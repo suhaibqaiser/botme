@@ -195,7 +195,7 @@ exports.client_heartbeat = function (req, res) {
             return res.status(403).send(failure);
         }
 
-        if (results.client == null) {
+        if (clients == null) {
             failure.payload = { message: 'Client not found' };
             return res.status(404).send(failure);
         } else {
