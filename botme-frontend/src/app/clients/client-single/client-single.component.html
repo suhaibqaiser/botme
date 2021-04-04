@@ -1,0 +1,50 @@
+<div *ngIf="client" class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">Client Details</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <h4>{{client.clientID | uppercase}}</h4>
+        <div class="form-group">
+            <label for="exampleInputBorder">ID: </label>
+            <input type="text" class="form-control form-control-border" id="exampleInputBorder"
+                placeholder="{{client._id}}">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputBorder">clientID: </label>
+            <input type="text" class="form-control form-control-border" id="exampleInputBorder"
+                placeholder="{{client.clientID}}">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputBorder">clientDeviceId: </label>
+            <input type="text" class="form-control form-control-border" id="exampleInputBorder"
+                placeholder="{{client.clientDeviceId}}">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputBorder">clientSecret: </label>
+            <input type="text" class="form-control form-control-border" id="exampleInputBorder"
+                placeholder="{{client.clientSecret}}">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputBorder">clientCreated: </label>
+            <input type="text" class="form-control form-control-border" id="exampleInputBorder"
+                placeholder="{{client.clientCreated}}">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputBorder">clientUpdated: </label>
+            <input type="text" class="form-control form-control-border" id="exampleInputBorder"
+                placeholder="{{client.clientUpdated}}">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputBorder">clientActive: </label>
+            <input type="text" class="form-control form-control-border" id="exampleInputBorder"
+                placeholder="{{client.clientActive}}">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputBorder">clientComment: </label>
+            <input type="text" class="form-control form-control-border" id="exampleInputBorder"
+                placeholder="{{client.clientComment}}">
+        </div>
+    </div>
+    <!-- /.card-body -->
+</div>

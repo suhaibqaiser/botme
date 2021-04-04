@@ -15,6 +15,11 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', verifyToken, clientsRouter);
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 function verifyToken(req, res, next) {
   const bearerHeader = req.headers['authorization'];
@@ -34,5 +39,5 @@ function verifyToken(req, res, next) {
 }
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`API listening at http://localhost:${port}`)
 })
