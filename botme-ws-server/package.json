@@ -1,11 +1,11 @@
 {
-  "name": "nodejs-ws-server",
+  "name": "botme-ws-server",
   "version": "1.0.0",
-  "description": "Nodejs WebSocket Server",
+  "description": "BotMe WebSocket Server",
   "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "rm -rf build && mkdir build",
+    "clean": "mkdir build",
     "build-babel": "babel -d ./build ./src -s",
     "build": "npm run clean && npm run build-babel",
     "start": "npm run build && node ./build/app.js",

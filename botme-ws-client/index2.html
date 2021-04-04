@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html itemscope="" itemtype="http://schema.org/webpage" lang="en">
+
+<head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+
+  <title>WebSocket Client v1.0</title>
+</head>
+
+<body>
+  <h2>Connection State: <p id="status"></p>
+  </h2>
+  <p>Send message to server:</p>
+  <input id="messageBox" type="text"></input>
+  <button type="button" onclick="sendMessage()">Send Message</button>
+  <hr>
+  <h2>Conneciton Log</h2>
+  <textarea class="log" id="log" rows="20" cols="150"></textarea>
+
+</body>
+<link rel="stylesheet" type="text/css" href="client.css">
+<script src="client2.js"></script>
+</html>
