@@ -2,8 +2,8 @@ window.onload = function () {
   document.getElementById('messageBox').value = "";
   document.getElementById('log').value = "";
 };
-const ws = new WebSocket('ws://ec2-107-21-10-51.compute-1.amazonaws.com:6380/comms');
-//const ws = new WebSocket('ws://localhost:6380/comms');
+//const ws = new WebSocket('ws://ec2-107-21-10-51.compute-1.amazonaws.com:6380/comms');
+const ws = new WebSocket('ws://localhost:6380/comms');
 
 setConnectionStatus();
 setInterval(function () { setConnectionStatus(); }, 1000);

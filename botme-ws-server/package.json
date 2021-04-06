@@ -28,7 +28,10 @@
   "dependencies": {
     "@aws-sdk/client-sqs": "^3.6.0",
     "axios": "^0.21.1",
+    "compromise": "^13.10.6",
+    "compromise-numbers": "^1.2.0",
     "mongoose": "^5.11.17",
+    "stopword": "^1.0.7",
     "uuid": "^8.3.2",
     "ws": "7.4.3"
   }

@@ -1,8 +1,8 @@
 {
-    "current_time": "",
-    "sender_id" : "",
-    "message_format" : "",
-    "message_command" : "",
-    "language" : "",
-    "message_text" : ""
+    "clientID": "1024",
+    "current_time": "2021-04-07 00:49:00",
+    "message_format": "text",
+    "message_command": "find",
+    "language": "en-US",
+    "message_text": "where can i find the nearest coffee shop"
 }
