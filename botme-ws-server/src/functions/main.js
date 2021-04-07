@@ -11,7 +11,7 @@ module.exports = {
         var v = nlp(text).verbs();
         var t = nlp(text).topics();
         var num = nlp(text).numbers();
-        command = v.text() + " " + n.text() + " " + num.text()
+        command = 'Verb: ' + v.text() + ' Nouns: ' + n.text() + ' Numbers: ' + num.text()
         // console.log('Command:' + command)
         // console.log('Nouns: ' + n.text())
         // console.log('Verbs: ' + v.text())
