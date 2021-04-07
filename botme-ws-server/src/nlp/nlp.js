@@ -4,7 +4,7 @@ var nlp = "";
 (async () => {
     const dock = await dockStart({ use: ['Basic'] });
     nlp = dock.get('nlp');
-    await nlp.addCorpus('./nlp/corpus-en.json');
+    await nlp.addCorpus('./build/nlp/corpus-en.json');
     await nlp.train();
 })();
 
