@@ -1,0 +1,44 @@
+{
+    "name": "Corpus with entities",
+    "locale": "en-US",
+    "contextData": "./utils/nlp/commands.json",
+    "data": [
+        {
+            "intent": "comm.gate",
+            "utterances": [
+                "where is gate number %gate%",
+                "where can i find gate %gate%",
+                "where can i find the gate number %gate%",
+                "i cannot find the gate %gate%",
+                "locate gate number %gate%",
+                "where the gate %gate% is",
+                "where is the terminal %gate%",
+                "where is terminal number %gate%",
+                "where can i find terminal %gate%",
+                "where can i find the terminal number %gate%",
+                "i cannot find the terminal %gate%",
+                "locate terminal number %gate%",
+                "where the terminal %gate% is"
+            ],
+            "answers": [
+                {
+                    "answer": "I'm sorry, I couldnt understand your gate number. Please specify again",
+                    "opts": "gate === undefined"
+                },
+                {
+                    "answer": "Your gate number {{gate}} is in terminal {{ _data[entities.gate.option].zone }}. Please proceed {{ _data[entities.gate.option].direction }} with {{ _data[entities.gate.option].steps }} steps",
+                    "opts": "gate !== '' && gate !== null && gate !== undefined"
+                }
+            ]
+        },
+        {
+            "intent": "None",
+            "utterances": [],
+            "answers": [
+                "Sorry, I cannot understand your query",
+                "Can you please repeat your question?",
+                "I dont get it. Please say it again"
+            ]
+        }
+    ]
+}
