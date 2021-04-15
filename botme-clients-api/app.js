@@ -1,6 +1,6 @@
 const express = require('express')
-var bodyParser = require('body-parser');
-const clientsRouter = require('./routes/clients.js')
+const clientsRouter = require('./routes/clientsRouter.js')
+const nlpRouter = require('./routes/nlpRouter.js')
 const app = express()
 const port = process.env.API_PORT || 3000;
 
@@ -12,9 +12,12 @@ mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/', verifyToken, clientsRouter);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use('/client', verifyToken, clientsRouter);
+app.use('/nlp', verifyToken, nlpRouter);
+
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
