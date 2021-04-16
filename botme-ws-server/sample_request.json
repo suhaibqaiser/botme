@@ -4,5 +4,6 @@
     "message_format": "text",
     "message_command": "find",
     "language": "en-US",
-    "message_text": "where can i find the nearest coffee shop"
+    "message_text": "where can i find the nearest coffee shop",
+    "authToken": "ea2d3aeaad77865f9769974a920892f5"
 }
