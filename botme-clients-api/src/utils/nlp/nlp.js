@@ -1,8 +1,6 @@
 const { dockStart } = require('@nlpjs/basic');
 const fs = require('fs');
 var nlp = "";
-//const airports = require('./airports.json');
-//const airportKeys = Object.keys(airports);
 
 // Initialize NLP
 (async () => {
@@ -14,12 +12,6 @@ var nlp = "";
     nlp.threshold = '0.5'
     nlp.autoLoad = true
     nlp.autoSave = true
-    //nlp.modelFileName = __dirname + '/model.nlp';
-
-    // for (let i = 0; i < airportKeys.length; i += 1) {
-    // //     const airport = airports[airportKeys[i]];
-    // //     nlp.addNerRuleOptionTexts('en', 'airport', airport.icao, airport.city);
-    // // }
 
     console.time('train')
     await train()
@@ -33,7 +25,6 @@ async function train() {
     nlp.addEntities(entities);
     await nlp.addCorpus(__dirname + '/corpus-commands.json');
 
-    //nlp.slotManager.addSlot('comm.gate', 'gate', true, { en: 'Please specify gate number?' })
     await nlp.train()
 }
 
