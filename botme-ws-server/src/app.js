@@ -1,14 +1,15 @@
 // requires for libraries
 const WebSocket = require('ws');
 const http = require('http');
+const config = require('./config');
+const Request = require("./models/request");
+const communicate = require("./utils/restUtil");
 //const dbUtil = require('./utils/dbUtil');
 //const queue = require('./utils/queue');
-const Request = require("./models/request");
 
-// application constants
-const port = process.env.WS_PORT || 6380;
-//const apiServer = process.env.CLIENTS_API || 'http://localhost:3000/client/'
-const bearerToken = 'ea2d3aeaad77865f9769974a920892f5'
+// application config
+const port = config.port
+const bearerToken = config.bearerToken
 var sessions = {}
 
 // application initialization
@@ -17,7 +18,7 @@ const wss = new WebSocket.Server({ server });
 
 wss.on('connection', function connection(ws) {
 
-    ws.on('message', function incoming(payload) {
+    ws.on('message', async function incoming(payload) {
 
         let data = new Request(payload)
 
@@ -36,7 +37,9 @@ wss.on('connection', function connection(ws) {
             //     ws.send(JSON.stringify({ "clientID": session.clientID }));
             // });
             if (data.authToken === bearerToken) {
-                ws.send(Date() + " | Message received on server: " + data.message_text)
+                response = await communicate.process(data.authToken, data.message_text)
+                response.date = Date()
+                ws.send(JSON.stringify(response))
             }
 
 

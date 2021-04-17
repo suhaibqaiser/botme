@@ -14,7 +14,7 @@ var nlp = "";
     nlp.threshold = '0.5'
     nlp.autoLoad = true
     nlp.autoSave = true
-    nlp.modelFileName = __dirname + '/model.nlp';
+    //nlp.modelFileName = __dirname + '/model.nlp';
 
     // for (let i = 0; i < airportKeys.length; i += 1) {
     // //     const airport = airports[airportKeys[i]];
@@ -33,13 +33,13 @@ async function train() {
     nlp.addEntities(entities);
     await nlp.addCorpus(__dirname + '/corpus-commands.json');
 
-    nlp.slotManager.addSlot('comm.gate', 'gate', true, { en: 'Please specify gate number?' })
+    //nlp.slotManager.addSlot('comm.gate', 'gate', true, { en: 'Please specify gate number?' })
     await nlp.train()
 }
 
 async function process(text) {
     try {
-        const response = await nlp.process(text)
+        const response = await nlp.process(text);
         return response
     } catch (err) {
         console.error(err)

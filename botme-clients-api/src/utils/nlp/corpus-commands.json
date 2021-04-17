@@ -1,33 +1,31 @@
 {
     "name": "Corpus with entities",
     "locale": "en-US",
-    "contextData": [
-        {
-            "Zone-A": {
-                "steps": "320",
-                "direction": "left",
-                "zone": "A"
-            },
-            "Zone-B": {
-                "steps": "150",
-                "direction": "right",
-                "zone": "B"
-            },
-            "Zone-C": {
-                "steps": "20",
-                "direction": "straight",
-                "zone": "C"
-            },
-            "Zone-D": {
-                "steps": "250",
-                "direction": "back",
-                "zone": "D"
-            }
+    "contextData": {
+        "Zone-A": {
+            "steps": "320",
+            "direction": "left",
+            "zone": "A"
+        },
+        "Zone-B": {
+            "steps": "150",
+            "direction": "right",
+            "zone": "B"
+        },
+        "Zone-C": {
+            "steps": "20",
+            "direction": "straight",
+            "zone": "C"
+        },
+        "Zone-D": {
+            "steps": "250",
+            "direction": "back",
+            "zone": "D"
         }
-    ],
+    },
     "data": [
         {
-            "intent": "comm.gate",
+            "intent": "query.gate",
             "utterances": [
                 "where is gate number %gate%",
                 "where can i find gate %gate%",
