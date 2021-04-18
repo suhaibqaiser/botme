@@ -1,6 +1,7 @@
 const express = require('express')
 const clientsRouter = require('./routes/clientsRouter.js')
 const nlpRouter = require('./routes/nlpRouter.js')
+const entityRouter = require('./routes/entityRouter')
 const app = express()
 const port = process.env.API_PORT || 3000;
 
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/client', verifyToken, clientsRouter);
 app.use('/nlp', verifyToken, nlpRouter);
+app.use('/entity', verifyToken, entityRouter);
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
