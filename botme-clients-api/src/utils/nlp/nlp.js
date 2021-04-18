@@ -1,5 +1,8 @@
 const {dockStart} = require('@nlpjs/basic');
 const Entity = require("../../models/entity");
+const Corpus = require("../../models/corpus");
+const fs = require('fs')
+const nlpModelPath = './model.nlp'
 let nlp = "";
 
 // Initialize NLP
@@ -13,13 +16,12 @@ let nlp = "";
     nlp.autoLoad = true
     nlp.autoSave = true
 
-    console.time('train')
+
     await train()
-    console.timeEnd('train')
+
 })();
 
 async function train() {
-
     async function getEntities() {
         let entitiesFromDB
         try {
@@ -38,9 +40,22 @@ async function train() {
         return entities
     }
 
+    async function getCorpus() {
+        let corpusFromDB
+        try {
+            corpusFromDB = await Corpus.findOne({}, {_id: 0, __v: 0})
+        } catch (err) {
+            console.log(err)
+        }
+        return corpusFromDB
+    }
+
+    console.time('train')
+    fs.unlinkSync(nlpModelPath);
     await nlp.addEntities(await getEntities());
-    await nlp.addCorpus(__dirname + '/corpus-commands.json');
-    await nlp.train()
+    await nlp.addCorpus(await getCorpus());
+    await nlp.train();
+    console.timeEnd('train')
 }
 
 async function process(text) {
