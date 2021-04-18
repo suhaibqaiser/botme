@@ -1,11 +1,10 @@
-const { dockStart } = require('@nlpjs/basic');
+const {dockStart} = require('@nlpjs/basic');
 const Entity = require("../../models/entity");
-const fs = require('fs');
-var nlp = "";
+let nlp = "";
 
 // Initialize NLP
 (async () => {
-    const dock = await dockStart({ use: ['Basic'] });
+    const dock = await dockStart({use: ['Basic']});
     nlp = dock.get('nlp');
 
     nlp.trainByDomain = false;
@@ -20,28 +19,24 @@ var nlp = "";
 })();
 
 async function train() {
-    //let rawdata = fs.readFileSync(__dirname + '/entities-commands.json');
-    // entities = JSON.parse(rawdata)
 
     async function getEntities() {
-
+        let entitiesFromDB
         try {
-            var entitiesFromDB = await Entity.find({})
+            entitiesFromDB = await Entity.find({})
         } catch (err) {
             console.log(err)
         }
 
-        var entities = {}
-        for (i in entitiesFromDB) {
-            var options = {}
+        let entities = {}
+        for (let i in entitiesFromDB) {
+            let options = {}
             options = entitiesFromDB[i].options
-            var entityOptions = { options }
+            let entityOptions = {options}
             entities[entitiesFromDB[i].name] = entityOptions
         }
-
-        return await entities
+        return entities
     }
-    //console.log(await getEntities())
 
     await nlp.addEntities(await getEntities());
     await nlp.addCorpus(__dirname + '/corpus-commands.json');
@@ -50,11 +45,10 @@ async function train() {
 
 async function process(text) {
     try {
-        const response = await nlp.process(text);
-        return response
+        return await nlp.process(text)
     } catch (err) {
         console.error(err)
     }
-
 }
-module.exports = { process, train }
+
+module.exports = {process, train}
