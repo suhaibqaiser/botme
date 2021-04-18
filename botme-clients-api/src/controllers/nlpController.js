@@ -1,8 +1,8 @@
-const nlplib = require('../utils/nlp/nlp')
+let nlplib = require('../utils/nlp/nlp')
 
 exports.communicate = async function (req, res) {
-    retResponse = { message: "", status: "" }
-    response = await nlplib.process(req.body.message);
+    let retResponse = { message: "", status: "" }
+    let response = await nlplib.process(req.body.message);
     retResponse.message = response.answer;
 
     if (response.intent.includes('query') && response.entities.length === 1) {
@@ -17,6 +17,6 @@ exports.communicate = async function (req, res) {
 
 exports.train = function (req, res) {
     nlplib.train()
-    success = 'Training complete'
+    let success = 'Training complete'
     res.status(200).send(success)
 }

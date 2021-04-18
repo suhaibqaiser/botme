@@ -51,7 +51,12 @@ async function train() {
     }
 
     console.time('train')
-    fs.unlinkSync(nlpModelPath);
+    try {
+        fs.unlinkSync(nlpModelPath);
+    } catch(e) {
+        console.log(e);
+    }
+
     await nlp.addEntities(await getEntities());
     await nlp.addCorpus(await getCorpus());
     await nlp.train();
