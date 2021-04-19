@@ -1,13 +1,5 @@
-const mongoose = require('mongoose');
-const config = require('../config');
 const Session = require('../models/session');
 const {v4: uuidv4} = require('uuid');
-const mongoDBConnection = process.env.MONGODB_CONNECTION || config.connectionString
-try {
-    db = mongoose.connect(mongoDBConnection, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
-} catch (err) {
-    console.log(err)
-}
 
 async function addConversation(clientToken) {
     let session;
@@ -29,14 +21,6 @@ async function addConversation(clientToken) {
         console.log(err);
         return 400
     }
-    // session = await Session.findOne({clientToken: clientToken})
-    // let uniqueConversationId = uuidv4()
-    // session.conversations.push({
-    //     conversationId: uniqueConversationId,
-    //     conversationStart: Date()
-    // })
-    // await session.save();
-
 }
 
 async function addConversationLog(conversationId, query, response) {

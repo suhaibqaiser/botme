@@ -16,4 +16,4 @@ async function endConversation(conversationId, rating) {
 //addConversationLog('aa55e113-555c-4f94-aee2-5531929ba4a7','where is brazil', 'Im sorry, i dont understand you question');
 //endConversation('aa55e113-555c-4f94-aee2-5531929ba4a7', 0);
 
-//module.exports({newConversation, addConversationLog, endConversation})
+module.exports = ({newConversation, addConversationLog, endConversation})
