@@ -1,7 +1,8 @@
 // requires for libraries
+const config = require('./config');
 const WebSocket = require('ws');
 const http = require('http');
-const config = require('./config');
+
 const Request = require("./models/request");
 const communicate = require("./utils/restUtil");
 //const dbUtil = require('./utils/dbUtil');
@@ -10,11 +11,12 @@ const communicate = require("./utils/restUtil");
 // application config
 const port = config.port
 const bearerToken = config.bearerToken
-var sessions = {}
+
 
 // application initialization
 const server = http.createServer();
 const wss = new WebSocket.Server({ server });
+var sessions = {}
 
 wss.on('connection', function connection(ws) {
 

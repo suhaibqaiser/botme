@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const conversationSchema = require('./conversation');
 const Schema = mongoose.Schema;
 
 let SessionsSchema = new Schema(
