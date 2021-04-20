@@ -1,5 +1,5 @@
 {
-  "name": "Corpus with entities",
+  "name": "Corpus for sofia",
   "locale": "en-US",
   "contextData": {
     "Zone-A": {
@@ -66,6 +66,56 @@
         },
         {
           "answer": "I dont get it. Please say it again",
+          "opts": ""
+        }
+      ]
+    },
+    {
+      "intent": "conversation.start",
+      "utterances": [
+        "sofia need help",
+        "hello sofia i need help",
+        "hey sofia need help",
+        "please help me",
+        "sofia want your help",
+        "want help"
+      ],
+      "answers": [
+        {
+          "answer": "Yes, I am here to help, what do you need?",
+          "opts": ""
+        },
+        {
+          "answer": "What can I help you with?",
+          "opts": ""
+        },
+        {
+          "answer": "How may I help you?",
+          "opts": ""
+        }
+      ]
+    },
+    {
+      "intent": "conversation.end",
+      "utterances": [
+        "thanks",
+        "thank you",
+        "my issue is resolved",
+        "my issue is solved",
+        "problem solved",
+        "thanks allot"
+      ],
+      "answers": [
+        {
+          "answer": "Good to hear that.",
+          "opts": ""
+        },
+        {
+          "answer": "You are welcome. I am happy that i was able to help you.",
+          "opts": ""
+        },
+        {
+          "answer": "Thank you for talking to me. Have a safe journey!",
           "opts": ""
         }
       ]

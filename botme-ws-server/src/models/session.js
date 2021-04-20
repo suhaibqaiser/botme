@@ -12,6 +12,7 @@ let SessionsSchema = new Schema(
             conversationId: {type: String, index: true, unique: true},
             conversationStart: Date,
             conversationEnd: Date,
+            conversationActive: Boolean,
             conversationRating: Number,
             conversationLog: [{
                 query: String,
