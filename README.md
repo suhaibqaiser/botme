@@ -10,3 +10,8 @@
 ### WebSocket Server
 - WebSocket Server: ws://54.165.125.65:6380/comms 
 - authToken for WS communication: ea2d3aeaad77865f9769974a920892f5 
+
+### Jenkins
+- Url: http://54.224.129.9:8080/
+- Username: admin
+- Password: abcd@1234
