@@ -15,10 +15,7 @@ let nlp = "";
     nlp.threshold = '0.5'
     nlp.autoLoad = true
     nlp.autoSave = true
-
-
     await train()
-
 })();
 
 async function train() {

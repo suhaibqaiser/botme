@@ -1,5 +1,5 @@
 {
-  "name": "Corpus with entities",
+  "name": "Corpus for sofia",
   "locale": "en-US",
   "contextData": {
     "Zone-A": {
@@ -66,6 +66,82 @@
         },
         {
           "answer": "I dont get it. Please say it again",
+          "opts": ""
+        }
+      ]
+    },
+    {
+      "intent": "conversation.start",
+      "utterances": [
+        "sofia need help",
+        "hello sofia i need help",
+        "hey sofia need help",
+        "please help me",
+        "sofia want your help",
+        "want help"
+      ],
+      "answers": [
+        {
+          "answer": "Yes, I am here to help, what do you need?",
+          "opts": ""
+        },
+        {
+          "answer": "What can I help you with?",
+          "opts": ""
+        },
+        {
+          "answer": "How may I help you?",
+          "opts": ""
+        }
+      ]
+    },
+    {
+      "intent": "conversation.confirmEnd",
+      "utterances": [
+        "okay done",
+        "ok done",
+        "ok thanks",
+        "alright",
+        "my issue is resolved",
+        "my issue is solved",
+        "problem solved",
+        "thank you",
+        "thanks"
+      ],
+      "answers": [
+        {
+          "answer": "Good to hear that. Is there anything else i can help you with?",
+          "opts": ""
+        },
+        {
+          "answer": "You are welcome. Is there something else i can help you with?",
+          "opts": ""
+        },
+        {
+          "answer": "Do you need anymore help?",
+          "opts": ""
+        }
+      ]
+    },
+    {
+      "intent": "conversation.end",
+      "utterances": [
+        "no thats it",
+        "no",
+        "nops",
+        "nothing"
+      ],
+      "answers": [
+        {
+          "answer": "Good to hear that.",
+          "opts": ""
+        },
+        {
+          "answer": "You are welcome. I am happy that i was able to help you.",
+          "opts": ""
+        },
+        {
+          "answer": "Thank you for talking to me. Have a safe journey!",
           "opts": ""
         }
       ]
