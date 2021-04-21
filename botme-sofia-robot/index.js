@@ -15,7 +15,7 @@ const ccStreamer = new WebSocket('ws://localhost:6380/comms');
  * App Variables
  */
 const app = express();
-const port = process.env.PORT || "5000";
+const port = process.env.PORT || "80";
 
 /**
  * Server Activation
@@ -30,7 +30,7 @@ const io = require('socket.io')(server);
 app.use(express.static(__dirname + '/views')); // html
 app.use(express.static(__dirname + '/public')); // js, css, images
 let message = {};
-message.authToken = "ea2d3aeaad77865f9769974a920892f5"
+message.authToken = "VY7oV9S4EsT+59Gf4suCvsDQ5B1KCl6AUJH7/jA9BaQ="
 message.message_format = "text"
 message.message_command = "find"
 message.language = "en-US"
