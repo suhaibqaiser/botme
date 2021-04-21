@@ -18,7 +18,6 @@ var failure = {
 };
 
 
-
 // Display list of all Clients.
 exports.client_list = function (req, res) {
     Client.find({}, function (err, clients) {

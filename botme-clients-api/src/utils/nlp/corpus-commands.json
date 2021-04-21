@@ -96,14 +96,40 @@
       ]
     },
     {
-      "intent": "conversation.end",
+      "intent": "conversation.confirmEnd",
       "utterances": [
-        "thanks",
-        "thank you",
+        "okay done",
+        "ok done",
+        "ok thanks",
+        "alright",
         "my issue is resolved",
         "my issue is solved",
         "problem solved",
-        "thanks allot"
+        "thank you",
+        "thanks"
+      ],
+      "answers": [
+        {
+          "answer": "Good to hear that. Is there anything else i can help you with?",
+          "opts": ""
+        },
+        {
+          "answer": "You are welcome. Is there something else i can help you with?",
+          "opts": ""
+        },
+        {
+          "answer": "Do you need anymore help?",
+          "opts": ""
+        }
+      ]
+    },
+    {
+      "intent": "conversation.end",
+      "utterances": [
+        "no thats it",
+        "no",
+        "nops",
+        "nothing"
       ],
       "answers": [
         {

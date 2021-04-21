@@ -56,10 +56,10 @@ async function processConversation(message, clientToken) {
     }
 
     let conversationId = await conversationController.getConversationId(clientToken)
-
+    console.log(communication.intent)
     if (communication.intent === 'conversation.end') {
         conversationController.addConversationLog(conversationId, message, communication.payload)
-        conversationController.endConversation(conversationId)
+        conversationController.endConversation(conversationId,0)
     } else {
         conversationController.addConversationLog(conversationId, message, communication.payload)
     }
