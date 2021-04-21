@@ -38,6 +38,7 @@ wss.on('connection', function connection(ws) {
             // });
             if (data.authToken === bearerToken) {
                 response = await communicate.process(data.authToken, data.message_text)
+                console.log("Received Msg: " + data)
                 response.date = Date()
                 ws.send(JSON.stringify(response))
             }
