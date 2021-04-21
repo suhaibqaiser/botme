@@ -7,15 +7,13 @@ const express = require("express");
 const path = require("path");
 const WebSocket = require('ws');
 const ccStreamer = new WebSocket('ws://localhost:6380/comms');
-
-
-
+//const ccStreamer = new WebSocket('ws://54.165.125.65:6380/comms');
 
 /**
  * App Variables
  */
 const app = express();
-const port = process.env.PORT || "80";
+const port = process.env.PORT || "5000";
 
 /**
  * Server Activation
@@ -37,11 +35,11 @@ message.language = "en-US"
 message.message_text = "where is my gate 12"
 
 ccStreamer.on('open', function open() {
-    console.log("Web Socket connected")
+    console.log("Web Socket backend connected")
 });
 
 io.on('connection', function(socket){
-    console.log('a user connected');
+    console.log('Websocket user connected');
 });
 
 io.on('connection', function(socket) {
