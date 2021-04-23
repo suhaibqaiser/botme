@@ -3,6 +3,7 @@ const clientsRouter = require('./routes/clientsRouter.js')
 const nlpRouter = require('./routes/nlpRouter.js')
 const entityRouter = require('./routes/entityRouter')
 const corpusRouter = require('./routes/corpusRouter')
+const sessionRouter = require('./routes/sessionRouter')
 const app = express()
 const port = process.env.API_PORT || 3000;
 
@@ -10,7 +11,12 @@ const port = process.env.API_PORT || 3000;
 const mongoose = require('mongoose');
 const mongoDB = process.env.MONGODB_CONNECTION || 'mongodb+srv://mongoUser:1t3jWnpoC0imAM4d@cluster0.tipo5.mongodb.net/clients?retryWrites=true&w=majority';
 
-mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
+mongoose.connect(mongoDB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+});
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
@@ -21,6 +27,7 @@ app.use('/client', verifyToken, clientsRouter);
 app.use('/nlp', verifyToken, nlpRouter);
 app.use('/entity', verifyToken, entityRouter);
 app.use('/corpus', verifyToken, corpusRouter);
+app.use('/session', verifyToken, sessionRouter);
 
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
