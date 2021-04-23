@@ -27,8 +27,10 @@ const io = require('socket.io')(server);
  */
 app.use(express.static(__dirname + '/views')); // html
 app.use(express.static(__dirname + '/public')); // js, css, images
+
+
 let message = {};
-message.authToken = "B0waZ+1egHXIoV1GdxHLONBBEgoCENk2TW79I6axjB4="
+message.authToken = "qbw/fcQKvC6SY+AelUs5VpRYOhnRvzZsz39xVU06LYI="
 message.message_format = "text"
 message.message_command = "find"
 message.language = "en-US"
@@ -38,11 +40,11 @@ ccStreamer.on('open', function open() {
     console.log("Web Socket backend connected")
 });
 
-io.on('connection', function(socket){
+io.on('connection', function (socket) {
     console.log('Websocket user connected');
 });
 
-io.on('connection', function(socket) {
+io.on('connection', function (socket) {
     socket.on('chat message', (text) => {
         console.log('Message: ' + text);
         console.log('state: ' + ccStreamer._readyState);
@@ -60,5 +62,5 @@ io.on('connection', function(socket) {
  * Routes Definitions
  */
 app.get("/", (req, res) => {
-    res.render("index", { title: "Home" });
+    res.render("index", {title: "Home"});
 });
