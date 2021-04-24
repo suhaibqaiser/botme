@@ -21,6 +21,16 @@ const routes: Routes = [{
       path: 'client',
       data: { pageTitle: "Clients" },
       loadChildren: () => import('./clients/clients.module').then(m => m.ClientsModule)
+    },
+    {
+      path: 'session',
+      data: { pageTitle: "Sessions" },
+      loadChildren: () => import('./sessions/sessions.module').then(m => m.SessionsModule)
+    },
+    {
+      path: 'conversations',
+      data: { pageTitle: "Conversations" },
+      loadChildren: () => import('./conversations/conversations.module').then(m => m.ConversationsModule)
     }
   ]
 }

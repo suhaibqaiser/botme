@@ -1,0 +1,10 @@
+<p>conversation-log works!</p>
+
+<tr *ngFor="let c of conversations; let i = index">
+  <td>{{c.conversationStart}}</td>
+  <td>{{c.conversationLog[0].query}}</td>
+</tr>
+
+<tr *ngFor="let cl of conversationLog; let i = index">
+  <td>{{cl.query}}</td>
+</tr>

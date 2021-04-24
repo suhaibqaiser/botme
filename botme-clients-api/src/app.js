@@ -4,6 +4,7 @@ const nlpRouter = require('./routes/nlpRouter.js')
 const entityRouter = require('./routes/entityRouter')
 const corpusRouter = require('./routes/corpusRouter')
 const sessionRouter = require('./routes/sessionRouter')
+const conversationRouter = require('./routes/conversationRouter')
 const app = express()
 const port = process.env.API_PORT || 3000;
 
@@ -28,6 +29,7 @@ app.use('/nlp', verifyToken, nlpRouter);
 app.use('/entity', verifyToken, entityRouter);
 app.use('/corpus', verifyToken, corpusRouter);
 app.use('/session', verifyToken, sessionRouter);
+app.use('/conversation', verifyToken, conversationRouter);
 
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");

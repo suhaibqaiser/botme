@@ -1,0 +1,56 @@
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Session List</h3>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <table class="table table-bordered">
+              <thead>
+              <tr>
+                <th style="width: 10px">#</th>
+                <th>Client ID</th>
+                <th>Session ID</th>
+                <th>Created</th>
+                <th>Updated</th>
+                <th style="width: 40px">Active</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let session of sessions; let i = index" (click)="onSelect(session)"
+                  [class.selected]="session === selectedSession">
+                <button type="button" class="btn btn-default"
+                        [routerLink]="['/session/single', session.sessionId]">View</button>
+                <!--                                    <td>{{i}}</td>-->
+                <td>{{session.clientID}}</td>
+                <td>{{session.sessionId}}</td>
+                <td>{{session.sessionCreated}}</td>
+                <td>{{session.sessionUpdated}}</td>
+                <td><span *ngIf="session.sessionActive === true"
+                          class="badge bg-success">{{session.sessionActive}}</span>
+                  <span *ngIf="session.sessionActive === false"
+                        class="badge bg-danger">{{session.sessionActive}}</span>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.card-body -->
+          <div class="card-footer clearfix">
+            <ul class="pagination pagination-sm m-0 float-right">
+              <li class="page-item"><a class="page-link" href="#">«</a></li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#">»</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- /.card -->
+      </div>
+    </div>
+  </div>
+</section>
