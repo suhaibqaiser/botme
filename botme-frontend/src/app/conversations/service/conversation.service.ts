@@ -19,10 +19,10 @@ export class ConversationService {
     Authorization: 'Bearer ' + environment.BearerToken
   });
 
-  getConversationList(): Observable<any> {
+  getConversationList(sessionId: string ): Observable<any> {
     const url = `${this.apiBaseUrl}/conversation/list`;
     const params = new HttpParams()
-      .set('sessionId', '9192ac9c-efad-4217-9a24-fa5911e7c68e');
+      .set('sessionId', sessionId);
     return this.http.get(url, {headers: this.headers, params});
   }
 

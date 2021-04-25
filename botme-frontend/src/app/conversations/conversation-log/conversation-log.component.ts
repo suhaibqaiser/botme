@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ConversationService} from '../service/conversation.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-conversation-log',
@@ -8,33 +9,25 @@ import {ConversationService} from '../service/conversation.service';
 })
 export class ConversationLogComponent implements OnInit {
 
-  constructor(private conversationServer: ConversationService) {
+  constructor(private conversationServer: ConversationService,
+              private route: ActivatedRoute,
+  ) {
   }
+
+  sessionId = '';
+  conversations: Array<any> = [];
+
+  // pageTitle = '';
 
   ngOnInit(): void {
-    this.getConversationList();
-    this.getConversationLog();
+    this.route.paramMap.subscribe(params => {
+      this.sessionId = params.get('sessionId') as string;
+    });
+    this.getConversationList(this.sessionId);
   }
 
-  conversations: Array<any> = [];
-  conversationLog: Array<any> = [];
-
-  getConversationLog(): void {
-    for (let c of this.conversations) {
-      let conversation = {
-        query: '',
-        response: '',
-        timestamp: ''
-      };
-      conversation.query = this.conversations[c].query;
-      conversation.response = this.conversations[c].response;
-      conversation.timestamp = this.conversations[c].timestamp;
-      this.conversationLog.push(conversation);
-    }
-  }
-
-  getConversationList(): void {
-    this.conversationServer.getConversationList()
+  getConversationList(sessionId: string): void {
+    this.conversationServer.getConversationList(sessionId)
       .subscribe(result => this.conversations = result.payload);
   }
 }

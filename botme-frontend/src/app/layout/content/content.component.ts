@@ -1,7 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-content',
@@ -10,10 +7,9 @@ import { map } from 'rxjs/operators';
 })
 export class ContentComponent implements OnInit {
 
-  @Input() pageTitle: string = '';
+  pageTitle: string = '';
 
   ngOnInit(): void {
-
   }
 
 }

@@ -4,7 +4,7 @@ import { ConversationLogComponent } from './conversation-log/conversation-log.co
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'conversationlog/:sessionId',
     data: { pageTitle: 'Conversations' },
     component: ConversationLogComponent
   }

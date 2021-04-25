@@ -23,7 +23,7 @@
               <tr *ngFor="let session of sessions; let i = index" (click)="onSelect(session)"
                   [class.selected]="session === selectedSession">
                 <button type="button" class="btn btn-default"
-                        [routerLink]="['/session/single', session.sessionId]">View</button>
+                        [routerLink]="['/conversations/conversationlog', session.sessionId]">View</button>
                 <!--                                    <td>{{i}}</td>-->
                 <td>{{session.clientID}}</td>
                 <td>{{session.sessionId}}</td>
