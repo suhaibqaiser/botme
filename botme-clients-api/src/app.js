@@ -7,6 +7,7 @@ const sessionRouter = require('./routes/sessionRouter')
 const conversationRouter = require('./routes/conversationRouter')
 const app = express()
 const port = process.env.API_PORT || 3000;
+let cors = require('cors')
 
 //Set up mongoose connection
 const mongoose = require('mongoose');
@@ -20,7 +21,7 @@ mongoose.connect(mongoDB, {
 });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
@@ -30,12 +31,6 @@ app.use('/entity', verifyToken, entityRouter);
 app.use('/corpus', verifyToken, corpusRouter);
 app.use('/session', verifyToken, sessionRouter);
 app.use('/conversation', verifyToken, conversationRouter);
-
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
 
 function verifyToken(req, res, next) {
     const bearerHeader = req.headers['authorization'];
