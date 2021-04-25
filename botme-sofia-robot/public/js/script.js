@@ -17,7 +17,10 @@ recognition.maxAlternatives = 1;
 document.querySelector('button').addEventListener('click', () => {
   recognition.start();
 });
-
+document.querySelector('#logout').addEventListener('click', () => {
+  document.cookie = "clientToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC;"
+  window.location.reload();
+});
 recognition.addEventListener('speechstart', () => {
   //outputDebug.textContent = '\nSpeech has been detected.'
   console.log('Speech has been detected.');
@@ -34,7 +37,13 @@ recognition.addEventListener('result', (e) => {
   console.log('Confidence: ' + e.results[0][0].confidence);
   //outputConfidence.textContent = 'Confidence: ' + e.results[0][0].confidence
 
-  socket.emit('chat message', text);
+  let clientToken = getCookie('clientToken');
+  console.log('client token = ' + clientToken)
+  let message = {
+    "command" : text,
+    "auth" : clientToken
+  }
+  socket.emit('chat message', JSON.stringify(message));
 });
 
 recognition.addEventListener('speechend', () => {
@@ -56,7 +65,28 @@ function synthVoice(text) {
   utterance.text = text;
   synth.speak(utterance);
 }
+function getCookie(name) {
+  // Add the = sign
+  name = name + '=';
 
+  // Get the decoded cookie
+  let decodedCookie = decodeURIComponent(document.cookie);
+
+  // Get all cookies, split on ; sign
+  let cookies = decodedCookie.split(';');
+
+  // Loop over the cookies
+  for (let i = 0; i < cookies.length; i++) {
+    // Define the single cookie, and remove whitespace
+    let cookie = cookies[i].trim();
+
+    // If this cookie has the name of what we are searching
+    if (cookie.indexOf(name) == 0) {
+      // Return everything after the cookies name
+      return cookie.substring(name.length, cookie.length);
+    }
+  }
+}
 socket.on('bot reply', function(replyText) {
   synthVoice(replyText);
 

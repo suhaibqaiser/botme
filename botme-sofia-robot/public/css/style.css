@@ -26,9 +26,12 @@ header {
   margin: 2em 0;
   text-align: center;
 }
-h1, h2, h3 {
+h1, h2, h3, a {
   margin: 0;
   text-rendering: optimizeLegibility;
+  text-align: center;
+}
+.link-center {
   text-align: center;
 }
 h1 {
