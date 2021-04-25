@@ -19,6 +19,9 @@ wss.on('connection', function connection(ws) {
 
     ws.on('message', async function incoming(payload) {
         let response = await communicate.processCommunication(payload)
+        let parsedPayload = JSON.parse(payload)
+        response.clientID = parsedPayload.clientID;
+        console.log(response)
         ws.send(JSON.stringify(response))
     });
 
