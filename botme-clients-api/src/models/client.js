@@ -4,8 +4,8 @@ var Schema = mongoose.Schema;
 
 var ClientsSchema = new Schema(
   {
-    clientDeviceId: { type: String, maxlength: 256, required: true },
-    clientID: { type: String, maxlength: 256, required: true },
+    clientDeviceId: { type: String, maxlength: 256, required: true, unique:true },
+    clientID: { type: String, maxlength: 256, required: true},
     clientSecret: { type: String, maxlength: 256, required: true },
     clientCreated: { type: Date, required: true },
     clientUpdated: { type: Date },
