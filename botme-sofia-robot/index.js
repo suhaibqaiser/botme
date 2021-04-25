@@ -28,7 +28,7 @@ const io = require('socket.io')(server);
 app.use(express.static(__dirname + '/views')); // html
 app.use(express.static(__dirname + '/public')); // js, css, images
 let message = {};
-message.authToken = "VY7oV9S4EsT+59Gf4suCvsDQ5B1KCl6AUJH7/jA9BaQ="
+message.authToken = "x7YofjlSv3HeCbG5DjaKL4TIiLt3WRo7/lNtUPVkBBo="
 message.message_format = "text"
 message.message_command = "find"
 message.language = "en-US"
@@ -47,6 +47,7 @@ io.on('connection', function(socket) {
         console.log('Message: ' + text);
         console.log('state: ' + ccStreamer._readyState);
         message.message_text = text;
+        console.log(socket.id);
         ccStreamer.send(JSON.stringify(message))
 
     });
