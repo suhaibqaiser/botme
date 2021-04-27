@@ -10,7 +10,7 @@ const routes: Routes = [
     component: ClientListComponent
   },
   {
-    path: 'single/:clientID',
+    path: 'single',
     component: ClientSingleComponent
   }
 ];

@@ -9,7 +9,7 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class ConversationLogComponent implements OnInit {
 
-  constructor(private conversationServer: ConversationService,
+  constructor(private conversationService: ConversationService,
               private route: ActivatedRoute,
   ) {
   }
@@ -27,7 +27,7 @@ export class ConversationLogComponent implements OnInit {
   }
 
   getConversationList(sessionId: string): void {
-    this.conversationServer.getConversationList(sessionId)
+    this.conversationService.getConversationList(sessionId)
       .subscribe(result => this.conversations = result.payload);
   }
 }

@@ -11,13 +11,13 @@ export class SessionListComponent implements OnInit {
   constructor(private sessionService: SessionService) {
   }
 
-  ngOnInit(): void {
-    this.getSessionList();
-  }
-
   sessions: Array<any> = [];
 
   selectedSession?: string;
+
+  ngOnInit(): void {
+    this.getSessionList();
+  }
 
   onSelect(session: any): void {
     this.selectedSession = session.sessionId;

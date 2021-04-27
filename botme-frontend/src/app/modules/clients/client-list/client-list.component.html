@@ -24,7 +24,7 @@
               <tr *ngFor="let client of clients; let i = index" (click)="onSelect(client)"
                   [class.selected]="client === selectedClient">
                 <button type="button" class="btn btn-default"
-                        [routerLink]="['/client/single', client.clientID]">View
+                        [routerLink]="['/client/single']" [queryParams]="{ clientId: client.clientID}">View
                 </button>
                 <!--                                    <td>{{i}}</td>-->
                 <td>{{client.clientID}}</td>
