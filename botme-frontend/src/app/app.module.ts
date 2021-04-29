@@ -4,12 +4,12 @@ import { HttpClientModule } from '@angular/common/http'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './layout/navbar/navbar.component';
-import { SidebarComponent } from './layout/sidebar/sidebar.component';
-import { ContentComponent } from './layout/content/content.component';
-import { FooterComponent } from './layout/footer/footer.component';
-import { ContactComponent } from './pages/contact/contact.component';
-import { HomeComponent } from './pages/home/home.component';
+import { NavbarComponent } from './components/layout/navbar/navbar.component';
+import { SidebarComponent } from './components/layout/sidebar/sidebar.component';
+import { ContentComponent } from './components/layout/content/content.component';
+import { FooterComponent } from './components/layout/footer/footer.component';
+import { ContactComponent } from './components/pages/contact/contact.component';
+import { HomeComponent } from './components/pages/home/home.component';
 
 @NgModule({
   declarations: [

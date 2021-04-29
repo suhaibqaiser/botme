@@ -6,17 +6,17 @@ const nlpModelPath = './model.nlp'
 let nlp = "";
 
 // Initialize NLP
-(async () => {
-    const dock = await dockStart({use: ['Basic']});
-    nlp = dock.get('nlp');
-
-    nlp.trainByDomain = false;
-    nlp.forceNER = true;
-    nlp.threshold = '0.5'
-    nlp.autoLoad = true
-    nlp.autoSave = true
-    await train()
-})();
+// (async () => {
+//     const dock = await dockStart({use: ['Basic']});
+//     nlp = dock.get('nlp');
+//
+//     nlp.trainByDomain = false;
+//     nlp.forceNER = true;
+//     nlp.threshold = '0.5'
+//     nlp.autoLoad = true
+//     nlp.autoSave = true
+//     await train()
+// })();
 
 async function train() {
     async function getEntities() {
