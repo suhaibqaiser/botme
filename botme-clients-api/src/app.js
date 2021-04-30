@@ -5,6 +5,7 @@ const entityRouter = require('./routes/entityRouter')
 const corpusRouter = require('./routes/corpusRouter')
 const sessionRouter = require('./routes/sessionRouter')
 const conversationRouter = require('./routes/conversationRouter')
+const authRouter = require('./routes/authRouter')
 const app = express()
 const port = process.env.API_PORT || 3000;
 let cors = require('cors')
@@ -31,6 +32,7 @@ app.use('/entity', verifyToken, entityRouter);
 app.use('/corpus', verifyToken, corpusRouter);
 app.use('/session', verifyToken, sessionRouter);
 app.use('/conversation', verifyToken, conversationRouter);
+app.use('/auth', verifyToken, authRouter);
 
 function verifyToken(req, res, next) {
     const bearerHeader = req.headers['authorization'];

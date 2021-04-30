@@ -6,7 +6,7 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a class="nav-link" routerLink="/" routerLinkActive="activebutton">Home</a>
+            <a class="nav-link" routerLink="/home" routerLinkActive="activebutton">Home</a>
 
         </li>
         <li class="nav-item d-none d-sm-inline-block">
@@ -126,3 +126,13 @@
     </ul>
 </nav>
 <!-- /.navbar -->
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+  <!-- Control sidebar content goes here -->
+  <div class="p-3">
+    <h5>User</h5>
+    <button class="btn btn-primary" (click)="userlogout()">Logout</button>
+  </div>
+</aside>
+<!-- /.control-sidebar -->
+
