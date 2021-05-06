@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
           this.isLoginFailed = false
           this.loginToken = response.payload.loginToken
           localStorage.setItem('loginToken', this.loginToken)
+          localStorage.setItem('userFullName', response.payload.userFullName)
           this.router.navigate(["/home"])
         }
 
