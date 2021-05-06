@@ -61,6 +61,7 @@ async function addClient(req, res) {
         clientDeviceId: req.body.clientDeviceId,
         clientID: clientID,
         clientSecret: clientSecret,
+        clientName: req.body.clientName,
         clientCreated: Date(),
         clientUpdated: null,
         clientActive: req.body.clientActive,
@@ -130,6 +131,7 @@ async function updateClient(req, res) {
     let client = {
         clientDeviceId: req.body.clientDeviceId,
         clientSecret: req.body.clientSecret,
+        clientName: req.body.clientName,
         clientUpdated: Date(),
         clientActive: req.body.clientActive,
         clientComment: req.body.clientComment

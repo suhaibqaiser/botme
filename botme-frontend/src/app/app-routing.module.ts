@@ -30,21 +30,25 @@ const routes: Routes = [
       },
       {
         path: 'client',
+        canActivate: [AuthGuard],
         data: {pageTitle: 'Clients'},
         loadChildren: () => import('./modules/clients/clients.module').then(m => m.ClientsModule)
       },
       {
         path: 'session',
+        canActivate: [AuthGuard],
         data: {pageTitle: 'Sessions'},
         loadChildren: () => import('./modules/sessions/sessions.module').then(m => m.SessionsModule)
       },
       {
         path: 'conversations',
+        canActivate: [AuthGuard],
         data: {pageTitle: 'Conversations'},
         loadChildren: () => import('./modules/conversations/conversations.module').then(m => m.ConversationsModule)
       },
       {
         path: 'client-conversation',
+        canActivate: [AuthGuard],
         data: {pageTitle: 'Client Conversations'},
         loadChildren: () => import('./modules/client-conversation/client-conversation.module').then(m => m.ClientConversationModule)
       }

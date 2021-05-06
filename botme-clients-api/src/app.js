@@ -1,4 +1,6 @@
 const express = require('express')
+const jwt = require('jsonwebtoken')
+const jwtKey = 'superSecretJWTKey'
 const clientsRouter = require('./routes/clientsRouter.js')
 const nlpRouter = require('./routes/nlpRouter.js')
 const entityRouter = require('./routes/entityRouter')
@@ -32,23 +34,21 @@ app.use('/entity', verifyToken, entityRouter);
 app.use('/corpus', verifyToken, corpusRouter);
 app.use('/session', verifyToken, sessionRouter);
 app.use('/conversation', verifyToken, conversationRouter);
-app.use('/auth', verifyToken, authRouter);
+app.use('/auth', authRouter);
 
 function verifyToken(req, res, next) {
-    const bearerHeader = req.headers['authorization'];
-    if (bearerHeader) {
-        const bearer = bearerHeader.split(' ');
-        const bearerToken = bearer[1];
-        if (bearerToken === 'ea2d3aeaad77865f9769974a920892f5') {
-            next();
-        } else {
-            // Forbidden
-            res.sendStatus(403);
-        }
-    } else {
-        // Forbidden
-        res.sendStatus(403);
-    }
+    let currentDate = new Date();
+    if (!req.headers.authorization) return res.status(401).send('Unauthorized')
+    let token = req.headers.authorization.split(' ')[1]
+
+    if (token === 'null') return res.status(401).send('Unauthorized')
+
+    if (!jwt.decode(token)) return res.status(401).send('Unauthorized. Invalid JWT Token')
+    let payload = jwt.verify(token, jwtKey)
+    if (!payload) return res.status(401).send('Unauthorized')
+    if (new Date(payload.expiresAt) < currentDate) return res.status(401).send('Unauthorized. Session Expired')
+    req.userId = payload.subject
+    next()
 }
 
 app.listen(port, () => {

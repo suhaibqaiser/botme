@@ -3,9 +3,15 @@ const Response = require("../models/response")
 const {v4: uuidv4} = require('uuid')
 const jwt = require('jsonwebtoken')
 const jwtKey = 'superSecretJWTKey'
+const minutesToAdd = 30;
+
 
 async function userLogin(req, res) {
+    let currentDate = new Date();
     let response = new Response()
+
+    let futureDate = new Date(currentDate.getTime() + minutesToAdd * 60000);
+    console.log(currentDate, futureDate)
 
     if (!req.body.username || !req.body.password) {
         response.payload = {message: 'Both username and password are required'};
@@ -19,11 +25,18 @@ async function userLogin(req, res) {
 
     if (user) {
         if (user.userSecret === userObject.password && user.userActive === true) {
-            let payload = {subject: user.userId}
+            let payload = {
+                subject: user.userId,
+                expiresAt: futureDate
+            }
             let token = jwt.sign(payload, jwtKey)
             user.userToken = token
             userService.updateUser(user)
-            response.payload = {loginToken: token}
+            response.payload = {
+                loginToken: token,
+                userId: user.userId,
+                userFullName: user.userFullName
+            }
             response.status = "success"
             return res.status(200).send(response)
         } else {
@@ -38,20 +51,18 @@ async function userLogin(req, res) {
     }
 }
 
-// Replace the existing static token validation function on app.js with the below function
 function verifyToken(req, res, next) {
+    let currentDate = new Date();
     if (!req.headers.authorization) return res.status(401).send('Unauthorized')
-
     let token = req.headers.authorization.split(' ')[1]
 
     if (token === 'null') return res.status(401).send('Unauthorized')
 
+    if (!jwt.decode(token)) return res.status(401).send('Unauthorized. Invalid JWT Token')
     let payload = jwt.verify(token, jwtKey)
-
     if (!payload) return res.status(401).send('Unauthorized')
-    req.userId = payload.subject
-    next()
-
+    if (new Date(payload.expiresAt) < currentDate) return res.status(401).send('Unauthorized. Session Expired')
+    return res.status(200).send()
 }
 
 module.exports = ({userLogin, verifyToken})

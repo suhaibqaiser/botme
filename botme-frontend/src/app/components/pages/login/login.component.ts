@@ -42,7 +42,6 @@ export class LoginComponent implements OnInit {
           this.loginToken = response.payload.loginToken
           localStorage.setItem('loginToken', this.loginToken)
           this.router.navigate(["/home"])
-          console.log(this.loginToken)
         }
 
       })
