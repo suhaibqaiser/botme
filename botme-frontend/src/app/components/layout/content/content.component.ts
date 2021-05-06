@@ -1,4 +1,8 @@
 import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
+import {map} from "rxjs/operators";
+import {Observable} from "rxjs";
+
 
 @Component({
   selector: 'app-content',
@@ -7,9 +11,13 @@ import {Component, OnInit} from '@angular/core';
 })
 export class ContentComponent implements OnInit {
 
-  pageTitle: string = '';
+  pageTitle: string;
 
-  ngOnInit(): void {
+  constructor(private router: Router, private actRouter: ActivatedRoute) {
+    this.pageTitle = this.router.routerState.snapshot.url.split('/')[1].toUpperCase()
   }
 
+  ngOnInit(): void {
+
+  }
 }
