@@ -38,8 +38,7 @@ export class AuthenticationService {
         if (error instanceof HttpErrorResponse) {
           if (error.status === 401) {
             console.log(status)
-            this.router.navigate(['/login'])
-            //this.userLogout()
+            this.userLogout()
             return false
           }
         }
@@ -51,6 +50,7 @@ export class AuthenticationService {
 
   userLogout(): void {
     localStorage.clear();
+    this.router.navigate(['/login'])
   }
 
   getToken(): string | null {
