@@ -14,16 +14,11 @@ export class ConversationService {
 
   apiBaseUrl = environment.apiBaseUrl;
 
-  headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: 'Bearer ' + environment.BearerToken
-  });
-
   getConversationList(sessionId: string ): Observable<any> {
     const url = `${this.apiBaseUrl}/conversation/list`;
     const params = new HttpParams()
       .set('sessionId', sessionId);
-    return this.http.get(url, {headers: this.headers, params});
+    return this.http.get(url, {params});
   }
 
 }

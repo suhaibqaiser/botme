@@ -15,6 +15,7 @@ export class AuthenticationService {
 
   headers = new HttpHeaders({
     'Content-Type': 'application/json',
+    'Request-Type': 'client',
     Authorization: 'Bearer ' + this.getToken()
   })
 
@@ -22,14 +23,14 @@ export class AuthenticationService {
   }
 
   userLogin(user: object): Observable<any> {
-    let body = user;
-    return this.http.post(this.loginUrl, body, {headers: this.headers});
+    return this.http.post(this.loginUrl, user, {headers: this.headers});
   }
 
   userLoggedIn(): boolean {
     let token = localStorage.getItem('loginToken')
     if (!token) return false
     if (token === '') return false
+
     this.http.get(this.verifyTokenUrl, {headers: this.headers}).subscribe(
       res => {
         return true

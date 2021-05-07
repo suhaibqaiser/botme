@@ -14,31 +14,27 @@ export class ClientService {
 
   apiBaseUrl = environment.apiBaseUrl;
 
-  headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: 'Bearer ' + environment.BearerToken
-  });
 
   getClients(): Observable<any> {
     const url = `${this.apiBaseUrl}/client/list`;
-    return this.http.get(url, {headers: this.headers});
+    return this.http.get(url);
   }
 
   getClientDetail(clientID: string): Observable<any> {
     const url = `${this.apiBaseUrl}/client/detail/?clientID=${clientID}`;
-    return this.http.get(url, {headers: this.headers});
+    return this.http.get(url);
   }
 
   registerClient(client: object): Observable<any> {
     const url = `${this.apiBaseUrl}/client/register`;
     const body = {client};
-    return this.http.put(url, body, {headers: this.headers});
+    return this.http.put(url, body);
   }
 
   updateClient(client: object): Observable<any> {
     console.log(client);
     const url = `${this.apiBaseUrl}/client/update`;
     const body = client;
-    return this.http.post(url, body, {headers: this.headers});
+    return this.http.post(url, body);
   }
 }

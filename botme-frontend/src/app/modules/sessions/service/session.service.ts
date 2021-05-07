@@ -13,19 +13,14 @@ export class SessionService {
 
   apiBaseUrl = environment.apiBaseUrl;
 
-  headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: 'Bearer ' + environment.BearerToken
-  })
-
   getSessionList(): Observable<any> {
     let url = `${this.apiBaseUrl}/session/list`;
-    return this.http.get(url, { headers: this.headers });
+    return this.http.get(url);
   }
 
   getClientDetail(sessionId?: string): Observable<any> {
     var url = `${this.apiBaseUrl}/session/detail`;
     var body = { sessionId: sessionId };
-    return this.http.post(url, body, { headers: this.headers });
+    return this.http.post(url, body);
   }
 }

@@ -38,17 +38,21 @@ app.use('/auth', authRouter);
 
 function verifyToken(req, res, next) {
     let currentDate = new Date();
-    if (!req.headers.authorization) return res.status(401).send('Unauthorized')
+    //if (!req.get('Request-Type')) return res.status(401).send('Unauthorized. Request type cannot be blank')
+    if (!req.headers.authorization) return res.status(401).send('Unauthorized. Authorization header cannot be blank')
     let token = req.headers.authorization.split(' ')[1]
-
-    if (token === 'null') return res.status(401).send('Unauthorized')
-
-    if (!jwt.decode(token)) return res.status(401).send('Unauthorized. Invalid JWT Token')
-    let payload = jwt.verify(token, jwtKey)
-    if (!payload) return res.status(401).send('Unauthorized')
-    if (new Date(payload.expiresAt) < currentDate) return res.status(401).send('Unauthorized. Session Expired')
-    req.userId = payload.subject
-    next()
+    if (token === 'null') return res.status(401).send('Unauthorized. Auth Token cannot be blank')
+    if (req.get('Request-Type') === 'client') {
+        if (!jwt.decode(token)) return res.status(401).send('Unauthorized. Invalid JWT Token')
+        let payload = jwt.verify(token, jwtKey)
+        if (!payload) return res.status(401).send('Unauthorized')
+        if (new Date(payload.expiresAt) < currentDate) return res.status(401).send('Unauthorized. Session Expired')
+        req.userId = payload.subject
+        next()
+    } else {
+        if (token != 'ea2d3aeaad77865f9769974a920892f5') return res.status(401).send('Unauthorized')
+        next()
+    }
 }
 
 app.listen(port, () => {
