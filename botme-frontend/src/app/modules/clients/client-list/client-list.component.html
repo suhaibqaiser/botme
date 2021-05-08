@@ -12,9 +12,9 @@
               <thead>
               <tr>
                 <th style="width: 10px">#</th>
+                <th>Client Name</th>
                 <th>Client ID</th>
                 <th>Client Device ID</th>
-                <th>Client Secret</th>
                 <th>Created</th>
                 <th>Comment</th>
                 <th style="width: 40px">Active</th>
@@ -27,9 +27,9 @@
                         [routerLink]="['/client/single']" [queryParams]="{ clientId: client.clientID}">View
                 </button>
                 <!--                                    <td>{{i}}</td>-->
+                <td>{{client.clientName}}</td>
                 <td>{{client.clientID}}</td>
                 <td>{{client.clientDeviceId}}</td>
-                <td>{{client.clientSecret}}</td>
                 <td>{{client.clientCreated}}</td>
                 <td>{{client.clientComment}}</td>
                 <td><span *ngIf="client.clientActive === true"
