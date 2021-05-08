@@ -11,16 +11,26 @@ import {FormBuilder} from '@angular/forms';
 })
 export class ClientSingleComponent implements OnInit {
 
-  constructor(private clientService: ClientService, private route: ActivatedRoute, private formBuilder: FormBuilder) {
+  constructor(private clientService: ClientService, private route: ActivatedRoute, private fb: FormBuilder) {
   }
 
-  updateClientForm = this.formBuilder.group({
-    'form-client-id': '',
-    'form-client-device-id': '',
-    'form-client-secret': ''
+  clientForm = this.fb.group({
+    formclientdeviceid: [''],
+    formclientsecret: [''],
+    formclientcomment: ['']
   });
+
   clientId = '';
-  client: IClient | undefined;
+  client: IClient = {
+    clientDeviceId: '',
+    clientID: '',
+    clientName: '',
+    clientSecret: '',
+    clientCreated: '',
+    clientUpdated: '',
+    clientActive: true,
+    clientComment: ''
+  };
 
   ngOnInit(): void {
     this.route.queryParams
@@ -32,12 +42,22 @@ export class ClientSingleComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.updateClient(this.client);
     console.log('Form Submitted');
   }
 
   getClientDetail(clientId: string): void {
     console.log(clientId);
-    this.clientService.getClientDetail(clientId).subscribe(result => this.client = result.payload);
+    this.clientService.getClientDetail(clientId).subscribe(
+      result => {
+        this.client = result.payload
+        this.clientForm.patchValue({
+          formclientdeviceid: this.client?.clientDeviceId,
+          formclientcomment: this.client?.clientComment,
+          formclientsecret: this.client?.clientSecret
+        })
+      }
+    );
   }
 
   updateClient(client: object): void {

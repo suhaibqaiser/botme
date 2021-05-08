@@ -4,22 +4,22 @@
   </div>
   <!-- /.card-header -->
   <div class="card-body">
-    <h4>{{client.clientID | uppercase}}</h4>
-    <form [formGroup]="updateClientForm" (ngSubmit)="onSubmit()">
+    <h4>{{client.clientName }}</h4>
+    <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="form-client-id">Client ID: </label>
         <input type="text" class="form-control form-control-border " id="form-client-id"
-               value="{{client.clientID}}" readonly="readonly" formControlName="form-client-id">
+               value="{{client.clientID}}" readonly="readonly">
       </div>
       <div class="form-group">
         <label for="form-client-device-id">Client Device ID: </label>
         <input type="text" class="form-control form-control-border" id="form-client-device-id"
-               value="{{client.clientDeviceId}}" formControlName="form-client-device-id">
+               formControlName="formclientdeviceid">
       </div>
       <div class="form-group">
         <label for="form-client-secret">Client Secret: </label>
         <input type="text" class="form-control form-control-border" id="form-client-secret"
-               value="{{client.clientSecret}}" formControlName="form-client-secret">
+               formControlName="formclientsecret">
       </div>
       <div class="form-group">
         <label for="form-client-created">Created: </label>
@@ -42,7 +42,7 @@
       <div class="form-group">
         <label for="form-client-comment">Comment: </label>
         <input type="text" class="form-control form-control-border" id="form-client-comment"
-               value="{{client.clientComment}}">
+                formControlName="formclientcomment">
       </div>
     </form>
     <div class="card-footer">
@@ -58,3 +58,4 @@
     }
 
   </script>
+</div>
