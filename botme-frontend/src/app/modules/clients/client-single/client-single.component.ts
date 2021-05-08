@@ -17,7 +17,9 @@ export class ClientSingleComponent implements OnInit {
   clientForm = this.fb.group({
     formclientdeviceid: [''],
     formclientsecret: [''],
-    formclientcomment: ['']
+    formclientcomment: [''],
+    formclientname: [''],
+    formclientactive: true
   });
 
   clientId = '';
@@ -37,13 +39,11 @@ export class ClientSingleComponent implements OnInit {
       .subscribe(params => {
         this.clientId = params.clientId;
       });
-
     this.getClientDetail(this.clientId);
   }
 
   onSubmit(): void {
     this.updateClient(this.client);
-    console.log('Form Submitted');
   }
 
   getClientDetail(clientId: string): void {
@@ -54,15 +54,23 @@ export class ClientSingleComponent implements OnInit {
         this.clientForm.patchValue({
           formclientdeviceid: this.client?.clientDeviceId,
           formclientcomment: this.client?.clientComment,
-          formclientsecret: this.client?.clientSecret
+          formclientsecret: this.client?.clientSecret,
+          formclientname: this.client.clientName,
+          formclientactive: this.client.clientActive
         })
       }
     );
   }
 
   updateClient(client: object): void {
+    this.client.clientSecret = this.clientForm.getRawValue().formclientsecret
+    this.client.clientDeviceId = this.clientForm.getRawValue().formclientdeviceid
+    this.client.clientComment = this.clientForm.getRawValue().formclientcomment
+    this.client.clientName= this.clientForm.getRawValue().formclientname
+    this.client.clientActive = this.clientForm.getRawValue().formclientactive
+
     this.clientService.updateClient(client)
-      .subscribe(result => console.log(result.payload));
+      .subscribe(result => this.client = result.payload);
   }
 
 }

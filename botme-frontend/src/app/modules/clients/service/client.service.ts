@@ -32,7 +32,7 @@ export class ClientService {
   }
 
   updateClient(client: object): Observable<any> {
-    console.log(client);
+    console.log(client)
     const url = `${this.apiBaseUrl}/client/update`;
     const body = client;
     return this.http.post(url, body);

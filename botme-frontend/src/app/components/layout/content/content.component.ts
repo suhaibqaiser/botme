@@ -18,6 +18,7 @@ export class ContentComponent implements OnInit {
   }
 
   getPageHeader(): String {
-    return this.router.routerState.snapshot.url.split('/')[1].toUpperCase();
+    let title = this.router.routerState.snapshot.url.split('/')[1]
+    return title.replace(title[0], title[0].toUpperCase());
   }
 }
