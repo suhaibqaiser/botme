@@ -1,8 +1,10 @@
-var express = require('express');
-var router = express.Router();
-var corpusController = require('../controllers/corpusController');
+let express = require('express');
+let router = express.Router();
+let corpusController = require('../controllers/corpusController');
 
 router.get('/list', corpusController.corpus_list);
-router.post('/add', corpusController.corpus_create);
+router.get('/detail', corpusController.corpus_detail);
+// router.get('/update', corpusController.corpus_update);
+router.put('/add', corpusController.corpus_create);
 
 module.exports = router;

@@ -51,6 +51,12 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {pageTitle: 'Client Conversations'},
         loadChildren: () => import('./modules/client-conversation/client-conversation.module').then(m => m.ClientConversationModule)
+      },
+      {
+        path: 'corpus',
+        canActivate: [AuthGuard],
+        data: {pageTitle: 'Corpus'},
+        loadChildren: () => import('./modules/corpus/corpus.module').then(m => m.CorpusModule)
       }
     ]
   }

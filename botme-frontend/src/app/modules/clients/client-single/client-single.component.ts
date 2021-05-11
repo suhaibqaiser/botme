@@ -24,16 +24,7 @@ export class ClientSingleComponent implements OnInit {
 
   formMode = 'update';
   clientId = '';
-  client: IClient = {
-    clientDeviceId: '',
-    clientID: '',
-    clientName: '',
-    clientSecret: '',
-    clientCreated: '',
-    clientUpdated: '',
-    clientActive: true,
-    clientComment: ''
-  };
+  client: IClient | any
 
   ngOnInit(): void {
     this.route.queryParams
