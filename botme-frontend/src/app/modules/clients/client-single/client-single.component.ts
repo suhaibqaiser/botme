@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {IClient} from '../model/client';
 import {ClientService} from '../service/client.service';
-import {FormBuilder} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-client-single',
@@ -15,13 +15,14 @@ export class ClientSingleComponent implements OnInit {
   }
 
   clientForm = this.fb.group({
-    formclientdeviceid: [''],
+    formclientdeviceid: ['', Validators.required],
     formclientsecret: [''],
     formclientcomment: [''],
-    formclientname: [''],
+    formclientname: ['', Validators.required],
     formclientactive: true
   });
 
+  formMode = 'update';
   clientId = '';
   client: IClient = {
     clientDeviceId: '',
@@ -39,15 +40,25 @@ export class ClientSingleComponent implements OnInit {
       .subscribe(params => {
         this.clientId = params.clientId;
       });
-    this.getClientDetail(this.clientId);
+    if (!this.clientId) {
+      this.formMode = 'new'
+    } else {
+      this.getClientDetail(this.clientId);
+    }
   }
 
   onSubmit(): void {
-    this.updateClient(this.client);
+    if (this.clientForm.invalid) {
+      return;
+    }
+    if (this.formMode === 'update') {
+      this.updateClient(this.client);
+    } else {
+      this.registerClient(this.client)
+    }
   }
 
   getClientDetail(clientId: string): void {
-    console.log(clientId);
     this.clientService.getClientDetail(clientId).subscribe(
       result => {
         this.client = result.payload
@@ -66,11 +77,23 @@ export class ClientSingleComponent implements OnInit {
     this.client.clientSecret = this.clientForm.getRawValue().formclientsecret
     this.client.clientDeviceId = this.clientForm.getRawValue().formclientdeviceid
     this.client.clientComment = this.clientForm.getRawValue().formclientcomment
-    this.client.clientName= this.clientForm.getRawValue().formclientname
+    this.client.clientName = this.clientForm.getRawValue().formclientname
     this.client.clientActive = this.clientForm.getRawValue().formclientactive
 
     this.clientService.updateClient(client)
       .subscribe(result => this.client = result.payload);
   }
 
+  registerClient(client: object): void {
+    this.client.clientDeviceId = this.clientForm.getRawValue().formclientdeviceid
+    this.client.clientComment = this.clientForm.getRawValue().formclientcomment
+    this.client.clientName = this.clientForm.getRawValue().formclientname
+    this.client.clientActive = this.clientForm.getRawValue().formclientactive
+
+    this.clientService.registerClient(client)
+      .subscribe(result => {
+        this.client = result.payload
+      })
+
+  }
 }

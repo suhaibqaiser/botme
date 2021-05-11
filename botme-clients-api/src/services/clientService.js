@@ -8,7 +8,7 @@ async function getClientDetail(clientID) {
     return Client.findOne({clientID: clientID}, {_id: 0, __v: 0})
 }
 
-async function createClient(client) {
+async function addClient(client) {
     let newClient = new Client(client)
     return await newClient.save()
 }
@@ -28,4 +28,4 @@ async function deleteClient(clientID) {
     return Client.findOneAndDelete({clientID: clientID})
 }
 
-module.exports = ({getClientList, getClientDetail, createClient, checkClientExists, updateClient, deleteClient})
+module.exports = ({getClientList, getClientDetail, addClient, checkClientExists, updateClient, deleteClient})
