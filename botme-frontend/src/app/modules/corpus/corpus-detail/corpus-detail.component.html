@@ -1,74 +1,138 @@
-<div class="card card-primary">
+<div class="card">
   <div class="card-header">
-    <h3 class="card-title">Client Details</h3>
+    <h3 class="card-title">
+      <i class="fas fa-brain mr-2"></i>
+      {{corpus.name}}
+    </h3>
   </div>
   <!-- /.card-header -->
-  <div class="card-body">
-    <h4>{{corpus.name}}</h4>
+  <div class="card-body row">
+    <div class="col-md-6">
+      <dl>
+        <dt>Corpus ID</dt>
+        <dd>{{corpus.corpusId}}</dd>
+        <dt>Locale</dt>
+        <dd>{{corpus.locale}}</dd>
+      </dl>
+    </div>
+    <div class="col-md-6">
+      <dl>
+        <dt>Comments</dt>
+        <dd>{{corpus.comment}}</dd>
+        <dt>Active</dt>
+        <dd>
+          <span *ngIf="corpus.active === true"
+                class="badge bg-success">Yes</span>
+          <span *ngIf="corpus.active === false"
+                class="badge bg-danger">No</span>
+          </dd>
+      </dl>
+    </div>
+  </div>
+  <!-- /.card-body -->
+</div>
+<!-- /.card -->
 
-    <form [formGroup]="corpusForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="form-client-id">Corpus Name: </label>
-        <input type="text" class="form-control form-control-border " id="form-client-name"
-               value="{{corpus.name}}" >
-<!--               formControlName="formclientname">-->
+<div class="row">
+  <div class="col-md-3">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Intentions</h3>
 
-      </div>
-      <div *ngIf="formMode==='update'" class="form-group">
-        <label for="form-client-id">Corpus ID: </label>
-        <input type="text" class="form-control form-control-border " id="form-client-id"
-               value="{{corpus.corpusId}}" readonly="readonly">
-      </div>
-      <div class="form-group">
-        <label for="form-client-device-id">Client Device ID: </label>
-        <input type="text" class="form-control form-control-border" id="form-client-device-id"
-               formControlName="formclientdeviceid">
-      </div>
-      <div *ngIf="formMode==='update'" class="form-group">
-        <label for="form-client-secret">Client Secret: </label>
-        <input type="text" class="form-control form-control-border" id="form-client-secret"
-               formControlName="formclientsecret">
-      </div>
-
-
-      <div class="form-group">
-        <label for="form-client-comment">Comment: </label>
-        <input type="text" class="form-control form-control-border" id="form-client-comment"
-               formControlName="formclientcomment">
-      </div>
-      <div class="form-group">
-        <label for="form-client-active">Active: </label>
-        <div class="custom-control custom-switch">
-          <input type="checkbox" class="custom-control-input" id="form-client-active"
-                 formControlName="formclientactive">
-          <label class="custom-control-label" for="form-client-active">Toggle this to mark active or inactive</label>
+        <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+          </button>
         </div>
       </div>
-      <div class="card-footer">
-        <button type="button" class="btn btn-secondary">Cancel</button>
-        <button type="submit" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">
-          Save
-        </button>
+      <div class="card-body p-0">
+        <ul class="nav nav-pills flex-column" *ngFor="let dat of corpus.data; let i = index">
+          <li class="nav-item active">
+            <a (click)="setIntent(i)" class="nav-link">
+              <i class="fas fa-inbox"></i> {{dat.intent}}
+              <span class="badge bg-primary float-right ml-2">{{dat.utterances.length}}</span>
+              <span class="badge bg-secondary float-right ml-2">{{dat.answers.length}}</span>
+            </a>
+          </li>
+        </ul>
       </div>
-    </form>
+      <!-- /.card-body -->
+    </div>
   </div>
-</div>
+  <div class="col-md-9">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">
+          <i class="fas fa-microphone-alt mr-2"></i>
+          Utterances
+        </h3>
+        <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+          </button>
+        </div>
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body">
+        <ul *ngFor="let utt of corpus.data[intent].utterances; let i = index">
+          <li>{{utt}}</li>
+        </ul>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <div class="col-md-3">
+<!--    <div class="card">-->
+<!--      <div class="card-header">-->
+<!--        <h3 class="card-title">Context</h3>-->
 
-<div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered " role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Action Processed</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+<!--        <div class="card-tools">-->
+<!--          <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>-->
+<!--          </button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="card-body p-0">-->
+<!--        <ul class="nav nav-pills flex-column" *ngFor="let context of this.contextData; let i = index">-->
+<!--          <li class="nav-item active">-->
+<!--            <a (click)="setIntent(i)" class="nav-link">-->
+<!--              <i class="fas fa-inbox"></i> {{context.zone}}-->
+<!--&lt;!&ndash;              <span class="badge bg-primary float-right ml-2">{{dat.utterances.length}}</span>&ndash;&gt;-->
+<!--&lt;!&ndash;              <span class="badge bg-secondary float-right ml-2">{{dat.answers.length}}</span>&ndash;&gt;-->
+<!--            </a>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </div>-->
+<!--      &lt;!&ndash; /.card-body &ndash;&gt;-->
+<!--    </div>-->
+  </div>
+  <div class="col-md-9">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">
+          <i class="fas fa-comment-dots mr-2"></i>
+          Answers
+        </h3>
+        <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+          </button>
+        </div>
       </div>
-      <div class="modal-body">
-        Changes saved!
+      <!-- /.card-header -->
+      <div class="card-body">
+        <ul *ngFor="let ans of corpus.data[intent].answers; let i = index">
+          <li>
+            <b>Answer: </b>
+            {{ans.answer}}
+          </li>
+          <ul *ngIf="ans.opts.length > 0">
+            <li>
+              <strong>Option: </strong>
+              <code>{{ans.opts}}</code>
+            </li>
+
+          </ul>
+        </ul>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
+      <!-- /.card-body -->
     </div>
   </div>
 </div>

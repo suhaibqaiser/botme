@@ -24,8 +24,15 @@ export class CorpusDetailComponent implements OnInit {
 
   corpusId = ''
   formMode = 'update'
+  intent = 0
+  contextData = [{
+    zone:'',
+    steps:''
+  }]
 
-  corpus: Corpus = {
+
+  corpus: Corpus
+    = {
     corpusId: '',
     active: true,
     comment: '',
@@ -33,7 +40,7 @@ export class CorpusDetailComponent implements OnInit {
     locale: '',
     data: [{
       intent: '',
-      utterance: [''],
+      utterances: [''],
       answers: [{
         answer: '',
         opts: ''
@@ -52,9 +59,9 @@ export class CorpusDetailComponent implements OnInit {
       this.formMode = 'new'
     } else {
       this.getCorpusDetails(this.corpusId)
-
-      console.log(this.corpus)
     }
+
+
   }
 
   onSubmit(): void {
@@ -63,9 +70,23 @@ export class CorpusDetailComponent implements OnInit {
   getCorpusDetails(corpusId: string): void {
     this.corpusService.getCorpusDetail(corpusId)
       .subscribe(result => {
-          this.corpus = result.payload
+          this.corpus = result.payload.corpus
+          //console.log(this.corpus)
+
+          // let cd = this.corpus.contextData
+          // for (let key in cd) {
+          //   if (cd.hasOwnProperty(key)) {
+          //     this.contextData.push(cd[key])
+          //   }
+          //
+          // }
+          // console.log(this.contextData)
+
         }
       )
+  }
 
+  setIntent(intent: number) {
+    this.intent = intent
   }
 }
