@@ -4,8 +4,11 @@ let Schema = mongoose.Schema;
 
 let CorpusSchema = new Schema(
     {
-        name: {type: String},
-        locale: {type: String},
+        corpusId: {type: String, unique: true, index: true},
+        active: {type: Boolean, required: true},
+        comment: String,
+        name: String,
+        locale: String,
         data: [{
             type: Object, properties: {
                 intent: {type: String},
