@@ -6,7 +6,7 @@ export interface Corpus {
   locale: String,
   data: [{
     intent: String,
-    utterances: [String],
+    utterances: Array<any>,
     answers: [{
       answer: string,
       opts: String

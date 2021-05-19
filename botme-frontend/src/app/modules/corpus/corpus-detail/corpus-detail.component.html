@@ -4,6 +4,9 @@
       <i class="fas fa-brain mr-2"></i>
       {{corpus.name}}
     </h3>
+    <div class="card-tools">
+      <button type="button" class="btn btn-outline-primary">Save Changes</button>
+    </div>
   </div>
   <!-- /.card-header -->
   <div class="card-body row">
@@ -25,7 +28,7 @@
                 class="badge bg-success">Yes</span>
           <span *ngIf="corpus.active === false"
                 class="badge bg-danger">No</span>
-          </dd>
+        </dd>
       </dl>
     </div>
   </div>
@@ -66,43 +69,56 @@
           Utterances
         </h3>
         <div class="card-tools">
+          <button type="button" class="btn btn-tool" (click)="addNewUtterance()"><i class="fas fa-plus-square"></i> Add New</button>
           <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
           </button>
         </div>
       </div>
       <!-- /.card-header -->
       <div class="card-body">
-        <ul *ngFor="let utt of corpus.data[intent].utterances; let i = index">
-          <li>{{utt}}</li>
-        </ul>
+        <gui-grid #utterance [columns]="columns"
+                  [source]="source"
+                  [cellEditing]="true"
+                  [rowSelection]="true"
+                  [theme]="'FABRIC'"
+                  [horizontalGrid]="horizontalGrid"
+                  [verticalGrid]="verticalGrid"
+                  [rowColoring]="rowColoring"
+                  [loading]="gridLoading"
+                  [paging]="paging"
+                  (cellEditEntered)="setformEdited(true)"
+                  (cellEditSubmitted)="setformEdited(false)"
+                  (sourceEdited)="onSubmit()"
+                  (itemsSelected)="onItemSelected($event)">
+        </gui-grid>
       </div>
       <!-- /.card-body -->
     </div>
     <!-- /.card -->
   </div>
   <div class="col-md-3">
-<!--    <div class="card">-->
-<!--      <div class="card-header">-->
-<!--        <h3 class="card-title">Context</h3>-->
+    <!--    <div class="card">-->
+    <!--      <div class="card-header">-->
+    <!--        <h3 class="card-title">Context</h3>-->
 
-<!--        <div class="card-tools">-->
-<!--          <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>-->
-<!--          </button>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="card-body p-0">-->
-<!--        <ul class="nav nav-pills flex-column" *ngFor="let context of this.contextData; let i = index">-->
-<!--          <li class="nav-item active">-->
-<!--            <a (click)="setIntent(i)" class="nav-link">-->
-<!--              <i class="fas fa-inbox"></i> {{context.zone}}-->
-<!--&lt;!&ndash;              <span class="badge bg-primary float-right ml-2">{{dat.utterances.length}}</span>&ndash;&gt;-->
-<!--&lt;!&ndash;              <span class="badge bg-secondary float-right ml-2">{{dat.answers.length}}</span>&ndash;&gt;-->
-<!--            </a>-->
-<!--          </li>-->
-<!--        </ul>-->
-<!--      </div>-->
-<!--      &lt;!&ndash; /.card-body &ndash;&gt;-->
-<!--    </div>-->
+    <!--        <div class="card-tools">-->
+    <!--          <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>-->
+    <!--          </button>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--      <div class="card-body p-0">-->
+    <!--        <ul class="nav nav-pills flex-column" *ngFor="let context of this.contextData; let i = index">-->
+    <!--          <li class="nav-item active">-->
+    <!--            <a (click)="setIntent(i)" class="nav-link">-->
+    <!--              <i class="fas fa-inbox"></i> {{context.zone}}-->
+    <!--&lt;!&ndash;              <span class="badge bg-primary float-right ml-2">{{dat.utterances.length}}</span>&ndash;&gt;-->
+    <!--&lt;!&ndash;              <span class="badge bg-secondary float-right ml-2">{{dat.answers.length}}</span>&ndash;&gt;-->
+    <!--            </a>-->
+    <!--          </li>-->
+    <!--        </ul>-->
+    <!--      </div>-->
+    <!--      &lt;!&ndash; /.card-body &ndash;&gt;-->
+    <!--    </div>-->
   </div>
   <div class="col-md-9">
     <div class="card">

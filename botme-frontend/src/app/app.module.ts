@@ -14,6 +14,7 @@ import {LoginComponent} from './components/pages/login/login.component';
 import {AuthGuard} from "./auth.guard";
 import {WrapperComponent} from './components/layout/wrapper/wrapper.component';
 import {FormsModule} from "@angular/forms";
+import { GuiGridModule } from '@generic-ui/ngx-grid';
 import {TokenInterceptorService} from "./services/token-interceptor.service";
 
 
@@ -33,7 +34,8 @@ import {TokenInterceptorService} from "./services/token-interceptor.service";
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    GuiGridModule
   ],
   providers: [Title, AuthGuard,{
     provide: HTTP_INTERCEPTORS,

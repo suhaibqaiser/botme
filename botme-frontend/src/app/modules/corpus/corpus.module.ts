@@ -4,6 +4,7 @@ import { CorpusListComponent } from './corpus-list/corpus-list.component';
 import { CorpusDetailComponent } from './corpus-detail/corpus-detail.component';
 import {CorpusRoutingModule} from "./corpus-routing.module";
 import {ReactiveFormsModule} from "@angular/forms";
+import {GuiGridModule} from "@generic-ui/ngx-grid";
 
 
 
@@ -12,10 +13,11 @@ import {ReactiveFormsModule} from "@angular/forms";
     CorpusListComponent,
     CorpusDetailComponent
   ],
-  imports: [
-    CommonModule,
-    CorpusRoutingModule,
-    ReactiveFormsModule
-  ]
+    imports: [
+        CommonModule,
+        CorpusRoutingModule,
+        ReactiveFormsModule,
+        GuiGridModule
+    ]
 })
 export class CorpusModule { }

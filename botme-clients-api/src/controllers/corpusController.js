@@ -18,6 +18,14 @@ async function corpus_list(req, res) {
     }
 }
 
+function convertArrayToObject(array, key) {
+    let arr = []
+    for (let i = 0; i < array.length; i++) {
+        arr.push({[key]: array[i]})
+    }
+    return arr
+};
+
 async function corpus_detail(req, res) {
     let response = new Response()
 
@@ -25,9 +33,12 @@ async function corpus_detail(req, res) {
         response.payload = {message: 'corpusId is required'};
         return res.status(400).send(response);
     }
-    let corpus = await corpusService.getCorpusDetail(req.query.corpusId)
+    let corpus = Corpus(await corpusService.getCorpusDetail(req.query.corpusId))
 
     if (corpus) {
+        for (let i = 0; i < corpus.data.length; i++) {
+            corpus.data[i].utterances = convertArrayToObject(corpus.data[i].utterances, 'phrase')
+        }
         response.payload = {corpus}
         response.status = "success"
         return res.status(200).send(response)
