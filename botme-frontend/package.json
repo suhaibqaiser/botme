@@ -12,6 +12,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^11.2.14",
+    "@angular/cdk": "^12.0.1",
     "@angular/common": "^11.2.14",
     "@angular/compiler": "^11.2.14",
     "@angular/core": "^11.2.14",
@@ -22,8 +23,11 @@
     "@generic-ui/fabric": "^0.13.0",
     "@generic-ui/hermes": "^0.13.0",
     "@generic-ui/ngx-grid": "^0.13.0",
+    "@ng-bootstrap/ng-bootstrap": "^9.1.1",
     "admin-lte": "^3.0.5",
     "element-resize-detector": "^1.1.14",
+    "primeicons": "^4.1.0",
+    "primeng": "^11.4.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"

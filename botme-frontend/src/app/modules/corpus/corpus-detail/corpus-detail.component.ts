@@ -1,31 +1,37 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {FormBuilder} from "@angular/forms";
 import {CorpusService} from "../service/corpus.service";
 import {Corpus} from "../model/corpus";
 import {
   GuiColumn,
-  GuiColumnAlign, GuiColumnCellEditing,
-  GuiGridApi,
+  GuiColumnAlign,
   GuiGridComponent,
   GuiPaging,
   GuiPagingDisplay,
   GuiRowColoring
 } from "@generic-ui/ngx-grid";
-import {GuiGridColumnCellEditingConverter} from "@generic-ui/ngx-grid/gui/grid/feature/grid/column/cell-editing/gui.grid.column-cell-editing.converter";
+import {ConfirmationService, ConfirmEventType, MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-corpus-detail',
   templateUrl: './corpus-detail.component.html',
   styleUrls: ['./corpus-detail.component.css']
 })
-export class CorpusDetailComponent implements OnInit, AfterViewInit {
+export class CorpusDetailComponent implements OnInit {
 
-  constructor(private corpusService: CorpusService, private route: ActivatedRoute, private fb: FormBuilder) {
+  constructor(private corpusService: CorpusService,
+              private route: ActivatedRoute,
+              private messageService: MessageService,
+              private confirmationService: ConfirmationService
+  ) {
   }
 
   @ViewChild('utterance', {static: true})
   gridComponent: GuiGridComponent | any
+  selectedIntent: any
+  submitted: boolean = false;
+  statuses!: any[];
+
 
   corpusId = ''
   formMode = 'update'
@@ -87,6 +93,13 @@ export class CorpusDetailComponent implements OnInit, AfterViewInit {
     } else {
       this.getCorpusDetails(this.corpusId)
     }
+
+    this.statuses = [
+      {label: 'INSTOCK', value: 'instock'},
+      {label: 'LOWSTOCK', value: 'lowstock'},
+      {label: 'OUTOFSTOCK', value: 'outofstock'}
+    ];
+
   }
 
   onSubmit(): void {
@@ -135,12 +148,56 @@ export class CorpusDetailComponent implements OnInit, AfterViewInit {
     this.gridLoading = false
   }
 
-  ngAfterViewInit(): void {
-    const api: GuiGridApi = this.gridComponent.api;
-    api.scrollToRowByIndex(1)
-  }
 
   onItemSelected(phrases: Array<any>) {
     this.selectedRow = phrases[0].id
+    this.messageService.add({severity: 'info', summary: 'Selected Row', detail: this.selectedRow.toString()});
   }
+
+  addNewIntent(val: string) {
+    this.corpus.data.push({
+      intent: val,
+      utterances: [],
+      answers: [{
+        answer: '',
+        opts: ''
+      }]
+    })
+  }
+
+  deleteIntent() {
+    this.confirmationService.confirm({
+      message: 'Do you want to delete this record?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.messageService.add({severity:'info', summary:'Confirmed', detail:'Record deleted'});
+        this.corpus.data.splice(this.intent,1)
+      },
+      reject: (type: any) => {
+        switch(type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({severity:'error', summary:'Rejected', detail:'You have rejected'});
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({severity:'warn', summary:'Cancelled', detail:'You have cancelled'});
+            break;
+        }
+      }
+    });
+
+  }
+
+  onRowSelect(event: any) {
+    this.messageService.add({severity: 'info', summary: 'Intent Selected', detail: event.data});
+    for (let i = 0; i < this.corpus.data.length; i++) {
+      if (event.data === this.corpus.data[i].intent)
+      this.setIntent(i)
+    }
+  }
+
+  onRowUnselect(event: any) {
+    this.messageService.add({severity: 'info', summary: 'Product Unselected', detail: event.data});
+  }
+
 }
