@@ -51,7 +51,7 @@
       </div>
       <div class="card-body p-0">
         <p-table [value]="corpus.data" selectionMode="single" [(selection)]="selectedIntent"
-                 (onRowSelect)="onRowSelect($event)" >
+                 (onRowSelect)="onRowSelect($event)">
           <ng-template pTemplate="header">
             <tr>
               <th>Intent</th>
@@ -98,104 +98,176 @@
         </div>
       </div>
       <!-- /.card-header -->
-      <p-fieldset legend="Header">
-        <div class="card-body">
+      <div class="card-body p-0">
+        <p-table [value]="corpus.data[intent].utterances" editMode="row" dataKey="id"
+                 selectionMode="single" [(selection)]="selectedUtterance"
+                 (onRowSelect)="onItemSelected($event)">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Phrase</th>
+              <th style="width:8rem">Action</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-utterance let-editing="editing" let-ri="rowIndex">
+            <tr [pEditableRow]="utterance" [pSelectableRow]="utterance">
+              <td>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <input pInputText type="text" [(ngModel)]="utterance.phrase" style="width: 100%">
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{utterance.phrase}}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+              <td style="text-align:center">
+                <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+                        (click)="onRowEditInit(utterance)" class="p-button-rounded p-button-text"></button>
 
-          <gui-grid #utterance [columns]="columns"
-                    [source]="source"
-                    [cellEditing]="true"
-                    [rowSelection]="true"
-                    [theme]="'FABRIC'"
-                    [horizontalGrid]="horizontalGrid"
-                    [verticalGrid]="verticalGrid"
-                    [rowColoring]="rowColoring"
-                    [loading]="gridLoading"
-                    [paging]="paging"
-                    (cellEditEntered)="setformEdited(true)"
-                    (cellEditSubmitted)="setformEdited(false)"
-                    (sourceEdited)="onSubmit()"
-                    (itemsSelected)="onItemSelected($event)">
-          </gui-grid>
+                <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"
+                        (click)="deleteUtterance(utterance)"
+                        class="p-button-rounded p-button-text p-button-danger"></button>
+
+                <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                        (click)="onRowEditSave(utterance)"
+                        class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
+                <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+                        (click)="onRowEditCancel(utterance, ri)"
+                        class="p-button-rounded p-button-text p-button-danger"></button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+        <!-- card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+    <div class="col-md-3">
+      <!--    <div class="card">-->
+      <!--      <div class="card-header">-->
+      <!--        <h3 class="card-title">Context</h3>-->
+
+      <!--        <div class="card-tools">-->
+      <!--          <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>-->
+      <!--          </button>-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <!--      <div class="card-body p-0">-->
+      <!--        <ul class="nav nav-pills flex-column" *ngFor="let context of this.contextData; let i = index">-->
+      <!--          <li class="nav-item active">-->
+      <!--            <a (click)="setIntent(i)" class="nav-link">-->
+      <!--              <i class="fas fa-inbox"></i> {{context.zone}}-->
+      <!--&lt;!&ndash;              <span class="badge bg-primary float-right ml-2">{{dat.utterances.length}}</span>&ndash;&gt;-->
+      <!--&lt;!&ndash;              <span class="badge bg-secondary float-right ml-2">{{dat.answers.length}}</span>&ndash;&gt;-->
+      <!--            </a>-->
+      <!--          </li>-->
+      <!--        </ul>-->
+      <!--      </div>-->
+      <!--      &lt;!&ndash; /.card-body &ndash;&gt;-->
+      <!--    </div>-->
+    </div>
+    <div class="col-md-9">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <i class="fas fa-comment-dots mr-2"></i>
+            Answers
+          </h3>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+            </button>
+          </div>
         </div>
-      </p-fieldset>
-      <!-- /.card-body -->
-    </div>
-    <!-- /.card -->
-  </div>
-  <div class="col-md-3">
-    <!--    <div class="card">-->
-    <!--      <div class="card-header">-->
-    <!--        <h3 class="card-title">Context</h3>-->
+        <!-- /.card-header -->
+        <div class="card-body p-0">
+          <p-table [value]="corpus.data[intent].answers" editMode="row"
+                   selectionMode="single" [(selection)]="selectedAnswer"
+                   (onRowSelect)="onItemSelected($event)">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Answer</th>
+                <th>Condition</th>
+                <th style="width:8rem">Action</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-answer let-editing="editing" let-ri="rowIndex">
+              <tr [pEditableRow]="answer.answer" [pSelectableRow]="answer">
+                <td>
+                  <p-cellEditor>
+                    <ng-template pTemplate="input">
+                      <input pInputText type="text" [(ngModel)]="answer.answer" style="width: 100%">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                      {{answer.answer}}
+                    </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td>
+                  <p-cellEditor>
+                    <ng-template pTemplate="input">
+                      <input pInputText type="text" [(ngModel)]="answer.opts" style="width: 100%">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                      {{answer.opts}}
+                    </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td style="text-align:center">
+                  <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+                          (click)="onRowEditInit(answer)" class="p-button-rounded p-button-text"></button>
 
-    <!--        <div class="card-tools">-->
-    <!--          <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>-->
-    <!--          </button>-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--      <div class="card-body p-0">-->
-    <!--        <ul class="nav nav-pills flex-column" *ngFor="let context of this.contextData; let i = index">-->
-    <!--          <li class="nav-item active">-->
-    <!--            <a (click)="setIntent(i)" class="nav-link">-->
-    <!--              <i class="fas fa-inbox"></i> {{context.zone}}-->
-    <!--&lt;!&ndash;              <span class="badge bg-primary float-right ml-2">{{dat.utterances.length}}</span>&ndash;&gt;-->
-    <!--&lt;!&ndash;              <span class="badge bg-secondary float-right ml-2">{{dat.answers.length}}</span>&ndash;&gt;-->
-    <!--            </a>-->
-    <!--          </li>-->
-    <!--        </ul>-->
-    <!--      </div>-->
-    <!--      &lt;!&ndash; /.card-body &ndash;&gt;-->
-    <!--    </div>-->
-  </div>
-  <div class="col-md-9">
-    <div class="card">
-      <div class="card-header">
-        <h3 class="card-title">
-          <i class="fas fa-comment-dots mr-2"></i>
-          Answers
-        </h3>
-        <div class="card-tools">
-          <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-          </button>
+                  <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"
+                          (click)="deleteUtterance(answer)"
+                          class="p-button-rounded p-button-text p-button-danger"></button>
+
+                  <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                          (click)="onRowEditSave(answer)"
+                          class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
+                  <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+                          (click)="onRowEditCancel(answer, ri)"
+                          class="p-button-rounded p-button-text p-button-danger"></button>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+          <!--          <ul *ngFor="let ans of corpus.data[intent].answers; let i = index">-->
+          <!--            <li>-->
+          <!--              <b>Answer: </b>-->
+          <!--              {{ans.answer}}-->
+          <!--            </li>-->
+          <!--            <ul *ngIf="ans.opts.length > 0">-->
+          <!--              <li>-->
+          <!--                <strong>Option: </strong>-->
+          <!--                <code>{{ans.opts}}</code>-->
+          <!--              </li>-->
+
+          <!--            </ul>-->
+          <!--          </ul>-->
+          <!--        </div>-->
+          <!-- /.card-body -->
         </div>
       </div>
-      <!-- /.card-header -->
-      <div class="card-body">
-        <ul *ngFor="let ans of corpus.data[intent].answers; let i = index">
-          <li>
-            <b>Answer: </b>
-            {{ans.answer}}
-          </li>
-          <ul *ngIf="ans.opts.length > 0">
-            <li>
-              <strong>Option: </strong>
-              <code>{{ans.opts}}</code>
-            </li>
-
-          </ul>
-        </ul>
-      </div>
-      <!-- /.card-body -->
     </div>
-  </div>
-</div>
 
-<div class="modal" id="intentModal" tabindex="-1" role="dialog" aria-labelledby="intentModalTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="intentModalTitle">New Intent</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Intent Identifier <input type="text" #newIntent/>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addNewIntent(newIntent.value)">Add
-        </button>
+    <div class="modal" id="intentModal" tabindex="-1" role="dialog" aria-labelledby="intentModalTitle"
+         aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="intentModalTitle">New Intent</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Intent Identifier <input type="text" #newIntent/>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addNewIntent(newIntent.value)">
+              Add
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>

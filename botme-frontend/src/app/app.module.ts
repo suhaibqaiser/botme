@@ -14,7 +14,6 @@ import {LoginComponent} from './components/pages/login/login.component';
 import {AuthGuard} from "./auth.guard";
 import {WrapperComponent} from './components/layout/wrapper/wrapper.component';
 import {FormsModule} from "@angular/forms";
-import {GuiGridModule} from '@generic-ui/ngx-grid';
 import {TokenInterceptorService} from "./services/token-interceptor.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastModule} from 'primeng/toast';
@@ -43,13 +42,13 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    GuiGridModule,
     ToastModule,
     MessagesModule,
     MessageModule,
     TableModule,
     FieldsetModule,
     ConfirmDialogModule,
+
   ],
   providers: [Title, AuthGuard, {
     provide: HTTP_INTERCEPTORS,

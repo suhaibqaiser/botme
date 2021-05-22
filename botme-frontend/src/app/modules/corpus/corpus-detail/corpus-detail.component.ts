@@ -1,15 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {CorpusService} from "../service/corpus.service";
 import {Corpus} from "../model/corpus";
-import {
-  GuiColumn,
-  GuiColumnAlign,
-  GuiGridComponent,
-  GuiPaging,
-  GuiPagingDisplay,
-  GuiRowColoring
-} from "@generic-ui/ngx-grid";
 import {ConfirmationService, ConfirmEventType, MessageService} from "primeng/api";
 
 @Component({
@@ -26,12 +18,12 @@ export class CorpusDetailComponent implements OnInit {
   ) {
   }
 
-  @ViewChild('utterance', {static: true})
-  gridComponent: GuiGridComponent | any
   selectedIntent: any
+  selectedUtterance: any
+  selectedAnswer: any
   submitted: boolean = false;
   statuses!: any[];
-
+  source: any
 
   corpusId = ''
   formMode = 'update'
@@ -55,30 +47,6 @@ export class CorpusDetailComponent implements OnInit {
     contextData: {}
   }
 
-  columns: Array<GuiColumn> = [{
-    header: '#',
-    field: 'id',
-    width: 40,
-    align: GuiColumnAlign.CENTER
-  }, {
-    header: 'Phrases',
-    field: 'phrase'
-  }];
-  source: Array<any> = []
-  rowColoring: GuiRowColoring = GuiRowColoring.ODD
-
-  horizontalGrid: boolean = true
-  verticalGrid: boolean = true
-  gridLoading: boolean = true
-  paging: GuiPaging = {
-    enabled: true,
-    page: 1,
-    pageSize: 10,
-    pageSizes: [10, 25, 50],
-    pagerTop: false,
-    pagerBottom: true,
-    display: GuiPagingDisplay.ADVANCED
-  }
   selectedRow: number = 0
 
 
@@ -111,7 +79,7 @@ export class CorpusDetailComponent implements OnInit {
       .subscribe(result => {
         this.corpus = result.payload.corpus
         this.setIntent(0)
-        this.gridLoading = false
+
       })
   }
 
@@ -142,16 +110,37 @@ export class CorpusDetailComponent implements OnInit {
   }
 
   addNewUtterance() {
-    this.gridLoading = true
     this.corpus.data[this.intent].utterances.push({phrase: ''})
     this.setSource(this.intent)
-    this.gridLoading = false
+
+  }
+
+  deleteUtterance(utterance: any) {
+    this.confirmationService.confirm({
+      message: 'Do you want to delete this record?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.corpus.data[this.intent].utterances.splice(utterance.id, 1)
+        this.messageService.add({severity: 'info', summary: 'Confirmed', detail: 'Record deleted'});
+      },
+      reject: (type: any) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({severity: 'error', summary: 'Rejected', detail: 'You have rejected'});
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled'});
+            break;
+        }
+      }
+    });
   }
 
 
-  onItemSelected(phrases: Array<any>) {
-    this.selectedRow = phrases[0].id
-    this.messageService.add({severity: 'info', summary: 'Selected Row', detail: this.selectedRow.toString()});
+  onItemSelected(selection: any) {
+    this.messageService.add({severity: 'info', summary: 'Selected Row', detail: JSON.stringify(selection.data)});
+    //console.log(this.selectedUtterance)
   }
 
   addNewIntent(val: string) {
@@ -171,16 +160,16 @@ export class CorpusDetailComponent implements OnInit {
       header: 'Delete Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
-        this.messageService.add({severity:'info', summary:'Confirmed', detail:'Record deleted'});
-        this.corpus.data.splice(this.intent,1)
+        this.corpus.data.splice(this.intent, 1)
+        this.messageService.add({severity: 'info', summary: 'Confirmed', detail: 'Record deleted'});
       },
       reject: (type: any) => {
-        switch(type) {
+        switch (type) {
           case ConfirmEventType.REJECT:
-            this.messageService.add({severity:'error', summary:'Rejected', detail:'You have rejected'});
+            this.messageService.add({severity: 'error', summary: 'Rejected', detail: 'You have rejected'});
             break;
           case ConfirmEventType.CANCEL:
-            this.messageService.add({severity:'warn', summary:'Cancelled', detail:'You have cancelled'});
+            this.messageService.add({severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled'});
             break;
         }
       }
@@ -192,12 +181,24 @@ export class CorpusDetailComponent implements OnInit {
     this.messageService.add({severity: 'info', summary: 'Intent Selected', detail: event.data});
     for (let i = 0; i < this.corpus.data.length; i++) {
       if (event.data === this.corpus.data[i].intent)
-      this.setIntent(i)
+        this.setIntent(i)
     }
   }
 
-  onRowUnselect(event: any) {
-    this.messageService.add({severity: 'info', summary: 'Product Unselected', detail: event.data});
+  clonedProducts: { [s: string]: any } = {};
+
+  onRowEditInit(product: any) {
+    this.clonedProducts[product.id] = {...product};
   }
 
+  onRowEditSave(product: any) {
+
+    this.messageService.add({severity: 'success', summary: 'Success', detail: 'Utterance is updated'});
+
+  }
+
+  onRowEditCancel(product: any, index: number) {
+    this.corpus.data[this.intent].utterances[index] = this.clonedProducts[product.id];
+    delete this.clonedProducts[product.id];
+  }
 }
