@@ -22,4 +22,9 @@ export class CorpusService {
     const url = `${this.apiBaseUrl}/corpus/detail?corpusId=${corpusId}`
     return this.http.get(url);
   }
+
+  updateCorpus(corpus: any): Observable<any> {
+    const url = `${this.apiBaseUrl}/corpus/update`
+    return this.http.post(url, corpus);
+  }
 }

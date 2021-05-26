@@ -1,11 +1,11 @@
 const Corpus = require('../models/corpus')
 
 function getCorpusList() {
-    return Corpus.find({}, {data: 0, contextData: 0, _id: 0, "__v": 0},)
+    return Corpus.find({}, {data: 0, contextData: 0, "_id": 0, "__v": 0},)
 }
 
 function getCorpusDetail(corpusId) {
-    return Corpus.findOne({corpusId: corpusId}, {_id: 0, "__v": 0})
+    return Corpus.findOne({corpusId: corpusId}, {"_id": false, "__v": 0})
 }
 
 function addCorpus(corpus) {
@@ -13,4 +13,13 @@ function addCorpus(corpus) {
     return corp.save()
 }
 
-module.exports = ({getCorpusDetail, getCorpusList, addCorpus})
+function updateCorpus(corpus) {
+    console.log(corpus)
+    let corpusId = corpus.corpusId
+    return Corpus.findOneAndUpdate({corpusId: corpusId}, corpus, {
+        "new": true
+    })
+
+}
+
+module.exports = ({getCorpusDetail, getCorpusList, addCorpus, updateCorpus})

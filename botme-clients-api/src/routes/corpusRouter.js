@@ -4,7 +4,7 @@ let corpusController = require('../controllers/corpusController');
 
 router.get('/list', corpusController.corpus_list);
 router.get('/detail', corpusController.corpus_detail);
-// router.get('/update', corpusController.corpus_update);
+router.post('/update', corpusController.corpus_update);
 router.put('/add', corpusController.corpus_create);
 
 module.exports = router;
