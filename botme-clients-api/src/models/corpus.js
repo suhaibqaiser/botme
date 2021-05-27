@@ -6,13 +6,13 @@ let CorpusSchema = new Schema(
     {
         corpusId: {type: String, unique: true, index: true},
         active: {type: Boolean, required: true},
-        comment: String,
-        name: String,
-        locale: String,
+        comment: {type: String},
+        name: {type: String},
+        locale: {type: String},
         data: [{
             type: Object, properties: {
                 intent: {type: String},
-                utterance: [String],
+                utterance: [{type: String}],
                 answers: [{
                     answer: {type: String},
                     opts: {type: String}

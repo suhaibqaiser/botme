@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule, Title} from '@angular/platform-browser';
-import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http'
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -15,7 +15,14 @@ import {AuthGuard} from "./auth.guard";
 import {WrapperComponent} from './components/layout/wrapper/wrapper.component';
 import {FormsModule} from "@angular/forms";
 import {TokenInterceptorService} from "./services/token-interceptor.service";
-
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ToastModule} from 'primeng/toast';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+import {ConfirmationService, MessageService} from "primeng/api";
+import {TableModule} from "primeng/table";
+import {FieldsetModule} from 'primeng/fieldset';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
@@ -31,15 +38,23 @@ import {TokenInterceptorService} from "./services/token-interceptor.service";
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ToastModule,
+    MessagesModule,
+    MessageModule,
+    TableModule,
+    FieldsetModule,
+    ConfirmDialogModule,
+
   ],
-  providers: [Title, AuthGuard,{
+  providers: [Title, AuthGuard, {
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService,
-    multi:true
-  }],
+    multi: true
+  }, MessageService, ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

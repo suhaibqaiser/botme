@@ -4,6 +4,9 @@
       <i class="fas fa-brain mr-2"></i>
       {{corpus.name}}
     </h3>
+    <div class="card-tools">
+      <button type="button" class="btn btn-outline-primary" (click)="saveChanges()">Save Changes</button>
+    </div>
   </div>
   <!-- /.card-header -->
   <div class="card-body row">
@@ -25,7 +28,7 @@
                 class="badge bg-success">Yes</span>
           <span *ngIf="corpus.active === false"
                 class="badge bg-danger">No</span>
-          </dd>
+        </dd>
       </dl>
     </div>
   </div>
@@ -37,23 +40,52 @@
   <div class="col-md-3">
     <div class="card">
       <div class="card-header">
-        <h3 class="card-title">Intentions</h3>
+        <h3 class="card-title">Intents</h3>
 
         <div class="card-tools">
-          <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+          <button type="button" class="btn btn-tool" data-toggle="modal" data-target="#intentModal">
+            <i class="fas fa-plus-square"></i> Add New
           </button>
         </div>
       </div>
       <div class="card-body p-0">
-        <ul class="nav nav-pills flex-column" *ngFor="let dat of corpus.data; let i = index">
-          <li class="nav-item active">
-            <a (click)="setIntent(i)" class="nav-link">
-              <i class="fas fa-inbox"></i> {{dat.intent}}
-              <span class="badge bg-primary float-right ml-2">{{dat.utterances.length}}</span>
-              <span class="badge bg-secondary float-right ml-2">{{dat.answers.length}}</span>
-            </a>
-          </li>
-        </ul>
+        <p-table [value]="intents" editMode="row" dataKey="id"
+                 selectionMode="single" [(selection)]="selectedIntent"
+                 (onRowSelect)="setIntent($event)">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Intent</th>
+              <th style="width:8rem">Action</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-intent let-editing="editing" let-ri="rowIndex">
+            <tr [pEditableRow]="intent" [pSelectableRow]="intent">
+              <td>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <input pInputText type="text" [(ngModel)]="intent.intent" style="width: 100%">
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{intent.intent}}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+              <td style="text-align:center">
+                <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+                        class="p-button-rounded p-button-text"></button>
+
+                <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"
+                        (click)="deleteIntent()"
+                        class="p-button-rounded p-button-text p-button-danger"></button>
+
+                <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                        class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
+                <!--                <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"-->
+                <!--                        class="p-button-rounded p-button-text p-button-danger"></button>-->
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
       </div>
       <!-- /.card-body -->
     </div>
@@ -66,43 +98,79 @@
           Utterances
         </h3>
         <div class="card-tools">
-          <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+          <button type="button" class="btn btn-tool" (click)="addNewUtterance()"><i class="fas fa-plus-square"></i> Add
+            New
           </button>
         </div>
       </div>
       <!-- /.card-header -->
-      <div class="card-body">
-        <ul *ngFor="let utt of corpus.data[intent].utterances; let i = index">
-          <li>{{utt}}</li>
-        </ul>
+      <div class="card-body p-0">
+        <p-table [value]="intents[intent].utterances" editMode="row" dataKey="id"
+                 selectionMode="single" [(selection)]="selectedUtterance">
+<!--                 (onRowSelect)="onItemSelected($event)"-->
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Phrase</th>
+              <th style="width:8rem">Action</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-utterance let-editing="editing" let-ri="rowIndex">
+            <tr [pEditableRow]="utterance" [pSelectableRow]="utterance">
+              <td>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <input pInputText type="text" [(ngModel)]="utterance.phrase" style="width: 100%">
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{utterance.phrase}}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+              <td style="text-align:center">
+                <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+                        class="p-button-rounded p-button-text"></button>
+
+                <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"
+                        (click)="deleteUtterance(utterance)"
+                        class="p-button-rounded p-button-text p-button-danger"></button>
+
+                <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+
+                        class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
+                <!--                <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"-->
+                <!--                        class="p-button-rounded p-button-text p-button-danger"></button>-->
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+        <!-- card-body -->
       </div>
-      <!-- /.card-body -->
+      <!-- /.card -->
     </div>
-    <!-- /.card -->
   </div>
   <div class="col-md-3">
-<!--    <div class="card">-->
-<!--      <div class="card-header">-->
-<!--        <h3 class="card-title">Context</h3>-->
+    <!--    <div class="card">-->
+    <!--      <div class="card-header">-->
+    <!--        <h3 class="card-title">Context</h3>-->
 
-<!--        <div class="card-tools">-->
-<!--          <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>-->
-<!--          </button>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="card-body p-0">-->
-<!--        <ul class="nav nav-pills flex-column" *ngFor="let context of this.contextData; let i = index">-->
-<!--          <li class="nav-item active">-->
-<!--            <a (click)="setIntent(i)" class="nav-link">-->
-<!--              <i class="fas fa-inbox"></i> {{context.zone}}-->
-<!--&lt;!&ndash;              <span class="badge bg-primary float-right ml-2">{{dat.utterances.length}}</span>&ndash;&gt;-->
-<!--&lt;!&ndash;              <span class="badge bg-secondary float-right ml-2">{{dat.answers.length}}</span>&ndash;&gt;-->
-<!--            </a>-->
-<!--          </li>-->
-<!--        </ul>-->
-<!--      </div>-->
-<!--      &lt;!&ndash; /.card-body &ndash;&gt;-->
-<!--    </div>-->
+    <!--        <div class="card-tools">-->
+    <!--          <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>-->
+    <!--          </button>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--      <div class="card-body p-0">-->
+    <!--        <ul class="nav nav-pills flex-column" *ngFor="let context of this.contextData; let i = index">-->
+    <!--          <li class="nav-item active">-->
+    <!--            <a (click)="setIntent(i)" class="nav-link">-->
+    <!--              <i class="fas fa-inbox"></i> {{context.zone}}-->
+    <!--&lt;!&ndash;              <span class="badge bg-primary float-right ml-2">{{dat.utterances.length}}</span>&ndash;&gt;-->
+    <!--&lt;!&ndash;              <span class="badge bg-secondary float-right ml-2">{{dat.answers.length}}</span>&ndash;&gt;-->
+    <!--            </a>-->
+    <!--          </li>-->
+    <!--        </ul>-->
+    <!--      </div>-->
+    <!--      &lt;!&ndash; /.card-body &ndash;&gt;-->
+    <!--    </div>-->
   </div>
   <div class="col-md-9">
     <div class="card">
@@ -112,27 +180,84 @@
           Answers
         </h3>
         <div class="card-tools">
-          <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+          <button type="button" class="btn btn-tool" (click)="addNewAnswer()"><i class="fas fa-plus-square"></i> Add
+            New
           </button>
         </div>
       </div>
       <!-- /.card-header -->
-      <div class="card-body">
-        <ul *ngFor="let ans of corpus.data[intent].answers; let i = index">
-          <li>
-            <b>Answer: </b>
-            {{ans.answer}}
-          </li>
-          <ul *ngIf="ans.opts.length > 0">
-            <li>
-              <strong>Option: </strong>
-              <code>{{ans.opts}}</code>
-            </li>
+      <div class="card-body p-0">
+        <p-table [value]="intents[intent].answers" editMode="row" dataKey="id"
+                 selectionMode="single" [(selection)]="selectedAnswer">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Statement</th>
+              <th>Condition</th>
+              <th style="width:8rem">Action</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-answer let-editing="editing" let-ri="rowIndex">
+            <tr [pEditableRow]="answer" [pSelectableRow]="answer">
+              <td>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <input pInputText type="text" [(ngModel)]="answer.answer" style="width: 100%">
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{answer.answer}}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+              <td>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <input pInputText type="text" [(ngModel)]="answer.opts" style="width: 100%">
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    <code>{{answer.opts}}</code>
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+              <td style="text-align:center">
+                <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+                        class="p-button-rounded p-button-text"></button>
 
-          </ul>
-        </ul>
+                <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"
+                        (click)="deleteAnswer(answer)"
+                        class="p-button-rounded p-button-text p-button-danger"></button>
+
+                <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                        class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
+                <!--                <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"-->
+                <!--                        class="p-button-rounded p-button-text p-button-danger"></button>-->
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+
       </div>
-      <!-- /.card-body -->
+    </div>
+  </div>
+</div>
+<div class="modal" id="intentModal" tabindex="-1" role="dialog" aria-labelledby="intentModalTitle"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="intentModalTitle">New Intent</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Intent Identifier <input type="text" #newIntent/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addNewIntent(newIntent.value)">
+          Add
+        </button>
+      </div>
     </div>
   </div>
 </div>

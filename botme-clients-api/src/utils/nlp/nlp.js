@@ -18,39 +18,46 @@ let nlp = "";
     await train()
 })();
 
+async function getCorpus() {
+    let corpusFromDB
+    try {
+        corpusFromDB = await Corpus.findOne({}, {_id: 0, __v: 0})
+    } catch (err) {
+        console.log(err)
+    }
+
+    let utterances = []
+    for (let i = 0; i < corpusFromDB.data.length; i++) {
+        for (const u of corpusFromDB.data[i].utterances) {
+            utterances.push(u.phrase)
+        }
+        corpusFromDB.data[i].utterances = utterances
+    }
+    return corpusFromDB
+}
+
+async function getEntities() {
+    let entitiesFromDB
+    try {
+        entitiesFromDB = await Entity.find({})
+    } catch (err) {
+        console.log(err)
+    }
+
+    let entities = {}
+    for (let i in entitiesFromDB) {
+        let options = {}
+        options = entitiesFromDB[i].options
+        entities[entitiesFromDB[i].name] = {options}
+    }
+    return entities
+}
+
 async function train() {
-    async function getEntities() {
-        let entitiesFromDB
-        try {
-            entitiesFromDB = await Entity.find({})
-        } catch (err) {
-            console.log(err)
-        }
-
-        let entities = {}
-        for (let i in entitiesFromDB) {
-            let options = {}
-            options = entitiesFromDB[i].options
-            let entityOptions = {options}
-            entities[entitiesFromDB[i].name] = entityOptions
-        }
-        return entities
-    }
-
-    async function getCorpus() {
-        let corpusFromDB
-        try {
-            corpusFromDB = await Corpus.findOne({}, {_id: 0, __v: 0})
-        } catch (err) {
-            console.log(err)
-        }
-        return corpusFromDB
-    }
-
     console.time('train')
     try {
         fs.unlinkSync(nlpModelPath);
-    } catch(e) {
+    } catch (e) {
         console.log(e);
     }
 
