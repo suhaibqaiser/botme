@@ -152,7 +152,7 @@ export class CorpusDetailComponent implements OnInit {
   }
 
   addNewAnswer() {
-    let nextId = this.intents[this.intent].answers
+    let nextId = this.intents[this.intent].answers.length
     this.intents[this.intent].answers.push({
       id: nextId,
       answer: '',
