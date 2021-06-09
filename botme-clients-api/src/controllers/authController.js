@@ -3,7 +3,7 @@ const Response = require("../models/response")
 const {v4: uuidv4} = require('uuid')
 const jwt = require('jsonwebtoken')
 const jwtKey = 'superSecretJWTKey'
-const minutesToAdd = 30;
+const minutesToAdd = 300;
 
 
 async function userLogin(req, res) {
