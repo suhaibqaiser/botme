@@ -5,6 +5,7 @@ exports.communicate = async function (req, res) {
     let response = await nlplib.process(req.body.message);
     retResponse.message = response.answer;
     retResponse.intent = response.intent;
+    retResponse.entities = response.entities;
 
     res.status(200).send(retResponse)
 };

@@ -57,13 +57,13 @@ input.addEventListener("keyup", function(event) {
 
 function sendMessage() {
   let request = {
-    "clientID": "1024",
+    "clientID": "987530c0-998d-4cfc-b86d-596b5f7cd7d7",
     "current_time": "2021-04-07 00:49:00",
     "message_format": "text",
     "message_command": "find",
     "language": "en-US",
     "message_text": "",
-    "authToken": "VY7oV9S4EsT+59Gf4suCvsDQ5B1KCl6AUJH7/jA9BaQ="
+    "authToken": "c9234fd1-fb5b-4663-b1d2-9ed5773091e8"
   }
   request.message_text = document.getElementById('messageBox').value
   ws.send(JSON.stringify(request));

@@ -1,6 +1,7 @@
 const Corpus = require("../models/corpus")
 const Response = require("../models/response")
 const corpusService = require('../services/corpusService')
+const nlplib = require('../utils/nlp/nlp')
 
 async function corpus_list(req, res) {
     let response = new Response()
@@ -84,6 +85,7 @@ async function corpus_update(req, res) {
     if (corpus) {
         response.payload = {corpus}
         response.status = "success"
+        nlplib.init()
         return res.status(200).send(response)
     } else {
         response.payload = "Corpus not found"

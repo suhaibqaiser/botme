@@ -23,6 +23,7 @@ import {ConfirmationService, MessageService} from "primeng/api";
 import {TableModule} from "primeng/table";
 import {FieldsetModule} from 'primeng/fieldset';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {SelectButtonModule} from 'primeng/selectbutton';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     TableModule,
     FieldsetModule,
     ConfirmDialogModule,
-
+    SelectButtonModule
   ],
   providers: [Title, AuthGuard, {
     provide: HTTP_INTERCEPTORS,

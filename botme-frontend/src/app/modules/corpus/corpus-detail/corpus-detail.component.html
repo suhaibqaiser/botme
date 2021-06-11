@@ -24,10 +24,7 @@
         <dd>{{corpus.comment}}</dd>
         <dt>Active</dt>
         <dd>
-          <span *ngIf="corpus.active === true"
-                class="badge bg-success">Yes</span>
-          <span *ngIf="corpus.active === false"
-                class="badge bg-danger">No</span>
+          <p-selectButton [options]="stateOptions" [(ngModel)]="corpus.active" optionLabel="label" optionValue="value"></p-selectButton>
         </dd>
       </dl>
     </div>
