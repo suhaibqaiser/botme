@@ -12,6 +12,7 @@ import {FieldsetModule} from "primeng/fieldset";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import {InputTextModule} from "primeng/inputtext";
+import {SelectButtonModule} from 'primeng/selectbutton';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {InputTextModule} from "primeng/inputtext";
     FieldsetModule,
     ButtonModule,
     RippleModule,
-    InputTextModule
+    InputTextModule,
+    SelectButtonModule
   ]
 })
 export class CorpusModule { }

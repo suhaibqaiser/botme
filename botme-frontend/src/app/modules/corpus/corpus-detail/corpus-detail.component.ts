@@ -5,6 +5,7 @@ import {Corpus} from "../model/corpus";
 import {ConfirmationService, ConfirmEventType, MessageService} from "primeng/api";
 
 
+
 @Component({
   selector: 'app-corpus-detail',
   templateUrl: './corpus-detail.component.html',
@@ -12,11 +13,15 @@ import {ConfirmationService, ConfirmEventType, MessageService} from "primeng/api
 })
 export class CorpusDetailComponent implements OnInit {
 
+  stateOptions: any[];
+
   constructor(private corpusService: CorpusService,
               private route: ActivatedRoute,
               private messageService: MessageService,
               private confirmationService: ConfirmationService
   ) {
+    this.stateOptions = [{label: 'No', value: false}, {label: 'Yes', value: true}];
+
   }
 
   selectedIntent: any

@@ -8,6 +8,8 @@ const corpusRouter = require('./routes/corpusRouter')
 const sessionRouter = require('./routes/sessionRouter')
 const conversationRouter = require('./routes/conversationRouter')
 const authRouter = require('./routes/authRouter')
+const restaurantRouter = require('./routes/restaurantRouter')
+
 const app = express()
 const port = process.env.API_PORT || 3000;
 let cors = require('cors')
@@ -40,7 +42,9 @@ app.use('/entity', verifyToken, entityRouter);
 app.use('/corpus', verifyToken, corpusRouter);
 app.use('/session', verifyToken, sessionRouter);
 app.use('/conversation', verifyToken, conversationRouter);
+app.use('/restaurant', verifyToken, restaurantRouter)
 app.use('/auth', authRouter);
+
 
 function verifyToken(req, res, next) {
     let currentDate = new Date();
