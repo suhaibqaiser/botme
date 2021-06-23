@@ -7,7 +7,7 @@ let nlp = "";
 
 // Initialize NLP
 (async () => {
-    await init()
+    //await init()
 })();
 
 async function init() {

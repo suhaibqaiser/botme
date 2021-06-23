@@ -69,15 +69,14 @@ async function processConversation(message, clientToken) {
 async function processMessage(text) {
     let response = {
         status: "",
-        intent: "",
         payload: ""
     };
 
     let message = await commService.process(text);
     if (message) {
-        response.payload = message.message;
-        response.intent = message.intent;
-        response.status = "success";
+        response.payload = message.payload;
+        //response.intent = message.intent;
+        response.status = message.status;
     } else {
         response.status = "error";
         response.payload = "Error: There is an error in communication api";
