@@ -192,3 +192,4 @@ dmypy.json
 cython_debug/
 
 models/*
+botme-nlp/models/*.tar.gz
