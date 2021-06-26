@@ -1,6 +1,6 @@
 const { dockStart, ConsoleConnector } = require('@nlpjs/basic');
 const Entity = require("../../models/entity");
-const Corpus = require("../../models/corpus");
+const Corpus = require("../../models/nlp/corpus");
 const fs = require('fs')
 const nlpModelPath = './model.nlp'
 let nlp = "";

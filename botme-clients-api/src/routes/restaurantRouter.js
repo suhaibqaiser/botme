@@ -1,7 +1,11 @@
-var express = require('express');
-var router = express.Router();
-var resturantController = require('../controllers/restaurantController');
+let express = require('express');
+let router = express.Router();
+let restaurantController = require('../controllers/restaurantController');
 
-router.get('/tables', resturantController.getTables);
+router.get('/tables/', restaurantController.getAllTable);
+router.get('/tables/unoccupied', restaurantController.getAllUnoccupiedTables);
+router.get('/tables/unoccupiedbyseats', restaurantController.getAllUnoccupiedTablesBySeats);
+router.post('/tables/update', restaurantController.updateTable);
+router.get('/areas', restaurantController.getAreaTable);
 
 module.exports = router;
