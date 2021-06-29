@@ -4,28 +4,12 @@ import {
     getUnoccupiedTables,
     getUnoccupiedTablesBySeats,
     updateOneTable,
-    areaTable,
     createTable
 } from "./controller"
 
 export default [
     {
-        path: "/restaurant",
-        method: "get",
-        handler: async (req: Request, res: Response) => {
-            res.send("Restaurant");
-        }
-    },
-    {
-        path: "/restaurant/area",
-        method: "get",
-        handler: async (req: Request, res: Response) => {
-            let result = await areaTable(req.query.areaId as string)
-            res.send(result);
-        }
-    },
-    {
-        path: "/restaurant/tables",
+        path: "/tables",
         method: "get",
         handler: async (req: Request, res: Response) => {
             let result = await getAllTable()
@@ -33,7 +17,7 @@ export default [
         }
     },
     {
-        path: "/restaurant/tables/unoccupiedbyseats/",
+        path: "/tables/unoccupiedbyseats/",
         method: "get",
         handler: async (req: Request, res: Response) => {
             let result = await getUnoccupiedTablesBySeats(Number(req.query.seats))
@@ -41,7 +25,7 @@ export default [
         }
     },
     {
-        path: "/restaurant/tables/unoccupied",
+        path: "/tables/unoccupied",
         method: "get",
         handler: async (req: Request, res: Response) => {
             let result = await getUnoccupiedTables()
@@ -49,7 +33,7 @@ export default [
         }
     },
     {
-        path: "/restaurant/tables/update",
+        path: "/tables/update",
         method: "post",
         handler: async (req: Request, res: Response) => {
             let result = await updateOneTable(req.body.table)
@@ -57,7 +41,7 @@ export default [
         }
     },
     {
-        path: "/restaurant/tables/add",
+        path: "/tables/add",
         method: "put",
         handler: async (req: Request, res: Response) => {
             let result = await createTable(req.body.table)

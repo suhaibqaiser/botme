@@ -14,14 +14,10 @@ intents:
   - bot_challenge
   - select_lang
 entities:
-  - action
-  - active_loop
   - date
-  - entities
-  - intent
   - lang
   - person
-  - slot_was_set
+  - phoneNumber
 slots:
   lang:
     type: categorical
@@ -35,8 +31,15 @@ slots:
   date:
     type: text
     influence_conversation: true
-
+  phoneNumber:
+    type: text
+    influence_conversation: true
 responses:
+  utter_askforPhoneNumber:
+    - text: Please tell me your phone number
+    - text: Provide your phone number
+    - text: I need your number to call you
+
   utter_select_lang:
     - buttons:
         - payload: en
@@ -127,10 +130,14 @@ actions:
   - utter_affirm
   - utter_deny
   - utter_try_again
+  - utter_askforPhoneNumber
 
 forms:
   table_reserve_form:
     required_slots:
+      phoneNumber:
+        - entity: phoneNumber
+          type: from_entity
       date:
         - entity: date
           type: from_entity

@@ -18,4 +18,4 @@ const ReservationSchema = createSchema(
     {timestamps: {createdAt: true}}
 );
 
-export const Area = typedModel('Reservation', ReservationSchema);
+export const Reservation = typedModel('Reservation', ReservationSchema);

@@ -1,22 +1,4 @@
-import {Area} from './models/area'
-import {Table} from './models/table'
-import {Restaurant} from "./models/restaurant";
-
-export async function getRestaurant(restaurantId: string) {
-    return Restaurant.findOne({restaurantId: restaurantId}, {_id: 0, __v: 0});
-}
-
-export function updateRestaurant(restaurant: any) {
-    Restaurant.findOneAndUpdate({restaurantId: restaurant.restaurantId}, restaurant)
-}
-
-export async function getAreas() {
-    return Area.find({}, {_id: 0, __v: 0});
-}
-
-export async function getAreaTables(areaId: string) {
-    return Area.find({areaId: areaId}, {_id: 0, __v: 0, "tables.area": 0}).populate("tables", {"area": 0, _id: 0});
-}
+import {Table} from "./model";
 
 export async function getAllTables() {
     return Table.find({}, {_id: 0, __v: 0}).populate("area", {"tables": 0, _id: 0});

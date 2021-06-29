@@ -95,6 +95,8 @@ nlu:
     - [اليوم](date)
     - [غدا](date)
     - [عطلة نهاية الاسبوع](date)
+    - [000000000](phoneNumber)
+    - [123456789](phoneNumber)
 - intent: deny
   examples: |
     - no

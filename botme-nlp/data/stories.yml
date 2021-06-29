@@ -11,11 +11,17 @@ stories:
           - lang: en
       - action: utter_set_lang
 
-  - story: reserve table - ask person and date
+  - story: reserve table - ask phoneNumber, person and date
     steps:
       - intent: greet
       - action: utter_greet
       - intent: reserve_table
+      - action: utter_askforPhoneNumber
+      - intent: inform
+        entities:
+          - phoneNumber: 012345678
+      - slot_was_set:
+          - phoneNumber: 012345678
       - action: utter_askforpersons
       - intent: inform
         entities:
@@ -48,6 +54,12 @@ stories:
           - person: "3"
       - slot_was_set:
           - date: sunday
+      - action: utter_askforPhoneNumber
+      - intent: inform
+        entities:
+          - phoneNumber: 012345678
+      - slot_was_set:
+          - phoneNumber: 012345678
       - action: table_reserve_form
       - active_loop: table_reserve_form
       - slot_was_set:
@@ -71,6 +83,12 @@ stories:
           - date: sunday
       - slot_was_set:
           - date: sunday
+      - action: utter_askforPhoneNumber
+      - intent: inform
+        entities:
+          - phoneNumber: 012345678
+      - slot_was_set:
+          - phoneNumber: 012345678
       - action: utter_askforpersons
       - intent: inform
         entities:
@@ -96,6 +114,12 @@ stories:
           - person: "5"
       - slot_was_set:
           - person: "5"
+      - action: utter_askforPhoneNumber
+      - intent: inform
+        entities:
+          - phoneNumber: 012345678
+      - slot_was_set:
+          - phoneNumber: 012345678
       - action: utter_askfordate
       - intent: inform
         entities:
@@ -123,6 +147,12 @@ stories:
       - intent: ar_greet
       - action: utter_ar_greet
       - intent: ar_reserve_table
+      - action: utter_askforPhoneNumber
+      - intent: inform
+        entities:
+          - phoneNumber: 012345678
+      - slot_was_set:
+          - phoneNumber: 012345678
       - action: utter_ar_askforpersons
       - intent: inform
         entities:
@@ -153,6 +183,12 @@ stories:
       - intent: ar_greet
       - action: utter_ar_greet
       - intent: ar_reserve_table
+      - action: utter_askforPhoneNumber
+      - intent: inform
+        entities:
+          - phoneNumber: 012345678
+      - slot_was_set:
+          - phoneNumber: 012345678
       - action: utter_ar_askforpersons
       - intent: inform
         entities:
@@ -180,6 +216,12 @@ stories:
   - story: interactive_story_2
     steps:
       - intent: ar_reserve_table
+      - action: utter_askforPhoneNumber
+      - intent: inform
+        entities:
+          - phoneNumber: 012345678
+      - slot_was_set:
+          - phoneNumber: 012345678
       - action: utter_ar_askforpersons
       - intent: inform
         entities:
