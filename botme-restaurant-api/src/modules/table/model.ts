@@ -2,7 +2,7 @@ import {createSchema, Type, typedModel} from 'ts-mongoose';
 const TableSchema = createSchema(
     {
         tableId: Type.string({maxlength: 256, required: true, unique: true}),
-        tableSeats: Type.number({required: true}),
+        tableSeats: Type.number({required: true, sparse: true}),
         tableOccupied: Type.boolean({required: true}),
         area: Type.objectId({ref: "Area"})
     },

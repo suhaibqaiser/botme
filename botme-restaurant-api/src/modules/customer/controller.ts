@@ -1,42 +1,45 @@
 import {restResponse} from "../../utils/response";
-import {addCustomer, getCustomerById, getCustomerByPhone, updateOneCustomer} from "./service";
+import {addCustomer, getCustomer, updateOneCustomer} from "./service";
 
-
-export async function getCustomerByID(customerId: string) {
+export async function findCustomer(filter: any) {
     let response = new restResponse()
-    if (!customerId) {
-        response.payload = "customerId is required"
-        response.status = "error"
-        return response;
+
+    interface queryFilters {
+        customerName: any | undefined;
+        customerEmail: any | undefined;
+        customerPhone: any | undefined;
     }
 
-    let result = await getCustomerById(customerId)
+    let queryParams: queryFilters = {
+        customerName: undefined,
+        customerEmail: undefined,
+        customerPhone: undefined
+    }
+
+    if (filter.name) {
+        queryParams.customerName = {'$regex': filter.name, '$options': 'i'}
+    } else {
+        delete queryParams.customerName
+    }
+    if (filter.email) {
+        queryParams.customerEmail = filter.email
+    } else {
+        delete queryParams.customerEmail
+    }
+    if (filter.phone) {
+        queryParams.customerPhone = filter.phone
+    } else {
+        delete queryParams.customerPhone
+    }
+
+    console.log(queryParams)
+    let result = await getCustomer(queryParams)
     if (result) {
         response.payload = result
         response.status = "success"
         return response
     } else {
-        response.payload = "Customer not found"
-        response.status = "error"
-        return response
-    }
-}
-
-export async function getCustomerByPhoneNumber(customerPhone: string) {
-    let response = new restResponse()
-    if (!customerPhone) {
-        response.payload = "customerPhone is required"
-        response.status = "error"
-        return response;
-    }
-
-    let result = await getCustomerByPhone(customerPhone)
-    if (result) {
-        response.payload = result
-        response.status = "success"
-        return response
-    } else {
-        response.payload = "Customer not found"
+        response.payload = "customer not found"
         response.status = "error"
         return response
     }

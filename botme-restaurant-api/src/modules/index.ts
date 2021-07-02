@@ -4,6 +4,8 @@ import tableRouter from "./table/router"
 import reservationRouter from "./reservation/router"
 import categoryRouter from "./category/router"
 import productRouter from "./product/router"
+import menuRouter from "./menu/router"
+import orderRouter from "./order/router"
 
 export default [
     ...customerRouter,
@@ -11,5 +13,7 @@ export default [
     ...tableRouter,
     ...reservationRouter,
     ...categoryRouter,
-    ...productRouter
+    ...productRouter,
+    ...menuRouter,
+    ...orderRouter
 ];

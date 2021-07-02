@@ -13,6 +13,7 @@ intents:
   - deny
   - bot_challenge
   - select_lang
+  - trigger_actions
 entities:
   - date
   - lang
@@ -131,6 +132,8 @@ actions:
   - utter_deny
   - utter_try_again
   - utter_askforPhoneNumber
+  - action_fetch_status
+  - action_hello_world
 
 forms:
   table_reserve_form:

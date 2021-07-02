@@ -1,24 +1,21 @@
 import {Request, Response} from "express";
-import {addProduct, findProduct} from "./controller";
-
+import {addMenu, findMenu} from "./controller";
 
 export default [
     {
-        path: "/product/add",
+        path: "/menu/add",
         method: "put",
         handler: async (req: Request, res: Response) => {
-            let result = await addProduct(req.body.product)
+            let result = await addMenu(req.body.menu)
             res.send(result);
         }
     },
-
     {
-        path: "/product/search",
+        path: "/menu/search",
         method: "get",
         handler: async (req: Request, res: Response) => {
-            let result = await findProduct(req.query)
+            let result = await findMenu(req.query.menuId)
             res.send(result);
-            //res.send(req.query)
         }
     }
 ]

@@ -11,6 +11,13 @@ stories:
           - lang: en
       - action: utter_set_lang
 
+  - story: action test
+    steps:
+      - intent: trigger_actions
+      - action: action_hello_world
+      - action: action_fetch_status
+
+
   - story: reserve table - ask phoneNumber, person and date
     steps:
       - intent: greet
@@ -177,7 +184,6 @@ stories:
       - action: utter_table_reserve
       - intent: affirm
       - action: utter_goodbye
-
   - story: interactive_story_1
     steps:
       - intent: ar_greet
@@ -212,7 +218,6 @@ stories:
       - slot_was_set:
           - requested_slot: null
       - active_loop: null
-
   - story: interactive_story_2
     steps:
       - intent: ar_reserve_table

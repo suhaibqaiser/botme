@@ -1,51 +1,54 @@
 import {restResponse} from "../../utils/response";
 import {
-    addTable,
+    createTable,
     getAllTables,
-    getAllUnoccupiedTables,
-    getAllUnoccupiedTablesBySeats,
+    getTable,
     updateTable
 } from "./service";
+
+export async function findTable(filter: any) {
+    let response = new restResponse()
+
+    interface queryFilters {
+        tableSeats: any | undefined;
+        tableOccupied: boolean | undefined;
+        area: any | undefined;
+    }
+
+    let queryParams: queryFilters = {tableSeats: undefined, tableOccupied: undefined, area: undefined}
+
+    if (filter.seats) {
+        queryParams.tableSeats = {$gte: Number(filter.seats), $lte: Number(filter.seats) + 1}
+    } else {
+        delete queryParams.tableSeats
+    }
+    if (filter.occupied) {
+        queryParams.tableOccupied = filter.occupied
+    } else {
+        delete queryParams.tableOccupied
+    }
+    if (filter.area) {
+        queryParams.area = filter.area
+    } else {
+        delete queryParams.area
+    }
+
+    let result = await getTable(queryParams)
+    if (result.length !=0) {
+        response.payload = result
+        response.status = "success"
+        return response
+    } else {
+        response.payload = "table not found"
+        response.status = "error"
+        return response
+    }
+}
 
 export async function getAllTable() {
     let response = new restResponse()
 
     let result = await getAllTables()
-    if (result.length != 0) {
-        response.payload = result
-        response.status = "success"
-        return response
-    } else {
-        response.payload = "Tables not found"
-        response.status = "error"
-        return response
-    }
-}
-
-export async function getUnoccupiedTables() {
-    let response = new restResponse()
-    let result = await getAllUnoccupiedTables()
-    if (result.length != 0) {
-        response.payload = result
-        response.status = "success"
-        return response
-    } else {
-        response.payload = "Tables not found"
-        response.status = "error"
-        return response
-    }
-}
-
-
-export async function getUnoccupiedTablesBySeats(seats: number) {
-    let response = new restResponse()
-    if (!seats) {
-        response.payload = "seats is required"
-        response.status = "error"
-        return response;
-    }
-
-    let result = await getAllUnoccupiedTablesBySeats(seats)
     if (result.length != 0) {
         response.payload = result
         response.status = "success"
@@ -77,7 +80,7 @@ export async function updateOneTable(table: any) {
     }
 }
 
-export async function createTable(table: any) {
+export async function addTable(table: any) {
     let response = new restResponse()
     if (!table) {
         response.payload = "table is required"
@@ -85,7 +88,7 @@ export async function createTable(table: any) {
         return response;
     }
 
-    let result = await addTable(table)
+    let result = await createTable(table)
     if (result) {
         response.payload = result
         response.status = "success"

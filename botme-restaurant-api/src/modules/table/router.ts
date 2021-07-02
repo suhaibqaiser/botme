@@ -1,10 +1,8 @@
 import {Request, Response} from "express";
 import {
     getAllTable,
-    getUnoccupiedTables,
-    getUnoccupiedTablesBySeats,
     updateOneTable,
-    createTable
+    addTable, findTable
 } from "./controller"
 
 export default [
@@ -17,18 +15,10 @@ export default [
         }
     },
     {
-        path: "/tables/unoccupiedbyseats/",
+        path: "/tables/search",
         method: "get",
         handler: async (req: Request, res: Response) => {
-            let result = await getUnoccupiedTablesBySeats(Number(req.query.seats))
-            res.send(result);
-        }
-    },
-    {
-        path: "/tables/unoccupied",
-        method: "get",
-        handler: async (req: Request, res: Response) => {
-            let result = await getUnoccupiedTables()
+            let result = await findTable(req.query)
             res.send(result);
         }
     },
@@ -44,7 +34,7 @@ export default [
         path: "/tables/add",
         method: "put",
         handler: async (req: Request, res: Response) => {
-            let result = await createTable(req.body.table)
+            let result = await addTable(req.body.table)
             res.send(result);
         }
     }

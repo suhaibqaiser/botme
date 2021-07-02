@@ -8,8 +8,8 @@ export async function updateOneCustomer(customer: any) {
     return Customer.findOneAndUpdate({customerId: customer.customerId}, customer)
 }
 
-export async function getCustomerById(customerId: string) {
-    return Customer.findOne({customerId: customerId})
+export async function getCustomer(queryParams: any) {
+    return Customer.findOne(queryParams)
 }
 
 export async function getCustomerByPhone(customerPhone: string) {
