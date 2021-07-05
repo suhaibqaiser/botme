@@ -1,0 +1,81 @@
+<div *ngIf="client" class="card card-primary" xmlns="http://www.w3.org/1999/html">
+  <div class="card-header">
+    <h3 class="card-title">Client Details</h3>
+  </div>
+  <!-- /.card-header -->
+  <div class="card-body">
+    <h4>{{client.clientName }}</h4>
+
+    <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="form-client-id">Client Name: </label>
+        <input type="text" class="form-control form-control-border " id="form-client-name"
+               formControlName="formclientname">
+      </div>
+      <div *ngIf="formMode==='update'" class="form-group">
+        <label for="form-client-id">Client ID: </label>
+        <input type="text" class="form-control form-control-border " id="form-client-id"
+               value="{{client.clientID}}" readonly="readonly">
+      </div>
+      <div class="form-group">
+        <label for="form-client-device-id">Client Device ID: </label>
+        <input type="text" class="form-control form-control-border" id="form-client-device-id"
+               formControlName="formclientdeviceid">
+      </div>
+      <div *ngIf="formMode==='update'" class="form-group">
+        <label for="form-client-secret">Client Secret: </label>
+        <input type="text" class="form-control form-control-border" id="form-client-secret"
+               formControlName="formclientsecret">
+      </div>
+      <div *ngIf="formMode==='update'" class="form-group">
+        <label for="form-client-created">Created: </label>
+        <input type="text" class="form-control form-control-border" id="form-client-created"
+               value="{{client.clientCreated}}" readonly="readonly">
+      </div>
+      <div *ngIf="formMode==='update'" class="form-group">
+        <label for="form-client-updated">Updated: </label>
+        <input type="text" class="form-control form-control-border" id="form-client-updated"
+               value="{{client.clientUpdated}}" readonly="readonly">
+      </div>
+
+      <div class="form-group">
+        <label for="form-client-comment">Comment: </label>
+        <input type="text" class="form-control form-control-border" id="form-client-comment"
+               formControlName="formclientcomment">
+      </div>
+      <div class="form-group">
+        <label for="form-client-active">Active: </label>
+        <div class="custom-control custom-switch">
+          <input type="checkbox" class="custom-control-input" id="form-client-active"
+                 formControlName="formclientactive">
+          <label class="custom-control-label" for="form-client-active">Toggle this to mark active or inactive</label>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="button" class="btn btn-secondary">Cancel</button>
+        <button type="submit" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered " role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Action Processed</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Changes saved!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

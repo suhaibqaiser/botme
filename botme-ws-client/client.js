@@ -2,8 +2,8 @@ window.onload = function () {
   document.getElementById('messageBox').value = "";
   document.getElementById('log').value = "";
 };
-const ws = new WebSocket('ws://ec2-107-21-10-51.compute-1.amazonaws.com:6380/comms');
-//const ws = new WebSocket('ws://localhost:6380/comms');
+//const ws = new WebSocket('ws://54.165.125.65:6380/comms');
+const ws = new WebSocket('ws://localhost:6380/comms');
 
 setConnectionStatus();
 setInterval(function () { setConnectionStatus(); }, 1000);
@@ -42,8 +42,31 @@ function checkConnection() {
   return state;
 }
 
+var input = document.getElementById("messageBox");
+
+// Execute a function when the user releases a key on the keyboard
+input.addEventListener("keyup", function(event) {
+  // Number 13 is the "Enter" key on the keyboard
+  if (event.keyCode === 13 || event.which === 13) {
+    // Cancel the default action, if needed
+    event.preventDefault();
+    // Trigger the button element with a click
+    sendMessage()
+  }
+});
+
 function sendMessage() {
-  ws.send(document.getElementById('messageBox').value);
+  let request = {
+    "clientID": "987530c0-998d-4cfc-b86d-596b5f7cd7d7",
+    "current_time": "2021-04-07 00:49:00",
+    "message_format": "text",
+    "message_command": "find",
+    "language": "en-US",
+    "message_text": "",
+    "authToken": "c9234fd1-fb5b-4663-b1d2-9ed5773091e8"
+  }
+  request.message_text = document.getElementById('messageBox').value
+  ws.send(JSON.stringify(request));
   document.getElementById('log').value += '\n' + Date() + " | Message sent to server...";
   ws.onmessage = function (e) {
     document.getElementById('log').value += '\n' + e.data;

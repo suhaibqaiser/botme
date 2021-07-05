@@ -1,0 +1,150 @@
+{
+  "name": "Corpus for sofia",
+  "locale": "en-US",
+  "contextData": {
+    "Zone-A": {
+      "steps": "320",
+      "direction": "left",
+      "zone": "A"
+    },
+    "Zone-B": {
+      "steps": "150",
+      "direction": "right",
+      "zone": "B"
+    },
+    "Zone-C": {
+      "steps": "20",
+      "direction": "straight",
+      "zone": "C"
+    },
+    "Zone-D": {
+      "steps": "250",
+      "direction": "back",
+      "zone": "D"
+    }
+  },
+  "data": [
+    {
+      "intent": "query.gate",
+      "utterances": [
+        "where is gate number %gate%",
+        "where can i find gate %gate%",
+        "where can i find the gate number %gate%",
+        "i cannot find the gate %gate%",
+        "locate gate number %gate%",
+        "where the gate %gate% is",
+        "where is the terminal %gate%",
+        "where is terminal number %gate%",
+        "where can i find terminal %gate%",
+        "where can i find the terminal number %gate%",
+        "i cannot find the terminal %gate%",
+        "locate terminal number %gate%",
+        "where the terminal %gate% is"
+      ],
+      "answers": [
+        {
+          "answer": "I'm sorry, I couldnt understand your gate number. Please specify again",
+          "opts": "gate === undefined"
+        },
+        {
+          "answer": "Your gate number {{gate}} is in terminal {{ _data[entities.gate.option].zone }}. Please proceed {{ _data[entities.gate.option].direction }} with {{ _data[entities.gate.option].steps }} steps",
+          "opts": "gate !== '' && gate !== null && gate !== undefined"
+        }
+      ]
+    },
+    {
+      "intent": "None",
+      "utterances": [],
+      "answers": [
+        {
+          "answer": "Sorry, I cannot understand your query",
+          "opts": ""
+        },
+        {
+          "answer": "Can you please repeat your question?",
+          "opts": ""
+        },
+        {
+          "answer": "I dont get it. Please say it again",
+          "opts": ""
+        }
+      ]
+    },
+    {
+      "intent": "conversation.start",
+      "utterances": [
+        "sofia need help",
+        "hello sofia i need help",
+        "hey sofia need help",
+        "please help me",
+        "sofia want your help",
+        "want help"
+      ],
+      "answers": [
+        {
+          "answer": "Yes, I am here to help, what do you need?",
+          "opts": ""
+        },
+        {
+          "answer": "What can I help you with?",
+          "opts": ""
+        },
+        {
+          "answer": "How may I help you?",
+          "opts": ""
+        }
+      ]
+    },
+    {
+      "intent": "conversation.confirmEnd",
+      "utterances": [
+        "okay done",
+        "ok done",
+        "ok thanks",
+        "alright",
+        "my issue is resolved",
+        "my issue is solved",
+        "problem solved",
+        "thank you",
+        "thanks"
+      ],
+      "answers": [
+        {
+          "answer": "Good to hear that. Is there anything else i can help you with?",
+          "opts": ""
+        },
+        {
+          "answer": "You are welcome. Is there something else i can help you with?",
+          "opts": ""
+        },
+        {
+          "answer": "Do you need anymore help?",
+          "opts": ""
+        }
+      ]
+    },
+    {
+      "intent": "conversation.end",
+      "utterances": [
+        "no thats it",
+        "no",
+        "nops",
+        "nothing"
+      ],
+      "answers": [
+        {
+          "answer": "Good to hear that.",
+          "opts": ""
+        },
+        {
+          "answer": "You are welcome. I am happy that i was able to help you.",
+          "opts": ""
+        },
+        {
+          "answer": "Thank you for talking to me. Have a safe journey!",
+          "opts": ""
+        }
+      ]
+    }
+  ]
+}

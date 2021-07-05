@@ -1,7 +1,5 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {PrimeNGConfig} from "primeng/api";
 
 
 @Component({
@@ -9,10 +7,11 @@ import { map } from 'rxjs/operators';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  pageTitle: string = '';
+export class AppComponent  implements OnInit {
 
-  constructor(route: ActivatedRoute) {
-    const Title: Observable<string> = route.data.pipe(map(d => this.pageTitle = d.pageTitle));
+  constructor(private primengConfig: PrimeNGConfig) {}
+
+  ngOnInit() {
+    this.primengConfig.ripple = true;
   }
 }

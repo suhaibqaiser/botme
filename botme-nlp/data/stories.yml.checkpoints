@@ -1,0 +1,67 @@
+stories:
+  - story: Language Selection
+    steps:
+      - intent: select_lang
+      - slot_was_set:
+          - lang: null
+      - action: utter_select_lang
+      - slot_was_set:
+          - lang: ar
+      - action: utter_set_lang
+      - checkpoint: check_language_selected
+
+  - story: greetings
+    steps:
+      - checkpoint: check_language_selected
+      - intent: greet
+      - action: utter_greet
+      - checkpoint: check_greetings
+
+  - story: reservation
+    steps:
+      - checkpoint: check_greetings
+      - intent: reserve_table
+      - action: utter_askforpersons
+      - intent: inform
+        entities:
+          - person: 2
+      - slot_was_set:
+          - person: 2
+      - action: utter_askfordate
+      - intent: inform
+        entities:
+          - date: tomorrow
+      - slot_was_set:
+          - date: tomorrow
+      - action: table_reserve_form
+      - slot_was_set:
+          - date: tomorrow
+      - slot_was_set:
+          - person: 3
+      - active_loop: table_reserve_form
+      - slot_was_set:
+          - requested_slot: null
+      - active_loop: null
+      - action: utter_table_reserve
+      - checkpoint: check_reservation
+
+  - story: reservation_confrim
+    steps:
+      - checkpoint: check_reservation
+      - intent: affirm
+      - action: utter_affirm
+      - checkpoint: check_reservation_confrim
+
+  - story: reservation_confrim
+    steps:
+      - checkpoint: check_reservation
+      - intent: deny
+      - action: utter_deny
+      - action: utter_try_again
+      - checkpoint: check_reservation_deny
+
+  - story: goodbye
+    steps:
+      - checkpoint: check_reservation_confrim
+      - intent: goodbye
+      - action: utter_goodbye

@@ -1,22 +1,26 @@
-var mongoose = require('mongoose');
-var Session = require('../models/session');
+const mongoose = require("mongoose");
+const config = require('../config');
+const mongoDBConnection = process.env.MONGODB_CONNECTION || config.connectionString
 
-var mongoDB = process.env.MONGODB_CONNECTION || 'mongodb+srv://mongoUser:1t3jWnpoC0imAM4d@cluster0.tipo5.mongodb.net/clients?retryWrites=true&w=majority';
+const clientOption = {
+    socketTimeoutMS: 30000,
+    keepAlive: true,
+    poolSize: 50,
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true
+};
 
-mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
-function getSession(authToken, callback) {
-    try {
-        Session.findOne({ clientToken: authToken }, function (err, session) {
-            if (err) console.log(err);
-
-            return callback(session);
-        });
-    } catch (err) {
-        console.log(err);
-    }
+function initDbConnection() {
+    mongoose.connect(mongoDBConnection, clientOption);
+    const db = mongoose.connection;
+    db.on("error", console.error.bind(console, "MongoDB Connection Error>> : "));
+    db.once("open", function () {
+        console.log("Connected to MongoDB Server");
+    });
+    return db;
 }
 
-module.exports = ({ getSession });
+module.exports = {
+    initDbConnection
+};

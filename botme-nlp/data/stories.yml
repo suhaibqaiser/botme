@@ -1,0 +1,255 @@
+version: "2.0"
+stories:
+  - story: set language
+    steps:
+      - intent: select_lang
+      - action: utter_select_lang
+      - intent: inform
+        entities:
+          - lang: en
+      - slot_was_set:
+          - lang: en
+      - action: utter_set_lang
+
+  - story: action test
+    steps:
+      - intent: trigger_actions
+      - action: action_hello_world
+      - action: action_fetch_status
+
+
+  - story: reserve table - ask phoneNumber, person and date
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: reserve_table
+      - action: utter_askforPhoneNumber
+      - intent: inform
+        entities:
+          - phoneNumber: 012345678
+      - slot_was_set:
+          - phoneNumber: 012345678
+      - action: utter_askforpersons
+      - intent: inform
+        entities:
+          - person: 2
+      - slot_was_set:
+          - person: 2
+      - action: utter_askfordate
+      - intent: inform
+        entities:
+          - date: tomorrow
+      - slot_was_set:
+          - date: tomorrow
+      - action: table_reserve_form
+      - active_loop: table_reserve_form
+      - slot_was_set:
+          - requested_slot: null
+      - active_loop: null
+      - action: utter_table_reserve
+      - intent: affirm
+      - action: utter_goodbye
+  - story: reserve table - person and table provided
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: reserve_table
+        entities:
+          - person: "3"
+          - date: sunday
+      - slot_was_set:
+          - person: "3"
+      - slot_was_set:
+          - date: sunday
+      - action: utter_askforPhoneNumber
+      - intent: inform
+        entities:
+          - phoneNumber: 012345678
+      - slot_was_set:
+          - phoneNumber: 012345678
+      - action: table_reserve_form
+      - active_loop: table_reserve_form
+      - slot_was_set:
+          - requested_slot: date
+      - slot_was_set:
+          - date: friday
+      - slot_was_set:
+          - requested_slot: person
+      - slot_was_set:
+          - person: "4"
+      - slot_was_set:
+          - requested_slot: null
+      - active_loop: null
+      - action: utter_table_reserve
+      - intent: affirm
+      - action: utter_goodbye
+  - story: reserve table - ask person but date is provided
+    steps:
+      - intent: reserve_table
+        entities:
+          - date: sunday
+      - slot_was_set:
+          - date: sunday
+      - action: utter_askforPhoneNumber
+      - intent: inform
+        entities:
+          - phoneNumber: 012345678
+      - slot_was_set:
+          - phoneNumber: 012345678
+      - action: utter_askforpersons
+      - intent: inform
+        entities:
+          - person: "6"
+      - slot_was_set:
+          - person: "6"
+      - action: table_reserve_form
+      - active_loop: table_reserve_form
+      - slot_was_set:
+          - date: sunday
+      - slot_was_set:
+          - person: "6"
+      - slot_was_set:
+          - requested_slot: null
+      - active_loop: null
+      - action: utter_table_reserve
+  - story: reserve table - ask date but person is provided
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: reserve_table
+        entities:
+          - person: "5"
+      - slot_was_set:
+          - person: "5"
+      - action: utter_askforPhoneNumber
+      - intent: inform
+        entities:
+          - phoneNumber: 012345678
+      - slot_was_set:
+          - phoneNumber: 012345678
+      - action: utter_askfordate
+      - intent: inform
+        entities:
+          - date: monday
+      - slot_was_set:
+          - date: monday
+      - action: table_reserve_form
+      - active_loop: table_reserve_form
+      - slot_was_set:
+          - requested_slot: date
+      - slot_was_set:
+          - date: monday
+      - slot_was_set:
+          - requested_slot: person
+      - slot_was_set:
+          - person: "5"
+      - slot_was_set:
+          - requested_slot: null
+      - active_loop: null
+      - action: utter_table_reserve
+      - intent: goodbye
+      - action: utter_goodbye
+  - story: ar reserve table - ask person and date
+    steps:
+      - intent: ar_greet
+      - action: utter_ar_greet
+      - intent: ar_reserve_table
+      - action: utter_askforPhoneNumber
+      - intent: inform
+        entities:
+          - phoneNumber: 012345678
+      - slot_was_set:
+          - phoneNumber: 012345678
+      - action: utter_ar_askforpersons
+      - intent: inform
+        entities:
+          - person: 2
+      - slot_was_set:
+          - person: 2
+      - action: utter_ar_askfordate
+      - intent: inform
+        entities:
+          - date: اليوم
+      - slot_was_set:
+          - date: اليوم
+      - action: table_reserve_form
+      - active_loop: table_reserve_form
+      - slot_was_set:
+          - date: اليوم
+      - slot_was_set:
+          - person: 2
+      - slot_was_set:
+          - requested_slot: null
+      - active_loop: null
+      - action: utter_table_reserve
+      - intent: affirm
+      - action: utter_goodbye
+  - story: interactive_story_1
+    steps:
+      - intent: ar_greet
+      - action: utter_ar_greet
+      - intent: ar_reserve_table
+      - action: utter_askforPhoneNumber
+      - intent: inform
+        entities:
+          - phoneNumber: 012345678
+      - slot_was_set:
+          - phoneNumber: 012345678
+      - action: utter_ar_askforpersons
+      - intent: inform
+        entities:
+          - person: "3"
+      - slot_was_set:
+          - person: "3"
+      - action: utter_ar_askfordate
+      - intent: inform
+        entities:
+          - date: tomorrow
+      - slot_was_set:
+          - date: tomorrow
+      - action: table_reserve_form
+      - active_loop: table_reserve_form
+      - slot_was_set:
+          - date: tomorrow
+      - slot_was_set:
+          - person: "3"
+      - slot_was_set:
+          - date: tomorrow
+      - slot_was_set:
+          - requested_slot: null
+      - active_loop: null
+  - story: interactive_story_2
+    steps:
+      - intent: ar_reserve_table
+      - action: utter_askforPhoneNumber
+      - intent: inform
+        entities:
+          - phoneNumber: 012345678
+      - slot_was_set:
+          - phoneNumber: 012345678
+      - action: utter_ar_askforpersons
+      - intent: inform
+        entities:
+          - person: "3"
+      - slot_was_set:
+          - person: "3"
+      - action: utter_ar_askfordate
+      - intent: inform
+        entities:
+          - date: weekend
+      - slot_was_set:
+          - date: weekend
+      - action: table_reserve_form
+      - active_loop: table_reserve_form
+      - slot_was_set:
+          - date: weekend
+      - slot_was_set:
+          - person: "3"
+      - slot_was_set:
+          - date: weekend
+      - slot_was_set:
+          - requested_slot: null
+      - active_loop: null
+      - action: utter_table_reserve
+      - intent: affirm
+      - action: utter_goodbye

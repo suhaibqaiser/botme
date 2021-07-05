@@ -1,0 +1,120 @@
+version: "2.0"
+stories:
+- story: happy path 1
+  steps:
+  - intent: greet
+    user: |-
+      hello there!
+  - action: utter_greet
+  - intent: mood_great
+    user: |-
+      amazing
+  - action: utter_happy
+- story: happy path 2
+  steps:
+  - intent: greet
+    user: |-
+      hello there!
+  - action: utter_greet
+  - intent: mood_great
+    user: |-
+      amazing
+  - action: utter_happy
+  - intent: goodbye
+    user: |-
+      bye-bye!
+  - action: utter_goodbye
+- story: sad path 1
+  steps:
+  - intent: greet
+    user: |-
+      hello
+  - action: utter_greet
+  - intent: mood_unhappy
+    user: |-
+      not good
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - intent: affirm
+    user: |-
+      yes
+  - action: utter_happy
+- story: sad path 2
+  steps:
+  - intent: greet
+    user: |-
+      hello
+  - action: utter_greet
+  - intent: mood_unhappy
+    user: |-
+      not good
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - intent: deny
+    user: |-
+      not really
+  - action: utter_goodbye
+- story: sad path 3
+  steps:
+  - intent: greet
+    user: |-
+      hi
+  - action: utter_greet
+  - intent: mood_unhappy
+    user: |-
+      very terrible
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - intent: deny
+    user: |-
+      no
+  - action: utter_goodbye
+- story: say goodbye
+  steps:
+  - intent: goodbye
+    user: |-
+      bye-bye!
+  - action: utter_goodbye
+- story: bot challenge
+  steps:
+  - intent: bot_challenge
+    user: |-
+      are you a bot?
+  - action: utter_iamabot
+- story: Story from Conversation ID 3c5def45e51e40c3baccfaddcdcafc7d
+  steps:
+  - intent: greet
+    user: |-
+      hey
+  - action: utter_greet
+  - intent: reserve_table
+    user: |-
+      i need a table for reservation
+  - action: utter_askforpersons
+  - intent: inform
+    user: |-
+      [5](person)
+  - slot_was_set:
+    - person: '5'
+  - action: utter_askfordate
+  - intent: greet
+    user: |-
+      on coming [saturday](date)
+  - slot_was_set:
+    - date: saturday
+  - action: table_reserve_form
+  - active_loop: table_reserve_form
+  - slot_was_set:
+    - date: saturday
+  - slot_was_set:
+    - person: '5'
+  - slot_was_set:
+    - date: saturday
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_table_reserve
+  - intent: affirm
+    user: |-
+      thank you
+  - action: utter_goodbye

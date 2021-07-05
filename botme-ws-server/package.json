@@ -5,7 +5,7 @@
   "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "mkdir build",
+    "clean": "rimraf build && mkdir build",
     "build-babel": "babel -d ./build ./src -s",
     "build": "npm run clean && npm run build-babel",
     "start": "npm run build && node ./build/app.js",
@@ -17,18 +17,19 @@
   "author": "Aman Subhan <amansubhan929@gmail.com>",
   "license": "ISC",
   "devDependencies": {
-    "@babel/cli": "^7.5.5",
-    "@babel/core": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
+    "@babel/cli": "^7.14.3",
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.2",
     "eslint": "^6.2.1",
     "eslint-config-prettier": "^6.1.0",
     "eslint-plugin-prettier": "^3.1.0",
     "prettier": "^1.18.2"
   },
   "dependencies": {
-    "@aws-sdk/client-sqs": "^3.6.0",
+    "@aws-sdk/client-sqs": "^3.16.0",
     "axios": "^0.21.1",
-    "mongoose": "^5.11.17",
+    "mongoose": "^5.12.10",
+    "node-fetch": "^2.6.1",
     "uuid": "^8.3.2",
     "ws": "7.4.3"
   }

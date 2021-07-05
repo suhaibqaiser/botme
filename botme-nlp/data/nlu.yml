@@ -1,0 +1,179 @@
+version: "2.0"
+nlu:
+- intent: select_lang
+  examples: |
+    - lang
+    - Language
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+- intent: goodbye
+  examples: |
+    - good afternoon
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+    - thats right
+- intent: affirm
+  examples: |
+    - yes
+    - y
+    - indeed
+    - of course
+    - that sounds good
+    - correct
+    - thanks
+    - thank you
+- intent: reserve_table
+  examples: |
+    - i want a table on [friday](date) for [5](person) people
+    - i want to reserve a table for [3](person) people for the next [monday](date)
+    - i need a table reservation for [4](person) person on [tomorrow](date)
+    - table for [2](person) person on [Friday the 13th](date)
+    - i want to reserve a table for [3](person) people on [sunday](date)
+    - i need to reserve a table
+    - need a table
+    - want to make a reservation
+    - i need a table for reservation
+    - need a table for [9](person) people
+    - [tomorrow](date) i need a table for [4](person) people on your patio
+- intent: inform
+  examples: |
+    - [4](person)
+    - [1](person)
+    - [2](person) people
+    - [three](person)
+    - [3](person)
+    - [7](person)
+    - [9](person) person
+    - [eleven](person)
+    - [tuesday](date)
+    - [wednesday](date)
+    - [tomorrow](date)
+    - [next week](date)
+    - [next month](date)
+    - [weekend](date)
+    - [today](date)
+    - [tonight](date)
+    - [sunday](date)
+    - [now](date)
+    - [1st of this month](date)
+    - [2nd June](date)
+    - [3rd of September](date)
+    - [10th july](date)
+    - [monday](date)
+    - [friday](date)
+    - [friday](date) [12th june](date)
+    - [12](person)
+    - on coming [saturday](date)
+    - [5](person)
+    - [two](person)
+    - [en](lang)
+    - [ar](lang)
+    - [english](lang)
+    - [arabic](lang)
+    - [arabi](lang)
+    - [اليوم](date)
+    - [غدا](date)
+    - [عطلة نهاية الاسبوع](date)
+    - [000000000](phoneNumber)
+    - [123456789](phoneNumber)
+- intent: deny
+  examples: |
+    - no
+    - n
+    - never
+    - I don't think so
+    - don't like that
+    - no way
+    - not really
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+- intent: ar_greet
+  examples: |
+    - أهلا
+    - مرحبا
+    - ازيك
+    - صباح الخير
+    - مساء الخير
+    - مرحبا هذا صدف
+    - أهلا مساء الخير
+    - مرحبا مساء الخير
+    - مرحبا، كيف حالك؟
+    - يا ما الجديد اليوم
+    - مرحبا ماذا يكون ما يصل؟
+    - مرحبا ما الجديد اليوم
+    - مرحبا من الجيد رؤيتك هنا
+    - مرحباً ، من الجيد رؤيتك هنا
+- intent: ar_reserve_table
+  examples: |
+    - أريد أن أعرف عن الجلوس لتناول طعام الغداء
+    - أريد أن أسأل عن الجلوس لتناول طعام الغداء
+    - من فضلك قل لي إذا كانت المقاعد متوفرة
+    - اسمحوا لي أن أعرف عن الجلوس لتناول طعام الغداء
+    - الجلوس متاح لتناول طعام الغداء
+    - هل لديكم ترتيب جلوس هنا لتناول طعام الغداء
+    - هل يمكنك ترتيب جلوس لنا
+    - هل يمكنك إدارة مقاعد لنا من فضلك
+    - هل يمكنك مساعدتي في العثور على أماكن جلوس لتناول طعام الغداء
+    - هل هناك أي مقاعد متاحة اليوم
+    - أريد أن أعرف عن مائدة الغداء
+    - أريد أن أسأل عن مائدة للغداء
+    - من فضلك قل لي إذا كان الجدول متاحًا
+    - اسمحوا لي أن أعرف عن الجدول لتناول طعام الغداء
+    - هل أي طاولة متاحة للغداء
+    - هل لديك أي ترتيب طاولة هنا لتناول طعام الغداء
+    - هل يمكنك ترتيب طاولة لنا
+    - هل يمكنك إدارة طاولة لنا من فضلك
+    - هل يمكنك مساعدتي في العثور على طاولة لتناول طعام الغداء
+    - هل هناك أي طاولة متاحة اليوم
+    - أريد أن أعرف عن مائدة طعام الغداء
+    - أريد أن أسأل عن مائدة طعام للغداء
+    - من فضلك قل لي إذا كانت طاولة الطعام متوفرة
+    - اسمحوا لي أن أعرف عن مائدة الطعام للغداء
+    - أي طاولة طعام متاحة للغداء
+    - هل لديكم أي ترتيب طاولة طعام هنا لتناول طعام الغداء?
+    - هل يمكنك ترتيب طاولة طعام لنا
+    - هل يمكنك إدارة طاولة طعام لنا من فضلك
+    - هل يمكنك مساعدتي في العثور على طاولة طعام للغداء
+    - هل هناك أي طاولة طعام متاحة اليوم
+    - أريد أن أعرف عن بعض المكاتب لتناول طعام الغداء
+    - أريد أن أسأل عن مكتب لتناول طعام الغداء
+    - من فضلك قل لي إذا كان المكتب متاح
+    - اسمحوا لي أن أعرف عن المكتب لتناول طعام الغداء
+    - هو بعض المكاتب المتاحة للغداء
+    - هل لديك ترتيب مكتب هنا لتناول طعام الغداء
+    - هل يمكنك ترتيب مكتب لنا
+    - هل يمكنك إدارة مكتب لنا من فضلك
+    - هل يمكنك مساعدتي في العثور على أي مكتب لتناول طعام الغداء
+    - هل هناك أي مكتب متاح اليوم
+
+- intent: trigger_actions
+  examples: |
+    - action
+    - actions
+    - work
+    - trigger
