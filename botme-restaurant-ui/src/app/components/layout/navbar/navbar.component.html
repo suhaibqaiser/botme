@@ -1,0 +1,263 @@
+<!-- navbar -->
+<div class="fixed-top">
+  <div class="navbar-area navbar-dark">
+    <!-- mobile menu -->
+    <div class="mobile-nav">
+      <a href="home" class="mobile-brand">
+        <img src="assets/images/logo.png" alt="logo" class="blue-logo">
+      </a>
+      <!-- mobile navbar-option -->
+      <div class="navbar-option d-flex align-items-center">
+        <div class="navbar-option-item navbar-option-dots mobile-hide">
+          <button class="dropdown-toggle" type="button" id="mobileOptionDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="flaticon-menu-1"></i>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="mobileOptionDropdown">
+            <div class="navbar-option-item navbar-option-cart">
+              <a href="#" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
+              <span class="option-badge">2</span>
+            </div>
+            <div class="navbar-option-item navbar-option-order">
+              <a href="shops-grid" class="btn">
+                <i class="flaticon-shopping-cart-black-shape"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="navbar-option-item navbar-option-authentication">
+          <button class="navbar-authentication-button" type="button" id="auth2" data-bs-toggle="dropdown" aria-haspopup="true" ><i class="flaticon-add-user"></i></button>
+          <div class="authentication-box dropdown-menu" aria-labelledby="auth2">
+            <div class="authentication-close"><i class="flaticon-cancel"></i></div>
+            <div class="authentication-body">
+              <ul class="authentication-tab">
+                <li class="authentication-tab-item active" data-authentication-tab="1">Log In</li>
+                <li class="authentication-tab-item" data-authentication-tab="2">Sign Up</li>
+              </ul>
+              <div class="authentication-details">
+                <div class="authentication-details-item active" data-authentication-details="1">
+                  <form>
+                    <div class="form-group mb-20">
+                      <div class="input-group">
+                        <input type="text" class="form-control" placeholder="User Name" />
+                      </div>
+                    </div>
+                    <div class="form-group mb-20">
+                      <div class="input-group">
+                        <input type="password" class="form-control" placeholder="Password" />
+                      </div>
+                    </div>
+                    <div class="authentication-action mb-20">
+                      <div class="authentication-action-item">
+                        <a href="forget-password">Forget Password?</a>
+                      </div>
+                      <div class="authentication-action-item">
+                        <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" id="check3">
+                          <label class="custom-control-label" for="check3">Remember Me</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="authentication-btn">
+                      <button class="btn full-width btn-border mb-20">Log In</button>
+                      <button class="btn full-width"><i class="icofont-google-plus"></i>Log In With Google</button>
+                    </div>
+                  </form>
+                </div>
+                <div class="authentication-details-item" data-authentication-details="2">
+                  <form>
+                    <div class="form-group mb-20">
+                      <div class="input-group">
+                        <input type="text" class="form-control" placeholder="User Name" />
+                      </div>
+                    </div>
+                    <div class="form-group mb-20">
+                      <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Email" />
+                      </div>
+                    </div>
+                    <div class="form-group mb-20">
+                      <div class="input-group">
+                        <input type="password" class="form-control" placeholder="Password" />
+                      </div>
+                    </div>
+                    <div class="form-group mb-20">
+                      <div class="input-group">
+                        <input type="password" class="form-control" placeholder="Confirm Password" />
+                      </div>
+                    </div>
+                    <div class="authentication-action mb-20">
+                      <div class="authentication-action-item">
+                        <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" id="check4">
+                          <label class="custom-control-label" for="check4">I agree that my submitted data is being collected and stored. For further details on handling user data, see our <a href="privacy-policy">Privacy Policy</a>.</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="authentication-btn">
+                      <button class="btn full-width btn-border mb-20">Log In</button>
+                      <button class="btn full-width"><i class="icofont-google-plus"></i>Log In With Google</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="navbar-option-item navbar-option-search">
+          <button class="dropdown-toggle" type="button" id="search2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="flaticon-loupe"></i>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="search2">
+            <form>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search">
+                <button><i class="flaticon-loupe"></i></button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="navbar-option-item navbar-option-cart mobile-block">
+          <a href="#" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
+          <span class="option-badge">2</span>
+        </div>
+        <div class="navbar-option-item navbar-option-order mobile-block">
+          <a href="shops-grid" class="btn">
+            <i class="flaticon-shopping-cart-black-shape"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- desktop menu -->
+    <div class="main-nav">
+      <div class="container">
+        <nav class="navbar navbar-expand-md navbar-light">
+          <a class="navbar-brand" href="home">
+            <img src="assets/images/logo.png" alt="logo" class="logo">
+          </a>
+          <!-- nav-list -->
+          <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a href="#" class="nav-link dropdown-toggle active">HOME</a>
+              </li>
+              <li class="nav-item">
+                <a href="menu" class="nav-link">MENU</a>
+              </li>
+              <li class="nav-item">
+                <a href="reservations" class="nav-link dropdown-toggle">RESERVATIONS</a>
+              </li>
+              <li class="nav-item">
+                <a href="contact-us" class="nav-link">CONTACT US</a>
+              </li>
+            </ul>
+          </div>
+          <!-- navbar-option -->
+          <div class="navbar-option d-flex align-items-center">
+            <div class="navbar-option-item navbar-option-authentication">
+              <button class="navbar-authentication-button" type="button" id="auth1" data-bs-toggle="dropdown" aria-haspopup="true" ><i class="flaticon-add-user"></i></button>
+              <div class="authentication-box dropdown-menu" aria-labelledby="auth1">
+                <div class="authentication-close"><i class="flaticon-cancel"></i></div>
+                <div class="authentication-body">
+                  <ul class="authentication-tab">
+                    <li class="authentication-tab-item active" data-authentication-tab="1">Log In</li>
+                    <li class="authentication-tab-item" data-authentication-tab="2">Sign Up</li>
+                  </ul>
+                  <div class="authentication-details">
+                    <div class="authentication-details-item active" data-authentication-details="1">
+                      <form>
+                        <div class="form-group mb-20">
+                          <div class="input-group">
+                            <input type="text" class="form-control" placeholder="User Name" />
+                          </div>
+                        </div>
+                        <div class="form-group mb-20">
+                          <div class="input-group">
+                            <input type="password" class="form-control" placeholder="Password" />
+                          </div>
+                        </div>
+                        <div class="authentication-action mb-20">
+                          <div class="authentication-action-item">
+                            <a href="forget-password">Forget Password?</a>
+                          </div>
+                          <div class="authentication-action-item">
+                            <div class="custom-control custom-checkbox">
+                              <input type="checkbox" class="custom-control-input" id="check1">
+                              <label class="custom-control-label" for="check1">Remember Me</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="authentication-btn">
+                          <button class="btn full-width btn-border mb-20">Log In</button>
+                          <button class="btn full-width"><i class="icofont-google-plus"></i>Log In With Google</button>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="authentication-details-item" data-authentication-details="2">
+                      <form>
+                        <div class="form-group mb-20">
+                          <div class="input-group">
+                            <input type="text" class="form-control" placeholder="User Name" />
+                          </div>
+                        </div>
+                        <div class="form-group mb-20">
+                          <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Email" />
+                          </div>
+                        </div>
+                        <div class="form-group mb-20">
+                          <div class="input-group">
+                            <input type="password" class="form-control" placeholder="Password" />
+                          </div>
+                        </div>
+                        <div class="form-group mb-20">
+                          <div class="input-group">
+                            <input type="password" class="form-control" placeholder="Confirm Password" />
+                          </div>
+                        </div>
+                        <div class="authentication-action mb-20">
+                          <div class="authentication-action-item">
+                            <div class="custom-control custom-checkbox">
+                              <input type="checkbox" class="custom-control-input" id="check2">
+                              <label class="custom-control-label" for="check2">I agree that my submitted data is being collected and stored. For further details on handling user data, see our <a href="privacy-policy">Privacy Policy</a>.</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="authentication-btn">
+                          <button class="btn full-width btn-border mb-20">Log In</button>
+                          <button class="btn full-width"><i class="icofont-google-plus"></i>Log In With Google</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="navbar-option-item navbar-option-search">
+              <button class="dropdown-toggle" type="button" id="search1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="flaticon-loupe"></i>
+              </button>
+              <div class="dropdown-menu" aria-labelledby="search1">
+                <form>
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                    <button><i class="flaticon-loupe"></i></button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="navbar-option-item navbar-option-cart">
+              <a href="#" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
+              <span class="option-badge">2</span>
+            </div>
+            <div class="navbar-option-item navbar-option-order">
+              <a href="online-shop" class="btn text-nowrap">
+                Order Online <i class="flaticon-shopping-cart-black-shape"></i>
+              </a>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- .end navbar -->
