@@ -16,7 +16,10 @@ class ActionFetchStatus(Action):
         result = requests.get(url).json()
 
         if result.get('status') == 'success':
-            dispatcher.utter_message(text="Table is available")
+            table_id = result.get('payload')[0].get('tableId')
+            area_name = result.get('payload')[0].get('area').get('areaName')
+
+            dispatcher.utter_message(text="Please proceed to the table labeled {0} on {1}".format(table_id, area_name))
         else:
             dispatcher.utter_message(text="Table with the asked capacity is not available at the moment")
         return []
