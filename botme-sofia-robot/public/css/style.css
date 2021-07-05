@@ -46,7 +46,7 @@ section {
   margin: 1.5em auto;
   width: 400px;
 }
-button {
+.speak-button{
   display: block;
   -webkit-appearance: none;
   -moz-appearance: none;

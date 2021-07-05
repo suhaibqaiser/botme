@@ -1,4 +1,4 @@
-const Corpus = require('../models/corpus')
+const Corpus = require('../models/nlp/corpus')
 
 function getCorpusList() {
     return Corpus.find({}, {data: 0, contextData: 0, "_id": 0, "__v": 0},)

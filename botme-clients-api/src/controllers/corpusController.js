@@ -1,4 +1,4 @@
-const Corpus = require("../models/corpus")
+const Corpus = require("../models/nlp/corpus")
 const Response = require("../models/response")
 const corpusService = require('../services/corpusService')
 const nlplib = require('../utils/nlp/nlp')

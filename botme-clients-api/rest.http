@@ -1,0 +1,18 @@
+POST http://localhost:5005/webhooks/rest/webhook  HTTP/1.1
+content-type: application/json
+
+{
+  "sender": "demo",
+  "message": "hi"
+}
+
+###
+
+
+POST http://localhost:3000/nlp/communicate  HTTP/1.1
+content-type: application/json
+
+{
+  "message": "need a table for 3 tomorrow"
+
+}

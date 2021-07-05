@@ -1,5 +1,5 @@
 const Session = require("../models/session")
-const Conversation = require("../models/conversation")
+const Conversation = require("../models/nlp/conversation")
 
 async function getConversation(sessionId) {
 

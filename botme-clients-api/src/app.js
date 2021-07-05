@@ -25,6 +25,9 @@ mongoose.connect(mongoDB, {
     useFindAndModify: false
 });
 const db = mongoose.connection;
+db.once("open", function () {
+    console.log("Connected to MongoDB Server");
+});
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 let corsOptions = {

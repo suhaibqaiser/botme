@@ -4,13 +4,14 @@ const socket = io();
 
 const outputYou = document.querySelector('.output-you');
 const outputBot = document.querySelector('.output-bot');
+const button = document.getElementsByClassName('speak-button')[0]
 //const outputConfidence = document.querySelector('.output-confidence');
 //const outputDebug = document.querySelector('.output-debug');
 
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = new SpeechRecognition();
 let voices = [];
-recognition.lang = 'en-US';
+recognition.lang = 'en-UK';
 recognition.interimResults = false;
 recognition.maxAlternatives = 1;
 
@@ -24,6 +25,7 @@ document.querySelector('#logout').addEventListener('click', () => {
 recognition.addEventListener('speechstart', () => {
   //outputDebug.textContent = '\nSpeech has been detected.'
   console.log('Speech has been detected.');
+  button.style.background = "orangered"
 });
 
 recognition.addEventListener('result', (e) => {
@@ -49,6 +51,7 @@ recognition.addEventListener('result', (e) => {
 recognition.addEventListener('speechend', () => {
   //outputDebug.textContent += '\nSpeech Ended'
   recognition.stop();
+  button.style.background = "linear-gradient(180deg, #39C2C9 0%, #3FC8C9 80%, #3FC8C9 100%)"
 });
 
 recognition.addEventListener('error', (e) => {
@@ -61,8 +64,10 @@ window.speechSynthesis.onvoiceschanged = function() {
 function synthVoice(text) {
   const synth = window.speechSynthesis;
   const utterance = new SpeechSynthesisUtterance();
-  utterance.voice = voices[1];
+  utterance.voice = voices[2];
   utterance.text = text;
+  utterance.lang = 'en-UK'
+  utterance.rate = Number(1.1)
   synth.speak(utterance);
 }
 function getCookie(name) {

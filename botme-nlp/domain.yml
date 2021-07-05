@@ -1,0 +1,149 @@
+version: '2.0'
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+intents:
+  - inform
+  - affirm
+  - ar_reserve_table
+  - ar_greet
+  - reserve_table
+  - greet
+  - goodbye
+  - deny
+  - bot_challenge
+  - select_lang
+  - trigger_actions
+entities:
+  - date
+  - lang
+  - person
+  - phoneNumber
+slots:
+  lang:
+    type: categorical
+    influence_conversation: true
+    values:
+      - en
+      - ar
+  person:
+    type: text
+    influence_conversation: true
+  date:
+    type: text
+    influence_conversation: true
+  phoneNumber:
+    type: text
+    influence_conversation: true
+responses:
+  utter_askforPhoneNumber:
+    - text: Please tell me your phone number
+    - text: Provide your phone number
+    - text: I need your number to call you
+
+  utter_select_lang:
+    - buttons:
+        - payload: en
+          title: English
+        - payload: ar
+          title: عربى
+      text: 'English or Arabic:'
+  utter_set_lang:
+    - text: Language is now changed to 'English'
+    - condition:
+        - type: slot
+          name: lang
+          value: ar
+      text: تم تغيير اللغة الآن إلى العربية
+  utter_greet:
+    - text: Hey!
+    - text: Hi!
+    - text: How may I help you?
+    - condition:
+        - type: slot
+          name: lang
+          value: ar
+      text: مرحبا بكم في مطعمنا
+  utter_goodbye:
+    - text: Thank you, have a nice day. Bye!
+  utter_affirm:
+    - text: Okay got it
+  utter_deny:
+    - text: No problem
+  utter_try_again:
+    - text: Would you like to try again? 
+  utter_iamabot:
+    - text: I am a bot, powered by Rasa.
+  utter_table_reserve:
+    - text: All right! I am booking a table for {person} persons. This booking is valid for {date} from 7pm to 9pm. Does this sounds fine?
+    - condition:
+        - type: slot
+          name: lang
+          value: ar
+      text: حسنًا ، أحجز طاولة لـ {person} أشخاص نيابة عنك لـ {date}?
+  utter_askfordate:
+    - buttons:
+        - payload: today
+          title: Today
+        - payload: tomorrow
+          title: Tomorrow
+        - payload: weekend
+          title: Weekend
+      text: When do you need this reservation?
+
+  utter_askforpersons:
+    - text: How many persons?
+    - text: How many people?
+    - condition:
+        - type: slot
+          name: lang
+          value: ar
+      text: كم عدد الاشخاص؟
+
+  utter_ar_greet:
+    - text: مرحبا بكم في مطعمنا
+    - text: تحياتي ، كيف لي أن أساعدك
+    - text: مرحبا بكم في مطعمنا ، ماذا تريد أن تعرف
+  utter_ar_askforpersons:
+    - text: كم عدد الاشخاص؟
+    - text: كم شخص؟
+  utter_ar_askfordate:
+    - buttons:
+        - payload: اليوم
+          title: اليوم
+        - payload: غدا
+          title: غدا
+        - payload: عطلة نهاية الاسبوع
+          title: عطلة نهاية الاسبوع
+      text: متى تحتاج هذا الحجز؟
+actions:
+  - utter_ar_askfordate
+  - utter_ar_askforpersons
+  - utter_ar_greet
+  - utter_askfordate
+  - utter_askforpersons
+  - utter_goodbye
+  - utter_greet
+  - utter_iamabot
+  - utter_select_lang
+  - utter_table_reserve
+  - utter_set_lang
+  - utter_affirm
+  - utter_deny
+  - utter_try_again
+  - utter_askforPhoneNumber
+  - action_fetch_status
+  - action_hello_world
+
+forms:
+  table_reserve_form:
+    required_slots:
+      phoneNumber:
+        - entity: phoneNumber
+          type: from_entity
+      date:
+        - entity: date
+          type: from_entity
+      person:
+        - entity: person
+          type: from_entity
