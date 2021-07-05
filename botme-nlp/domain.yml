@@ -13,12 +13,14 @@ intents:
   - deny
   - bot_challenge
   - select_lang
-  - trigger_actions
+  - thanks
 entities:
   - date
   - lang
   - person
   - phoneNumber
+  - orderType
+  - orderId
 slots:
   lang:
     type: categorical
@@ -35,11 +37,56 @@ slots:
   phoneNumber:
     type: text
     influence_conversation: true
+  orderType:
+    type: categorical
+    influence_conversation: true
+    values:
+      - pickup
+      - dinein
+      - delivery
+  orderId:
+    type: text
+    influence_conversation: true
+
 responses:
+  utter_thanks_response:
+    - text: You are welcome!
+    - text: Welcome!
+    - text: You're welcome!
+  utter_orderTypeSet:
+    - text: You may want a table with us. For that, can you tell me how many people are you?
+    - condition:
+        - type: slot
+          name: orderType
+          value: pickup
+      text: Please provide Order ID to get the status of the order. Or if you want to place a new pickup order then proceed to the order counter.
+    - condition:
+        - type: slot
+          name: orderType
+          value: delivery
+      text: Please provide delivery code to get the status of the order.
+
+  utter_pickup_response:
+    - text: Your order {orderId} is ready. Please pick it from the pickup counter.
+
+  utter_delivery_response:
+    - text: Your order {orderId} is ready. Please pick it from the delivery counter.
+
+
   utter_askforPhoneNumber:
     - text: Please tell me your phone number
     - text: Provide your phone number
     - text: I need your number to call you
+
+  #  utter_askforCustomer:
+  #    - buttons:
+  #        - payload: true
+  #          title: Yes
+  #        - payload: false
+  #          title: No
+  #     text: Are you an existing customer?
+  #  #    - text: Do you have an account with us?
+  #  #    - text: Did you registered with us before?
 
   utter_select_lang:
     - buttons:
@@ -64,6 +111,15 @@ responses:
           name: lang
           value: ar
       text: مرحبا بكم في مطعمنا
+  utter_greet_buttons:
+    - buttons:
+        - payload: pickup
+          title: Pick-up
+        - payload: dinein
+          title: Dine-in
+        - payload: delivery
+          title: Delivery
+      text: Hey! How may I help you?
   utter_goodbye:
     - text: Thank you, have a nice day. Bye!
   utter_affirm:
@@ -71,7 +127,7 @@ responses:
   utter_deny:
     - text: No problem
   utter_try_again:
-    - text: Would you like to try again? 
+    - text: Would you like to try again?
   utter_iamabot:
     - text: I am a bot, powered by Rasa.
   utter_table_reserve:
@@ -132,8 +188,12 @@ actions:
   - utter_deny
   - utter_try_again
   - utter_askforPhoneNumber
-  - action_fetch_status
   - action_hello_world
+  - action_fetch_tables
+  - utter_greet_buttons
+  - utter_delivery_response
+  - utter_pickup_response
+  - utter_thanks_response
 
 forms:
   table_reserve_form:

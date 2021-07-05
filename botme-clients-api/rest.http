@@ -3,7 +3,15 @@ content-type: application/json
 
 {
   "sender": "demo",
-  "message": "hi"
+  "message": "hello"
+}
+###
+
+POST  http://localhost:5005/model/parse HTTP/1.1
+content-type: application/json
+
+{
+  "text": "I need a table for tomorrow. I will be comming with 13 people"
 }
 
 ###

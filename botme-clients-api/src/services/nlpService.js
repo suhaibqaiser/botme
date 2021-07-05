@@ -11,7 +11,7 @@ async function process(sessionId, text) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
-        timeout: 600,  
+        //timeout: 600,
     })
     .then(res => res.json())
     .then(json => res = json)
