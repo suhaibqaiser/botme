@@ -1,11 +1,30 @@
 version: "2.0"
 stories:
-  - story: greeting dinein
+  - story: search customer
     steps:
-      - intent: greet
-      - action: utter_greet_buttons
+      - action: utter_ask_for_customer_phone
+      - intent: inform
+        entities:
+          - phoneNumber: 0123456789
+      - action: action_fetch_customer
+      - action: utter_customer_response
+      - action: utter_customer_name
 
-  - story: dinein
+  - story: new customer
+    steps:
+      - action: utter_ask_for_customer_phone
+      - intent: inform
+        entities:
+          - phoneNumber: 0123456789
+      - action: action_fetch_customer
+      - action: utter_customer_response
+      - intent: inform
+        entities:
+          - customerName: James
+      - action: action_set_name
+      - action: utter_customer_name
+
+  - story: dinein 2
     steps:
       - intent: inform
         entities:
@@ -15,8 +34,186 @@ stories:
         entities:
           - person: 2
       - action: action_fetch_tables
+      - action: utter_ask_for_customer_phone
+      - intent: inform
+        entities:
+          - phoneNumber: 0123456789
+      - action: action_fetch_customer
+      - action: utter_customer_response
+      - action: utter_customer_name
+      - action: action_add_reservation
+      - slot_was_set:
+          - reservationId: 9309
+      - action: utter_table_code
+
+  - story: interactive_story_1
+    steps:
+      - intent: greet
+      - action: action_reset_slots
+      - action: utter_greet_buttons
+      - intent: inform
+        entities:
+          - orderType: dinein
+      - slot_was_set:
+          - orderType: dinein
+      - action: utter_orderTypeSet
+      - intent: inform
+        entities:
+          - person: 2
+      - slot_was_set:
+          - person: 2
+      - action: action_fetch_tables
+      - action: utter_ask_for_customer_phone
+      - intent: inform
+        entities:
+          - phoneNumber: 0123456789
+      - slot_was_set:
+          - phoneNumber: 0123456789
+      - action: action_fetch_customer
+      - slot_was_set:
+          - customerId: a54c9086-96fb-4bb7-9da2-32fd2f6f4c2e
+      - slot_was_set:
+          - customerName: None
+      - slot_was_set:
+          - newCustomer: true
+      - slot_was_set:
+          - customerObjectId: a54c9086-96fb-4bb7-9da2-32fd2f6f4c2e
+      - action: utter_customer_response
+      - intent: inform
+        entities:
+          - customerName: John Snow
+      - slot_was_set:
+          - customerName: John Snow
+      - action: action_set_name
+      - action: utter_customer_name
+      - action: action_add_reservation
+      - slot_was_set:
+          - reservationId: 9309
+      - action: utter_table_code
+
+  - story: interactive_story_3
+    steps:
+      - intent: greet
+      - action: action_reset_slots
+      - action: utter_greet_buttons
+      - intent: inform
+        entities:
+          - orderType: dinein
+      - slot_was_set:
+          - orderType: dinein
+      - action: utter_orderTypeSet
+      - intent: inform
+        entities:
+          - person: '3'
+      - slot_was_set:
+          - person: '3'
+      - action: action_fetch_tables
+      - slot_was_set:
+          - tableObjectId: 60d375f8938e14a7fbaff5d5
+      - slot_was_set:
+          - tableId: MA-T1
+      - slot_was_set:
+          - areaName: Main Floor
+      - action: utter_ask_for_customer_phone
+      - intent: inform
+        entities:
+          - phoneNumber: '0123456789'
+      - slot_was_set:
+          - phoneNumber: '0123456789'
+      - action: action_fetch_customer
+      - slot_was_set:
+          - customerId: '1'
+      - slot_was_set:
+          - customerName: John Smith
+      - slot_was_set:
+          - newCustomer: null
+      - slot_was_set:
+          - customerObjectId: 60db2ebf89639113c70b733e
+      - action: utter_customer_response
+      - action: action_add_reservation
+      - slot_was_set:
+          - reservationId: '8003'
+      - action: utter_table_code
+
+  - story: interactive_story_1
+    steps:
+      - intent: greet
+      - action: action_reset_slots
+      - action: utter_greet_buttons
+      - intent: inform
+        entities:
+          - orderType: dinein
+      - slot_was_set:
+          - orderType: dinein
+      - action: utter_orderTypeSet
+      - intent: inform
+        entities:
+          - person: '5'
+      - slot_was_set:
+          - person: '5'
+      - action: action_fetch_tables
+      - slot_was_set:
+          - tableObjectId: 60ddab854f4bd61bd98a14be
+      - slot_was_set:
+          - tableId: MA-T5
+      - slot_was_set:
+          - areaName: Main Floor
+      - action: utter_ask_for_customer_phone
+      - intent: inform
+        entities:
+          - phoneNumber: '22222211114'
+      - slot_was_set:
+          - phoneNumber: '22222211114'
+      - action: action_fetch_customer
+      - slot_was_set:
+          - customerId: 77d6d704-022c-4edf-8fea-9fcc9dd93994
+      - slot_was_set:
+          - customerName: ''
+      - slot_was_set:
+          - newCustomer: 'true'
+      - slot_was_set:
+          - customerObjectId: 60e7426efce21e83c0bf71d2
+      - action: utter_customer_response
+      - intent: inform
+        entities:
+          - customerName: Hassan
+      - slot_was_set:
+          - customerName: Hassan
+      - action: action_set_name
+      - action: utter_customer_name
+      - action: action_add_reservation
+      - slot_was_set:
+          - reservationId: '3336'
+      - action: utter_table_code
       - intent: thanks
       - action: utter_thanks_response
+
+      # - story: dinein 3
+      #   steps:
+      #     - intent: inform
+      #       entities:
+      #         - orderType: dinein
+      #     - action: utter_orderTypeSet
+      #     - intent: inform
+      #       entities:
+      #         - person: 2
+      #     - action: utter_ask_for_customer_phone
+      #     - intent: inform
+      #       entities:
+      #         - phoneNumber: 0123456789
+      #     - action: action_fetch_customer
+      #     - slot_was_set:
+      #         - customerId: "1a21sd321asd58"
+      #         - customerName: ""
+      #     - action: utter_customer_response
+      #     - intent: inform
+      #       entities:
+      #         - customerName: James
+      #     - action: action_set_name
+      #     - action: utter_customer_name
+      #     - action: action_fetch_tables
+      #     - intent: thanks
+      #     - action: utter_thanks_response
 
   - story: pickup
     steps:
@@ -44,10 +241,6 @@ stories:
       - intent: thanks
       - action: utter_thanks_response
 
-  - story: thanks
-    steps:
-      - intent: thanks
-      - action: utter_thanks_response
 
 #  - story: set language
 #    steps:

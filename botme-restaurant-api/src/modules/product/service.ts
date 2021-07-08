@@ -5,5 +5,5 @@ export async function createProduct(product: any) {
 }
 
 export async function getProduct(queryParams: any) {
-    return Product.find(queryParams, {__v: 0, _id: 0}).populate("category")
+    return Product.find(queryParams, {__v: 0, _id: 0}).populate('productAddon').populate("category")
 }

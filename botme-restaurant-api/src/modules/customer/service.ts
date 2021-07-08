@@ -15,3 +15,7 @@ export async function getCustomer(queryParams: any) {
 export async function getCustomerByPhone(customerPhone: string) {
     return Customer.findOne({customerPhone: customerPhone})
 }
+
+export async function getAllCustomers() {
+    return Customer.find({})
+}

@@ -5,7 +5,7 @@ export async function getAllTables() {
 }
 
 export async function getTable(queryParams: any) {
-    return Table.find(queryParams, {_id: 0, __v: 0}).populate("area", {"tables": 0, _id: 0});
+    return Table.find(queryParams, { __v: 0}).populate("area", {"tables": 0, _id: 0});
 }
 
 export async function updateTable(table: any) {

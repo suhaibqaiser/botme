@@ -8,7 +8,7 @@ const ReservationSchema = createSchema(
         reservationSeats: Type.number({required: true}),
         reservationDatetime: Type.date({required: true}),
         reservationType: Type.string({enum: ['Walk-in', 'Booking'], required: true}),
-        reservationSource: Type.string({enum: ['On-Premises', 'Phone', 'Website', 'App'], required: true}),
+        reservationSource: Type.string({enum: ['On-Premises', 'Phone', 'Website', 'App', 'Sofia'], required: true}),
         reservationMeta: {
             customerArrival: Type.date(),
             customerWaiting: Type.number(),

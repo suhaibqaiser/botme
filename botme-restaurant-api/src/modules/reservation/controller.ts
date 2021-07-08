@@ -8,6 +8,7 @@ export async function addReservation(reservation: any) {
         response.status = "error"
         return response;
     }
+    reservation.reservationId = Math.floor(1000 + Math.random() * 9000);
 
     let result = await createReservation(reservation)
     if (result) {

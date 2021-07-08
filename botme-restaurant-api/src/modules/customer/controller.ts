@@ -1,5 +1,6 @@
 import {restResponse} from "../../utils/response";
-import {addCustomer, getCustomer, updateOneCustomer} from "./service";
+import {addCustomer, getAllCustomers, getCustomer, updateOneCustomer} from "./service";
+import {randomUUID} from "crypto";
 
 export async function findCustomer(filter: any) {
     let response = new restResponse()
@@ -52,6 +53,8 @@ export async function createCustomer(customer: any) {
         response.status = "error"
         return response;
     }
+    customer.customerId = randomUUID()
+    customer.customerActive = true
 
     let result = await addCustomer(customer)
     if (result) {
@@ -74,6 +77,21 @@ export async function updateCustomer(customer: any) {
     }
 
     let result = await updateOneCustomer(customer)
+    if (result) {
+        response.payload = result
+        response.status = "success"
+        return response
+    } else {
+        response.payload = "Customer not found"
+        response.status = "error"
+        return response
+    }
+}
+
+export async function getAllCustomer() {
+    let response = new restResponse()
+
+    let result = await getAllCustomers()
     if (result) {
         response.payload = result
         response.status = "success"

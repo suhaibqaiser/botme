@@ -1,7 +1,15 @@
 import {Request, Response} from "express";
-import {createCustomer, findCustomer, updateCustomer} from "./controller";
+import {createCustomer, findCustomer, getAllCustomer, updateCustomer} from "./controller";
 
 export default [
+    {
+        path: "/customer/",
+        method: "get",
+        handler: async (req: Request, res: Response) => {
+            let result = await getAllCustomer()
+            res.send(result);
+        }
+    },
     {
         path: "/customer/search",
         method: "get",

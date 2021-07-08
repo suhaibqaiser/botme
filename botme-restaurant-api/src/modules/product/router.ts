@@ -7,7 +7,7 @@ export default [
         path: "/product/add",
         method: "put",
         handler: async (req: Request, res: Response) => {
-            let result = await addProduct(req.body.product)
+            let result = await addProduct(req.body)
             res.send(result);
         }
     },

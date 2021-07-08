@@ -1,15 +1,23 @@
 import {restResponse} from "../../utils/response";
 import {createProduct, getProduct} from "./service";
+import {randomUUID} from "crypto";
 
-export async function addProduct(product: any) {
+export async function addProduct(products: [any]) {
     let response = new restResponse()
-    if (!product) {
+    if (products.length < 0) {
         response.payload = "product is required"
         response.status = "error"
         return response;
     }
+    let result
 
-    let result = await createProduct(product)
+    for (const product of products) {
+        const index = products.indexOf(product);
+        product.productId = randomUUID()
+        product.productActive = true
+        result = await createProduct(product)
+    }
+
     if (result) {
         response.payload = result
         response.status = "success"
