@@ -3,20 +3,19 @@
 <!--  <link rel="stylesheet" href="https://npm-scalableminds.s3.eu-central-1.amazonaws.com/@scalableminds/chatroom@master/dist/Chatroom.css" />-->
 </head>
 <body>
-  <div class="chat-container"></div>
+<div class="chat-container"></div>
 
-  <script src="js/chatbot/chatroom.min.js" />
-<!--  <script src="https://npm-scalableminds.s3.eu-central-1.amazonaws.com/@scalableminds/chatroom@master/dist/Chatroom.js" />-->
-
-  <script type="text/javascript">
-    var chatroom = new window.Chatroom({
-      host: "http://gofindmenu.com:5005",
-      title: "Chat with Sofia",
-      container: document.querySelector(".chat-container"),
-      welcomeMessage: "Hi, I am Sofia. How may I help you?",
-      speechRecognition: "en-UK",
-      voiceLang: "en-UK"
-    });
-    chatroom.openChat();
-  </script>
+<!--<script src="https://npm-scalableminds.s3.eu-central-1.amazonaws.com/@scalableminds/chatroom@master/dist/Chatroom.js"/></script>-->
+<script src="js/chatbot/chatroom.min.js"/></script>
+<script type="text/javascript">
+  var chatroom = new window.Chatroom({
+    host: "http://gofindmenu.com:5005",
+    title: "Chat with Sofia",
+    container: document.querySelector(".chat-container"),
+    welcomeMessage: "Hi, I am Sofia. How may I help you?",
+    speechRecognition: "en-UK",
+    voiceLang: "en-UK"
+  });
+  chatroom.openChat();
+</script>
 </body>
