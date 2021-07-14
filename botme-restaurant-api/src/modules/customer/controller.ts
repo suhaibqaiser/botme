@@ -9,12 +9,14 @@ export async function findCustomer(filter: any) {
         customerName: any | undefined;
         customerEmail: any | undefined;
         customerPhone: any | undefined;
+        customerId: any | undefined;
     }
 
     let queryParams: queryFilters = {
         customerName: undefined,
         customerEmail: undefined,
-        customerPhone: undefined
+        customerPhone: undefined,
+        customerId: undefined
     }
 
     if (filter.name) {
@@ -26,6 +28,11 @@ export async function findCustomer(filter: any) {
         queryParams.customerEmail = filter.email
     } else {
         delete queryParams.customerEmail
+    }
+    if (filter.customerId) {
+        queryParams.customerId = filter.customerId
+    } else {
+        delete queryParams.customerId
     }
     if (filter.phone) {
         queryParams.customerPhone = filter.phone

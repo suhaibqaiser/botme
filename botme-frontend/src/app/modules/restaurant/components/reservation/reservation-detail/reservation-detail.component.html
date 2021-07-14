@@ -1,0 +1,64 @@
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="fas fa-book mr-2"></i>
+            Reservation {{reservation.reservationId}}
+        </h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-outline-primary" (click)="saveChanges()">Save Changes</button>
+        </div>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body row">
+        <div class="col-md-6">
+            <dl>
+                <dt>Reservation Type</dt>
+                <dd>{{reservation.reservationType}}</dd>
+                <dt>Reservation Source</dt>
+                <dd>{{reservation.reservationSource}}</dd>
+            </dl>
+        </div>
+        <div class="col-md-6">
+            <dl>
+                <dt>Reservation Seats</dt>
+                <dd>{{reservation.reservationSeats}}</dd>
+                <dt>Reservation DateTime</dt>
+                <dd>{{reservation.reservationDatetime}}</dd>
+                <!-- <dt>Active</dt>
+          <dd>
+            <p-selectButton [options]="stateOptions" [(ngModel)]="corpus.active" optionLabel="label" optionValue="value"></p-selectButton>
+          </dd> -->
+            </dl>
+        </div>
+    </div>
+    <!-- /.card-body -->
+</div>
+
+<p-panel header="Reservation Details">
+    <div class="row">
+        <div class="col-md-6">
+            <div>
+                <h5>Customer</h5>
+                <ul>
+                    <li><span class="p-ml-2 mr-2">Customer Name: <b>{{reservation.customer.customerName}}</b></span>
+                    </li>
+                    <li><span class="p-ml-2 mr-2">Customer Email: <b>{{reservation.customer.customerEmail}}</b></span>
+                    </li>
+                    <li><span class="p-ml-2 mr-2">Customer Phone: <b>{{reservation.customer.customerPhone}}</b></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <h5>Table</h5>
+            <ul>
+                <li><span class="p-ml-2 mr-2">Table Name: <b>{{reservation.table.tableId}}</b></span>
+                </li>
+                <li><span class="p-ml-2 mr-2">Table Capacity: <b>{{reservation.table.tableSeats}}</b></span>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</p-panel>

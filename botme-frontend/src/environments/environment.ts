@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   apiBaseUrl: "http://localhost:3000",
+  apiRestaurantUrl: "http://localhost:3100",
   BearerToken: "ea2d3aeaad77865f9769974a920892f5"
 };
 
