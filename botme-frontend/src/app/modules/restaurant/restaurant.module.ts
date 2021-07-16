@@ -10,10 +10,22 @@ import { ReservationDetailComponent } from './components/reservation/reservation
 import { PanelModule } from 'primeng/panel';
 import { DividerModule } from 'primeng/divider';
 import { ButtonModule } from 'primeng/button';
-import {ToggleButtonModule} from 'primeng/togglebutton';
+import { ToggleButtonModule } from 'primeng/togglebutton';
+import { ProductListComponent } from './components/product/product-list/product-list.component';
+import { ProductDetailComponent } from './components/product/product-detail/product-detail.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { InputNumberModule } from 'primeng/inputnumber';
+import {InputTextModule} from 'primeng/inputtext';
+
 
 @NgModule({
-  declarations: [ReservationListComponent, CustomerListComponent, CustomerSingleComponent, ReservationDetailComponent],
+  declarations: [ReservationListComponent,
+    CustomerListComponent,
+    CustomerSingleComponent,
+    ReservationDetailComponent,
+    ProductListComponent,
+    ProductDetailComponent],
   imports: [
     CommonModule,
     RestaurantRoutingModule,
@@ -21,7 +33,11 @@ import {ToggleButtonModule} from 'primeng/togglebutton';
     PanelModule,
     DividerModule,
     ButtonModule,
-    ToggleButtonModule
+    ToggleButtonModule,
+    DropdownModule,
+    MultiSelectModule,
+    InputNumberModule,
+    InputTextModule
   ]
 })
 export class RestaurantModule {

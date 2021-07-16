@@ -1,4 +1,5 @@
 import {createSchema, Type, typedModel} from 'ts-mongoose';
+import {foodDB} from "../../../config/mongoDB";
 const AreaSchema = createSchema(
     {
         areaId: Type.string({maxlength: 256, required: true, unique: true}),
@@ -10,4 +11,4 @@ const AreaSchema = createSchema(
     {timestamps: {createdAt: true}}
 );
 
-export const Area = typedModel('Area', AreaSchema);
+export const Area = foodDB.model('Area', AreaSchema);

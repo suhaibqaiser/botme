@@ -1,5 +1,5 @@
 import {restResponse} from "../../utils/response";
-import {createProduct, getProduct} from "./service";
+import {createProduct, getProduct, updateProduct} from "./service";
 import {randomUUID} from "crypto";
 
 export async function addProduct(products: [any]) {
@@ -9,12 +9,24 @@ export async function addProduct(products: [any]) {
         response.status = "error"
         return response;
     }
+    console.log(products)
+
     let result
 
     for (const product of products) {
         const index = products.indexOf(product);
         product.productId = randomUUID()
         product.productActive = true
+        if (product.productVariant === '') {
+            delete product.productVariant
+        }
+        if (product.productAddon === '') {
+            delete product.productAddon
+        }
+        if (product.productImage === '') {
+            delete product.productImage
+        }
+
         result = await createProduct(product)
     }
 
@@ -33,12 +45,18 @@ export async function findProduct(filter: any) {
     let response = new restResponse()
 
     interface queryFilters {
+        productId: any | undefined;
         productName: any | undefined;
         productPrice: any | undefined;
         category: any | undefined;
     }
 
-    let queryParams: queryFilters = {productName: undefined, productPrice: undefined, category: undefined}
+    let queryParams: queryFilters = {
+        productId: undefined,
+        productName: undefined,
+        productPrice: undefined,
+        category: undefined
+    }
 
     if (filter.searchText) {
         queryParams.productName = {'$regex': filter.searchText, '$options': 'i'}
@@ -55,9 +73,34 @@ export async function findProduct(filter: any) {
     } else {
         delete queryParams.category
     }
+    if (filter.productId) {
+        queryParams.productId = filter.productId
+    } else {
+        delete queryParams.productId
+    }
 
     let result = await getProduct(queryParams)
     if (result.length != 0) {
+        response.payload = result
+        response.status = "success"
+        return response
+    } else {
+        response.payload = "product not found"
+        response.status = "error"
+        return response
+    }
+}
+
+export async function editProduct(product: any) {
+    let response = new restResponse()
+    if (!product) {
+        response.payload = "product is required"
+        response.status = "error"
+        return response;
+    }
+
+    let result = await updateProduct(product)
+    if (result) {
         response.payload = result
         response.status = "success"
         return response

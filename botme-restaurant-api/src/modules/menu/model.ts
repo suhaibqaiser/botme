@@ -1,4 +1,6 @@
 import {createSchema, Type, typedModel} from 'ts-mongoose';
+import {foodDB} from "../../config/mongoDB";
+
 
 const MenuSchema = createSchema(
     {
@@ -14,4 +16,4 @@ const MenuSchema = createSchema(
     {timestamps: {createdAt: true}}
 );
 
-export const Menu = typedModel('Menu', MenuSchema);
+export const Menu = foodDB.model('Menu', MenuSchema);

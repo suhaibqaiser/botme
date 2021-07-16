@@ -1,4 +1,5 @@
 import {createSchema, Type, typedModel} from 'ts-mongoose';
+import {dictionaryDB} from "../../config/mongoDB";
 
 const ProductSchema = createSchema(
     {
@@ -15,4 +16,4 @@ const ProductSchema = createSchema(
     {timestamps: {createdAt: true}}
 );
 
-export const Product = typedModel('Product', ProductSchema);
+export const Product = dictionaryDB.model('Product', ProductSchema);

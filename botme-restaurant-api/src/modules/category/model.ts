@@ -1,4 +1,5 @@
 import {createSchema, Type, typedModel} from 'ts-mongoose';
+import {dictionaryDB} from "../../config/mongoDB";
 const CategorySchema = createSchema(
     {
         categoryId: Type.string({maxlength: 256, required: true, unique: true}),
@@ -8,4 +9,4 @@ const CategorySchema = createSchema(
     {timestamps: {createdAt: true}}
 );
 
-export const Category = typedModel('Category', CategorySchema);
+export const Category = dictionaryDB.model('Category', CategorySchema);

@@ -20,8 +20,11 @@ function initDbConnection() {
     return db;
 }
 
+const foodDB = mongoose.connection.useDb('food');
+const dictionaryDB = mongoose.connection.useDb('dictionary');
+
 async function init() {
     await initDbConnection();
-};
+}
 
-export {init};
+export {init, foodDB, dictionaryDB};
