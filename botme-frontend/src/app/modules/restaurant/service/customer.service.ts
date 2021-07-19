@@ -24,6 +24,11 @@ export class CustomerService {
     return this.http.get(url);
   }
 
+  getCustomerByName(name: string): Observable<any> {
+    const url = `${this.apiBaseUrl}/customer/search/?name=${name}`;
+    return this.http.get(url);
+  }
+
   registerCustomer(customer: object): Observable<any> {
     const url = `${this.apiBaseUrl}/customer/add`;
     const body = { customer: customer };

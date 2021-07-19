@@ -16,7 +16,10 @@ import { ProductDetailComponent } from './components/product/product-detail/prod
 import { DropdownModule } from 'primeng/dropdown';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { InputNumberModule } from 'primeng/inputnumber';
-import {InputTextModule} from 'primeng/inputtext';
+import { InputTextModule } from 'primeng/inputtext';
+import { ChipsModule } from 'primeng/chips';
+import { CardModule } from 'primeng/card';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 
 @NgModule({
@@ -37,7 +40,10 @@ import {InputTextModule} from 'primeng/inputtext';
     DropdownModule,
     MultiSelectModule,
     InputNumberModule,
-    InputTextModule
+    InputTextModule,
+    ChipsModule,
+    CardModule,
+    AutoCompleteModule
   ]
 })
 export class RestaurantModule {

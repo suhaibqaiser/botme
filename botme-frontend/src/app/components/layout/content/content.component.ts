@@ -18,7 +18,8 @@ export class ContentComponent implements OnInit {
 
   getPageHeader(): String {
 
-    let titleSplit = this.router.routerState.snapshot.url.split('/')
+    let url = this.router.routerState.snapshot.url.split('?')[0]
+    let titleSplit = url.split('/')
     let title = ''
     for (let t in titleSplit) {
       if (Number(t) != 0) {

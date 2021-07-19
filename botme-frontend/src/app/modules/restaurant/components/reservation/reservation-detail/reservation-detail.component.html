@@ -1,64 +1,88 @@
-<div class="card">
-    <div class="card-header">
-        <h3 class="card-title">
-            <i class="fas fa-book mr-2"></i>
-            Reservation {{reservation.reservationId}}
-        </h3>
-        <div class="card-tools">
-            <button type="button" class="btn btn-outline-primary" (click)="saveChanges()">Save Changes</button>
-        </div>
-    </div>
-    <!-- /.card-header -->
-    <div class="card-body row">
-        <div class="col-md-6">
-            <dl>
-                <dt>Reservation Type</dt>
-                <dd>{{reservation.reservationType}}</dd>
-                <dt>Reservation Source</dt>
-                <dd>{{reservation.reservationSource}}</dd>
-            </dl>
-        </div>
-        <div class="col-md-6">
-            <dl>
-                <dt>Reservation Seats</dt>
-                <dd>{{reservation.reservationSeats}}</dd>
-                <dt>Reservation DateTime</dt>
-                <dd>{{reservation.reservationDatetime}}</dd>
-                <!-- <dt>Active</dt>
-          <dd>
-            <p-selectButton [options]="stateOptions" [(ngModel)]="corpus.active" optionLabel="label" optionValue="value"></p-selectButton>
-          </dd> -->
-            </dl>
-        </div>
-    </div>
-    <!-- /.card-body -->
-</div>
+<p-card header="Reservation" subheader="Type" styleClass="p-card-shadow">
+    <ng-template pTemplate="header">
+    </ng-template>
+    <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
+            numquam
+            deserunt
+        </p>
+        <p-divider>
+            <div class="p-d-inline-flex p-ai-center">
+                <i class="pi pi-user p-mr-2 mr-2"></i>
+                <b>Basic</b>
+            </div>
+        </p-divider>
 
-<p-panel header="Reservation Details">
-    <div class="row">
-        <div class="col-md-6">
-            <div>
-                <h5>Customer</h5>
-                <ul>
-                    <li><span class="p-ml-2 mr-2">Customer Name: <b>{{reservation.customer.customerName}}</b></span>
-                    </li>
-                    <li><span class="p-ml-2 mr-2">Customer Email: <b>{{reservation.customer.customerEmail}}</b></span>
-                    </li>
-                    <li><span class="p-ml-2 mr-2">Customer Phone: <b>{{reservation.customer.customerPhone}}</b></span>
-                    </li>
-                </ul>
+        <div class="p-fluid">
+            <div class="p-field p-grid">
+                <label for="reservationType" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Reservation Type</label>
+                <div class="p-col-12 p-md-10">
+                    <p-dropdown id="reservationType" [options]="reservationType" optionLabel="name"
+                        formControlName="reservationType" optionValue="name">
+                    </p-dropdown>
+                </div>
+            </div>
+            <div class="p-field p-grid">
+                <label for="reservationSource" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Reservation Source</label>
+                <div class="p-col-12 p-md-10">
+                    <p-dropdown id="reservationSource" [options]="reservationSource" optionLabel="name"
+                        formControlName="reservationSource" optionValue="name">
+                    </p-dropdown>
+                </div>
             </div>
         </div>
 
-        <div class="col-md-6">
-            <h5>Table</h5>
-            <ul>
-                <li><span class="p-ml-2 mr-2">Table Name: <b>{{reservation.table.tableId}}</b></span>
-                </li>
-                <li><span class="p-ml-2 mr-2">Table Capacity: <b>{{reservation.table.tableSeats}}</b></span>
-                </li>
-            </ul>
-
+        <p-divider>
+            <div class="p-d-inline-flex p-ai-center">
+                <i class="pi pi-user p-mr-2 mr-2"></i>
+                <b>Customer</b>
+            </div>
+        </p-divider>
+        <div class="p-fluid">
+            <div class="p-field p-grid">
+                <label for="customer" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Customer</label>
+                <div class="p-col-12 p-md-10">
+                    <p-dropdown id="customer" [options]="customers" optionLabel="customerName"
+                        formControlName="customer" optionValue="_id" [filter]="true">
+                    </p-dropdown>
+                </div>
+            </div>
         </div>
-    </div>
-</p-panel>
+
+        <p-divider>
+            <div class="p-d-inline-flex p-ai-center">
+                <i class="pi pi-user p-mr-2 mr-2"></i>
+                <b>Table</b>
+            </div>
+        </p-divider>
+        <div class="p-fluid">
+            <div class="p-field p-grid">
+                <label for="table" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Table</label>
+                <div class="p-col-12 p-md-10">
+                    <p-dropdown id="table" formControlName="table" [filter]="true" optionValue="_id"
+                        optionLabel="customerName" [options]="customers">
+                    </p-dropdown>
+                </div>
+            </div>
+        </div>
+        <p-divider>
+            <div class="p-d-inline-flex p-ai-center">
+                <i class="pi pi-user p-mr-2 mr-2"></i>
+                <b>Meta</b>
+            </div>
+        </p-divider>
+
+        <ng-template pTemplate="footer">
+            <p-button label="Save" icon="pi pi-check"></p-button>
+            <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-secondary"
+                [style]="{'margin-left': '.5em'}">
+            </p-button>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <p-button label="Save" action="submit" icon="pi pi-check"></p-button>
+            <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-secondary"
+                [style]="{'margin-left': '.5em'}"></p-button>
+        </ng-template>
+    </form>
+
+</p-card>
