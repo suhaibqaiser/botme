@@ -1,19 +1,11 @@
 import http from "http";
 import express from "express";
-import cors from "cors";
 import {applyMiddleware, applyRoutes} from "./utils";
 import middleware from "./middleware";
 import routes from "./modules";
 import {initDependencies} from './config';
 
-
 const router = express();
-const corsOptions = {
-    origin: '*',
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
-
-router.use(cors(corsOptions));
 applyMiddleware(middleware, router);
 applyRoutes(routes, router);
 
