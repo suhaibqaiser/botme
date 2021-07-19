@@ -1,5 +1,5 @@
 import {Request, Response} from "express";
-import {addReservation, editReservation, findReservation} from "./controller";
+import {addReservation, editReservation, findReservation, findReservations} from "./controller";
 
 export default [
     {
@@ -23,6 +23,14 @@ export default [
         method: "get",
         handler: async (req: Request, res: Response) => {
             let result = await findReservation(String(req.query.reservationId))
+            res.send(result);
+        }
+    },
+    {
+        path: "/reservation/findAll",
+        method: "get",
+        handler: async (req: Request, res: Response) => {
+            let result = await findReservations()
             res.send(result);
         }
     }

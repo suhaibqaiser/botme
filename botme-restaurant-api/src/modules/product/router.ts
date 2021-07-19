@@ -1,5 +1,5 @@
 import {Request, Response} from "express";
-import {addProduct, findProduct} from "./controller";
+import {addProduct, editProduct, findProduct} from "./controller";
 
 
 export default [
@@ -11,14 +11,20 @@ export default [
             res.send(result);
         }
     },
-
     {
         path: "/product/search",
         method: "get",
         handler: async (req: Request, res: Response) => {
             let result = await findProduct(req.query)
             res.send(result);
-            //res.send(req.query)
+        }
+    },
+    {
+        path: "/product/update",
+        method: "post",
+        handler: async (req: Request, res: Response) => {
+            let result = await editProduct(req.body.product)
+            res.send(result);
         }
     }
 ]

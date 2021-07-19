@@ -9,5 +9,9 @@ export async function updateReservation(reservation: any) {
 }
 
 export async function getReservation(reservationId: string) {
-    return Reservation.findOne({reservationId: reservationId}).populate("customer").populate("table")
+    return Reservation.findOne({reservationId: reservationId})
+}
+
+export async function getAllReservation() {
+    return Reservation.find({}).populate("customer").populate("table")
 }

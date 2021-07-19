@@ -57,6 +57,12 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {pageTitle: 'Corpus'},
         loadChildren: () => import('./modules/corpus/corpus.module').then(m => m.CorpusModule)
+      },
+      {
+        path: 'restaurant',
+        canActivate: [AuthGuard],
+        data: {pageTitle: 'Restaurant'},
+        loadChildren: () => import('./modules/restaurant/restaurant.module').then(m => m.RestaurantModule)
       }
     ]
   }

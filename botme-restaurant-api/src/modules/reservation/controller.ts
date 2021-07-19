@@ -1,5 +1,5 @@
 import {restResponse} from "../../utils/response";
-import {createReservation, getReservation, updateReservation} from "./service";
+import {createReservation, getReservation, updateReservation, getAllReservation} from "./service";
 
 export async function addReservation(reservation: any) {
     let response = new restResponse()
@@ -53,6 +53,20 @@ export async function findReservation(reservationId: string) {
     }
 
     let result = await getReservation(reservationId)
+    if (result) {
+        response.payload = result
+        response.status = "success"
+        return response
+    } else {
+        response.payload = "reservation not found"
+        response.status = "error"
+        return response
+    }
+}
+
+export async function findReservations() {
+    let response = new restResponse()
+    let result = await getAllReservation()
     if (result) {
         response.payload = result
         response.status = "success"
