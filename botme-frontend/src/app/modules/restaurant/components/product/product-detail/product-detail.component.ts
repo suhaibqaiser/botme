@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../service/product.service';
 import { Product } from '../../../model/product';
+import { CategoryService } from '../../../service/category.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -11,7 +12,9 @@ import { Product } from '../../../model/product';
 })
 export class ProductDetailComponent implements OnInit {
 
-  constructor(private productservice: ProductService, private route: ActivatedRoute, private fb: FormBuilder) {
+  constructor(private productservice: ProductService,
+    private categoryService: CategoryService,
+    private route: ActivatedRoute, private fb: FormBuilder) {
   }
 
   productForm = this.fb.group({
@@ -62,12 +65,10 @@ export class ProductDetailComponent implements OnInit {
 
 
     if (this.productForm.invalid) {
-
       return;
     }
 
     if (this.formMode === 'update') {
-
       this.updateProduct();
     } else {
       this.addProduct()
@@ -94,7 +95,7 @@ export class ProductDetailComponent implements OnInit {
   }
 
   getCategories() {
-    this.productservice.getCategories().subscribe(
+    this.categoryService.getCategories().subscribe(
       result => {
         this.categories = result.payload
       }

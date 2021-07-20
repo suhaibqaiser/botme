@@ -1,88 +1,101 @@
-<p-card header="Reservation" subheader="Type" styleClass="p-card-shadow">
+<p-card header="Reservation {{reservationId}}" subheader="{{formMode}} Customer Reservation Details"
+    styleClass="p-card-shadow">
     <ng-template pTemplate="header">
     </ng-template>
     <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
-            numquam
-            deserunt
-        </p>
-        <p-divider>
-            <div class="p-d-inline-flex p-ai-center">
-                <i class="pi pi-user p-mr-2 mr-2"></i>
-                <b>Basic</b>
-            </div>
-        </p-divider>
+        <div>
+            <p-divider>
+                <div class="p-d-inline-flex p-ai-center">
+                    <i class="pi pi-user p-mr-2 mr-2"></i>
+                    <b>Basic</b>
+                </div>
+            </p-divider>
 
-        <div class="p-fluid">
-            <div class="p-field p-grid">
-                <label for="reservationType" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Reservation Type</label>
-                <div class="p-col-12 p-md-10">
-                    <p-dropdown id="reservationType" [options]="reservationType" optionLabel="name"
-                        formControlName="reservationType" optionValue="name">
-                    </p-dropdown>
+            <div class="p-fluid">
+                <div class="p-field p-grid">
+                    <label for="reservationType" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Reservation Type</label>
+                    <div class="p-col-12 p-md-10">
+                        <p-dropdown id="reservationType" [options]="reservationType" optionLabel="name"
+                            formControlName="reservationType" optionValue="name" placeholder="Select reservation type">
+                        </p-dropdown>
+                    </div>
+                </div>
+                <div class="p-field p-grid">
+                    <label for="reservationSource" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Reservation Source</label>
+                    <div class="p-col-12 p-md-10">
+                        <p-dropdown id="reservationSource" [options]="reservationSource" optionLabel="name"
+                            formControlName="reservationSource" optionValue="name"
+                            placeholder="Select reservation source"
+                            [ngClass]="{'ng-invalid ng-dirty': reservationForm.controls['reservationSource'].invalid}">
+                        </p-dropdown>
+                    </div>
+                </div>
+                <div class="p-field p-grid">
+                    <label for="reservationSeats" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Reservation Seats</label>
+                    <div class="p-col-12 p-md-10">
+                        <p-inputNumber id="reservationSeats" formControlName="reservationSeats" inputId="minmax"
+                            inputId="minmax" mode="decimal" [min]="1" [max]="100"
+                            placeholder="Enter number of guests [1-100]"
+                            [ngClass]="{'ng-invalid ng-dirty' : reservationForm.controls['reservationSeats'].status === 'INVALID'}">
+                        </p-inputNumber>
+                    </div>
                 </div>
             </div>
-            <div class="p-field p-grid">
-                <label for="reservationSource" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Reservation Source</label>
-                <div class="p-col-12 p-md-10">
-                    <p-dropdown id="reservationSource" [options]="reservationSource" optionLabel="name"
-                        formControlName="reservationSource" optionValue="name">
-                    </p-dropdown>
+
+            <p-divider>
+                <div class="p-d-inline-flex p-ai-center">
+                    <i class="pi pi-user p-mr-2 mr-2"></i>
+                    <b>Customer</b>
+                </div>
+            </p-divider>
+            <div class="p-fluid">
+                <div class="p-field p-grid">
+                    <label for="customer" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Customer</label>
+                    <div class="p-col-12 p-md-10">
+                        <p-dropdown id="customer" [options]="customers" optionLabel="customerName"
+                            formControlName="customer" optionValue="_id" [filter]="true" placeholder="Select customer"
+                            [ngClass]="{'ng-invalid ng-dirty': reservationForm.controls['customer'].invalid}">
+                        </p-dropdown>
+
+                    </div>
+                </div>
+            </div>
+            <p-divider>
+                <div class="p-d-inline-flex p-ai-center">
+                    <i class="pi pi-user p-mr-2 mr-2"></i>
+                    <b>Table</b>
+                </div>
+            </p-divider>
+            <div class="p-fluid">
+                <div class="p-field p-grid">
+                    <label for="table" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Table</label>
+                    <div class="p-col-12 p-md-10">
+                        <p-dropdown id="table" formControlName="table" [filter]="true" optionValue="_id"
+                            optionLabel="tableId" [options]="tables" placeholder="Select table"
+                            [ngClass]="{'ng-invalid ng-dirty': reservationForm.controls['table'].invalid}">
+                            >
+                        </p-dropdown>
+                    </div>
+                </div>
+            </div>
+            <p-divider>
+                <div class="p-d-inline-flex p-ai-center">
+                    <i class="pi pi-user p-mr-2 mr-2"></i>
+                    <b>Meta</b>
+                </div>
+            </p-divider>
+            <div class="p-fluid">
+                <div class="p-field p-grid">
+                    <!-- <label>{{reservation.reservationMeta.customerSeated}}</label>
+                    <label>{{reservation.reservationMeta.customerDeparture}}</label> -->
                 </div>
             </div>
         </div>
-
-        <p-divider>
-            <div class="p-d-inline-flex p-ai-center">
-                <i class="pi pi-user p-mr-2 mr-2"></i>
-                <b>Customer</b>
-            </div>
-        </p-divider>
-        <div class="p-fluid">
-            <div class="p-field p-grid">
-                <label for="customer" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Customer</label>
-                <div class="p-col-12 p-md-10">
-                    <p-dropdown id="customer" [options]="customers" optionLabel="customerName"
-                        formControlName="customer" optionValue="_id" [filter]="true">
-                    </p-dropdown>
-                </div>
-            </div>
-        </div>
-
-        <p-divider>
-            <div class="p-d-inline-flex p-ai-center">
-                <i class="pi pi-user p-mr-2 mr-2"></i>
-                <b>Table</b>
-            </div>
-        </p-divider>
-        <div class="p-fluid">
-            <div class="p-field p-grid">
-                <label for="table" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Table</label>
-                <div class="p-col-12 p-md-10">
-                    <p-dropdown id="table" formControlName="table" [filter]="true" optionValue="_id"
-                        optionLabel="customerName" [options]="customers">
-                    </p-dropdown>
-                </div>
-            </div>
-        </div>
-        <p-divider>
-            <div class="p-d-inline-flex p-ai-center">
-                <i class="pi pi-user p-mr-2 mr-2"></i>
-                <b>Meta</b>
-            </div>
-        </p-divider>
-
-        <ng-template pTemplate="footer">
-            <p-button label="Save" icon="pi pi-check"></p-button>
-            <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-secondary"
-                [style]="{'margin-left': '.5em'}">
-            </p-button>
-        </ng-template>
-        <ng-template pTemplate="footer">
-            <p-button label="Save" action="submit" icon="pi pi-check"></p-button>
-            <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-secondary"
+        <div class="footer">
+            <p-button label="Save" type="submit" icon="pi pi-check"></p-button>
+            <p-button label="Cancel" [routerLink]="['../']" icon="pi pi-times" styleClass="p-button-secondary"
                 [style]="{'margin-left': '.5em'}"></p-button>
-        </ng-template>
+        </div>
     </form>
 
 </p-card>

@@ -5,7 +5,7 @@ export async function createReservation(reservation: any) {
 }
 
 export async function updateReservation(reservation: any) {
-    return Reservation.findOneAndUpdate({reservationId: reservation.reservationId}, reservation)
+    return Reservation.findOneAndUpdate({reservationId: reservation.reservationId}, reservation, {new: true})
 }
 
 export async function getReservation(reservationId: string) {

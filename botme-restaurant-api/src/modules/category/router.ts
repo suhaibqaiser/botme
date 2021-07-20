@@ -1,5 +1,5 @@
 import {Request, Response} from "express";
-import {addCategory, getAllCategory} from "./controller";
+import {addCategory, editCategory, getAllCategory, removeCategory} from "./controller";
 
 
 export default [
@@ -12,10 +12,26 @@ export default [
         }
     },
     {
+        path: "/category/edit",
+        method: "post",
+        handler: async (req: Request, res: Response) => {
+            let result = await editCategory(req.body.category)
+            res.send(result);
+        }
+    },
+    {
         path: "/category/all",
         method: "get",
         handler: async (req: Request, res: Response) => {
             let result = await getAllCategory()
+            res.send(result);
+        }
+    },
+    {
+        path: "/category/remove",
+        method: "delete",
+        handler: async (req: Request, res: Response) => {
+            let result = await removeCategory(req.query.categoryId)
             res.send(result);
         }
     }

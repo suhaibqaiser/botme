@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {environment} from "../../../../environments/environment";
-import {Observable} from "rxjs";
+import { Injectable } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import { environment } from "../../../../environments/environment";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +21,17 @@ export class ReservationService {
   findReservation(reservationId: string): Observable<any> {
     const url = `${this.apiBaseUrl}/reservation/find?reservationId=${reservationId}`;
     return this.http.get(url);
+  }
+
+  editReservation(reservation: any): Observable<any> {
+    const url = `${this.apiBaseUrl}/reservation/edit`;
+    let body = { reservation: reservation }
+    return this.http.post(url, body);
+  }
+
+  addReservation(reservation: any): Observable<any> {
+    const url = `${this.apiBaseUrl}/reservation/add`;
+    let body = { reservation: reservation }
+    return this.http.post(url, body);
   }
 }

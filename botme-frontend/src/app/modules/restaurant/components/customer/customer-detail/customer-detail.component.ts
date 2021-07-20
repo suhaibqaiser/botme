@@ -5,11 +5,11 @@ import { CustomerService } from '../../../service/customer.service';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-customer-single',
-  templateUrl: './customer-single.component.html',
-  styleUrls: ['./customer-single.component.css']
+  selector: 'app-customer-detail',
+  templateUrl: './customer-detail.component.html',
+  styleUrls: ['./customer-detail.component.css']
 })
-export class CustomerSingleComponent implements OnInit {
+export class CustomerDetailComponent implements OnInit {
 
   constructor(private customerService: CustomerService, private route: ActivatedRoute, private fb: FormBuilder) {
   }
@@ -78,9 +78,6 @@ export class CustomerSingleComponent implements OnInit {
   }
 
   addCustomer(): void {
-    console.log(this.customerForm.getRawValue().customerName)
-    console.log(this.customerForm.getRawValue().customerEmail)
-    console.log(this.customerForm.getRawValue().customerPhone)
     this.customer.customerName = this.customerForm.getRawValue().customerName
     this.customer.customerEmail = this.customerForm.getRawValue().customerEmail
     this.customer.customerPhone = this.customerForm.getRawValue().customerPhone

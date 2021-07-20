@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CustomerListComponent } from './components/customer/customer-list/customer-list.component';
-import { CustomerSingleComponent } from './components/customer/customer-single/customer-single.component';
+import { CustomerDetailComponent } from './components/customer/customer-detail/customer-detail.component';
 import { ProductDetailComponent } from './components/product/product-detail/product-detail.component';
 import { ProductListComponent } from './components/product/product-list/product-list.component';
 import { ReservationDetailComponent } from './components/reservation/reservation-detail/reservation-detail.component';
 import { ReservationListComponent } from './components/reservation/reservation-list/reservation-list.component'
+import { CategoryListComponent } from './components/category/category-list/category-list.component';
 
 const routes: Routes = [
   {
@@ -15,7 +16,7 @@ const routes: Routes = [
   },
   {
     path: 'customer/detail',
-    component: CustomerSingleComponent
+    component: CustomerDetailComponent
   },
   {
     path: 'reservation',
@@ -32,6 +33,10 @@ const routes: Routes = [
   {
     path: 'product/detail',
     component: ProductDetailComponent
+  },
+  {
+    path: 'category',
+    component: CategoryListComponent
   },
 ];
 

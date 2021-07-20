@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Customer } from '../../../model/customer';
+import { MessageService, ConfirmationService, ConfirmEventType } from 'primeng/api';
 import { Reservation } from '../../../model/reservation';
 import { CustomerService } from '../../../service/customer.service';
 import { ReservationService } from '../../../service/reservation.service';
+import { TableService } from '../../../service/table.service';
 
 @Component({
   selector: 'app-reservation-detail',
@@ -16,10 +17,29 @@ export class ReservationDetailComponent implements OnInit {
   constructor(private reservationService: ReservationService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private tableService: TableService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) { }
 
-  reservation?: Reservation | any
+  reservation: Reservation = {
+    reservationMeta: {
+      customerArrival: '',
+      customerSeated: '',
+      customerDeparture: '',
+      customerWaiting: ''
+    },
+    reservationSeats: 1,
+    reservationDatetime: '',
+    reservationType: '',
+    reservationSource: '',
+    reservationId: '',
+    customer: '',
+    table: ''
+  };
+
+
   reservationId?: string
   formMode = 'update'
 
@@ -32,23 +52,18 @@ export class ReservationDetailComponent implements OnInit {
     { name: 'Sofia' }
   ]
   customers?: any
-  searchCustomer?: any
-
   tables?: any
-  suggestedTables?: any
 
   reservationForm = this.fb.group({
-    reservationSeats: new FormControl('', [Validators.required, Validators.maxLength(2)]),
-    reservationType: new FormControl(''),
-    reservationSource: new FormControl(''),
-    customer: new FormControl(''),
-    table: new FormControl(''),
-    reservationMeta: {
-      customerArrival: new FormControl(''),
-      customerWaiting: new FormControl(''),
-      customerSeated: new FormControl(''),
-      customerDeparture: new FormControl(''),
-    }
+    reservationSeats: new FormControl(null, [Validators.required, Validators.maxLength(3)]),
+    reservationType: new FormControl('', [Validators.required, Validators.maxLength(30)]),
+    reservationSource: new FormControl('', [Validators.required, Validators.maxLength(30)]),
+    customer: new FormControl('', [Validators.required, Validators.maxLength(30)]),
+    table: new FormControl('', [Validators.required, Validators.maxLength(30)]),
+    customerArrival: new FormControl(''),
+    customerWaiting: new FormControl(''),
+    customerSeated: new FormControl(''),
+    customerDeparture: new FormControl(''),
   });
 
 
@@ -57,12 +72,13 @@ export class ReservationDetailComponent implements OnInit {
       .subscribe(params => {
         this.reservationId = params.reservationId;
       });
-    if (!this.reservationId) {
-      this.formMode = 'new'
-    } else {
+    if (this.reservationId) {
       this.findReservation(this.reservationId);
+    } else {
+      this.formMode = 'new'
     }
     this.getCustomers()
+    this.getTables()
   }
 
   findReservation(rId: string) {
@@ -74,9 +90,23 @@ export class ReservationDetailComponent implements OnInit {
           reservationType: this.reservation.reservationType,
           reservationSeats: this.reservation.reservationSeats,
           customer: this.reservation.customer,
-          table: this.reservation.table
+          table: this.reservation.table,
+          customerArrival: '',
+          customerWaiting: '',
+          customerSeated: '',
+          customerDeparture: '',
         })
-        console.log(this.reservationForm)
+        if (this.reservation.reservationMeta) {
+          this.reservationForm.patchValue({
+            customerArrival: this.reservation.reservationMeta.customerArrival,
+            customerWaiting: this.reservation.reservationMeta.customerWaiting,
+            customerSeated: this.reservation.reservationMeta.customerSeated,
+            customerDeparture: this.reservation.reservationMeta.customerDeparture
+
+          })
+        }
+
+        console.log(this.reservation)
       }
     )
   }
@@ -88,24 +118,103 @@ export class ReservationDetailComponent implements OnInit {
       })
   }
 
-  filterCustomers(event: any) {
-    let query = event.query
-    this.searchCustomer = this.customers.filter(
-      (customer: { customerName: string; }) => customer.customerName
-        .toLowerCase()
-        .includes(query.toLowerCase())
-    );
+  getTables() {
+    this.tableService.getAllTables()
+      .subscribe(result => {
+        this.tables = result.payload;
+      })
   }
 
-  filterTables(event: any) {
-    let query = event.query
-    this.suggestedTables = this.tables.filter(
-      (table: { tableId: string; }) => table.tableId
-        .toLowerCase()
-        .includes(query.toLowerCase())
-    );
+  // displayCustomer(customerId: string) {
+  //   let customer_result = this.customers.filter(
+  //     (customer: { _id: string; }) => customer._id
+  //       .toLowerCase()
+  //       .includes(customerId.toLowerCase())
+  //   )
+  //   return customer_result[0]
+  // }
+
+  onSubmit() {
+    if (this.reservationForm.status === 'VALID') {
+      (this.formMode === 'update') ? this.updateReservation() : this.addReservation();
+    } else {
+      let controls = ''
+      for (let control in this.reservationForm.controls) {
+        if (this.reservationForm.controls[control].status === 'INVALID') {
+          controls = controls + control + ', '
+        }
+      }
+      alert(`Make sure all the required fields are properly set: ${controls}`);
+    }
   }
 
-  onSubmit() { }
-  saveChanges() { }
+  updateReservation() {
+    this.confirmationService.confirm({
+      message: 'Do you want to update this record?',
+      header: 'Update Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.reservation.reservationSeats = this.reservationForm.getRawValue().reservationSeats
+        this.reservation.table = this.reservationForm.getRawValue().table
+        this.reservation.customer = this.reservationForm.getRawValue().customer
+        this.reservation.reservationType = this.reservationForm.getRawValue().reservationType
+        this.reservation.reservationSource = this.reservationForm.getRawValue().reservationSource
+
+        this.reservationService.editReservation(this.reservation).subscribe(result => {
+          (result.status === 'success') ?
+            this.messageService.add({ severity: 'info', summary: 'Update Success', detail: 'Reservation updated!' }) :
+            this.messageService.add({ severity: 'error', summary: 'Update Failed', detail: `Reason: ${result.payload}` })
+        });
+      },
+      reject: (type: any) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
+            break;
+        }
+      }
+    });
+  }
+
+  addReservation() {
+    this.confirmationService.confirm({
+      message: 'Do you want to add this record?',
+      header: 'Add Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        console.log(this.reservationForm);
+
+        console.log(this.reservationForm.getRawValue().reservationSeats);
+
+        this.reservation.reservationSeats = this.reservationForm.getRawValue().reservationSeats
+        this.reservation.table = this.reservationForm.getRawValue().table
+        this.reservation.customer = this.reservationForm.getRawValue().customer
+        this.reservation.reservationType = this.reservationForm.getRawValue().reservationType
+        this.reservation.reservationSource = this.reservationForm.getRawValue().reservationSource
+
+
+        console.log(this.reservation);
+
+        // this.reservationService.addReservation(this.reservation).subscribe(result => {
+        //   (result.status === 'success') ?
+        //     this.messageService.add({ severity: 'info', summary: 'Add Success', detail: 'Reservation Add!' }) :
+        //     this.messageService.add({ severity: 'error', summary: 'Add Failed', detail: `Reason: ${result.payload}` })
+        // });
+
+      },
+      reject: (type: any) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
+            break;
+        }
+      }
+    });
+  }
 }

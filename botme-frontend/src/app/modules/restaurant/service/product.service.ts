@@ -28,11 +28,6 @@ export class ProductService {
     return this.http.get(url);
   }
 
-  getCategories(): Observable<any> {
-    const url = `${this.apiBaseUrl}/category/all`;
-    return this.http.get(url);
-  }
-
   updateProduct(product: any): Observable<any> {
     const url = `${this.apiBaseUrl}/product/update`;
     const body = { product: product };
