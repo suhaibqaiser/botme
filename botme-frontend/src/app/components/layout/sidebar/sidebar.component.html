@@ -1,122 +1,108 @@
-<!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a routerLink="/home" class="brand-link">
-        <img src="../../../../assets/img/AdminLTELogo.png" alt="AdminLTE Logo"
-            class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">Sofia Bot Console</span>
-    </a>
-
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
-                <img src="../../../../assets/img/avatar2.png" class="img-circle elevation-2" alt="User Image">
-            </div>
-            <div class="info">
-                <a routerLink="/home" class="d-block">Sofia Admin</a>
-            </div>
-        </div>
-
-        <!--    &lt;!&ndash; SidebarSearch Form &ndash;&gt;-->
-        <!--    <div class="form-inline">-->
-        <!--      <div class="input-group" data-widget="sidebar-search">-->
-        <!--        <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">-->
-        <!--        <div class="input-group-append">-->
-        <!--          <button class="btn btn-sidebar">-->
-        <!--            <i class="fas fa-search fa-fw"></i>-->
-        <!--          </button>-->
-        <!--        </div>-->
-        <!--      </div>-->
-        <!--    </div>-->
-
-        <!-- Sidebar Menu -->
-        <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <!-- Add icons to the links using the .nav-icon class
-       with font-awesome or any other icon font library -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon pi pi-check"></i>
-                        <p> Clients
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a class="nav-link" routerLink="/client" routerLinkActive="activebutton">
-                                <i class="pi pi-tablet nav-icon"></i>
-                                <p>Clients</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" routerLink="/session" routerLinkActive="activebutton">
-                                <i class="pi pi-cloud nav-icon"></i>
-                                <p>Sessions</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" routerLink="/corpus" routerLinkActive="activebutton">
-                                <i class="pi pi-briefcase nav-icon"></i>
-                                <p>Corpus</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="nav-item menu-open">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon pi pi-check"></i>
-                        <p> Restaurant
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a class="nav-link" routerLink="/restaurant/reservation" routerLinkActive="activebutton">
-                                <i class="pi pi-book nav-icon"></i>
-                                <p>Reservations</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a class="nav-link" routerLink="/restaurant/customer" routerLinkActive="activebutton">
-                                <i class="pi pi-users nav-icon"></i>
-                                <p>Customers</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a class="nav-link" routerLink="/restaurant/category" routerLinkActive="activebutton">
-                                <i class="pi pi-filter nav-icon"></i>
-                                <p>Categories</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a class="nav-link" routerLink="/restaurant/product" routerLinkActive="activebutton">
-                                <i class="pi pi-shopping-cart nav-icon"></i>
-                                <p>Products</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <!--        <li class="nav-item">-->
-                <!--          <a href="#" class="nav-link">-->
-                <!--            <i class="nav-icon fas fa-th"></i>-->
-                <!--            <p>-->
-                <!--              Simple Link-->
-                <!--              <span class="right badge badge-danger">New</span>-->
-                <!--            </p>-->
-                <!--          </a>-->
-                <!--        </li>-->
-            </ul>
-        </nav>
-        <!-- /.sidebar-menu -->
+<div class="side-nav">
+    <div class="side-nav-inner">
+        <ul class="side-nav-menu scrollable">
+            <li class="nav-item dropdown">
+                <a routerLink="/home">
+                    <span class="icon-holder">
+                        <i class="anticon anticon-dashboard"></i>
+                    </span>
+                    <span class="title">Home</span>
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="dropdown-toggle" href="javascript:void(0);">
+                    <span class="icon-holder">
+                        <i class="anticon anticon-pie-chart"></i>
+                    </span>
+                    <span class="title">Clients</span>
+                    <span class="arrow">
+                        <i class="arrow-icon"></i>
+                    </span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/client" routerLinkActive="activebutton">
+                            Clients
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/session" routerLinkActive="activebutton">
+                            Sessions
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/corpus" routerLinkActive="activebutton">
+                            Corpus
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="dropdown-toggle" href="javascript:void(0);">
+                    <span class="icon-holder">
+                        <i class="anticon anticon-pie-chart"></i>
+                    </span>
+                    <span class="title">Restaurant</span>
+                    <span class="arrow">
+                        <i class="arrow-icon"></i>
+                    </span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/restaurant/reservation" routerLinkActive="activebutton">
+                            <i class="pi pi-book nav-icon"></i>
+                            <p>Reservations</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/restaurant/customer" routerLinkActive="activebutton">
+                            <i class="pi pi-users nav-icon"></i>
+                            <p>Customers</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/restaurant/category" routerLinkActive="activebutton">
+                            <i class="pi pi-filter nav-icon"></i>
+                            <p>Categories</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/restaurant/product" routerLinkActive="activebutton">
+                            <i class="pi pi-shopping-cart nav-icon"></i>
+                            <p>Products</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="dropdown-toggle" href="javascript:void(0);">
+                    <span class="icon-holder">
+                        <i class="anticon anticon-file"></i>
+                    </span>
+                    <span class="title">Multi Level</span>
+                    <span class="arrow">
+                        <i class="arrow-icon"></i>
+                    </span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="nav-item dropdown">
+                        <a href="javascript:void(0);">
+                            <span>Level 1</span>
+                            <span class="arrow">
+                                <i class="arrow-icon"></i>
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="">Level 2.1</a>
+                            </li>
+                            <li>
+                                <a href="">Level 2.2</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
     </div>
-    <!-- /.sidebar -->
-</aside>
+</div>

@@ -1,68 +1,68 @@
-<section class="content">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md">
-        <div class="card">
-          <div class="card-header">
-            <h2 class="card-title">Reservation List</h2>
-            <button type="button" class="btn btn-primary float-right"
-                    [routerLink]="['detail']">Add New
-            </button>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <table class="table table-bordered">
-              <thead>
-              <tr>
-                <th style="width: 10px">#</th>
-                <th>ID</th>
-                <th>Customer</th>
-                <th>Seats</th>
-                <th>Table</th>
-                <th>Type</th>
-                <th>Source</th>
-                <th>DateTime</th>
-<!--                <th style="width: 40px">Active</th>-->
-              </tr>
-              </thead>
-              <tbody>
-              <tr *ngFor="let reservation of reservations; let i = index" (click)="onSelect(reservation)"
-                  [class.selected]="reservation === selectedReservation">
-                <button type="button" class="btn btn-default"
-                        [routerLink]="['detail']" [queryParams]="{ reservationId: reservation.reservationId}">View
-                </button>
-                <td>{{reservation.reservationId}}</td>
-                <td >{{reservation.customer.customerName}}</td>
-
-                <td>{{reservation.reservationSeats}}</td>
-                <td>{{reservation.table.tableId}}</td>
-                <td>{{reservation.reservationType}}</td>
-                <td>{{reservation.reservationSource}}</td>
-                <td>{{reservation.createdAt}}</td>
-                <!--
-                <td><span *ngIf="corp.customer.customerActive === true"
-                          class="badge bg-success">Yes</span>
-                  <span *ngIf="corp.customer.customerActive === false"
-                        class="badge bg-danger">No</span>
-                </td>
-                -->
-              </tr>
-              </tbody>
-            </table>
-          </div>
-          <!-- /.card-body -->
-          <div class="card-footer clearfix">
-            <ul class="pagination pagination-sm m-0 float-right">
-              <li class="page-item"><a class="page-link" href="#">«</a></li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">»</a></li>
-            </ul>
-          </div>
-        </div>
-        <!-- /.card -->
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex align-items-center justify-content-between m-b-15">
+      <h4 class="m-b-0">Reservation List</h4>
+      <div class="card-toolbar">
+        <ul>
+          <!-- <li>
+            <a class="text-gray" href="javascript:void(0)">
+              <i class="anticon anticon-reload font-size-20"></i>
+            </a>
+          </li>-->
+          <li>
+            <a class="text-gray" href="javascript:void(0)">
+              <i class="anticon anticon-delete font-size-20"></i>
+            </a>
+          </li> 
+          <li>
+            <a class="text-gray" [routerLink]="['detail']">
+              <i class="anticon anticon-plus font-size-20"></i>
+              Add New
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
+    <p-table #dt1 [value]="reservations" [paginator]="true" [rows]="10" [loading]="loading"
+      [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [rowsPerPageOptions]="[10,25,50]">
+      <ng-template pTemplate="header">
+        <tr>
+          <!-- <th style="width: 10px">#</th> -->
+          <th style="width: 3rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th>ID</th>
+          <th>Customer</th>
+          <th>Seats</th>
+          <th>Table</th>
+          <th>Type</th>
+          <th>Source</th>
+          <th>DateTime</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-reservation>
+        <tr>
+          <td>
+            <p-tableCheckbox [value]="reservation"></p-tableCheckbox>
+          </td>
+          <td><button class="btn btn-primary btn-tone m-r-5" [routerLink]="['detail']"
+              [queryParams]="{ reservationId: reservation.reservationId}">
+              {{reservation.reservationId}}</button></td>
+          <td>{{reservation.customer.customerName}}</td>
+          <td>{{reservation.reservationSeats}}</td>
+          <td>{{reservation.table.tableId}}</td>
+          <td>{{reservation.reservationType}}</td>
+          <td>{{reservation.reservationSource}}</td>
+          <td>{{reservation.createdAt}}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="paginatorleft">
+        <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+      </ng-template>
+      <ng-template pTemplate="paginatorright">
+        <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+      </ng-template>
+    </p-table>
   </div>
-</section>
+</div>

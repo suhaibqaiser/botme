@@ -15,6 +15,8 @@ export class ProductListComponent implements OnInit {
     this.getProducts();
   }
 
+  loading = true
+
   products: Array<any> = [];
 
   selectedProduct?: string;
@@ -25,7 +27,10 @@ export class ProductListComponent implements OnInit {
 
   getProducts(): void {
     this.productService.getProducts()
-      .subscribe(result => this.products = result.payload);
+      .subscribe(result => {
+        this.products = result.payload
+        this.loading = false
+      });
   }
 
 }

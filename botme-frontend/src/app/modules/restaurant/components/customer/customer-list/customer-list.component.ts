@@ -9,7 +9,9 @@ import { CustomerService } from '../../../service/customer.service';
 })
 export class CustomerListComponent implements OnInit {
 
-  constructor(private customerService: CustomerService,private _router:Router,private route: ActivatedRoute) { }
+  constructor(private customerService: CustomerService, private _router: Router, private route: ActivatedRoute) { }
+
+  loading: boolean = true;
 
   ngOnInit(): void {
     this.getCustomers();
@@ -22,11 +24,14 @@ export class CustomerListComponent implements OnInit {
   onSelect(customer: any): void {
     this.selectedCustomer = customer.customerId;
   }
-  navigateToAddCustomer(){
+  navigateToAddCustomer() {
     this._router.navigate(['add-customer'], { relativeTo: this.route })
   }
   getCustomers(): void {
     this.customerService.getCustomers()
-      .subscribe(result => this.customers = result.payload);
+      .subscribe(result => {
+        this.customers = result.payload
+        this.loading = false;
+      });
   }
 }
