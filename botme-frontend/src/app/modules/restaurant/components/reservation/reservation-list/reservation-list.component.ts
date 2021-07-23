@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {ReservationService} from "../../../service/reservation.service";
+import { Component, OnInit } from '@angular/core';
+import { Table } from 'primeng/table';
+import { ReservationService } from "../../../service/reservation.service";
 
 @Component({
   selector: 'app-corpus-list',
@@ -10,6 +11,7 @@ export class ReservationListComponent implements OnInit {
 
   constructor(private reservationService: ReservationService) {
   }
+  loading: boolean = true;
 
   ngOnInit(): void {
     this.getAllReservation()
@@ -26,8 +28,11 @@ export class ReservationListComponent implements OnInit {
     this.reservationService.getAllReservation()
       .subscribe(result => {
         this.reservations = result.payload
+        this.loading = false
       })
   }
-
+  clear(table: Table) {
+    table.clear();
+  }
 
 }

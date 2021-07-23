@@ -12,24 +12,23 @@ export class ContentComponent implements OnInit {
 
   constructor(private router: Router, private actRouter: ActivatedRoute) {
   }
+  breadcrumbs: [string] = ['']
+
 
   ngOnInit(): void {
-  }
-
-  getPageHeader(): String {
 
     let url = this.router.routerState.snapshot.url.split('?')[0]
     let titleSplit = url.split('/')
     let title = ''
     for (let t in titleSplit) {
+
       if (Number(t) != 0) {
-        title = title + this.titleCase(titleSplit[t])
-        if (Number(t) != titleSplit.length-1) {
+        this.breadcrumbs.push(this.titleCase(titleSplit[t]))
+        if (Number(t) != titleSplit.length - 1) {
           title = title + ' / '
         }
       }
     }
-    return title;
   }
 
   titleCase(str: string) {
