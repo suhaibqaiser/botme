@@ -23,8 +23,10 @@
         </ul>
       </div>
     </div>
-    <p-table #dt1 [value]="customers" [paginator]="true" [rows]="10" [loading]="loading" [showCurrentPageReport]="true"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+
+    <p-table #dt1 [value]="customers" [responsive]="true" [paginator]="true" [rows]="10" [loading]="loading"
+      [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [rowsPerPageOptions]="[10,25,50]">
       <ng-template pTemplate="header">
         <tr>
           <!-- <th style="width: 10px">#</th> -->
@@ -68,5 +70,6 @@
         <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
       </ng-template>
     </p-table>
+
   </div>
 </div>
