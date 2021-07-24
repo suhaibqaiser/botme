@@ -40,7 +40,7 @@ export class ReservationDetailComponent implements OnInit {
   };
 
 
-  reservationId?: string
+  reservationId: string = ''
   formMode = 'update'
 
   reservationType = [{ name: 'Walk-in' }, { name: 'Booking' }]
@@ -79,6 +79,11 @@ export class ReservationDetailComponent implements OnInit {
     }
     this.getCustomers()
     this.getTables()
+
+    this.reservationForm.valueChanges.subscribe(res => {
+      this.reservation = res
+    })
+
   }
 
   findReservation(rId: string) {
@@ -105,8 +110,6 @@ export class ReservationDetailComponent implements OnInit {
 
           })
         }
-
-        console.log(this.reservation)
       }
     )
   }
@@ -124,15 +127,6 @@ export class ReservationDetailComponent implements OnInit {
         this.tables = result.payload;
       })
   }
-
-  // displayCustomer(customerId: string) {
-  //   let customer_result = this.customers.filter(
-  //     (customer: { _id: string; }) => customer._id
-  //       .toLowerCase()
-  //       .includes(customerId.toLowerCase())
-  //   )
-  //   return customer_result[0]
-  // }
 
   onSubmit() {
     if (this.reservationForm.status === 'VALID') {
@@ -154,12 +148,7 @@ export class ReservationDetailComponent implements OnInit {
       header: 'Update Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
-        this.reservation.reservationSeats = this.reservationForm.getRawValue().reservationSeats
-        this.reservation.table = this.reservationForm.getRawValue().table
-        this.reservation.customer = this.reservationForm.getRawValue().customer
-        this.reservation.reservationType = this.reservationForm.getRawValue().reservationType
-        this.reservation.reservationSource = this.reservationForm.getRawValue().reservationSource
-
+        this.reservation.reservationId = this.reservationId
         this.reservationService.editReservation(this.reservation).subscribe(result => {
           (result.status === 'success') ?
             this.messageService.add({ severity: 'info', summary: 'Update Success', detail: 'Reservation updated!' }) :
@@ -185,25 +174,11 @@ export class ReservationDetailComponent implements OnInit {
       header: 'Add Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
-        console.log(this.reservationForm);
-
-        console.log(this.reservationForm.getRawValue().reservationSeats);
-
-        this.reservation.reservationSeats = this.reservationForm.getRawValue().reservationSeats
-        this.reservation.table = this.reservationForm.getRawValue().table
-        this.reservation.customer = this.reservationForm.getRawValue().customer
-        this.reservation.reservationType = this.reservationForm.getRawValue().reservationType
-        this.reservation.reservationSource = this.reservationForm.getRawValue().reservationSource
-
-
-        console.log(this.reservation);
-
-        // this.reservationService.addReservation(this.reservation).subscribe(result => {
-        //   (result.status === 'success') ?
-        //     this.messageService.add({ severity: 'info', summary: 'Add Success', detail: 'Reservation Add!' }) :
-        //     this.messageService.add({ severity: 'error', summary: 'Add Failed', detail: `Reason: ${result.payload}` })
-        // });
-
+        this.reservationService.addReservation(this.reservation).subscribe(result => {
+          (result.status === 'success') ?
+            this.messageService.add({ severity: 'info', summary: 'Add Success', detail: 'Reservation Add!' }) :
+            this.messageService.add({ severity: 'error', summary: 'Add Failed', detail: `Reason: ${result.payload}` })
+        });
       },
       reject: (type: any) => {
         switch (type) {

@@ -2,31 +2,47 @@
   <div class="row">
     <div class="col-lg-5">
 
-      <div class="card card-primary card-outline">
-        <div class="card-header">
-          <h5 class="m-0">Robot Client List</h5>
-        </div>
+      <div class="card">
         <div class="card-body">
-          <h6 class="card-title">List all enrolled robot clients</h6>
-
-          <p class="card-text">Follow the link below to see the of list all enrolled robot clients
-          </p>
-          <a href="/client" class="btn btn-primary">Clients list</a>
+          <h4>Robot Client List</h4>
+          Follow the link below to see the of list all enrolled robot clients
         </div>
-      </div>
-      <div class="card card-outline">
-        <div class="card-header">
-          <h5 class="m-0">Conversation List</h5>
-        </div>
-        <div class="card-body">
-          <h6 class="card-title">List all conversations</h6>
-
-          <p class="card-text">Follow the link below to see the of list all conversations
-          </p>
-          <a href="/session" class="btn btn-primary">Conversation list</a>
+        <div class="card-footer">
+          <div class="text-right">
+            <button class="btn btn-primary" routerLink="/client">Robot List</button>
+          </div>
         </div>
       </div>
 
+      <div class="card">
+        <div class="card-body">
+          <h4>Conversation List</h4>
+          Follow the link below to see the of list all conversations
+        </div>
+        <div class="card-footer">
+          <div class="text-right">
+            <button class="btn btn-primary" routerLink="/session">Conversation List</button>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="col-lg-5">
+      <div class="card">
+        <div class="card-body">
+          <h4>Restaurant</h4>
+          Follow the link below to see the list of all restaurant related features
+        </div>
+        <div class="card-footer">
+          <div class="text-right">
+            <button class="btn btn-primary m-2" routerLink="/restaurant/customer">Customer List</button>
+            <button class="btn btn-primary m-2" routerLink="/restaurant/category">Category List</button>
+            <button class="btn btn-primary m-2" routerLink="/restaurant/product">Product List</button>
+            <button class="btn btn-primary m-2" routerLink="/restaurant/reservation">Reservation List</button>
+          </div>
+        </div>
+      </div>
 
     </div>
     <!-- /.col-md-6 -->
