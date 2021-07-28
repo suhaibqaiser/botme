@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Table } from 'primeng/table';
 import { CustomerService } from '../../../service/customer.service';
 
 @Component({
@@ -33,5 +34,9 @@ export class CustomerListComponent implements OnInit {
         this.customers = result.payload
         this.loading = false;
       });
+  }
+
+  clear(table: Table) {
+    table.clear();
   }
 }

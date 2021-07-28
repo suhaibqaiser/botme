@@ -1,0 +1,59 @@
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">Table Details</h3>
+    </div>
+
+    <div class="card-body">
+        <form [formGroup]="tableForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="tableId">Table ID: </label>
+                <input type="text" class="form-control form-control-border" formControlName="tableId" id="tableId"
+                    placeholder="Enter Table ID">
+            </div>
+            <div class="form-group">
+                <label for="tableSeats">Table Seats: </label>
+                <input type="text" class="form-control form-control-border" formControlName="tableSeats" id="tableSeats"
+                    placeholder="Enter Seats">
+            </div>
+            <div class="form-group">
+                <label for="area">Area: </label>
+                <p-dropdown id="area" [options]="areas" formControlName="area"
+                optionLabel="areaName" optionValue="_id"></p-dropdown>
+                <!-- <input type="text" class="form-control form-control-border" formControlName="area" id="area"
+                    placeholder="Enter Area"> -->
+            </div>
+
+            <div class="form-group">
+                <label for="tableOccupied">Table Occupied: </label>
+                <p-inputSwitch class="form-control" id="tableOccupied" formControlName="tableOccupied"></p-inputSwitch>
+            </div>
+
+            <div class="card-footer">
+                <button type="button" class="btn btn-secondary" [routerLink]="['../']">Cancel</button>
+                <button type="submit" class="btn btn-primary float-right" >
+                    Save
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Action Processed</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Changes saved!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    [routerLink]="['../']">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
