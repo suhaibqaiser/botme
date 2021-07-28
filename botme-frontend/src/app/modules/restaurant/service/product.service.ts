@@ -14,28 +14,28 @@ export class ProductService {
   apiBaseUrl = environment.apiRestaurantUrl;
 
   getProducts(): Observable<any> {
-    const url = `${this.apiBaseUrl}/product/search`;
+    const url = `${this.apiBaseUrl}/food/product/search`;
     return this.http.get(url);
   }
 
   getProductsByCategory(category: string): Observable<any> {
-    const url = `${this.apiBaseUrl}/product/search?category=${category}`;
+    const url = `${this.apiBaseUrl}/food/product/search?category=${category}`;
     return this.http.get(url);
   }
 
   getProductById(productId: string): Observable<any> {
-    const url = `${this.apiBaseUrl}/product/search?productId=${productId}`;
+    const url = `${this.apiBaseUrl}/food/product/search?productId=${productId}`;
     return this.http.get(url);
   }
 
   updateProduct(product: any): Observable<any> {
-    const url = `${this.apiBaseUrl}/product/update`;
+    const url = `${this.apiBaseUrl}/food/product/update`;
     const body = { product: product };
     return this.http.post(url, body);
   }
 
   addProduct(product: any): Observable<any> {
-    const url = `${this.apiBaseUrl}/product/add`;
+    const url = `${this.apiBaseUrl}/food/product/add`;
     const body = [product];
     return this.http.put(url, body);
   }

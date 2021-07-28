@@ -14,23 +14,23 @@ export class ReservationService {
   apiBaseUrl = environment.apiRestaurantUrl;
 
   getAllReservation(): Observable<any> {
-    const url = `${this.apiBaseUrl}/reservation/findAll`;
+    const url = `${this.apiBaseUrl}/food/reservation/findAll`;
     return this.http.get(url);
   }
 
   findReservation(reservationId: string): Observable<any> {
-    const url = `${this.apiBaseUrl}/reservation/find?reservationId=${reservationId}`;
+    const url = `${this.apiBaseUrl}/food/reservation/find?reservationId=${reservationId}`;
     return this.http.get(url);
   }
 
   editReservation(reservation: any): Observable<any> {
-    const url = `${this.apiBaseUrl}/reservation/edit`;
+    const url = `${this.apiBaseUrl}/food/reservation/edit`;
     let body = { reservation: reservation }
     return this.http.post(url, body);
   }
 
   addReservation(reservation: any): Observable<any> {
-    const url = `${this.apiBaseUrl}/reservation/add`;
+    const url = `${this.apiBaseUrl}/food/reservation/add`;
     let body = { reservation: reservation }
     return this.http.post(url, body);
   }

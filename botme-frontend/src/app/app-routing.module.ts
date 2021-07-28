@@ -63,6 +63,12 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {pageTitle: 'Restaurant'},
         loadChildren: () => import('./modules/restaurant/restaurant.module').then(m => m.RestaurantModule)
+      },
+      {
+        path: 'admin',
+        canActivate: [AuthGuard],
+        data: {pageTitle: 'Administration'},
+        loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
       }
     ]
   }

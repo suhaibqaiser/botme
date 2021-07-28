@@ -15,29 +15,29 @@ export class CustomerService {
   apiBaseUrl = environment.apiRestaurantUrl;
 
   getCustomers(): Observable<any> {
-    const url = `${this.apiBaseUrl}/customer/`;
+    const url = `${this.apiBaseUrl}/food/customer/`;
     return this.http.get(url);
   }
 
   getCustomerDetail(customerId: string): Observable<any> {
-    const url = `${this.apiBaseUrl}/customer/search/?customerId=${customerId}`;
+    const url = `${this.apiBaseUrl}/food/customer/search/?customerId=${customerId}`;
     return this.http.get(url);
   }
 
   getCustomerByName(name: string): Observable<any> {
-    const url = `${this.apiBaseUrl}/customer/search/?name=${name}`;
+    const url = `${this.apiBaseUrl}/food/customer/search/?name=${name}`;
     return this.http.get(url);
   }
 
   registerCustomer(customer: object): Observable<any> {
-    const url = `${this.apiBaseUrl}/customer/add`;
+    const url = `${this.apiBaseUrl}/food/customer/add`;
     const body = { customer: customer };
     return this.http.put(url, body);
   }
 
   updateCustomer(customer: object): Observable<any> {
 
-    const url = `${this.apiBaseUrl}/customer/update`;
+    const url = `${this.apiBaseUrl}/food/customer/update`;
     const body = { customer: customer };
     return this.http.post(url, body);
   }

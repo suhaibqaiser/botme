@@ -11,8 +11,6 @@ import { PanelModule } from 'primeng/panel';
 import { DividerModule } from 'primeng/divider';
 import { ButtonModule } from 'primeng/button';
 import { ToggleButtonModule } from 'primeng/togglebutton';
-import { ProductListComponent } from './components/product/product-list/product-list.component';
-import { ProductDetailComponent } from './components/product/product-detail/product-detail.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -20,11 +18,18 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ChipsModule } from 'primeng/chips';
 import { CardModule } from 'primeng/card';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { CategoryListComponent } from './components/category/category-list/category-list.component';
 import { TableModule } from "primeng/table";
 import { FormsModule } from '@angular/forms';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { DialogModule } from 'primeng/dialog';
+import { ProductListComponent } from './components/product/product-list/product-list.component';
+import { ProductDetailComponent } from './components/product/product-detail/product-detail.component';
+import { TableListComponent } from './components/table/table-list/table-list.component';
+import { OrderListComponent } from './components/order/order-list/order-list.component';
+import { MenuListComponent } from './components/menu/menu-list/menu-list.component';
+import { MenuDetailComponent } from './components/menu/menu-detail/menu-detail.component';
+import { OrderDetailComponent } from './components/order/order-detail/order-detail.component';
+import { TableDetailComponent } from './components/table/table-detail/table-detail.component';
 
 
 @NgModule({
@@ -34,7 +39,13 @@ import { DialogModule } from 'primeng/dialog';
     ReservationDetailComponent,
     ProductListComponent,
     ProductDetailComponent,
-    CategoryListComponent],
+    TableListComponent,
+    OrderListComponent,
+    MenuListComponent,
+    MenuDetailComponent,
+    OrderDetailComponent,
+    TableDetailComponent,
+  ],
   imports: [
     CommonModule,
     RestaurantRoutingModule,

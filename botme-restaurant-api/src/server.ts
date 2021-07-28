@@ -2,12 +2,14 @@ import http from "http";
 import express from "express";
 import {applyMiddleware, applyRoutes} from "./utils";
 import middleware from "./middleware";
-import routes from "./modules";
+import foodRoutes from "./modules/food";
+import dictionaryRoutes from "./modules/dictionary";
 import {initDependencies} from './config';
 
 const router = express();
 applyMiddleware(middleware, router);
-applyRoutes(routes, router);
+applyRoutes('/food', foodRoutes, router);
+applyRoutes('/dictionary', dictionaryRoutes, router);
 
 const {PORT = 3100} = process.env;
 const server = http.createServer(router);

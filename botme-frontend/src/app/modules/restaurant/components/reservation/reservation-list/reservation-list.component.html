@@ -13,7 +13,7 @@
             <a class="text-gray" href="javascript:void(0)">
               <i class="anticon anticon-delete font-size-20"></i>
             </a>
-          </li> 
+          </li>
           <li>
             <a class="text-gray" [routerLink]="['detail']">
               <i class="anticon anticon-plus font-size-20"></i>
@@ -25,22 +25,41 @@
     </div>
     <p-table #dt1 [value]="reservations" [responsive]="true" [paginator]="true" [rows]="10" [loading]="loading"
       [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-      [rowsPerPageOptions]="[10,25,50]">
+      [rowsPerPageOptions]="[10,25,50]"
+      [globalFilterFields]="['customer.customerName', 'reservationSeats','table.tableId','reservationType','reservationSource']">
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+          <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+            (click)="clear(dt1)"></button>
+          <span class="p-input-icon-left p-ml-auto" style="float: right;">
+            <i class="pi pi-search"></i>
+            <input #search pInputText type="text" (input)="dt1.filterGlobal(search.value, 'contains')"
+              placeholder="Search keyword" />
+          </span>
+        </div>
+      </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <!-- <th style="width: 10px">#</th> -->
           <th style="width: 3rem">
             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
           </th>
-          <th>ID</th>
-          <th>Customer</th>
-          <th>Seats</th>
-          <th>Table</th>
-          <th>Type</th>
-          <th>Source</th>
-          <th>DateTime</th>
+          <th pSortableColumn="reservationId">ID <p-sortIcon field="reservationId"></p-sortIcon>
+          </th>
+          <th pSortableColumn="customer.customerName">Customer <p-sortIcon field="customer.customerName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="reservationSeats">Seats <p-sortIcon field="reservationSeats"></p-sortIcon>
+          </th>
+          <th pSortableColumn="table.tableId">Table <p-sortIcon field="table.tableId"></p-sortIcon>
+          </th>
+          <th pSortableColumn="reservationType">Type <p-sortIcon field="reservationType"></p-sortIcon>
+          </th>
+          <th pSortableColumn="reservationSource">Source <p-sortIcon field="reservationSource"></p-sortIcon>
+          </th>
+          <th pSortableColumn="createdAt">DateTime <p-sortIcon field="createdAt"></p-sortIcon>
+          </th>
         </tr>
       </ng-template>
+     
       <ng-template pTemplate="body" let-reservation>
         <tr>
           <td>

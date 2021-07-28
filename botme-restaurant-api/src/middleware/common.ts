@@ -6,7 +6,7 @@ import compression from "compression";
 export const handleCors = (router: Router) =>
     router.use(cors({
         origin: true,
-        //credentials: true
+        credentials: true
     }));
 
 export const handleBodyRequestParsing = (router: Router) => {
