@@ -1,6 +1,20 @@
-<div class="card card-primary" xmlns="http://www.w3.org/1999/html">
+<div class="card card-primary">
     <div class="card-header">
-        <h3 class="card-title">Product Details</h3>
+        <div class="d-flex align-items-center justify-content-between m-b-15">
+            <h3 class="card-title">Product Details</h3>
+            <div class="card-toolbar">
+                <button pButton pRipple type="button" label="Back" icon="pi pi-chevron-left" *ngIf="!editMode"
+                    class="p-button-rounded p-button-success m-r-5" [routerLink]="['../']"></button>
+                <button pButton pRipple type="button" label="Delete" icon="pi pi-trash" *ngIf="editMode" [disabled]="true"
+                    class="p-button-rounded p-button-danger m-r-5"></button>
+                <button pButton pRipple type="button" label="Cancel" icon="pi pi-times" class="p-button-rounded m-r-5"
+                    *ngIf="editMode" (click)="disableEdit()"></button>
+                <button pButton pRipple type="button" label="Edit" icon="pi pi-pencil" class="p-button-rounded m-r-5"
+                    *ngIf="!editMode" (click)="enableEdit()"></button>
+                <button pButton pRipple type="button" label="Save" icon="pi pi-save" *ngIf="editMode"
+                    class="p-button-rounded p-button-secondary m-r-5" (click)="onSubmit()"></button>
+            </div>
+        </div>
     </div>
 
     <div class="card-body">
@@ -47,12 +61,12 @@
                         </p-multiSelect>
                     </div>
                 </div>
-                <div class="p-field p-grid" *ngIf="formMode === 'update'">
+                <div class="p-field p-grid" *ngIf="!this.newForm">
                     <label for="form-productVariant" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"> Product Variant:
                     </label>
                     <div class="p-col-12 p-md-10">
                         <p-multiSelect id="form-productVariant" [options]="variants" formControlName="productVariant"
-                            defaultLabel="Add a Variant" optionLabel="productName" display="chip" optionValue="_id">
+                            placeholder="Add a Variant" optionLabel="productName" display="chip" optionValue="_id">
                         </p-multiSelect>
                     </div>
                 </div>
@@ -82,12 +96,12 @@
             </div>
 
 
-            <div class="card-footer">
+            <!-- <div class="card-footer">
                 <button type="button" class="btn btn-secondary" [routerLink]="['../']">Cancel</button>
                 <button type="submit" class="btn btn-primary float-right">
                     Save
                 </button>
-            </div>
+            </div> -->
         </form>
     </div>
 </div>

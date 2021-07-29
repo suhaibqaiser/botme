@@ -18,6 +18,11 @@ export class ProductService {
     return this.http.get(url);
   }
 
+  getDictionaryProducts(name: string): Observable<any> {
+    const url = `${this.apiBaseUrl}/dictionary/product/search?searchText=${name}`;
+    return this.http.get(url);
+  }
+
   getProductsByCategory(category: string): Observable<any> {
     const url = `${this.apiBaseUrl}/food/product/search?category=${category}`;
     return this.http.get(url);

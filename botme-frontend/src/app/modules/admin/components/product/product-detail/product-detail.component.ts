@@ -33,7 +33,8 @@ export class ProductDetailComponent implements OnInit {
   });
 
   productId = ''
-  formMode = 'update';
+  editMode = false
+  newForm = false
   categories: any
   addons: any
   variants: any
@@ -52,15 +53,11 @@ export class ProductDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.queryParams
-      .subscribe(params => {
-        this.productId = params.productId;
-        this.product.productId = params.productId;
-      });
-
+    this.productId = this.route.snapshot.queryParams['productId'];
+    this.product.productId = this.productId;
 
     if (!this.product.productId) {
-      this.formMode = 'new'
+      this.newForm = true
     } else {
       this.getProductDetail(this.product.productId);
     }
@@ -70,8 +67,18 @@ export class ProductDetailComponent implements OnInit {
     this.productForm.valueChanges.subscribe(res => {
       this.product = res
     })
+    this.disableEdit()
+  }
+
+  disableEdit() {
+    this.editMode = false
+    this.productForm.disable()
+  }
 
 
+  enableEdit() {
+    this.editMode = true
+    this.productForm.enable()
   }
 
   onSubmit(): void {
@@ -79,10 +86,10 @@ export class ProductDetailComponent implements OnInit {
       return;
     }
 
-    if (this.formMode === 'update') {
+    if (!this.newForm) {
       this.updateProduct();
     } else {
-      this.addProduct()
+      this.addProduct();
     }
   }
 
@@ -144,9 +151,12 @@ export class ProductDetailComponent implements OnInit {
 
         console.log(this.product);
         this.productservice.updateProduct(this.product).subscribe(result => {
-          (result.status === 'success') ?
-            this.messageService.add({ severity: 'info', summary: 'Update Success', detail: 'Product updated!' }) :
+          if (result.status === 'success') {
+            this.messageService.add({ severity: 'info', summary: 'Update Success', detail: 'Product updated!' })
+            this.disableEdit()
+          } else {
             this.messageService.add({ severity: 'error', summary: 'Update Failed', detail: `Reason: ${result.payload}` })
+          }
         });
       },
       reject: (type: any) => {
@@ -171,10 +181,14 @@ export class ProductDetailComponent implements OnInit {
       icon: 'pi pi-info-circle',
       accept: () => {
         this.productservice.addProduct(this.product).subscribe(result => {
-          (result.status === 'success') ?
-            this.messageService.add({ severity: 'info', summary: 'Add Success', detail: 'Product Added!' }) :
+          if (result.status === 'success') {
+            this.messageService.add({ severity: 'info', summary: 'Add Success', detail: 'Product Added!' })
+            this.disableEdit()
+          } else {
             this.messageService.add({ severity: 'error', summary: 'Add Failed', detail: `Reason: ${result.payload}` })
+          }
         });
+
       },
       reject: (type: any) => {
         switch (type) {

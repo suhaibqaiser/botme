@@ -12,6 +12,7 @@ import { OrderListComponent } from './components/order/order-list/order-list.com
 import { OrderDetailComponent } from './components/order/order-detail/order-detail.component';
 import { TableListComponent } from './components/table/table-list/table-list.component';
 import { TableDetailComponent } from './components/table/table-detail/table-detail.component';
+import { CategoryListComponent } from './components/category/category-list/category-list.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,14 @@ const routes: Routes = [
   },
   {
     path: 'product/detail',
+    component: ProductDetailComponent
+  },
+  {
+    path: 'category',
+    component: CategoryListComponent
+  },
+  {
+    path: 'category/detail',
     component: ProductDetailComponent
   },
   {
