@@ -22,6 +22,7 @@ import { TableModule } from "primeng/table";
 import { FormsModule } from '@angular/forms';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { DialogModule } from 'primeng/dialog';
+import { CategoryListComponent } from './components/category/category-list/category-list.component'
 import { ProductListComponent } from './components/product/product-list/product-list.component';
 import { ProductDetailComponent } from './components/product/product-detail/product-detail.component';
 import { TableListComponent } from './components/table/table-list/table-list.component';
@@ -45,6 +46,7 @@ import { TableDetailComponent } from './components/table/table-detail/table-deta
     MenuDetailComponent,
     OrderDetailComponent,
     TableDetailComponent,
+    CategoryListComponent
   ],
   imports: [
     CommonModule,

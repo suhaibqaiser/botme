@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../service/product.service';
 import { Product } from '../../../model/product';
@@ -21,61 +21,114 @@ export class ProductDetailComponent implements OnInit {
   }
 
   productForm = this.fb.group({
-    productName: new FormControl('', [Validators.required, Validators.maxLength(30)]),
-    productDesc: new FormControl('', [Validators.maxLength(300)]),
-    productImage: new FormControl(''),
-    productAddon: new FormControl(''),
-    productVariant: new FormControl(''),
-    productPrice: new FormControl('', [Validators.required]),
-    category: new FormControl(''),
-    productTags: new FormControl(''),
-    productActive: true,
+    restaurantId: [''],
+    productId: [''],
+    productName: ['', Validators.required],
+    productType: ['', Validators.required],
+    productCategory: ['', Validators.required],
+    productSerialNo: [''],
+    productBarcode: [''],
+    productDesc: [''],
+    productIngredients: [''],
+    productRate: this.fb.group({
+      standard: [0, Validators.min(0.1)],
+      meal: [0],
+      addon: [0]
+    }),
+    productFlavor: [''],
+    productProportion: [''],
+    productToppings: [''],
+    productAddons: [''],
+    productNutrition: this.fb.group({
+      calories: [''],
+      fats: [''],
+      proteins: ['']
+    }),
+    productHistory: [''],
+    productImage: [''],
+    productTags: [''],
+    productAttributes: this.fb.group({
+      halal: [false],
+      vegan: [false],
+      vegetarian: [false],
+      glutenFree: [false],
+
+    }),
+    offeringTime: [''],
+    productVariant: [''],
+    productActive: [''],
   });
 
-  selectedProduct: any
-  productDictionary: any = [{}]
   productId = ''
+  validationError = { productName: false, productType: false, productCategory: false, standard: false }
   editMode = false
-  formMode = 'update';
+  newForm = false
+  productType = ['Item', 'Addon', 'Topping']
   categories: any
   addons: any
   variants: any
 
   product: Product = {
+    restaurantId: '1',
     productId: '',
     productName: '',
+    productType: '',
+    productCategory: '',
+    productSerialNo: '',
+    productBarcode: '',
     productDesc: '',
-    productImage: [null],
-    productAddon: [null],
-    productVariant: [null],
-    productPrice: 0,
+    productIngredients: '',
+    productRate: {
+      standard: 0,
+      meal: 0,
+      addon: 0
+    },
+    productFlavor: [''],
+    productProportion: [''],
+    productToppings: [''],
+    productAddons: [''],
+    productNutrition: {
+      calories: '',
+      fats: '',
+      proteins: ''
+    },
+    productHistory: '',
+    productImage: [''],
+    productTags: [''],
+    productAttributes: {
+      halal: true,
+      vegan: true,
+      vegetarian: true,
+      glutenFree: true,
+
+    },
+    offeringTime: [''],
+    productVariant: [''],
     productActive: true,
-    productTags: [null],
-    category: null
+    updatedAt: null,
+    createdAt: null
   }
 
   ngOnInit(): void {
-    this.route.queryParams
-      .subscribe(params => {
-        this.productId = params.productId;
-        this.product.productId = params.productId;
-      });
-
+    this.productId = this.route.snapshot.queryParams['productId'];
+    this.product.productId = this.productId;
 
     if (!this.product.productId) {
-      this.formMode = 'new'
+      this.newForm = true
     } else {
       this.getProductDetail(this.product.productId);
     }
+
     this.getCategories()
-    this.getProductAddons('60ddd76cea63a8111ebaa0b2')
+    this.getProductAddons()
 
     this.productForm.valueChanges.subscribe(res => {
       this.product = res
+      this.getProductVariants();
     })
+
     this.disableEdit()
   }
-
 
   disableEdit() {
     this.editMode = false
@@ -88,89 +141,63 @@ export class ProductDetailComponent implements OnInit {
     this.productForm.enable()
   }
 
-
   onSubmit(): void {
     if (this.productForm.invalid) {
+      (this.productForm.controls['productName'].errors) ? this.validationError.productName = true : false;
+      (this.productForm.controls['productType'].errors) ? this.validationError.productType = true : false;
+      (this.productForm.get('productRate') as FormGroup).get('standard')?.errors ? this.validationError.standard = true : false;
+      (this.productForm.controls['productCategory'].errors) ? this.validationError.productCategory = true : false;
+      
+      this.messageService.add({ severity: 'error', summary: 'Validation Failed', detail: `Kindly fill in the required fields` });
+
       return;
     }
 
-    if (this.formMode === 'update') {
+    if (!this.newForm) {
       this.updateProduct();
     } else {
-      this.addProduct()
+      this.addProduct();
     }
   }
 
   getProductDetail(productId: string): void {
     this.productservice.getProductById(productId).subscribe(
       result => {
-        if (result.status === 'success') this.product = result.payload[0]
-
-        if (this.product.category) {
-          this.getProductVariants(this.product.category._id)
+        this.product = result.payload[0]
+        delete this.product.createdAt;
+        delete this.product.updatedAt;
+        try {
+          this.productForm.patchValue(this.product);
+        } catch (err) {
+          console.log(err);
         }
         console.log(this.product);
-
-        this.productForm.patchValue({
-          productName: this.product.productName,
-          productDesc: this.product.productDesc,
-          productImage: this.product.productImage,
-          productAddon: this.product.productAddon,
-          productVariant: this.product.productVariant,
-          productPrice: this.product.productPrice,
-          productActive: this.product.productActive,
-          productTags: this.product.productTags,
-          category: this.product.category._id,
-        });
-
       }
     );
-  }
-
-  getDictionaryProducts(event: any) {
-    this.productservice.getDictionaryProducts(event.query).subscribe(
-      result => {
-        if (result.status === 'error') return this.productDictionary = [{ "productName": "Not Found" }]
-        return this.productDictionary = result.payload
-      }
-    )
-  }
-
-  setSelectedProduct() {
-    console.log(this.selectedProduct);
-    this.productForm.patchValue({
-      productName: this.selectedProduct.productName,
-      productDesc: this.selectedProduct.productDesc,
-      productImage: this.selectedProduct.productImage,
-      // productAddon: this.selectedProduct.productAddon,
-      // productVariant: this.selectedProduct.productVariant,
-      productPrice: this.selectedProduct.productPrice,
-      // productActive: this.selectedProduct.productActive,
-      productTags: this.selectedProduct.productTags,
-      // category: this.selectedProduct.category._id,
-    });
   }
 
   getCategories() {
     this.categoryService.getCategories().subscribe(
       result => {
-        if (result.status === 'success') this.categories = result.payload
+        this.categories = result.payload
       }
     )
   }
 
-  getProductAddons(category: string): void {
-    this.productservice.getProductsByCategory(category).subscribe(
+  getProductAddons(): void {
+    this.productservice.getProductsByType('Addon').subscribe(
       result => {
-        if (result.status === 'success') this.addons = result.payload
+        this.addons = result.payload
       })
   }
 
-  getProductVariants(category: string): void {
-    this.productservice.getProductsByCategory(category).subscribe(
-      result => {
-        if (result.status === 'success') this.variants = result.payload
-      })
+  getProductVariants(): void {
+    if (this.product.productCategory) {
+      this.productservice.getProductsByCategory(this.product.productCategory).subscribe(
+        result => {
+          this.variants = result.payload
+        })
+    }
   }
 
   updateProduct(): void {
@@ -220,6 +247,7 @@ export class ProductDetailComponent implements OnInit {
             this.messageService.add({ severity: 'error', summary: 'Add Failed', detail: `Reason: ${result.payload}` })
           }
         });
+
       },
       reject: (type: any) => {
         switch (type) {

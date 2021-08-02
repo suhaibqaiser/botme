@@ -7,5 +7,6 @@ export interface Product {
     productVariant: [any],
     productPrice: number,
     productActive: boolean,
+    productTags: [any],
     category: any
 }

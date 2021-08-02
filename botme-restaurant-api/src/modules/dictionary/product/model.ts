@@ -1,20 +1,49 @@
-import {createSchema, Type, typedModel} from 'ts-mongoose';
-import {dictionaryDB} from "../../../config/mongoDB";
+import { createSchema, Type, typedModel } from 'ts-mongoose';
+import { dictionaryDB } from "../../../config/mongoDB";
 
 const ProductSchema = createSchema(
     {
-        productId: Type.string({maxlength: 256, required: true, unique: true}),
-        productName: Type.string({maxlength: 256, required: true, unique: true}),
-        productDesc: Type.string({maxlength: 4000}),
+        restaurantId: Type.string(),
+        productId: Type.string({ maxlength: 256, required: true, unique: true }),
+        productName: Type.string({ maxlength: 256, required: true }),
+        productType: Type.string({ maxlength: 256, required: true }),
+        productCategory: Type.string(),
+        productSerialNo: Type.string(),
+        productBarcode: Type.string(),
+        productDesc: Type.string({ maxlength: 4000 }),
+        productIngredients: Type.string({ maxlength: 4000 }),
+        productRate: {
+            standard: Type.number(),
+            meal: Type.number(),
+            addon: Type.number()
+        },
+        productFlavor: [Type.string()],
+        productProportion: [Type.string()],
+        productToppings: [Type.string()],
+        productAddons: [Type.string()],
+        productNutrition: {
+            calories: Type.string(),
+            fats: Type.string(),
+            proteins: Type.string()
+        },
+        productHistory: Type.string(),
         productImage: [Type.string()],
-        productAddon: [Type.objectId({ref: "Product"})],
-        productVariant: [Type.objectId({ref: "Product"})],
-        productPrice: Type.number({required: true}),
-        productActive: Type.boolean({required: true}),
         productTags: [Type.string()],
-        category: Type.objectId({ref: "Category"})
+        productAttributes: {
+            halal: Type.boolean(),
+            vegan: Type.boolean(),
+            vegetarian: Type.boolean(),
+            glutenFree: Type.boolean(),
+
+        },
+        offeringTime: [Type.string()],
+        productVariant: [Type.string()],
+        productActive: Type.boolean({ required: true }),
     },
-    {timestamps: {createdAt: true}}
+    {
+        timestamps: { createdAt: true },
+        strictQuery: true
+    }
 );
 
 export const Product = dictionaryDB.model('Product', ProductSchema);
