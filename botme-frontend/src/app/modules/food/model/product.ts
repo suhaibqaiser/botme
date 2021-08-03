@@ -2,6 +2,7 @@ export interface Product {
     restaurantId: string;
     productId: string;
     productName: string;
+    productUOM: string;
     productType: string;
     productCategory: string;
     productSerialNo: string;
@@ -10,6 +11,8 @@ export interface Product {
     productIngredients: string;
     productRate: {
         standard: number;
+        small: number;
+        large: number;
         meal: number;
         addon: number;
     };
@@ -22,6 +25,10 @@ export interface Product {
         fats: string;
         proteins: string
     };
+    productMeal: {
+        food: [string];
+        drink: [string];
+    }
     productHistory: string;
     productImage: [string];
     productTags: [string];

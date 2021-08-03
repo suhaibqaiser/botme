@@ -24,6 +24,7 @@ export class ProductDetailComponent implements OnInit {
     restaurantId: [''],
     productId: [''],
     productName: ['', Validators.required],
+    productUOM: ['', Validators.required],
     productType: ['', Validators.required],
     productCategory: ['', Validators.required],
     productSerialNo: [''],
@@ -31,9 +32,11 @@ export class ProductDetailComponent implements OnInit {
     productDesc: [''],
     productIngredients: [''],
     productRate: this.fb.group({
-      standard: [0, Validators.min(0.1)],
+      standard: new FormControl('', [Validators.required, Validators.min(0.1)]),
       meal: [0],
-      addon: [0]
+      addon: [0],
+      large: [0],
+      small: [0]
     }),
     productFlavor: [''],
     productProportion: [''],
@@ -43,6 +46,10 @@ export class ProductDetailComponent implements OnInit {
       calories: [''],
       fats: [''],
       proteins: ['']
+    }),
+    productMeal: this.fb.group({
+      food: [''],
+      drink: ['']
     }),
     productHistory: [''],
     productImage: [''],
@@ -60,18 +67,28 @@ export class ProductDetailComponent implements OnInit {
   });
 
   productId = ''
-  validationError = { productName: false, productType: false, productCategory: false, standard: false }
+  validationError = {
+    productName: false,
+    productType: false,
+    productCategory: false,
+    standard: false,
+    productUOM: false
+  }
   editMode = false
   newForm = false
-  productType = ['Item', 'Addon', 'Topping']
+  productType = ['Menu Item', 'Platter', 'Meal', 'Addon', 'Topping', 'Drink']
+  productUOM = ['Plate', 'Bowl', 'Platter', 'Piece', 'Skewer', 'Cup', 'Glass', 'Bottle', 'Box', 'Pack']
   categories: any
   addons: any
   variants: any
+  productList: any
+  drinks: any
 
   product: Product = {
     restaurantId: '1',
     productId: '',
     productName: '',
+    productUOM: '',
     productType: '',
     productCategory: '',
     productSerialNo: '',
@@ -80,6 +97,8 @@ export class ProductDetailComponent implements OnInit {
     productIngredients: '',
     productRate: {
       standard: 0,
+      small: 0,
+      large: 0,
       meal: 0,
       addon: 0
     },
@@ -91,6 +110,10 @@ export class ProductDetailComponent implements OnInit {
       calories: '',
       fats: '',
       proteins: ''
+    },
+    productMeal: {
+      food: [''],
+      drink: ['']
     },
     productHistory: '',
     productImage: [''],
@@ -110,6 +133,7 @@ export class ProductDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    window.scrollTo(0, 0)
     this.productId = this.route.snapshot.queryParams['productId'];
     this.product.productId = this.productId;
 
@@ -121,6 +145,9 @@ export class ProductDetailComponent implements OnInit {
 
     this.getCategories()
     this.getProductAddons()
+    this.getProductsList()
+    this.getDrinks()
+
 
     this.productForm.valueChanges.subscribe(res => {
       this.product = res
@@ -143,11 +170,13 @@ export class ProductDetailComponent implements OnInit {
 
   onSubmit(): void {
     if (this.productForm.invalid) {
+      let productRate = this.productForm.controls['productRate'] as FormGroup;
       (this.productForm.controls['productName'].errors) ? this.validationError.productName = true : false;
+      (this.productForm.controls['productUOM'].errors) ? this.validationError.productUOM = true : false;
       (this.productForm.controls['productType'].errors) ? this.validationError.productType = true : false;
-      (this.productForm.get('productRate') as FormGroup).get('standard')?.errors ? this.validationError.standard = true : false;
+      (productRate.controls['standard'].errors) ? this.validationError.standard = true : false;
       (this.productForm.controls['productCategory'].errors) ? this.validationError.productCategory = true : false;
-      
+
       this.messageService.add({ severity: 'error', summary: 'Validation Failed', detail: `Kindly fill in the required fields` });
 
       return;
@@ -176,7 +205,22 @@ export class ProductDetailComponent implements OnInit {
     );
   }
 
+  getProductsList() {
+    this.productservice.getProductsByType('Item').subscribe(
+      result => {
+        this.productList = result.payload
+      })
+  }
+
+  getDrinks() {
+    this.productservice.getProductsByType('Drink').subscribe(
+      result => {
+        this.drinks = result.payload
+      })
+  }
+
   getCategories() {
+
     this.categoryService.getCategories().subscribe(
       result => {
         this.categories = result.payload

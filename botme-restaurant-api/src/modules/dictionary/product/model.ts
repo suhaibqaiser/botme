@@ -7,6 +7,7 @@ const ProductSchema = createSchema(
         productId: Type.string({ maxlength: 256, required: true, unique: true }),
         productName: Type.string({ maxlength: 256, required: true }),
         productType: Type.string({ maxlength: 256, required: true }),
+        productUOM:  Type.string(),
         productCategory: Type.string(),
         productSerialNo: Type.string(),
         productBarcode: Type.string(),
@@ -14,6 +15,8 @@ const ProductSchema = createSchema(
         productIngredients: Type.string({ maxlength: 4000 }),
         productRate: {
             standard: Type.number(),
+            small: Type.number(),
+            large: Type.number(),
             meal: Type.number(),
             addon: Type.number()
         },
@@ -25,6 +28,10 @@ const ProductSchema = createSchema(
             calories: Type.string(),
             fats: Type.string(),
             proteins: Type.string()
+        },
+        productMeal: {
+            food: [Type.string()],
+            drink: [Type.string()]
         },
         productHistory: Type.string(),
         productImage: [Type.string()],
