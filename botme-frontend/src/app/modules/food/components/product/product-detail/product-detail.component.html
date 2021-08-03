@@ -1,6 +1,6 @@
 <div class="card card-primary">
     <div class="card-header">
-        <div class="d-flex align-items-center justify-content-between m-b-15">
+        <div class="d-flex align-items-center justify-content-between m-v-15">
             <h3 class="card-title">Product Details</h3>
             <div class="card-toolbar">
                 <button pButton pRipple type="button" label="Back" icon="pi pi-chevron-left" *ngIf="!editMode"
@@ -34,7 +34,8 @@
                         </label>
                         <div class="p-col-12 p-md-10">
                             <input type="text" pInputText formControlName="productName" id="form-productName"
-                                [ngClass]="{'ng-invalid ng-dirty ': validationError.productName}" placeholder="Enter Name">
+                                [ngClass]="{'ng-invalid ng-dirty ': validationError.productName}"
+                                placeholder="Enter Name" autofocus>
                         </div>
                     </div>
                     <div class="form-group col-md-6">
@@ -44,6 +45,17 @@
                         <div class="p-col-12 p-md-10">
                             <input type="text" pInputText formControlName="productDesc" id="form-productDesc"
                                 placeholder="Enter Description">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="form-productUOM" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
+                            Unit
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <p-dropdown id="form-productUOM" [options]="productUOM" formControlName="productUOM"
+                                [ngClass]="{'ng-invalid ng-dirty is-invalid': validationError.productUOM}"
+                                placeholder="Select a unit of measurement">
+                            </p-dropdown>
                         </div>
                     </div>
                     <div class="form-group col-md-6">
@@ -77,10 +89,10 @@
                         <label for="form-productType" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
                             Type
                         </label>
-                        <div *ngIf="productForm.controls['productType']?.errors"></div>
                         <div class="p-col-12 p-md-10">
                             <p-dropdown id="form-productType" [options]="productType" formControlName="productType"
-                                placeholder="Select a Type" [ngClass]="{'ng-invalid ng-dirty is-invalid': validationError.productType}">
+                                placeholder="Select a Type"
+                                [ngClass]="{'ng-invalid ng-dirty is-invalid': validationError.productType}">
                             </p-dropdown>
                         </div>
                     </div>
@@ -91,12 +103,43 @@
                         <div class="p-col-12 p-md-10">
                             <p-dropdown id="form-productCategory" [options]="categories"
                                 formControlName="productCategory" optionLabel="categoryName" optionValue="categoryName"
-                                [ngClass]="{'ng-invalid ng-dirty is-invalid':validationError.productCategory}">
+                                [ngClass]="{'ng-invalid ng-dirty is-invalid':validationError.productCategory}"
                                 placeholder="Select a Category">
                             </p-dropdown>
                         </div>
                     </div>
                 </div>
+
+                <p-divider *ngIf="this.productForm.controls['productType'].value === 'Meal'">
+                    <div class="p-d-inline-flex p-ai-center">
+                        <i class="pi pi-user p-mr-2 mr-2"></i>
+                        <b>Meal Items</b>
+                    </div>
+                </p-divider>
+                <div formGroupName="productMeal" class="form-row m-b-50"
+                    *ngIf="this.productForm.controls['productType'].value === 'Meal'">
+                    <div class="form-group col-md-6">
+                        <label for="form-productIngredients" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
+                            Food
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <p-multiSelect id="form-food" [options]="productList" formControlName="food"
+                                defaultLabel="Select one or more items" optionLabel="productName" display="chip">
+                            </p-multiSelect>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="form-productFlavor" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
+                            Drink
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <p-multiSelect id="form-drink" [options]="drinks" formControlName="drink"
+                                defaultLabel="Select one or more items" optionLabel="productName" display="chip">
+                            </p-multiSelect>
+                        </div>
+                    </div>
+                </div>
+
 
                 <p-divider>
                     <div class="p-d-inline-flex p-ai-center">
@@ -105,32 +148,55 @@
                     </div>
                 </p-divider>
                 <div formGroupName="productRate" class="form-row m-b-50">
-                    <div class="form-group col-md-4">
-                        <label for="form-productRate" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
-                            Standard Rate </label>
-                        <div class="p-col-12 p-md-10">
-                            <input type="text" pInputText formControlName="standard" id="form-productRate"
-                            [ngClass]="{'ng-invalid ng-dirty ': validationError.standard}" 
-                                placeholder="Enter productRate">
+
+                    <div class="p-col-12 p-md-10">
+                        <div class="row">
+                            <div class="input-group mb-3 col-md-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Standard</span>
+                                </div>
+                                <input class="form-control {{validationError.standard ? 'is-invalid' : ''}}" type="text"
+                                    formControlName="standard" placeholder="Standard Rate">
+                            </div>
+                            <div class="input-group mb-3 col-md-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Small</span>
+                                </div>
+                                <input class="form-control" type="text" formControlName="small"
+                                    placeholder="Small Rate">
+                            </div>
+                            <div class="input-group mb-3 col-md-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Large</span>
+                                </div>
+                                <input class="form-control" type="text" formControlName="large"
+                                    placeholder="Large Rate">
+                            </div>
+                            <div class="input-group mb-3 col-md-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon2">Meal</span>
+                                </div>
+                                <input class="form-control" type="text" formControlName="meal" placeholder="Meal Rate">
+                            </div>
+                            <div class="input-group mb-3 col-md-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon3">Addon</span>
+                                </div>
+                                <input class="form-control" type="text" formControlName="addon"
+                                    placeholder="Addon Rate">
+                            </div>
                         </div>
+
                     </div>
-                    <div class="form-group col-md-4">
-                        <label for="form-productRate" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold"> Meal
-                            Rate </label>
-                        <div class="p-col-12 p-md-10">
-                            <input type="text" pInputText formControlName="meal" id="form-productRate"
-                                placeholder="Enter productRate">
-                        </div>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="form-productRate" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold"> Addon
-                            Rate </label>
-                        <div class="p-col-12 p-md-10">
-                            <input type="text" pInputText formControlName="addon" id="form-productRate"
-                                placeholder="Enter productRate">
-                        </div>
-                    </div>
+
+
                 </div>
+
+
+
+
+
+
 
                 <p-divider>
                     <div class="p-d-inline-flex p-ai-center">
@@ -159,7 +225,7 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label for="form-productProportion" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
-                            Proportions
+                            Portion Size
                         </label>
                         <div class="p-col-12 p-md-10">
                             <p-chips id="form-productProportion" formControlName="productProportion"
