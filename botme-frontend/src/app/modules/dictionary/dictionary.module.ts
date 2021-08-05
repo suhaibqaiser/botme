@@ -16,11 +16,11 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
 import { ToggleButtonModule } from 'primeng/togglebutton';
-import { AdminRoutingModule } from './admin-routing.module';
+import { DictionaryRoutingModule } from './dictionary-routing.module';
 import { CategoryListComponent } from './components/category/category-list/category-list.component';
 import { ProductDetailComponent } from './components/product/product-detail/product-detail.component';
 import { ProductListComponent } from './components/product/product-list/product-list.component';
-
+import { BlockUIModule } from 'primeng/blockui';
 
 
 @NgModule({
@@ -30,7 +30,7 @@ import { ProductListComponent } from './components/product/product-list/product-
     CategoryListComponent],
   imports: [
     CommonModule,
-    AdminRoutingModule,
+    DictionaryRoutingModule,
     ReactiveFormsModule,
     PanelModule,
     DividerModule,
@@ -46,7 +46,8 @@ import { ProductListComponent } from './components/product/product-list/product-
     DialogModule,
     TableModule,
     InputSwitchModule,
-    FormsModule
+    FormsModule,
+    BlockUIModule
   ]
 })
-export class AdminModule { }
+export class DictionaryModule { }

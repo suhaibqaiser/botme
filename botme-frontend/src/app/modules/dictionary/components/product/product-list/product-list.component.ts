@@ -28,13 +28,8 @@ export class ProductListComponent implements OnInit {
     this.productService.getProducts()
       .subscribe(result => {
         this.products = result.payload
-
-        if (Array.isArray(this.products)) {
-          for (let product of this.products) {
-            product.productCategory = this.getCategoryName(product.productCategory)
-          }
-        } else {
-          this.products = []
+        for (let product of this.products) {
+          product.productCategory = this.getCategoryName(product.productCategory)
         }
         this.loading = false
       });
@@ -43,10 +38,11 @@ export class ProductListComponent implements OnInit {
   getCategoryName(catId: string) {
     let cat = this.categories.find((category: { categoryId: string; }) => category.categoryId === catId);
     if (cat) return cat.categoryName
-
+    
     return null;
   }
   getCategories() {
+
     this.categoryService.getCategories().subscribe(
       result => {
         this.categories = result.payload
