@@ -8,7 +8,7 @@ export interface Product {
     productSerialNo: string;
     productBarcode: string;
     productDesc: string;
-    productIngredients: string;
+    productIngredients: [string];
     productRate: {
         standard: number;
         small: number;

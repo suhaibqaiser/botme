@@ -74,13 +74,13 @@ export class ProductDetailComponent implements OnInit {
   loading = true
   editMode = false
   newForm = false
-  productType = ['Menu Item', 'Platter', 'Meal', 'Addon', 'Topping', 'Drink']
+  productType = ['Menu Item', 'Platter', 'Meal', 'Addon', 'Ingredient', 'Drink']
   productUOM = ['Single', 'Plate', 'Bowl', 'Platter', 'Piece', 'Skewer', 'Cup', 'Glass', 'Bottle', 'Box', 'Pack']
-  categories: any
+  categories = []
   addons: any
   variants: any
-  productList: any
-  drinks: any
+  productList = []
+  productIngredients = []
 
   product: Product = {
     restaurantId: '1',
@@ -92,7 +92,7 @@ export class ProductDetailComponent implements OnInit {
     productSerialNo: '',
     productBarcode: '',
     productDesc: '',
-    productIngredients: '',
+    productIngredients: [''],
     productRate: {
       standard: 0,
       small: 0,
@@ -134,6 +134,7 @@ export class ProductDetailComponent implements OnInit {
     this.getCategories()
     this.getProductsList()
     this.getProductVariants()
+    this.getIngredients()
 
     if (!this.product.productId) {
       this.newForm = true
@@ -173,7 +174,7 @@ export class ProductDetailComponent implements OnInit {
       this.messageService.add({ severity: 'error', summary: 'Validation Failed', detail: `Kindly fill in the required fields` });
       return;
     }
-   
+
     if (this.product.productId) {
       this.updateProduct();
     } else {
@@ -216,10 +217,11 @@ export class ProductDetailComponent implements OnInit {
     }
   }
 
-  getDrinks() {
-    this.productservice.getProductsByType('Drink').subscribe(
+  getIngredients() {
+    this.productservice.getProductsByType('Ingredient').subscribe(
       result => {
-        this.drinks = result.payload
+        if (result.status === 'success')
+          this.productIngredients = result.payload
       })
   }
 

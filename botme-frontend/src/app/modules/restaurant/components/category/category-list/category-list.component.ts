@@ -15,9 +15,7 @@ export class CategoryListComponent implements OnInit {
     private messageService: MessageService,
     private confirmationService: ConfirmationService) { }
 
-  categories: [Category] = [{
-    categoryId: '', categoryName: '', categoryActive: true
-  }]
+  categories: any
   newCategory: any
   categoryDialog = false
 
@@ -77,9 +75,7 @@ export class CategoryListComponent implements OnInit {
   }
 
   addNew() {
-    let nextId = this.categories.length + 1
-    this.newCategory = {
-      categoryId: nextId,
+     this.newCategory = {
       categoryName: '',
       categoryActive: true
     }

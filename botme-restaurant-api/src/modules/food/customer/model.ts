@@ -17,4 +17,19 @@ const CustomerSchema = createSchema(
     {timestamps: {createdAt: true}}
 );
 
+const AddressSchema = createSchema(
+    {
+        restaurantId: Type.string({maxlength: 256, required: true}),
+        addressId: Type.string({maxlength: 256, required: true, unique: true}),
+        customerId: Type.string({maxlength: 256, required: true}),
+        addressLine1: Type.string(),
+        addressLine2: Type.string(),
+        adddressPostalCode: Type.string(),
+        addressCity: Type.string(),
+        addressState: Type.string(),
+        addressCountry: Type.string(),
+    }
+)
+
 export const Customer = foodDB.model('Customer', CustomerSchema);
+export const Address = foodDB.model('Address', AddressSchema);

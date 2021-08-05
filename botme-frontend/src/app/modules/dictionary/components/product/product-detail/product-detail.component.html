@@ -288,8 +288,10 @@
                             Ingredients
                         </label>
                         <div class="p-col-12 p-md-10">
-                            <p-chips id="form-productIngredients" formControlName="productIngredients"
-                                placeholder="Write about Ingredients"></p-chips>
+                            <p-multiSelect id="form-productIngredients" [options]="productIngredients" optionValue="productId"
+                                formControlName="productIngredients" defaultLabel="Select one or more Ingredients"
+                                optionLabel="productName" display="chip">
+                            </p-multiSelect>
                         </div>
                     </div>
                     <div class="form-group col-md-6">
@@ -315,8 +317,10 @@
                             Toppings
                         </label>
                         <div class="p-col-12 p-md-10">
-                            <p-chips id="form-productToppings" formControlName="productToppings"
-                                placeholder="Add one or more Toppings"></p-chips>
+                            <p-multiSelect id="form-productIngredients" [options]="productIngredients" optionValue="productId"
+                                formControlName="productToppings" defaultLabel="Select one or more Toppings"
+                                optionLabel="productName" display="chip">
+                            </p-multiSelect>
                         </div>
                     </div>
                     <!-- <div class="form-group col-md-6">
