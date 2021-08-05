@@ -13,8 +13,7 @@ export interface Product {
         standard: number;
         small: number;
         large: number;
-        meal: number;
-        addon: number;
+        medium: number;
     };
     productFlavor: [string];
     productProportion: [string];
@@ -25,10 +24,7 @@ export interface Product {
         fats: string;
         proteins: string
     };
-    productMeal: {
-        food: [string];
-        drink: [string];
-    }
+    productOptions: [[]];
     productHistory: string;
     productImage: [string];
     productTags: [string];

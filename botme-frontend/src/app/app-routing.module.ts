@@ -68,7 +68,7 @@ const routes: Routes = [
         path: 'admin',
         canActivate: [AuthGuard],
         data: {pageTitle: 'Administration'},
-        loadChildren: () => import('./modules/food/admin.module').then(m => m.AdminModule)
+        loadChildren: () => import('./modules/food/food.module').then(m => m.FoodModule)
       }
     ]
   }

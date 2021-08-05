@@ -17,8 +17,7 @@ const ProductSchema = createSchema(
             standard: Type.number(),
             small: Type.number(),
             large: Type.number(),
-            meal: Type.number(),
-            addon: Type.number()
+            medium: Type.number()
         },
         productFlavor: [Type.string()],
         productProportion: [Type.string()],
@@ -29,10 +28,7 @@ const ProductSchema = createSchema(
             fats: Type.string(),
             proteins: Type.string()
         },
-        productMeal: {
-            food: [Type.string()],
-            drink: [Type.string()]
-        },
+        productOptions: [[]],
         productHistory: Type.string(),
         productImage: [Type.string()],
         productTags: [Type.string()],
