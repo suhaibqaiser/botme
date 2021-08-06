@@ -28,8 +28,13 @@ export class ProductListComponent implements OnInit {
     this.productService.getProducts()
       .subscribe(result => {
         this.products = result.payload
-        for (let product of this.products) {
-          product.productCategory = this.getCategoryName(product.productCategory)
+
+        if (Array.isArray(this.products)) {
+          for (let product of this.products) {
+            product.productCategory = this.getCategoryName(product.productCategory)
+          }
+        } else {
+          this.products = []
         }
         this.loading = false
       });

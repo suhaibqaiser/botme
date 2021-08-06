@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-body">
         <div class="d-flex align-items-center justify-content-between m-b-15">
-            <h4 class="m-b-0">Customer List</h4>
+            <h4 class="m-b-0">Category List</h4>
             <div class="card-toolbar">
                 <ul>
                     <!-- <li>
@@ -43,8 +43,6 @@
                     <!-- <th style="width: 3rem">
                         <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                     </th> -->
-                    <th pSortableColumn="categoryId">ID <p-sortIcon field="categoryId"></p-sortIcon>
-                    </th>
                     <th pSortableColumn="categoryName">Name <p-sortIcon field="categoryName"></p-sortIcon>
                     </th>
                     <th pSortableColumn="categoryActive">Active <p-sortIcon field="categoryActive"></p-sortIcon>
@@ -54,7 +52,7 @@
             </ng-template>
             <ng-template pTemplate="colgroup">
                 <colgroup>
-                    <col style="width:10%">
+
                     <col style="width:65%">
                     <col style="width:15%">
                     <col style="width:10%">
@@ -62,16 +60,6 @@
             </ng-template>
             <ng-template pTemplate="body" let-category let-editing="editing" let-ri="rowIndex">
                 <tr [pEditableRow]="category">
-                    <td>
-                        <p-cellEditor>
-                            <ng-template pTemplate="input">
-                                <input pInputText type="text" [(ngModel)]="category.categoryId" style="width: 100%;">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                {{category.categoryId}}
-                            </ng-template>
-                        </p-cellEditor>
-                    </td>
                     <td>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
@@ -119,11 +107,6 @@
     styleClass="p-fluid">
     <ng-template pTemplate="content">
         <div class="p-field">
-            <label for="name">ID</label>
-            <input type="text" pInputText id="Id" [(ngModel)]="newCategory.categoryId" required />
-            <small class="p-error" *ngIf="!newCategory.categoryId">Id is required.</small>
-        </div>
-        <div class="p-field">
             <label for="name">Name</label>
             <input type="text" pInputText id="name" [(ngModel)]="newCategory.categoryName" required autofocus />
             <small class="p-error" *ngIf="!newCategory.categoryName">Name is required.</small>
@@ -134,6 +117,6 @@
             </p-inputSwitch>
         </div>
         <button pButton label="Add" [style]="{'width': '6em'}" class="float-right btn btn-primary" icon="pi pi-plus"
-            (click)="save()" [disabled]="!newCategory.categoryName || !newCategory.categoryId"></button>
+            (click)="save()" [disabled]="!newCategory.categoryName"></button>
     </ng-template>
 </p-dialog>

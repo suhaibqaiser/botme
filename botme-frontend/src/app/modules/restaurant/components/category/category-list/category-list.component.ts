@@ -15,7 +15,7 @@ export class CategoryListComponent implements OnInit {
     private messageService: MessageService,
     private confirmationService: ConfirmationService) { }
 
-  categories: any
+  categories: Category[] = []
   newCategory: any
   categoryDialog = false
 

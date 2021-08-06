@@ -20,7 +20,8 @@ const CustomerSchema = createSchema(
 const AddressSchema = createSchema(
     {
         restaurantId: Type.string({maxlength: 256, required: true}),
-        addressId: Type.string({maxlength: 256, required: true, unique: true}),
+        addressId: Type.string({ maxlength: 256, required: true, unique: true }),
+        addressLabel: Type.string(),
         customerId: Type.string({maxlength: 256, required: true}),
         addressLine1: Type.string(),
         addressLine2: Type.string(),

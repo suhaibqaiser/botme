@@ -2,7 +2,7 @@
     <!-- <p-blockUI [blocked]="loading" [target]="f"><i class="pi pi-lock" style="font-size: 3rem"></i></p-blockUI> -->
     <div class="card-header">
         <div class="d-flex align-items-center justify-content-between m-v-15">
-            <h3 class="card-title">Product Details</h3>
+            <h3 class="card-title">Product Details <span *ngIf="!newForm">P-{{product.productLabel}}</span></h3>
             <div class="card-toolbar">
                 <div class="d-flex">
                     <button pButton pRipple type="button" label="Back" icon="pi pi-chevron-left" *ngIf="!editMode"
@@ -324,7 +324,7 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label for="form-productToppings" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
-                            Toppings
+                            Extra Toppings
                         </label>
                         <div class="p-col-12 p-md-10">
                             <p-multiSelect id="form-productIngredients" [options]="productIngredients" optionValue="productId"

@@ -1,6 +1,7 @@
 export interface Product {
     restaurantId: string;
     productId: string;
+    productLabel: string;
     productName: string;
     productUOM: string;
     productType: string;

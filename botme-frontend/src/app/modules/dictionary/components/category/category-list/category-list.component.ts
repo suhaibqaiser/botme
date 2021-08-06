@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService, ConfirmEventType } from 'primeng/api';
 import { Table } from 'primeng/table';
-import { Category } from '../../../model/category';
+import { Category } from 'src/app/modules/restaurant/model/category';
 import { CategoryService } from '../../../service/category.service';
 
 @Component({
@@ -15,9 +15,7 @@ export class CategoryListComponent implements OnInit {
     private messageService: MessageService,
     private confirmationService: ConfirmationService) { }
 
-  categories: [Category] = [{
-    categoryId: '', categoryName: '', categoryActive: true
-  }]
+  categories: Category[] = []
   newCategory: any
   categoryDialog = false
 
@@ -27,7 +25,8 @@ export class CategoryListComponent implements OnInit {
 
   getCategories() {
     this.categoryService.getCategories().subscribe(res => {
-      this.categories = res.payload
+      if (res.status === 'error') return this.categories
+      return this.categories = res.payload
     })
   }
 
@@ -76,9 +75,7 @@ export class CategoryListComponent implements OnInit {
   }
 
   addNew() {
-    let nextId = this.categories.length + 1
     this.newCategory = {
-      categoryId: nextId,
       categoryName: '',
       categoryActive: true
     }
@@ -95,5 +92,5 @@ export class CategoryListComponent implements OnInit {
 
   clear(table: Table) {
     table.clear();
-}
+  }
 }
