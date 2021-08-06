@@ -23,6 +23,7 @@ export class ProductDetailComponent implements OnInit {
   productForm = this.fb.group({
     restaurantId: [],
     productId: [],
+    productLabel: [],
     productName: [, Validators.required],
     productUOM: [, Validators.required],
     productType: [, Validators.required],
@@ -66,6 +67,7 @@ export class ProductDetailComponent implements OnInit {
   productOptions = this.productForm.get('productOptions') as FormArray;
   validationError = {
     productName: false,
+    productLabel: false,
     productType: false,
     productCategory: false,
     standard: false,
@@ -74,7 +76,7 @@ export class ProductDetailComponent implements OnInit {
   loading = true
   editMode = false
   newForm = false
-  productType = ['Menu Item', 'Platter', 'Meal', 'Addon', 'Ingredient', 'Drink']
+  productType = ['Item', 'Platter', 'Meal', 'Addon', 'Ingredient']
   productUOM = ['Single', 'Plate', 'Bowl', 'Platter', 'Piece', 'Skewer', 'Cup', 'Glass', 'Bottle', 'Box', 'Pack']
   categories = []
   addons: any
@@ -85,6 +87,7 @@ export class ProductDetailComponent implements OnInit {
   product: Product = {
     restaurantId: '1',
     productId: '',
+    productLabel: '',
     productName: '',
     productUOM: '',
     productType: '',
@@ -182,26 +185,26 @@ export class ProductDetailComponent implements OnInit {
     }
   }
 
-  getProductDetail(productId: string): void {
+ getProductDetail(productId: string): void {
     this.productservice.getProductById(productId).subscribe(
       result => {
-        this.product = result.payload[0]
+        (result.status === 'success') ? this.product = result.payload[0] : null
+        if (this.product) {
+          try {
+            this.productForm.patchValue(this.product);
 
-        try {
-          this.productForm.patchValue(this.product);
-
-          for (let opt in result.payload[0].productOptions) {
-            this.productOptions.push(new FormControl(result.payload[0].productOptions[opt]))
+            for (let opt in result.payload[0].productOptions) {
+              this.productOptions.push(new FormControl(result.payload[0].productOptions[opt]))
+            }
+            this.loading = false
+          } catch (err) {
+            console.log(err);
           }
-          this.loading = false
-        } catch (err) {
-          console.log(err);
         }
-
-
       }
     );
   }
+
 
   getProductsList() {
     if (this.product.productType === 'Meal') {
@@ -294,7 +297,7 @@ export class ProductDetailComponent implements OnInit {
       accept: () => {
         this.productservice.addProduct(this.product).subscribe(result => {
           if (result.status === 'success') {
-            this.messageService.add({ severity: 'info', summary: 'Add Success', detail: `Product Added! ${result.payload.productId}` })
+            this.messageService.add({ severity: 'info', summary: 'Add Success', detail: `Product Added!` })
             this.productId = result.payload.productId
             this.product.productId = this.productId
           } else {

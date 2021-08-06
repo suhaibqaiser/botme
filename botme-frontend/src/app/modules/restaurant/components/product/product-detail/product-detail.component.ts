@@ -74,7 +74,7 @@ export class ProductDetailComponent implements OnInit {
   loading = true
   editMode = false
   newForm = false
-  productType = ['Menu Item', 'Platter', 'Meal', 'Addon', 'Ingredient', 'Drink']
+  productType = ['Item', 'Platter', 'Meal', 'Addon', 'Ingredient']
   productUOM = ['Single', 'Plate', 'Bowl', 'Platter', 'Piece', 'Skewer', 'Cup', 'Glass', 'Bottle', 'Box', 'Pack']
   categories = []
   variants = []
@@ -86,6 +86,7 @@ export class ProductDetailComponent implements OnInit {
   product: Product = {
     restaurantId: '',
     productId: '',
+    productLabel: '',
     productName: '',
     productUOM: '',
     productType: '',
@@ -305,7 +306,7 @@ export class ProductDetailComponent implements OnInit {
       accept: () => {
         this.productservice.addProduct(this.product).subscribe(result => {
           if (result.status === 'success') {
-            this.messageService.add({ severity: 'info', summary: 'Add Success', detail: `Product Added! ${result.payload.productId}` })
+            this.messageService.add({ severity: 'info', summary: 'Add Success', detail: `Product Added!` })
             this.productId = result.payload.productId
             this.product.productId = this.productId
           } else {

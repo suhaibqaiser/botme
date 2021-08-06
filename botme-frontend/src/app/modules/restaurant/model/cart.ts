@@ -1,9 +1,10 @@
 export interface Cart {
     restaurantId: string;
     cartId: string
+    cartLabel: string
     cartProduct: [{
         productId: string,
-        productSerialNo: string;
+        productLabel: string; //TODO
         productCategory: string;
         productFlavor: string;
         productProportion: string;

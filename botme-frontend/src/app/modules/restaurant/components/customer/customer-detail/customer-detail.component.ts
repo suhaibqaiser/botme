@@ -24,6 +24,7 @@ export class CustomerDetailComponent implements OnInit {
   formMode = 'update';
   customerId = '';
   customer: Customer = {
+    customerId: '',
     customerName: '',
     customerEmail: '',
     customerPhone: '',
@@ -81,7 +82,7 @@ export class CustomerDetailComponent implements OnInit {
     this.customer.customerName = this.customerForm.getRawValue().customerName
     this.customer.customerEmail = this.customerForm.getRawValue().customerEmail
     this.customer.customerPhone = this.customerForm.getRawValue().customerPhone
-    
+
     this.customerService.registerCustomer(this.customer)
       .subscribe(result => { this.customer = result.payload })
 

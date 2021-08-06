@@ -45,7 +45,7 @@
                     <th style="width: 3rem">
                         <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                     </th>
-                    <th pSortableColumn="customerId">ID <p-sortIcon field="customerId"></p-sortIcon>
+                    <th pSortableColumn="customerId">Label <p-sortIcon field="customerId"></p-sortIcon>
                     </th>
                     <th pSortableColumn="productName">Name <p-sortIcon field="productName"></p-sortIcon>
                     </th>
@@ -69,7 +69,7 @@
                     </td>
                     <td>
                         <button class="btn btn-primary btn-tone m-r-5" [routerLink]="['detail']"
-                            [queryParams]="{ productId: product.productId }">{{product.productId}}</button>
+                            [queryParams]="{ productId: product.productId }">P-{{product.productLabel}}</button>
                     </td>
                     <td>{{product.productName}}</td>
                     <td>{{product.productDesc}}</td>

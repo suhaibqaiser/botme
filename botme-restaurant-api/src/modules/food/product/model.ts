@@ -1,17 +1,18 @@
-import {createSchema, Type} from 'ts-mongoose';
-import {foodDB} from "../../../config/mongoDB";
+import { createSchema, Type } from 'ts-mongoose';
+import { foodDB } from "../../../config/mongoDB";
 
 const ProductSchema = createSchema(
     {
         restaurantId: Type.string(),
-        productId: Type.string({maxlength: 256, required: true, unique: true}),
-        productName: Type.string({maxlength: 256, required: true}),
-        productType: Type.string({maxlength: 256, required: true}),
+        productId: Type.string({ maxlength: 256, required: true, unique: true }),
+        productLabel: Type.number({ unique: true }),
+        productName: Type.string({ maxlength: 256, required: true }),
+        productType: Type.string({ maxlength: 256, required: true }),
         productUOM: Type.string(),
         productCategory: Type.string(),
         productSerialNo: Type.string(),
         productBarcode: Type.string(),
-        productDesc: Type.string({maxlength: 4000}),
+        productDesc: Type.string({ maxlength: 4000 }),
         productIngredients: [Type.string()],
         productRate: {
             standard: Type.number(),
@@ -41,10 +42,10 @@ const ProductSchema = createSchema(
         },
         offeringTime: [Type.string()],
         productVariant: [Type.string()],
-        productActive: Type.boolean({required: true}),
+        productActive: Type.boolean({ required: true }),
     },
     {
-        timestamps: {createdAt: true},
+        timestamps: { createdAt: true },
         strictQuery: true
     }
 );

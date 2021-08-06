@@ -1,6 +1,6 @@
-import {restResponse} from "../../../utils/response";
-import {createProduct, getProduct, updateProduct} from "./service";
-import {randomUUID} from "crypto";
+import { restResponse } from "../../../utils/response";
+import { createProduct, getMaxLabelValue, getProduct, updateProduct } from "./service";
+import { randomUUID } from "crypto";
 
 export async function addProduct(products: [any]) {
     let response = new restResponse()
@@ -14,18 +14,16 @@ export async function addProduct(products: [any]) {
     let result
 
     for (const product of products) {
-        const index = products.indexOf(product);
+        let val = await getMaxLabelValue()
+        if (!val) { val = 0 }
+        else {
+            val = val.productLabel
+        }
+
+
         product.productId = randomUUID()
+        product.productLabel = await val + 1
         product.productActive = true
-        // if (product.productVariant === '') {
-        //     delete product.productVariant
-        // }
-        // if (product.productAddon === '') {
-        //     delete product.productAddon
-        // }
-        // if (product.productImage === '') {
-        //     delete product.productImage
-        // }
 
         result = await createProduct(product)
     }
@@ -63,12 +61,12 @@ export async function findProduct(filter: any) {
     }
 
     if (filter.searchText) {
-        queryParams.productName = {'$regex': filter.searchText, '$options': 'i'}
+        queryParams.productName = { '$regex': filter.searchText, '$options': 'i' }
     } else {
         delete queryParams.productName
     }
     if (filter.priceMin && filter.priceMax) {
-        queryParams.productPrice = {$lte: Number(filter.priceMax), $gte: Number(filter.priceMin)}
+        queryParams.productPrice = { $lte: Number(filter.priceMax), $gte: Number(filter.priceMin) }
     } else {
         delete queryParams.productPrice
     }
@@ -94,7 +92,7 @@ export async function findProduct(filter: any) {
         response.status = "success"
         return response
     } else {
-        response.payload = "product not found"
+        response.payload = "Product not found"
         response.status = "error"
         return response
     }
@@ -103,7 +101,7 @@ export async function findProduct(filter: any) {
 export async function editProduct(product: any) {
     let response = new restResponse()
     if (!product) {
-        response.payload = "product is required"
+        response.payload = "Product is required"
         response.status = "error"
         return response;
     }
@@ -114,7 +112,7 @@ export async function editProduct(product: any) {
         response.status = "success"
         return response
     } else {
-        response.payload = "product not found"
+        response.payload = "Product not found"
         response.status = "error"
         return response
     }
