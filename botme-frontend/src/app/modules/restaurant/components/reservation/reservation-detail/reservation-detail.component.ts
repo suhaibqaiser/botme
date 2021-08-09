@@ -14,6 +14,8 @@ import { TableService } from '../../../service/table.service';
 })
 export class ReservationDetailComponent implements OnInit {
 
+  //form edition
+  editMode = false
   constructor(private reservationService: ReservationService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
@@ -74,8 +76,12 @@ export class ReservationDetailComponent implements OnInit {
       });
     if (this.reservationId) {
       this.findReservation(this.reservationId);
+      this.editMode = false
+      this.reservationForm.disable()
     } else {
       this.formMode = 'new'
+      this.editMode = false
+      this.reservationForm.disable()
     }
     this.getCustomers()
     this.getTables()
@@ -191,5 +197,15 @@ export class ReservationDetailComponent implements OnInit {
         }
       }
     });
+  }
+
+  disableEdit() {
+    this.editMode = false
+    this.reservationForm.disable()
+  }
+
+  enableEdit() {
+    this.editMode = true
+    this.reservationForm.enable()
   }
 }
