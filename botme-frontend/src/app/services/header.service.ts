@@ -8,12 +8,22 @@ import {Router} from "@angular/router";
   providedIn: 'root'
 })
 export class HeaderService {
-  private pageHeader:String = "";
+  private pageHeader: String = "";
+  private toggleSideBarObject = {
+    check: true,
+    addClass: ''
+  }
 
   public getHeader() {
     return this.pageHeader;
   }
-  public setHeader(value:String) {
+
+  public setHeader(value: String) {
     this.pageHeader = value;
   }
+
+  public getToggleObject() {
+    return this.toggleSideBarObject
+  }
+
 }
