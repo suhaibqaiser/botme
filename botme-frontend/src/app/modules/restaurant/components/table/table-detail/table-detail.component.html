@@ -40,7 +40,13 @@
   </div>
 
     <div class="card-body">
-        <form [formGroup]="tableForm" (ngSubmit)="onSubmit()">
+      <p-divider>
+        <div class="p-d-inline-flex p-ai-center">
+          <i class="pi pi-user p-mr-2 mr-2"></i>
+          <b>Identification</b>
+        </div>
+      </p-divider>
+        <form class="m-t-30" [formGroup]="tableForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
                 <label for="tableId" class="font-weight-bold">Table ID</label>
                 <input pInputText type="text" class="form-control form-control-border" formControlName="tableId" id="tableId"
