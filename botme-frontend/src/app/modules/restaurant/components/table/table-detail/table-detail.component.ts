@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { MessageService, ConfirmationService, ConfirmEventType } from 'primeng/api';
-import { Table } from '../../../model/table';
-import { TableService } from '../../../service/table.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {MessageService, ConfirmationService, ConfirmEventType} from 'primeng/api';
+import {Table} from '../../../model/table';
+import {TableService} from '../../../service/table.service';
 
 @Component({
   selector: 'app-table-detail',
@@ -12,12 +12,16 @@ import { TableService } from '../../../service/table.service';
 })
 export class TableDetailComponent implements OnInit {
 
+  editMode = false
+  newForm = false
+
   constructor(private tableService: TableService,
-    private route: ActivatedRoute,
-    private fb: FormBuilder,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService
-  ) { }
+              private route: ActivatedRoute,
+              private fb: FormBuilder,
+              private messageService: MessageService,
+              private confirmationService: ConfirmationService
+  ) {
+  }
 
   table: Table = {
     tableId: '',
@@ -28,7 +32,7 @@ export class TableDetailComponent implements OnInit {
 
   tableId = ''
   areas: [{}] = [{}]
-    
+
   formMode = 'update'
 
   tableForm = this.fb.group({
@@ -48,12 +52,24 @@ export class TableDetailComponent implements OnInit {
       this.getTable(this.tableId);
     } else {
       this.formMode = 'new'
+      this.newForm = true
     }
 
     this.tableForm.valueChanges.subscribe(res => {
       this.table = res
     })
+    this.disableEdit()
+  }
 
+  disableEdit() {
+    this.editMode = false
+    this.tableForm.disable()
+  }
+
+
+  enableEdit() {
+    this.editMode = true
+    this.tableForm.enable()
   }
 
   getTable(Id: string) {
@@ -74,7 +90,6 @@ export class TableDetailComponent implements OnInit {
       }
     )
   }
-
 
 
   onSubmit() {
@@ -100,19 +115,21 @@ export class TableDetailComponent implements OnInit {
         //this.table.tableId = this.tableId
         this.tableService.updateTable(this.table).subscribe(result => {
           (result.status === 'success') ?
-            this.messageService.add({ severity: 'info', summary: 'Update Success', detail: 'Table updated!' }) :
-            this.messageService.add({ severity: 'error', summary: 'Update Failed', detail: `Reason: ${result.payload}` })
+            this.messageService.add({severity: 'info', summary: 'Update Success', detail: 'Table updated!'}) :
+            this.messageService.add({severity: 'error', summary: 'Update Failed', detail: `Reason: ${result.payload}`})
+          if (result.status === 'success') this.disableEdit()
         });
       },
       reject: (type: any) => {
         switch (type) {
           case ConfirmEventType.REJECT:
-            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+            this.messageService.add({severity: 'error', summary: 'Rejected', detail: 'You have rejected'});
             break;
           case ConfirmEventType.CANCEL:
-            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
+            this.messageService.add({severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled'});
             break;
         }
+        this.disableEdit()
       }
     });
   }
@@ -125,19 +142,21 @@ export class TableDetailComponent implements OnInit {
       accept: () => {
         this.tableService.addTable(this.table).subscribe(result => {
           (result.status === 'success') ?
-            this.messageService.add({ severity: 'info', summary: 'Add Success', detail: 'Table Add!' }) :
-            this.messageService.add({ severity: 'error', summary: 'Add Failed', detail: `Reason: ${result.payload}` })
+            this.messageService.add({severity: 'info', summary: 'Add Success', detail: 'Table Add!'}) :
+            this.messageService.add({severity: 'error', summary: 'Add Failed', detail: `Reason: ${result.payload}`})
+          if (result.status === 'success') this.disableEdit()
         });
       },
       reject: (type: any) => {
         switch (type) {
           case ConfirmEventType.REJECT:
-            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+            this.messageService.add({severity: 'error', summary: 'Rejected', detail: 'You have rejected'});
             break;
           case ConfirmEventType.CANCEL:
-            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
+            this.messageService.add({severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled'});
             break;
         }
+        this.disableEdit()
       }
     });
   }

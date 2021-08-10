@@ -1,38 +1,67 @@
 <div class="card card-primary">
-    <div class="card-header">
-        <h3 class="card-title">Table Details</h3>
+  <div class="card-header">
+    <div class="d-flex align-items-center justify-content-between m-v-15">
+      <h3 class="card-title">Table Details <span *ngIf="!newForm">T-{{table.tableId}}</span></h3>
+      <div class="card-toolbar">
+        <div class="d-flex">
+          <button pButton pRipple type="button" label="Back" icon="pi pi-chevron-left" *ngIf="!editMode"
+                  class="p-button-rounded p-button-success m-r-5 d-none d-sm-block"
+                  [routerLink]="['../']"></button>
+
+          <button pButton pRipple type="button" icon="pi pi-chevron-left" *ngIf="!editMode"
+                  class="p-button-rounded p-button-success m-r-5  d-sm-none" [routerLink]="['../']"></button>
+
+          <button pButton pRipple type="button" label="Delete" icon="pi pi-trash" *ngIf="editMode"
+                  [disabled]="true" class="p-button-rounded p-button-danger m-r-5 d-none d-sm-block"></button>
+
+          <button pButton pRipple type="button" label="Cancel" icon="pi pi-times"
+                  class="p-button-rounded m-r-5 d-none d-sm-block" *ngIf="editMode"
+                  (click)="disableEdit()"></button>
+
+          <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded m-r-5  d-sm-none"
+                  *ngIf="editMode" (click)="disableEdit()"></button>
+
+          <button pButton pRipple type="button" label="Edit" icon="pi pi-pencil"
+                  class="p-button-rounded m-r-5 d-none d-sm-block" *ngIf="!editMode"
+                  (click)="enableEdit()"></button>
+
+          <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded m-r-5  d-sm-none"
+                  *ngIf="!editMode" (click)="enableEdit()"></button>
+
+          <button pButton pRipple type="button" label="Save" icon="pi pi-save" *ngIf="editMode"
+                  class="p-button-rounded p-button-secondary m-r-5 d-none d-sm-block"
+                  (click)="onSubmit()"></button>
+
+          <button pButton pRipple type="button" icon="pi pi-save" *ngIf="editMode"
+                  class="p-button-rounded p-button-secondary m-r-5  d-sm-none" (click)="onSubmit()"></button>
+        </div>
+      </div>
     </div>
+  </div>
 
     <div class="card-body">
         <form [formGroup]="tableForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
-                <label for="tableId">Table ID: </label>
-                <input type="text" class="form-control form-control-border" formControlName="tableId" id="tableId"
+                <label for="tableId" class="font-weight-bold">Table ID</label>
+                <input pInputText type="text" class="form-control form-control-border" formControlName="tableId" id="tableId"
                     placeholder="Enter Table ID">
             </div>
             <div class="form-group">
-                <label for="tableSeats">Table Seats: </label>
-                <input type="text" class="form-control form-control-border" formControlName="tableSeats" id="tableSeats"
+                <label for="tableSeats" class="font-weight-bold">Table Seats</label>
+                <input pInputText type="text" class="form-control form-control-border" formControlName="tableSeats" id="tableSeats"
                     placeholder="Enter Seats">
             </div>
             <div class="form-group">
-                <label for="area">Area: </label>
-                <p-dropdown id="area" [options]="areas" formControlName="area"
+                <label for="area" class="font-weight-bold">Area</label>
+                <p-dropdown id="area" class="ml-2" [options]="areas" formControlName="area"
                 optionLabel="areaName" optionValue="_id"></p-dropdown>
                 <!-- <input type="text" class="form-control form-control-border" formControlName="area" id="area"
                     placeholder="Enter Area"> -->
             </div>
 
             <div class="form-group">
-                <label for="tableOccupied">Table Occupied: </label>
+                <label for="tableOccupied" class="font-weight-bold">Table Occupied</label>
                 <p-inputSwitch class="form-control" id="tableOccupied" formControlName="tableOccupied"></p-inputSwitch>
-            </div>
-
-            <div class="card-footer">
-                <button type="button" class="btn btn-secondary" [routerLink]="['../']">Cancel</button>
-                <button type="submit" class="btn btn-primary float-right" >
-                    Save
-                </button>
             </div>
         </form>
     </div>
