@@ -32,6 +32,6 @@ export class ReservationService {
   addReservation(reservation: any): Observable<any> {
     const url = `${this.apiBaseUrl}/food/reservation/add`;
     let body = { reservation: reservation }
-    return this.http.post(url, body);
+    return this.http.put(url, body);
   }
 }
