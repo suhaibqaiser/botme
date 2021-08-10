@@ -1,6 +1,6 @@
 import { restResponse } from "../../../utils/response";
 import { createProduct, getMaxLabelValue, getProduct, updateProduct } from "./service";
-import { randomUUID } from "crypto";
+const { v4: uuidv4 } = require('uuid');
 
 export async function addProduct(products: [any]) {
     let response = new restResponse()
@@ -21,7 +21,7 @@ export async function addProduct(products: [any]) {
         }
 
 
-        product.productId = randomUUID()
+        product.productId = uuidv4()
         product.productLabel = await val + 1
         product.productActive = true
 

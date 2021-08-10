@@ -1,6 +1,6 @@
 import {restResponse} from "../../../utils/response";
 import {addCustomer, getAllCustomers, getCustomer, updateOneCustomer} from "./service";
-import {randomUUID} from "crypto";
+const { v4: uuidv4 } = require('uuid');
 
 export async function findCustomer(filter: any) {
     let response = new restResponse()
@@ -60,7 +60,7 @@ export async function createCustomer(customer: any) {
         response.status = "error"
         return response;
     }
-    customer.customerId = randomUUID()
+    customer.customerId = uuidv4()
     customer.customerActive = true
 
     let result = await addCustomer(customer)

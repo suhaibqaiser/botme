@@ -1,23 +1,64 @@
 <div class="card card-primary" xmlns="http://www.w3.org/1999/html">
-  <div class="card-header">
-    <h3 class="card-title">Customer Details</h3>
-  </div>
+    <div class="card-header">
+      <div class="d-flex align-items-center justify-content-between m-v-15">
+        <h3 class="card-title">Customer Details <span *ngIf="!newForm">C-{{customer.customerId}}</span></h3>
+        <div class="card-toolbar">
+          <div class="d-flex">
+            <button pButton pRipple type="button" label="Back" icon="pi pi-chevron-left" *ngIf="!editMode"
+                    class="p-button-rounded p-button-success m-r-5 d-none d-sm-block"
+                    [routerLink]="['../']"></button>
 
+            <button pButton pRipple type="button" icon="pi pi-chevron-left" *ngIf="!editMode"
+                    class="p-button-rounded p-button-success m-r-5  d-sm-none" [routerLink]="['../']"></button>
+
+            <button pButton pRipple type="button" label="Delete" icon="pi pi-trash" *ngIf="editMode"
+                    [disabled]="true" class="p-button-rounded p-button-danger m-r-5 d-none d-sm-block"></button>
+
+            <button pButton pRipple type="button" label="Cancel" icon="pi pi-times"
+                    class="p-button-rounded m-r-5 d-none d-sm-block" *ngIf="editMode"
+                    (click)="disableEdit()"></button>
+
+            <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded m-r-5  d-sm-none"
+                    *ngIf="editMode" (click)="disableEdit()"></button>
+
+            <button pButton pRipple type="button" label="Edit" icon="pi pi-pencil"
+                    class="p-button-rounded m-r-5 d-none d-sm-block" *ngIf="!editMode"
+                    (click)="enableEdit()"></button>
+
+            <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded m-r-5  d-sm-none"
+                    *ngIf="!editMode" (click)="enableEdit()"></button>
+
+            <button pButton pRipple type="button" label="Save" icon="pi pi-save" *ngIf="editMode"
+                    class="p-button-rounded p-button-secondary m-r-5 d-none d-sm-block"
+                    (click)="onSubmit()"></button>
+
+            <button pButton pRipple type="button" icon="pi pi-save" *ngIf="editMode"
+                    class="p-button-rounded p-button-secondary m-r-5  d-sm-none" (click)="onSubmit()"></button>
+          </div>
+        </div>
+      </div>
+    </div>
   <div class="card-body">
-    <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+    <p-divider>
+      <div class="p-d-inline-flex p-ai-center">
+        <i class="pi pi-user p-mr-2 mr-2"></i>
+        <b>Identification</b>
+      </div>
+    </p-divider>
+    <form class="m-t-20" [formGroup]="customerForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <label for="form-customerName">Customer Name: </label>
-        <input type="text" class="form-control form-control-border" formControlName="customerName"
+        <label for="form-customerName" class="font-weight-bold">Customer Name</label>
+        <input type="text" pInputText class="form-control form-control-border" formControlName="customerName"
           id="form-customerName" placeholder="Enter Name">
       </div>
       <div class="form-group">
-        <label for="form-customerEmail">Customer Email: </label>
-        <input type="email" class="form-control form-control-border" formControlName="customerEmail"
+        <label for="form-customerEmail" class="font-weight-bold">Customer Email</label>
+        <input pInputText type="email" class="form-control form-control-border" formControlName="customerEmail"
           id="form-customerEmail" placeholder="Enter Email">
       </div>
       <div class="form-group">
-        <label for="form-customerPhone">Customer Phone: </label>
-        <input type="text" class="form-control form-control-border" formControlName="customerPhone"
+        <label for="form-customerPhone" class="font-weight-bold">Customer Phone</label>
+        <input pInputText type="text" class="form-control form-control-border" formControlName="customerPhone"
           id="form-customerPhone" placeholder="Enter Phone">
       </div>
       <div class="form-group">

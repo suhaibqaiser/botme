@@ -1,6 +1,6 @@
 import { restResponse } from "../../../utils/response";
 import { createCart, createOrder, getCart, getOrder, updateCart, updateOrder } from "./service";
-import { randomUUID } from "crypto";
+const { v4: uuidv4 } = require('uuid');
 
 export async function findOrder(filter: any) {
     let response = new restResponse()
@@ -25,7 +25,7 @@ export async function addOrder(order: any) {
         return response;
     }
 
-    order.orderId = randomUUID()
+    order.orderId = uuidv4()
 
     let result = await createOrder(order)
     if (result) {
@@ -84,7 +84,7 @@ export async function addCart(cart: any) {
         return response;
     }
 
-    cart.cartId = randomUUID()
+    cart.cartId = uuidv4()
 
     let result = await createCart(cart)
     if (result) {

@@ -1,6 +1,6 @@
-import { randomUUID } from "crypto";
 import { restResponse } from "../../../utils/response";
 import { createCategory, deleteCategory, getCategory, updateCategory } from "./service";
+const { v4: uuidv4 } = require('uuid');
 
 
 export async function addCategory(category: any) {
@@ -10,7 +10,7 @@ export async function addCategory(category: any) {
         response.status = "error"
         return response;
     }
-    category.categoryId = randomUUID()
+    category.categoryId = uuidv4()
     let result = await createCategory(category)
     if (result) {
         response.payload = result
