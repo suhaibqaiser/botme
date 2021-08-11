@@ -4,6 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {MessageService, ConfirmationService, ConfirmEventType} from 'primeng/api';
 import {Table} from '../../../model/table';
 import {TableService} from '../../../service/table.service';
+import {AreaService} from "../../../service/area.service";
 
 @Component({
   selector: 'app-table-detail',
@@ -19,7 +20,8 @@ export class TableDetailComponent implements OnInit {
               private route: ActivatedRoute,
               private fb: FormBuilder,
               private messageService: MessageService,
-              private confirmationService: ConfirmationService
+              private confirmationService: ConfirmationService,
+              private areaService: AreaService
   ) {
   }
 
@@ -31,23 +33,23 @@ export class TableDetailComponent implements OnInit {
   };
 
   tableId = ''
-  areas: [{}] = [{}]
+  areas?: any
 
   formMode = 'update'
 
   tableForm = this.fb.group({
     tableId: new FormControl('', [Validators.required, Validators.maxLength(30)]),
     tableSeats: new FormControl(''),
-    tableOccupied: new FormControl(''),
+    tableOccupied: new FormControl('false'),
     area: new FormControl(''),
   });
 
 
   ngOnInit(): void {
-    this.route.queryParams
-      .subscribe(params => {
-        this.tableId = params.tableId;
-      });
+    this.getAreas()
+    this.route.queryParams.subscribe(params => {
+      this.tableId = params.tableId;
+    });
     if (this.tableId) {
       this.getTable(this.tableId);
     } else {
@@ -77,10 +79,6 @@ export class TableDetailComponent implements OnInit {
       result => {
         this.table = result.payload[0]
 
-        this.areas.push(this.table.area)
-        console.log(this.table);
-
-
         this.tableForm.patchValue({
           tableId: this.table.tableId,
           tableSeats: this.table.tableSeats,
@@ -91,6 +89,13 @@ export class TableDetailComponent implements OnInit {
     )
   }
 
+  getAreas() {
+    this.areaService.getAreas().subscribe(
+      result => {
+        this.areas = result.payload
+      }
+    )
+  }
 
   onSubmit() {
     if (this.tableForm.status === 'VALID') {
@@ -160,5 +165,4 @@ export class TableDetailComponent implements OnInit {
       }
     });
   }
-
 }

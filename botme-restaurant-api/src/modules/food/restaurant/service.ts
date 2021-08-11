@@ -10,7 +10,7 @@ export function updateRestaurant(restaurant: any) {
 }
 
 export async function getAreas() {
-    return Area.find({}, {_id: 0, __v: 0});
+    return Area.find({});
 }
 
 export async function getAreaTables(areaId: string) {
