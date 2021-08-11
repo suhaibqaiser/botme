@@ -16,6 +16,7 @@ export class ReservationDetailComponent implements OnInit {
 
   //form edition
   editMode = false
+  reservationLabel = 0
 
   constructor(private reservationService: ReservationService,
               private route: ActivatedRoute,
@@ -39,6 +40,7 @@ export class ReservationDetailComponent implements OnInit {
     reservationType: '',
     reservationSource: '',
     reservationId: '',
+    reservationLabel: 0,
     customer: '',
     table: ''
   };
@@ -67,17 +69,18 @@ export class ReservationDetailComponent implements OnInit {
     customerArrival: new FormControl(''),
     customerWaiting: new FormControl(''),
     customerSeated: new FormControl(''),
-    customerDeparture: new FormControl('')
+    customerDeparture: new FormControl(''),
+    reservationLabel: new FormControl(0)
   });
 
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.route.queryParams
       .subscribe(params => {
         this.reservationId = params.reservationId;
       });
     if (this.reservationId) {
-      this.findReservation(this.reservationId);
+      await this.findReservation(this.reservationId);
       this.editMode = false
       this.reservationForm.disable()
     } else {
@@ -94,10 +97,11 @@ export class ReservationDetailComponent implements OnInit {
 
   }
 
-  findReservation(rId: string) {
+  async findReservation(rId: string) {
     this.reservationService.findReservation(rId).subscribe(
       result => {
         this.reservation = result.payload
+        this.reservationLabel = result.payload.reservationLabel
         this.reservationForm.patchValue({
           reservationSource: this.reservation.reservationSource,
           reservationType: this.reservation.reservationType,
@@ -108,6 +112,7 @@ export class ReservationDetailComponent implements OnInit {
           customerWaiting: '',
           customerSeated: '',
           customerDeparture: '',
+          reservationLabel: this.reservation.reservationLabel
         })
         if (this.reservation.reservationMeta) {
           this.reservationForm.patchValue({

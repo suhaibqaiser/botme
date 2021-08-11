@@ -15,3 +15,7 @@ export async function getReservation(reservationId: string) {
 export async function getAllReservation() {
     return Reservation.find({}).populate("customer").populate("table")
 }
+
+export async function getMaxLabelValue() {
+    return Reservation.find({}).sort({ reservationLabel: -1 }).limit(1)
+}

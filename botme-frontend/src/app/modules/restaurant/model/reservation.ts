@@ -11,6 +11,7 @@ export interface Reservation {
   reservationType: String,
   reservationSource: String,
   reservationId: String,
+  reservationLabel: Number,
   customer: String,
   table: String
 }

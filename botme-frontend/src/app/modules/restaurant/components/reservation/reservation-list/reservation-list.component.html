@@ -43,7 +43,7 @@
           <th style="width: 3rem">
             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
           </th>
-          <th pSortableColumn="reservationId">ID <p-sortIcon field="reservationId"></p-sortIcon>
+          <th pSortableColumn="reservationId">Label <p-sortIcon field="reservationLabel"></p-sortIcon>
           </th>
           <th pSortableColumn="customer.customerName">Customer <p-sortIcon field="customer.customerName"></p-sortIcon>
           </th>
@@ -59,7 +59,7 @@
           </th>
         </tr>
       </ng-template>
-     
+
       <ng-template pTemplate="body" let-reservation>
         <tr>
           <td>
@@ -67,7 +67,7 @@
           </td>
           <td><button class="btn btn-primary btn-tone m-r-5" [routerLink]="['detail']"
               [queryParams]="{ reservationId: reservation.reservationId}">
-              {{reservation.reservationId}}</button></td>
+              R-{{reservation.reservationLabel}}</button></td>
           <td>{{reservation.customer.customerName}}</td>
           <td>{{reservation.reservationSeats}}</td>
           <td>{{reservation.table.tableId}}</td>
