@@ -41,10 +41,8 @@
   </div>
   <!--body-->
   <div class="card-body">
-    <ng-template pTemplate="header">
-    </ng-template>
     <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
-      <div>
+      <div class="p-fluid">
         <p-divider>
           <div class="p-d-inline-flex p-ai-center">
             <i class="pi pi-user p-mr-2 mr-2"></i>
@@ -52,71 +50,48 @@
           </div>
         </p-divider>
 
-        <div class="p-fluid">
-          <div class="p-field p-grid m-b-20">
-            <label for="reservationType" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">Reservation Type</label>
-            <div class="p-col-12 p-md-10">
-              <p-dropdown id="reservationType" [options]="reservationType" optionLabel="name"
-                          formControlName="reservationType" optionValue="name" placeholder="Select reservation type">
-              </p-dropdown>
-            </div>
+        <div class="form-group">
+          <label for="reservationType" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">Reservation Type</label>
+          <div class="p-col-12 p-md-10">
+            <p-dropdown id="reservationType" [options]="reservationType" optionLabel="name" formControlName="reservationType" optionValue="name" placeholder="Select reservation type"></p-dropdown>
           </div>
-          <div class="p-field p-grid m-b-20">
-            <label for="reservationSource" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">Reservation Source</label>
-            <div class="p-col-12 p-md-10">
-              <p-dropdown id="reservationSource" [options]="reservationSource" optionLabel="name"
-                          formControlName="reservationSource" optionValue="name"
-                          placeholder="Select reservation source"
-                          [ngClass]="{'ng-invalid ng-dirty': reservationForm.controls['reservationSource'].invalid}">
-              </p-dropdown>
-            </div>
+        </div>
+        <div class="form-group">
+          <label for="reservationSource" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">Reservation Source</label>
+          <div class="p-col-12 p-md-10">
+            <p-dropdown id="reservationSource" [options]="reservationSource" optionLabel="name" formControlName="reservationSource" optionValue="name" placeholder="Select reservation source" [ngClass]="{'ng-invalid ng-dirty': reservationForm.controls['reservationSource'].invalid}"></p-dropdown>
           </div>
-          <div class="p-field p-grid m-b-50">
-            <label for="reservationSeats" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">Reservation Seats</label>
-            <div class="p-col-12 p-md-10">
-              <p-inputNumber id="reservationSeats" formControlName="reservationSeats" inputId="minmax"
-                             inputId="minmax" mode="decimal" [min]="1" [max]="100"
-                             placeholder="Enter number of guests [1-100]"
-                             [ngClass]="{'ng-invalid ng-dirty' : reservationForm.controls['reservationSeats'].status === 'INVALID'}">
-              </p-inputNumber>
-            </div>
+        </div>
+        <div class="form-group">
+          <label for="reservationSeats" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">Reservation Seats</label>
+          <div class="p-col-12 p-md-10">
+            <p-inputNumber id="reservationSeats" formControlName="reservationSeats" inputId="minmax" inputId="minmax" mode="decimal" [min]="1" [max]="100" placeholder="Enter number of guests [1-100]" [ngClass]="{'ng-invalid ng-dirty' : reservationForm.controls['reservationSeats'].status === 'INVALID'}"></p-inputNumber>
           </div>
         </div>
 
-        <p-divider>
-          <div class="p-d-inline-flex p-ai-center">
-            <i class="pi pi-user p-mr-2 mr-2"></i>
-            <b>Customer</b>
-          </div>
-        </p-divider>
-        <div class="p-fluid m-t-20">
-          <div class="p-field p-grid m-b-50">
-            <label for="customer" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">Customer</label>
-            <div class="p-col-12 p-md-10">
-              <p-dropdown id="customer" [options]="customers" optionLabel="customerName"
-                          formControlName="customer" optionValue="_id" [filter]="true" placeholder="Select customer"
-                          [ngClass]="{'ng-invalid ng-dirty': reservationForm.controls['customer'].invalid}">
-              </p-dropdown>
+      <p-divider>
+        <div class="p-d-inline-flex p-ai-center">
+          <i class="pi pi-user p-mr-2 mr-2"></i>
+          <b>Customer</b>
+        </div>
+      </p-divider>
 
-            </div>
+        <div class="form-group">
+          <label for="customer" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">Customer</label>
+          <div class="p-col-12 p-md-10">
+            <p-dropdown id="customer" [options]="customers" optionLabel="customerName" formControlName="customer" optionValue="_id" [filter]="true" placeholder="Select customer" [ngClass]="{'ng-invalid ng-dirty': reservationForm.controls['customer'].invalid}"></p-dropdown>
           </div>
         </div>
-        <p-divider>
-          <div class="p-d-inline-flex p-ai-center">
-            <i class="pi pi-user p-mr-2 mr-2"></i>
-            <b>Table</b>
-          </div>
-        </p-divider>
-        <div class="p-fluid m-t-20">
-          <div class="p-field p-grid">
-            <label for="table" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">Table</label>
-            <div class="p-col-12 p-md-10">
-              <p-dropdown id="table" formControlName="table" [filter]="true" optionValue="_id"
-                          optionLabel="tableId" [options]="tables" placeholder="Select table"
-                          [ngClass]="{'ng-invalid ng-dirty': reservationForm.controls['table'].invalid}">
-                >
-              </p-dropdown>
-            </div>
+      <p-divider>
+        <div class="p-d-inline-flex p-ai-center">
+          <i class="pi pi-user p-mr-2 mr-2"></i>
+          <b>Table</b>
+        </div>
+      </p-divider>
+        <div class="form-group">
+          <label for="table" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">Table</label>
+          <div class="p-col-12 p-md-10">
+            <p-dropdown id="table" formControlName="table" [filter]="true" optionValue="_id" optionLabel="tableId" [options]="tables" placeholder="Select table" [ngClass]="{'ng-invalid ng-dirty': reservationForm.controls['table'].invalid}">></p-dropdown>
           </div>
         </div>
       </div>
