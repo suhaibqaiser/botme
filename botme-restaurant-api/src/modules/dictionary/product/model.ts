@@ -5,7 +5,7 @@ const ProductSchema = createSchema(
     {
         restaurantId: Type.string(),
         productId: Type.string({ maxlength: 256, required: true, unique: true }),
-        productLabel: Type.number(),
+        productLabel: Type.number({unique: true}),
         productName: Type.string({maxlength: 256, required: true}),
         productType: Type.string({maxlength: 256, required: true}),
         productUOM: Type.string(),
