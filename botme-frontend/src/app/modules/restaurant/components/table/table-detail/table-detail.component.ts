@@ -15,6 +15,7 @@ export class TableDetailComponent implements OnInit {
 
   editMode = false
   newForm = false
+  tableLabel = 0
 
   constructor(private tableService: TableService,
               private route: ActivatedRoute,
@@ -27,6 +28,7 @@ export class TableDetailComponent implements OnInit {
 
   table: Table = {
     tableId: '',
+    tableLabel: 0,
     tableSeats: 0,
     tableOccupied: false,
     area: ''
@@ -40,8 +42,9 @@ export class TableDetailComponent implements OnInit {
   tableForm = this.fb.group({
     tableId: new FormControl('', [Validators.required, Validators.maxLength(30)]),
     tableSeats: new FormControl(''),
-    tableOccupied: new FormControl('false'),
+    tableOccupied: new FormControl(false),
     area: new FormControl(''),
+    tableLabel: new FormControl(0)
   });
 
 
@@ -78,12 +81,13 @@ export class TableDetailComponent implements OnInit {
     this.tableService.getTableById(Id).subscribe(
       result => {
         this.table = result.payload[0]
-
+        this.tableLabel = result.payload[0].tableLabel
         this.tableForm.patchValue({
           tableId: this.table.tableId,
           tableSeats: this.table.tableSeats,
           tableOccupied: this.table.tableOccupied,
-          area: this.table.area._id
+          area: this.table.area._id,
+          tableLabel:this.table.tableLabel
         })
       }
     )

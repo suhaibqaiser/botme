@@ -3,6 +3,7 @@ import {foodDB} from "../../../config/mongoDB";
 const TableSchema = createSchema(
     {
         tableId: Type.string({maxlength: 256, required: true, unique: true}),
+        tableLabel: Type.number({unique: true}),
         tableSeats: Type.number({required: true, sparse: true}),
         tableOccupied: Type.boolean({required: true}),
         area: Type.objectId({ref: "Area"})

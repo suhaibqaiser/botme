@@ -63,9 +63,12 @@
                  id="form-customerPhone" placeholder="Enter Phone">
         </div>
         <div class="form-group">
-          <label class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">Enabled</label> <br>
-          <p-inputSwitch class="ml-2" formControlName="customerActive" id="form-customerActive" offLabel="Disabled" onIcon="pi pi-check" offIcon="pi pi-times"></p-inputSwitch>
-
+          <label class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">Active</label>
+          <div class="p-col-12 p-md-10">
+          <p-toggleButton class="ml-2" formControlName="customerActive" id="form-customerActive" onLabel="Enabled"
+                         offLabel="Disabled" onIcon="pi pi-check" offIcon="pi pi-times"
+                         [style]="{'width': '10em'}"></p-toggleButton>
+          </div>
         </div>
       </div>
     </form>

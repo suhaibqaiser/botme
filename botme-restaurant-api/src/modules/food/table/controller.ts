@@ -1,4 +1,5 @@
 import {restResponse} from "../../../utils/response";
+import {getMaxLabelValue} from "../../food/table/service";
 import {
     createTable,
     getAllTables,
@@ -92,6 +93,13 @@ export async function addTable(table: any) {
         response.payload = "table is required"
         response.status = "error"
         return response;
+    }
+
+    let val = await getMaxLabelValue()
+    if (val.length > 0) {
+        table.tableLabel = val[0].tableLabel + 1
+    } else {
+        table.tableLabel = 0
     }
 
     let result = await createTable(table)

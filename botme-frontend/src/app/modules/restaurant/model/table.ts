@@ -1,7 +1,7 @@
 export interface Table {
-    tableId: String,
-    // TODO: tableLabel: string;
-    tableSeats: Number,
-    tableOccupied: boolean,
-    area: String | any
+  tableId: String,
+  tableLabel: Number;
+  tableSeats: Number,
+  tableOccupied: boolean,
+  area: String | any
 }

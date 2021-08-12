@@ -149,8 +149,8 @@ export class CustomerDetailComponent implements OnInit {
                 summary: 'Add Failed',
                 detail: `Reason: ${result.payload}`
               })
-              this.disableEdit()
             }
+            this.disableEdit()
           })
       },
       reject: (type: any) => {

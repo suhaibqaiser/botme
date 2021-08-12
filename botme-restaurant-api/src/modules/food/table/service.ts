@@ -15,3 +15,7 @@ export async function updateTable(table: any) {
 export async function createTable(table: any) {
     return Table.create(table)
 }
+
+export async function getMaxLabelValue() {
+    return Table.find({}).sort({ tableLabel: -1 }).limit(1)
+}
