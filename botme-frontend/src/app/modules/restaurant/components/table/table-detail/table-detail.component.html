@@ -39,56 +39,63 @@
     </div>
   </div>
 
-    <div class="card-body">
-      <p-divider>
-        <div class="p-d-inline-flex p-ai-center">
-          <i class="pi pi-user p-mr-2 mr-2"></i>
-          <b>Identification</b>
-        </div>
-      </p-divider>
-        <form class="m-t-30" [formGroup]="tableForm" (ngSubmit)="onSubmit()">
-            <div class="form-group">
-                <label for="tableId" class="font-weight-bold">Table ID</label>
-                <input pInputText type="text" class="form-control form-control-border" formControlName="tableId" id="tableId"
-                    placeholder="Enter Table ID">
-            </div>
-            <div class="form-group">
-                <label for="tableSeats" class="font-weight-bold">Table Seats</label>
-                <input pInputText type="text" class="form-control form-control-border" formControlName="tableSeats" id="tableSeats"
-                    placeholder="Enter Seats">
-            </div>
-            <div class="form-group">
-                <label for="area" class="font-weight-bold">Area</label>
-                <p-dropdown id="area" class="ml-2" [options]="areas" formControlName="area"
-                optionLabel="areaName" optionValue="_id"></p-dropdown>
-                <!-- <input type="text" class="form-control form-control-border" formControlName="area" id="area"
-                    placeholder="Enter Area"> -->
-            </div>
+  <div class="card-body">
+    <form [formGroup]="tableForm" (ngSubmit)="onSubmit()">
+      <div class="p-fluid">
+        <p-divider>
+          <div class="p-d-inline-flex p-ai-center">
+            <i class="pi pi-user p-mr-2 mr-2"></i>
+            <b>Identification</b>
+          </div>
+        </p-divider>
 
-            <div class="form-group">
-                <label for="tableOccupied" class="font-weight-bold">Table Occupied</label>
-                <p-inputSwitch class="form-control" id="tableOccupied" formControlName="tableOccupied"></p-inputSwitch>
-            </div>
-        </form>
-    </div>
+        <div class="form-group">
+          <label for="tableId" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">Table ID</label>
+          <div class="p-col-12 p-md-10">
+            <input autofocus pInputText type="text"  formControlName="tableId"
+                   id="tableId" placeholder="Enter Table ID">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="tableSeats" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">Table Seats</label>
+          <div class="p-col-12 p-md-10">
+            <input pInputText type="text" formControlName="tableSeats" id="tableSeats" placeholder="Enter Seats">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="area" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">Area</label>
+          <p-dropdown id="area" class="ml-2" [options]="areas" formControlName="area"
+                      optionLabel="areaName" optionValue="_id"></p-dropdown>
+          <!-- <input type="text" class="form-control form-control-border" formControlName="area" id="area"
+              placeholder="Enter Area"> -->
+        </div>
+
+        <div class="form-group">
+              <label for="tableOccupied" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">Table Occupied</label> <br>
+              <p-inputSwitch id="tableOccupied" class="ml-2" formControlName="tableOccupied"></p-inputSwitch>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
 
 <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered " role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Action Processed</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Changes saved!
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                    [routerLink]="['../']">Close</button>
-            </div>
-        </div>
+  <div class="modal-dialog modal-dialog-centered " role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Action Processed</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Changes saved!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                [routerLink]="['../']">Close
+        </button>
+      </div>
     </div>
+  </div>
 </div>
