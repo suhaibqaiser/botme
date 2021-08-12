@@ -1,6 +1,7 @@
 import {restResponse} from "../../../utils/response";
 import {addCustomer, getAllCustomers, getCustomer, updateOneCustomer} from "./service";
 import {randomUUID} from "crypto";
+import {getMaxLabelValue} from "../../food/customer/service";
 
 export async function findCustomer(filter: any) {
     let response = new restResponse()
@@ -62,6 +63,13 @@ export async function createCustomer(customer: any) {
     }
     customer.customerId = randomUUID()
     customer.customerActive = true
+
+    let val = await getMaxLabelValue()
+    if (val.length > 0) {
+        customer.customerLabel = val[0].customerLabel + 1
+    } else {
+        customer.customerLabel = 0
+    }
 
     let result = await addCustomer(customer)
     if (result) {

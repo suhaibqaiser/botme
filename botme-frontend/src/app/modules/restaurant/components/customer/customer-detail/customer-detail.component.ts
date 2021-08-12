@@ -14,6 +14,7 @@ export class CustomerDetailComponent implements OnInit {
 
   editMode = false
   newForm = false
+  customerLabel = 0
 
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService, private customerService: CustomerService, private route: ActivatedRoute, private fb: FormBuilder) {
   }
@@ -23,12 +24,14 @@ export class CustomerDetailComponent implements OnInit {
     customerEmail: new FormControl('', [Validators.required, Validators.maxLength(30)]),
     customerPhone: new FormControl('', [Validators.required, Validators.maxLength(15)]),
     customerActive: true,
+    customerLabel: new FormControl(0)
   });
 
   formMode = 'update';
   customerId = '';
   customer: Customer = {
     customerId: '',
+    customerLabel: 0,
     customerName: '',
     customerEmail: '',
     customerPhone: '',
@@ -74,11 +77,13 @@ export class CustomerDetailComponent implements OnInit {
     this.customerService.getCustomerDetail(customerId).subscribe(
       result => {
         this.customer = result.payload
+        this.customerLabel = result.payload.customerLabel
         this.customerForm.patchValue({
           customerName: this.customer?.customerName,
           customerEmail: this.customer?.customerEmail,
           customerPhone: this.customer?.customerPhone,
-          customerActive: this.customer?.customerActive
+          customerActive: this.customer?.customerActive,
+          customerLabel: this.customer?.customerLabel
         })
       }
     );
@@ -135,17 +140,17 @@ export class CustomerDetailComponent implements OnInit {
       accept: () => {
         this.customerService.registerCustomer(this.customer)
           .subscribe(result => {
-              if (result.status === 'success') {
-                this.customer = result.payload
-                this.messageService.add({severity: 'info', summary: 'Update Success', detail: 'Customer added!'})
-              }else{
-                this.messageService.add({
-                  severity: 'error',
-                  summary: 'Add Failed',
-                  detail: `Reason: ${result.payload}`
-                })
-                this.disableEdit()
-              }
+            if (result.status === 'success') {
+              this.customer = result.payload
+              this.messageService.add({severity: 'info', summary: 'Update Success', detail: 'Customer added!'})
+            } else {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Add Failed',
+                detail: `Reason: ${result.payload}`
+              })
+              this.disableEdit()
+            }
           })
       },
       reject: (type: any) => {
