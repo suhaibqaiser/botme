@@ -17,7 +17,7 @@ export class ReservationDetailComponent implements OnInit {
   //form edition
   editMode = false
   reservationLabel = 0
-
+  newForm = false
   constructor(private reservationService: ReservationService,
               private route: ActivatedRoute,
               private fb: FormBuilder,
@@ -86,6 +86,7 @@ export class ReservationDetailComponent implements OnInit {
     } else {
       this.formMode = 'new'
       this.editMode = false
+      this.newForm = true
       this.reservationForm.disable()
     }
     this.getCustomers()
