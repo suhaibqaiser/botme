@@ -9,7 +9,7 @@ export interface Order {
     tableId: string;
     cartId: string;
     delivery: {
-        deliveryDate: Date; // datetime
+        deliveryDate: null | Date; // datetime
         deliverFee: number;
         deliveryNote: string;
     }
@@ -20,4 +20,5 @@ export interface Order {
     orderServiceTax: number;
     orderSalesTax: number;
     orderTotal: number;
+    orderActive: boolean;
 }

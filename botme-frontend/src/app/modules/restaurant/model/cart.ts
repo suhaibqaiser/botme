@@ -22,3 +22,21 @@ export interface Cart {
     cartDiscount: number;
     cartTotal: number;
 }
+
+export interface cartProduct {
+    productId: string,
+    productLabel: string,
+    productCategory: string,
+    productFlavor: string,
+    productProportion: string,
+    productToppings: [string],
+    productOptions: [[string]],
+    productRate: {
+        standard: number,
+        small: number,
+        medium: number,
+        large: number,
+    },
+    productQuantity: number,
+    productNotes: string
+}

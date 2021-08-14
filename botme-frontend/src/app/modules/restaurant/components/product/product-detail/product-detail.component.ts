@@ -309,6 +309,7 @@ export class ProductDetailComponent implements OnInit {
             this.messageService.add({ severity: 'info', summary: 'Add Success', detail: `Product Added!` })
             this.productId = result.payload.productId
             this.product.productId = this.productId
+            this.disableEdit()
           } else {
             this.messageService.add({ severity: 'error', summary: 'Add Failed', detail: `Reason: ${result.payload}` })
           }

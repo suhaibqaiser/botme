@@ -63,7 +63,7 @@ function sendMessage() {
     "message_command": "find",
     "language": "en-US",
     "message_text": "",
-    "authToken": "c9234fd1-fb5b-4663-b1d2-9ed5773091e8"
+    "authToken": "qbw/fcQKvC6SY+AelUs5VpRYOhnRvzZsz39xVU06LYI="
   }
   request.message_text = document.getElementById('messageBox').value
   ws.send(JSON.stringify(request));

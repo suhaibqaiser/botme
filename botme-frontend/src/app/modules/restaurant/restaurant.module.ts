@@ -31,6 +31,7 @@ import { MenuListComponent } from './components/menu/menu-list/menu-list.compone
 import { MenuDetailComponent } from './components/menu/menu-detail/menu-detail.component';
 import { OrderDetailComponent } from './components/order/order-detail/order-detail.component';
 import { TableDetailComponent } from './components/table/table-detail/table-detail.component';
+import {CalendarModule} from 'primeng/calendar';
 
 
 @NgModule({
@@ -66,7 +67,8 @@ import { TableDetailComponent } from './components/table/table-detail/table-deta
     DialogModule,
     TableModule,
     InputSwitchModule,
-    FormsModule
+    FormsModule,
+    CalendarModule
   ]
 })
 export class RestaurantModule {

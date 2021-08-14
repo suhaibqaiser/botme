@@ -3,7 +3,7 @@ import {addCart, addOrder, editCart, editOrder, findCart, findOrder} from "./con
 
 export default [
     {
-        path: "/orders/search",
+        path: "/order/search",
         method: "get",
         handler: async (req: Request, res: Response) => {
             let result = await findOrder(req.query)
@@ -11,7 +11,7 @@ export default [
         }
     },
     {
-        path: "/orders/update",
+        path: "/order/update",
         method: "post",
         handler: async (req: Request, res: Response) => {
             let result = await editOrder(req.body.order)
@@ -19,7 +19,7 @@ export default [
         }
     },
     {
-        path: "/orders/add",
+        path: "/order/add",
         method: "put",
         handler: async (req: Request, res: Response) => {
             let result = await addOrder(req.body.order)
