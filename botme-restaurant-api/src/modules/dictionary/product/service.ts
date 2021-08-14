@@ -15,5 +15,5 @@ export async function updateProduct(product: any) {
 }
 
 export async function getMaxLabelValue() {
-    return Product.find({}).sort({ productLabel: -1 }).limit(1)
+    return Product.findOne({}).sort({ productLabel: -1 })
 }

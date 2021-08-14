@@ -17,5 +17,5 @@ export async function createTable(table: any) {
 }
 
 export async function getMaxLabelValue() {
-    return Table.find({}).sort({ tableLabel: -1 }).limit(1)
+    return Table.findOne({}).sort({ tableLabel: -1 })
 }

@@ -65,11 +65,7 @@ export async function createCustomer(customer: any) {
     customer.customerActive = true
 
     let val = await getMaxLabelValue()
-    if (val.length > 0) {
-        customer.customerLabel = val[0].customerLabel + 1
-    } else {
-        customer.customerLabel = 1
-    }
+    customer.customerLabel = val ? (val.customerLabel + 1) : 1
 
     let result = await addCustomer(customer)
     if (result) {

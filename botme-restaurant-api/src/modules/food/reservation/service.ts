@@ -17,5 +17,5 @@ export async function getAllReservation() {
 }
 
 export async function getMaxLabelValue() {
-    return Reservation.find({}).sort({ reservationLabel: -1 }).limit(1)
+    return Reservation.findOne({}).sort({ reservationLabel: -1 })
 }

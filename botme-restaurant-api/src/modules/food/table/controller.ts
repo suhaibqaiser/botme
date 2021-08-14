@@ -18,7 +18,12 @@ export async function findTable(filter: any) {
         tableId: any | undefined;
     }
 
-    let queryParams: queryFilters = {tableId: undefined, tableSeats: undefined, tableOccupied: undefined, area: undefined}
+    let queryParams: queryFilters = {
+        tableId: undefined,
+        tableSeats: undefined,
+        tableOccupied: undefined,
+        area: undefined
+    }
 
     if (filter.tableId) {
         queryParams.tableId = filter.tableId
@@ -42,7 +47,7 @@ export async function findTable(filter: any) {
     }
 
     let result = await getTable(queryParams)
-    if (result.length !=0) {
+    if (result.length != 0) {
         response.payload = result
         response.status = "success"
         return response
@@ -98,11 +103,7 @@ export async function addTable(table: any) {
 
     table.tableId = randomUUID()
     let val = await getMaxLabelValue()
-    if (val.length > 0) {
-        table.tableLabel = val[0].tableLabel + 1
-    } else {
-        table.tableLabel = 1
-    }
+    table.tableLabel = val ? ( val.tableLabel + 1) : 1
 
     let result = await createTable(table)
     if (result) {

@@ -33,5 +33,5 @@ export async function updateAddress(address: any) {
 }
 
 export async function getMaxLabelValue() {
-    return Customer.find({}).sort({ customerLabel: -1 }).limit(1)
+    return Customer.findOne({}).sort({ customerLabel: -1 })
 }

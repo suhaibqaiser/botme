@@ -11,11 +11,7 @@ export async function addReservation(reservation: any) {
     }
     reservation.reservationId = randomUUID();
     let val = await getMaxLabelValue()
-    if (val.length > 0) {
-        reservation.reservationLabel = val[0].reservationLabel + 1
-    } else {
-        reservation.reservationLabel = 1
-    }
+    reservation.reservationLabel = val ? ( val.reservationLabel + 1) : 1
 
     let result = await createReservation(reservation)
     if (result) {

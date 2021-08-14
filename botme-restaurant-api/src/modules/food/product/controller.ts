@@ -12,11 +12,7 @@ export async function addProduct(product: any) {
     let result
 
     let val = await getMaxLabelValue()
-    if (val.length > 0) {
-        product.productLabel = val[0].productLabel + 1
-    } else {
-        product.productLabel = 1
-    }
+    product.productLabel = val ? ( val.productLabel + 1) : 1
 
     product.productId = randomUUID()
     product.productActive = true
