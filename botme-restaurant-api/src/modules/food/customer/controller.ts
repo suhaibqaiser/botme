@@ -68,7 +68,7 @@ export async function createCustomer(customer: any) {
     if (val.length > 0) {
         customer.customerLabel = val[0].customerLabel + 1
     } else {
-        customer.customerLabel = 0
+        customer.customerLabel = 1
     }
 
     let result = await addCustomer(customer)

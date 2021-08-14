@@ -64,7 +64,7 @@
             </td>
             <td>
               <button class="btn btn-primary btn-tone m-r-5" [routerLink]="['detail']"
-                [queryParams]="{ tableId: table._id }">T-{{table.tableLabel}}</button>
+                [queryParams]="{ tableId: table.tableId }">T-{{table.tableLabel}}</button>
             </td>
             <td>{{table.tableSeats}}</td>
             <td><span *ngIf="table.tableOccupied === true"

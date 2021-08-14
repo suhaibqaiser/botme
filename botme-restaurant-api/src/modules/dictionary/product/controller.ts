@@ -14,7 +14,7 @@ export async function addProduct(product: any) {
     if (val.length > 0) {
         product.productLabel = val[0].productLabel + 1
     } else {
-        product.productLabel = 0
+        product.productLabel = 1
     }
 
     product.productId = randomUUID()

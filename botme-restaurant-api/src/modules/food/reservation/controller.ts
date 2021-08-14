@@ -14,7 +14,7 @@ export async function addReservation(reservation: any) {
     if (val.length > 0) {
         reservation.reservationLabel = val[0].reservationLabel + 1
     } else {
-        reservation.reservationLabel = 0
+        reservation.reservationLabel = 1
     }
 
     let result = await createReservation(reservation)

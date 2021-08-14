@@ -15,15 +15,15 @@ export async function findTable(filter: any) {
         tableSeats: any | undefined;
         tableOccupied: boolean | undefined;
         area: any | undefined;
-        _id: any | undefined;
+        tableId: any | undefined;
     }
 
-    let queryParams: queryFilters = {_id: undefined, tableSeats: undefined, tableOccupied: undefined, area: undefined}
+    let queryParams: queryFilters = {tableId: undefined, tableSeats: undefined, tableOccupied: undefined, area: undefined}
 
     if (filter.tableId) {
-        queryParams._id = filter.tableId
+        queryParams.tableId = filter.tableId
     } else {
-        delete queryParams._id
+        delete queryParams.tableId
     }
     if (filter.seats) {
         queryParams.tableSeats = {$gte: Number(filter.seats), $lte: Number(filter.seats) + 1}
@@ -101,7 +101,7 @@ export async function addTable(table: any) {
     if (val.length > 0) {
         table.tableLabel = val[0].tableLabel + 1
     } else {
-        table.tableLabel = 0
+        table.tableLabel = 1
     }
 
     let result = await createTable(table)

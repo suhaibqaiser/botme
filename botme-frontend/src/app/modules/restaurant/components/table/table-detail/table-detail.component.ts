@@ -40,7 +40,7 @@ export class TableDetailComponent implements OnInit {
   formMode = 'update'
 
   tableForm = this.fb.group({
-    tableId: new FormControl('', [Validators.required, Validators.maxLength(30)]),
+    tableId: new FormControl('', [Validators.required, Validators.maxLength(50)]),
     tableSeats: new FormControl(''),
     tableOccupied: new FormControl(false),
     area: new FormControl(''),
