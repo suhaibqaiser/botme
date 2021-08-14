@@ -49,7 +49,7 @@
           </th>
           <th pSortableColumn="reservationSeats">Seats <p-sortIcon field="reservationSeats"></p-sortIcon>
           </th>
-          <th pSortableColumn="table.tableId">Table <p-sortIcon field="table.tableId"></p-sortIcon>
+          <th pSortableColumn="table.tableId">Table Label<p-sortIcon field="table.tableLabel"></p-sortIcon>
           </th>
           <th pSortableColumn="reservationType">Type <p-sortIcon field="reservationType"></p-sortIcon>
           </th>
@@ -70,7 +70,7 @@
               R-{{reservation.reservationLabel}}</button></td>
           <td>{{reservation.customer.customerName}}</td>
           <td>{{reservation.reservationSeats}}</td>
-          <td>{{reservation.table.tableId}}</td>
+          <td><span class="btn btn-primary btn-tone">T-{{reservation.table.tableLabel}}</span></td>
           <td>{{reservation.reservationType}}</td>
           <td>{{reservation.reservationSource}}</td>
           <td>{{reservation.createdAt}}</td>

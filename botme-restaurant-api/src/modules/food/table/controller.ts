@@ -1,5 +1,6 @@
 import {restResponse} from "../../../utils/response";
 import {getMaxLabelValue} from "../../food/table/service";
+import {randomUUID} from "crypto";
 import {
     createTable,
     getAllTables,
@@ -95,6 +96,7 @@ export async function addTable(table: any) {
         return response;
     }
 
+    table.tableId = randomUUID()
     let val = await getMaxLabelValue()
     if (val.length > 0) {
         table.tableLabel = val[0].tableLabel + 1
