@@ -3,9 +3,10 @@ import {foodDB} from "../../../config/mongoDB";
 
 const ReservationSchema = createSchema(
     {
-        customer: Type.objectId({ref: "Customer"}),
-        table: Type.objectId({ref: "Table"}),
+        customerId: Type.string({maxlength: 256, required: true}),
+        tableId: Type.string({maxlength: 256, required: true}),
         reservationId: Type.string({maxlength: 256, required: true, unique: true}),
+        reservationLabel: Type.number({unique: true}),
         reservationSeats: Type.number({required: true}),
         reservationDatetime: Type.date({required: true}),
         reservationType: Type.string({enum: ['Walk-in', 'Booking'], required: true}),

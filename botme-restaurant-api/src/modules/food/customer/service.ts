@@ -31,3 +31,7 @@ export async function createAddress(address: any) {
 export async function updateAddress(address: any) {
     return Address.findOneAndUpdate({ addressId: address.addressId }, address)
 }
+
+export async function getMaxLabelValue() {
+    return Customer.findOne({}).sort({ customerLabel: -1 })
+}

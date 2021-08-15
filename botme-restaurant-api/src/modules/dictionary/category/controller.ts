@@ -1,6 +1,6 @@
-import { randomUUID } from "crypto";
 import { restResponse } from "../../../utils/response";
 import { createCategory, deleteCategory, getCategory, updateCategory } from "./service";
+import {randomUUID} from "crypto";
 
 
 export async function addCategory(category: any) {

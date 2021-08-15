@@ -1,4 +1,6 @@
 import {restResponse} from "../../../utils/response";
+import {getMaxLabelValue} from "../../food/table/service";
+import {randomUUID} from "crypto";
 import {
     createTable,
     getAllTables,
@@ -13,15 +15,20 @@ export async function findTable(filter: any) {
         tableSeats: any | undefined;
         tableOccupied: boolean | undefined;
         area: any | undefined;
-        _id: any | undefined;
+        tableId: any | undefined;
     }
 
-    let queryParams: queryFilters = {_id: undefined, tableSeats: undefined, tableOccupied: undefined, area: undefined}
+    let queryParams: queryFilters = {
+        tableId: undefined,
+        tableSeats: undefined,
+        tableOccupied: undefined,
+        area: undefined
+    }
 
     if (filter.tableId) {
-        queryParams._id = filter.tableId
+        queryParams.tableId = filter.tableId
     } else {
-        delete queryParams._id
+        delete queryParams.tableId
     }
     if (filter.seats) {
         queryParams.tableSeats = {$gte: Number(filter.seats), $lte: Number(filter.seats) + 1}
@@ -40,7 +47,7 @@ export async function findTable(filter: any) {
     }
 
     let result = await getTable(queryParams)
-    if (result.length !=0) {
+    if (result.length != 0) {
         response.payload = result
         response.status = "success"
         return response
@@ -93,6 +100,10 @@ export async function addTable(table: any) {
         response.status = "error"
         return response;
     }
+
+    table.tableId = randomUUID()
+    let val = await getMaxLabelValue()
+    table.tableLabel = val ? ( val.tableLabel + 1) : 1
 
     let result = await createTable(table)
     if (result) {
