@@ -31,7 +31,8 @@ export class TableDetailComponent implements OnInit {
     tableLabel: 0,
     tableSeats: 0,
     tableOccupied: false,
-    area: ''
+    areaId: '',
+    areaName:''
   };
 
   tableId = ''
@@ -43,7 +44,7 @@ export class TableDetailComponent implements OnInit {
     tableId: new FormControl(''),
     tableSeats: new FormControl(''),
     tableOccupied: new FormControl(false),
-    area: new FormControl(''),
+    areaId: new FormControl(''),
     tableLabel: new FormControl(0)
   });
 
@@ -86,7 +87,7 @@ export class TableDetailComponent implements OnInit {
           tableId: this.table.tableId,
           tableSeats: this.table.tableSeats,
           tableOccupied: this.table.tableOccupied,
-          area: this.table.area._id,
+          areaId: this.table.areaId,
           tableLabel:this.table.tableLabel
         })
       }

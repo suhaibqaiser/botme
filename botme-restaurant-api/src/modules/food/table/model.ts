@@ -6,7 +6,7 @@ const TableSchema = createSchema(
         tableLabel: Type.number({unique: true}),
         tableSeats: Type.number({required: true, sparse: true}),
         tableOccupied: Type.boolean({required: true}),
-        area: Type.objectId({ref: "Area"})
+        areaId: Type.string({maxlength: 256, required: true})
     },
     {timestamps: {createdAt: true}}
 );

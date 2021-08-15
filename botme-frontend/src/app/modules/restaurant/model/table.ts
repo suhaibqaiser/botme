@@ -3,5 +3,6 @@ export interface Table {
   tableLabel: Number;
   tableSeats: Number,
   tableOccupied: boolean,
-  area: String | any
+  areaId: String | any,
+  areaName: String
 }

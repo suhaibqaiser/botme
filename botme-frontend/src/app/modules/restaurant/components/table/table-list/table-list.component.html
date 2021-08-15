@@ -49,7 +49,7 @@
             </th>
             <th pSortableColumn="tableOccupied">Occupied <p-sortIcon field="tableOccupied"></p-sortIcon>
             </th>
-            <th pSortableColumn="area.areaName">Area <p-sortIcon field="area.areaName"></p-sortIcon>
+            <th pSortableColumn="area.areaName">Area <p-sortIcon field="areaName"></p-sortIcon>
             </th>
             <th pSortableColumn="createdAt">Created <p-sortIcon field="createdAt"></p-sortIcon>
             </th>
@@ -72,7 +72,7 @@
               <span *ngIf="table.tableOccupied === false"
                 class="badge badge-success">No</span>
             </td>
-            <td>{{table.area.areaName}}</td>
+            <td>{{table.areaName}}</td>
             <td>{{table.createdAt}}</td>
             <td>{{table.updatedAt}}</td>
 
