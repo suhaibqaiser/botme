@@ -8,8 +8,8 @@ const MenuSchema = createSchema(
         menuName: Type.string({maxlength: 256, required: true, unique: true}),
         menuDesc: Type.string({maxlength: 4000}),
         menuItems: [{
-            category: Type.objectId({ref: "Category"}),
-            products: [Type.objectId({ref: "Product"})]
+            category: Type.string(),
+            products: [Type.string()]
         }],
         menuActive: Type.boolean({required: true})
     },

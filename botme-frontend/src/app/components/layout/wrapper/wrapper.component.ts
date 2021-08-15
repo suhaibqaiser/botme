@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {HeaderService} from "../../../services/header.service";
 
 @Component({
   selector: 'app-wrapper',
@@ -7,7 +8,7 @@ import {Component, OnInit} from '@angular/core';
 })
 export class WrapperComponent implements OnInit {
 
-  constructor() {
+  constructor(public headerService: HeaderService) {
   }
 
   ngOnInit(): void {

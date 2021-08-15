@@ -7,12 +7,13 @@ export interface Reservation {
     customerWaiting: String
   },
   reservationSeats: Number | null,
-  reservationDatetime: String,
+  reservationDatetime: Date,
   reservationType: String,
   reservationSource: String,
   reservationId: String,
-  customer: String,
-  table: String
+  reservationLabel: Number,
+  customerId: String,
+  tableId: String
 }
 
 

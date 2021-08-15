@@ -24,6 +24,10 @@ export async function getCart(filter: string) {
     return Cart.find(filter)
 }
 
+export async function getCartById(filter: string) {
+    return Cart.findOne(filter)
+}
+
 export async function createCart(cart: any) {
     return Cart.create(cart)
 }

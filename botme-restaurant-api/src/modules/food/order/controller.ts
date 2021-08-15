@@ -1,5 +1,5 @@
 import { restResponse } from "../../../utils/response";
-import { createCart, createOrder, getCart, getOrder, updateCart, updateOrder } from "./service";
+import { createCart, createOrder, getCart, getCartById, getOrder, updateCart, updateOrder } from "./service";
 import { randomUUID } from "crypto";
 
 export async function findOrder(filter: any) {
@@ -66,6 +66,21 @@ export async function findCart(filter: any) {
 
     let result = await getCart(filter)
     if (result.length != 0) {
+        response.payload = result
+        response.status = "success"
+        return response
+    } else {
+        response.payload = "Cart not found"
+        response.status = "error"
+        return response
+    }
+}
+
+export async function findCartById(filter: any) {
+    let response = new restResponse()
+
+    let result = await getCartById(filter)
+    if (result) {
         response.payload = result
         response.status = "success"
         return response

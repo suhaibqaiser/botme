@@ -4,6 +4,7 @@ import {foodDB} from "../../../config/mongoDB";
 const CustomerSchema = createSchema(
     {
         customerId: Type.string({maxlength: 256, required: true, unique: true}),
+        customerLabel: Type.number({unique: true}),
         customerName: Type.string(),
         customerEmail: Type.string({
             maxlength: 256, trim: true, index: {

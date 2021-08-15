@@ -268,10 +268,10 @@ export class ProductDetailComponent implements OnInit {
         this.productservice.updateProduct(this.product).subscribe(result => {
           if (result.status === 'success') {
             this.messageService.add({ severity: 'info', summary: 'Update Success', detail: 'Product updated!' })
-            this.disableEdit()
           } else {
             this.messageService.add({ severity: 'error', summary: 'Update Failed', detail: `Reason: ${result.payload}` })
           }
+          this.disableEdit()
         });
       },
       reject: (type: any) => {
@@ -283,6 +283,7 @@ export class ProductDetailComponent implements OnInit {
             this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
             break;
         }
+        this.disableEdit()
       }
     });
 
@@ -303,6 +304,7 @@ export class ProductDetailComponent implements OnInit {
           } else {
             this.messageService.add({ severity: 'error', summary: 'Add Failed', detail: `Reason: ${result.payload}` })
           }
+          this.disableEdit()
         });
 
       },

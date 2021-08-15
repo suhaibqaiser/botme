@@ -1,32 +1,22 @@
-import { restResponse } from "../../../utils/response";
-import { createProduct, getMaxLabelValue, getProduct, updateProduct } from "./service";
-import { randomUUID } from "crypto";
+import {restResponse} from "../../../utils/response";
+import {createProduct, getMaxLabelValue, getProduct, updateProduct} from "./service";
+import {randomUUID} from "crypto";
 
-export async function addProduct(products: [any]) {
+export async function addProduct(product: any) {
     let response = new restResponse()
-    if (products.length < 1) {
+    if (product.length < 1) {
         response.payload = "product is required"
         response.status = "error"
         return response;
     }
-    console.log(products)
 
-    let result
+    let val = await getMaxLabelValue()
+    product.productLabel = val ? (val.productLabel + 1) : 1
 
-    for (const product of products) {
-        let val = await getMaxLabelValue()
-        if (!val) { val = 0 }
-        else {
-            val = val.productLabel
-        }
+    product.productId = randomUUID()
+    product.productActive = true
 
-
-        product.productId = randomUUID()
-        product.productLabel = await val + 1
-        product.productActive = true
-
-        result = await createProduct(product)
-    }
+    let result = await createProduct(product)
 
     if (result) {
         response.payload = result
@@ -61,12 +51,12 @@ export async function findProduct(filter: any) {
     }
 
     if (filter.searchText) {
-        queryParams.productName = { '$regex': filter.searchText, '$options': 'i' }
+        queryParams.productName = {'$regex': filter.searchText, '$options': 'i'}
     } else {
         delete queryParams.productName
     }
     if (filter.priceMin && filter.priceMax) {
-        queryParams.productPrice = { $lte: Number(filter.priceMax), $gte: Number(filter.priceMin) }
+        queryParams.productPrice = {$lte: Number(filter.priceMax), $gte: Number(filter.priceMin)}
     } else {
         delete queryParams.productPrice
     }
