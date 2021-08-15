@@ -68,9 +68,9 @@
           <td><button class="btn btn-primary btn-tone m-r-5" [routerLink]="['detail']"
               [queryParams]="{ reservationId: reservation.reservationId}">
               R-{{reservation.reservationLabel}}</button></td>
-          <td>{{reservation.customer.customerName}}</td>
+          <td>{{reservation.customerName}}</td>
           <td>{{reservation.reservationSeats}}</td>
-          <td><span class="btn btn-primary btn-tone">T-{{reservation.table.tableLabel}}</span></td>
+          <td><span class="btn btn-primary btn-tone">T-{{reservation.tableLabel}}</span></td>
           <td>{{reservation.reservationType}}</td>
           <td>{{reservation.reservationSource}}</td>
           <td>{{reservation.createdAt}}</td>

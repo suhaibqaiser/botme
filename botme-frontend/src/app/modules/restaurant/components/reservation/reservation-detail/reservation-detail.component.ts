@@ -41,8 +41,8 @@ export class ReservationDetailComponent implements OnInit {
     reservationSource: '',
     reservationId: '',
     reservationLabel: 0,
-    customer: '',
-    table: ''
+    customerId: '',
+    tableId: ''
   };
 
 
@@ -64,8 +64,8 @@ export class ReservationDetailComponent implements OnInit {
     reservationSeats: new FormControl(null, [Validators.required, Validators.maxLength(3)]),
     reservationType: new FormControl('', [Validators.required, Validators.maxLength(30)]),
     reservationSource: new FormControl('', [Validators.required, Validators.maxLength(30)]),
-    customer: new FormControl('', [Validators.required, Validators.maxLength(30)]),
-    table: new FormControl('', [Validators.required, Validators.maxLength(30)]),
+    customerId: new FormControl('' ),
+    tableId: new FormControl('' ),
     customerArrival: new FormControl(''),
     customerWaiting: new FormControl(''),
     customerSeated: new FormControl(''),
@@ -107,8 +107,8 @@ export class ReservationDetailComponent implements OnInit {
           reservationSource: this.reservation.reservationSource,
           reservationType: this.reservation.reservationType,
           reservationSeats: this.reservation.reservationSeats,
-          customer: this.reservation.customer,
-          table: this.reservation.table,
+          customerId: this.reservation.customerId,
+          tableId: this.reservation.tableId,
           customerArrival: '',
           customerWaiting: '',
           customerSeated: '',
@@ -143,6 +143,7 @@ export class ReservationDetailComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.reservationForm.value)
     if (this.reservationForm.status === 'VALID') {
       this.reservation.reservationDatetime = new Date();
       (this.formMode === 'update') ? this.updateReservation() : this.addReservation();

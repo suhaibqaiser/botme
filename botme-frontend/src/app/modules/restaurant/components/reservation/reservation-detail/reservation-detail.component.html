@@ -79,7 +79,7 @@
         <div class="form-group">
           <label for="customer" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">Customer</label>
           <div class="p-col-12 p-md-10">
-            <p-dropdown id="customer" [options]="customers" optionLabel="customerName" formControlName="customer" optionValue="_id" [filter]="true" placeholder="Select customer" [ngClass]="{'ng-invalid ng-dirty': reservationForm.controls['customer'].invalid}"></p-dropdown>
+            <p-dropdown id="customer" [options]="customers" optionLabel="customerName" formControlName="customerId" optionValue="customerId" [filter]="true" placeholder="Select customer" [ngClass]="{'ng-invalid ng-dirty': reservationForm.controls['customerId'].invalid}"></p-dropdown>
           </div>
         </div>
       <p-divider>
@@ -91,7 +91,7 @@
         <div class="form-group">
           <label for="table" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">Table Label</label>
           <div class="p-col-12 p-md-10">
-            <p-dropdown id="table" formControlName="table" [filter]="true" optionValue="_id" optionLabel="tableLabel" [options]="tables" placeholder="Select table" [ngClass]="{'ng-invalid ng-dirty': reservationForm.controls['table'].invalid}">></p-dropdown>
+            <p-dropdown id="table" formControlName="tableId" [filter]="true" optionValue="tableId" optionLabel="tableLabel" [options]="tables" placeholder="Select table" [ngClass]="{'ng-invalid ng-dirty': reservationForm.controls['tableId'].invalid}">></p-dropdown>
           </div>
         </div>
       </div>
