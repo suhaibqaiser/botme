@@ -36,9 +36,13 @@ export class CustomerService {
   }
 
   updateCustomer(customer: object): Observable<any> {
-
     const url = `${this.apiBaseUrl}/food/customer/update`;
     const body = { customer: customer };
     return this.http.post(url, body);
+  }
+
+  getAddressesByCustomer(customerId: string): Observable<any> {
+    const url = `${this.apiBaseUrl}/food/address/search?customerId=${customerId}`;
+    return this.http.get(url);
   }
 }
