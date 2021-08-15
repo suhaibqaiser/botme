@@ -1,7 +1,7 @@
 export interface Cart {
     restaurantId: string;
     cartId: string
-    cartLabel: string
+    cartLabel: number
     cartProduct: [{
         productId: string,
         productLabel: string; //TODO
@@ -18,7 +18,7 @@ export interface Cart {
         };
         productQuantity: number;
         productNotes: string; // customization Instructions
-    }];
+    } | null];
     cartDiscount: number;
     cartTotal: number;
 }

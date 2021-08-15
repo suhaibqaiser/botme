@@ -24,7 +24,7 @@ export class OrderService {
   }
 
   getCartById(cartId: string): Observable<any> {
-    const url = `${this.apiBaseUrl}/food/cart/search?orderId=${cartId}`;
+    const url = `${this.apiBaseUrl}/food/cart/findCartById?cartId=${cartId}`;
     return this.http.get(url);
   }
 }

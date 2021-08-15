@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { Cart, cartProduct } from '../../../model/cart';
-import { Category } from '../../../model/category';
+import { Cart } from '../../../model/cart';
 import { Order } from '../../../model/order';
-import { Product } from '../../../model/product';
 import { CategoryService } from '../../../service/category.service';
 import { CustomerService } from '../../../service/customer.service';
 import { OrderService } from '../../../service/order.service';
@@ -80,10 +77,21 @@ export class OrderDetailComponent implements OnInit {
     orderActive: true,
   }
 
+  newForm = false
+  editMode = false
+  loading = true
+  orderType = ['Dine In', 'Pickup', 'Delivery']
+  customers = []
+  tables = []
+  addresses = []
+  products = []
+  categories = []
   cart: Cart = {
     restaurantId: '',
     cartId: '',
-    cartLabel: '',
+    cartLabel: 0,
+    cartDiscount: 0,
+    cartTotal: 0,
     cartProduct: [{
       productId: '',
       productLabel: '',
@@ -99,31 +107,9 @@ export class OrderDetailComponent implements OnInit {
         large: 0,
       },
       productQuantity: 0,
-      productNotes: '',
-    }],
-    cartDiscount: 0,
-    cartTotal: 0,
+      productNotes: ''
+    }]
   }
-
-  cartForm = this.fb.group({
-    cartId: [],
-    cartLabel: [],
-    cartProduct: new FormArray([]),
-    cartDiscount: [],
-    cartTotal: [],
-  })
-
-
-  newForm = false
-  editMode = false
-  loading = true
-  orderType = ['Dine In', 'Pickup', 'Delivery']
-  customers = []
-  tables = []
-  addresses = []
-  products = []
-  categories = []
-  cartProduct = this.cartForm.get('cartProduct') as FormArray
   paymentMethod = ['Cash', 'Credit/Debit Card', 'Online']
   selectedProduct = ''
   productSelections: Array<any> = []
@@ -163,7 +149,7 @@ export class OrderDetailComponent implements OnInit {
             // for (let opt in result.payload[0].productOptions) {
             //   this.productOptions.push(new FormControl(result.payload[0].productOptions[opt]))
             // }
-
+            this.getCartDetails(this.order.cartId)
             this.loading = false
           } catch (err) {
             console.log(err);
@@ -173,8 +159,12 @@ export class OrderDetailComponent implements OnInit {
     );
   }
 
-  getCartDetails() {
-    
+  getCartDetails(cartId: string) {
+    this.orderService.getCartById(cartId).subscribe(
+      result => {
+        (result.status === 'success') ? this.cart = result.payload : null
+      }
+    )
   }
 
   getCustomers() {
@@ -220,13 +210,11 @@ export class OrderDetailComponent implements OnInit {
   disableEdit() {
     this.editMode = false
     this.orderForm.disable()
-    this.cartForm.disable()
   }
 
   enableEdit() {
     this.editMode = true
     this.orderForm.enable()
-    this.cartForm.enable()
   }
 
   // fillProduct(productId: string, index: number) {
@@ -292,11 +280,11 @@ export class OrderDetailComponent implements OnInit {
   //   }));
   // }
 
-  productById(productId: string) {
+  productById(productId: string  | undefined) {
     let p: any = this.products.find((product: { productId: string }) => product.productId == productId);
     return p ? p.productName : "";
   }
-  categoryById(categoryId: string) {
+  categoryById(categoryId: string | undefined) {
     let p: any = this.categories.find((category: { categoryId: string }) => category.categoryId == categoryId);
     return p ? p.categoryName : "";
   }

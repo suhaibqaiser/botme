@@ -22,12 +22,12 @@
                     <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded m-r-5  d-sm-none"
                         *ngIf="editMode" (click)="disableEdit()"></button>
 
-                    <button pButton pRipple type="button" label="Edit" icon="pi pi-pencil"
+                    <!-- <button pButton pRipple type="button" label="Edit" icon="pi pi-pencil"
                         class="p-button-rounded m-r-5 d-none d-sm-block" *ngIf="!editMode"
                         (click)="enableEdit()"></button>
 
                     <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded m-r-5  d-sm-none"
-                        *ngIf="!editMode" (click)="enableEdit()"></button>
+                        *ngIf="!editMode" (click)="enableEdit()"></button> -->
 
                     <button pButton pRipple type="button" label="Save" icon="pi pi-save" *ngIf="editMode"
                         class="p-button-rounded p-button-secondary m-r-5 d-none d-sm-block"
@@ -85,7 +85,7 @@
                         <label for="form-tableId" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
                             Table
                         </label>
-                        <p-dropdown [options]="tables" optionLabel="tableId" [filter]="true" filterBy="tableId"
+                        <p-dropdown [options]="tables" optionLabel="tableLabel" [filter]="true" filterBy="tableLabel"
                             [showClear]="true" placeholder="Select a Table" id="form-tableId" formControlName="tableId"
                             optionValue="tableId">
                         </p-dropdown>
@@ -223,43 +223,41 @@
                         <b>Cart</b>
                     </div>
                 </p-divider>
-                <div [formGroup]="cartForm" class=" col-md-12 form-row m-b-50">
+                <div class=" col-md-12 form-row m-b-50">
                     <div class="form-group col-md-4">
                         <label for="form-cartLabel" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
                             Cart Label
                         </label>
-                        <div class="p-col-12 p-md-10">
-                            <input type="text" pInputText formControlName="cartLabel" id="form-cartLabel"
+                        {{cart.cartLabel}}
+                        <!-- <div class="p-col-12 p-md-10">
+                            <input type="text" pInputText id="form-cartLabel"
                                 placeholder="Enter Label">
-                        </div>
+                        </div> -->
                     </div>
                     <div class="form-group col-md-4">
                         <label for="form-orderTotal" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
                             Cart Discount
                         </label>
-                        <div class="p-col-12 p-md-10">
-                            <p-inputNumber formControlName="cartDiscount" id="form-orderTotal"
+                        {{cart.cartDiscount}}
+                        <!-- <div class="p-col-12 p-md-10">
+                            <p-inputNumber id="form-orderTotal"
                                 placeholder="Enter Cart Discount" [min]="0" [minFractionDigits]="2"
                                 [maxFractionDigits]="2"></p-inputNumber>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="form-group col-md-4">
                         <label for="form-orderTotal" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
                             Cart Total
-                        </label>
-                        <div class="p-col-12 p-md-10">
-                            <p-inputNumber formControlName="cartTotal" id="form-orderTotal"
-                                placeholder="Enter Cart Total" [min]="0" [minFractionDigits]="2"
-                                [maxFractionDigits]="2"></p-inputNumber>
-                        </div>
+                        </label>{{cart.cartTotal}}
+
                     </div>
 
 
-                    <div formArrayName="cartProduct">
+                    <div>
                         <!-- <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded right"
                             (click)="addToCart()" [disabled]="!editMode"></button> -->
 
-                        <p-table #dt1 [value]="cartProduct.controls" [responsive]="true">
+                        <p-table #dt1 [value]="cart.cartProduct" [responsive]="true" *ngIf="!loading">
                             <ng-template pTemplate="caption">
                                 <div class="p-d-flex p-ai-center p-jc-between right">
                                     Products
@@ -276,85 +274,47 @@
                                     <th>Rate</th>
                                     <th>Quantity</th>
                                     <th>Note</th>
-                                    <th style="width:8rem">Action</th>
                                 </tr>
                             </ng-template>
-                            <!-- <ng-template pTemplate="colgroup">
-                            <colgroup>
-                                <col style="width:10%">
-                                <col style="width:80%">
-                                <col style="width:10%">
-                            </colgroup>
-                        </ng-template> -->
                             <ng-template pTemplate="body" let-ri="rowIndex">
-                                <tr [formGroupName]="ri">
+                                <tr>
                                     <td class="p-col-12 p-md-10">
-                                        <div class="p-col-12 p-md-10">
-                                            <!-- <p-dropdown [options]="products" optionLabel="productName"
-                                                formControlName="productId" optionValue="productId"
-                                                (onChange)="fillProduct($event.value, ri)"
-                                                placeholder="Select a unit of measurement">
-                                            </p-dropdown> -->
-                                            <label for="" formControlName="productId"></label>
-                                        </div>
+                                        {{productById(cart.cartProduct[ri]?.productId)}}
                                     </td>
                                     <td class="p-col-12 p-md-10">
-                                        <p-dropdown [options]="categories" optionLabel="categoryName"
-                                            formControlName="productCategory" optionValue="categoryId"
-                                            placeholder="Select a category">
-                                        </p-dropdown>
-                                    </td>
-
-                                    <td class="p-col-12 p-md-10">
-                                        <p-dropdown [options]="products" formControlName="productFlavor"
-                                            optionLabel="productName" optionValue="productId"
-                                            placeholder="Select a Flavor">
-                                        </p-dropdown>
+                                        {{categoryById(cart.cartProduct[ri]?.productCategory)}}
                                     </td>
                                     <td class="p-col-12 p-md-10">
-                                        <p-dropdown [options]="products" optionLabel="productName"
-                                            formControlName="productProportion" optionValue="productId"
-                                            placeholder="Select a category">
-                                        </p-dropdown>
+                                        {{cart.cartProduct[ri]?.productFlavor}}
                                     </td>
                                     <td class="p-col-12 p-md-10">
-                                        <p-dropdown [options]="products" optionLabel="productName"
-                                            formControlName="productToppings" optionValue="productId"
-                                            placeholder="Select a category">
-                                        </p-dropdown>
+                                        {{cart.cartProduct[ri]?.productProportion}}
+                                    </td>
+                                    <td class="p-col-12 p-md-10">
+                                        <ul *ngFor="let topping of cart.cartProduct[ri]?.productToppings">
+                                            <li>{{productById(topping)}}</li>
+                                        </ul>
+                                    </td>
+                                    <td class="p-col-12 p-md-10">
+                                        <ul *ngFor="let option of cart.cartProduct[ri]?.productOptions; let i = index">
+                                            <li>
+                                                Option {{i}}
+                                                <ul *ngFor="let item of option" class="ml-2">
+                                                    <li>{{productById(item)}}</li>
+                                                </ul>
+                                            </li>
+                                        </ul>
                                     </td>
 
                                     <td class="p-col-12 p-md-10">
-                                        <p-dropdown [options]="products" optionLabel="productName"
-                                            formControlName="productOptions" optionValue="productId"
-                                            placeholder="Select an option">
-                                        </p-dropdown>
+                                        Standard: {{cart.cartProduct[ri]?.productRate?.standard}}
                                     </td>
 
                                     <td class="p-col-12 p-md-10">
-                                        <!-- <p-dropdown [options]="categories" optionLabel="categoryName"
-                                        formControlName="productRate" optionValue="categoryId"
-                                        placeholder="Select a category">
-                                    </p-dropdown> -->
-                                    </td>
-
-                                    <td class="p-col-12 p-md-10">
-                                        <p-inputNumber formControlName="productQuantity" id="form-orderTip"
-                                            placeholder="Enter Quantity" [min]="0" [minFractionDigits]="2"
-                                            [maxFractionDigits]="2"></p-inputNumber>
+                                        {{cart.cartProduct[ri]?.productQuantity}}
                                     </td>
                                     <td class="p-col-12 p-md-10">
-                                        <input type="text" pInputText formControlName="productNotes"
-                                            id="form-productBarcode" placeholder="Notes">
-                                    </td>
-
-
-
-                                    <td style="text-align:center">
-                                        <!-- <button pButton pRipple type="button" icon="pi pi-trash"
-                                            (click)="removeFromCart()"
-                                            class="p-button-rounded p-button-text p-button-danger"
-                                            [disabled]="!editMode"></button> -->
+                                        {{cart.cartProduct[ri]?.productNotes}}
                                     </td>
                                 </tr>
                             </ng-template>
