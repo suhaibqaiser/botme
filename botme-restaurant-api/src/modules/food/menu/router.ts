@@ -1,9 +1,18 @@
 import {Request, Response} from "express";
-import {addMenu, findMenu} from "./controller";
+import {addMenu, findMenu, getAllMenu} from "./controller";
+import {updateOneTable} from "../table/controller";
 
 export default [
     {
-        path: "/menu/add",
+        path: "/menus",
+        method: "get",
+        handler: async (req: Request, res: Response) => {
+            let result = await getAllMenu()
+            res.send(result);
+        }
+    },
+    {
+        path: "/menus/add",
         method: "put",
         handler: async (req: Request, res: Response) => {
             let result = await addMenu(req.body.menu)
@@ -11,10 +20,18 @@ export default [
         }
     },
     {
-        path: "/menu/search",
+        path: "/tables/update",
+        method: "post",
+        handler: async (req: Request, res: Response) => {
+            let result = await updateOneTable(req.body.table)
+            res.send(result);
+        }
+    },
+    {
+        path: "/menus/search",
         method: "get",
         handler: async (req: Request, res: Response) => {
-            let result = await findMenu(req.query.menuId)
+            let result = await findMenu(req.query)
             res.send(result);
         }
     }
