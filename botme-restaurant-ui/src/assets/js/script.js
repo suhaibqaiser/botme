@@ -31,7 +31,7 @@ jQuery(function ($) {
     $("#scrolltop").on('click', function () {
         $("html").animate({
             scrollTop: 0
-        }, 2000);
+        }, 100);
         return false;
     });
 
@@ -210,6 +210,8 @@ jQuery(function ($) {
             draggable: false,
             asNavFor: '.menu-main-thumb-nav',
             speed: 1500,
+            prevArrow: '<i class="flaticon-left-arrow-2 prev-arrow"></i>',
+            nextArrow: '<i class="flaticon-right-arrow-3 next-arrow"></i>',
         });
 
         $('.menu-main-thumb-nav').slick({
@@ -265,6 +267,7 @@ jQuery(function ($) {
             centerPadding: '0',
             slidesToShow: 3,
             infinite: true,
+            draggable: true,
             autoplay: false,
             autoplaySpeed: 3000,
             speed: 1300,
@@ -290,7 +293,7 @@ jQuery(function ($) {
             ]
         });
 
-    }, 1500);
+    }, 2000);
 
 
 
