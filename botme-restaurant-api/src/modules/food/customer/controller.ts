@@ -1,6 +1,7 @@
 import {restResponse} from "../../../utils/response";
-import {addCustomer, getAllCustomers, getCustomer, updateOneCustomer} from "./service";
+import {addCustomer, getAllCustomers, getCustomer, updateOneCustomer, getAddressByCustomer} from "./service";
 import {randomUUID} from "crypto";
+import {getMaxLabelValue} from "../../food/customer/service";
 
 export async function findCustomer(filter: any) {
     let response = new restResponse()
@@ -63,6 +64,9 @@ export async function createCustomer(customer: any) {
     customer.customerId = randomUUID()
     customer.customerActive = true
 
+    let val = await getMaxLabelValue()
+    customer.customerLabel = val ? (val.customerLabel + 1) : 1
+
     let result = await addCustomer(customer)
     if (result) {
         response.payload = result
@@ -109,3 +113,19 @@ export async function getAllCustomer() {
         return response
     }
 }
+
+export async function getAddressByCustomerId(filter: any) {
+    let response = new restResponse()
+
+    let result = await getAddressByCustomer(filter.customerId)
+    if (result.length > 0) {
+        response.payload = result
+        response.status = "success"
+        return response
+    } else {
+        response.payload = "Address not found"
+        response.status = "error"
+        return response
+    }
+}
+

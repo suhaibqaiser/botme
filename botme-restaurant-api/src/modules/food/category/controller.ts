@@ -1,5 +1,6 @@
 import {restResponse} from "../../../utils/response";
 import {createCategory, deleteCategory, getCategory, updateCategory} from "./service";
+import {randomUUID} from "crypto";
 
 
 export async function addCategory(category: any) {
@@ -9,6 +10,7 @@ export async function addCategory(category: any) {
         response.status = "error"
         return response;
     }
+    category.categoryId = randomUUID()
 
     let result = await createCategory(category)
     if (result) {

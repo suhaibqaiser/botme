@@ -41,7 +41,7 @@ export class ProductService {
 
   addProduct(product: any): Observable<any> {
     const url = `${this.apiBaseUrl}/dictionary/product/add`;
-    const body = [product];
+    const body = product;
     return this.http.put(url, body);
   }
 }

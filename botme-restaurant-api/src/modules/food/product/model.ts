@@ -1,20 +1,53 @@
-import {createSchema, Type} from 'ts-mongoose';
-import {foodDB} from "../../../config/mongoDB";
+import { createSchema, Type } from 'ts-mongoose';
+import { foodDB } from "../../../config/mongoDB";
 
 const ProductSchema = createSchema(
     {
-        productId: Type.string({maxlength: 256, required: true, unique: true}),
-        productName: Type.string({maxlength: 256, required: true, unique: true}),
-        productDesc: Type.string({maxlength: 4000}),
+        restaurantId: Type.string(),
+        productId: Type.string({ maxlength: 256, required: true, unique: true }),
+        productLabel: Type.number({ unique: true }),
+        productName: Type.string({ maxlength: 256, required: true }),
+        productType: Type.string({ maxlength: 256, required: true }),
+        productUOM: Type.string(),
+        productCategory: Type.string(),
+        productSerialNo: Type.string(),
+        productBarcode: Type.string(),
+        productDesc: Type.string({ maxlength: 4000 }),
+        productIngredients: [Type.string()],
+        productRate: {
+            standard: Type.number(),
+            small: Type.number(),
+            large: Type.number(),
+            medium: Type.number()
+        },
+        productFlavor: [Type.string()],
+        productProportion: [Type.string()],
+        productToppings: [Type.string()],
+        productAddons: [Type.string()],
+        productNutrition: {
+            calories: Type.string(),
+            fats: Type.string(),
+            proteins: Type.string()
+        },
+        productOptions: [[]],
+        productHistory: Type.string(),
         productImage: [Type.string()],
-        productAddon: [Type.objectId({ref: "Product"})],
-        productVariant: [Type.objectId({ref: "Product"})],
-        productPrice: Type.number({required: true}),
-        productActive: Type.boolean({required: true}),
         productTags: [Type.string()],
-        category: Type.objectId({ref: "Category"})
+        productAttributes: {
+            halal: Type.boolean(),
+            vegan: Type.boolean(),
+            vegetarian: Type.boolean(),
+            glutenFree: Type.boolean(),
+
+        },
+        offeringTime: [Type.string()],
+        productVariant: [Type.string()],
+        productActive: Type.boolean({ required: true }),
     },
-    {timestamps: {createdAt: true}}
+    {
+        timestamps: { createdAt: true },
+        strictQuery: true
+    }
 );
 
 export const Product = foodDB.model('Product', ProductSchema);

@@ -8,7 +8,7 @@
               <a class="text-gray" href="javascript:void(0)">
                 <i class="anticon anticon-reload font-size-20"></i>
               </a>
-            </li>-->
+                </li>-->
                     <li>
                         <a class="text-gray" href="javascript:void(0)">
                             <i class="anticon anticon-delete font-size-20"></i>
@@ -28,7 +28,7 @@
             [showCurrentPageReport]="true"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             [rowsPerPageOptions]="[10,25,50]"
-            [globalFilterFields]="['productName','productDesc', 'productPrice' ,'category.categoryName']">
+            [globalFilterFields]="['productName','productDesc', 'productTags','productType','productCategory']">
             <ng-template pTemplate="caption">
                 <div class="p-d-flex">
                     <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
@@ -45,15 +45,15 @@
                     <th style="width: 3rem">
                         <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                     </th>
-                    <th pSortableColumn="customerId">ID <p-sortIcon field="customerId"></p-sortIcon>
+                    <th pSortableColumn="customerId">Label <p-sortIcon field="customerId"></p-sortIcon>
                     </th>
                     <th pSortableColumn="productName">Name <p-sortIcon field="productName"></p-sortIcon>
                     </th>
                     <th pSortableColumn="productDesc">Description <p-sortIcon field="productDesc"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="productPrice">Price <p-sortIcon field="productPrice"></p-sortIcon>
+                    <th pSortableColumn="productType">Type <p-sortIcon field="productType"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="category.categoryName">Category <p-sortIcon field="category.categoryName"></p-sortIcon>
+                    <th pSortableColumn="productCategory">Category <p-sortIcon field="productCategory"></p-sortIcon>
                     </th>
                     <th pSortableColumn="updatedAt">Updated <p-sortIcon field="updatedAt"></p-sortIcon>
                     </th>
@@ -69,12 +69,12 @@
                     </td>
                     <td>
                         <button class="btn btn-primary btn-tone m-r-5" [routerLink]="['detail']"
-                            [queryParams]="{ productId: product.productId }">{{product.productId}}</button>
+                            [queryParams]="{ productId: product.productId }">P-{{product.productLabel}}</button>
                     </td>
                     <td>{{product.productName}}</td>
                     <td>{{product.productDesc}}</td>
-                    <td>{{product.productPrice}}</td>
-                    <td>{{product.category.categoryName}}</td>
+                    <td>{{product.productType}}</td>
+                    <td>{{product.productCategory}}</td>
                     <td>{{product.updatedAt}}</td>
                     <td><span *ngIf="product.productActive === true"
                             class="badge badge-success">{{product.productActive}}</span>

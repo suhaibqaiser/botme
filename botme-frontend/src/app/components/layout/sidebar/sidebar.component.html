@@ -9,8 +9,8 @@
                     <span class="title">Home</span>
                 </a>
             </li>
-            <li class="nav-item dropdown">
-                <a class="dropdown-toggle">
+            <li [class]="robotsToggleObj.addClass" class="nav-item dropdown">
+                <a (click)="robotsDropdownToggle()" class="dropdown-toggle pointer">
                     <span class="icon-holder">
                         <i class="anticon anticon-robot"></i>
                     </span>
@@ -37,8 +37,8 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item dropdown">
-                <a class="dropdown-toggle">
+            <li [class]="restaurantToggleObj.addClass" class="nav-item dropdown pointer">
+                <a (click)="restaurantDropdownToggle()" class="dropdown-toggle">
                     <span class="icon-holder">
                         <i class="anticon anticon-shopping"></i>
                     </span>
@@ -82,11 +82,11 @@
                         <a class="nav-link" routerLink="/restaurant/product" routerLinkActive="activebutton">
                             <p>Products</p>
                         </a>
-                    </li> 
+                    </li>
                 </ul>
             </li>
-            <li class="nav-item dropdown">
-                <a class="dropdown-toggle">
+            <li [class]="dictionaryToggleObj.addClass" class="nav-item dropdown pointer">
+                <a (click)="dictionaryDropdownToggle()" class="dropdown-toggle">
                     <span class="icon-holder">
                         <i class="anticon anticon-database"></i>
                     </span>
@@ -97,12 +97,12 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li class="nav-item">
-                        <a class="nav-link" routerLink="/admin/category" routerLinkActive="activebutton">
+                        <a class="nav-link" routerLink="/dictionary/category" routerLinkActive="activebutton">
                             <p>Categories</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" routerLink="/admin/product" routerLinkActive="activebutton">
+                        <a class="nav-link" routerLink="/dictionary/product" routerLinkActive="activebutton">
                             <p>Products</p>
                         </a>
                     </li>

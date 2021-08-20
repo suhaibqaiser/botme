@@ -65,10 +65,10 @@ const routes: Routes = [
         loadChildren: () => import('./modules/restaurant/restaurant.module').then(m => m.RestaurantModule)
       },
       {
-        path: 'admin',
+        path: 'dictionary',
         canActivate: [AuthGuard],
-        data: {pageTitle: 'Administration'},
-        loadChildren: () => import('./modules/food/admin.module').then(m => m.AdminModule)
+        data: {pageTitle: 'Dictionary'},
+        loadChildren: () => import('./modules/dictionary/dictionary.module').then(m => m.DictionaryModule)
       }
     ]
   }

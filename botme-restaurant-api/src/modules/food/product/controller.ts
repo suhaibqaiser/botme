@@ -1,34 +1,23 @@
 import {restResponse} from "../../../utils/response";
-import {createProduct, getProduct, updateProduct} from "./service";
+import {createProduct, getProduct, updateProduct, getMaxLabelValue} from "./service";
 import {randomUUID} from "crypto";
 
-export async function addProduct(products: [any]) {
+export async function addProduct(product: any) {
     let response = new restResponse()
-    if (products.length < 0) {
+    if (!product) {
         response.payload = "product is required"
         response.status = "error"
         return response;
     }
-    console.log(products)
-
     let result
 
-    for (const product of products) {
-        const index = products.indexOf(product);
-        product.productId = randomUUID()
-        product.productActive = true
-        if (product.productVariant === '') {
-            delete product.productVariant
-        }
-        if (product.productAddon === '') {
-            delete product.productAddon
-        }
-        if (product.productImage === '') {
-            delete product.productImage
-        }
+    let val = await getMaxLabelValue()
+    product.productLabel = val ? ( val.productLabel + 1) : 1
 
-        result = await createProduct(product)
-    }
+    product.productId = randomUUID()
+    product.productActive = true
+
+    result = await createProduct(product)
 
     if (result) {
         response.payload = result
@@ -48,16 +37,18 @@ export async function findProduct(filter: any) {
         productId: any | undefined;
         productName: any | undefined;
         productPrice: any | undefined;
-        category: any | undefined;
-        productActive: boolean;
+        productType: any | undefined;
+        productCategory: any | undefined;
+        //productActive: boolean;
     }
 
     let queryParams: queryFilters = {
         productId: undefined,
         productName: undefined,
         productPrice: undefined,
-        category: undefined,
-        productActive: true
+        productType: undefined,
+        productCategory: undefined,
+        //productActive: true
     }
 
     if (filter.searchText) {
@@ -70,10 +61,15 @@ export async function findProduct(filter: any) {
     } else {
         delete queryParams.productPrice
     }
-    if (filter.category) {
-        queryParams.category = filter.category
+    if (filter.productCategory) {
+        queryParams.productCategory = filter.productCategory
     } else {
-        delete queryParams.category
+        delete queryParams.productCategory
+    }
+    if (filter.productType) {
+        queryParams.productType = filter.productType
+    } else {
+        delete queryParams.productType
     }
     if (filter.productId) {
         queryParams.productId = filter.productId

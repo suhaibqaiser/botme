@@ -1,24 +1,24 @@
-import { createSchema, Type, typedModel } from 'ts-mongoose';
-import { dictionaryDB } from "../../../config/mongoDB";
+import {createSchema, Type, typedModel} from 'ts-mongoose';
+import {dictionaryDB} from "../../../config/mongoDB";
 
 const ProductSchema = createSchema(
     {
         restaurantId: Type.string(),
         productId: Type.string({ maxlength: 256, required: true, unique: true }),
-        productName: Type.string({ maxlength: 256, required: true }),
-        productType: Type.string({ maxlength: 256, required: true }),
-        productUOM:  Type.string(),
+        productLabel: Type.number({unique: true}),
+        productName: Type.string({maxlength: 256, required: true}),
+        productType: Type.string({maxlength: 256, required: true}),
+        productUOM: Type.string(),
         productCategory: Type.string(),
         productSerialNo: Type.string(),
         productBarcode: Type.string(),
-        productDesc: Type.string({ maxlength: 4000 }),
-        productIngredients: Type.string({ maxlength: 4000 }),
+        productDesc: Type.string({maxlength: 4000}),
+        productIngredients: [Type.string()],
         productRate: {
             standard: Type.number(),
             small: Type.number(),
             large: Type.number(),
-            meal: Type.number(),
-            addon: Type.number()
+            medium: Type.number()
         },
         productFlavor: [Type.string()],
         productProportion: [Type.string()],
@@ -29,10 +29,7 @@ const ProductSchema = createSchema(
             fats: Type.string(),
             proteins: Type.string()
         },
-        productMeal: {
-            food: [Type.string()],
-            drink: [Type.string()]
-        },
+        productOptions: [[]],
         productHistory: Type.string(),
         productImage: [Type.string()],
         productTags: [Type.string()],
@@ -45,10 +42,10 @@ const ProductSchema = createSchema(
         },
         offeringTime: [Type.string()],
         productVariant: [Type.string()],
-        productActive: Type.boolean({ required: true }),
+        productActive: Type.boolean({required: true}),
     },
     {
-        timestamps: { createdAt: true },
+        timestamps: {createdAt: true},
         strictQuery: true
     }
 );

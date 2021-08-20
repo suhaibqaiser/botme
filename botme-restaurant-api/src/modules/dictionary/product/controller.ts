@@ -1,34 +1,22 @@
 import {restResponse} from "../../../utils/response";
-import {createProduct, getProduct, updateProduct} from "./service";
+import {createProduct, getMaxLabelValue, getProduct, updateProduct} from "./service";
 import {randomUUID} from "crypto";
 
-export async function addProduct(products: [any]) {
+export async function addProduct(product: any) {
     let response = new restResponse()
-    if (products.length < 1) {
+    if (product.length < 1) {
         response.payload = "product is required"
         response.status = "error"
         return response;
     }
-    console.log(products)
 
-    let result
+    let val = await getMaxLabelValue()
+    product.productLabel = val ? (val.productLabel + 1) : 1
 
-    for (const product of products) {
-        const index = products.indexOf(product);
-        product.productId = randomUUID()
-        product.productActive = true
-        // if (product.productVariant === '') {
-        //     delete product.productVariant
-        // }
-        // if (product.productAddon === '') {
-        //     delete product.productAddon
-        // }
-        // if (product.productImage === '') {
-        //     delete product.productImage
-        // }
+    product.productId = randomUUID()
+    product.productActive = true
 
-        result = await createProduct(product)
-    }
+    let result = await createProduct(product)
 
     if (result) {
         response.payload = result
@@ -94,7 +82,7 @@ export async function findProduct(filter: any) {
         response.status = "success"
         return response
     } else {
-        response.payload = "product not found"
+        response.payload = "Product not found"
         response.status = "error"
         return response
     }
@@ -103,7 +91,7 @@ export async function findProduct(filter: any) {
 export async function editProduct(product: any) {
     let response = new restResponse()
     if (!product) {
-        response.payload = "product is required"
+        response.payload = "Product is required"
         response.status = "error"
         return response;
     }
@@ -114,7 +102,7 @@ export async function editProduct(product: any) {
         response.status = "success"
         return response
     } else {
-        response.payload = "product not found"
+        response.payload = "Product not found"
         response.status = "error"
         return response
     }

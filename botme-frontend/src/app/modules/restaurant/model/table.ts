@@ -1,6 +1,8 @@
 export interface Table {
-    tableId: String,
-    tableSeats: Number,
-    tableOccupied: boolean,
-    area: String | any
+  tableId: String,
+  tableLabel: Number;
+  tableSeats: Number,
+  tableOccupied: boolean,
+  areaId: String | any,
+  areaName: String
 }

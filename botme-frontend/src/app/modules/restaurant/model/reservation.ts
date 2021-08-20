@@ -1,4 +1,5 @@
 export interface Reservation {
+  // FIXME: update structure to new syntax standard
   reservationMeta: {
     customerArrival: String,
     customerSeated: String,
@@ -6,12 +7,13 @@ export interface Reservation {
     customerWaiting: String
   },
   reservationSeats: Number | null,
-  reservationDatetime: String,
+  reservationDatetime: Date,
   reservationType: String,
   reservationSource: String,
   reservationId: String,
-  customer: String,
-  table: String
+  reservationLabel: Number,
+  customerId: String,
+  tableId: String
 }
 
 

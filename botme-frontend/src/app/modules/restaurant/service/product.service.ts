@@ -24,7 +24,12 @@ export class ProductService {
   }
 
   getProductsByCategory(category: string): Observable<any> {
-    const url = `${this.apiBaseUrl}/food/product/search?category=${category}`;
+    const url = `${this.apiBaseUrl}/food/product/search?productCategory=${category}`;
+    return this.http.get(url);
+  }
+
+  getProductsByType(type: string): Observable<any> {
+    const url = `${this.apiBaseUrl}/food/product/search?productType=${type}`;
     return this.http.get(url);
   }
 
@@ -41,7 +46,7 @@ export class ProductService {
 
   addProduct(product: any): Observable<any> {
     const url = `${this.apiBaseUrl}/food/product/add`;
-    const body = [product];
+    const body = product;
     return this.http.put(url, body);
   }
 }

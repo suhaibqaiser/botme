@@ -1,118 +1,478 @@
-<div class="card card-primary" xmlns="http://www.w3.org/1999/html">
+<div class="card card-primary">
+    <!-- <p-blockUI [blocked]="loading" [target]="f"><i class="pi pi-lock" style="font-size: 3rem"></i></p-blockUI> -->
     <div class="card-header">
-        <div class="d-flex align-items-center justify-content-between m-b-15">
-            <h3 class="card-title">Product Details</h3>
+        <div class="d-flex align-items-center justify-content-between m-v-15">
+            <h3 class="card-title">Product Details <span *ngIf="!newForm">P-{{product.productLabel}}</span></h3>
             <div class="card-toolbar">
-                <button pButton pRipple type="button" label="Back" icon="pi pi-chevron-left" *ngIf="!editMode"
-                    class="p-button-rounded p-button-success m-r-5" [routerLink]="['../']"></button>
-                <button pButton pRipple type="button" label="Delete" icon="pi pi-trash" *ngIf="editMode" [disabled]="true"
-                    class="p-button-rounded p-button-danger m-r-5"></button>
-                <button pButton pRipple type="button" label="Cancel" icon="pi pi-times" class="p-button-rounded m-r-5"
-                    *ngIf="editMode" (click)="disableEdit()"></button>
-                <button pButton pRipple type="button" label="Edit" icon="pi pi-pencil" class="p-button-rounded m-r-5"
-                    *ngIf="!editMode" (click)="enableEdit()"></button>
-                <button pButton pRipple type="button" label="Save" icon="pi pi-save" *ngIf="editMode"
-                    class="p-button-rounded p-button-secondary m-r-5" (click)="onSubmit()"></button>
-            </div>
-        </div>
-    </div>
-    <div class="p-fluid">
-        <div class="p-field p-grid">
-            <label for="form-productName" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Quick Search</label>
-            <div class="p-col-12 p-md-10">
-                <p-autoComplete [(ngModel)]="selectedProduct" [suggestions]="productDictionary"
-                    (completeMethod)="getDictionaryProducts($event)" field="productName"
-                    [minLength]="3" (onSelect)="setSelectedProduct()"></p-autoComplete>
-            </div>
-        </div>
-    </div>
+                <div class="d-flex">
+                    <button pButton pRipple type="button" label="Back" icon="pi pi-chevron-left" *ngIf="!editMode"
+                        class="p-button-rounded p-button-success m-r-5 d-none d-sm-block"
+                        [routerLink]="['../']"></button>
 
+                    <button pButton pRipple type="button" icon="pi pi-chevron-left" *ngIf="!editMode"
+                        class="p-button-rounded p-button-success m-r-5  d-sm-none" [routerLink]="['../']"></button>
+
+                    <button pButton pRipple type="button" label="Delete" icon="pi pi-trash" *ngIf="editMode"
+                        [disabled]="true" class="p-button-rounded p-button-danger m-r-5 d-none d-sm-block"></button>
+
+                    <button pButton pRipple type="button" label="Cancel" icon="pi pi-times"
+                        class="p-button-rounded m-r-5 d-none d-sm-block" *ngIf="editMode"
+                        (click)="disableEdit()"></button>
+
+                    <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded m-r-5  d-sm-none"
+                        *ngIf="editMode" (click)="disableEdit()"></button>
+
+                    <button pButton pRipple type="button" label="Edit" icon="pi pi-pencil"
+                        class="p-button-rounded m-r-5 d-none d-sm-block" *ngIf="!editMode"
+                        (click)="enableEdit()"></button>
+
+                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded m-r-5  d-sm-none"
+                        *ngIf="!editMode" (click)="enableEdit()"></button>
+
+                    <button pButton pRipple type="button" label="Save" icon="pi pi-save" *ngIf="editMode"
+                        class="p-button-rounded p-button-secondary m-r-5 d-none d-sm-block"
+                        (click)="onSubmit()"></button>
+
+                    <button pButton pRipple type="button" icon="pi pi-save" *ngIf="editMode"
+                        class="p-button-rounded p-button-secondary m-r-5  d-sm-none" (click)="onSubmit()"></button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="card-body">
+        <div class="p-fluid">
+            <div class="p-field p-grid" *ngIf="newForm">
+                <label for="form-productName" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">Quick Search</label>
+                <div class="p-col-12 p-md-10">
+                    <p-autoComplete [(ngModel)]="selectedProduct" [suggestions]="productDictionary"
+                        (completeMethod)="getDictionaryProducts($event)" field="productName" [minLength]="3"
+                        (onSelect)="setSelectedProduct()" ></p-autoComplete>
+                </div>
+            </div>
+        </div>
         <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+
             <div class="p-fluid">
-                <div class="p-field p-grid">
-                    <label for="form-productName" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"> Product Name: </label>
-                    <div class="p-col-12 p-md-10">
-                        <input type="text" pInputText formControlName="productName" id="form-productName"
-                            placeholder="Enter Name">
+                <p-divider>
+                    <div class="p-d-inline-flex p-ai-center">
+                        <i class="pi pi-user p-mr-2 mr-2"></i>
+                        <b>Identification</b>
+                    </div>
+                </p-divider>
+                <div class="form-row m-b-50">
+                    <div class="form-group col-md-6">
+                        <label for="form-productName" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
+                            Name
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <input type="text" pInputText formControlName="productName" id="form-productName"
+                                [ngClass]="{'ng-invalid ng-dirty ': validationError.productName}"
+                                placeholder="Enter Name" autofocus>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="form-productDesc" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
+                            Description
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <input type="text" pInputText formControlName="productDesc" id="form-productDesc"
+                                placeholder="Enter Description">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="form-productUOM" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
+                            Unit
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <p-dropdown id="form-productUOM" [options]="productUOM" formControlName="productUOM"
+                                [ngClass]="{'ng-invalid ng-dirty is-invalid': validationError.productUOM}"
+                                placeholder="Select a unit of measurement">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="form-productSerialNo" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
+                            Serial No
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <input type="text" pInputText formControlName="productSerialNo" id="form-productSerialNo"
+                                placeholder="Enter Serial No">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="form-productBarcode" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
+                            Barcode
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <input type="text" pInputText formControlName="productBarcode" id="form-productBarcode"
+                                placeholder="Enter Barcode">
+                        </div>
                     </div>
                 </div>
-                <div class="p-field p-grid">
-                    <label for="form-productDesc" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"> Product Description:
-                    </label>
-                    <div class="p-col-12 p-md-10">
-                        <input type="text" pInputText formControlName="productDesc" id="form-productDesc"
-                            placeholder="Enter Description">
+
+                <p-divider>
+                    <div class="p-d-inline-flex p-ai-center">
+                        <i class="pi pi-user p-mr-2 mr-2"></i>
+                        <b>Classification</b>
+                    </div>
+                </p-divider>
+                <div class="form-row m-b-50">
+                    <div class="form-group col-md-6">
+                        <label for="form-productType" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
+                            Type
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <p-dropdown id="form-productType" [options]="productType" formControlName="productType"
+                                placeholder="Select a Type"
+                                [ngClass]="{'ng-invalid ng-dirty is-invalid': validationError.productType}">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="form-productCategory" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
+                            Category
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <p-dropdown id="form-productCategory" [options]="categories"
+                                formControlName="productCategory" optionLabel="categoryName" optionValue="categoryId"
+                                [ngClass]="{'ng-invalid ng-dirty is-invalid':validationError.productCategory}"
+                                placeholder="Select a Category">
+                            </p-dropdown>
+                        </div>
                     </div>
                 </div>
-                <div class="p-field p-grid">
-                    <label for="form-productPrice" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"> Product Price: </label>
+
+                <p-divider
+                    *ngIf="this.productForm.controls['productType'].value === 'Meal' || this.productForm.controls['productType'].value === 'Platter'">
+
+                    <div align="left" class="p-d-inline-flex p-ai-center">
+                        <i class="pi pi-user p-mr-2 mr-2"></i>
+                        <b>Meal Items</b>
+                    </div>
+
+                </p-divider>
+                <div align="right">
+                    <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded right"
+                        *ngIf="this.productForm.controls['productType'].value === 'Meal' || this.productForm.controls['productType'].value === 'Platter'"
+                        (click)="addProductOptionsInArray()" [disabled]="!editMode"></button>
+                    <!-- *ngIf="editMode" -->
+
+                </div>
+
+                <div formArrayName="productOptions" class=" col-md-12"
+                    *ngIf="this.productForm.controls['productType'].value === 'Meal' || this.productForm.controls['productType'].value === 'Platter'">
+                    <p-table #dt1 [value]="productOptions.controls" [responsive]="true">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>#</th>
+                                <th>Options</th>
+                                <th style="width:8rem">Action</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="colgroup">
+                            <colgroup>
+                                <col style="width:10%">
+                                <col style="width:80%">
+                                <col style="width:10%">
+                            </colgroup>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-ri="rowIndex">
+                            <tr>
+                                <td>
+                                    Option #{{ri+1}}
+                                </td>
+                                <td class="p-col-12 p-md-10">
+                                    <p-cellEditor>
+                                        <ng-template pTemplate="output">
+                                            <p-multiSelect id="form-productOptions" [options]="productList"
+                                                [readonly]="!editMode" [formControlName]="ri"
+                                                defaultLabel="Select one or more items" optionLabel="productName"
+                                                optionValue="productId" display="chip">
+                                            </p-multiSelect>
+                                        </ng-template>
+                                    </p-cellEditor>
+                                </td>
+                                <td style="text-align:center">
+                                    <button pButton pRipple type="button" icon="pi pi-trash"
+                                        (click)="removeProductOptionsArray(ri)"
+                                        class="p-button-rounded p-button-text p-button-danger"
+                                        [disabled]="!editMode"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- <div class="form-row m-b-50" *ngIf="this.productForm.controls['productType'].value === 'Meal'">
+                    <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded"
+                        (click)="addProductOptionsArray()"></button>
+                    <div formArrayName="productOptions" class=" col-md-12">
+                        <div class="form-group col-md-12" *ngFor="let option of productOptions.controls; let i = index">
+                            <label for="form-productOptions" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
+                                Options #{{i}}
+                            </label>
+                            <div class="p-col-12 p-md-10" [formGroupName]="i">
+                                <p-multiSelect id="form-productOptions" [options]="productList" formControlName="option"
+                                    defaultLabel="Select one or more items" optionLabel="productName"
+                                    optionValue="productId" display="chip">
+                                </p-multiSelect>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
+
+                <p-divider>
+                    <div class="p-d-inline-flex p-ai-center">
+                        <i class="pi pi-user p-mr-2 mr-2"></i>
+                        <b>Rates</b>
+                    </div>
+                </p-divider>
+                <div formGroupName="productRate" class="form-row m-b-50">
+
                     <div class="p-col-12 p-md-10">
-                        <p-inputNumber type="text" formControlName="productPrice" id="form-productPrice"
-                            placeholder="Enter Price" inputId="minmaxfraction" mode="decimal" [minFractionDigits]="2"
-                            [maxFractionDigits]="5">
-                        </p-inputNumber>
+                        <div class="row">
+                            <div class="input-group mb-3 col-md-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Standard</span>
+                                </div>
+                                <input class="form-control {{validationError.standard ? 'is-invalid' : ''}}" type="text"
+                                    formControlName="standard" placeholder="Standard Rate">
+                            </div>
+                            <div class="input-group mb-3 col-md-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Small</span>
+                                </div>
+                                <input class="form-control" type="text" formControlName="small"
+                                    placeholder="Small Rate">
+                            </div>
+                            <div class="input-group mb-3 col-md-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Large</span>
+                                </div>
+                                <input class="form-control" type="text" formControlName="large"
+                                    placeholder="Large Rate">
+                            </div>
+                            <div class="input-group mb-3 col-md-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon2">Medium</span>
+                                </div>
+                                <input class="form-control" type="text" formControlName="medium"
+                                    placeholder="Medium Rate">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+
+
+
+
+                <p-divider>
+                    <div class="p-d-inline-flex p-ai-center">
+                        <i class="pi pi-user p-mr-2 mr-2"></i>
+                        <b>Details</b>
+                    </div>
+                </p-divider>
+                <div class="form-row m-b-50">
+                    <div class="form-group col-md-6">
+                        <label for="form-productIngredients" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
+                            Ingredients
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <p-multiSelect id="form-productIngredients" [options]="productIngredients" optionValue="productId"
+                                formControlName="productIngredients" defaultLabel="Select one or more Ingredients"
+                                optionLabel="productName" display="chip">
+                            </p-multiSelect>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="form-productFlavor" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
+                            Flavors
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <p-chips id="form-productFlavor" formControlName="productFlavor"
+                                placeholder="Add one or more Flavors"></p-chips>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="form-productProportion" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
+                            Portion Size
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <p-chips id="form-productProportion" formControlName="productProportion"
+                                placeholder="Add one or more Proportions"></p-chips>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="form-productToppings" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
+                            Extra Toppings
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <p-multiSelect id="form-productIngredients" [options]="productIngredients" optionValue="productId"
+                                formControlName="productToppings" defaultLabel="Select one or more Toppings"
+                                optionLabel="productName" display="chip">
+                            </p-multiSelect>
+                        </div>
+                    </div>
+                    <!-- <div class="form-group col-md-6">
+                        <label for="form-productAddons" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
+                            Addons
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <p-multiSelect id="form-productAddons" [options]="addons" formControlName="productAddons"
+                                defaultLabel="Select one or more Addons" optionLabel="productName" display="chip">
+                            </p-multiSelect>
+                        </div>
+                    </div> -->
+                    <div class="form-group col-md-6">
+                        <label for="form-productVariant" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
+                            Variants
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <p-multiSelect id="form-productVariant" [options]="variants"
+                                formControlName="productVariant" defaultLabel="Select one or more Variants"
+                                optionLabel="productName" display="chip">
+                            </p-multiSelect>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="form-productTags" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
+                            Tags
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <p-chips id="form-productTags" formControlName="productTags"
+                                placeholder="Add one or more Tags"></p-chips>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="form-offeringTime" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
+                            Offering Times
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <p-chips id="form-offeringTime" formControlName="offeringTime"
+                                placeholder="Add one or more Offering Times"></p-chips>
+                        </div>
+                    </div>
+
+                    <div formGroupName="productNutrition" class="form-group col-md-6">
+                        <label for="form-productNutrition" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
+                            Nutrition
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <div class="row">
+                                <div class="input-group mb-3 col-md-4">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">Calories</span>
+                                    </div>
+                                    <input class="form-control" type="text" formControlName="calories"
+                                        placeholder="Calories" aria-label="Calories" aria-describedby="basic-addon1">
+                                </div>
+                                <div class="input-group mb-3 col-md-4">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon2">Fats</span>
+                                    </div>
+                                    <input class="form-control" type="text" formControlName="fats" placeholder="Fats"
+                                        aria-label="Fats" aria-describedby="basic-addon2">
+                                </div>
+                                <div class="input-group mb-3 col-md-4">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon3">Proteins</span>
+                                    </div>
+                                    <input class="form-control" type="text" formControlName="proteins"
+                                        placeholder="Proteins" aria-label="Proteins" aria-describedby="basic-addon3">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div formGroupName="productAttributes" class="form-group col-md-6">
+                        <label for="form-productAttributes" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
+                            Attributes
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <div class="row">
+                                <div class="col">
+                                    <h6>Halal</h6>
+                                    <p-inputSwitch formControlName="halal"></p-inputSwitch>
+                                </div>
+                                <div class="col">
+                                    <h6>Vegan</h6>
+                                    <p-inputSwitch formControlName="vegan"></p-inputSwitch>
+                                </div>
+                                <div class="col">
+                                    <h6>Vegetarian</h6>
+                                    <p-inputSwitch formControlName="vegetarian"></p-inputSwitch>
+                                </div>
+                                <div class="col">
+                                    <h6>Gluten Free</h6>
+                                    <p-inputSwitch formControlName="glutenFree"></p-inputSwitch>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="form-productImage" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
+                            Images
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <p-chips id="form-productImage" formControlName="productImage"></p-chips>
+                        </div>
                     </div>
                 </div>
-                <div class="p-field p-grid">
-                    <label for="form-category" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"> Product Category:
-                    </label>
-                    <div class="p-col-12 p-md-10">
-                        <p-dropdown id="form-category" [options]="categories" formControlName="category"
-                            optionLabel="categoryName" optionValue="_id"></p-dropdown>
+
+                <p-divider>
+                    <div class="p-d-inline-flex p-ai-center">
+                        <i class="pi pi-user p-mr-2 mr-2"></i>
+                        <b>Meta</b>
                     </div>
-                </div>
-                <div class="p-field p-grid">
-                    <label for="form-productAddon" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"> Product Addon:
-                    </label>
-                    <div class="p-col-12 p-md-10">
-                        <p-multiSelect id="form-productAddon" [options]="addons" formControlName="productAddon"
-                            defaultLabel="Select an Addon" optionLabel="productName" display="chip" optionValue="_id">
-                        </p-multiSelect>
+                </p-divider>
+                <div class="form-row m-b-50">
+                    <div class="form-group col-md-6">
+                        <label for="form-productHistory" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
+                            History
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <textarea id="form-productHistory" class="form-control"
+                                formControlName="productHistory"></textarea>
+                        </div>
                     </div>
-                </div>
-                <div class="p-field p-grid" *ngIf="formMode === 'update'">
-                    <label for="form-productVariant" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"> Product Variant:
-                    </label>
-                    <div class="p-col-12 p-md-10">
-                        <p-multiSelect id="form-productVariant" [options]="variants" formControlName="productVariant"
-                            defaultLabel="Add a Variant" optionLabel="productName" display="chip" optionValue="_id">
-                        </p-multiSelect>
-                    </div>
-                </div>
-                <div class="p-field p-grid">
-                    <label for="form-productImage" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"> Product Images:
-                    </label>
-                    <div class="p-col-12 p-md-10">
-                        <p-chips id="form-productImage" formControlName="productImage"></p-chips>
-                    </div>
-                </div>
-                <div class="p-field p-grid">
-                    <label for="form-productTags" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"> Product Tags:
-                    </label>
-                    <div class="p-col-12 p-md-10">
-                        <p-chips id="form-productTags" formControlName="productTags"></p-chips>
-                    </div>
-                </div>
-                <div class="p-field p-grid">
-                    <label for="form-productActive" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"> Product Active:
-                    </label>
-                    <div class="p-col-12 p-md-10">
-                        <p-toggleButton id="form-productActive" formControlName="productActive" onLabel="Enabled"
-                            offLabel="Disabled" onIcon="pi pi-check" offIcon="pi pi-times" [style]="{'width': '10em'}">
-                        </p-toggleButton>
+
+                    <div class="form-group col-md-6">
+                        <label for="form-productActive" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
+                            Active
+                        </label>
+                        <div class="p-col-12 p-md-10">
+                            <p-toggleButton id="form-productActive" formControlName="productActive" onLabel="Enabled"
+                                offLabel="Disabled" onIcon="pi pi-check" offIcon="pi pi-times"
+                                [style]="{'width': '10em'}">
+                            </p-toggleButton>
+                        </div>
                     </div>
                 </div>
             </div>
 
-
-            <div class="card-footer">
-                <button type="button" class="btn btn-secondary" [routerLink]="['../']">Cancel</button>
-                <button type="submit" class="btn btn-primary float-right">
-                    Save
-                </button>
-            </div>
         </form>
     </div>
 </div>

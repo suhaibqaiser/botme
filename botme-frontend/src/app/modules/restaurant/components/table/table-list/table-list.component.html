@@ -23,7 +23,7 @@
           </ul>
         </div>
       </div>
-  
+
       <p-table #dt1 [value]="tables" [responsive]="true" [paginator]="true" [rows]="10" [loading]="loading"
         [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         [rowsPerPageOptions]="[10,25,50]" [globalFilterFields]="['tableId','tableSeats','area.areaName', 'tableOccupied']">
@@ -43,13 +43,13 @@
             <th style="width: 3rem">
               <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
             </th>
-            <th pSortableColumn="tableId">ID <p-sortIcon field="tableId"></p-sortIcon>
+            <th pSortableColumn="tableLabel">Label <p-sortIcon field="tableLabel"></p-sortIcon>
             </th>
             <th pSortableColumn="tableSeats">Seats <p-sortIcon field="tableSeats"></p-sortIcon>
             </th>
             <th pSortableColumn="tableOccupied">Occupied <p-sortIcon field="tableOccupied"></p-sortIcon>
             </th>
-            <th pSortableColumn="area.areaName">Area <p-sortIcon field="area.areaName"></p-sortIcon>
+            <th pSortableColumn="area.areaName">Area <p-sortIcon field="areaName"></p-sortIcon>
             </th>
             <th pSortableColumn="createdAt">Created <p-sortIcon field="createdAt"></p-sortIcon>
             </th>
@@ -64,7 +64,7 @@
             </td>
             <td>
               <button class="btn btn-primary btn-tone m-r-5" [routerLink]="['detail']"
-                [queryParams]="{ tableId: table._id }">{{table.tableId}}</button>
+                [queryParams]="{ tableId: table.tableId }">T-{{table.tableLabel}}</button>
             </td>
             <td>{{table.tableSeats}}</td>
             <td><span *ngIf="table.tableOccupied === true"
@@ -72,10 +72,10 @@
               <span *ngIf="table.tableOccupied === false"
                 class="badge badge-success">No</span>
             </td>
-            <td>{{table.area.areaName}}</td>
+            <td>{{table.areaName}}</td>
             <td>{{table.createdAt}}</td>
             <td>{{table.updatedAt}}</td>
-           
+
           </tr>
         </ng-template>
         <ng-template pTemplate="paginatorleft">
@@ -85,6 +85,6 @@
           <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
         </ng-template>
       </p-table>
-  
+
     </div>
   </div>

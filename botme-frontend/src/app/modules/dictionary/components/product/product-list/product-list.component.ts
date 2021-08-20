@@ -15,7 +15,7 @@ export class ProductListComponent implements OnInit {
     private categoryService: CategoryService) { }
 
   ngOnInit(): void {
-    this.getCategories();
+    this.getCategories()
     this.getProducts();
   }
 
@@ -43,10 +43,11 @@ export class ProductListComponent implements OnInit {
   getCategoryName(catId: string) {
     let cat = this.categories.find((category: { categoryId: string; }) => category.categoryId === catId);
     if (cat) return cat.categoryName
-
+    
     return null;
   }
   getCategories() {
+
     this.categoryService.getCategories().subscribe(
       result => {
         this.categories = result.payload
