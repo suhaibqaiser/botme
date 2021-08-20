@@ -46,6 +46,17 @@ nlu:
       - of course
       - that sounds good
       - correct
+  - intent: menu_list
+    examples: |
+      - Hey, I am Hungry what's the [menu](FoodList) today
+      - Hello, I am searching for a good food today. What's the [menu](FoodList)
+      - Hello, I am searching for a good [cusine](FoodList) today. What's the [menu](FoodList)
+      - Hi, May i check the [meal list](FoodList)
+      - Hi, The weather is so good outside so i want to  have good [food](FoodList)
+      - hey, What's the best [cusine](FoodList) at your restaurant?
+      - May i have the [menu card](FoodList) please
+      - Can you please share me your [menu card](FoodList) please
+      - May i have the [food](FoodList) list 
   - intent: reserve_table
     examples: |
       - i want a table on [friday](date) for [5](person) people

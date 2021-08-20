@@ -17,7 +17,7 @@ function initDbConnection() {
     db.on("error", console.error.bind(console, "MongoDB Connection Error>> : "));
     db.once("open", function () {
         console.log("Connected to MongoDB Server");
-    });
+        }); 
     return db;
 }
 

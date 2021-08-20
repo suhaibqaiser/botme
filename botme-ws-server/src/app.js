@@ -4,8 +4,11 @@ const WebSocket = require('ws');
 const http = require('http');
 const db = require('./utils/dbUtil');
 const communicate = require("./controllers/communicationController");
+const commandController = require("./controllers/commandController");
 //const queue = require('./utils/queue');
+const express = require('express');
 
+const app = express();
 // application config
 const port = config.port
 const bearerToken = config.bearerToken
@@ -18,7 +21,7 @@ const wss = new WebSocket.Server({server});
 wss.on('connection', function connection(ws) {
 
     ws.on('message', async function incoming(payload) {
-        let response = await communicate.processCommunication(payload)
+        let response = await communicate.processRasa(payload)
         let parsedPayload = JSON.parse(payload)
         response.clientID = parsedPayload.clientID;
         console.log(response)
@@ -42,8 +45,7 @@ wss.on('connection', function connection(ws) {
 //     }
 // }, 50000);
 
-})
-;
-
+});
+commandController.fetchProducts(); 
 server.listen(port);
 console.log('Websocket server started on port : ' + port);

@@ -19,5 +19,24 @@ async function process(text) {
     }
     return data;
 }
+async function rasaProcess(text) {
+    let data
+    try {
+        let body = {"text": text};
+        const response = await fetch(config.rasaApi + 'model/parse', {
+            method: 'post',
+            body: JSON.stringify(body),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        data = await response.json();
+        // productName = data.entities[0].value
+        // console.log(productName)
+    } catch (err) {
+        console.log(err);
+    }
+    return data;
+}
 
-module.exports = ({process})
+module.exports = ({process,rasaProcess})
