@@ -11,6 +11,8 @@ export class SpeechRecognitionSectionComponent implements OnInit {
   isRecording = false;
   recordedTime: any
   blobUrl: any
+  formData = new FormData()
+  blobData: any
 
   constructor(private audioRecordingService: SpeechRecognitionService, private sanitizer: DomSanitizer) {
     this.audioRecordingService.recordingFailed().subscribe(() => {
@@ -21,9 +23,10 @@ export class SpeechRecognitionSectionComponent implements OnInit {
       this.recordedTime = time;
     });
 
-    this.audioRecordingService.getRecordedBlob().subscribe((data) => {
+    this.audioRecordingService.getRecordedBlob().subscribe(data => {
       this.blobUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data.blob));
-      console.log('this.blobUrl =>',this.blobUrl)
+      this.blobData = data.blob
+      console.log('subscribe =>', this.blobData)
     });
   }
 
@@ -57,6 +60,16 @@ export class SpeechRecognitionSectionComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.abortRecording();
+  }
+
+  sendData() {
+    console.log(this.blobData)
+    this.formData.set('audio', this.blobData)
+    this.audioRecordingService.getTextFromSpeech(this.formData).subscribe(
+      (res) => {
+        console.log(res)
+      }
+    )
   }
 
 }

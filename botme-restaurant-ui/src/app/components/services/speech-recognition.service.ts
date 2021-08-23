@@ -2,6 +2,7 @@ import {Injectable, NgZone} from '@angular/core';
 import * as RecordRTC from 'recordrtc';
 import * as moment from 'moment';
 import {Observable, Subject} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
 
 interface RecordedAudioOutput {
   blob: Blob;
@@ -20,7 +21,7 @@ export class SpeechRecognitionService {
   private _recordingTime = new Subject<string>();
   private _recordingFailed = new Subject<string>();
 
-  constructor() {
+  constructor(private _http: HttpClient) {
   }
 
   getRecordedBlob(): Observable<RecordedAudioOutput> {
@@ -93,10 +94,10 @@ export class SpeechRecognitionService {
       this.recorder.stop((blob: any) => {
         if (this.startTime) {
           const mp3Name = encodeURIComponent('audio_' + new Date().getTime() + '.mp3');
-          console.log('mp3Name =>',mp3Name)
+          console.log('mp3Name =>', mp3Name)
           this.stopMedia();
           this._recorded.next({blob: blob, title: mp3Name});
-          console.log('_recorded.next',this._recorded.next({blob: blob, title: mp3Name}))
+          console.log('_recorded.next', this._recorded.next({blob: blob, title: mp3Name}))
         }
       }, () => {
         this.stopMedia();
@@ -116,5 +117,9 @@ export class SpeechRecognitionService {
         this.stream = null;
       }
     }
+  }
+
+  getTextFromSpeech(data:any) {
+    return this._http.post('http://localhost:3000/getTextFromSpeech', data)
   }
 }

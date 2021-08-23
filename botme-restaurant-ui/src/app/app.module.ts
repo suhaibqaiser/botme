@@ -38,7 +38,7 @@ import { ContactUsComponent } from './components/pages/contact-us/contact-us.com
 import { SpeechRecognitionSectionComponent } from './components/sections/speech-recognition-section/speech-recognition-section.component';
 import {SpeechRecognitionService} from "./components/services/speech-recognition.service";
 
-
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -79,7 +79,8 @@ import {SpeechRecognitionService} from "./components/services/speech-recognition
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule
+    RouterModule,
+    HttpClientModule
   ],
   providers: [SpeechRecognitionService],
   bootstrap: [AppComponent]
