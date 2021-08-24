@@ -1,0 +1,34 @@
+{
+    "text": {
+        "textValue": "Hello",
+        "language": "english",
+        "timestamp": "",
+        "geoCode": {
+            "lat": -1.5555,
+            "long": 6.222
+        }
+    },
+    "context": {
+        "pageId": "menuPage",
+        "sectionId": "sliderSection",
+        "entities": [
+            {
+                "entityId": "",
+                "entityName": "",
+                "clickAttribute": "href, button",
+                "keywords": ""
+            }
+        ]
+    },
+    "action": {
+        "entity": {
+            "entityId": "4bb5d4fb-5288-41b2-849a-675632980209",
+            "entityName": "Burgers",
+            "clickAttribute": "javascript:getElementById('xxx-xxxx-xxxx-xxxx').click()",
+            "keywords": "select burger menu",
+            "customJavaScript": "",
+            "entityType": "product, category, "
+        },
+        "searchEntity": ""
+    }
+}

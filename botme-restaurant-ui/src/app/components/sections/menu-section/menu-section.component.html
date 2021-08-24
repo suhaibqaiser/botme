@@ -3,15 +3,16 @@
   <div class="container position-relative">
     <div class="section-title">
       <small>Menu</small>
+      <input type="text" id="itemId"/>
       <h2 class="color-white">Just Choose From The Best</h2>
     </div>
     <div class="menu-main-carousel-area">
       <div class="menu-main-thumb-nav">
 
-        <div class="menu-main-thumb-item" *ngFor="let cat of categoryList; let i = index">
+        <div class="menu-main-thumb-item" *ngFor="let cat of categoryList; let i = index" id="CAT-{{cat.categoryId}}">
           <div class="menu-main-thumb-inner">
             <img src="assets/images/menu-1.png" alt="menu">
-            <p>{{cat}}</p>
+            <p>{{cat.categoryName}}</p>
           </div>
         </div>
       </div>
@@ -19,11 +20,11 @@
         <div class="menu-main-details-item" *ngFor="let cat of categoryList; let i = index">
           <div class="menu-details-carousel">
             <div class="menu-details-carousel-item menu-details-carousel-black"
-              *ngFor="let product of getProductsByCategory(cat); let i = index">
+              *ngFor="let product of getProductsByCategory(cat.categoryId); let i = index" id="p{{product.productId}}">
               <h3>{{product.productName}}</h3>
               <p>{{product.productDesc}}</p>
               <h4 class="menu-price">${{product.productRate.standard}}</h4>
-              <a href="#" class="btn btn-yellow">
+              <a href="alert('product Added');" class="btn btn-yellow">
                 Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
               </a>
               <div class="menu-details-carousel-image">
@@ -39,5 +40,10 @@
 <!-- .end menu-section -->
 
 <script>
-
+ function actionItem() {
+    let itemId = document.getElementById('itemId').value;
+    let item;
+    if (itemId) { item = document.getElementById(itemId); }
+    item?.click();
+  };
 </script>

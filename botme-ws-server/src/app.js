@@ -16,6 +16,8 @@ const server = http.createServer();
 const wss = new WebSocket.Server({server});
 
 wss.on('connection', function connection(ws) {
+    console.log('Client Connected');
+    
 
     ws.on('message', async function incoming(payload) {
         let response = await communicate.processCommunication(payload)

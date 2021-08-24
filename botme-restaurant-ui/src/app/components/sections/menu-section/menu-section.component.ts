@@ -8,13 +8,12 @@ import { MenuService } from 'src/app/services/menu.service';
 })
 export class MenuSectionComponent implements OnInit {
 
-  constructor(private menuservice: MenuService) { }
-
   products: any
   categories = []
-  categoryList: string[] = []
+  categoryList: { categoryId: string, categoryName: string }[] = []
   loading = true
 
+  constructor(private menuservice: MenuService) { }
 
   ngOnInit(): void {
     this.getCategory()
@@ -27,8 +26,9 @@ export class MenuSectionComponent implements OnInit {
 
         if (Array.isArray(this.products)) {
           for (let product of this.products) {
-            product.productCategory = this.getCategoryName(product.productCategory);
-            (!this.categoryList.find(element => element === product.productCategory)) ? this.categoryList.push(product.productCategory) : null;
+            product.productCategoryName = this.getCategoryName(product.productCategory);
+            (!this.categoryList.find(category => category.categoryId === product.productCategory)) ?
+              this.categoryList.push({ categoryId: product.productCategory, categoryName: product.productCategoryName }) : null;
             this.loading = false;
           }
         } else {
@@ -36,11 +36,12 @@ export class MenuSectionComponent implements OnInit {
           this.loading = false;
         }
       });
+    console.log(this.categoryList);
   }
 
   getProductsByCategory(category: string) {
-    let prods: any = this.products.filter((product: { productCategory: string; }) => product.productCategory === category);
-    return prods;
+    let products: any = this.products.filter((product: { productCategory: string; }) => product.productCategory === category);
+    return products;
   }
 
   getCategory() {
@@ -62,4 +63,6 @@ export class MenuSectionComponent implements OnInit {
 
     return null;
   }
+
+ 
 }
