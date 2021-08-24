@@ -13,6 +13,7 @@ export class SpeechRecognitionSectionComponent implements OnInit {
   blobUrl: any
   blobData: any
   text: any
+  loader: any
 
   constructor(private audioRecordingService: SpeechRecognitionService, private sanitizer: DomSanitizer) {
     this.audioRecordingService.recordingFailed().subscribe(() => {
@@ -63,14 +64,16 @@ export class SpeechRecognitionSectionComponent implements OnInit {
   }
 
   sendData() {
+    this.loader = true
     const formData = new FormData()
     console.log(this.blobData)
     formData.append('file', this.blobData)
     this.audioRecordingService.getTextFromSpeech(formData).subscribe(
-      (res:any) => {
-        if(res.status){
+      (res: any) => {
+        this.loader = false
+        if (res.status) {
           this.text = res.data
-        }else{
+        } else {
           this.text = 'Failed to get response'
         }
       }

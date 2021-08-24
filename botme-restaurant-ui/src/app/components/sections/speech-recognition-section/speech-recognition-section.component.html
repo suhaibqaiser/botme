@@ -2,7 +2,11 @@
   <button class="start-button" *ngIf="!isRecording && !blobUrl" (click)="startRecording()">Start Recording</button>
   <button class="stop-button" *ngIf="isRecording && !blobUrl" (click)="stopRecording()">Stop Recording</button>
   <button class="cancel-button" *ngIf="!isRecording && blobUrl" (click)="clearRecordedData()">Clear Recording</button>
-  <button class="cancel-button"  (click)="sendData()">send</button>
+  <button class="cancel-button" *ngIf="!isRecording && blobUrl" (click)="sendData()">Send
+    <div *ngIf="loader" class="spinner-border spinner-border-sm ml-3 text-warning" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </button>
   <div *ngIf="isRecording && !blobUrl"> {{recordedTime}} </div>
   <div *ngIf="!isRecording && blobUrl">
     <h6 class="text-white">{{text}}</h6>
