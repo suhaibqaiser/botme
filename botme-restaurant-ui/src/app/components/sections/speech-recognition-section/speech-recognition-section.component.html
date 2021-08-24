@@ -4,9 +4,7 @@
   <button class="cancel-button" *ngIf="!isRecording && blobUrl" (click)="clearRecordedData()">Clear Recording</button>
   <button class="cancel-button"  (click)="sendData()">send</button>
   <div *ngIf="isRecording && !blobUrl"> {{recordedTime}} </div>
-  <div>
-    <audio *ngIf="!isRecording && blobUrl"  controls>
-      <source [src]="blobUrl" type="audio/webm">
-    </audio>
+  <div *ngIf="!isRecording && blobUrl">
+    <h6 class="text-white">{{text}}</h6>
   </div>
 </div>

@@ -4,6 +4,7 @@
 
 const express = require('express')
 const cors = require("cors")
+const path = require('path')
 const bodyparser = require("body-parser")
 const PORT = process.env.PORT || 3000
 const app = express()
@@ -14,49 +15,26 @@ const speech = require('@google-cloud/speech')
 const fs = require('fs')
 const multer = require('multer');
 const client = new speech.SpeechClient()
-// async function main() {
-//     const client = new speech.SpeechClient()
-//     const filename = './audio.wav'
-//     const file = fs.readFileSync(filename)
-//     const audioBytes = file.toString('base64')
 
-//     const audio = {
-//         content: audioBytes
-//     }
-//     const config = {
-//         encoding: 'LINEAR16',
-//         sampleRateHertz: 44100,
-//         languageCode: 'en-US',
-//         audioChannelCount: 2
-//     }
-//     const request = {
-//         audio: audio,
-//         config: config
-//     }
-
-//     console.log('please wait.......')
-//     const [response] = await client.recognize(request)
-//     console.log('response =>',)
-//     const transcription = response.results.map(result =>
-//         result.alternatives[0].transcript).join('\n')
-//     console.log('Transcription :', transcription)
-// }
-
-// main().catch(console.error)
-
-var upload = multer({dest:'uploads/'});
-
-
-app.listen(PORT, () => {
-    console.log("Port : " + PORT)
+//multer
+const storage = multer.diskStorage({
+    destination: (req, file, callBack) => {
+        callBack(null, 'index/uploads')
+    },
+    filename: (req, file, callBack) => {
+        callBack(null, file.originalname)
+    }
 })
 
+const upload = multer({ storage: storage })
+
+
 //default route
-app.post('/getTextFromSpeech',upload.single('file'), async (req, res) => {
-    console.log(req.file)
-    const filename = './'+file.filename+'.wav'
-    const fileing = fs.readFileSync(filename)
-    const audioBytes = file.toString(fileing)
+app.post('/getTextFromSpeech', upload.single('file'), async (req, res) => {
+     console.log(req.file)
+    const filename = path.resolve('./index/uploads/' + req.file.filename)
+    const file = fs.readFileSync(filename)
+    const audioBytes = file.toString('base64')
     const audio = {
         content: audioBytes
     }
@@ -82,11 +60,15 @@ app.post('/getTextFromSpeech',upload.single('file'), async (req, res) => {
             res.json(data)
         }, (err) => {
             res.json({
-                'status':false,
-                'message':'Failed to convert text'
+                'status': false,
+                'message': 'Failed to convert text'
             })
         }
     )
 
 
+})
+
+app.listen(PORT, () => {
+    console.log("Port : " + PORT)
 })

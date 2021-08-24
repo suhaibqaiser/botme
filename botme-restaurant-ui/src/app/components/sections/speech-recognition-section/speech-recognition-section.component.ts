@@ -11,8 +11,8 @@ export class SpeechRecognitionSectionComponent implements OnInit {
   isRecording = false;
   recordedTime: any
   blobUrl: any
-  formData = new FormData()
   blobData: any
+  text: any
 
   constructor(private audioRecordingService: SpeechRecognitionService, private sanitizer: DomSanitizer) {
     this.audioRecordingService.recordingFailed().subscribe(() => {
@@ -63,11 +63,16 @@ export class SpeechRecognitionSectionComponent implements OnInit {
   }
 
   sendData() {
+    const formData = new FormData()
     console.log(this.blobData)
-    this.formData.set('audio', this.blobData)
-    this.audioRecordingService.getTextFromSpeech(this.formData).subscribe(
-      (res) => {
-        console.log(res)
+    formData.append('file', this.blobData)
+    this.audioRecordingService.getTextFromSpeech(formData).subscribe(
+      (res:any) => {
+        if(res.status){
+          this.text = res.data
+        }else{
+          this.text = 'Failed to get response'
+        }
       }
     )
   }
