@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import {SpeechRecognitionService} from "../../services/speech-recognition.service";
+
 @Component({
   selector: 'app-topbar',
   templateUrl: './topbar.component.html',
@@ -13,6 +14,7 @@ export class TopbarComponent implements OnInit {
   blobData: any
   text: any
   loader: any
+
   constructor(private audioRecordingService: SpeechRecognitionService, private sanitizer: DomSanitizer) {
 
     this.audioRecordingService.recordingFailed().subscribe(() => {
@@ -35,12 +37,23 @@ export class TopbarComponent implements OnInit {
   }
 
   startRecording() {
+    console.log('start recording')
+    this.text = ''
     if (!this.isRecording) {
       this.isRecording = true;
+      console.log('started')
       this.audioRecordingService.startRecording();
-    }else{
-      this.stopRecording()
+      console.log('end')
     }
+    console.log('stop')
+     setTimeout(() => {
+      console.log('stoping recording')
+      this.stopRecording()
+    }, 5000)
+    setTimeout(() => {
+      console.log('sending data')
+      this.sendData()
+    }, 6000)
   }
 
   abortRecording() {
