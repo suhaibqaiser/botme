@@ -3,7 +3,15 @@
   <div class="container">
     <div class="topbar-inner">
       <div class="topbar-item">
-        <a href=""><img class="img-fluid matacs-logo" width="50" src="assets/images/logo/logo.png"/></a>
+        <a style="cursor: pointer" (click)="startRecording()"><img class="img-fluid" [class.matacs-logo]="isRecording" width="50" src="assets/images/logo/logo.png"/></a>
+        <button class="btn btn-success send-btn btn-sm ml-2" *ngIf="!isRecording && blobUrl" (click)="sendData()">Send
+          <div *ngIf="loader" class="spinner-border d-inline-flex spinner-border-sm ml-3 text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </button>
+        <div class="d-inline-flex ml-3" *ngIf="!isRecording && blobUrl">
+          <h6 class="text-white">{{text}}</h6>
+        </div>
       </div>
       <div class="topbar-item">
         <div class="topbar-right d-flex flex-wrap topbar-right justify-content-center justify-content-md-start full-height">
