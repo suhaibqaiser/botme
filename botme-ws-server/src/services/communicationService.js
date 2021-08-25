@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 const config = require('../config');
 
+// This method is used for Google TTS service
 async function process(text) {
     let data
     try {
