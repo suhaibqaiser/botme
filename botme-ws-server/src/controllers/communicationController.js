@@ -4,6 +4,7 @@ const Response = require("../models/response");
 const commService = require("../services/communicationService");
 const conversationController = require("../controllers/conversationController")
 
+// Main entry point for processing communication
 async function processCommunication(payload) {
     let response = new Response();
 
@@ -41,6 +42,7 @@ async function processCommunication(payload) {
     return response;
 }
 
+
 async function processConversation(message, clientToken) {
     let response = {
         status: "",
@@ -55,14 +57,14 @@ async function processConversation(message, clientToken) {
         response.payload = communication.payload
     }
 
-    let conversationId = await conversationController.getConversationId(clientToken)
-    console.log(communication.intent)
-    if (communication.intent === 'conversation.end') {
-        conversationController.addConversationLog(conversationId, message, communication.payload)
-        conversationController.endConversation(conversationId,0)
-    } else {
-        conversationController.addConversationLog(conversationId, message, communication.payload)
-    }
+    // let conversationId = await conversationController.getConversationId(clientToken)
+    // console.log(communication.intent)
+    // if (communication.intent === 'conversation.end') {
+    //     conversationController.addConversationLog(conversationId, message, communication.payload)
+    //     conversationController.endConversation(conversationId,0)
+    // } else {
+    //     conversationController.addConversationLog(conversationId, message, communication.payload)
+    // }
     return response
 }
 

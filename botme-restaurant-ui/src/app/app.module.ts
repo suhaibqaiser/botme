@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {RouterModule} from "@angular/router";
+import { RouterModule } from "@angular/router";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/pages/home/home.component';
@@ -35,6 +35,7 @@ import { SearchGridSectionComponent } from './components/sections/search-grid-se
 import { ContactSectionComponent } from './components/sections/contact-section/contact-section.component';
 import { MapSectionComponent } from './components/sections/map-section/map-section.component';
 import { ContactUsComponent } from './components/pages/contact-us/contact-us.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -76,7 +77,8 @@ import { ContactUsComponent } from './components/pages/contact-us/contact-us.com
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule
+    RouterModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
