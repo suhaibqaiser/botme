@@ -1,0 +1,16 @@
+{
+  "name": "botme-sofia-connect",
+  "version": "1.0.0",
+  "main": "app/app.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@google-cloud/speech": "^4.4.0",
+    "express": "^4.17.1",
+    "mic": "^2.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}

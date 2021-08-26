@@ -2,28 +2,20 @@
 <div class="topbar bg-main">
   <div class="container">
     <div class="topbar-inner">
-      <div class="topbar-item topbar-padding">
-        <ul class="social-list social-list-white">
-          <li><a href="#"><i class="flaticon-facebook"></i></a></li>
-          <li><a href="#"><i class="flaticon-twitter"></i></a></li>
-          <li><a href="#"><i class="flaticon-linkedin"></i></a></li>
-          <li><a href="#"><i class="flaticon-youtube"></i></a></li>
-          <li><a href="#"><i class="flaticon-instagram-1"></i></a></li>
-        </ul>
+      <div class="topbar-item">
+        <a style="cursor: pointer" (click)="startRecording()"><img class="img-fluid" [class.matacs-logo]="isRecording" width="50" src="assets/images/logo/logo.png"/></a>
       </div>
       <div class="topbar-item">
         <div class="topbar-right d-flex flex-wrap topbar-right justify-content-center justify-content-md-start full-height">
           <div class="topbar-right-item topbar-padding color-white">
-            <i class="flaticon-clock"></i>
-            Friday Closed
+            <strong>Request: </strong>
+            <div *ngIf="loader" class="spinner-border d-inline-flex spinner-border-sm ml-5 text-warning" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+            <span class="ml-1" *ngIf="!isRecording && blobUrl"> {{text}} </span>
           </div>
           <div class="topbar-right-item topbar-padding color-white">
-            <i class="flaticon-placeholder-1"></i>
-            12 Poor Street, New York.
-          </div>
-          <div class="topbar-right-item topbar-padding color-white">
-            <i class="flaticon-smartphone-call"></i>
-            <a href="tel:001-964-565-87652" class="color-white">+1 964 565 87652</a>
+            <strong>Bot reply : </strong>
           </div>
           <div class="topbar-right-item topbar-padding language-button language-option"> <!-- "language-option" class is used for language switcher -->
             <button class="dropdown-toggle color-white lang-compo" type="button" id="language1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <!-- "lang-compo" class is used for language switcher -->
