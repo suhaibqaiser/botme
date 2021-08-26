@@ -9,7 +9,7 @@ import { SocketService } from 'src/app/services/socket.service';
   templateUrl: './search-grid-section.component.html',
   styleUrls: ['./search-grid-section.component.scss']
 })
-export class SearchGridSectionComponent implements OnInit, OnDestroy {
+export class SearchGridSectionComponent implements OnInit {
 
   products: any
   filteredProducts: any
@@ -17,16 +17,7 @@ export class SearchGridSectionComponent implements OnInit, OnDestroy {
   categoryList: { categoryId: string, categoryName: string }[] = []
   loading = true
   cartVisible = false;
-
-  wsPayload = {
-    "clientID": "987530c0-998d-4cfc-b86d-596b5f7cd7d7",
-    "current_time": "2021-04-07 00:49:00",
-    "message_format": "text",
-    "message_command": "find",
-    "language": "en-US",
-    "message_text": "Hey",
-    "authToken": "qbw/fcQKvC6SY+AelUs5VpRYOhnRvzZsz39xVU06LYI="
-  }
+  sofiaMessage = "Message from Sofia"
 
 
   constructor(private menuservice: MenuService,
@@ -35,14 +26,7 @@ export class SearchGridSectionComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getCategory();
-
-    this.socketService.connect();
-    this.socketService.messages$.subscribe(r => {
-      console.log(r);
-    })
-
-    this.socketService.sendMessage("Hi");
-    this.socketService.sendMessage(this.wsPayload);
+    this.getWSMessage();
   }
 
   getProducts(): void {
@@ -105,17 +89,15 @@ export class SearchGridSectionComponent implements OnInit, OnDestroy {
     document.getElementById("btnProductCart")?.click()
   }
 
-  callToAction(input: any) {
-    let CTAJson = JSON.parse(input);
-    let ctaId = CTAJson.action.entity.entityId
-
-    let cta = document.getElementById(ctaId)
-    let btn: HTMLElement = cta?.getElementsByTagName('a')[0] as HTMLElement;
-    //let btn: HTMLElement = cta?.getElementsByClassName('btn-yellow')[0] as HTMLElement;
-    btn.click();
+  sendWSMessage(text: string) {
+    this.socketService.sendMessage(text);
   }
 
-  ngOnDestroy() {
-    this.socketService.close();
+  getWSMessage() {
+    this.socketService.messages.subscribe(r => {
+      let res: any = r
+      this.sofiaMessage = res.message.text
+    }
+    )
   }
 }

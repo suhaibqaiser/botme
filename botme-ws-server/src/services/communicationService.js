@@ -6,7 +6,7 @@ async function process(text) {
     let data
     try {
         let body = {"message": text};
-        const response = await fetch(config.apiServer + 'nlp/communicate', {
+        const response = await fetch(config.clientsAPI + 'nlp/communicate', {
             method: 'post',
             body: JSON.stringify(body),
             headers: {
