@@ -1,27 +1,47 @@
 version: "2.0"
 nlu:
+  - intent: page_navigation
+    examples: |
+      - show me the [menu](navigation)
+      - i wana see the [menu](navigation)
+      - whats the [menu](navigation)
+      - [menu](navigation) please
+
   - intent: select_lang
     examples: |
       - lang
       - Language
-  - intent: greet
+  - intent: greet_one
     examples: |
-      - hey
-      - hello
       - hi
-      - hello there
+      - hello
+  - intent: greet_two
+    examples: |
       - good morning
+      - good afternoon
       - good evening
-      - moin
-      - hey there
-      - let's go
-      - hey dude
       - goodmorning
       - goodevening
       - good afternoon
+      - hi good morning
+      - hi good morning how are you
+      - hi good morning sir
+      - hi good morning dear
+      - hi good evening
+      - hi good afternoon
+  - intent: greet_three
+    examples: |
+      - hey, what's up
+      - hey whats new today
+      - hi whats up
+      - hello whats up?
+      - hello whats new today
+  - intent: greet_four
+    examples: |
+      - hello good to see you here
+      - hi good to see you here
   - intent: goodbye
     examples: |
-      - good afternoon
       - cu
       - good by
       - cee you later
@@ -46,6 +66,502 @@ nlu:
       - of course
       - that sounds good
       - correct
+  - intent: menu_list
+    examples: |
+      - Hey, I am Hungry what's the [menu](FoodList) today
+      - Hello, I am searching for a good food today. What's the [menu](FoodList)
+      - Hello, I am searching for a good [cusine](FoodList) today. What's the [menu](FoodList)
+      - Hi, May i check the [meal list](FoodList)
+      - Hi, The weather is so good outside so i want to  have good [food](FoodList)
+      - hey, What's the best [cusine](FoodList) at your restaurant?
+      - May i have the [menu card](FoodList) please
+      - Can you please share me your [menu card](FoodList) please
+      - May i have the [food list](FoodList)
+      - i am looking for some good [food](FoodList)
+      - hey, today is a good day so i am looking for good [food](FoodList)
+      - Anything good in [snacks](FoodList)
+      - i demand [menu card](FoodList)
+      - i request you to bring [menu card](FoodList)
+      - can you bring up the [menu](FoodList) please
+      - Show [menu](FoodList) please
+      - i am looking for some good [cusine](FoodList) at your restaurant
+      - i am hungry so can you show me good [snacks](FoodList) at your restaurant
+  - intent: menu_category
+    examples: |
+      - I want to order from [burger](categoryName)
+      - We want to order from [burger](categoryName)
+      - I want to order from [sandwich](categoryName)
+      - We want to order from [sandwich](categoryName)
+      - I want to order from [starters](categoryName)
+      - We want to order from [starters](categoryName)
+      - I want to order from [desserts](categoryName)
+      - We want to order from [desserts](categoryName)
+      - I want to order from [drinks] (categoryName)
+      - We want to order from [drinks](categoryName)
+      - I want to order from [today's special](categoryName)
+      - We want to order from [today's special](categoryName)
+      - I want to order from [wraps](categoryName)
+      - We want to order from [wraps](categoryName)
+      - I want to order from [kids meal](categoryName)
+      - We want to order from [kids meal](categoryName)
+      - I want to order from [sides](categoryName)
+      - We want to order from [sides](categoryName)
+      - I want to order from [salads](categoryName)
+      - We want to order from [salads](categoryName)     
+      - I want to have [burger](categoryName)
+      - We want to have [burger](categoryName)
+      - I want to have [sandwich](categoryName)
+      - We want to have [sandwich](categoryName)
+      - I want to have [starters](categoryName)
+      - We want to have [starters](categoryName)
+      - I want to have [desserts](categoryName)
+      - We want to have [desserts](categoryName)
+      - I want to have [drinks](categoryName)
+      - We want to have [drinks](categoryName)
+      - I want to have [today's special](categoryName)
+      - We want to have [today's special](categoryName)
+      - I want to have [wraps](categoryName)
+      - We want to have [wraps](categoryName)
+      - I want to have [kids meal](categoryName)
+      - We want to have [kids meal](categoryName)
+      - I want to have [sides](categoryName)
+      - We want to have [sides](categoryName)
+      - I want to have [salads](categoryName)
+      - We want to have [salads](categoryName)
+      - I want to eat burger
+      - We want to eat [burger](categoryName)
+      - I want to eat [sandwich](categoryName)
+      - We want to eat sandwich
+      - I want to eat [starters](categoryName)
+      - We want to eat starters
+      - I want to eat desserts
+      - We want to eat [desserts](categoryName)
+      - I want to eat drinks
+      - We want to eat [drinks](categoryName)
+      - I want to eat [today's special](categoryName)
+      - We want to eat today's special
+      - I want to eat [wraps](categoryName)
+      - We want to eat wraps
+      - I want to eat [kids meal](categoryName)
+      - We want to eat kids meal
+      - I want to eat sides
+      - We want to eat [sides](categoryName)
+      - I want to eat salads
+      - We want to eat [salads](categoryName)
+      - I request you to bring [burger](categoryName)
+      - We request you to bring burger
+      - I request you to bring sandwich
+      - We request you to bring [sandwich](categoryName)
+      - I request you to bring starters
+      - We request you to bring starters
+      - I request you to bring [desserts](categoryName)
+      - We request you to bring desserts
+      - I request you to bring drinks
+      - We request you to bring [drinks](categoryName)
+      - I request you to bring today's special
+      - We request you to bring [today's special](categoryName)
+      - I request you to bring [wraps](categoryName)
+      - We request you to bring wraps
+      - I request you to bring kids meal
+      - We request you to bring [kids meal](categoryName)
+      - I request you to bring [sides](categoryName)
+      - We request you to bring sides
+      - I request you to bring [salads](categoryName)
+      - We request you to bring salads
+      - I want to make a request you to bring [burger](categoryName)
+      - We want to make a request you to bring burger
+      - I want to make a request you to bring sandwich
+      - We want to make a request you to bring [sandwich](categoryName)
+      - I want to make a request you to bring starters
+      - We want to make a request you to bring [starters](categoryName)
+      - I want to make a request you to bring [desserts](categoryName)
+      - We want to make a request you to bring desserts
+      - I want to make a request you to bring [drinks](categoryName)
+      - We want to make a request you to bring drinks
+      - I want to make a request you to bring [today's special](categoryName)
+      - We want to make a request you to bring today's special
+      - I want to make a request you to bring [wraps](categoryName)
+      - We want to make a request you to bring wraps
+      - I want to make a request you to bring [kids meal](categoryName)
+      - We want to make a request you to bring kids meal
+      - I want to make a request you to bring [sides](categoryName)
+      - We want to make a request you to bring sides
+      - I want to make a request you to bring [salads](categoryName)
+      - We want to make a request you to bring salads
+      - I demand you to bring [burger](categoryName)
+      - We demand you to bring burger
+      - I demand you to bring sandwich
+      - We demand you to bring [sandwich](categoryName)
+      - I demand you to bring [starters](categoryName)
+      - We demand you to bring starters
+      - I demand you to bring desserts
+      - We demand you to bring [desserts](categoryName)
+      - I demand you to bring [drinks](categoryName)
+      - We demand you to bring drinks
+      - I demand you to bring today's special
+      - We demand you to bring [today's special](categoryName)
+      - I demand you to bring wraps
+      - We demand you to bring [wraps](categoryName)
+      - I demand you to bring kids meal
+      - We demand you to bring [kids meal](categoryName)
+      - I demand you to bring [sides](categoryName)
+      - We demand you to bring sides
+      - I demand you to bring [salads](categoryName)
+      - We demand you to bring salads
+      - I want ask for burger
+      - We want ask for [burger](categoryName)
+      - I want ask for [sandwich](categoryName)
+      - We want ask for sandwich
+      - I want ask for starters
+      - We want ask for [starters](categoryName)
+      - I want ask for desserts
+      - We want ask for [desserts](categoryName)
+      - I want ask for drinks
+      - We want ask for [drinks](categoryName)
+      - I want ask for today's special
+      - We want ask for [today's special](categoryName)
+      - I want ask for [wraps](categoryName)
+      - We want ask for wraps
+      - I want ask for [kids meal](categoryName)
+      - We want ask for kids meal
+      - I want ask for sides
+      - We want ask for [sides](categoryName)
+      - I want ask for salads
+      - We want ask for [salads](categoryName)
+  - intent: Navigation_left
+    examples: |
+      - can you move the slider to [left](slide)
+      - move to the [left](slide)
+      - I want the slider to move [left](slide)
+      - can you shift the slider to [left](slide)
+  - intent: Navigation_right
+    examples: |
+      - can you move the slider to [right](slide)
+      - move to the [right](slide)
+      - I want the slider to move [right](slide)
+      - can you shift the slider to [right](slide)
+  - intent: Order_meal
+    examples: |
+      - I want to order [Cheese Slice](productName)
+      - I like to buy [Cheese Slice](productName)
+      - i want to add Cheese Slice to my cart
+      - we want to add cheese slice to my cart
+      - I would like to order a [cheese slice](productName)
+      - I want to place an order for [cheese slice](productName)
+      - I want to order [Nacho Burger](productName)
+      - I like to buy [Nacho Burger](productName)
+      - i want to add Nacho Burger to my cart
+      - we want to add nacho burger to my cart
+      - I would like to order a [nacho burger](productName)
+      - I want to place an order for [nacho burger](productName)
+      - I would like to order a Nacho Burger
+      - I want to order [Nacho Cheese](productName)
+      - I like to buy [Nacho Cheese](productName)
+      - i want to add nacho cheese to my cart
+      - we want to add Nacho Cheese to my cart
+      - I want to place an order for [nacho cheese](productName)
+      - I would like to order a [nacho cheese](productName)
+      - I want to order [Cole Slaw](productName)
+      - I like to buy [Cole Slaw](productName)
+      - i want to add Cole Slaw to my cart
+      - we want to add [cole slaw](productName) to my cart
+      - I would like to order a [cole slaw](productName)
+      - I want to place an order for [cole slaw](productName)
+      - I want to order [French Fries](productName)
+      - I like to buy [French Fries](productName)
+      - add french fries to cart
+      - i want to add [French Fries](productName) to cart
+      - I would like to order a [french fries](productName)
+      - I want to place an order for [french fries](productName)
+      - I want to order [Beef Bacon](productName)
+      - I like to buy [Beef Bacon](productName)
+      - I would like to order a [beef bacon](productName)
+      - I want to place an order for [beef bacon](productName)
+      - I want to order [Onion Rings](productName)
+      - I like to buy [Onion Rings](productName)
+      - I would like to order a [onion rings](productName)
+      - I want to place an order for [onion rings](productName)
+      - I want to order [Cheese Sticks](productName)
+      - I like to buy [Cheese Sticks](productName)
+      - I want to place an order for [cheese sticks](productName)
+      - I would like to order a [cheese sticks](productName)
+      - I want to order [Jalapeno Poppers](productName)
+      - I like to buy [Jalapeno Poppers](productName)
+      - I would like to order a [jalapeno poppers](productName)
+      - I want to place an order for [jalapeno poppers](productName)
+      - I want to order [Beef Patty](productName)
+      - I like to buy [Beef Patty](productName)
+      - I want to place an order for [beef patty](productName)
+      - I would like to order a [beef patty](productName)
+      - I want to order [Chicken Patty](productName)
+      - I like to buy [Chicken Patty](productName)
+      - I would like to order a [chicken patty](productName)
+      - I want to place an order for [chicken patty](productName)
+      - I want to order [Fried Kibbeh](productName)
+      - I like to buy [Fried Kibbeh](productName)
+      - I want to place an order for [fried kibbeh](productName)
+      - I would like to order a [fried kibbeh](productName)
+      - I want to order [Pizza](productName)
+      - I like to buy [Pizza](productName)
+      - I want to place an order for [pizza](productName)
+      - I would like to order a [pizza](productName)
+      - I want to order [Spicy Potato](productName)
+      - I like to buy [Spicy Potato](productName)
+      - I want to place an order for [spicy potato](productName)
+      - I would like to order a [spicy potato](productName)
+      - I want to order [Curly Fries](productName)
+      - I like to buy [Curly Fries](productName)
+      - I want to place an order for [curly fries](productName)
+      - I would like to order a [curly fries](productName)
+      - I want to order [Soup](productName)
+      - I like to buy [Soup](productName)
+      - I would like to order a [soup](productName)
+      - I want to place an order for [soup](productName)
+      - I want to order [Poutine](productName)
+      - I like to buy [Poutine](productName)
+      - I want to place an order for [poutine](productName)
+      - I would like to order a [poutine](productName)
+      - I want to order [Hummus](productName)
+      - I like to buy [Hummus](productName)
+      - I would like to order a [hummus](productName)
+      - I want to place an order for [hummus](productName)
+      - I want to order [Baba Ghanoush](productName)
+      - I like to buy [Baba Ghanoush](productName)
+      - I would like to order a [baba ghanoush](productName)
+      - I want to place an order for [baba ghanoush](productName)
+      - I want to order [Spicy Deluxe](productName)
+      - I like to buy [Spicy Deluxe](productName)
+      - I would like to order a [spicy deluxe](productName)
+      - I want to place an order for [spicy deluxe](productName)
+      - I want to order [Lettuce](productName)
+      - I like to buy [Lettuce](productName)
+      - I would like to order a lettuce(productName)
+      - I want to place an order for [lettuce](productName)
+      - I want to order [Tomato](productName)
+      - I like to buy [Tomato](productName)
+      - I would like to order a [tomato](productName)
+      - I want to place an order for [tomato](productName)
+      - I want to order [Beef Shawarma](productName)
+      - I like to buy [Beef Shawarma](productName)
+      - I would like to order a [beef shawarma](productName)
+      - I want to place an order for [beef shawarma](productName)
+      - I want to order [Pickle](productName)
+      - I like to buy [Pickle](productName)
+      - I would like to order a [pickle](productName)
+      - I want to place an order for [pickle](productName)
+      - I want to order [Kafta Sandwich](productName)
+      - I like to buy [Kafta Sandwich](productName)
+      - I would like to order a [kafta sandwich](productName)
+      - I want to place an order for [kafta sandwich](productName)
+      - I want to order [Shish Kaboob Plate](productName)
+      - I like to buy [Shish Kaboob Plate](productName)
+      - I would like to order a [shish kaboob plate](productName)
+      - I want to place an order for [shish kaboob plate](productName)
+      - I want to order [Pepsi](productName)
+      - I like to buy [Pepsi](productName)
+      - I would like to order a [pepsi](productName)
+      - I want to place an order for [pepsi](productName)
+      - I would like to order a [Beiruti](productName)
+      - I want to order [Beiruti](productName)
+      - I like to buy [beiruti](productName)
+      - I want to place an order for [beiruti](productName)
+      - I would like to order a [Mushroom Swiss)](productName)
+      - I want to order [Mushroom Swiss](productName)
+      - I like to buy [mushroom swiss](productName)
+      - I want to place an order for [mushroom swiss](productName)
+      - I would like to order a [Taystee Fish](productName)
+      - I want to order [Taystee Fish](productName)
+      - I like to buy [taystee fish](productName)
+      - I want to place an order for [taystee fish](productName)
+      - I would like to order a [Chicken Taystee](productName)
+      - I want to order [Chicken Taystee](productName)
+      - I like to buy [chicken taystee](productName)
+      - I want to place an order for [chicken taystee](productName)
+      - I would like to order a [Taystee Vegan](productName)
+      - I want to order [Taystee Vegan](productName)
+      - I like to buy [taystee vegan](productName)
+      - I want to place an order for [taystee vegan](productName)
+      - I would like to order a [American Cheese](productName)
+      - I want to order [American Cheese](productName)
+      - I like to buy [american cheese](productName)
+      - I want to place an order for [american cheese](productName)
+      - I would like to order a [Garlic Sauce](productName)
+      - I want to order [Garlic Sauce](productName)
+      - I like to buy [garlic sauce](productName)
+      - I want to place an order for [garlic sauce](productName)
+      - I would like to order a [Chicken Shawarma Sandwich](productName)
+      - I want to order [Chicken Shawarma Sandwich](productName)
+      - I like to buy [chicken shawarma sandwich](productName)
+      - I want to place an order for [chicken shawarma sandwich](productName)
+      - I would like to order a [Tannour Sandwich](productName)
+      - I want to order [Tannour Sandwich](productName)
+      - I like to buy [tannour sandwich](productName)
+      - I want to place an order for [tannour sandwich](productName)
+      - I would like to order a [Tahini Sauce](productName)
+      - I want to order [Tahini Sauce](productName)
+      - I like to buy [tahini sauce](productName)
+      - I want to place an order for [tahini sauce](productName)
+      - I would like to order a [Falafel Sandwich](productName)
+      - I want to order [Falafel Sandwich](productName)
+      - I want to place an order for [falafel sandwich](productName)
+      - I like to buy [falafel sandwich](productName)
+      - I would like to order a [Soujouk Sandwich](productName)
+      - I want to order [Soujouk Sandwich](productName)
+      - I like to buy [soujouk sandwich](productName)
+      - I want to place an order for [soujouk sandwich](productName)
+      - I would like to order a [Shawarma Plate](productName)
+      - I want to order [Shawarma Plate](productName)
+      - I like to buy [shawarma plate](productName)
+      - I want to place an order for [shawarma plate](productName)
+      - I want to place an order for [shawarma plate](productName)
+      - I would like to order a [Shish Kafta Plate](productName)
+      - I want to order [Shish Kafta Plate](productName)
+      - I like to buy [shish kafta plate](productName)
+      - I want to place an order for [shish kafta plate](productName)
+      - I would like to order a [Shish Tawook Plate](productName)
+      - I want to order [Shish Tawook Plate](productName)
+      - I like to buy [shish tawook plate](productName)
+      - I want to place an order for [shish tawook plate](productName)
+      - I would like to order a [Falafel Plate](productName)
+      - I want to order [Falafel Plate](productName)
+      - I like to buy [falafel plate](productName)
+      - I want to place an order for [falafel plate](productName)
+      - I would like to order a [Potatoes](productName)
+      - I want to order [Potatoes](productName)
+      - I like to buy [potatoes](productName)
+      - I want to place an order for [potatoes](productName)
+      - I would like to order a [Make Your Own Bowl](productName)
+      - I want to order [Make Your Own Bowl](productName)
+      - I like to buy [make your own bowl](productName)
+      - I want to place an order for [make your own bowl](productName)
+      - I would like to order a [BBQ Platter](productName)
+      - I want to order [BBQ Platter](productName)
+      - I like to buy [bbq platter](productName)
+      - I want to place an order for [bbq platter](productName)
+      - I would like to order a [Whole BBQ Chicken](productName)
+      - I want to order [Whole BBQ Chicken](productName)
+      - I like to buy [whole bbq chicken](productName)
+      - I want to place an order for [whole bbq chicken](productName)
+      - I would like to order a [Crazy Taystee](productName)
+      - I want to order [Crazy Taystee](productName)
+      - I like to buy [crazy taystee](productName)
+      - I want to place an order for [crazy taystee](productName)
+      - I would like to order a [Grilled Chicken Wrap](productName)
+      - I want to order [Grilled Chicken Wrap](productName)
+      - I like to buy [grilled chicken wrap](productName)
+      - I want to place an order for [grilled chicken wrap](productName)
+      - I would like to order a [Crispy Chicken Wrap](productName)
+      - I want to order Crispy [Crispy Chicken Wrap](productName)
+      - I like to buy [crispy chicken wrap](productName)
+      - I want to place an order for [crispy chicken wrap](productName)
+      - I would like to order a [Grilled Stake Wrap](productName)
+      - I want to order [Grilled Stake Wrap](productName)
+      - I like to buy [grilled stake wrap](productName)
+      - I want to place an order for [grilled stake wrap](productName)
+      - I would like to order a [Junior Taystee Burger](productName)
+      - I want to order [Junior Taystee Burger](productName)
+      - I like to buy [junior taystee burger](productName)
+      - I want to place an order for [junior taystee burger](productName)
+      - I would like to order a [Chicken Tenders](productName)
+      - I want to order [Chicken Tenders](productName)
+      - I like to buy [chicken tenders](productName)
+      - I want to place an order for [chicken tenders](productName)
+      - I would like to order a [Chicken Nuggets](productName)
+      - I want to order [Chicken Nuggets](productName)
+      - I like to buy [chicken nuggets](productName)
+      - I want to place an order for [chicken nuggets](productName)
+      - I would like to order a [Chicken Wings](productName)
+      - I want to order [Chicken Wings](productName)
+      - I like to buy [chicken wings](productName)
+      - I want to place an order for [chicken wings](productName)
+      - I would like to order a [Shawarma Salad](productName)
+      - I want to order [Shawarma Salad](productName)
+      - I like to buy [shawarma salad](productName)
+      - I want to place an order for [shawarma salad](productName)
+      - I would like to order a [Fattoush Salad](productName)
+      - I want to order [Fattoush Salad](productName)
+      - I like to buy [fattoush salad](productName)
+      - I want to place an order for [fattoush salad](productName)
+      - I would like to order a [Tabouli Salad](productName)
+      - I want to order [Tabouli Salad](productName)
+      - I like to buy [tabouli salad](productName)
+      - I want to place an order for [tabouli salad](productName)
+      - I would like to order a [vegetable](productName)
+      - I want to order [vegetable](productName)
+      - I like to buy [Vegetable](productName)
+      - I want to place an order for [Vegetable](productName)
+      - I would like to order a [Greek Salad](productName)
+      - I want to order [Greek Salad](productName)
+      - I like to buy [greek salad](productName)
+      - I want to place an order for [greek salad](productName)
+      - I would like to order a [Caesars Salad](productName)
+      - I want to order [Caesars Salad](productName)
+      - I like to buy [caesars salad](productName)
+      - I want to place an order for [caesars salad](productName)
+      - I would like to order a [Baklawa](productName)
+      - I want to order [Baklawa](productName)
+      - I want to place an order for [baklawa](productName)
+      - I like to buy [baklawa](productName)
+      - I would like to order a [Water Bottle](productName)
+      - I want to order [Water Bottle](productName)
+      - I like to buy [water bottle](productName)
+      - I want to place an order for [water bottle](productName)
+      - I would like to order a [Fresh Orange Juice](productName)
+      - I want to order [Fresh Orange Juice](productName)
+      - I like to buy [fresh orange juice](productName)
+      - I want to place an order for [fresh orange juice](productName)
+      - I would like to order a [Apple Juice](productName)
+      - I want to order [Apple Juice](productName)
+      - I like to buy [apple juice](productName)
+      - I want to place an order for [apple juice](productName)
+      - I would like to order a [Strawberry Juice](productName)
+      - I want to order [Strawberry Juice](productName)
+      - I like to buy [strawberry juice](productName)
+      - I want to place an order for [strawberry juice](productName)
+      - I would like to order a [Diet Pepsi](productName)
+      - I want to order [Diet Pepsi](productName)
+      - I like to buy [diet pepsi](productName)
+      - I want to place an order for [diet pepsi](productName)
+      - I would like to order a [Sprite](productName)
+      - I want to order [Sprite](productName)
+      - I like to buy [sprite](productName)
+      - I want to place an order for [sprite](productName)
+      - I would like to order a [Red Bull](productName)
+      - I want to order [Red Bull](productName)
+      - I like to buy [red bull](productName)
+      - I want to place an order for [red bull](productName)
+      - I would like to order a [Banana Shake](productName)
+      - I want to order [Banana Shake](productName)
+      - I like to buy [banana shake](productName)
+      - I want to place an order for [banana shake](productName)
+      - I would like to order a [Chocolate Shake](productName)
+      - I want to order [Chocolate Shake](productName)
+      - I like to buy [chocolate shake](productName)
+      - I want to place an order for [chocolate shake](productName)
+      - I would like to order a [Cookies & Creme Shake](productName)
+      - I want to order [Cookies & Creme Shake](productName)
+      - I like to buy [cookies & creme shake](productName)
+      - I want to place an order for [cookies & creme shake](productName)
+  - intent: cart
+    examples: |
+      - Can you show me my [cart](list)
+      - I want to see my [cart](list)
+      - I want you to pop up the [cart](list)
+      - I want to see my [cart](list)
+      - I want to check my [cart](list)
+      - I want you to bring my [cart](list)
+      - I want to update my [cart](list)
+      - I want to add and delete the [quantity](list)
+      - Can you show me my [cart](list) so i can do changes
+      - i want you to bring up my [cart](list)
+      - we want you to show our [cart](list)
+      - we demand you to show our [cart](list)
+      - we demand you to bring up our [cart](list)
+      - i demand you to show our [cart](list)
+      - can you please show me my [cart](list) so i can do changes
+      - can you please bring up my [cart](list) so i can update it 
+      - i have done with the order kindly show me the cart
+
   - intent: reserve_table
     examples: |
       - i want a table on [friday](date) for [5](person) people
@@ -203,3 +719,163 @@ nlu:
       - pickup
       - dinein
       - delivery
+  - lookup: categoryName
+    examples: |
+      - burgers
+      - sandwich
+      - starters
+      - desserts
+      - drinks
+      - today's special
+      - wraps
+      - kids meal
+      - sides
+      - salads
+  - lookup: productName
+    examples: |
+      - Cookies & Creme Shake
+      - Chocolate Shake
+      - Banana Shake
+      - Red Bull
+      - Sprite
+      - Diet Pepsi
+      - Strawberry Juice
+      - Apple Juice
+      - Fresh Orange Juice
+      - Water Bottle
+      - Baklawa
+      - Caesars Salad
+      - Greek Salad
+      - vegetable
+      - Tabouli Salad
+      - Fattoush Salad
+      - Shawarma Salad
+      - Chicken Wings
+      - Chicken Nuggets
+      - Chicken Tenders
+      - Junior Taystee Burger
+      - Grilled Stake Wrap
+      - Crispy Chicken Wrap
+      - Grilled Chicken Wrap
+      - Crazy Taystee
+      - Whole BBQ Chicken
+      - BBQ Platter
+      - Make Your Own Bowl
+      - Potatoes
+      - Falafel Plate
+      - Shish Tawook Plate
+      - Shish Kafta Plate
+      - Shawarma Plate
+      - Soujouk Sandwich
+      - Falafel Sandwich
+      - Tahini Sauce
+      - Tannour Sandwich
+      - Chicken Shawarma Sandwich
+      - Garlic Sauce
+      - American Cheese
+      - Taystee Vegan
+      - Chicken Taystee
+      - Taystee Fish
+      - Mushroom Swiss
+      - Beiruti
+      - Pepsi
+      - Rice
+      - Shish Kaboob Plate
+      - Kafta Sandwich
+      - Pickle
+      - Beef Shawarma
+      - Tomato
+      - Lettuce
+      - Spicy Deluxe
+      - Baba Ghanoush
+      - Hummus
+      - Poutine
+      - Soup
+      - Curly Fries
+      - Spicy Potato
+      - Fried Kibbeh
+      - Chicken Patty
+      - Beef Patty
+      - Jalapeno Poppers
+      - Cheese Sticks
+      - Onion Rings
+      - Beef Bacon
+      - French Fries
+      - Cole Slaw
+      - Nacho Cheese
+      - Cheese Slice
+      - Nacho Burger
+      - Pizza
+      - cookies & creme shake
+      - chocolate shake
+      - banana shake
+      - red bull
+      - sprite
+      - diet pepsi
+      - strawberry juice
+      - apple juice
+      - fresh orange juice
+      - fresh orange juice
+      - water bottle
+      - baklawa
+      - caesars salad
+      - greek salad
+      - Vegetable
+      - tabouli salad
+      - fattoush salad
+      - shawarma salad
+      - chicken wings
+      - chicken nuggets
+      - chicken tenders
+      - junior taystee burger
+      - grilled stake wrap
+      - crispy chicken wrap
+      - grilled chicken wrap
+      - crazy taystee
+      - whole bbq chicken
+      - bbq platter
+      - make your own bowl
+      - potatoes
+      - falafel plate
+      - shish tawook plate
+      - shish kafta plate
+      - shawarma plate
+      - soujouk sandwich
+      - falafel sandwich
+      - tahini sauce
+      - tannour sandwich
+      - chicken shawarma sandwich
+      - garlic sauce
+      - american cheese
+      - taystee vegan
+      - chicken taystee
+      - taystee fish
+      - mushroom swiss
+      - beiruti
+      - pepsi
+      - rice
+      - shish kaboob plate
+      - kafta sandwich
+      - pickle
+      - beef shawarma
+      - tomato
+      - lettuce
+      - spicy deluxe
+      - baba ghanoush
+      - hummus
+      - poutine
+      - soup
+      - curly fries
+      - spicy potato
+      - fried kibbeh
+      - chicken patty
+      - beef patty
+      - jalapeno poppers
+      - cheese sticks
+      - onion rings
+      - beef bacon
+      - french fries
+      - cole slaw
+      - nacho cheese
+      - cheese slice
+      - nacho burger     
