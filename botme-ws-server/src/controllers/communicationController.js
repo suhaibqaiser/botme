@@ -5,6 +5,7 @@ const commService = require("../services/communicationService");
 const commandService = require("../services/commandService");
 const answeringService = require('../services/answeringService');
 const conversationController = require("../controllers/conversationController")
+const communicationService = require('../services/communicationService')
 
 // Main entry point for processing communication
 async function processCommunication(payload) {
@@ -59,14 +60,14 @@ async function processConversation(message, clientToken) {
         response.payload = communication.payload
     }
 
-    // let conversationId = await conversationController.getConversationId(clientToken)
-    // console.log(communication.intent)
-    // if (communication.intent === 'conversation.end') {
-    //     conversationController.addConversationLog(conversationId, message, communication.payload)
-    //     conversationController.endConversation(conversationId,0)
-    // } else {
-    //     conversationController.addConversationLog(conversationId, message, communication.payload)
-    // }
+    let conversationId = await conversationController.getConversationId(clientToken)
+    console.log(communication.intent)
+    if (communication.intent === 'conversation.end') {
+        conversationController.addConversationLog(conversationId, message, communication.payload)
+        conversationController.endConversation(conversationId, 0)
+    } else {
+        conversationController.addConversationLog(conversationId, message, communication.payload)
+    }
     return response
 }
 
@@ -75,8 +76,9 @@ async function processMessage(text) {
         status: "",
         payload: ""
     };
-
-    let message = await answeringService.generateAnswer(await commandService.getIntent(text));
+    let textToSpeech = await communicationService.getSpeechToText(text)
+    console.log('textToSpeech', textToSpeech)
+    let message = await answeringService.generateAnswer(await commandService.getIntent(textToSpeech));
     if (message) {
         response.payload = message;
         //response.intent = message.intent;
@@ -88,4 +90,4 @@ async function processMessage(text) {
     return response;
 }
 
-module.exports = { processCommunication };
+module.exports = {processCommunication, processMessage};

@@ -35,8 +35,9 @@ import { SearchGridSectionComponent } from './components/sections/search-grid-se
 import { ContactSectionComponent } from './components/sections/contact-section/contact-section.component';
 import { MapSectionComponent } from './components/sections/map-section/map-section.component';
 import { ContactUsComponent } from './components/pages/contact-us/contact-us.component';
-import {SpeechRecognitionService} from "./components/services/speech-recognition.service";
+import {SpeechRecognitionService} from "./services/speech-recognition.service";
 import { HttpClientModule } from '@angular/common/http';
+import { SofiaBotComponent } from './components/sections/sofia-bot/sofia-bot.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { HttpClientModule } from '@angular/common/http';
     SearchGridSectionComponent,
     ContactSectionComponent,
     MapSectionComponent,
-    ContactUsComponent
+    ContactUsComponent,
+    SofiaBotComponent
   ],
   imports: [
     BrowserModule,
