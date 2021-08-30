@@ -47,6 +47,7 @@ export class SearchGridSectionComponent implements OnInit {
           this.filteredProducts = this.products
           this.loading = false;
         }
+        console.log(this.filteredProducts)
       });
   }
 

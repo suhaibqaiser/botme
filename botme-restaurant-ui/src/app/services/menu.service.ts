@@ -22,4 +22,9 @@ export class MenuService {
         const url = `${this.apiBaseUrl}/food/category/all`;
         return this.http.get(url);
     }
+
+  getProductById(productId: string): Observable<any> {
+    const url = `${this.apiBaseUrl}/food/product/search?productId=${productId}`;
+    return this.http.get(url);
+  }
 }

@@ -7,6 +7,7 @@ import {PrivacyPolicyComponent} from "./components/pages/privacy-policy/privacy-
 import {SearchMenuComponent} from "./components/pages/search-menu/search-menu.component";
 import {ContactSectionComponent} from "./components/sections/contact-section/contact-section.component";
 import {ContactUsComponent} from "./components/pages/contact-us/contact-us.component";
+import {ProductDetailComponent} from "./components/pages/product-detail/product-detail.component";
 
 const routes: Routes = [
   {
@@ -37,6 +38,10 @@ const routes: Routes = [
     path: "",
     redirectTo: "/home",
     pathMatch: "full"
+  },
+  {
+    path: "product-detail",
+    component: ProductDetailComponent
   }
 
 ];

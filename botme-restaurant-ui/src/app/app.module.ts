@@ -38,6 +38,8 @@ import { ContactUsComponent } from './components/pages/contact-us/contact-us.com
 import {SpeechRecognitionService} from "./services/speech-recognition.service";
 import { HttpClientModule } from '@angular/common/http';
 import { SofiaBotComponent } from './components/sections/sofia-bot/sofia-bot.component';
+import { ProductDetailComponent } from './components/pages/product-detail/product-detail.component';
+import { ProductDetailSectionComponent } from './components/sections/product-detail-section/product-detail-section.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +76,9 @@ import { SofiaBotComponent } from './components/sections/sofia-bot/sofia-bot.com
     ContactSectionComponent,
     MapSectionComponent,
     ContactUsComponent,
-    SofiaBotComponent
+    SofiaBotComponent,
+    ProductDetailComponent,
+    ProductDetailSectionComponent
   ],
   imports: [
     BrowserModule,
