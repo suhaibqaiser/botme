@@ -234,110 +234,15 @@
         <h3 class="color-white">Related Items</h3>
       </div>
       <div class="receipe-grid receipe-grid-three">
-        <div class="receipe-item receipe-item-black pb-30">
+        <div *ngFor="let item of relatedProduct" class="receipe-item receipe-item-black pb-30">
           <div class="receipe-item-inner">
             <div class="receipe-image">
               <img src="assets/images/pizza-receipe-1.png" alt="receipe">
             </div>
             <div class="receipe-content">
               <div class="receipe-info">
-                <h3><a href="shop-details.html">Pepperoni Pizza</a></h3>
-                <h4>$4.59<del>$7.59</del></h4>
-              </div>
-              <div class="receipe-cart receipe-cart-main">
-                <a href="#">
-                  <i class="flaticon-supermarket-basket"></i>
-                  <i class="flaticon-supermarket-basket"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="receipe-item receipe-item-black pb-30">
-          <div class="receipe-item-inner">
-            <div class="receipe-image">
-              <img src="assets/images/pizza-receipe-2.png" alt="receipe">
-            </div>
-            <div class="receipe-content">
-              <div class="receipe-info">
-                <h3><a href="shop-details.html">Beefka Pizza</a></h3>
-                <h4>$5.12<del>$6.59</del></h4>
-              </div>
-              <div class="receipe-cart receipe-cart-main">
-                <a href="#">
-                  <i class="flaticon-supermarket-basket"></i>
-                  <i class="flaticon-supermarket-basket"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="receipe-item receipe-item-black pb-30">
-          <div class="receipe-item-inner">
-            <div class="receipe-image">
-              <img src="assets/images/pizza-receipe-3.png" alt="receipe">
-            </div>
-            <div class="receipe-content">
-              <div class="receipe-info">
-                <h3><a href="shop-details.html">Chicken Pizza</a></h3>
-                <h4>$6.57<del>$7.12</del></h4>
-              </div>
-              <div class="receipe-cart receipe-cart-main">
-                <a href="#">
-                  <i class="flaticon-supermarket-basket"></i>
-                  <i class="flaticon-supermarket-basket"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="receipe-item receipe-item-black pb-30">
-          <div class="receipe-item-inner">
-            <div class="receipe-image">
-              <img src="assets/images/pizza-receipe-4.png" alt="receipe">
-            </div>
-            <div class="receipe-content">
-              <div class="receipe-info">
-                <h3><a href="shop-details.html">Avocado Pizza</a></h3>
-                <h4>$5.12<del>$6.59</del></h4>
-              </div>
-              <div class="receipe-cart receipe-cart-main">
-                <a href="#">
-                  <i class="flaticon-supermarket-basket"></i>
-                  <i class="flaticon-supermarket-basket"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="receipe-item receipe-item-black pb-30">
-          <div class="receipe-item-inner">
-            <div class="receipe-image">
-              <img src="assets/images/pizza-receipe-5.png" alt="receipe">
-            </div>
-            <div class="receipe-content">
-              <div class="receipe-info">
-                <h3><a href="shop-details.html">Vegana Pizza</a></h3>
-                <h4>$7.45<del>$8.12</del></h4>
-              </div>
-              <div class="receipe-cart receipe-cart-main">
-                <a href="#">
-                  <i class="flaticon-supermarket-basket"></i>
-                  <i class="flaticon-supermarket-basket"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="receipe-item receipe-item-black pb-30">
-          <div class="receipe-item-inner">
-            <div class="receipe-image">
-              <img src="assets/images/pizza-receipe-6.png" alt="receipe">
-            </div>
-            <div class="receipe-content">
-              <div class="receipe-info">
-                <h3><a href="shop-details.html">Meat Pizza</a></h3>
-                <h4>$8.45<del>$9.24</del></h4>
+                <h3><a href="/product-detail/?productId={{product.productId}}">{{item.productName}}</a></h3>
+                <h4>{{item.productRate.standard}}</h4>
               </div>
               <div class="receipe-cart receipe-cart-main">
                 <a href="#">

@@ -7726,6 +7726,10 @@ textarea.form-control {
   font-size: 24px;
 }
 
+.product-size-list li:nth-child(4) {
+  font-size: 28px;
+}
+
 .product-size-list li.active {
   color: #FFCC00;
 }

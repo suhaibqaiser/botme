@@ -15,7 +15,7 @@
         </thead>
         <tbody>
         <tr *ngFor="let product of cartProducts">
-          <td class="cancel"><a href="#"><i class='flaticon-cancel'></i></a></td>
+          <td class="cancel"><a (click)="removeFromCart(product.productId)"><i class='flaticon-cancel'></i></a></td>
           <td>
             <div class="product-table-info">
               <div class="product-table-thumb">

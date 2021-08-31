@@ -12,6 +12,8 @@ export class ProductDetailSectionComponent implements OnInit {
 
   product: any
   categories: any
+  relatedProduct: any
+  productsList: any
 
   constructor(private cartService: CartService, private route: ActivatedRoute, private menuservice: MenuService) {
   }
@@ -19,6 +21,7 @@ export class ProductDetailSectionComponent implements OnInit {
   async ngOnInit() {
     await this.getCategory()
     await this.getProductDetail(this.route.snapshot.queryParams['productId'])
+    await this.getRelatedProducts()
   }
 
   async getProductDetail(productId: string) {
@@ -27,7 +30,6 @@ export class ProductDetailSectionComponent implements OnInit {
         if (result.status === 'success') {
           this.product = result.payload[0]
           this.product.productCategoryName = await this.getCategoryName(this.product.productCategory);
-          console.log(this.product)
         }
       }
     );
@@ -51,5 +53,31 @@ export class ProductDetailSectionComponent implements OnInit {
   addToCart(productId: string) {
     this.cartService.addToCart(productId);
     document.getElementById("btnProductCart")?.click()
+  }
+
+  async getRelatedProducts() {
+    return this.menuservice.getProducts()
+      .subscribe(async result => {
+        this.productsList = await result.payload
+        await this.getProductByTags(await result.payload)
+        return
+      });
+  }
+
+  async getProductByTags(productsList: any) {
+    this.relatedProduct = []
+    this.productsList = await productsList
+    if (Array.isArray(this.productsList)) {
+      for (let product of this.productsList) {
+        if (product && product.productTags) {
+          for (let tag of product.productTags) {
+            if (tag.toLowerCase() === product.productUOM.toLowerCase() || tag.toLowerCase() === product.productType || product.productName.includes(tag)) {
+              this.relatedProduct.push(product)
+            }
+          }
+        }
+      }
+    }
+    return
   }
 }
