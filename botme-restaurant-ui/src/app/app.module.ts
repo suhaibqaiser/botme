@@ -40,6 +40,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { SofiaBotComponent } from './components/sections/sofia-bot/sofia-bot.component';
 import { ProductDetailComponent } from './components/pages/product-detail/product-detail.component';
 import { ProductDetailSectionComponent } from './components/sections/product-detail-section/product-detail-section.component';
+import { CartComponent } from './components/pages/cart/cart.component';
+import { CartSectionComponent } from './components/sections/cart-section/cart-section.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +80,9 @@ import { ProductDetailSectionComponent } from './components/sections/product-det
     ContactUsComponent,
     SofiaBotComponent,
     ProductDetailComponent,
-    ProductDetailSectionComponent
+    ProductDetailSectionComponent,
+    CartComponent,
+    CartSectionComponent
   ],
   imports: [
     BrowserModule,

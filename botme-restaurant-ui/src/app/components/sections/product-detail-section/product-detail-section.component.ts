@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuService} from 'src/app/services/menu.service';
 import {ActivatedRoute} from "@angular/router";
+import {CartService} from "../../../services/cart.service";
 
 @Component({
   selector: 'app-product-detail-section',
@@ -12,7 +13,7 @@ export class ProductDetailSectionComponent implements OnInit {
   product: any
   categories: any
 
-  constructor(private route: ActivatedRoute, private menuservice: MenuService) {
+  constructor(private cartService: CartService, private route: ActivatedRoute, private menuservice: MenuService) {
   }
 
   async ngOnInit() {
@@ -45,5 +46,10 @@ export class ProductDetailSectionComponent implements OnInit {
     if (cat) return cat.categoryName
 
     return null;
+  }
+
+  addToCart(productId: string) {
+    this.cartService.addToCart(productId);
+    document.getElementById("btnProductCart")?.click()
   }
 }

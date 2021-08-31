@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-headingbanner',
@@ -14,7 +14,10 @@ export class HeadingbannerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.currentRoute = this.router.url.replace(/\//g, "").replace("-"," ");
+    this.currentRoute = this.router.url.replace(/\//g, "").replace("-", " ");
+    if(this.currentRoute.indexOf('?') > 0){
+      this.currentRoute = this.currentRoute.substr(0, this.currentRoute.indexOf('?'))
+    }
   }
 
 }
