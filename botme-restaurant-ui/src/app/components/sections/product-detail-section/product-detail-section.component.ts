@@ -30,6 +30,7 @@ export class ProductDetailSectionComponent implements OnInit {
         if (result.status === 'success') {
           this.product = result.payload[0]
           this.product.productCategoryName = await this.getCategoryName(this.product.productCategory);
+          console.log('product =>', this.product)
         }
       }
     );
@@ -44,7 +45,7 @@ export class ProductDetailSectionComponent implements OnInit {
   }
 
   async getCategoryName(catId: string) {
-    let cat: any = this.categories.find((category: { categoryId: string; }) => category.categoryId === catId);
+    let cat: any = await this.categories.find((category: { categoryId: string; }) => category.categoryId === catId);
     if (cat) return cat.categoryName
 
     return null;
@@ -69,12 +70,9 @@ export class ProductDetailSectionComponent implements OnInit {
     this.productsList = await productsList
     if (Array.isArray(this.productsList)) {
       for (let product of this.productsList) {
-        if (product && product.productTags) {
-          for (let tag of product.productTags) {
-            if (tag.toLowerCase() === product.productUOM.toLowerCase() || tag.toLowerCase() === product.productType || product.productName.includes(tag)) {
-              this.relatedProduct.push(product)
-            }
-          }
+        this.product.productCategoryName = await this.getCategoryName(this.product.productCategory);
+        if (this.product.productCategoryName == product.productCategoryName || this.product.productType == product.productType || this.product.productTags.includes(product.productCategoryName) || this.product.productTags.includes(product.productName)) {
+          this.relatedProduct.push(product)
         }
       }
     }
