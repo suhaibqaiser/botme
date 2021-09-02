@@ -56,15 +56,35 @@
                     }
                 ]
             },
-            "action" : {
-                "entity" : {
-                    "entityId" : "xxx-xxxx-xxxx-xxxx",
-                    "entityName" : "Burgers",
-                    "clickAttribute" : "javascript:getElementById('xxx-xxxx-xxxx-xxxx').click()",
-                    "keywords" : "select burger menu",
-                    "customJavaScript" : ""
+            "action" : [
+                {
+                    "actionType" : "navigate",
+                    "entity" : {
+                        "entityKey": "Menu",
+                        "entityValue": "/menu",
+                        "entityType" : "Page Address",
+                        "customJavaScript": ""
+                    }
+                },
+                {
+                    "actionType" : "search",
+                    "entity" : {
+                        "entityKey" : "filterText",
+                        "entityValue" : "chicken",
+                        "entityType" : "OpenText",
+                        "customJavaScript" : ""
+                    }
+                },
+                {
+                    "actionType" : "add-to-cart",
+                    "entity" : {
+                        "entityKey" : "Nacho Burger",
+                        "entityValue" : "xxx-xxxx-xxxx-xxxx",
+                        "entityType" : "Product",
+                        "customJavaScript" : ""
+                    }
                 }
-            }
+            ]
         }
     }
 }
