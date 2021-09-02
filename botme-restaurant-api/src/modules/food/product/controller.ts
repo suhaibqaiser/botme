@@ -31,6 +31,7 @@ export async function addProduct(product: any) {
 }
 
 export async function findProduct(filter: any) {
+    console.log('filter =>',filter)
     let response = new restResponse()
 
     interface queryFilters {

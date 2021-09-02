@@ -5,7 +5,7 @@
       <div class="col-sm-12 col-md-9 col-lg-9 pb-30">
         <div class="product-list-header">
           <div class="product-list-header-item">
-            <div class="product-list-result">
+            <div *ngIf="false" class="product-list-result">
               <!-- <p>Showing 1-6 Of 35 Results</p> -->
               <div class="around-border pr-5">
                 <input type="text" class="form-control" placeholder="Message to Sofia" id="sofiaInput" #sofiaInput
@@ -80,8 +80,7 @@
         <div class="sidebar-item around-border sidebar-search">
           <form>
             <div class="form-group">
-              <input #productSearch class="form-control" id="productSearch" type="text" placeholder="Search"
-                (input)="filterProductsByName(productSearch.value)">
+              <input [formControl]="searchControl" class="form-control" id="productSearch" type="text" placeholder="Search">
               <button><i class="flaticon-loupe"></i></button>
             </div>
           </form>
