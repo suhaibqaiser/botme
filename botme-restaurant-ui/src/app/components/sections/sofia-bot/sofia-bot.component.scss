@@ -1,0 +1,48 @@
+// a { cursor: pointer; color: blue; }
+// a:hover,a.hover { text-decoration: underline; }
+
+@keyframes zoomInZoomOutInfinite {
+  0% {
+    transform: scale(1,1);
+  }
+  50% {
+    transform: scale(1.1,1.1);
+  }
+  100% {
+    transform: scale(1,1);
+  }
+}
+
+
+
+.chat-bot{
+  position: fixed;
+  bottom: 60px;
+  float: right;
+  z-index: 999;
+  margin-left: 60px;
+  border-radius: 10px;
+  height: 200px;
+
+}
+
+
+
+.sofia-bot-button{
+  position: fixed;
+  bottom: 20px;
+  float: right;
+  margin-left: 20px;
+  z-index: 999;
+  img{
+    border-radius: 100px;
+    width: 70px;
+    height: 70px;
+    background: #FFCC00;
+    padding: 4px;
+  }
+}
+
+.bot-animation{
+  animation: zoomInZoomOutInfinite 1s infinite;
+}

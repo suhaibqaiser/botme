@@ -1,0 +1,30 @@
+@keyframes zoomInZoomOutInfinite {
+  0% {
+    transform: scale(1,1);
+  }
+  50% {
+    transform: scale(1.1,1.1);
+  }
+  100% {
+    transform: scale(1,1);
+  }
+}
+
+.matacs-logo{
+  animation: zoomInZoomOutInfinite 1s infinite
+}
+
+.send-btn{
+  padding: 7px 25px !important;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.spinner-border{
+  margin-left: 4px;
+}
+
+.topbar-right{
+  width: 900px !important;
+  justify-content: space-between !important;
+}

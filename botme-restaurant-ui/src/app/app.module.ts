@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {RouterModule} from "@angular/router";
+import { RouterModule } from "@angular/router";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/pages/home/home.component';
@@ -35,7 +35,9 @@ import { SearchGridSectionComponent } from './components/sections/search-grid-se
 import { ContactSectionComponent } from './components/sections/contact-section/contact-section.component';
 import { MapSectionComponent } from './components/sections/map-section/map-section.component';
 import { ContactUsComponent } from './components/pages/contact-us/contact-us.component';
-
+import {SpeechRecognitionService} from "./services/speech-recognition.service";
+import { HttpClientModule } from '@angular/common/http';
+import { SofiaBotComponent } from './components/sections/sofia-bot/sofia-bot.component';
 
 @NgModule({
   declarations: [
@@ -71,14 +73,16 @@ import { ContactUsComponent } from './components/pages/contact-us/contact-us.com
     SearchGridSectionComponent,
     ContactSectionComponent,
     MapSectionComponent,
-    ContactUsComponent
+    ContactUsComponent,
+    SofiaBotComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule
+    RouterModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [SpeechRecognitionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
