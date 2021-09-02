@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import {SpeechRecognitionService} from "../../../services/speech-recognition.service";
 import {SocketService} from "../../../services/socket.service";
+
 @Component({
   selector: 'app-sofia-bot',
   templateUrl: './sofia-bot.component.html',
@@ -14,6 +15,8 @@ export class SofiaBotComponent implements OnInit {
   blobData: any
   text: any
   loader: any
+  closeChatModal = true
+
   constructor(private socketService: SocketService, private audioRecordingService: SpeechRecognitionService, private sanitizer: DomSanitizer) {
     this.audioRecordingService.recordingFailed().subscribe(() => {
       this.isRecording = false;
@@ -32,8 +35,10 @@ export class SofiaBotComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
   startRecording() {
     console.log('start recording')
+    this.closeChatModal = false
     this.text = ''
     if (!this.isRecording) {
       this.isRecording = true;
@@ -77,7 +82,7 @@ export class SofiaBotComponent implements OnInit {
     this.abortRecording();
   }
 
-  sendData(t:any) {
+  sendData(t: any) {
     this.loader = true
     const formData = new FormData()
     console.log(this.blobData)
@@ -101,5 +106,9 @@ export class SofiaBotComponent implements OnInit {
       reader.onloadend = () => resolve(reader.result);
       reader.readAsDataURL(this.blobData);
     });
+  }
+
+  close() {
+    this.closeChatModal = true
   }
 }
