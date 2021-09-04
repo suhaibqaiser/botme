@@ -39,7 +39,7 @@
               <div class="product-card product-card-dark" id="{{product.productId}}">
                 <div class="product-card-thumb">
                   <div class="product-card-thumb-inner">
-                    <img src="assets/images/product-1.png" alt="product">
+                    <img [src]="resolveImages(product)" alt="product">
                     <div class="product-card-button">
                       <a (click)="addToCart(product.productId)" class="btn btn-yellow">Add To
                         Cart</a>

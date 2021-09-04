@@ -161,4 +161,11 @@ export class SearchGridSectionComponent implements OnInit {
     // //   })
     // )
   }
+
+  resolveImages(product:any){
+    if(product.productImage && product.productImage.length){
+      return 'assets/images/products/' + product.productImage[0]
+    }
+    return 'assets/images/product-1.png'
+  }
 }
