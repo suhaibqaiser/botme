@@ -407,11 +407,12 @@ jQuery(function ($) {
     // Range slider
     $("#range-slider").slider({
         range: true,
-        min: 40,
-        max: 400,
-        values: [40, 400],
+        min: 2,
+        max: 100,
+        values: [2, 100],
         slide: function (event, ui) {
             $("#price-amount").val("$" + ui.values[0] + " ― $" + ui.values[1]);
+            localStorage.setItem('filterItem',JSON.stringify({'priceMin':ui.values[0],'priceMax':ui.values[1]}))
         }
     });
     $("#price-amount").val("$" + $("#range-slider").slider("values", 0) +

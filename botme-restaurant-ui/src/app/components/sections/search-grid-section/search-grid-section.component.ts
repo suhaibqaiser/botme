@@ -6,6 +6,8 @@ import {debounceTime, finalize, switchMap, tap} from 'rxjs/operators';
 import {FormControl} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 
+declare var jQuery: any;
+
 @Component({
   selector: 'app-search-grid-section',
   templateUrl: './search-grid-section.component.html',
@@ -16,7 +18,7 @@ export class SearchGridSectionComponent implements OnInit {
   products: any
   filteredProducts: any
   categories = []
-  categoryList: { categoryId: string, categoryName: string }[] = []
+  categoryList: { categoryId: string, categoryName: string, selected: boolean }[] = []
   loading = true
   cartVisible = false;
   sofiaMessage = "Message from Sofia"
@@ -26,13 +28,15 @@ export class SearchGridSectionComponent implements OnInit {
   //search text
   searchControl = new FormControl("")
   searchText = ''
+  productCategory = ''
 
   constructor(private _http: HttpClient, private menuservice: MenuService,
               private cartService: CartService,
               private socketService: SocketService) {
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.isLoading = true
     this.getCategory();
     this.getWSMessage();
     this.filterProductsByName()
@@ -49,15 +53,16 @@ export class SearchGridSectionComponent implements OnInit {
             (!this.categoryList.find(category => category.categoryId === product.productCategory)) ?
               this.categoryList.push({
                 categoryId: product.productCategory,
-                categoryName: product.productCategoryName
+                categoryName: product.productCategoryName,
+                selected: false
               }) : null;
             this.filteredProducts = this.products
-            this.loading = false;
+            this.isLoading = false
           }
         } else {
           this.products = []
           this.filteredProducts = this.products
-          this.loading = false;
+          this.isLoading = false
         }
         console.log(this.filteredProducts)
       });
@@ -88,11 +93,17 @@ export class SearchGridSectionComponent implements OnInit {
     return null;
   }
 
-  filterProducts(categoryId: string) {
+  filterProducts(category: any) {
     // this.filteredProducts = this.filteredProducts.filter((product: { productCategory: string; }) => product.productCategory === categoryId);
-    this._http.get<any>(this.menuservice.apiBaseUrl + "/food/product/search?productCategory=" + categoryId + '&searchText=' + this.searchText).subscribe(
+    this.isLoading = true
+    this.categoryList.forEach((item) => {
+      item.selected = false
+    })
+    category.selected = true
+    this._http.get<any>(this.menuservice.apiBaseUrl + "/food/product/search?productCategory=" + category.categoryId + '&searchText=' + this.searchText).subscribe(
       ((res: any) => {
         this.filteredProducts = res.payload
+        this.isLoading = false
       })
     )
   }
@@ -106,7 +117,7 @@ export class SearchGridSectionComponent implements OnInit {
           this.filteredProducts = []
           this.isLoading = true
         }),
-        switchMap(value => this._http.get<any>(this.menuservice.apiBaseUrl + "/food/product/search?searchText=" + value)
+        switchMap(value => this._http.get<any>(this.menuservice.apiBaseUrl + "/food/product/search?searchText=" + value + '&productCategory=' + this.productCategory)
           .pipe(
             finalize(() => {
               this.isLoading = false
@@ -136,5 +147,18 @@ export class SearchGridSectionComponent implements OnInit {
         this.sofiaMessage = res.message.text
       }
     )
+  }
+
+  filterProductByPriceRange() {
+    let data: any = localStorage.getItem('filterItem')
+    data = JSON.parse(data)
+    // this.isLoading = true
+    // this.filteredProducts = []
+    // // this._http.get<any>(this.menuservice.apiBaseUrl + "/food/product/search?priceMin=" + data.priceMin + '&priceMax=' + data.priceMax).subscribe(
+    // //   ((res: any) => {
+    // //     this.filteredProducts = res.payload
+    // //     this.isLoading = false
+    // //   })
+    // )
   }
 }

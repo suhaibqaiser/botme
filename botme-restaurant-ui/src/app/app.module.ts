@@ -44,6 +44,7 @@ import { ProductDetailSectionComponent } from './components/sections/product-det
 import { CartComponent } from './components/pages/cart/cart.component';
 import { CartSectionComponent } from './components/sections/cart-section/cart-section.component';
 import { CheckoutSectionComponent } from './components/sections/checkout-section/checkout-section.component';
+import { SpinnerComponent } from './components/layout/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import { CheckoutSectionComponent } from './components/sections/checkout-section
     ProductDetailSectionComponent,
     CartComponent,
     CartSectionComponent,
-    CheckoutSectionComponent
+    CheckoutSectionComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,

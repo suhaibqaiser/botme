@@ -1,2 +1,20 @@
 // a { cursor: pointer; color: blue; }
 // a:hover,a.hover { text-decoration: underline; }
+
+.active-category {
+  color: #E7272D
+}
+
+.product-icons {
+  .fa-cart-plus {
+    color: #FFCC00;
+    font-size: large;
+    cursor: pointer;
+  }
+
+  .fa-heart {
+    color: #E7272D;
+    font-size: large;
+    cursor: pointer;
+  }
+}
