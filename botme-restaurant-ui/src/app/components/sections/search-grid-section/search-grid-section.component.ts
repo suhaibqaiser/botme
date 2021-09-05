@@ -30,12 +30,15 @@ export class SearchGridSectionComponent implements OnInit {
   searchText = ''
   productCategory = ''
 
+  searchList: any
+
   constructor(private _http: HttpClient, private menuservice: MenuService,
               private cartService: CartService,
               private socketService: SocketService) {
   }
 
   ngOnInit() {
+    this.searchList = []
     this.isLoading = true
     this.getCategory();
     this.getWSMessage();
@@ -99,7 +102,10 @@ export class SearchGridSectionComponent implements OnInit {
     this.categoryList.forEach((item) => {
       item.selected = false
     })
+    this.filteredProducts = []
+    if(category.categoryId) this.setFilterList('Category')
     category.selected = true
+    this.productCategory = category.categoryId
     this._http.get<any>(this.menuservice.apiBaseUrl + "/food/product/search?productCategory=" + category.categoryId + '&searchText=' + this.searchText).subscribe(
       ((res: any) => {
         this.filteredProducts = res.payload
@@ -122,6 +128,9 @@ export class SearchGridSectionComponent implements OnInit {
             finalize(() => {
               this.isLoading = false
               this.searchText = value
+              if (value) {
+                this.setFilterList('Search')
+              }
             }),
           )
         )
@@ -162,10 +171,30 @@ export class SearchGridSectionComponent implements OnInit {
     // )
   }
 
-  resolveImages(product:any){
-    if(product.productImage && product.productImage.length){
+  resolveImages(product: any) {
+    if (product.productImage && product.productImage.length) {
       return 'assets/images/products/' + product.productImage[0]
     }
     return 'assets/images/product-1.png'
+  }
+
+  removeFilter(item: any, i: any) {
+    this.searchList.splice(i, 1)
+    if (item.name == 'Search') {
+      this.searchText = ''
+      this.searchControl.setValue('')
+      this.filterProductsByName()
+    } else if (item.name == 'Category') {
+      this.productCategory = ''
+      this.filterProducts({categoryId: ''})
+    }
+  }
+
+  setFilterList(type: any) {
+    let check = this.searchList.filter((item: any) => item.name == type).length
+    if (check) return
+    this.searchList.push({
+      'name': type
+    })
   }
 }
