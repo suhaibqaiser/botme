@@ -12,7 +12,7 @@ export async function addProduct(product: any) {
     let result
 
     let val = await getMaxLabelValue()
-    product.productLabel = val ? ( val.productLabel + 1) : 1
+    product.productLabel = val ? (val.productLabel + 1) : 1
 
     product.productId = randomUUID()
     product.productActive = true
@@ -31,36 +31,37 @@ export async function addProduct(product: any) {
 }
 
 export async function findProduct(filter: any) {
-    console.log('filter =>',filter)
+    console.log('filter =>', filter)
     let response = new restResponse()
 
     interface queryFilters {
         productId: any | undefined;
         productName: any | undefined;
-        productPrice: any | undefined;
+        productRate: any;
         productType: any | undefined;
         productCategory: any | undefined;
         //productActive: boolean;
     }
 
-    let queryParams: queryFilters = {
+    let queryParams: any = {
         productId: undefined,
         productName: undefined,
-        productPrice: undefined,
+        productRate: undefined,
         productType: undefined,
         productCategory: undefined,
         //productActive: true
     }
-
+    let rangeQuery: any
     if (filter.searchText) {
         queryParams.productName = {'$regex': filter.searchText, '$options': 'i'}
     } else {
         delete queryParams.productName
     }
     if (filter.priceMin && filter.priceMax) {
-        queryParams.productPrice = {$lte: Number(filter.priceMax), $gte: Number(filter.priceMin)}
+        // queryParams.productRate.standard = {$lte: Number(filter.priceMin), $gte: Number(filter.priceMax)}
+        rangeQuery = {"productRate.standard": {$gte: Number(filter.priceMin),$lte: Number(filter.priceMax)}}
     } else {
-        delete queryParams.productPrice
+        delete queryParams.productRate
     }
     if (filter.productCategory) {
         queryParams.productCategory = filter.productCategory
@@ -78,6 +79,7 @@ export async function findProduct(filter: any) {
         delete queryParams.productId
     }
 
+    queryParams = rangeQuery ? rangeQuery :  queryParams
     let result = await getProduct(queryParams)
     if (result.length != 0) {
         response.payload = result

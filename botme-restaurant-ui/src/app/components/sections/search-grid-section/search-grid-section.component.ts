@@ -161,14 +161,21 @@ export class SearchGridSectionComponent implements OnInit {
   filterProductByPriceRange() {
     let data: any = localStorage.getItem('filterItem')
     data = JSON.parse(data)
-    // this.isLoading = true
-    // this.filteredProducts = []
-    // // this._http.get<any>(this.menuservice.apiBaseUrl + "/food/product/search?priceMin=" + data.priceMin + '&priceMax=' + data.priceMax).subscribe(
-    // //   ((res: any) => {
-    // //     this.filteredProducts = res.payload
-    // //     this.isLoading = false
-    // //   })
-    // )
+    this.isLoading = true
+    this.filteredProducts = []
+    let url = ''
+    if(data && data.priceMin){
+      this.setFilterList('Filter by price')
+      url = this.menuservice.apiBaseUrl + "/food/product/search?priceMin=" + data.priceMin + '&priceMax=' + data.priceMax
+    }else{
+      url = this.menuservice.apiBaseUrl + "/food/product/search"
+    }
+    this._http.get<any>(url).subscribe(
+      ((res: any) => {
+        this.filteredProducts = res.payload
+        this.isLoading = false
+      })
+    )
   }
 
   resolveImages(product: any) {
@@ -187,6 +194,9 @@ export class SearchGridSectionComponent implements OnInit {
     } else if (item.name == 'Category') {
       this.productCategory = ''
       this.filterProducts({categoryId: ''})
+    }else if(item.name == 'Filter by price'){
+      localStorage.clear()
+      this.filterProductByPriceRange()
     }
   }
 
