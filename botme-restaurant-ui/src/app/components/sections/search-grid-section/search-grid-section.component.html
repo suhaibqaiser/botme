@@ -26,10 +26,8 @@
             <div class="product-list-action">
               <div class="product-list-form">
                 <form>
-                  <select>
-                    <option value="popularity">Sort By Popular</option>
-                    <option value="lowtohigh">Sort By Price: Low To High</option>
-                    <option value="hightolow">Sort By Price: High To Low</option>
+                  <select (change)="sortByPrice()" [formControl]="sortControl" >
+                    <option *ngFor="let item of sortList" [value]="item.value">{{item.name}}</option>
                   </select>
                 </form>
               </div>

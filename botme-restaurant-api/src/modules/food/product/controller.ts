@@ -48,21 +48,30 @@ export async function findProduct(filter: any) {
         productName: undefined,
         productRate: undefined,
         productType: undefined,
-        productCategory: undefined,
+        productCategory: undefined
         //productActive: true
     }
     let rangeQuery: any
+    let sortByPrice: any
     if (filter.searchText) {
         queryParams.productName = {'$regex': filter.searchText, '$options': 'i'}
     } else {
         delete queryParams.productName
     }
+
     if (filter.priceMin && filter.priceMax) {
         // queryParams.productRate.standard = {$lte: Number(filter.priceMin), $gte: Number(filter.priceMax)}
-        rangeQuery = {"productRate.standard": {$gte: Number(filter.priceMin),$lte: Number(filter.priceMax)}}
+        rangeQuery = {"productRate.standard": {$gte: Number(filter.priceMin), $lte: Number(filter.priceMax)}}
     } else {
         delete queryParams.productRate
     }
+
+    if (filter.sortByPrice == 'low_to_high') {
+        sortByPrice = {"productRate.standard": {$gte: Number(0), $lte: Number(1000)}}
+    } else if (filter.sortByPrice == 'high_to_low') {
+        sortByPrice = {"productRate.standard": {$lte: Number(1000), $gte: Number(0)}}
+    }
+
     if (filter.productCategory) {
         queryParams.productCategory = filter.productCategory
     } else {
@@ -79,8 +88,8 @@ export async function findProduct(filter: any) {
         delete queryParams.productId
     }
 
-    queryParams = rangeQuery ? rangeQuery :  queryParams
-    let result = await getProduct(queryParams)
+    // queryParams = rangeQuery ? rangeQuery : queryParams
+    let result = await getProduct(sortByPrice)
     if (result.length != 0) {
         response.payload = result
         response.status = "success"

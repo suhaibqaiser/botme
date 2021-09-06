@@ -31,6 +31,21 @@ export class SearchGridSectionComponent implements OnInit {
   productCategory = ''
 
   searchList: any
+  sortList = [
+    {
+      'name': 'Sort By Price',
+      'value': ''
+    },
+    {
+      'name': 'Sort By Price: Low To High',
+      'value': 'low_to_high'
+    },
+    {
+      'name': 'Sort By Price: High To Low',
+      'value': 'high_to_low'
+    }
+  ]
+  sortControl = new FormControl('')
 
   constructor(private _http: HttpClient, private menuservice: MenuService,
               private cartService: CartService,
@@ -103,7 +118,7 @@ export class SearchGridSectionComponent implements OnInit {
       item.selected = false
     })
     this.filteredProducts = []
-    if(category.categoryId) this.setFilterList('Category')
+    if (category.categoryId) this.setFilterList('Category')
     category.selected = true
     this.productCategory = category.categoryId
     this._http.get<any>(this.menuservice.apiBaseUrl + "/food/product/search?productCategory=" + category.categoryId + '&searchText=' + this.searchText).subscribe(
@@ -164,13 +179,24 @@ export class SearchGridSectionComponent implements OnInit {
     this.isLoading = true
     this.filteredProducts = []
     let url = ''
-    if(data && data.priceMin){
+    if (data && data.priceMin) {
       this.setFilterList('Filter by price')
       url = this.menuservice.apiBaseUrl + "/food/product/search?priceMin=" + data.priceMin + '&priceMax=' + data.priceMax
-    }else{
+    } else {
       url = this.menuservice.apiBaseUrl + "/food/product/search"
     }
     this._http.get<any>(url).subscribe(
+      ((res: any) => {
+        this.filteredProducts = res.payload
+        this.isLoading = false
+      })
+    )
+  }
+
+  sortByPrice() {
+    this.isLoading = true
+    this.filteredProducts = []
+    this._http.get<any>(this.menuservice.apiBaseUrl + "/food/product/search?sortByPrice=" + this.sortControl.value).subscribe(
       ((res: any) => {
         this.filteredProducts = res.payload
         this.isLoading = false
@@ -194,7 +220,7 @@ export class SearchGridSectionComponent implements OnInit {
     } else if (item.name == 'Category') {
       this.productCategory = ''
       this.filterProducts({categoryId: ''})
-    }else if(item.name == 'Filter by price'){
+    } else if (item.name == 'Filter by price') {
       localStorage.clear()
       this.filterProductByPriceRange()
     }
