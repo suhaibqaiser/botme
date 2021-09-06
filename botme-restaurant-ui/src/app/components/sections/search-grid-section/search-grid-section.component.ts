@@ -34,18 +34,18 @@ export class SearchGridSectionComponent implements OnInit {
   sortList = [
     {
       'name': 'Sort By Price',
-      'value': ''
+      'value': 0
     },
     {
       'name': 'Sort By Price: Low To High',
-      'value': 'low_to_high'
+      'value': 1
     },
     {
       'name': 'Sort By Price: High To Low',
-      'value': 'high_to_low'
+      'value': -1
     }
   ]
-  sortControl = new FormControl('')
+  sortControl = new FormControl(1)
 
   constructor(private _http: HttpClient, private menuservice: MenuService,
               private cartService: CartService,
@@ -196,7 +196,14 @@ export class SearchGridSectionComponent implements OnInit {
   sortByPrice() {
     this.isLoading = true
     this.filteredProducts = []
-    this._http.get<any>(this.menuservice.apiBaseUrl + "/food/product/search?sortByPrice=" + this.sortControl.value).subscribe(
+    let url = ''
+    if (this.sortControl.value == 0) {
+      url = this.menuservice.apiBaseUrl + "/food/product/search"
+    } else {
+      url = this.menuservice.apiBaseUrl + "/food/product/search?sortByPrice=" + this.sortControl.value
+    }
+
+    this._http.get<any>(url).subscribe(
       ((res: any) => {
         this.filteredProducts = res.payload
         this.isLoading = false

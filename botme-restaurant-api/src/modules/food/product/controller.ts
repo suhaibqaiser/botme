@@ -66,12 +66,6 @@ export async function findProduct(filter: any) {
         delete queryParams.productRate
     }
 
-    if (filter.sortByPrice == 'low_to_high') {
-        sortByPrice = {"productRate.standard": {$gte: Number(0), $lte: Number(1000)}}
-    } else if (filter.sortByPrice == 'high_to_low') {
-        sortByPrice = {"productRate.standard": {$lte: Number(1000), $gte: Number(0)}}
-    }
-
     if (filter.productCategory) {
         queryParams.productCategory = filter.productCategory
     } else {
@@ -88,8 +82,8 @@ export async function findProduct(filter: any) {
         delete queryParams.productId
     }
 
-    // queryParams = rangeQuery ? rangeQuery : queryParams
-    let result = await getProduct(sortByPrice)
+    queryParams = rangeQuery ? rangeQuery : queryParams
+    let result = await getProduct(queryParams, filter.sortByPrice)
     if (result.length != 0) {
         response.payload = result
         response.status = "success"
