@@ -78,4 +78,10 @@ export class ProductDetailSectionComponent implements OnInit {
     }
     return
   }
+  resolveImages() {
+    if (this.product.productImage && this.product.productImage.length) {
+      return 'assets/images/products/' + this.product.productImage[0]
+    }
+    return 'assets/images/product-1.png'
+  }
 }
