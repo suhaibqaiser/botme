@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  apiRestaurantUrl: "http://localhost:3100",
+  apiRestaurantUrl: "https://api.gofindmenu.com/restaurant",
+  wsEndpoint: "wss://api.gofindmenu.com/ws/"
 };
