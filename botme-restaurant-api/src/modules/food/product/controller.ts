@@ -34,56 +34,24 @@ export async function findProduct(filter: any) {
     console.log('filter =>', filter)
     let response = new restResponse()
 
-    interface queryFilters {
-        productId: any | undefined;
-        productName: any | undefined;
-        productRate: any;
-        productType: any | undefined;
-        productCategory: any | undefined;
-        //productActive: boolean;
+    let priceMin = (filter && filter.priceMin) ? filter.priceMin : ''
+    let priceMax = (filter && filter.priceMax) ? filter.priceMax : ''
+    let productCategory = (filter && filter.productCategory) ? filter.productCategory : ''
+    let productName = (filter && filter.productName) ? filter.productName : ''
+
+    let queryParam: any = {}
+    if (productCategory && productCategory.length) {
+        queryParam.productCategory = productCategory
+    }
+    if (productName && productName.length) {
+        queryParam.productName = {'$regex': productName, '$options': 'i'}
     }
 
-    let queryParams: any = {
-        productId: undefined,
-        productName: undefined,
-        productRate: undefined,
-        productType: undefined,
-        productCategory: undefined
-        //productActive: true
-    }
-    let rangeQuery: any
-    let sortByPrice: any
-    if (filter.searchText) {
-        queryParams.productName = {'$regex': filter.searchText, '$options': 'i'}
-    } else {
-        delete queryParams.productName
+    if (priceMin || priceMax) {
+        queryParam = {...queryParam, 'productRate.standard': {'$gte': Number(priceMin), '$lte': Number(priceMax)}}
     }
 
-    if (filter.priceMin && filter.priceMax) {
-        // queryParams.productRate.standard = {$lte: Number(filter.priceMin), $gte: Number(filter.priceMax)}
-        rangeQuery = {"productRate.standard": {$gte: Number(filter.priceMin), $lte: Number(filter.priceMax)}}
-    } else {
-        delete queryParams.productRate
-    }
-
-    if (filter.productCategory) {
-        queryParams.productCategory = filter.productCategory
-    } else {
-        delete queryParams.productCategory
-    }
-    if (filter.productType) {
-        queryParams.productType = filter.productType
-    } else {
-        delete queryParams.productType
-    }
-    if (filter.productId) {
-        queryParams.productId = filter.productId
-    } else {
-        delete queryParams.productId
-    }
-
-    queryParams = rangeQuery ? rangeQuery : queryParams
-    let result = await getProduct(queryParams, filter.sortByPrice)
+    let result = await getProduct(queryParam, filter.sortByPrice)
     if (result.length != 0) {
         response.payload = result
         response.status = "success"

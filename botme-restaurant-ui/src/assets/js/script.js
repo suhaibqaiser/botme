@@ -407,9 +407,9 @@ jQuery(function ($) {
     // Range slider
     $("#range-slider").slider({
         range: true,
-        min: 2,
-        max: 100,
-        values: [2, 100],
+        min: 0.1,
+        max: 99.9,
+        values: [0.1, 99.9],
         slide: function (event, ui) {
             $("#price-amount").val("$" + ui.values[0] + " ― $" + ui.values[1]);
             localStorage.setItem('filterItem',JSON.stringify({'priceMin':ui.values[0],'priceMax':ui.values[1]}))
