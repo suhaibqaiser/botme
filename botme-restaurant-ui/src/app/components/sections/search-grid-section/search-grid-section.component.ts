@@ -153,7 +153,7 @@ export class SearchGridSectionComponent implements OnInit {
 
     this.menuservice.getProductsByFiltering(this.queryParams).subscribe(
       ((res: any) => {
-        this.filteredProducts = res.status!=='error' ? res.payload : []
+        this.filteredProducts = res.status !== 'error' ? res.payload : []
         this.isLoading = false
       })
     )
@@ -178,7 +178,7 @@ export class SearchGridSectionComponent implements OnInit {
     }
     this.menuservice.getProductsByFiltering(this.payload).subscribe(
       ((res: any) => {
-        this.filteredProducts = res.status!=='error' ? res.payload : []
+        this.filteredProducts = res.status !== 'error' ? res.payload : []
         this.isLoading = false
       })
     )
@@ -187,18 +187,18 @@ export class SearchGridSectionComponent implements OnInit {
   filterProductsByName(event: any = null) {
     let text = event && event.target.value ? event.target.value : ''
     this.searchControl.setValue(text)
-    if(this.searchControl.value && this.searchControl.value.length){
+    if (this.searchControl.value && this.searchControl.value.length) {
       this.setFilterList('Search', this.searchControl.value)
       this.payload.productName = this.searchControl.value
       this.setQueryParameters()
-    }else{
+    } else {
       this.payload.productName = ''
       this.setQueryParameters()
       this.searchControl.setValue('')
     }
     this.menuservice.getProductsByFiltering(this.payload).subscribe(
       ((res: any) => {
-        this.filteredProducts = res.status!=='error' ? res.payload : []
+        this.filteredProducts = res.status !== 'error' ? res.payload : []
         this.isLoading = false
       })
     )
@@ -222,7 +222,7 @@ export class SearchGridSectionComponent implements OnInit {
     }
     this.menuservice.getProductsByFiltering(this.payload).subscribe(
       ((res: any) => {
-        this.filteredProducts = res.status!=='error' ? res.payload : []
+        this.filteredProducts = res.status !== 'error' ? res.payload : []
         this.isLoading = false
       })
     )
@@ -273,7 +273,7 @@ export class SearchGridSectionComponent implements OnInit {
     }
     this.menuservice.getProductsByFiltering(this.payload).subscribe(
       ((res: any) => {
-        this.filteredProducts = res.status!=='error' ? res.payload : []
+        this.filteredProducts = res.status !== 'error' ? res.payload : []
         this.isLoading = false
       })
     )
@@ -285,6 +285,18 @@ export class SearchGridSectionComponent implements OnInit {
       return 'assets/images/products/' + product.productImage[0]
     }
     return 'assets/images/product-1.png'
+  }
+
+  resolveRating(product: any) {
+    let data = []
+    for (let i = 1; i <= 5; i++) {
+      if (i <= product.productRating) {
+        data.push({star:'flaticon-star-1'})
+      } else {
+        data.push({star:'flaticon-star-2'})
+      }
+    }
+    return data
   }
 
   removeFilter(item: any, i: any) {

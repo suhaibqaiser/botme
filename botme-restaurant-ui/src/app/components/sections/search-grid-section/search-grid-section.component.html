@@ -51,13 +51,9 @@
                   </div>
                   <div class="review-star mt-3">
                     <ul>
-                      <li class="full-star"><i class="flaticon-star-1"></i></li>
-                      <li class="full-star"><i class="flaticon-star-1"></i></li>
-                      <li class="full-star"><i class="flaticon-star-1"></i></li>
-                      <li class="full-star"><i class="flaticon-star-1"></i></li>
-                      <li class="full-star"><i class="flaticon-star-2"></i></li>
+                      <li *ngFor="let item of resolveRating(product)" class="full-star"><i [class]="item.star"></i></li>
                     </ul>
-                    <p>(4 Reviews)</p>
+                    <p>({{product.productRating}} Reviews)</p>
                   </div>
                 </div>
                 <div class="product-card-content">

@@ -12,6 +12,7 @@ const ProductSchema = createSchema(
         productCategory: Type.string(),
         productSerialNo: Type.string(),
         productBarcode: Type.string(),
+        productRating:Type.number(),
         productDesc: Type.string({ maxlength: 4000 }),
         productIngredients: [Type.string()],
         productRate: {
