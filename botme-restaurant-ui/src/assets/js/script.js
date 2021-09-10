@@ -418,6 +418,20 @@ jQuery(function ($) {
     $("#price-amount").val("$" + $("#range-slider").slider("values", 0) +
         " - $" + $("#range-slider").slider("values", 1));
 
+  // Rating slider
+  $("#rating-slider").slider({
+    range: true,
+    min: 1,
+    max: 5,
+    values: [1, 5],
+    slide: function (event, ui) {
+      $("#rating-amount").val("$" + ui.values[0] + " ― $" + ui.values[1]);
+      localStorage.setItem('ratingItem',JSON.stringify({'ratingMin':ui.values[0],'ratingMax':ui.values[1]}))
+    }
+  });
+  $("#rating-amount").val("$" + $("#rating-slider").slider("values", 0) +
+    " - $" + $("#rating-slider").slider("values", 1));
+
     // Product-details-slider
     $('.product-details-for').slick({
         slidesToShow: 1,

@@ -53,7 +53,9 @@ export class SearchGridSectionComponent implements OnInit {
     productName: '',
     priceMin: '',
     priceMax: '',
-    sortByPrice: ''
+    sortByPrice: '',
+    ratingMin: '',
+    ratingMax: ''
   }
 
   queryParams: any = {
@@ -61,7 +63,9 @@ export class SearchGridSectionComponent implements OnInit {
     productName: '',
     priceMin: 0.1,
     priceMax: 99.9,
-    sortByPrice: 0
+    sortByPrice: 0,
+    ratingMin: 1,
+    ratingMax: 5
   }
 
   constructor(private _http: HttpClient, private menuservice: MenuService,
@@ -88,6 +92,8 @@ export class SearchGridSectionComponent implements OnInit {
         productName: (param && param.productName) ? param.productName : '',
         priceMin: (param && param.priceMin) ? param.priceMin : '',
         priceMax: (param && param.priceMax) ? param.priceMax : '',
+        ratingMin: (param && param.ratingMin) ? param.ratingMin : '',
+        ratingMax: (param && param.ratingMax) ? param.ratingMax : '',
         sortByPrice: (param && param.sortByPrice) ? param.sortByPrice : 0
       }
       this.payload = this.queryParams
@@ -228,11 +234,37 @@ export class SearchGridSectionComponent implements OnInit {
     )
   }
 
+  filterProductByRating() {
+    this.isLoading = true
+    this.filteredProducts = []
+
+    let data: any = localStorage.getItem('ratingItem')
+    data = JSON.parse(data)
+    if (data && data.ratingMin) {
+      this.setFilterList('Filter by rating', data.ratingMin + '-' + data.ratingMax)
+      this.payload.ratingMin = data.ratingMin
+      this.payload.ratingMax = data.ratingMax
+      this.setQueryParameters()
+    } else {
+      this.payload.ratingMin = ''
+      this.payload.ratingMax = ''
+      this.setQueryParameters()
+    }
+    this.menuservice.getProductsByFiltering(this.payload).subscribe(
+      ((res: any) => {
+        this.filteredProducts = res.status !== 'error' ? res.payload : []
+        this.isLoading = false
+      })
+    )
+  }
+
   setQueryParameters() {
     if (!this.payload.productCategory) this.payload.productCategory = ''
     if (!this.payload.productName) this.payload.productName = ''
     if (!this.payload.priceMin) this.payload.priceMin = ''
     if (!this.payload.priceMax) this.payload.priceMax = ''
+    if (!this.payload.ratingMin) this.payload.ratingMin = ''
+    if (!this.payload.ratingMax) this.payload.ratingMax = ''
     if (!this.payload.sortByPrice) this.payload.sortByPrice = ''
     this._router.navigate([], {
       relativeTo: this._route,
@@ -291,9 +323,9 @@ export class SearchGridSectionComponent implements OnInit {
     let data = []
     for (let i = 1; i <= 5; i++) {
       if (i <= product.productRating) {
-        data.push({star:'flaticon-star-1'})
+        data.push({star: 'flaticon-star-1'})
       } else {
-        data.push({star:'flaticon-star-2'})
+        data.push({star: 'flaticon-star-2'})
       }
     }
     return data
@@ -312,6 +344,9 @@ export class SearchGridSectionComponent implements OnInit {
     } else if (item.value == 0 || item.value == 1 || item.value == -1) {
       this.sortControl.setValue(0)
       this.sortByPrice()
+    }else if(item.name === 'Filter by rating'){
+      localStorage.removeItem('ratingItem')
+      this.filterProductByRating()
     }
     localStorage.setItem('searchList', JSON.stringify(this.searchList))
   }

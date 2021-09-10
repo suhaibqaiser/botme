@@ -36,6 +36,8 @@ export async function findProduct(filter: any) {
 
     let priceMin = (filter && filter.priceMin) ? filter.priceMin : ''
     let priceMax = (filter && filter.priceMax) ? filter.priceMax : ''
+    let ratingMin = (filter && filter.ratingMin) ? filter.ratingMin : ''
+    let ratingMax = (filter && filter.ratingMax) ? filter.ratingMax : ''
     let productCategory = (filter && filter.productCategory) ? filter.productCategory : ''
     let productName = (filter && filter.productName) ? filter.productName : ''
 
@@ -49,6 +51,10 @@ export async function findProduct(filter: any) {
 
     if (priceMin || priceMax) {
         queryParam = {...queryParam, 'productRate.standard': {'$gte': Number(priceMin), '$lte': Number(priceMax)}}
+    }
+
+    if (ratingMin || ratingMax) {
+        queryParam.productRating = {'$gte': Number(ratingMin), '$lte': Number(ratingMax)}
     }
 
     let result = await getProduct(queryParam, filter.sortByPrice)

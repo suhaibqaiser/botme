@@ -122,6 +122,25 @@
             </form>
           </div>
         </div>
+        <div class="sidebar-item mb-30">
+          <div class="sidebar-title">
+            <h3 class="color-white">Filter By Rating</h3>
+          </div>
+          <div class="sidebar-content">
+            <form class="price-range-content">
+              <div class="price-range-bar" id="rating-slider"></div>
+              <div class="price-range-filter">
+                <div class="price-range-filter-item price-range-filter-button order-2 order-xl-1">
+                  <button (click)="filterProductByRating()" class="btn btn-small">Filter</button>
+                </div>
+                <div class="price-range-filter-item d-flex align-items-center text-end order-1 order-xl-2">
+                  <h4>Rating:</h4>
+                  <input type="text" class="price-amount" id="rating-amount" readonly>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
         <div class="sidebar-item">
           <div class="sidebar-title">
             <h3 class="color-white">Categories</h3>
