@@ -301,6 +301,7 @@ export class SearchGridSectionComponent implements OnInit {
       this.sortControl.setValue(0)
       this.sortByPrice()
     }
+    localStorage.setItem('searchList', JSON.stringify(this.searchList))
   }
 
   setFilterList(type: any, value: any) {
