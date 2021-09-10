@@ -78,7 +78,7 @@ export class SearchGridSectionComponent implements OnInit {
     await this.getQueryParams()
     await this.getCategory();
     this.getWSMessage();
-    this.filterProductsByName()
+    // this.filterProductsByName('first-call')
   }
 
   async getQueryParams() {
@@ -86,10 +86,12 @@ export class SearchGridSectionComponent implements OnInit {
       this.queryParams = {
         productCategory: (param && param.productCategory) ? param.productCategory : '',
         productName: (param && param.productName) ? param.productName : '',
-        priceMin: (param && param.priceMin) ? param.priceMin : 0.1,
-        priceMax: (param && param.priceMax) ? param.priceMax : 99.1,
+        priceMin: (param && param.priceMin) ? param.priceMin : '',
+        priceMax: (param && param.priceMax) ? param.priceMax : '',
         sortByPrice: (param && param.sortByPrice) ? param.sortByPrice : 0
       }
+      this.payload = this.queryParams
+      this.searchControl.setValue(this.payload.productName)
     })
   }
 
@@ -105,7 +107,7 @@ export class SearchGridSectionComponent implements OnInit {
               this.categoryList.push({
                 categoryId: product.productCategory,
                 categoryName: product.productCategoryName,
-                selected: false
+                selected: (this.payload.productCategory === product.productCategory)
               }) : null;
           }
         } else {
@@ -114,8 +116,6 @@ export class SearchGridSectionComponent implements OnInit {
           this.isLoading = false
         }
         this.filterFromQueryParam()
-        return
-        console.log(this.filteredProducts)
       });
   }
 
@@ -141,7 +141,6 @@ export class SearchGridSectionComponent implements OnInit {
   }
 
   filterFromQueryParam() {
-    console.log('filterFromQueryParam =>', this.queryParams)
 
     let data: any = localStorage.getItem('searchList')
     if (data) {
@@ -153,7 +152,7 @@ export class SearchGridSectionComponent implements OnInit {
     this.isLoading = true
     this._http.get<any>(this.menuservice.apiBaseUrl + "/food/product/search?productCategory=" + this.queryParams.productCategory + '&productName=' + this.queryParams.productName + '&priceMin=' + this.queryParams.priceMin + '&priceMax=' + this.queryParams.priceMax + '&sortByPrice=' + this.queryParams.sortByPrice).subscribe(
       ((res: any) => {
-        this.filteredProducts = res.payload
+        this.filteredProducts = res.status!=='error' ? res.payload : []
         this.isLoading = false
       })
     )
@@ -178,39 +177,30 @@ export class SearchGridSectionComponent implements OnInit {
     }
     this._http.get<any>(this.menuservice.apiBaseUrl + "/food/product/search?productCategory=" + this.payload.productCategory + '&productName=' + this.payload.productName + '&priceMin=' + this.payload.priceMin + '&priceMax=' + this.payload.priceMax).subscribe(
       ((res: any) => {
-        this.filteredProducts = res.payload
+        this.filteredProducts = res.status!=='error' ? res.payload : []
         this.isLoading = false
       })
     )
   }
 
-  filterProductsByName() {
-    console.log('filterProductsByName =>', this.queryParams)
-    this.searchControl.valueChanges
-      .pipe(
-        debounceTime(500),
-        tap(() => {
-          this.filteredProducts = []
-          this.isLoading = true
-        }),
-        switchMap(value => this._http.get<any>(this.menuservice.apiBaseUrl + "/food/product/search?productCategory=" + this.payload.productCategory + '&productName=' + value + '&priceMin=' + this.payload.priceMin + '&priceMax=' + this.payload.priceMax)
-          .pipe(
-            finalize(() => {
-              this.isLoading = false
-              if (value && value.length) {
-                this.setFilterList('Search', value)
-                this.payload.productName = value
-                this.setQueryParameters()
-              } else {
-                this.payload.productName = ''
-                this.setQueryParameters()
-              }
-            }),
-          )
-        )
-      ).subscribe((res: any) => {
-      this.filteredProducts = res.payload
-    });
+  filterProductsByName(event: any = null) {
+    let text = event && event.target.value ? event.target.value : ''
+    this.searchControl.setValue(text)
+    if(this.searchControl.value && this.searchControl.value.length){
+      this.setFilterList('Search', this.searchControl.value)
+      this.payload.productName = this.searchControl.value
+      this.setQueryParameters()
+    }else{
+      this.payload.productName = ''
+      this.setQueryParameters()
+      this.searchControl.setValue('')
+    }
+    this._http.get<any>(this.menuservice.apiBaseUrl + "/food/product/search?productCategory=" + this.payload.productCategory + '&productName=' + this.payload.productName + '&priceMin=' + this.payload.priceMin + '&priceMax=' + this.payload.priceMax).subscribe(
+      ((res: any) => {
+        this.filteredProducts = res.status!=='error' ? res.payload : []
+        this.isLoading = false
+      })
+    )
   }
 
   filterProductByPriceRange() {
@@ -231,7 +221,7 @@ export class SearchGridSectionComponent implements OnInit {
     }
     this._http.get<any>(this.menuservice.apiBaseUrl + "/food/product/search?productCategory=" + this.payload.productCategory + '&productName=' + this.payload.productName + '&priceMin=' + this.payload.priceMin + '&priceMax=' + this.payload.priceMax).subscribe(
       ((res: any) => {
-        this.filteredProducts = res.payload
+        this.filteredProducts = res.status!=='error' ? res.payload : []
         this.isLoading = false
       })
     )
@@ -272,23 +262,23 @@ export class SearchGridSectionComponent implements OnInit {
     this.filteredProducts = []
     let url = ''
 
-    if (this.sortControl.value) {
+    if (this.sortControl.value != 0) {
       this.payload.sortByPrice = this.sortControl.value
       this.setQueryParameters()
       this.setFilterList('Sort by price', this.sortControl.value)
-    }else{
+    } else {
       this.payload.sortByPrice = 0
       this.setQueryParameters()
     }
-
     url = this.menuservice.apiBaseUrl + "/food/product/search?productCategory=" + this.payload.productCategory + '&productName=' + this.payload.productName + '&priceMin=' + this.payload.priceMin + '&priceMax=' + this.payload.priceMax + '&sortByPrice=' + this.payload.sortByPrice
 
     this._http.get<any>(url).subscribe(
       ((res: any) => {
-        this.filteredProducts = res.payload
+        this.filteredProducts = res.status!=='error' ? res.payload : []
         this.isLoading = false
       })
     )
+    return true
   }
 
   resolveImages(product: any) {
@@ -302,7 +292,7 @@ export class SearchGridSectionComponent implements OnInit {
     this.searchList.splice(i, 1)
     if (item.name == 'Search') {
       this.searchControl.setValue('')
-      this.filterProductsByName()
+      this.filterProductsByName(null)
     } else if (item.name == 'Category') {
       this.filterProductsByCategory({categoryId: ''})
     } else if (item.name == 'Filter by price') {

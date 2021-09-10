@@ -6,8 +6,13 @@ export async function createProduct(product: any) {
 
 export async function getProduct(queryParams: any, sort: any) {
     console.log('queryParams => ', queryParams);
+    console.log('sort =>', sort)
     if (parseInt(sort)) {
-        return Product.find(queryParams, {__v: 0, _id: 0, "productOptions._id": 0}).sort({'productRate.standard': parseInt(sort)})
+        return Product.find(queryParams, {
+            __v: 0,
+            _id: 0,
+            "productOptions._id": 0
+        }).sort({'productRate.standard': parseInt(sort)})
     }
     return Product.find(queryParams, {__v: 0, _id: 0, "productOptions._id": 0})
 
