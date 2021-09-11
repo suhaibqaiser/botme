@@ -129,7 +129,7 @@ export class SearchGridSectionComponent implements OnInit {
     this.menuservice.getCategory()
       .subscribe(result => {
         this.categories = result.payload
-
+        console.log('categories', result.payload)
         if (Array.isArray(this.categories)) {
           this.getProducts();
         } else {
@@ -185,6 +185,7 @@ export class SearchGridSectionComponent implements OnInit {
     this.menuservice.getProductsByFiltering(this.payload).subscribe(
       ((res: any) => {
         this.filteredProducts = res.status !== 'error' ? res.payload : []
+        window.scroll(0,200);
         this.isLoading = false
       })
     )
@@ -298,7 +299,11 @@ export class SearchGridSectionComponent implements OnInit {
     if (this.sortControl.value != 0) {
       this.payload.sortByPrice = this.sortControl.value
       this.setQueryParameters()
-      this.setFilterList('Sort by price', this.sortControl.value)
+      if(this.sortControl.value == -1){
+        this.setFilterList('Sort by price', 'High To Low')
+      }else if(this.sortControl.value == 1){
+        this.setFilterList('Sort by price', 'Low To High')
+      }
     } else {
       this.payload.sortByPrice = 0
       this.setQueryParameters()
@@ -341,10 +346,10 @@ export class SearchGridSectionComponent implements OnInit {
     } else if (item.name == 'Filter by price') {
       localStorage.clear()
       this.filterProductByPriceRange()
-    } else if (item.value == 0 || item.value == 1 || item.value == -1) {
+    } else if (item.value == 'High To Low' || item.value == 'Low To High') {
       this.sortControl.setValue(0)
       this.sortByPrice()
-    }else if(item.name === 'Filter by rating'){
+    } else if (item.name === 'Filter by rating') {
       localStorage.removeItem('ratingItem')
       this.filterProductByRating()
     }
