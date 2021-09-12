@@ -5,6 +5,7 @@ import {SocketService} from 'src/app/services/socket.service';
 import {debounceTime, finalize, switchMap, tap} from 'rxjs/operators';
 import {FormControl} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
+import {ActivatedRoute, Router} from "@angular/router";
 
 declare var jQuery: any;
 
@@ -47,20 +48,60 @@ export class SearchGridSectionComponent implements OnInit {
   ]
   sortControl = new FormControl(1)
 
+  payload: any = {
+    productCategory: '',
+    productName: '',
+    priceMin: '',
+    priceMax: '',
+    sortByPrice: '',
+    ratingMin: '',
+    ratingMax: ''
+  }
+
+  queryParams: any = {
+    productCategory: '',
+    productName: '',
+    priceMin: 0.1,
+    priceMax: 99.9,
+    sortByPrice: 0,
+    ratingMin: 1,
+    ratingMax: 5
+  }
+
   constructor(private _http: HttpClient, private menuservice: MenuService,
               private cartService: CartService,
-              private socketService: SocketService) {
+              private socketService: SocketService,
+              private _router: Router,
+              private _route: ActivatedRoute
+  ) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.searchList = []
     this.isLoading = true
-    this.getCategory();
+    await this.getQueryParams()
+    await this.getCategory();
     this.getWSMessage();
-    this.filterProductsByName()
+    // this.filterProductsByName('first-call')
   }
 
-  getProducts(): void {
+  async getQueryParams() {
+    this._route.queryParams.subscribe(param => {
+      this.queryParams = {
+        productCategory: (param && param.productCategory) ? param.productCategory : '',
+        productName: (param && param.productName) ? param.productName : '',
+        priceMin: (param && param.priceMin) ? param.priceMin : '',
+        priceMax: (param && param.priceMax) ? param.priceMax : '',
+        ratingMin: (param && param.ratingMin) ? param.ratingMin : '',
+        ratingMax: (param && param.ratingMax) ? param.ratingMax : '',
+        sortByPrice: (param && param.sortByPrice) ? param.sortByPrice : 0
+      }
+      this.payload = this.queryParams
+      this.searchControl.setValue(this.payload.productName)
+    })
+  }
+
+  async getProducts() {
     this.menuservice.getProducts()
       .subscribe(result => {
         this.products = result.payload
@@ -72,35 +113,29 @@ export class SearchGridSectionComponent implements OnInit {
               this.categoryList.push({
                 categoryId: product.productCategory,
                 categoryName: product.productCategoryName,
-                selected: false
+                selected: (this.payload.productCategory === product.productCategory)
               }) : null;
-            this.filteredProducts = this.products
-            this.isLoading = false
           }
         } else {
           this.products = []
           this.filteredProducts = this.products
           this.isLoading = false
         }
-        console.log(this.filteredProducts)
+        this.filterFromQueryParam()
       });
   }
 
-  getProductsByCategory(category: string) {
-    let products: any = this.products.filter((product: { productCategory: string; }) => product.productCategory === category);
-    return products;
-  }
-
-  getCategory() {
+  async getCategory() {
     this.menuservice.getCategory()
       .subscribe(result => {
         this.categories = result.payload
-
+        console.log('categories', result.payload)
         if (Array.isArray(this.categories)) {
           this.getProducts();
         } else {
           this.categories = []
         }
+        return
       });
   }
 
@@ -111,50 +146,133 @@ export class SearchGridSectionComponent implements OnInit {
     return null;
   }
 
-  filterProducts(category: any) {
-    // this.filteredProducts = this.filteredProducts.filter((product: { productCategory: string; }) => product.productCategory === categoryId);
-    this.isLoading = true
-    this.categoryList.forEach((item) => {
-      item.selected = false
-    })
+  filterFromQueryParam() {
+
+    let data: any = localStorage.getItem('searchList')
+    if (data) {
+      data = JSON.parse(data)
+      this.searchList = data
+    }
+
     this.filteredProducts = []
-    if (category.categoryId) this.setFilterList('Category')
-    category.selected = true
-    this.productCategory = category.categoryId
-    this._http.get<any>(this.menuservice.apiBaseUrl + "/food/product/search?productCategory=" + category.categoryId + '&searchText=' + this.searchText).subscribe(
+    this.isLoading = true
+
+    this.menuservice.getProductsByFiltering(this.queryParams).subscribe(
       ((res: any) => {
-        this.filteredProducts = res.payload
+        this.filteredProducts = res.status !== 'error' ? res.payload : []
         this.isLoading = false
       })
     )
   }
 
-  filterProductsByName() {
-    // this.filteredProducts = this.products.filter((product: { productName: string; }) => product.productName.toLowerCase().indexOf(text) >= 0);
-    this.searchControl.valueChanges
-      .pipe(
-        debounceTime(500),
-        tap(() => {
-          this.filteredProducts = []
-          this.isLoading = true
-        }),
-        switchMap(value => this._http.get<any>(this.menuservice.apiBaseUrl + "/food/product/search?searchText=" + value + '&productCategory=' + this.productCategory)
-          .pipe(
-            finalize(() => {
-              this.isLoading = false
-              this.searchText = value
-              if (value) {
-                this.setFilterList('Search')
-              }
-            }),
-          )
-        )
-      ).subscribe((res: any) => {
-      this.filteredProducts = res.payload
-    });
+  filterProductsByCategory(category: any) {
+    this.isLoading = true
+    this.filteredProducts = []
+    this.categoryList.forEach((item) => {
+      item.selected = false
+    })
+    category.selected = true
 
+    if (category.categoryId) {
+      this.productCategory = category.categoryId
+      this.setFilterList('Category', category.categoryName)
+      this.payload.productCategory = category.categoryId
+      this.setQueryParameters()
+    } else {
+      this.payload.productCategory = ''
+      this.setQueryParameters()
+    }
+    this.menuservice.getProductsByFiltering(this.payload).subscribe(
+      ((res: any) => {
+        this.filteredProducts = res.status !== 'error' ? res.payload : []
+        window.scroll(0,200);
+        this.isLoading = false
+      })
+    )
   }
 
+  filterProductsByName(event: any = null) {
+    let text = event && event.target.value ? event.target.value : ''
+    this.searchControl.setValue(text)
+    if (this.searchControl.value && this.searchControl.value.length) {
+      this.setFilterList('Search', this.searchControl.value)
+      this.payload.productName = this.searchControl.value
+      this.setQueryParameters()
+    } else {
+      this.payload.productName = ''
+      this.setQueryParameters()
+      this.searchControl.setValue('')
+    }
+    this.menuservice.getProductsByFiltering(this.payload).subscribe(
+      ((res: any) => {
+        this.filteredProducts = res.status !== 'error' ? res.payload : []
+        this.isLoading = false
+      })
+    )
+  }
+
+  filterProductByPriceRange() {
+    this.isLoading = true
+    this.filteredProducts = []
+
+    let data: any = localStorage.getItem('filterItem')
+    data = JSON.parse(data)
+    if (data && data.priceMin) {
+      this.setFilterList('Filter by price', data.priceMin + '-' + data.priceMax)
+      this.payload.priceMin = data.priceMin
+      this.payload.priceMax = data.priceMax
+      this.setQueryParameters()
+    } else {
+      this.payload.priceMin = ''
+      this.payload.priceMax = ''
+      this.setQueryParameters()
+    }
+    this.menuservice.getProductsByFiltering(this.payload).subscribe(
+      ((res: any) => {
+        this.filteredProducts = res.status !== 'error' ? res.payload : []
+        this.isLoading = false
+      })
+    )
+  }
+
+  filterProductByRating() {
+    this.isLoading = true
+    this.filteredProducts = []
+
+    let data: any = localStorage.getItem('ratingItem')
+    data = JSON.parse(data)
+    if (data && data.ratingMin) {
+      this.setFilterList('Filter by rating', data.ratingMin + '-' + data.ratingMax)
+      this.payload.ratingMin = data.ratingMin
+      this.payload.ratingMax = data.ratingMax
+      this.setQueryParameters()
+    } else {
+      this.payload.ratingMin = ''
+      this.payload.ratingMax = ''
+      this.setQueryParameters()
+    }
+    this.menuservice.getProductsByFiltering(this.payload).subscribe(
+      ((res: any) => {
+        this.filteredProducts = res.status !== 'error' ? res.payload : []
+        this.isLoading = false
+      })
+    )
+  }
+
+  setQueryParameters() {
+    if (!this.payload.productCategory) this.payload.productCategory = ''
+    if (!this.payload.productName) this.payload.productName = ''
+    if (!this.payload.priceMin) this.payload.priceMin = ''
+    if (!this.payload.priceMax) this.payload.priceMax = ''
+    if (!this.payload.ratingMin) this.payload.ratingMin = ''
+    if (!this.payload.ratingMax) this.payload.ratingMax = ''
+    if (!this.payload.sortByPrice) this.payload.sortByPrice = ''
+    this._router.navigate([], {
+      relativeTo: this._route,
+      queryParams: this.payload,
+      queryParamsHandling: 'merge',
+    });
+  }
 
   addToCart(productId: string) {
     this.cartService.addToCart(productId);
@@ -173,42 +291,30 @@ export class SearchGridSectionComponent implements OnInit {
     )
   }
 
-  filterProductByPriceRange() {
-    let data: any = localStorage.getItem('filterItem')
-    data = JSON.parse(data)
-    this.isLoading = true
-    this.filteredProducts = []
-    let url = ''
-    if (data && data.priceMin) {
-      this.setFilterList('Filter by price')
-      url = this.menuservice.apiBaseUrl + "/food/product/search?priceMin=" + data.priceMin + '&priceMax=' + data.priceMax
-    } else {
-      url = this.menuservice.apiBaseUrl + "/food/product/search"
-    }
-    this._http.get<any>(url).subscribe(
-      ((res: any) => {
-        this.filteredProducts = res.payload
-        this.isLoading = false
-      })
-    )
-  }
-
   sortByPrice() {
     this.isLoading = true
     this.filteredProducts = []
     let url = ''
-    if (this.sortControl.value == 0) {
-      url = this.menuservice.apiBaseUrl + "/food/product/search"
-    } else {
-      url = this.menuservice.apiBaseUrl + "/food/product/search?sortByPrice=" + this.sortControl.value
-    }
 
-    this._http.get<any>(url).subscribe(
+    if (this.sortControl.value != 0) {
+      this.payload.sortByPrice = this.sortControl.value
+      this.setQueryParameters()
+      if(this.sortControl.value == -1){
+        this.setFilterList('Sort by price', 'High To Low')
+      }else if(this.sortControl.value == 1){
+        this.setFilterList('Sort by price', 'Low To High')
+      }
+    } else {
+      this.payload.sortByPrice = 0
+      this.setQueryParameters()
+    }
+    this.menuservice.getProductsByFiltering(this.payload).subscribe(
       ((res: any) => {
-        this.filteredProducts = res.payload
+        this.filteredProducts = res.status !== 'error' ? res.payload : []
         this.isLoading = false
       })
     )
+    return true
   }
 
   resolveImages(product: any) {
@@ -218,26 +324,49 @@ export class SearchGridSectionComponent implements OnInit {
     return 'assets/images/product-1.png'
   }
 
+  resolveRating(product: any) {
+    let data = []
+    for (let i = 1; i <= 5; i++) {
+      if (i <= product.productRating) {
+        data.push({star: 'flaticon-star-1'})
+      } else {
+        data.push({star: 'flaticon-star-2'})
+      }
+    }
+    return data
+  }
+
   removeFilter(item: any, i: any) {
     this.searchList.splice(i, 1)
     if (item.name == 'Search') {
-      this.searchText = ''
       this.searchControl.setValue('')
-      this.filterProductsByName()
+      this.filterProductsByName(null)
     } else if (item.name == 'Category') {
-      this.productCategory = ''
-      this.filterProducts({categoryId: ''})
+      this.filterProductsByCategory({categoryId: ''})
     } else if (item.name == 'Filter by price') {
       localStorage.clear()
       this.filterProductByPriceRange()
+    } else if (item.value == 'High To Low' || item.value == 'Low To High') {
+      this.sortControl.setValue(0)
+      this.sortByPrice()
+    } else if (item.name === 'Filter by rating') {
+      localStorage.removeItem('ratingItem')
+      this.filterProductByRating()
     }
+    localStorage.setItem('searchList', JSON.stringify(this.searchList))
   }
 
-  setFilterList(type: any) {
-    let check = this.searchList.filter((item: any) => item.name == type).length
-    if (check) return
+  setFilterList(type: any, value: any) {
+    let check = this.searchList.filter((item: any) => item.name == type)
+    if (check[0]) {
+      check[0].value = value
+      localStorage.setItem('searchList', JSON.stringify(this.searchList))
+      return
+    }
     this.searchList.push({
-      'name': type
+      'name': type,
+      'value': value
     })
+    localStorage.setItem('searchList', JSON.stringify(this.searchList))
   }
 }
