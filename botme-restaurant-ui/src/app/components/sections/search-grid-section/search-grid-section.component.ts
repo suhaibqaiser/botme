@@ -24,6 +24,7 @@ export class SearchGridSectionComponent implements OnInit {
   cartVisible = false;
   sofiaMessage = "Message from Sofia"
 
+  // List and filtering
   isLoading = false;
   showSpinner: boolean = false
   //search text
@@ -68,6 +69,11 @@ export class SearchGridSectionComponent implements OnInit {
     ratingMax: 5
   }
 
+  /// product customization
+
+  productCustomizeModal: any
+
+
   constructor(private _http: HttpClient, private menuservice: MenuService,
               private cartService: CartService,
               private socketService: SocketService,
@@ -77,6 +83,7 @@ export class SearchGridSectionComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.productCustomizeModal = {}
     this.searchList = []
     this.isLoading = true
     await this.getQueryParams()
@@ -185,7 +192,7 @@ export class SearchGridSectionComponent implements OnInit {
     this.menuservice.getProductsByFiltering(this.payload).subscribe(
       ((res: any) => {
         this.filteredProducts = res.status !== 'error' ? res.payload : []
-        window.scroll(0,200);
+        window.scroll(0, 200);
         this.isLoading = false
       })
     )
@@ -299,9 +306,9 @@ export class SearchGridSectionComponent implements OnInit {
     if (this.sortControl.value != 0) {
       this.payload.sortByPrice = this.sortControl.value
       this.setQueryParameters()
-      if(this.sortControl.value == -1){
+      if (this.sortControl.value == -1) {
         this.setFilterList('Sort by price', 'High To Low')
-      }else if(this.sortControl.value == 1){
+      } else if (this.sortControl.value == 1) {
         this.setFilterList('Sort by price', 'Low To High')
       }
     } else {
@@ -368,5 +375,9 @@ export class SearchGridSectionComponent implements OnInit {
       'value': value
     })
     localStorage.setItem('searchList', JSON.stringify(this.searchList))
+  }
+
+  setProductCustomization(product: any) {
+    this.productCustomizeModal = product
   }
 }

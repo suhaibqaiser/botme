@@ -1,5 +1,46 @@
 <!-- shop-section -->
 <section class="shop-section pt-100 pb-70 bg-black" id="p01">
+  <!-- Button trigger modal -->
+
+  <!-- Dynamic product cartModal -->
+  <div class="modal product-customization-modal fade" id="productCustomizeModal" tabindex="-1" aria-labelledby="productCustomizeModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{productCustomizeModal.productName}}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row m-auto main-grid">
+            <div class="left col-lg-8">sd</div>
+            <div class="right col-lg-4">
+              <div class="product-details">
+                <p>Type: <span>{{productCustomizeModal.productType}}</span></p>
+                <hr>
+                <p>Category: <span>{{productCustomizeModal.productCategory}}</span></p>
+                <hr>
+                <p>Serial No: <span>{{productCustomizeModal.productSerialNo}}</span></p>
+                <hr>
+                <p>Offer Time: <span>{{productCustomizeModal.offeringTime}}</span></p>
+                <hr>
+                <p>Nutritions: <br><span *ngFor="let item of productCustomizeModal.productNutrition | keyvalue">{{item.key}} : {{item.value}} <br></span></p>
+                <hr>
+                <p>Attributes: <br><span *ngFor="let item of productCustomizeModal.productAttributes | keyvalue">{{item.key}} :
+                  <span *ngIf="item.value" class="badge badge-success">Yes</span>
+                  <span *ngIf="!item.value" class="badge badge-danger">No</span>
+                  <br></span></p>
+                <hr>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="container">
     <div class="row">
       <div class="col-sm-12 col-md-9 col-lg-9 pb-30">
@@ -60,7 +101,7 @@
                   <h3><a href="/product-detail/?productId={{product.productId}}">{{product.productName}}</a></h3>
                   <h4 class="product-price">${{product.productRate.standard}}</h4>
                   <div class="d-flex product-icons justify-content-around">
-                    <a (click)="addToCart(product.productId)"><i class="fas fa-cart-plus"></i></a>
+                    <a (click)="setProductCustomization(product)" data-bs-toggle="modal" data-bs-target="#productCustomizeModal"><i class="fas fa-cart-plus"></i></a>
                     <a><i class="fas fa-heart"></i></a>
                   </div>
                 </div>

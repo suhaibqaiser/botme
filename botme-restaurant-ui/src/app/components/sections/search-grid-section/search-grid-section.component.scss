@@ -19,14 +19,14 @@
   }
 }
 
-.error-product{
+.error-product {
   text-align: center;
   color: #FFCC00;
   font-size: large;
   font-weight: bold;
 }
 
-.badge{
+.badge {
   display: inline-block;
   padding: 1em;
   margin-left: 4px;
@@ -38,7 +38,7 @@
   vertical-align: baseline;
   border-radius: .25rem;
   cursor: pointer;
-  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
 .badge-danger {
@@ -46,10 +46,55 @@
   background-color: #dc3545;
 }
 
-.product-card-thumb-inner{
-  img{
+.product-card-thumb-inner {
+  img {
     width: 400px;
     height: 150px;
     border-radius: 10px;
+  }
+}
+
+.product-customization-modal {
+  .modal-dialog {
+    .modal-content {
+      .modal-body {
+        padding: 0px;
+
+        .main-grid {
+          .left {
+            border-right: 1px solid rgba(0, 0, 0, .2);
+            height: auto;
+            padding: 0px;
+          }
+
+          .right {
+            padding: 0px;
+            .product-details {
+              p{
+                color: #212529;
+                font-weight: bold;
+                font-size: medium;
+                margin: 0.5rem;
+                span{
+                  font-weight: lighter;
+                  font-size: medium;
+                  .badge{
+                    color: whitesmoke;
+                    padding: 4px;
+                    font-weight: bold;
+                  }
+                  .badge-success{
+                    background: #28a745;
+                  }
+                  .badge-danger{
+                    background: #dc3545;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
