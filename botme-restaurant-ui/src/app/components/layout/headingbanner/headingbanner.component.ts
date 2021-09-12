@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
+
 @Component({
   selector: 'app-headingbanner',
   templateUrl: './headingbanner.component.html',
@@ -15,8 +16,12 @@ export class HeadingbannerComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentRoute = this.router.url.replace(/\//g, "").replace("-", " ");
-    if(this.currentRoute.indexOf('?') > 0){
+    if (this.currentRoute.indexOf('?') > 0) {
       this.currentRoute = this.currentRoute.substr(0, this.currentRoute.indexOf('?'))
+    }
+    console.log(this.currentRoute)
+    if (this.currentRoute !== 'online shop') {
+      localStorage.clear()
     }
   }
 
