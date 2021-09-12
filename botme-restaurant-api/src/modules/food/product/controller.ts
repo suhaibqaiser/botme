@@ -34,6 +34,7 @@ export async function findProduct(filter: any) {
     console.log('filter =>', filter)
     let response = new restResponse()
 
+    let productId = (filter && filter.productId) ? filter.productId : ''
     let priceMin = (filter && filter.priceMin) ? filter.priceMin : ''
     let priceMax = (filter && filter.priceMax) ? filter.priceMax : ''
     let ratingMin = (filter && filter.ratingMin) ? filter.ratingMin : ''
@@ -42,6 +43,10 @@ export async function findProduct(filter: any) {
     let productName = (filter && filter.productName) ? filter.productName : ''
 
     let queryParam: any = {}
+    if (productId && productId.length) {
+        queryParam.productId = productId
+    }
+
     if (productCategory && productCategory.length) {
         queryParam.productCategory = productCategory
     }
@@ -56,6 +61,8 @@ export async function findProduct(filter: any) {
     if (ratingMin || ratingMax) {
         queryParam.productRating = {'$gte': Number(ratingMin), '$lte': Number(ratingMax)}
     }
+
+    console.log('before queryParam =>', queryParam)
 
     let result = await getProduct(queryParam, filter.sortByPrice)
     if (result.length != 0) {
