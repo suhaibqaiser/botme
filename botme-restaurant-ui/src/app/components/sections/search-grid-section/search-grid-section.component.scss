@@ -59,6 +59,7 @@
     .modal-content {
       .modal-body {
         padding: 0px;
+        height: 500px;
 
         .main-grid {
           .left {
@@ -67,27 +68,90 @@
             padding: 0px;
           }
 
+          .customization {
+            .item {
+              .blog-card-slide {
+                .blog-card-thumb {
+                  height: 480px;
+                  border: none;
+                  padding: 12px;
+
+                  img {
+                    width: 100%;
+                    height: 550px;
+                  }
+                }
+
+                .blog-card-content {
+                  top: 15%;
+
+                  .blog-entry {
+                    ul {
+                      li {
+                        font-size: xx-large !important;
+                      }
+                    }
+                  }
+
+                  .slide-button-group {
+                    display: flex;
+                    position: absolute;
+                    z-index: 1;
+                    justify-content: space-between;
+                    width: 99%;
+                    top: 45%;
+
+                    .prev, .next {
+                      background: #E7272D;
+                      color: #fff;
+                      border-radius: 50%;
+                      width: 40px;
+                      height: 40px;
+
+                      .fas {
+                        color: whitesmoke;
+                      }
+                    }
+
+                    .prev {
+                      margin-left: -40px;
+                    }
+
+                    .apply-left-margin {
+                      margin-left: 430px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+
           .right {
             padding: 0px;
+
             .product-details {
-              p{
-                color: #212529;
-                font-weight: bold;
-                font-size: medium;
-                margin: 0.5rem;
-                span{
-                  font-weight: lighter;
-                  font-size: medium;
-                  .badge{
-                    color: whitesmoke;
-                    padding: 4px;
+              .blog-feature-item {
+                padding: 6px;
+
+                .sidebar-item {
+                  .title {
+                    color: #212529;
                     font-weight: bold;
+                    font-size: medium;
+                    margin: 0.5rem;
                   }
-                  .badge-success{
-                    background: #28a745;
-                  }
-                  .badge-danger{
-                    background: #dc3545;
+
+                  .sidebar-recent-post {
+                    .sidebar-recent-item {
+                      .sidebar-recent-content {
+                        h3 {
+                          color: #212529;
+                          font-weight: bold;
+                          font-size: medium;
+                          margin: 0.5rem;
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -98,3 +162,4 @@
     }
   }
 }
+

@@ -3,33 +3,104 @@
   <!-- Button trigger modal -->
 
   <!-- Dynamic product cartModal -->
-  <div class="modal product-customization-modal fade" id="productCustomizeModal" tabindex="-1" aria-labelledby="productCustomizeModal" aria-hidden="true">
+  <div class="modal product-customization-modal fade" id="productCustomizeModal" tabindex="-1"
+       aria-labelledby="productCustomizeModal" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">{{productCustomizeModal.productName}}</h5>
+          <h5 class="modablog-card-thumbl-title" id="exampleModalLabel">{{productCustomizeModal.productName}}</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class="row m-auto main-grid">
-            <div class="left col-lg-8">sd</div>
+            <div class="left col-lg-8">
+              <div class="customization">
+                <div class="m-auto item">
+                  <div class="blog-card-slide">
+                    <div class="blog-card-thumb">
+                      <img [src]="resolveImages(productCustomizeModal)" alt="blog">
+                    </div>
+                    <div class="blog-card-content">
+                      <div class="slide-button-group">
+                        <button *ngIf="slideToShow!==0" (click)="previousSlide()" class="prev"><i
+                          class="fas fa-arrow-left"></i></button>
+                        <button *ngIf="slideToShow!==4" (click)="nextSlide()"
+                                [class.apply-left-margin]="slideToShow===0" class="next"><i
+                          class="fas fa-arrow-right"></i></button>
+                      </div>
+                      <ul class="justify-content-between blog-entry">
+<!--                        <li><strong>Category : </strong> {{ getCategoryName(productCustomizeModal.productCategory)}}-->
+<!--                        </li>-->
+<!--                        <li><strong>Offer Time : </strong> {{ productCustomizeModal.offeringTime}}</li>-->
+<!--                        <li><strong>Type : </strong> {{ productCustomizeModal.productType}}</li>-->
+                      </ul>
+                      <div class="mt-4 p-4" *ngIf="slideToShow===0">
+                        <h3>Product Proportion</h3>
+                        <ng-multiselect-dropdown
+                          [placeholder]="'Product proportion size'"
+                          [settings]="dropdownSettings"
+                          [data]="productCustomizeModal.productProportion"
+                          (onSelect)="onItemSelect($event)"
+                          (onSelectAll)="onSelectAll($event)"
+                        >
+                        </ng-multiselect-dropdown>
+                      </div>
+                      <div class="mt-4" *ngIf="slideToShow===1">
+                        <h3>Why Burger Made So Tasty In Recent Days</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                          labore et dolore magna aliqua.</p>
+                      </div>
+                      <div class="mt-4" *ngIf="slideToShow===2">
+                        <h3>Why Burger Made So Tasty In Recent Days</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                          labore et dolore magna aliqua.</p>
+                      </div>
+                      <div class="mt-4" *ngIf="slideToShow===3">
+                        <h3>Why Burger Made So Tasty In Recent Days</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                          labore et dolore magna aliqua.</p>
+                      </div>
+                      <div class="mt-4" *ngIf="slideToShow===4">
+                        <h3>Why Burger Made So Tasty In Recent Days</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                          labore et dolore magna aliqua.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="right col-lg-4">
               <div class="product-details">
-                <p>Type: <span>{{productCustomizeModal.productType}}</span></p>
-                <hr>
-                <p>Category: <span>{{productCustomizeModal.productCategory}}</span></p>
-                <hr>
-                <p>Serial No: <span>{{productCustomizeModal.productSerialNo}}</span></p>
-                <hr>
-                <p>Offer Time: <span>{{productCustomizeModal.offeringTime}}</span></p>
-                <hr>
-                <p>Nutritions: <br><span *ngFor="let item of productCustomizeModal.productNutrition | keyvalue">{{item.key}} : {{item.value}} <br></span></p>
-                <hr>
-                <p>Attributes: <br><span *ngFor="let item of productCustomizeModal.productAttributes | keyvalue">{{item.key}} :
-                  <span *ngIf="item.value" class="badge badge-success">Yes</span>
-                  <span *ngIf="!item.value" class="badge badge-danger">No</span>
-                  <br></span></p>
-                <hr>
+                <div class="blog-feature-item">
+                  <div class="sidebar-item">
+                    <div class="title">
+                      <h3 class="">Your selections</h3>
+                    </div>
+                    <div class="sidebar-recent-post">
+                      <div class="sidebar-recent-item">
+                        <div class="sidebar-recent-content">
+                          <h3>Your product proportion size is <small *ngIf="productCustomizeModal && productCustomizeModal.selectedProductProportion">{{productCustomizeModal.selectedProductProportion.item_text}}</small></h3>
+                        </div>
+                      </div>
+                      <div class="sidebar-recent-item">
+                        <div class="sidebar-recent-content">
+                          <h3>How can Pizza's Taste Can Defeat</h3>
+                        </div>
+                      </div>
+                      <div class="sidebar-recent-item">
+                        <div class="sidebar-recent-content">
+                          <h3>How Combo Offer Can Save Our</h3>
+                        </div>
+                      </div>
+                      <div class="sidebar-recent-item">
+                        <div class="sidebar-recent-content">
+                          <h3>Which Secret Recipe Make A Burger</h3>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -101,7 +172,8 @@
                   <h3><a href="/product-detail/?productId={{product.productId}}">{{product.productName}}</a></h3>
                   <h4 class="product-price">${{product.productRate.standard}}</h4>
                   <div class="d-flex product-icons justify-content-around">
-                    <a (click)="setProductCustomization(product)" data-bs-toggle="modal" data-bs-target="#productCustomizeModal"><i class="fas fa-cart-plus"></i></a>
+                    <a (click)="setProductCustomization(product)" data-bs-toggle="modal"
+                       data-bs-target="#productCustomizeModal"><i class="fas fa-cart-plus"></i></a>
                     <a><i class="fas fa-heart"></i></a>
                   </div>
                 </div>

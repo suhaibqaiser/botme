@@ -1,13 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CartService} from 'src/app/services/cart.service';
 import {MenuService} from 'src/app/services/menu.service';
 import {SocketService} from 'src/app/services/socket.service';
-import {debounceTime, finalize, switchMap, tap} from 'rxjs/operators';
 import {FormControl} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
-
-declare var jQuery: any;
+import {IDropdownSettings} from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-search-grid-section',
@@ -72,7 +70,14 @@ export class SearchGridSectionComponent implements OnInit {
   /// product customization
 
   productCustomizeModal: any
+  productCustomizationSlider: any
+  slideToShow: any
 
+
+  // for multi select
+  dropdownSettings: any;
+
+  orderedProductsList: any
 
   constructor(private _http: HttpClient, private menuservice: MenuService,
               private cartService: CartService,
@@ -83,7 +88,16 @@ export class SearchGridSectionComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.dropdownSettings = {
+      singleSelection: true,
+      idField: 'item_id',
+      textField: 'item_text',
+      itemsShowLimit: 3,
+      allowSearchFilter: true
+    };
     this.productCustomizeModal = {}
+    this.productCustomizationSlider = [0, 1, 2, 3]
+    this.slideToShow = 0
     this.searchList = []
     this.isLoading = true
     await this.getQueryParams()
@@ -378,6 +392,38 @@ export class SearchGridSectionComponent implements OnInit {
   }
 
   setProductCustomization(product: any) {
+    let productProportionList: any = []
+    product.productProportion.forEach((item: any, index: any) => {
+      productProportionList.push({
+        item_id: index,
+        item_text: item
+      })
+    })
+    product.productProportion = productProportionList
     this.productCustomizeModal = product
+    console.log(this.productCustomizeModal)
+  }
+
+  previousSlide() {
+    this.slideToShow--
+  }
+
+  nextSlide() {
+    this.slideToShow++
+  }
+
+  onItemSelect(item: any) {
+    this.productCustomizeModal.selectedProductProportion = item
+  }
+
+  onSelectAll(items: any) {
+
+  }
+
+  setOrderedProductList(data: any) {
+    this.orderedProductsList.push({
+      id: Math.floor(Math.random() * 1000000000),
+
+    })
   }
 }
