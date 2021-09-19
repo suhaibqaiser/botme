@@ -5,7 +5,6 @@ import {SocketService} from 'src/app/services/socket.service';
 import {FormControl} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
-import {IDropdownSettings} from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-search-grid-section',
@@ -73,10 +72,6 @@ export class SearchGridSectionComponent implements OnInit {
   productCustomizationSlider: any
   slideToShow: any
 
-
-  // for multi select
-  dropdownSettings: any;
-
   orderedProductsList: any
 
   constructor(private _http: HttpClient, private menuservice: MenuService,
@@ -88,13 +83,6 @@ export class SearchGridSectionComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.dropdownSettings = {
-      singleSelection: true,
-      idField: 'item_id',
-      textField: 'item_text',
-      itemsShowLimit: 3,
-      allowSearchFilter: true
-    };
     this.productCustomizeModal = {}
     this.productCustomizationSlider = [0, 1, 2, 3]
     this.slideToShow = 0
@@ -391,17 +379,32 @@ export class SearchGridSectionComponent implements OnInit {
     localStorage.setItem('searchList', JSON.stringify(this.searchList))
   }
 
+  getProductByIngredients(productId: any) {
+    return this.products.find((item: any) => item.productId == productId)
+  }
+
+
   setProductCustomization(product: any) {
+    this.slideToShow = 0
+    this.productCustomizeModal = JSON.parse(JSON.stringify(product))
     let productProportionList: any = []
-    product.productProportion.forEach((item: any, index: any) => {
+    let productIngredientList: any = []
+    this.productCustomizeModal.productProportion.forEach((item: any, index: any) => {
       productProportionList.push({
-        item_id: index,
-        item_text: item
+        name: item,
+        selected: index == 0
       })
     })
-    product.productProportion = productProportionList
-    this.productCustomizeModal = product
-    console.log(this.productCustomizeModal)
+    this.productCustomizeModal.productIngredients.forEach((item: any, index: any) => {
+      let obj = this.getProductByIngredients(item)
+      productIngredientList.push({
+        name: obj.productName,
+        image: this.resolveImages(obj),
+        selected: index == 0
+      })
+    })
+    this.productCustomizeModal.productIngredients = productIngredientList
+    this.productCustomizeModal.productProportion = productProportionList
   }
 
   previousSlide() {
@@ -412,12 +415,14 @@ export class SearchGridSectionComponent implements OnInit {
     this.slideToShow++
   }
 
-  onItemSelect(item: any) {
-    this.productCustomizeModal.selectedProductProportion = item
+  selectProductProportion(productProportionObj: any) {
+    this.productCustomizeModal.productProportion.forEach((item: any) => {
+      item.selected = (item.name == productProportionObj.name)
+    })
   }
 
-  onSelectAll(items: any) {
-
+  selectIngredients(ingredientObj: any) {
+    ingredientObj.selected = !ingredientObj.selected
   }
 
   setOrderedProductList(data: any) {
