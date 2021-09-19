@@ -97,7 +97,8 @@
                     margin-top: 10px;
                     width: 100%;
                     padding: 10px;
-                    height: 26px;
+                    height: 224px;
+                    overflow: auto;
 
                     .list {
                       cursor: pointer;
@@ -110,7 +111,7 @@
                           border-radius: 4px;
                         }
 
-                        h5 {
+                        h6 {
                           margin-left: 8px;
                         }
                       }
@@ -125,6 +126,15 @@
                           padding: 10px;
                           border-radius: 10px;
                           border-color: lightgray;
+                        }
+                      }
+
+                      .counter-section{
+                        display: inline-grid;
+                        .btn-group{
+                          .btn{
+                            padding: 4px;
+                          }
                         }
                       }
                     }

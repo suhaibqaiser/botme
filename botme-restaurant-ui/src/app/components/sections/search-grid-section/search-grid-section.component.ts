@@ -379,7 +379,7 @@ export class SearchGridSectionComponent implements OnInit {
     localStorage.setItem('searchList', JSON.stringify(this.searchList))
   }
 
-  getProductByIngredients(productId: any) {
+  getProductById(productId: any) {
     return this.products.find((item: any) => item.productId == productId)
   }
 
@@ -389,6 +389,7 @@ export class SearchGridSectionComponent implements OnInit {
     this.productCustomizeModal = JSON.parse(JSON.stringify(product))
     let productProportionList: any = []
     let productIngredientList: any = []
+    let productToppingList: any = []
     this.productCustomizeModal.productProportion.forEach((item: any, index: any) => {
       productProportionList.push({
         name: item,
@@ -396,13 +397,22 @@ export class SearchGridSectionComponent implements OnInit {
       })
     })
     this.productCustomizeModal.productIngredients.forEach((item: any, index: any) => {
-      let obj = this.getProductByIngredients(item)
+      let obj = this.getProductById(item)
       productIngredientList.push({
         name: obj.productName,
         image: this.resolveImages(obj),
         selected: index == 0
       })
     })
+    this.productCustomizeModal.productToppings.forEach((item: any, index: any) => {
+      let obj = this.getProductById(item)
+      productToppingList.push({
+        name: obj.productName,
+        image: this.resolveImages(obj),
+        selected: index == 0
+      })
+    })
+    this.productCustomizeModal.productToppings = productToppingList
     this.productCustomizeModal.productIngredients = productIngredientList
     this.productCustomizeModal.productProportion = productProportionList
   }
