@@ -73,6 +73,7 @@ export class SearchGridSectionComponent implements OnInit {
   slideToShow: any
 
   orderedProductsList: any
+  selectProductProportionField = new FormControl('')
 
   constructor(private _http: HttpClient, private menuservice: MenuService,
               private cartService: CartService,
@@ -390,10 +391,10 @@ export class SearchGridSectionComponent implements OnInit {
     let productProportionList: any = []
     let productIngredientList: any = []
     let productToppingList: any = []
+    let productAddonsList: any = []
     this.productCustomizeModal.productProportion.forEach((item: any, index: any) => {
       productProportionList.push({
-        name: item,
-        selected: index == 0
+        name: item
       })
     })
     this.productCustomizeModal.productIngredients.forEach((item: any, index: any) => {
@@ -408,10 +409,27 @@ export class SearchGridSectionComponent implements OnInit {
       let obj = this.getProductById(item)
       productToppingList.push({
         name: obj.productName,
+        price: obj.productRate.standard,
         image: this.resolveImages(obj),
-        selected: index == 0
+        selected: index == 0,
+        quantity: 1,
+        total: obj.productRate.standard
       })
     })
+    this.productCustomizeModal.productOptions.forEach((array: any, index: any) => {
+      array.forEach((item:any,i:any)=>{
+        let obj = this.getProductById(item)
+        productAddonsList.push({
+          name: obj.productName,
+          price: obj.productRate.standard,
+          image: this.resolveImages(obj),
+          selected: index == 0,
+          quantity: 1,
+          total: obj.productRate.standard
+        })
+      })
+    })
+    this.productCustomizeModal.productOptions = productAddonsList
     this.productCustomizeModal.productToppings = productToppingList
     this.productCustomizeModal.productIngredients = productIngredientList
     this.productCustomizeModal.productProportion = productProportionList
@@ -425,14 +443,28 @@ export class SearchGridSectionComponent implements OnInit {
     this.slideToShow++
   }
 
-  selectProductProportion(productProportionObj: any) {
-    this.productCustomizeModal.productProportion.forEach((item: any) => {
-      item.selected = (item.name == productProportionObj.name)
-    })
-  }
 
   selectIngredients(ingredientObj: any) {
     ingredientObj.selected = !ingredientObj.selected
+  }
+
+  selectToppings(toppings: any) {
+    toppings.selected = !toppings.selected
+    toppings.quantity = toppings.selected ? toppings.quantity : 1
+    toppings.total = toppings.selected ? toppings.total : toppings.price
+  }
+
+  addToppingQuantity(toppings: any, type: any) {
+    console.log('yo bro')
+    if (type === 'adding') {
+      toppings.quantity = toppings.quantity + 1
+    } else if (type === 'subtracting') {
+      if (toppings.quantity === 1) return
+      toppings.quantity = toppings.quantity - 1
+    }
+    toppings.total = toppings.price * toppings.quantity
+    toppings.total = parseFloat(toppings.total).toFixed(1)
+    console.log(toppings)
   }
 
   setOrderedProductList(data: any) {
