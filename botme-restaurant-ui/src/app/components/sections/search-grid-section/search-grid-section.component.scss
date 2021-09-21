@@ -19,14 +19,14 @@
   }
 }
 
-.error-product{
+.error-product {
   text-align: center;
   color: #FFCC00;
   font-size: large;
   font-weight: bold;
 }
 
-.badge{
+.badge {
   display: inline-block;
   padding: 1em;
   margin-left: 4px;
@@ -38,7 +38,7 @@
   vertical-align: baseline;
   border-radius: .25rem;
   cursor: pointer;
-  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
 .badge-danger {
@@ -46,10 +46,161 @@
   background-color: #dc3545;
 }
 
-.product-card-thumb-inner{
-  img{
+.product-card-thumb-inner {
+  img {
     width: 400px;
     height: 150px;
     border-radius: 10px;
   }
+}
+
+.product-customization-modal {
+  .modal-dialog {
+    .modal-content {
+      background: transparent;
+      .modal-body {
+        padding: 0px;
+        height: 500px;
+
+        .main-grid {
+
+          .customization {
+            .item {
+              .blog-card-slide {
+                border-radius: 10px;
+
+                &:hover .blog-card-content h3 {
+                  margin-bottom: 0px !important;
+                }
+
+                .blog-card-thumb {
+                  border: none;
+                  padding: 12px;
+                  border-radius: 10px;
+
+                  img {
+                    width: 100%;
+                    height: 550px;
+                    border-radius: 10px;
+                  }
+                }
+
+                .blog-card-content {
+                  top: 11%;
+                  border-radius: 10px;
+                  padding: 20px 0px;
+                  .section {
+                    height: 250px;
+                  }
+
+                  .main-selection-container {
+                    margin-top: 10px;
+                    width: 100%;
+                    padding: 10px;
+                    overflow: auto;
+
+                    .list {
+                      cursor: pointer;
+                      padding: 15px;
+
+                      .left {
+                        img {
+                          width: 60px;
+                          height: 60px;
+                          border-radius: 4px;
+                        }
+
+                        h6 {
+                          margin-left: 8px;
+                        }
+                      }
+
+                      .right {
+                        width: 20%;
+
+                        .drop-down {
+                          background: lightgray;
+                          color: black;
+                          width: 100%;
+                          padding: 10px;
+                          border-radius: 10px;
+                          border-color: lightgray;
+                        }
+                      }
+
+                      .counter-section{
+                        display: inline-grid;
+                        .btn-group{
+                          .btn{
+                            padding: 4px 12PX;
+                          }
+                        }
+                      }
+                    }
+
+                    .multi-select-list {
+                      .col-lg-4 {
+                        .d-flex {
+                          cursor: pointer;
+                          border: 1px solid lightgray;
+                          border-radius: 10px;
+                          color: black;
+                          padding: 4px;
+
+                          img {
+                            width: 50px;
+                            height: 50px;
+                            border-radius: 50px;
+                            padding: 4px;
+                          }
+
+                          h6 {
+                            color: black;
+                          }
+                        }
+                      }
+                    }
+                  }
+
+                  .total {
+                    margin-top: 120px;
+                    padding-right: 40px;
+                  }
+
+                  .button-group {
+                    padding: 20px 38px;
+                    .btn {
+                      padding: 4px 14px;
+
+                      .fa-arrow-right {
+                        margin-left: 10px;
+                      }
+
+                      .fa-arrow-left {
+                        margin-right: 10px;
+                      }
+                    }
+
+                    .apply-left-margin {
+                      margin-left: 75%;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.single-selection {
+  background: whitesmoke;
+  border-radius: 10px;
+}
+
+.multi-selection {
+  background: whitesmoke;
+  border: none !important;
 }

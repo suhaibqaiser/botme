@@ -1,5 +1,140 @@
 <!-- shop-section -->
 <section class="shop-section pt-100 pb-70 bg-black" id="p01">
+  <!-- Button trigger modal -->
+
+  <!-- Dynamic product cartModal -->
+  <div class="modal product-customization-modal fade" id="productCustomizeModal" tabindex="-1"
+       aria-labelledby="productCustomizeModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="row m-auto main-grid">
+            <div class="left col-lg-12">
+              <div class="customization">
+                <div class="m-auto item">
+                  <div class="blog-card-slide">
+                    <div class="blog-card-thumb">
+                      <img [src]="resolveImages(productCustomizeModal)" alt="blog">
+                    </div>
+                    <div class="blog-card-content">
+                      <div class="section p-2" *ngIf="slideToShow===0">
+                        <h3 class="text-center">Product Proportion</h3>
+                        <div class="main-selection-container">
+                          <div
+                            class="list mb-2 d-flex justify-content-between">
+                            <div class="d-flex left">
+                              <img [src]="resolveImages(productCustomizeModal)"/>
+                              <h6>Product Proportion</h6>
+                            </div>
+                            <div class="right">
+                              <h6 class="float-end">$2.33</h6>
+                              <select [formControl]="selectProductProportionField" class="drop-down"
+                                      id="exampleFormControlSelect1">
+                                <option [value]="item.name"
+                                        *ngFor="let item of productCustomizeModal.productProportion">{{item.name}}</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="section p-2" *ngIf="slideToShow===1">
+                        <h3 class="text-center">Product Ingredients</h3>
+                        <div class="main-selection-container">
+                          <div class="container multi-select-list row">
+                            <div *ngFor="let ingredients of productCustomizeModal.productIngredients"
+                                 (click)="selectIngredients(ingredients)" class="mb-3 col-lg-4">
+                              <div [class.multi-selection]="ingredients.selected"
+                                   class="d-flex align-items-center justify-content-around ">
+                                <img [src]="ingredients.image"/>
+                                <h6>{{ingredients.name}}</h6>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="section p-2" *ngIf="slideToShow===2">
+                        <h3 class="text-center">Product Topping</h3>
+                        <div class="main-selection-container">
+                          <div *ngFor="let toppings of productCustomizeModal.productToppings"
+                               [class.single-selection]="toppings.selected"
+                               class="list mb-2 d-flex justify-content-between">
+                            <div (click)="selectToppings(toppings)" class="d-flex left">
+                              <img [src]="toppings.image"/>
+                              <h6>{{toppings.name}}
+                                <br>
+                                <span class="mt-3">${{toppings.price}}</span>
+                              </h6>
+                            </div>
+                            <div class="counter-section">
+                              <h6 class="text-center">${{toppings.total}}</h6>
+                              <div class="btn-group">
+                                <button type="button" (click)="addToppingQuantity(toppings,'subtracting')"
+                                        class="btn btn-secondary"><strong>-</strong></button>
+                                <button type="button" class="btn btn-secondary ml-1 mr-1">
+                                  <strong>{{toppings.quantity}}</strong></button>
+                                <button type="button" (click)="addToppingQuantity(toppings,'adding')"
+                                        class="btn btn-secondary"><strong>+</strong></button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="section p-2" *ngIf="slideToShow===3 && selectProductProportionField.value==='combo'">
+                        <h3 class="text-center">Addons</h3>
+                        <div class="main-selection-container">
+                          <div *ngFor="let addons of productCustomizeModal.productOptions"
+                               [class.single-selection]="addons.selected"
+                               class="list mb-2 d-flex justify-content-between">
+                            <div (click)="selectAddons(addons)" class="d-flex left">
+                              <img [src]="addons.image"/>
+                              <h6>{{addons.name}}
+                                <br>
+                                <span class="mt-3">${{addons.price}}</span>
+                              </h6>
+                            </div>
+                            <div class="counter-section">
+                              <h6 class="text-center">${{addons.total}}</h6>
+                              <div class="btn-group">
+                                <button type="button" (click)="addAddonQuantity(addons,'subtracting')"
+                                        class="btn btn-secondary"><strong>-</strong></button>
+                                <button type="button" class="btn btn-secondary ml-1 mr-1">
+                                  <strong>{{addons.quantity}}</strong></button>
+                                <button type="button" (click)="addAddonQuantity(addons,'adding')"
+                                        class="btn btn-secondary"><strong>+</strong></button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="section p-2" *ngIf="slideToShow===4">
+                        <h3 class="text-center">Product Proportion</h3>
+                        <div class="main-selection-container">df</div>
+                      </div>
+                      <div class="total">
+                        <hr>
+                        <h6 class="text-end">Total ${{totalCustomProductBill}}</h6>
+                      </div>
+                      <div class="d-flex justify-content-between button-group">
+                        <button *ngIf="slideToShow!==0" (click)="previousSlide()" type="button" class="btn btn-yellow">
+                          <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        <div [class.apply-left-margin]="slideToShow===0" class="d-flex">
+                          <button data-bs-dismiss="modal" type="button" class="btn btn-yellow">Cancel</button>
+                          <button *ngIf="slideToShow!==4" (click)="nextSlide()" type="button"
+                                  class="btn ml-2 btn-primary">Next
+                            <i class="fas fa-arrow-right"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="container">
     <div class="row">
       <div class="col-sm-12 col-md-9 col-lg-9 pb-30">
@@ -60,7 +195,8 @@
                   <h3><a href="/product-detail/?productId={{product.productId}}">{{product.productName}}</a></h3>
                   <h4 class="product-price">${{product.productRate.standard}}</h4>
                   <div class="d-flex product-icons justify-content-around">
-                    <a (click)="addToCart(product.productId)"><i class="fas fa-cart-plus"></i></a>
+                    <a (click)="setProductCustomization(product)" data-bs-toggle="modal"
+                       data-bs-target="#productCustomizeModal"><i class="fas fa-cart-plus"></i></a>
                     <a><i class="fas fa-heart"></i></a>
                   </div>
                 </div>

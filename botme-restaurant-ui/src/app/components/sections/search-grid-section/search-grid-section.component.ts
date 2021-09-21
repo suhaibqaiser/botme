@@ -1,13 +1,10 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CartService} from 'src/app/services/cart.service';
 import {MenuService} from 'src/app/services/menu.service';
 import {SocketService} from 'src/app/services/socket.service';
-import {debounceTime, finalize, switchMap, tap} from 'rxjs/operators';
 import {FormControl} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
-
-declare var jQuery: any;
 
 @Component({
   selector: 'app-search-grid-section',
@@ -24,6 +21,7 @@ export class SearchGridSectionComponent implements OnInit {
   cartVisible = false;
   sofiaMessage = "Message from Sofia"
 
+  // List and filtering
   isLoading = false;
   showSpinner: boolean = false
   //search text
@@ -68,6 +66,16 @@ export class SearchGridSectionComponent implements OnInit {
     ratingMax: 5
   }
 
+  /// product customization
+
+  productCustomizeModal: any
+  productCustomizationSlider: any
+  slideToShow: any
+
+  orderedProductsList: any
+  selectProductProportionField = new FormControl('')
+  totalCustomProductBill: any = 0
+
   constructor(private _http: HttpClient, private menuservice: MenuService,
               private cartService: CartService,
               private socketService: SocketService,
@@ -77,6 +85,9 @@ export class SearchGridSectionComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.productCustomizeModal = {}
+    this.productCustomizationSlider = [0, 1, 2, 3]
+    this.slideToShow = 0
     this.searchList = []
     this.isLoading = true
     await this.getQueryParams()
@@ -185,7 +196,7 @@ export class SearchGridSectionComponent implements OnInit {
     this.menuservice.getProductsByFiltering(this.payload).subscribe(
       ((res: any) => {
         this.filteredProducts = res.status !== 'error' ? res.payload : []
-        window.scroll(0,200);
+        window.scroll(0, 200);
         this.isLoading = false
       })
     )
@@ -299,9 +310,9 @@ export class SearchGridSectionComponent implements OnInit {
     if (this.sortControl.value != 0) {
       this.payload.sortByPrice = this.sortControl.value
       this.setQueryParameters()
-      if(this.sortControl.value == -1){
+      if (this.sortControl.value == -1) {
         this.setFilterList('Sort by price', 'High To Low')
-      }else if(this.sortControl.value == 1){
+      } else if (this.sortControl.value == 1) {
         this.setFilterList('Sort by price', 'Low To High')
       }
     } else {
@@ -368,5 +379,138 @@ export class SearchGridSectionComponent implements OnInit {
       'value': value
     })
     localStorage.setItem('searchList', JSON.stringify(this.searchList))
+  }
+
+  getProductById(productId: any) {
+    return this.products.find((item: any) => item.productId == productId)
+  }
+
+
+  setProductCustomization(product: any) {
+    this.slideToShow = 0
+    this.productCustomizeModal = JSON.parse(JSON.stringify(product))
+    let productProportionList: any = []
+    let productIngredientList: any = []
+    let productToppingList: any = []
+    let productAddonsList: any = []
+    this.productCustomizeModal.productProportion.forEach((item: any, index: any) => {
+      if (index === 0) this.selectProductProportionField.setValue(item)
+      productProportionList.push({
+        name: item
+      })
+    })
+    this.productCustomizeModal.productIngredients.forEach((item: any, index: any) => {
+      let obj = this.getProductById(item)
+      productIngredientList.push({
+        name: obj.productName,
+        image: this.resolveImages(obj),
+        selected: index == 0
+      })
+    })
+    this.productCustomizeModal.productToppings.forEach((item: any, index: any) => {
+      let obj = this.getProductById(item)
+      productToppingList.push({
+        name: obj.productName,
+        price: obj.productRate.standard,
+        image: this.resolveImages(obj),
+        selected: false,
+        quantity: 1,
+        total: obj.productRate.standard
+      })
+    })
+    this.productCustomizeModal.productOptions.forEach((array: any, index: any) => {
+      array.forEach((item: any, i: any) => {
+        let obj = this.getProductById(item)
+        productAddonsList.push({
+          name: obj.productName,
+          price: obj.productRate.standard,
+          image: this.resolveImages(obj),
+          selected: false,
+          quantity: 1,
+          total: obj.productRate.standard
+        })
+      })
+    })
+    this.productCustomizeModal.productOptions = productAddonsList
+    this.productCustomizeModal.productToppings = productToppingList
+    this.productCustomizeModal.productIngredients = productIngredientList
+    this.productCustomizeModal.productProportion = productProportionList
+  }
+
+  previousSlide() {
+    this.slideToShow--
+  }
+
+  nextSlide() {
+    this.slideToShow++
+  }
+
+
+  selectIngredients(ingredientObj: any) {
+    ingredientObj.selected = !ingredientObj.selected
+  }
+
+  selectToppings(toppings: any) {
+    toppings.selected = !toppings.selected
+    toppings.quantity = toppings.selected ? toppings.quantity : 1
+    toppings.total = toppings.selected ? toppings.total : toppings.price
+    this.customizeBillCalculation()
+  }
+
+  selectAddons(addons: any) {
+    addons.selected = !addons.selected
+    addons.quantity = addons.selected ? addons.quantity : 1
+    addons.total = addons.selected ? addons.total : addons.price
+    this.customizeBillCalculation()
+  }
+
+  customizeBillCalculation() {
+    this.totalCustomProductBill = 0
+    this.productCustomizeModal.productToppings.forEach((item:any) => {
+      if(item.selected){
+        this.totalCustomProductBill += parseInt(item.total)
+      }
+    })
+    this.productCustomizeModal.productOptions.forEach((item:any) => {
+      if(item.selected){
+        this.totalCustomProductBill += parseInt(item.total)
+      }
+    })
+    this.totalCustomProductBill = parseFloat(this.totalCustomProductBill).toFixed(1)
+  }
+
+  addToppingQuantity(toppings: any, type: any) {
+    console.log('yo bro')
+    if (type === 'adding') {
+      toppings.quantity = toppings.quantity + 1
+    } else if (type === 'subtracting') {
+      if (toppings.quantity === 1) return
+      toppings.quantity = toppings.quantity - 1
+    }
+    toppings.total = toppings.price * toppings.quantity
+    toppings.total = parseFloat(toppings.total).toFixed(1)
+    console.log(toppings)
+    this.customizeBillCalculation()
+  }
+
+  addAddonQuantity(addons: any, type: any) {
+    console.log('yo bro')
+    if (type === 'adding') {
+      addons.quantity = addons.quantity + 1
+    } else if (type === 'subtracting') {
+      if (addons.quantity === 1) return
+      addons.quantity = addons.quantity - 1
+    }
+    addons.total = addons.price * addons.quantity
+    addons.total = parseFloat(addons.total).toFixed(1)
+    console.log(addons)
+    this.customizeBillCalculation()
+  }
+
+  setOrderedProductList(data: any) {
+    this.orderedProductsList.push({
+      id: Math.floor(Math.random() * 1000000000),
+
+    })
   }
 }
