@@ -74,6 +74,7 @@ export class SearchGridSectionComponent implements OnInit {
 
   orderedProductsList: any
   selectProductProportionField = new FormControl('')
+  totalCustomProductBill: any = 0
 
   constructor(private _http: HttpClient, private menuservice: MenuService,
               private cartService: CartService,
@@ -393,6 +394,7 @@ export class SearchGridSectionComponent implements OnInit {
     let productToppingList: any = []
     let productAddonsList: any = []
     this.productCustomizeModal.productProportion.forEach((item: any, index: any) => {
+      if (index === 0) this.selectProductProportionField.setValue(item)
       productProportionList.push({
         name: item
       })
@@ -411,19 +413,19 @@ export class SearchGridSectionComponent implements OnInit {
         name: obj.productName,
         price: obj.productRate.standard,
         image: this.resolveImages(obj),
-        selected: index == 0,
+        selected: false,
         quantity: 1,
         total: obj.productRate.standard
       })
     })
     this.productCustomizeModal.productOptions.forEach((array: any, index: any) => {
-      array.forEach((item:any,i:any)=>{
+      array.forEach((item: any, i: any) => {
         let obj = this.getProductById(item)
         productAddonsList.push({
           name: obj.productName,
           price: obj.productRate.standard,
           image: this.resolveImages(obj),
-          selected: index == 0,
+          selected: false,
           quantity: 1,
           total: obj.productRate.standard
         })
@@ -452,6 +454,29 @@ export class SearchGridSectionComponent implements OnInit {
     toppings.selected = !toppings.selected
     toppings.quantity = toppings.selected ? toppings.quantity : 1
     toppings.total = toppings.selected ? toppings.total : toppings.price
+    this.customizeBillCalculation()
+  }
+
+  selectAddons(addons: any) {
+    addons.selected = !addons.selected
+    addons.quantity = addons.selected ? addons.quantity : 1
+    addons.total = addons.selected ? addons.total : addons.price
+    this.customizeBillCalculation()
+  }
+
+  customizeBillCalculation() {
+    this.totalCustomProductBill = 0
+    this.productCustomizeModal.productToppings.forEach((item:any) => {
+      if(item.selected){
+        this.totalCustomProductBill += parseInt(item.total)
+      }
+    })
+    this.productCustomizeModal.productOptions.forEach((item:any) => {
+      if(item.selected){
+        this.totalCustomProductBill += parseInt(item.total)
+      }
+    })
+    this.totalCustomProductBill = parseFloat(this.totalCustomProductBill).toFixed(1)
   }
 
   addToppingQuantity(toppings: any, type: any) {
@@ -465,6 +490,21 @@ export class SearchGridSectionComponent implements OnInit {
     toppings.total = toppings.price * toppings.quantity
     toppings.total = parseFloat(toppings.total).toFixed(1)
     console.log(toppings)
+    this.customizeBillCalculation()
+  }
+
+  addAddonQuantity(addons: any, type: any) {
+    console.log('yo bro')
+    if (type === 'adding') {
+      addons.quantity = addons.quantity + 1
+    } else if (type === 'subtracting') {
+      if (addons.quantity === 1) return
+      addons.quantity = addons.quantity - 1
+    }
+    addons.total = addons.price * addons.quantity
+    addons.total = parseFloat(addons.total).toFixed(1)
+    console.log(addons)
+    this.customizeBillCalculation()
   }
 
   setOrderedProductList(data: any) {
