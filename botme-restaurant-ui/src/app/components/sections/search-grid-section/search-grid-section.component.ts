@@ -73,9 +73,23 @@ export class SearchGridSectionComponent implements OnInit {
   slideToShow: any
 
   orderedProductsList: any
-  selectProductProportionField = new FormControl('')
-  totalCustomProductBill: any = 0
-  selectedProductPrice: any = 0
+  selectProductRatesField = new FormControl('')
+  productSizeList = ['standard', 'medium', 'large', 'small']
+  singleCustomProductObj: any = {
+    productName: '',
+    productId: '',
+    productImage: '',
+    productRate: {},
+    productServingSize: '',
+    productOptions: [],
+    productIngredients: [],
+    productFlavors: [],
+    productAddons: [],
+    productToppings: [],
+    productQuantity: 0,
+    productPrice: 0,
+    productTotalPrice: 0
+  }
 
   constructor(private _http: HttpClient, private menuservice: MenuService,
               private cartService: CartService,
@@ -386,77 +400,132 @@ export class SearchGridSectionComponent implements OnInit {
     return this.products.find((item: any) => item.productId == productId)
   }
 
+  getProductByType(productType: any) {
+    return this.products.filter((item: any) => item.productType == productType)
+  }
+
 
   setProductCustomization(product: any) {
     this.slideToShow = 0
-    this.totalCustomProductBill = product.productRate.standard
-    this.selectedProductPrice = product.productRate.standard
-    this.productCustomizeModal = JSON.parse(JSON.stringify(product))
-    let productProportionList: any = []
+
+    let productOptionsList: any = []
     let productIngredientList: any = []
-    let productToppingList: any = []
+    let productFlavoursList: any = []
     let productAddonsList: any = []
-    this.productCustomizeModal.productProportion.forEach((item: any, index: any) => {
-      if (index === 0) this.selectProductProportionField.setValue(item)
-      productProportionList.push({
-        name: item
-      })
-    })
-    this.productCustomizeModal.productIngredients.forEach((item: any, index: any) => {
-      let obj = this.getProductById(item)
-      productIngredientList.push({
-        name: obj.productName,
-        image: this.resolveImages(obj),
-        selected: index == 0
-      })
-    })
-    this.productCustomizeModal.productToppings.forEach((item: any, index: any) => {
-      let obj = this.getProductById(item)
-      productToppingList.push({
-        name: obj.productName,
-        price: obj.productRate.standard,
-        image: this.resolveImages(obj),
-        selected: false,
-        quantity: 1,
-        total: obj.productRate.standard
-      })
-    })
-    this.productCustomizeModal.productOptions.forEach((array: any, index: any) => {
-      array.forEach((item: any, i: any) => {
-        let obj = this.getProductById(item)
-        productAddonsList.push({
-          name: obj.productName,
-          price: obj.productRate.standard,
-          image: this.resolveImages(obj),
-          selected: false,
-          quantity: 1,
-          total: obj.productRate.standard
+    let productToppingsList: any = []
+    if (product.productOptions && product.productOptions.length) {
+      product.productOptions.forEach((array: any) => {
+        array.forEach((item: any, i: any) => {
+          let obj = this.getProductById(item)
+          productOptionsList.push({
+            productId: obj.productId,
+            productName: obj.productName,
+            productImage: this.resolveImages(obj),
+            selected: false
+          })
         })
       })
+    }
+
+    if (product.productIngredients && product.productIngredients.length) {
+      product.productIngredients.forEach((item: any, index: any) => {
+        let obj = this.getProductById(item)
+        productIngredientList.push({
+          productId: obj.productId,
+          productName: obj.productName,
+          productImage: this.resolveImages(obj),
+          selected: true
+        })
+      })
+    }
+
+    if (product.productToppings && product.productToppings.length) {
+      product.productToppings.forEach((item: any, index: any) => {
+        let obj = this.getProductById(item)
+        productToppingsList.push({
+          productId: obj.productId,
+          productName: obj.productName,
+          productImage: this.resolveImages(obj),
+          productQuantity: 0,
+          productPrice: obj.productRate.standard,
+          productTotalPrice: 0
+        })
+      })
+    }
+
+    if (product.productFlavor && product.productFlavor.length) {
+      product.productFlavor.forEach((item: any, index: any) => {
+        productFlavoursList.push({
+          flavorName: item,
+          selected: false
+        })
+      })
+    }
+    let productlist = this.getProductByType('Addon')
+    if (productlist && productlist.length) {
+      productlist.forEach((item: any) => {
+        productAddonsList.push({
+          productId: item.productId,
+          productName: item.productName,
+          productImage: this.resolveImages(item),
+          selected: false,
+          productQuantity: 0,
+          productPrice: item.productRate.standard,
+          productTotalPrice: 0
+        })
+      })
+    }
+
+    this.singleCustomProductObj = {
+      productName: product.productName,
+      productId: product.productId,
+      productImage: product.productImage,
+      productRate: product.productRate,
+      productServingSize: this.productSizeList[0],
+      productOptions: productOptionsList,
+      productIngredients: productIngredientList,
+      productFlavors: productFlavoursList,
+      productAddons: productAddonsList,
+      productToppings: productToppingsList,
+      productQuantity: 0,
+      productPrice: product.productRate[this.productSizeList[0]],
+      productTotalPrice: product.productRate[this.productSizeList[0]]
+    }
+    this.selectProductRatesField.setValue(this.productSizeList[0])
+  }
+
+  selectProductRate() {
+    this.singleCustomProductObj.productTotalPrice = this.singleCustomProductObj.productRate[this.selectProductRatesField.value]
+    this.singleCustomProductObj.productServingSize = this.selectProductRatesField.value
+  }
+
+  selectFlavor(flavor: any) {
+    this.singleCustomProductObj.productFlavors.forEach((item: any) => {
+      item.selected = item.flavorName === flavor.flavorName
     })
-    this.productCustomizeModal.productOptions = productAddonsList
-    this.productCustomizeModal.productToppings = productToppingList
-    this.productCustomizeModal.productIngredients = productIngredientList
-    this.productCustomizeModal.productProportion = productProportionList
   }
 
   previousSlide() {
     this.slideToShow--
-    if(this.slideToShow===3 && this.selectProductProportionField.value==='single'){
+    if (this.slideToShow === 3 && this.selectProductRatesField.value === 'single') {
       this.slideToShow--
     }
   }
 
   nextSlide() {
     this.slideToShow++
-    if(this.slideToShow===3 && this.selectProductProportionField.value==='single'){
+    if (this.slideToShow === 3 && this.selectProductRatesField.value === 'single') {
       this.slideToShow++
     }
   }
 
 
-  selectIngredients(ingredientObj: any) {
-    ingredientObj.selected = !ingredientObj.selected
+  selectIngredients(ingredient: any) {
+    ingredient.selected = !ingredient.selected
+  }
+
+  selectProductOptions(option: any) {
+    option.selected = !option.selected
   }
 
   selectToppings(toppings: any) {
@@ -474,45 +543,52 @@ export class SearchGridSectionComponent implements OnInit {
   }
 
   customizeBillCalculation() {
-    this.totalCustomProductBill = this.selectedProductPrice
-    this.productCustomizeModal.productToppings.forEach((item: any) => {
-      if (item.selected) {
-        this.totalCustomProductBill += parseInt(item.total)
-      }
+    this.singleCustomProductObj.productTotalPrice = this.singleCustomProductObj.productPrice
+    this.singleCustomProductObj.productToppings.forEach((item: any) => {
+      this.singleCustomProductObj.productTotalPrice += parseInt(item.productTotalPrice)
     })
-    this.productCustomizeModal.productOptions.forEach((item: any) => {
-      if (item.selected) {
-        this.totalCustomProductBill += parseInt(item.total)
-      }
+
+    this.singleCustomProductObj.productAddons.forEach((item: any) => {
+      this.singleCustomProductObj.productTotalPrice += parseInt(item.productTotalPrice)
     })
-    this.totalCustomProductBill = parseFloat(this.totalCustomProductBill).toFixed(1)
+
+
+
+    // this.totalCustomProductBill = this.selectedProductPrice
+    // this.productCustomizeModal.productToppings.forEach((item: any) => {
+    //   if (item.selected) {
+    //     this.totalCustomProductBill += parseInt(item.total)
+    //   }
+    // })
+    // this.productCustomizeModal.productOptions.forEach((item: any) => {
+    //   if (item.selected) {
+    //     this.totalCustomProductBill += parseInt(item.total)
+    //   }
+    // })
+    // this.totalCustomProductBill = parseFloat(this.totalCustomProductBill).toFixed(1)
   }
 
   addToppingQuantity(toppings: any, type: any) {
-    console.log('yo bro')
     if (type === 'adding') {
-      toppings.quantity = toppings.quantity + 1
+      toppings.productQuantity = toppings.productQuantity + 1
     } else if (type === 'subtracting') {
-      if (toppings.quantity === 1) return
-      toppings.quantity = toppings.quantity - 1
+      if (toppings.productQuantity === 0) return
+      toppings.productQuantity = toppings.productQuantity - 1
     }
-    toppings.total = toppings.price * toppings.quantity
-    toppings.total = parseFloat(toppings.total).toFixed(2)
-    console.log(toppings)
+    toppings.productTotalPrice = toppings.productPrice * toppings.productQuantity
+    toppings.productTotalPrice = parseFloat(toppings.productTotalPrice).toFixed(1)
     this.customizeBillCalculation()
   }
 
   addAddonQuantity(addons: any, type: any) {
-    console.log('yo bro')
     if (type === 'adding') {
-      addons.quantity = addons.quantity + 1
+      addons.productQuantity = addons.productQuantity + 1
     } else if (type === 'subtracting') {
-      if (addons.quantity === 1) return
-      addons.quantity = addons.quantity - 1
+      if (addons.productQuantity === 0) return
+      addons.productQuantity = addons.productQuantity - 1
     }
-    addons.total = addons.price * addons.quantity
-    addons.total = parseFloat(addons.total).toFixed(2)
-    console.log(addons)
+    addons.productTotalPrice = addons.productPrice * addons.productQuantity
+    addons.productTotalPrice = parseFloat(addons.productTotalPrice).toFixed(1)
     this.customizeBillCalculation()
   }
 

@@ -14,25 +14,36 @@
                 <div class="m-auto item">
                   <div class="blog-card-slide">
                     <div class="blog-card-thumb">
-                      <img [src]="resolveImages(productCustomizeModal)" alt="blog">
+                      <img [src]="resolveImages(singleCustomProductObj)" alt="blog">
                     </div>
                     <div class="blog-card-content">
                       <div class="section p-2" *ngIf="slideToShow===0">
-                        <h3 class="text-center">Product Proportion</h3>
+                        <h3 class="text-center">{{singleCustomProductObj.productName}}</h3>
                         <div class="main-selection-container">
-                          <div
-                            class="list mb-2 d-flex justify-content-between">
+                          <div class="list mb-2 d-flex justify-content-between">
                             <div class="d-flex left">
-                              <img [src]="resolveImages(productCustomizeModal)"/>
-                              <h6>Product Proportion</h6>
+                              <h6>Serving Size</h6>
                             </div>
                             <div class="right">
-                              <h6 class="float-end">${{selectedProductPrice}}</h6>
-                              <select [formControl]="selectProductProportionField" class="drop-down"
+                              <select (change)="selectProductRate()" [formControl]="selectProductRatesField"
+                                      class="drop-down"
                                       id="exampleFormControlSelect1">
-                                <option [value]="item.name"
-                                        *ngFor="let item of productCustomizeModal.productProportion">{{item.name}}</option>
+                                <option [value]="item" *ngFor="let item of productSizeList">{{item}}</option>
                               </select>
+                            </div>
+                          </div>
+                          <hr>
+                          <div
+                            *ngIf="singleCustomProductObj.productOptions && singleCustomProductObj.productOptions.length"
+                            class="container multi-select-list row">
+                            <h6 class="mb-4">Product Options</h6>
+                            <div *ngFor="let options of singleCustomProductObj.productOptions"
+                                 (click)="selectProductOptions(options)" class="mb-3 col-lg-4">
+                              <div [class.multi-selection]="options.selected"
+                                   class="d-flex align-items-center justify-content-around ">
+                                <img [src]="options.productImage"/>
+                                <h6>{{options.productName}}</h6>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -40,13 +51,28 @@
                       <div class="section p-2" *ngIf="slideToShow===1">
                         <h3 class="text-center">Product Ingredients</h3>
                         <div class="main-selection-container">
-                          <div class="container multi-select-list row">
-                            <div *ngFor="let ingredients of productCustomizeModal.productIngredients"
+                          <div
+                            *ngIf="singleCustomProductObj.productIngredients && singleCustomProductObj.productIngredients.length"
+                            class="container multi-select-list row">
+                            <div *ngFor="let ingredients of singleCustomProductObj.productIngredients"
                                  (click)="selectIngredients(ingredients)" class="mb-3 col-lg-4">
                               <div [class.multi-selection]="ingredients.selected"
                                    class="d-flex align-items-center justify-content-around ">
-                                <img [src]="ingredients.image"/>
-                                <h6>{{ingredients.name}}</h6>
+                                <img [src]="ingredients.productImage"/>
+                                <h6>{{ingredients.productName}}</h6>
+                              </div>
+                            </div>
+                          </div>
+                          <hr>
+                          <h6 style="letter-spacing: 1px;font-size: 17px;font-weight: 600;font-family: Abril Fatface, cursive" class="text-center mb-4">Product Flavours</h6>
+                          <div
+                            *ngIf="singleCustomProductObj.productFlavors && singleCustomProductObj.productFlavors.length"
+                            class="container multi-select-list row">
+                            <div *ngFor="let flavor of singleCustomProductObj.productFlavors"
+                                 (click)="selectFlavor(flavor)" class="mb-3 col-lg-4">
+                              <div [class.multi-selection]="flavor.selected"
+                                   class="d-flex align-items-center justify-content-around ">
+                                <h6>{{flavor.flavorName}}</h6>
                               </div>
                             </div>
                           </div>
@@ -54,24 +80,22 @@
                       </div>
                       <div class="section p-2" *ngIf="slideToShow===2">
                         <h3 class="text-center">Product Topping</h3>
-                        <div class="main-selection-container">
-                          <div *ngFor="let toppings of productCustomizeModal.productToppings"
-                               [class.single-selection]="toppings.selected"
-                               class="list mb-2 d-flex justify-content-between">
-                            <div (click)="selectToppings(toppings)" class="d-flex left">
-                              <img [src]="toppings.image"/>
-                              <h6>{{toppings.name}}
+                        <div *ngIf="singleCustomProductObj.productToppings && singleCustomProductObj.productToppings.length" class="main-selection-container">
+                          <div *ngFor="let toppings of singleCustomProductObj.productToppings" class="list mb-2 d-flex justify-content-between">
+                            <div class="d-flex left">
+                              <img [src]="toppings.productImage"/>
+                              <h6>{{toppings.productName}}
                                 <br>
-                                <span class="mt-3">${{toppings.price}}</span>
+                                <span class="mt-3">${{toppings.productPrice}}</span>
                               </h6>
                             </div>
                             <div class="counter-section">
-                              <h6 class="text-center">${{toppings.total}}</h6>
+                              <h6 class="text-center">${{toppings.productTotalPrice}}</h6>
                               <div class="btn-group">
                                 <button type="button" (click)="addToppingQuantity(toppings,'subtracting')"
                                         class="btn btn-secondary"><strong>-</strong></button>
                                 <button type="button" class="btn btn-secondary ml-1 mr-1">
-                                  <strong>{{toppings.quantity}}</strong></button>
+                                  <strong>{{toppings.productQuantity}}</strong></button>
                                 <button type="button" (click)="addToppingQuantity(toppings,'adding')"
                                         class="btn btn-secondary"><strong>+</strong></button>
                               </div>
@@ -81,26 +105,24 @@
                       </div>
                       <div class="section p-2" *ngIf="slideToShow===3">
                         <h3 class="text-center">Addons</h3>
-                        <div class="main-selection-container">
-                          <div *ngFor="let addons of productCustomizeModal.productOptions"
-                               [class.single-selection]="addons.selected"
-                               class="list mb-2 d-flex justify-content-between">
-                            <div (click)="selectAddons(addons)" class="d-flex left">
-                              <img [src]="addons.image"/>
-                              <h6>{{addons.name}}
+                        <div *ngIf="singleCustomProductObj.productAddons && singleCustomProductObj.productAddons.length"  class="main-selection-container">
+                          <div *ngFor="let addons of singleCustomProductObj.productAddons" class="list mb-2 d-flex justify-content-between">
+                            <div class="d-flex left">
+                              <img [src]="addons.productImage"/>
+                              <h6>{{addons.productName}}
                                 <br>
-                                <span class="mt-3">${{addons.price}}</span>
+                                <span class="mt-3">${{addons.productPrice}}</span>
                               </h6>
                             </div>
                             <div class="counter-section">
-                              <h6 class="text-center">${{addons.total}}</h6>
+                              <h6 class="text-center">${{addons.productTotalPrice}}</h6>
                               <div class="btn-group">
                                 <button type="button" (click)="addAddonQuantity(addons,'subtracting')"
-                                        class="btn btn-secondary"><strong>-</strong></button>
-                                <button type="button" class="btn btn-secondary ml-1 mr-1">
-                                  <strong>{{addons.quantity}}</strong></button>
+                                        class="btn btn-grp btn-secondary"><strong>-</strong></button>
+                                <button type="button" class="btn btn-grp btn-quantity ml-1 mr-1">
+                                  <strong>{{addons.productQuantity}}</strong></button>
                                 <button type="button" (click)="addAddonQuantity(addons,'adding')"
-                                        class="btn btn-secondary"><strong>+</strong></button>
+                                        class="btn btn-grp btn-secondary"><strong>+</strong></button>
                               </div>
                             </div>
                           </div>
@@ -112,7 +134,7 @@
                       </div>
                       <div class="total">
                         <hr>
-                        <h6 class="text-end">Total ${{totalCustomProductBill}}</h6>
+                        <h6 class="text-end">Total ${{singleCustomProductObj.productTotalPrice}}</h6>
                       </div>
                       <div class="d-flex justify-content-between button-group">
                         <button *ngIf="slideToShow!==0" (click)="previousSlide()" type="button" class="btn btn-yellow">
