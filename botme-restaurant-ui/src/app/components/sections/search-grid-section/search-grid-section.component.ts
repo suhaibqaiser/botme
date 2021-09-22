@@ -442,10 +442,16 @@ export class SearchGridSectionComponent implements OnInit {
 
   previousSlide() {
     this.slideToShow--
+    if(this.slideToShow===3 && this.selectProductProportionField.value==='single'){
+      this.slideToShow--
+    }
   }
 
   nextSlide() {
     this.slideToShow++
+    if(this.slideToShow===3 && this.selectProductProportionField.value==='single'){
+      this.slideToShow++
+    }
   }
 
 
