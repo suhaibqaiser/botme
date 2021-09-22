@@ -75,6 +75,7 @@ export class SearchGridSectionComponent implements OnInit {
   orderedProductsList: any
   selectProductProportionField = new FormControl('')
   totalCustomProductBill: any = 0
+  selectedProductPrice: any = 0
 
   constructor(private _http: HttpClient, private menuservice: MenuService,
               private cartService: CartService,
@@ -388,6 +389,8 @@ export class SearchGridSectionComponent implements OnInit {
 
   setProductCustomization(product: any) {
     this.slideToShow = 0
+    this.totalCustomProductBill = product.productRate.standard
+    this.selectedProductPrice = product.productRate.standard
     this.productCustomizeModal = JSON.parse(JSON.stringify(product))
     let productProportionList: any = []
     let productIngredientList: any = []
@@ -465,14 +468,14 @@ export class SearchGridSectionComponent implements OnInit {
   }
 
   customizeBillCalculation() {
-    this.totalCustomProductBill = 0
-    this.productCustomizeModal.productToppings.forEach((item:any) => {
-      if(item.selected){
+    this.totalCustomProductBill = this.selectedProductPrice
+    this.productCustomizeModal.productToppings.forEach((item: any) => {
+      if (item.selected) {
         this.totalCustomProductBill += parseInt(item.total)
       }
     })
-    this.productCustomizeModal.productOptions.forEach((item:any) => {
-      if(item.selected){
+    this.productCustomizeModal.productOptions.forEach((item: any) => {
+      if (item.selected) {
         this.totalCustomProductBill += parseInt(item.total)
       }
     })
@@ -488,7 +491,7 @@ export class SearchGridSectionComponent implements OnInit {
       toppings.quantity = toppings.quantity - 1
     }
     toppings.total = toppings.price * toppings.quantity
-    toppings.total = parseFloat(toppings.total).toFixed(1)
+    toppings.total = parseFloat(toppings.total).toFixed(2)
     console.log(toppings)
     this.customizeBillCalculation()
   }
@@ -502,7 +505,7 @@ export class SearchGridSectionComponent implements OnInit {
       addons.quantity = addons.quantity - 1
     }
     addons.total = addons.price * addons.quantity
-    addons.total = parseFloat(addons.total).toFixed(1)
+    addons.total = parseFloat(addons.total).toFixed(2)
     console.log(addons)
     this.customizeBillCalculation()
   }
