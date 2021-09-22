@@ -92,11 +92,11 @@
                             <div class="counter-section">
                               <h6 class="text-center">${{toppings.productTotalPrice}}</h6>
                               <div class="btn-group">
-                                <button type="button" (click)="addToppingQuantity(toppings,'subtracting')"
+                                <button style="padding: 4px 28px;" type="button" (click)="addToppingQuantity(toppings,'subtracting')"
                                         class="btn btn-secondary"><strong>-</strong></button>
-                                <button type="button" class="btn btn-secondary ml-1 mr-1">
+                                <button style="padding: 4px 28px;border: 1px solid lightgray;background: whitesmoke;color: black" type="button" class="btn btn-secondary ml-1 mr-1">
                                   <strong>{{toppings.productQuantity}}</strong></button>
-                                <button type="button" (click)="addToppingQuantity(toppings,'adding')"
+                                <button style="padding: 4px 28px;" type="button" (click)="addToppingQuantity(toppings,'adding')"
                                         class="btn btn-secondary"><strong>+</strong></button>
                               </div>
                             </div>
@@ -117,19 +117,19 @@
                             <div class="counter-section">
                               <h6 class="text-center">${{addons.productTotalPrice}}</h6>
                               <div class="btn-group">
-                                <button type="button" (click)="addAddonQuantity(addons,'subtracting')"
+                                <button style="padding: 4px 28px;" type="button" (click)="addAddonQuantity(addons,'subtracting')"
                                         class="btn btn-grp btn-secondary"><strong>-</strong></button>
-                                <button type="button" class="btn btn-grp btn-quantity ml-1 mr-1">
+                                <button style="padding: 4px 28px;border: 1px solid lightgray;background: whitesmoke;color: black" type="button" class="btn ml-1 mr-1">
                                   <strong>{{addons.productQuantity}}</strong></button>
-                                <button type="button" (click)="addAddonQuantity(addons,'adding')"
-                                        class="btn btn-grp btn-secondary"><strong>+</strong></button>
+                                <button style="padding: 4px 28px;" type="button" (click)="addAddonQuantity(addons,'adding')"
+                                        class="btn btn-secondary"><strong>+</strong></button>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
                       <div class="section p-2" *ngIf="slideToShow===4">
-                        <h3 class="text-center">Product Quantity</h3>
+                        <h3 class="text-center">Product Summary</h3>
                         <div class="main-selection-container">df</div>
                       </div>
                       <div class="total">

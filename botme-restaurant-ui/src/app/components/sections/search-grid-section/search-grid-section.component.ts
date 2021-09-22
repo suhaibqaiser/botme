@@ -535,12 +535,6 @@ export class SearchGridSectionComponent implements OnInit {
     this.customizeBillCalculation()
   }
 
-  selectAddons(addons: any) {
-    addons.selected = !addons.selected
-    addons.quantity = addons.selected ? addons.quantity : 1
-    addons.total = addons.selected ? addons.total : addons.price
-    this.customizeBillCalculation()
-  }
 
   customizeBillCalculation() {
     this.singleCustomProductObj.productTotalPrice = this.singleCustomProductObj.productPrice
@@ -551,21 +545,6 @@ export class SearchGridSectionComponent implements OnInit {
     this.singleCustomProductObj.productAddons.forEach((item: any) => {
       this.singleCustomProductObj.productTotalPrice += parseInt(item.productTotalPrice)
     })
-
-
-
-    // this.totalCustomProductBill = this.selectedProductPrice
-    // this.productCustomizeModal.productToppings.forEach((item: any) => {
-    //   if (item.selected) {
-    //     this.totalCustomProductBill += parseInt(item.total)
-    //   }
-    // })
-    // this.productCustomizeModal.productOptions.forEach((item: any) => {
-    //   if (item.selected) {
-    //     this.totalCustomProductBill += parseInt(item.total)
-    //   }
-    // })
-    // this.totalCustomProductBill = parseFloat(this.totalCustomProductBill).toFixed(1)
   }
 
   addToppingQuantity(toppings: any, type: any) {
