@@ -58,6 +58,7 @@
   .modal-dialog {
     .modal-content {
       background: transparent;
+
       .modal-body {
         padding: 0px;
         height: 500px;
@@ -89,6 +90,7 @@
                   top: 11%;
                   border-radius: 10px;
                   padding: 20px 0px;
+
                   .section {
                     height: 250px;
                   }
@@ -99,6 +101,13 @@
                     padding: 10px;
                     overflow: auto;
                     height: 328px;
+
+                    img {
+                      width: 60px;
+                      height: 60px;
+                      border-radius: 4px;
+                    }
+
                     .list {
                       cursor: pointer;
                       padding: 15px;
@@ -128,10 +137,11 @@
                         }
                       }
 
-                      .counter-section{
+                      .counter-section {
                         display: inline-grid;
-                        .btn-group{
-                          .btn{
+
+                        .btn-group {
+                          .btn {
                             padding: 4px 12PX;
                           }
                         }
@@ -169,6 +179,7 @@
 
                   .button-group {
                     padding: 20px 38px;
+
                     .btn {
                       padding: 4px 14px;
 
