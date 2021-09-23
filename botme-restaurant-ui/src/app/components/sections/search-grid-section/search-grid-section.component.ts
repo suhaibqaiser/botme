@@ -86,6 +86,8 @@ export class SearchGridSectionComponent implements OnInit {
     productFlavors: [],
     productAddons: [],
     productToppings: [],
+    productAttributes: {},
+    productNutrition: {},
     productQuantity: 0,
     productPrice: 0,
     productTotalPrice: 0
@@ -488,6 +490,8 @@ export class SearchGridSectionComponent implements OnInit {
       productAddons: productAddonsList,
       productToppings: productToppingsList,
       productQuantity: 0,
+      productAttributes: product.productAttributes,
+      productNutrition: product.productNutrition,
       productPrice: product.productRate[this.productSizeList[0]],
       productTotalPrice: product.productRate[this.productSizeList[0]]
     }
@@ -537,7 +541,7 @@ export class SearchGridSectionComponent implements OnInit {
 
 
   customizeBillCalculation() {
-    this.singleCustomProductObj.productTotalPrice = this.singleCustomProductObj.productPrice
+    this.singleCustomProductObj.productTotalPrice = this.singleCustomProductObj.productQuantity ? this.singleCustomProductObj.productPrice * this.singleCustomProductObj.productQuantity : this.singleCustomProductObj.productPrice
     this.singleCustomProductObj.productToppings.forEach((item: any) => {
       this.singleCustomProductObj.productTotalPrice += parseInt(item.productTotalPrice)
     })
@@ -569,6 +573,28 @@ export class SearchGridSectionComponent implements OnInit {
     addons.productTotalPrice = addons.productPrice * addons.productQuantity
     addons.productTotalPrice = parseFloat(addons.productTotalPrice).toFixed(1)
     this.customizeBillCalculation()
+  }
+
+  addProductQuantity(product: any, type: any) {
+    if (type === 'adding') {
+      product.productQuantity = product.productQuantity + 1
+    } else if (type === 'subtracting') {
+      if (product.productQuantity === 0) return
+      product.productQuantity = product.productQuantity - 1
+    }
+    product.productTotalPrice = product.productPrice * product.productQuantity
+    product.productTotalPrice = parseFloat(product.productTotalPrice).toFixed(1)
+    this.customizeBillCalculation()
+  }
+
+  getTotalPrice(obj: any) {
+    let total = 0
+    obj.forEach((item: any) => {
+      if (item.productQuantity) {
+        total += parseInt(item.productTotalPrice)
+      }
+    })
+    return total
   }
 
   setOrderedProductList(data: any) {

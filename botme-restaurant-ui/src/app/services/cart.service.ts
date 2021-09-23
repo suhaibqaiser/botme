@@ -27,7 +27,7 @@ export class CartService {
         this.cartProducts.next(JSON.stringify(this.cartProduct));
     }
 
-    addToCart(productId: string) {
+    addToCart(productId: any) {
         this.cartProduct.push(productId);
         this.setToLocalStorage("cart-products", this.cartProduct);
     }
