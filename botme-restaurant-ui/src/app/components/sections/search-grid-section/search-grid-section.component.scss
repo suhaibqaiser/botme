@@ -150,6 +150,13 @@
 
                     .multi-select-list {
                       .col-lg-4 {
+                        .fa-check {
+                          font-size: large;
+                          position: absolute;
+                          color: #AFC31B;
+                          margin-top: -8px;
+                        }
+
                         .d-flex {
                           cursor: pointer;
                           border: 1px solid lightgray;
@@ -173,7 +180,7 @@
                   }
 
                   .total {
-                    margin-top: 120px;
+                    margin-top: 125px;
                     padding-right: 40px;
                   }
 

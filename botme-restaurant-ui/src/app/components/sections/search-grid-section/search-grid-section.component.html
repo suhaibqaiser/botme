@@ -39,10 +39,11 @@
                             <h6 class="mb-4">Product Options</h6>
                             <div *ngFor="let options of singleCustomProductObj.productOptions"
                                  (click)="selectProductOptions(options)" class="mb-3 col-lg-4">
+                              <span *ngIf="options.selected"><i class="fas fa-check"></i></span>
                               <div [class.multi-selection]="options.selected"
                                    class="d-flex align-items-center justify-content-around ">
                                 <img [src]="options.productImage"/>
-                                <h6>{{options.productName}}</h6>
+                                <h6>{{options.productName}} {{options.selected}}</h6>
                               </div>
                             </div>
                           </div>
@@ -56,6 +57,7 @@
                             class="container multi-select-list row">
                             <div *ngFor="let ingredients of singleCustomProductObj.productIngredients"
                                  (click)="selectIngredients(ingredients)" class="mb-3 col-lg-4">
+                              <i *ngIf="ingredients.selected" class="fas fa-check"></i>
                               <div [class.multi-selection]="ingredients.selected"
                                    class="d-flex align-items-center justify-content-around ">
                                 <img [src]="ingredients.productImage"/>
@@ -72,6 +74,7 @@
                             class="container multi-select-list row">
                             <div *ngFor="let flavor of singleCustomProductObj.productFlavors"
                                  (click)="selectFlavor(flavor)" class="mb-3 col-lg-4">
+                              <i *ngIf="flavor.selected" class="fas fa-check"></i>
                               <div [class.multi-selection]="flavor.selected"
                                    class="d-flex align-items-center justify-content-around ">
                                 <h6>{{flavor.flavorName}}</h6>
@@ -101,7 +104,7 @@
                                         (click)="addToppingQuantity(toppings,'subtracting')"
                                         class="btn btn-secondary"><strong>-</strong></button>
                                 <button
-                                  style="padding: 4px 28px;border: 1px solid lightgray;background: whitesmoke;color: black"
+                                  style="width: 70px;padding: 4px 28px;border: 1px solid lightgray;background: whitesmoke;color: black"
                                   type="button" class="btn btn-secondary ml-1 mr-1">
                                   <strong>{{toppings.productQuantity}}</strong></button>
                                 <button style="padding: 4px 28px;" type="button"
@@ -132,7 +135,7 @@
                                         (click)="addAddonQuantity(addons,'subtracting')"
                                         class="btn btn-grp btn-secondary"><strong>-</strong></button>
                                 <button
-                                  style="padding: 4px 28px;border: 1px solid lightgray;background: whitesmoke;color: black"
+                                  style="width: 70px;padding: 4px 28px;border: 1px solid lightgray;background: whitesmoke;color: black"
                                   type="button" class="btn ml-1 mr-1">
                                   <strong>{{addons.productQuantity}}</strong></button>
                                 <button style="padding: 4px 28px;" type="button"
@@ -145,8 +148,20 @@
                       </div>
                       <div class="section p-2" *ngIf="slideToShow===4">
                         <h3 class="text-center">Product Summary</h3>
-                        <div style="height: 280px;" class="main-selection-container">
-                          <table class="table">
+                        <div class="d-flex mt-2 align-items-center justify-content-center">
+                          <div class="btn-group">
+                            <button style="padding: 4px 28px;" type="button"
+                                    (click)="addProductQuantity(singleCustomProductObj,'subtracting')"
+                                    class="btn btn-grp btn-secondary"><strong>-</strong></button>
+                            <button style="width: 70px;padding: 4px 28px;border: 1px solid lightgray;background: whitesmoke;color: black" type="button" class="btn ml-1 mr-1">
+                              <strong>{{singleCustomProductObj.productQuantity}}</strong></button>
+                            <button style="padding: 4px 28px;" type="button"
+                                    (click)="addProductQuantity(singleCustomProductObj,'adding')"
+                                    class="btn btn-secondary"><strong>+</strong></button>
+                          </div>
+                        </div>
+                        <div style="height: 286px;" class="main-selection-container">
+                          <table class="table table-bordered">
                             <thead>
                             <tr>
                               <th style="width: 25%"></th>
@@ -217,24 +232,8 @@
                             </tbody>
                           </table>
                         </div>
-                        <div style="margin-right: 33px" class="d-flex align-items-center justify-content-end">
-                          <h6 class="mt-1 mr-3">Product Quantity</h6>
-                          <div class="btn-group">
-                            <button style="padding: 4px 28px;" type="button"
-                                    (click)="addProductQuantity(singleCustomProductObj,'subtracting')"
-                                    class="btn btn-grp btn-secondary"><strong>-</strong></button>
-                            <button
-                              style="padding: 4px 28px;border: 1px solid lightgray;background: whitesmoke;color: black"
-                              type="button" class="btn ml-1 mr-1">
-                              <strong>{{singleCustomProductObj.productQuantity}}</strong></button>
-                            <button style="padding: 4px 28px;" type="button"
-                                    (click)="addProductQuantity(singleCustomProductObj,'adding')"
-                                    class="btn btn-secondary"><strong>+</strong></button>
-                          </div>
-                        </div>
                       </div>
                       <div class="total">
-                        <hr>
                         <h6 class="text-end">Total ${{singleCustomProductObj.productTotalPrice}}</h6>
                       </div>
                       <div class="d-flex justify-content-between button-group">
@@ -247,7 +246,7 @@
                                   class="btn ml-2 btn-primary">Next
                             <i class="fas fa-arrow-right"></i></button>
                           <button *ngIf="slideToShow==4" (click)="addToCart('')" type="button"
-                                  class="btn ml-2 btn-primary">Cart
+                                  class="btn ml-2 btn-primary">Cart Item
                             <i class="fas ml-2 fa-cart-plus"></i></button>
                         </div>
                       </div>

@@ -88,7 +88,7 @@ export class SearchGridSectionComponent implements OnInit {
     productToppings: [],
     productAttributes: {},
     productNutrition: {},
-    productQuantity: 0,
+    productQuantity: 1,
     productPrice: 0,
     productTotalPrice: 0
   }
@@ -303,7 +303,7 @@ export class SearchGridSectionComponent implements OnInit {
   }
 
   addToCart(productId: string) {
-    this.cartService.addToCart(productId);
+    this.cartService.addToCart(this.singleCustomProductObj);
     document.getElementById("btnProductCart")?.click()
   }
 
@@ -489,7 +489,7 @@ export class SearchGridSectionComponent implements OnInit {
       productFlavors: productFlavoursList,
       productAddons: productAddonsList,
       productToppings: productToppingsList,
-      productQuantity: 0,
+      productQuantity: 1,
       productAttributes: product.productAttributes,
       productNutrition: product.productNutrition,
       productPrice: product.productRate[this.productSizeList[0]],
@@ -559,7 +559,7 @@ export class SearchGridSectionComponent implements OnInit {
       toppings.productQuantity = toppings.productQuantity - 1
     }
     toppings.productTotalPrice = toppings.productPrice * toppings.productQuantity
-    toppings.productTotalPrice = parseFloat(toppings.productTotalPrice).toFixed(1)
+    toppings.productTotalPrice = Math.ceil(toppings.productTotalPrice)
     this.customizeBillCalculation()
   }
 
@@ -579,7 +579,7 @@ export class SearchGridSectionComponent implements OnInit {
     if (type === 'adding') {
       product.productQuantity = product.productQuantity + 1
     } else if (type === 'subtracting') {
-      if (product.productQuantity === 0) return
+      if (product.productQuantity === 1) return
       product.productQuantity = product.productQuantity - 1
     }
     product.productTotalPrice = product.productPrice * product.productQuantity
@@ -591,7 +591,7 @@ export class SearchGridSectionComponent implements OnInit {
     let total = 0
     obj.forEach((item: any) => {
       if (item.productQuantity) {
-        total += parseInt(item.productTotalPrice)
+        total += Math.ceil(item.productTotalPrice)
       }
     })
     return total
