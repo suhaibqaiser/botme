@@ -408,8 +408,8 @@ export class SearchGridSectionComponent implements OnInit {
 
 
   setProductCustomization(product: any) {
+    this.reset()
     this.slideToShow = 0
-
     let productOptionsList: any = []
     let productIngredientList: any = []
     let productFlavoursList: any = []
@@ -602,5 +602,25 @@ export class SearchGridSectionComponent implements OnInit {
       id: Math.floor(Math.random() * 1000000000),
 
     })
+  }
+
+  reset() {
+    this.singleCustomProductObj = {
+      productName: '',
+      productId: '',
+      productImage: '',
+      productRate: {},
+      productServingSize: '',
+      productOptions: [],
+      productIngredients: [],
+      productFlavors: [],
+      productAddons: [],
+      productToppings: [],
+      productAttributes: {},
+      productNutrition: {},
+      productQuantity: 1,
+      productPrice: 0,
+      productTotalPrice: 0
+    }
   }
 }
