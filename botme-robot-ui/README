@@ -1,0 +1,5 @@
+To run this app use python 3.8 or higher, im using python 3.9
+
+1. Activate the python virtual environment (venv/bin/activate)
+2. Update the packages (if needed) "pip3 install -r requirements.txt"
+3. Run "python main.py"
