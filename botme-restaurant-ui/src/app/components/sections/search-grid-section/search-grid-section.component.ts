@@ -408,6 +408,7 @@ export class SearchGridSectionComponent implements OnInit {
 
 
   setProductCustomization(product: any) {
+    console.log(product)
     this.reset()
     this.slideToShow = 0
     let productOptionsList: any = []
@@ -419,12 +420,14 @@ export class SearchGridSectionComponent implements OnInit {
       product.productOptions.forEach((array: any) => {
         array.forEach((item: any, i: any) => {
           let obj = this.getProductById(item)
-          productOptionsList.push({
-            productId: obj.productId,
-            productName: obj.productName,
-            productImage: this.resolveImages(obj),
-            selected: false
-          })
+          if (obj) {
+            productOptionsList.push({
+              productId: obj.productId,
+              productName: obj.productName,
+              productImage: this.resolveImages(obj),
+              selected: false
+            })
+          }
         })
       })
     }
@@ -432,26 +435,30 @@ export class SearchGridSectionComponent implements OnInit {
     if (product.productIngredients && product.productIngredients.length) {
       product.productIngredients.forEach((item: any, index: any) => {
         let obj = this.getProductById(item)
-        productIngredientList.push({
-          productId: obj.productId,
-          productName: obj.productName,
-          productImage: this.resolveImages(obj),
-          selected: true
-        })
+        if (obj) {
+          productIngredientList.push({
+            productId: obj.productId,
+            productName: obj.productName,
+            productImage: this.resolveImages(obj),
+            selected: true
+          })
+        }
       })
     }
 
     if (product.productToppings && product.productToppings.length) {
       product.productToppings.forEach((item: any, index: any) => {
         let obj = this.getProductById(item)
-        productToppingsList.push({
-          productId: obj.productId,
-          productName: obj.productName,
-          productImage: this.resolveImages(obj),
-          productQuantity: 0,
-          productPrice: obj.productRate.standard,
-          productTotalPrice: 0
-        })
+        if (obj) {
+          productToppingsList.push({
+            productId: obj.productId,
+            productName: obj.productName,
+            productImage: this.resolveImages(obj),
+            productQuantity: 0,
+            productPrice: Math.ceil(obj.productRate.standard),
+            productTotalPrice: 0
+          })
+        }
       })
     }
 
@@ -472,7 +479,7 @@ export class SearchGridSectionComponent implements OnInit {
           productImage: this.resolveImages(item),
           selected: false,
           productQuantity: 0,
-          productPrice: item.productRate.standard,
+          productPrice: Math.ceil(item.productRate.standard),
           productTotalPrice: 0
         })
       })
@@ -492,8 +499,8 @@ export class SearchGridSectionComponent implements OnInit {
       productQuantity: 1,
       productAttributes: product.productAttributes,
       productNutrition: product.productNutrition,
-      productPrice: product.productRate[this.productSizeList[0]],
-      productTotalPrice: product.productRate[this.productSizeList[0]]
+      productPrice: Math.ceil(product.productRate[this.productSizeList[0]]),
+      productTotalPrice: Math.ceil(product.productRate[this.productSizeList[0]])
     }
     this.selectProductRatesField.setValue(this.productSizeList[0])
   }
@@ -511,14 +518,14 @@ export class SearchGridSectionComponent implements OnInit {
 
   previousSlide() {
     this.slideToShow--
-    if (this.slideToShow === 3 && this.selectProductRatesField.value === 'single') {
+    if (this.slideToShow === 2 && !this.singleCustomProductObj.productToppings.length) {
       this.slideToShow--
     }
   }
 
   nextSlide() {
     this.slideToShow++
-    if (this.slideToShow === 3 && this.selectProductRatesField.value === 'single') {
+    if (this.slideToShow === 2 && !this.singleCustomProductObj.productToppings.length) {
       this.slideToShow++
     }
   }
@@ -532,22 +539,14 @@ export class SearchGridSectionComponent implements OnInit {
     option.selected = !option.selected
   }
 
-  selectToppings(toppings: any) {
-    toppings.selected = !toppings.selected
-    toppings.quantity = toppings.selected ? toppings.quantity : 1
-    toppings.total = toppings.selected ? toppings.total : toppings.price
-    this.customizeBillCalculation()
-  }
-
-
   customizeBillCalculation() {
     this.singleCustomProductObj.productTotalPrice = this.singleCustomProductObj.productQuantity ? this.singleCustomProductObj.productPrice * this.singleCustomProductObj.productQuantity : this.singleCustomProductObj.productPrice
     this.singleCustomProductObj.productToppings.forEach((item: any) => {
-      this.singleCustomProductObj.productTotalPrice += parseInt(item.productTotalPrice)
+      this.singleCustomProductObj.productTotalPrice += Math.ceil(item.productTotalPrice)
     })
 
     this.singleCustomProductObj.productAddons.forEach((item: any) => {
-      this.singleCustomProductObj.productTotalPrice += parseInt(item.productTotalPrice)
+      this.singleCustomProductObj.productTotalPrice += item.productTotalPrice
     })
   }
 
@@ -559,7 +558,6 @@ export class SearchGridSectionComponent implements OnInit {
       toppings.productQuantity = toppings.productQuantity - 1
     }
     toppings.productTotalPrice = toppings.productPrice * toppings.productQuantity
-    toppings.productTotalPrice = Math.ceil(toppings.productTotalPrice)
     this.customizeBillCalculation()
   }
 
@@ -571,7 +569,6 @@ export class SearchGridSectionComponent implements OnInit {
       addons.productQuantity = addons.productQuantity - 1
     }
     addons.productTotalPrice = addons.productPrice * addons.productQuantity
-    addons.productTotalPrice = parseFloat(addons.productTotalPrice).toFixed(1)
     this.customizeBillCalculation()
   }
 
@@ -583,7 +580,6 @@ export class SearchGridSectionComponent implements OnInit {
       product.productQuantity = product.productQuantity - 1
     }
     product.productTotalPrice = product.productPrice * product.productQuantity
-    product.productTotalPrice = parseFloat(product.productTotalPrice).toFixed(1)
     this.customizeBillCalculation()
   }
 
@@ -591,7 +587,7 @@ export class SearchGridSectionComponent implements OnInit {
     let total = 0
     obj.forEach((item: any) => {
       if (item.productQuantity) {
-        total += Math.ceil(item.productTotalPrice)
+        total += item.productTotalPrice
       }
     })
     return total
