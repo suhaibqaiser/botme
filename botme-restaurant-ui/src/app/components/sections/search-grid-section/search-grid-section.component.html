@@ -43,7 +43,7 @@
                               <div [class.multi-selection]="options.selected"
                                    class="d-flex align-items-center justify-content-around ">
                                 <img [src]="options.productImage"/>
-                                <h6>{{options.productName}} {{options.selected}}</h6>
+                                <h6>{{options.productName}}</h6>
                               </div>
                             </div>
                           </div>
@@ -57,7 +57,7 @@
                             class="container multi-select-list row">
                             <div *ngFor="let ingredients of cartService.singleCustomProductObj.productIngredients"
                                  (click)="selectIngredients(ingredients)" class="mb-3 col-lg-4">
-                              <i *ngIf="ingredients.selected" class="fas fa-check"></i>
+                              <span *ngIf="ingredients.selected"><i class="fas fa-check"></i></span>
                               <div [class.multi-selection]="ingredients.selected"
                                    class="d-flex align-items-center justify-content-around ">
                                 <img [src]="ingredients.productImage"/>
@@ -74,7 +74,7 @@
                             class="container multi-select-list row">
                             <div *ngFor="let flavor of cartService.singleCustomProductObj.productFlavors"
                                  (click)="selectFlavor(flavor)" class="mb-3 col-lg-4">
-                              <i *ngIf="flavor.selected" class="fas fa-check"></i>
+                              <span *ngIf="flavor.selected"><i class="fas fa-check"></i></span>
                               <div [class.multi-selection]="flavor.selected"
                                    class="d-flex align-items-center justify-content-around ">
                                 <h6>{{flavor.flavorName}}</h6>
