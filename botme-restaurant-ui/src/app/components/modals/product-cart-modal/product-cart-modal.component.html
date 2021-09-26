@@ -12,20 +12,32 @@
       <div class="cart-modal-product" *ngFor="let product of cartProducts">
         <div class="cart-modal-thumb">
           <a href="javascript:void(0)">
-            <img src="assets/images/product-1.png" alt="product">
+            <img [src]="resolveImages(product)" alt="product">
           </a>
         </div>
-        <div class="cart-modal-content" >
+        <div class="cart-modal-content">
           <h4><a href="javascript:void(0)">{{product.productName}}</a></h4>
           <div class="cart-modal-action">
             <div class="cart-modal-action-item">
               <div class="cart-modal-quantity">
-                 <p class="cart-quantity-price">${{product.productRate.standard}}</p>
+                <p class="cart-quantity-price">Item ({{product.productPrice}} * {{product.productQuantity}})
+                  = ${{product.productPrice * product.productQuantity}}</p>
+              </div>
+              <div class="cart-modal-quantity">
+                <p class="cart-quantity-price">Topping ${{calculateTotalPrice(product.productToppings)}}</p>
+              </div>
+              <div class="cart-modal-quantity">
+                <p class="cart-quantity-price">Addons ${{calculateTotalPrice(product.productAddons)}}</p>
               </div>
             </div>
             <div class="cart-modal-action-item">
               <div class="cart-modal-delete">
-                <a href="javascript:void(0)" (click)="removeFromCart(product.productId)" ><i class="icofont-ui-delete"></i></a>
+                <a href="javascript:void(0)" (click)="removeFromCart(product.productId)"><i
+                  class="icofont-ui-delete"></i></a>
+              </div>
+              <div class="mt-3 cart-modal-delete">
+                <a href="javascript:void(0)" (click)="editFromCart(product)">
+                  <i class="fas fa-edit"></i></a>
               </div>
             </div>
           </div>
@@ -34,11 +46,11 @@
 
       <div class="cart-modal-total">
         <p>Total</p>
-        <h3>${{cartTotal.toFixed(2)}}</h3>
+        <h3>${{totalCartPrice()}}</h3>
       </div>
       <div class="cart-modal-button">
         <a href="javascript:void(0)" routerLink="/checkout" class="btn full-width">Proceed To Checkout</a>
-        <a href="javascript:void(0)" routerLink="/cart"  class="btn btn-yellow full-width">View Shopping Cart</a>
+        <a href="javascript:void(0)" routerLink="/cart" class="btn btn-yellow full-width">View Shopping Cart</a>
       </div>
       <!-- The commented content in below is currently used "display: none". If no data is in the modal, just add "active" class with it and hide rest of the data. -->
       <!-- <div class="modal-no-data">

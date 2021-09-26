@@ -45,7 +45,7 @@ import { CartComponent } from './components/pages/cart/cart.component';
 import { CartSectionComponent } from './components/sections/cart-section/cart-section.component';
 import { CheckoutSectionComponent } from './components/sections/checkout-section/checkout-section.component';
 import { SpinnerComponent } from './components/layout/spinner/spinner.component';
-
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 @NgModule({
   declarations: [
     AppComponent,
@@ -95,7 +95,8 @@ import { SpinnerComponent } from './components/layout/spinner/spinner.component'
     RouterModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [SpeechRecognitionService],
   bootstrap: [AppComponent]

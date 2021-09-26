@@ -1,47 +1,64 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable, Subject} from 'rxjs';
+import {environment} from 'src/environments/environment';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class CartService {
 
-    cartProducts = new Subject();
+  cartProducts = new Subject();
 
-    cartProduct: string[] = []
+  cartProduct: string[] = []
 
-    constructor() {
-        this.getFromLocalstorage();
-    }
+  singleCustomProductObj: any = {
+    productName: '',
+    productId: '',
+    productImage: '',
+    productRate: {},
+    productServingSize: '',
+    productOptions: [],
+    productIngredients: [],
+    productFlavors: [],
+    productAddons: [],
+    productToppings: [],
+    productAttributes: {},
+    productNutrition: {},
+    productQuantity: 1,
+    productPrice: 0,
+    productTotalPrice: 0
+  }
 
-    getFromLocalstorage() {
-        let _cartProducts = localStorage.getItem('cart-products');
-        (_cartProducts) ? this.cartProduct = JSON.parse(_cartProducts) : null;
-        this.cartProducts.next(JSON.stringify(this.cartProduct));
-    }
+  constructor() {
+    this.getFromLocalstorage();
+  }
 
-    setToLocalStorage(key: string, value: any) {
-        localStorage.setItem(key, JSON.stringify(value));
-        this.cartProducts.next(JSON.stringify(this.cartProduct));
-    }
+  getFromLocalstorage() {
+    let _cartProducts = localStorage.getItem('cart-products');
+    (_cartProducts) ? this.cartProduct = JSON.parse(_cartProducts) : null;
+    this.cartProducts.next(JSON.stringify(this.cartProduct));
+  }
 
-    addToCart(productId: string) {
-        this.cartProduct.push(productId);
-        this.setToLocalStorage("cart-products", this.cartProduct);
-    }
+  setToLocalStorage(key: string, value: any) {
+    localStorage.setItem(key, JSON.stringify(value));
+    this.cartProducts.next(JSON.stringify(this.cartProduct));
+  }
 
-    removeFromCart(productId: string) {
-        this.cartProduct.splice(this.cartProduct.indexOf(productId), 1);
-        this.setToLocalStorage("cart-products", this.cartProduct);
-    }
+  addToCart(singleCustomProductObj: any) {
+    this.cartProduct.push(singleCustomProductObj);
+    this.setToLocalStorage("cart-products", this.cartProduct);
+  }
 
-    getCartProducts(): Observable<any> {
-        this.getFromLocalstorage();
-        return this.cartProducts.asObservable();
-    }
+  removeFromCart(productId: string) {
+    this.cartProduct.splice(this.cartProduct.indexOf(productId), 1);
+    this.setToLocalStorage("cart-products", this.cartProduct);
+  }
 
+  getCartProducts(): Observable<any> {
+    this.getFromLocalstorage();
+    return this.cartProducts.asObservable();
+  }
 
 
 }

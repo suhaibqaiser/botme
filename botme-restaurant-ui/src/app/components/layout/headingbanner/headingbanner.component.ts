@@ -21,7 +21,7 @@ export class HeadingbannerComponent implements OnInit {
     }
     console.log(this.currentRoute)
     if (this.currentRoute !== 'online shop') {
-      localStorage.clear()
+      localStorage.setItem('searchList', JSON.stringify([]))
     }
   }
 
