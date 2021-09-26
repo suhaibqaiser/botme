@@ -489,8 +489,9 @@ export class SearchGridSectionComponent implements OnInit {
   }
 
   selectProductRate() {
-    this.cartService.singleCustomProductObj.productTotalPrice = this.cartService.singleCustomProductObj.productRate[this.selectProductRatesField.value]
+    this.cartService.singleCustomProductObj.productPrice = Math.ceil(this.cartService.singleCustomProductObj.productRate[this.selectProductRatesField.value])
     this.cartService.singleCustomProductObj.productServingSize = this.selectProductRatesField.value
+    this.customizeBillCalculation()
   }
 
   selectFlavor(flavor: any) {
