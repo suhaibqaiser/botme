@@ -2,6 +2,7 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {environment} from 'src/environments/environment';
+import {FormControl} from "@angular/forms";
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,7 @@ export class CartService {
     productPrice: 0,
     productTotalPrice: 0
   }
-
+  selectProductRatesField = new FormControl('')
   constructor() {
     this.getFromLocalstorage();
   }

@@ -25,7 +25,7 @@
                               <h6>Serving Size</h6>
                             </div>
                             <div class="right">
-                              <select (change)="selectProductRate()" [formControl]="selectProductRatesField"
+                              <select (change)="selectProductRate()" [formControl]="cartService.selectProductRatesField"
                                       class="drop-down"
                                       id="exampleFormControlSelect1">
                                 <option [value]="item" *ngFor="let item of productSizeList">{{item}}</option>

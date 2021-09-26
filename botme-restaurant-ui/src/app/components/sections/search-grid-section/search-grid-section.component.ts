@@ -73,7 +73,6 @@ export class SearchGridSectionComponent implements OnInit {
   slideToShow: any
 
   orderedProductsList: any
-  selectProductRatesField = new FormControl('')
   productSizeList = ['standard', 'medium', 'large', 'small']
 
   constructor(private _http: HttpClient, private menuservice: MenuService,
@@ -391,7 +390,6 @@ export class SearchGridSectionComponent implements OnInit {
 
 
   setProductCustomization(product: any) {
-    console.log(product)
     this.reset()
     this.slideToShow = 0
     let productOptionsList: any = []
@@ -485,12 +483,12 @@ export class SearchGridSectionComponent implements OnInit {
       productPrice: Math.ceil(product.productRate[this.productSizeList[0]]),
       productTotalPrice: Math.ceil(product.productRate[this.productSizeList[0]])
     }
-    this.selectProductRatesField.setValue(this.productSizeList[0])
+    this.cartService.selectProductRatesField.setValue(this.productSizeList[0])
   }
 
   selectProductRate() {
-    this.cartService.singleCustomProductObj.productPrice = Math.ceil(this.cartService.singleCustomProductObj.productRate[this.selectProductRatesField.value])
-    this.cartService.singleCustomProductObj.productServingSize = this.selectProductRatesField.value
+    this.cartService.singleCustomProductObj.productPrice = Math.ceil(this.cartService.singleCustomProductObj.productRate[this.cartService.selectProductRatesField.value])
+    this.cartService.singleCustomProductObj.productServingSize = this.cartService.selectProductRatesField.value
     this.customizeBillCalculation()
   }
 

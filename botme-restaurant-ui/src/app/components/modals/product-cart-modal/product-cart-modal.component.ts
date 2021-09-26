@@ -79,8 +79,9 @@ export class ProductCartModalComponent implements OnInit {
   }
 
   editFromCart(product: any) {
+    document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style','display:none')
     this.cartService.singleCustomProductObj = JSON.parse(JSON.stringify(product))
-    let modal = document.getElementsByClassName('product-customization-modal')
-    console.log(modal.namedItem('ontoggle'))
+    this.cartService.selectProductRatesField.setValue(product.productServingSize)
+    $('#productCustomizeModal').modal('show')
   }
 }
