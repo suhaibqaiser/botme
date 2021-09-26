@@ -75,26 +75,9 @@ export class SearchGridSectionComponent implements OnInit {
   orderedProductsList: any
   selectProductRatesField = new FormControl('')
   productSizeList = ['standard', 'medium', 'large', 'small']
-  singleCustomProductObj: any = {
-    productName: '',
-    productId: '',
-    productImage: '',
-    productRate: {},
-    productServingSize: '',
-    productOptions: [],
-    productIngredients: [],
-    productFlavors: [],
-    productAddons: [],
-    productToppings: [],
-    productAttributes: {},
-    productNutrition: {},
-    productQuantity: 1,
-    productPrice: 0,
-    productTotalPrice: 0
-  }
 
   constructor(private _http: HttpClient, private menuservice: MenuService,
-              private cartService: CartService,
+              public cartService: CartService,
               private socketService: SocketService,
               private _router: Router,
               private _route: ActivatedRoute
@@ -302,8 +285,8 @@ export class SearchGridSectionComponent implements OnInit {
     });
   }
 
-  addToCart(productId: string) {
-    this.cartService.addToCart(this.singleCustomProductObj);
+  addToCart() {
+    this.cartService.addToCart(this.cartService.singleCustomProductObj);
     document.getElementById("btnProductCart")?.click()
   }
 
@@ -485,7 +468,7 @@ export class SearchGridSectionComponent implements OnInit {
       })
     }
 
-    this.singleCustomProductObj = {
+    this.cartService.singleCustomProductObj = {
       productName: product.productName,
       productId: product.productId,
       productImage: product.productImage,
@@ -506,26 +489,26 @@ export class SearchGridSectionComponent implements OnInit {
   }
 
   selectProductRate() {
-    this.singleCustomProductObj.productTotalPrice = this.singleCustomProductObj.productRate[this.selectProductRatesField.value]
-    this.singleCustomProductObj.productServingSize = this.selectProductRatesField.value
+    this.cartService.singleCustomProductObj.productTotalPrice = this.cartService.singleCustomProductObj.productRate[this.selectProductRatesField.value]
+    this.cartService.singleCustomProductObj.productServingSize = this.selectProductRatesField.value
   }
 
   selectFlavor(flavor: any) {
-    this.singleCustomProductObj.productFlavors.forEach((item: any) => {
+    this.cartService.singleCustomProductObj.productFlavors.forEach((item: any) => {
       item.selected = item.flavorName === flavor.flavorName
     })
   }
 
   previousSlide() {
     this.slideToShow--
-    if (this.slideToShow === 2 && !this.singleCustomProductObj.productToppings.length) {
+    if (this.slideToShow === 2 && !this.cartService.singleCustomProductObj.productToppings.length) {
       this.slideToShow--
     }
   }
 
   nextSlide() {
     this.slideToShow++
-    if (this.slideToShow === 2 && !this.singleCustomProductObj.productToppings.length) {
+    if (this.slideToShow === 2 && !this.cartService.singleCustomProductObj.productToppings.length) {
       this.slideToShow++
     }
   }
@@ -540,13 +523,13 @@ export class SearchGridSectionComponent implements OnInit {
   }
 
   customizeBillCalculation() {
-    this.singleCustomProductObj.productTotalPrice = this.singleCustomProductObj.productQuantity ? this.singleCustomProductObj.productPrice * this.singleCustomProductObj.productQuantity : this.singleCustomProductObj.productPrice
-    this.singleCustomProductObj.productToppings.forEach((item: any) => {
-      this.singleCustomProductObj.productTotalPrice += Math.ceil(item.productTotalPrice)
+    this.cartService.singleCustomProductObj.productTotalPrice = this.cartService.singleCustomProductObj.productQuantity ? this.cartService.singleCustomProductObj.productPrice * this.cartService.singleCustomProductObj.productQuantity : this.cartService.singleCustomProductObj.productPrice
+    this.cartService.singleCustomProductObj.productToppings.forEach((item: any) => {
+      this.cartService.singleCustomProductObj.productTotalPrice += Math.ceil(item.productTotalPrice)
     })
 
-    this.singleCustomProductObj.productAddons.forEach((item: any) => {
-      this.singleCustomProductObj.productTotalPrice += item.productTotalPrice
+    this.cartService.singleCustomProductObj.productAddons.forEach((item: any) => {
+      this.cartService.singleCustomProductObj.productTotalPrice += item.productTotalPrice
     })
   }
 
@@ -601,7 +584,7 @@ export class SearchGridSectionComponent implements OnInit {
   }
 
   reset() {
-    this.singleCustomProductObj = {
+    this.cartService.singleCustomProductObj = {
       productName: '',
       productId: '',
       productImage: '',

@@ -14,11 +14,11 @@
                 <div class="m-auto item">
                   <div class="blog-card-slide">
                     <div class="blog-card-thumb">
-                      <img [src]="resolveImages(singleCustomProductObj)" alt="blog">
+                      <img [src]="resolveImages(cartService.singleCustomProductObj)" alt="blog">
                     </div>
                     <div class="blog-card-content">
                       <div class="section p-2" *ngIf="slideToShow===0">
-                        <h3 class="text-center">{{singleCustomProductObj.productName}}</h3>
+                        <h3 class="text-center">{{cartService.singleCustomProductObj.productName}}</h3>
                         <div class="main-selection-container">
                           <div class="list mb-2 d-flex justify-content-between">
                             <div class="d-flex left">
@@ -34,10 +34,10 @@
                           </div>
                           <hr>
                           <div
-                            *ngIf="singleCustomProductObj.productOptions && singleCustomProductObj.productOptions.length"
+                            *ngIf="cartService.singleCustomProductObj.productOptions && cartService.singleCustomProductObj.productOptions.length"
                             class="container multi-select-list row">
                             <h6 class="mb-4">Product Options</h6>
-                            <div *ngFor="let options of singleCustomProductObj.productOptions"
+                            <div *ngFor="let options of cartService.singleCustomProductObj.productOptions"
                                  (click)="selectProductOptions(options)" class="mb-3 col-lg-4">
                               <span *ngIf="options.selected"><i class="fas fa-check"></i></span>
                               <div [class.multi-selection]="options.selected"
@@ -53,9 +53,9 @@
                         <h3 class="text-center">Product Ingredients</h3>
                         <div class="main-selection-container">
                           <div
-                            *ngIf="singleCustomProductObj.productIngredients && singleCustomProductObj.productIngredients.length"
+                            *ngIf="cartService.singleCustomProductObj.productIngredients && cartService.singleCustomProductObj.productIngredients.length"
                             class="container multi-select-list row">
-                            <div *ngFor="let ingredients of singleCustomProductObj.productIngredients"
+                            <div *ngFor="let ingredients of cartService.singleCustomProductObj.productIngredients"
                                  (click)="selectIngredients(ingredients)" class="mb-3 col-lg-4">
                               <i *ngIf="ingredients.selected" class="fas fa-check"></i>
                               <div [class.multi-selection]="ingredients.selected"
@@ -70,9 +70,9 @@
                             style="letter-spacing: 1px;font-size: 17px;font-weight: 600;font-family: Abril Fatface, cursive"
                             class="text-center mb-4">Product Flavours</h6>
                           <div
-                            *ngIf="singleCustomProductObj.productFlavors && singleCustomProductObj.productFlavors.length"
+                            *ngIf="cartService.singleCustomProductObj.productFlavors && cartService.singleCustomProductObj.productFlavors.length"
                             class="container multi-select-list row">
-                            <div *ngFor="let flavor of singleCustomProductObj.productFlavors"
+                            <div *ngFor="let flavor of cartService.singleCustomProductObj.productFlavors"
                                  (click)="selectFlavor(flavor)" class="mb-3 col-lg-4">
                               <i *ngIf="flavor.selected" class="fas fa-check"></i>
                               <div [class.multi-selection]="flavor.selected"
@@ -86,9 +86,9 @@
                       <div class="section p-2" *ngIf="slideToShow===2">
                         <h3 class="text-center">Product Topping</h3>
                         <div
-                          *ngIf="singleCustomProductObj.productToppings && singleCustomProductObj.productToppings.length"
+                          *ngIf="cartService.singleCustomProductObj.productToppings && cartService.singleCustomProductObj.productToppings.length"
                           class="main-selection-container">
-                          <div *ngFor="let toppings of singleCustomProductObj.productToppings"
+                          <div *ngFor="let toppings of cartService.singleCustomProductObj.productToppings"
                                class="list mb-2 d-flex justify-content-between">
                             <div class="d-flex left">
                               <img [src]="toppings.productImage"/>
@@ -117,9 +117,9 @@
                       </div>
                       <div class="section p-2" *ngIf="slideToShow===3">
                         <h3 class="text-center">Addons</h3>
-                        <div *ngIf="singleCustomProductObj.productAddons && singleCustomProductObj.productAddons.length"
+                        <div *ngIf="cartService.singleCustomProductObj.productAddons && cartService.singleCustomProductObj.productAddons.length"
                              class="main-selection-container">
-                          <div *ngFor="let addons of singleCustomProductObj.productAddons"
+                          <div *ngFor="let addons of cartService.singleCustomProductObj.productAddons"
                                class="list mb-2 d-flex justify-content-between">
                             <div class="d-flex left">
                               <img [src]="addons.productImage"/>
@@ -151,12 +151,12 @@
                         <div class="d-flex mt-2 align-items-center justify-content-center">
                           <div class="btn-group">
                             <button style="padding: 4px 28px;" type="button"
-                                    (click)="addProductQuantity(singleCustomProductObj,'subtracting')"
+                                    (click)="addProductQuantity(cartService.singleCustomProductObj,'subtracting')"
                                     class="btn btn-grp btn-secondary"><strong>-</strong></button>
                             <button style="width: 70px;padding: 4px 28px;border: 1px solid lightgray;background: whitesmoke;color: black" type="button" class="btn ml-1 mr-1">
-                              <strong>{{singleCustomProductObj.productQuantity}}</strong></button>
+                              <strong>{{cartService.singleCustomProductObj.productQuantity}}</strong></button>
                             <button style="padding: 4px 28px;" type="button"
-                                    (click)="addProductQuantity(singleCustomProductObj,'adding')"
+                                    (click)="addProductQuantity(cartService.singleCustomProductObj,'adding')"
                                     class="btn btn-secondary"><strong>+</strong></button>
                           </div>
                         </div>
@@ -172,12 +172,12 @@
                             <tbody>
                             <tr style="height: 20%">
                               <td>Item Name</td>
-                              <td>{{singleCustomProductObj.productName}}</td>
-                              <td>${{singleCustomProductObj.productPrice}}</td>
+                              <td>{{cartService.singleCustomProductObj.productName}}</td>
+                              <td>${{cartService.singleCustomProductObj.productPrice}}</td>
                             </tr>
                             <tr>
                               <td>Options</td>
-                              <td><span *ngFor="let opt of singleCustomProductObj.productOptions">
+                              <td><span *ngFor="let opt of cartService.singleCustomProductObj.productOptions">
                                 <span *ngIf="opt.selected">{{opt.productName }} , </span>
                               </span>
                               </td>
@@ -185,7 +185,7 @@
                             </tr>
                             <tr>
                               <td>Ingredients</td>
-                              <td><span *ngFor="let ing of singleCustomProductObj.productIngredients">
+                              <td><span *ngFor="let ing of cartService.singleCustomProductObj.productIngredients">
                                 <span *ngIf="ing.selected">{{ing.productName }} , </span>
                               </span>
                               </td>
@@ -193,7 +193,7 @@
                             </tr>
                             <tr>
                               <td>Flavour</td>
-                              <td><span *ngFor="let flav of singleCustomProductObj.productFlavors">
+                              <td><span *ngFor="let flav of cartService.singleCustomProductObj.productFlavors">
                                 <span *ngIf="flav.selected">{{flav.flavorName }} , </span>
                               </span>
                               </td>
@@ -201,30 +201,30 @@
                             </tr>
                             <tr>
                               <td>Toppings</td>
-                              <td><span *ngFor="let top of singleCustomProductObj.productToppings">
+                              <td><span *ngFor="let top of cartService.singleCustomProductObj.productToppings">
                                 <span *ngIf="top.productQuantity">{{top.productName }} , </span>
                               </span>
                               </td>
-                              <td>${{getTotalPrice(singleCustomProductObj.productToppings)}}</td>
+                              <td>${{getTotalPrice(cartService.singleCustomProductObj.productToppings)}}</td>
                             </tr>
                             <tr>
                               <td>Addons</td>
-                              <td><span *ngFor="let add of singleCustomProductObj.productAddons">
+                              <td><span *ngFor="let add of cartService.singleCustomProductObj.productAddons">
                                 <span *ngIf="add.productQuantity">{{add.productName }} , </span>
                               </span>
                               </td>
-                              <td>${{getTotalPrice(singleCustomProductObj.productAddons)}}</td>
+                              <td>${{getTotalPrice(cartService.singleCustomProductObj.productAddons)}}</td>
                             </tr>
                             <tr>
                               <td>Attributes</td>
-                              <td><span *ngFor="let attr of singleCustomProductObj.productAttributes | keyvalue">
+                              <td><span *ngFor="let attr of cartService.singleCustomProductObj.productAttributes | keyvalue">
                                 <span *ngIf="attr.value">{{attr.key }} , </span>
                               </span></td>
                               <td>--</td>
                             </tr>
                             <tr>
                               <td>Nutrition</td>
-                              <td><span *ngFor="let nut of singleCustomProductObj.productNutrition | keyvalue">
+                              <td><span *ngFor="let nut of cartService.singleCustomProductObj.productNutrition | keyvalue">
                                 ({{nut.key}} : {{nut.value}}) <br>
                               </span></td>
                               <td>--</td>
@@ -234,7 +234,7 @@
                         </div>
                       </div>
                       <div class="total">
-                        <h6 class="text-end">Total ${{singleCustomProductObj.productTotalPrice}}</h6>
+                        <h6 class="text-end">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
                       </div>
                       <div class="d-flex justify-content-between button-group">
                         <button *ngIf="slideToShow!==0" (click)="previousSlide()" type="button" class="btn btn-yellow">
@@ -245,8 +245,8 @@
                           <button *ngIf="slideToShow!==4" (click)="nextSlide()" type="button"
                                   class="btn ml-2 btn-primary">Next
                             <i class="fas fa-arrow-right"></i></button>
-                          <button *ngIf="slideToShow==4" (click)="addToCart('')" type="button"
-                                  class="btn ml-2 btn-primary">Cart Item
+                          <button *ngIf="slideToShow==4" (click)="addToCart()" type="button"
+                                  data-bs-dismiss="modal" class="btn ml-2 btn-primary">Cart Item
                             <i class="fas ml-2 fa-cart-plus"></i></button>
                         </div>
                       </div>

@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { CartService } from 'src/app/services/cart.service';
-import { MenuService } from 'src/app/services/menu.service';
+import {Component, OnInit} from '@angular/core';
+import {CartService} from 'src/app/services/cart.service';
+import {MenuService} from 'src/app/services/menu.service';
+
+declare var $: any;
 
 @Component({
   selector: 'app-product-cart-modal',
@@ -15,23 +17,31 @@ export class ProductCartModalComponent implements OnInit {
   cartTotal = 0
 
   constructor(private cartService: CartService,
-    private MenuService: MenuService) { }
+              private MenuService: MenuService) {
+  }
 
   ngOnInit(): void {
     this.getProducts();
     this.getCartProducts();
   }
 
+  resolveImages(product: any) {
+    if (product.productImage && product.productImage.length) {
+      return 'assets/images/products/' + product.productImage[0]
+    }
+    return 'assets/images/product-1.png'
+  }
+
   getCartProducts() {
     this.cartService.getCartProducts().subscribe(
       res => {
-        this.productIds = JSON.parse(res)
-        this.cartProducts = []
+        // this.productIds = JSON.parse(res)
+        this.cartProducts = JSON.parse(res)
         this.cartTotal = 0
-        for (let id in this.productIds) {
-          this.cartProducts.push(this.products.find((product: { productId: string }) => product.productId === this.productIds[id]));
-          this.cartTotal += this.cartProducts[id].productRate.standard
-        }
+        // for (let id in this.productIds) {
+        //   this.cartProducts.push(this.products.find((product: { productId: string }) => product.productId === this.productIds[id]));
+        //   this.cartTotal += this.cartProducts[id].productRate.standard
+        // }
       }
     )
   }
@@ -44,8 +54,33 @@ export class ProductCartModalComponent implements OnInit {
       });
   }
 
+  calculateTotalPrice(productToppings: any) {
+    let price = 0
+    if (productToppings && productToppings.length) {
+      productToppings.forEach((item: any) => {
+        price += item.productTotalPrice
+      })
+    }
+    return price
+  }
+
+  totalCartPrice() {
+    let price = 0
+    if (this.cartProducts && this.cartProducts.length) {
+      this.cartProducts.forEach((item: any) => {
+        price += item.productTotalPrice
+      })
+    }
+    return price
+  }
+
   removeFromCart(productId: string) {
     this.cartService.removeFromCart(productId);
   }
 
+  editFromCart(product: any) {
+    this.cartService.singleCustomProductObj = JSON.parse(JSON.stringify(product))
+    let modal = document.getElementsByClassName('product-customization-modal')
+    console.log(modal.namedItem('ontoggle'))
+  }
 }
