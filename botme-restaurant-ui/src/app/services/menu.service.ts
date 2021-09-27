@@ -28,6 +28,11 @@ export class MenuService {
     return this.http.get(url);
   }
 
+  getProductByCategory(productCategory: string): Observable<any> {
+    const url = `${this.apiBaseUrl}/food/product/search?productCategory=${productCategory}`;
+    return this.http.get(url);
+  }
+
   getProductsByFiltering(urlString: any) {
     const url = this.apiBaseUrl + "/food/product/search?productCategory=" + urlString.productCategory + '&productName=' + urlString.productName + '&priceMin=' + urlString.priceMin + '&priceMax=' + urlString.priceMax + '&sortByPrice=' + urlString.sortByPrice + '&ratingMin=' + urlString.ratingMin + '&ratingMax=' + urlString.ratingMax
     return this.http.get(url);
