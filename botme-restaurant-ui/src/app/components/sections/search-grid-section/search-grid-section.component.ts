@@ -289,6 +289,11 @@ export class SearchGridSectionComponent implements OnInit {
     document.getElementById("btnProductCart")?.click()
   }
 
+  editToCart() {
+    this.cartService.addToCart(this.cartService.singleCustomProductObj, true);
+    document.getElementById("btnProductCart")?.click()
+  }
+
   sendWSMessage(text: string) {
     this.socketService.sendMessage(text);
   }
@@ -598,7 +603,8 @@ export class SearchGridSectionComponent implements OnInit {
       productNutrition: {},
       productQuantity: 1,
       productPrice: 0,
-      productTotalPrice: 0
+      productTotalPrice: 0,
+      isEditable: false
     }
   }
 }

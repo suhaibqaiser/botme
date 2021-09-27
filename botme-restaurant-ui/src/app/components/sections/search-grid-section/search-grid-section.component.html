@@ -245,8 +245,11 @@
                           <button *ngIf="slideToShow!==4" (click)="nextSlide()" type="button"
                                   class="btn ml-2 btn-primary">Next
                             <i class="fas fa-arrow-right"></i></button>
-                          <button *ngIf="slideToShow==4" (click)="addToCart()" type="button"
+                          <button *ngIf="slideToShow==4 && !cartService.singleCustomProductObj.isEditable" (click)="addToCart()" type="button"
                                   data-bs-dismiss="modal" class="btn ml-2 btn-primary">Cart Item
+                            <i class="fas ml-2 fa-cart-plus"></i></button>
+                          <button *ngIf="slideToShow==4 && cartService.singleCustomProductObj.isEditable" (click)="editToCart()" type="button"
+                                  data-bs-dismiss="modal" class="btn ml-2 btn-primary">Edit Cart Item
                             <i class="fas ml-2 fa-cart-plus"></i></button>
                         </div>
                       </div>

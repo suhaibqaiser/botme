@@ -28,9 +28,11 @@ export class CartService {
     productNutrition: {},
     productQuantity: 1,
     productPrice: 0,
-    productTotalPrice: 0
+    productTotalPrice: 0,
+    isEditable: false
   }
   selectProductRatesField = new FormControl('')
+
   constructor() {
     this.getFromLocalstorage();
   }
@@ -46,8 +48,14 @@ export class CartService {
     this.cartProducts.next(JSON.stringify(this.cartProduct));
   }
 
-  addToCart(singleCustomProductObj: any) {
-    this.cartProduct.push(singleCustomProductObj);
+  addToCart(singleCustomProductObj: any, isEdit: any = false) {
+    if (!isEdit) {
+      this.cartProduct.push(singleCustomProductObj)
+    } else {
+      this.cartProduct.splice(this.cartProduct.indexOf(singleCustomProductObj.productId), 1)
+      this.cartProduct.push(singleCustomProductObj)
+    }
+
     this.setToLocalStorage("cart-products", this.cartProduct);
   }
 
