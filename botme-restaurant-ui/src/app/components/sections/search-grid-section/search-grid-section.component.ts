@@ -522,7 +522,7 @@ export class SearchGridSectionComponent implements OnInit {
   }
 
   customizeBillCalculation() {
-    this.cartService.singleCustomProductObj.productTotalPrice = this.cartService.singleCustomProductObj.productQuantity ? this.cartService.singleCustomProductObj.productPrice * this.cartService.singleCustomProductObj.productQuantity : this.cartService.singleCustomProductObj.productPrice
+    this.cartService.singleCustomProductObj.productTotalPrice = this.cartService.singleCustomProductObj.productPrice
     this.cartService.singleCustomProductObj.productToppings.forEach((item: any) => {
       this.cartService.singleCustomProductObj.productTotalPrice += Math.ceil(item.productTotalPrice)
     })
@@ -555,14 +555,14 @@ export class SearchGridSectionComponent implements OnInit {
   }
 
   addProductQuantity(product: any, type: any) {
+    this.customizeBillCalculation()
     if (type === 'adding') {
       product.productQuantity = product.productQuantity + 1
     } else if (type === 'subtracting') {
       if (product.productQuantity === 1) return
       product.productQuantity = product.productQuantity - 1
     }
-    product.productTotalPrice = product.productPrice * product.productQuantity
-    this.customizeBillCalculation()
+    product.productTotalPrice = product.productTotalPrice * product.productQuantity
   }
 
   getTotalPrice(obj: any) {
