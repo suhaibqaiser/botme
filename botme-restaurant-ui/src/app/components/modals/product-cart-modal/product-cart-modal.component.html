@@ -20,28 +20,26 @@
           <div class="cart-modal-action">
             <div class="cart-modal-action-item">
               <div class="cart-modal-quantity">
-                <p class="cart-quantity-price"><strong>Item</strong> : ${{product.productPrice}}
+                <p class="cart-quantity-price">
+                  <span *ngFor="let top of product.productToppings"><span *ngIf="top.productQuantity">{{top.productName }}( ${{top.productTotalPrice}})<br></span></span></p>
               </div>
-              <div class="cart-modal-quantity mt-2">
-                <p class="cart-quantity-price"><strong>Topping</strong> : ${{calculateTotalPrice(product.productToppings)}}
-                  <br>
-                  <span *ngFor="let top of product.productToppings"><span *ngIf="top.productQuantity">{{top.productName }} , </span></span></p>
+              <div class="cart-modal-quantity">
+                <p class="cart-quantity-price">
+                  <span *ngFor="let addon of product.productAddons"><span *ngIf="addon.productQuantity">{{addon.productName }}( ${{addon.productTotalPrice}})<br> </span></span></p>
               </div>
-              <div class="cart-modal-quantity mt-2">
-                <p class="cart-quantity-price"><strong>Addons</strong> : ${{calculateTotalPrice(product.productAddons)}}
-                  <br>
-                  <span *ngFor="let addon of product.productAddons"><span *ngIf="addon.productQuantity">{{addon.productName }} , </span></span></p>
+              <div class="mt-2 cart-modal-quantity">
+                <p class="cart-quantity-price"><strong>Sub Total</strong> : ${{product.productTotalPrice}}
               </div>
             </div>
-            <div class="cart-modal-action-item">
-              <div class="cart-modal-delete">
-                <a href="javascript:void(0)" (click)="removeFromCart(product.productId)"><i
-                  class="icofont-ui-delete"></i></a>
-              </div>
-              <div class="mt-3 cart-modal-delete">
-                <a href="javascript:void(0)" (click)="editFromCart(product)">
-                  <i class="fas fa-edit"></i></a>
-              </div>
+          </div>
+          <div class="d-flex justify-content-between mt-2 cart-modal-action-item">
+            <div class="cart-modal-delete">
+              <a href="javascript:void(0)" (click)="removeFromCart(product.productId)"><i
+                class="icofont-ui-delete"></i></a>
+            </div>
+            <div class="cart-modal-delete">
+              <a href="javascript:void(0)" (click)="editFromCart(product)">
+                <i class="fas fa-edit"></i></a>
             </div>
           </div>
         </div>
