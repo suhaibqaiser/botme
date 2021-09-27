@@ -11,7 +11,7 @@
       <h2 class="color-white">My Order</h2>
       <div class="cart-modal-product" *ngFor="let product of cartProducts">
         <div class="cart-modal-thumb">
-          <a href="javascript:void(0)">
+          <a href="/product-detail/?productId={{product.productId}}">
             <img [src]="resolveImages(product)" alt="product">
           </a>
         </div>
