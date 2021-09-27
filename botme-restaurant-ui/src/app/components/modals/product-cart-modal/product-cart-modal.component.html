@@ -20,14 +20,17 @@
           <div class="cart-modal-action">
             <div class="cart-modal-action-item">
               <div class="cart-modal-quantity">
-                <p class="cart-quantity-price">Item ({{product.productPrice}} * {{product.productQuantity}})
-                  = ${{product.productPrice * product.productQuantity}}</p>
+                <p class="cart-quantity-price"><strong>Item</strong> : ${{product.productPrice}}
               </div>
-              <div class="cart-modal-quantity">
-                <p class="cart-quantity-price">Topping ${{calculateTotalPrice(product.productToppings)}}</p>
+              <div class="cart-modal-quantity mt-2">
+                <p class="cart-quantity-price"><strong>Topping</strong> : ${{calculateTotalPrice(product.productToppings)}}
+                  <br>
+                  <span *ngFor="let top of product.productToppings"><span *ngIf="top.productQuantity">{{top.productName }} , </span></span></p>
               </div>
-              <div class="cart-modal-quantity">
-                <p class="cart-quantity-price">Addons ${{calculateTotalPrice(product.productAddons)}}</p>
+              <div class="cart-modal-quantity mt-2">
+                <p class="cart-quantity-price"><strong>Addons</strong> : ${{calculateTotalPrice(product.productAddons)}}
+                  <br>
+                  <span *ngFor="let addon of product.productAddons"><span *ngIf="addon.productQuantity">{{addon.productName }} , </span></span></p>
               </div>
             </div>
             <div class="cart-modal-action-item">
