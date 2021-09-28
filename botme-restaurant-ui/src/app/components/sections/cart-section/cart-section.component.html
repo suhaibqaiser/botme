@@ -7,7 +7,6 @@
           <th></th>
           <th></th>
           <th>Product</th>
-          <th>Id</th>
           <th>Unit Price</th>
           <th>Quantity</th>
           <th>Total</th>
@@ -19,21 +18,22 @@
           <td>
             <div class="product-table-info">
               <div class="product-table-thumb">
-                <img src="assets/images/product-1.png" alt="product">
+                <a href="/product-detail/?productId={{product.productId}}">
+                  <img [src]="resolveImages(product)" alt="product">
+                </a>
               </div>
             </div>
           </td>
           <td class="td-product-name">{{product.productName}}</td>
-          <td>{{product.productSerialNo}}</td>
-          <td>${{product.productRate.standard}}</td>
+          <td>${{product.productPrice}}</td>
           <td>
             <div class="cart-quantity">
-              <button class="qu-btn dec">-</button>
-              <input type="text" class="qu-input" value="2">
-              <button class="qu-btn inc">+</button>
+              <button (click)="addProductQuantity(product,'subtracting')" class="qu-btn dec">-</button>
+              <input type="text" class="qu-input" [value]="product.productQuantity">
+              <button (click)="addProductQuantity(product,'adding')" class="qu-btn inc">+</button>
             </div>
           </td>
-          <td class="td-total-price">$9.00</td>
+          <td class="td-total-price">${{product.productTotalPrice}}</td>
         </tr>
         </tbody>
       </table>
@@ -64,7 +64,7 @@
           <div class="cart-total-box">
             <div class="cart-total-item">
               <h4>Sub Total</h4>
-              <p>$ 45</p>
+              <p>$ {{getSubTotal()}}</p>
             </div>
             <div class="cart-total-item">
               <h4>Shipping</h4>
@@ -92,7 +92,7 @@
             </div>
             <div class="cart-total-item cart-total-bold">
               <h4 class="color-white">Total</h4>
-              <p>$ 45</p>
+              <p>$ {{getSubTotal()}}</p>
             </div>
           </div>
           <a routerLink="/checkout" class="btn">Proceed To Checkout</a>
