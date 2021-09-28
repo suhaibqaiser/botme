@@ -4,35 +4,31 @@ nlu:
     examples: |
       - lang
       - Language
-  - intent: greet_one
+      
+  - intent: greet
     examples: |
       - hi
       - hello
-  - intent: greet_two
-    examples: |
+      - Hello
+      - Hi
+      - Hey
       - good morning
+      - Good Morning
       - good afternoon
+      - Good Afternoon
       - good evening
-      - goodmorning
-      - goodevening
-      - good afternoon
-      - hi good morning
-      - hi good morning how are you
-      - hi good morning sir
-      - hi good morning dear
-      - hi good evening
-      - hi good afternoon
-  - intent: greet_three
-    examples: |
-      - hey, what's up
+      - Good Evening
+      - good morning how are you
+      - good morning sir
+      - good morning dear
+      - hey what's up
       - hey whats new today
       - hi whats up
-      - hello whats up?
-      - hello whats new today
-  - intent: greet_four
-    examples: |
-      - hello good to see you here
-      - hi good to see you here
+      - hey whats up?
+      - hey whats new today
+      - hey good to see you here
+      - hey good to see you here
+
   - intent: goodbye
     examples: |
       - cu
@@ -43,14 +39,15 @@ nlu:
       - goodbye
       - have a nice day
       - see you around
-      - bye bye
       - see you later
       - thats right
+
   - intent: thanks
     examples: |
       - thanks
       - thankyou
       - thank you
+
   - intent: affirm
     examples: |
       - yes
@@ -59,6 +56,7 @@ nlu:
       - of course
       - that sounds good
       - correct
+
   - intent: Home_page
     examples: |
       - Take me to [home page](pageone)
@@ -72,6 +70,71 @@ nlu:
       - show us the [home page](pageone)
       - i want you to take me to the [home page](pageone)
       - she want to visit [home page](pageone)
+      - Take me to [home](pageone)
+      - i want to visit [home](pageone)
+      - open [home](pageone) please
+      - i want to see the [home](pageone)
+      - can you please redirect me to [home](pageone)
+      - he want to redirect to [home](pageone)
+      - i want to redirect to [home](pageone)
+      - show me the [home](pageone)
+      - show us the [home](pageone)
+      - i want you to take me to the [home](pageone)
+      - she want to visit [home](pageone)
+      - [home page](pageone)
+      - [home](pageone)
+
+  - synonym: home 
+    examples: |
+      - home page
+
+  - intent: menu_list
+    examples: |
+      - I am Hungry what's the [menu](FoodList) today
+      - I am searching for a good food today. What's the [menu](FoodList)
+      - I am searching for a good [cusine](FoodList) today. What's the [menu](FoodList)
+      - May i check the [meal list](FoodList)
+      - The weather is so good outside so i want to  have good [food](FoodList)
+      - What's the best [cusine](FoodList) at your restaurant?
+      - May i have the [menu card](FoodList) please
+      - Can you please share me your [menu card](FoodList) please
+      - May i have the [food list](FoodList)
+      - i am looking for some good [food](FoodList)
+      - today is a good day so i am looking for good [food](FoodList)
+      - Anything good in [snacks](FoodList)
+      - i demand [menu card](FoodList)
+      - i request you to bring [menu card](FoodList)
+      - can you bring up the [menu](FoodList) please
+      - Show [menu](FoodList) please
+      - i am looking for some good [cusine](FoodList) at your restaurant
+      - i am hungry so can you show me good [snacks](FoodList) at your restaurant
+      - Show me the [menu](FoodList)
+      - [menu](FoodList)
+      - Bring me the [menu card](FoodList)
+      - get me the [menu card](FoodList)
+      - Would you please show me the [menu](FoodList)
+      - would you please show me the [menu card](FoodList)
+      - Take me to [menu page](FoodList)
+      - i want to visit [menu page](FoodList)
+      - open [menu page](FoodList) please
+      - i want to see the [menu page](FoodList)
+      - can you please redirect me to [menu page](FoodList)
+      - he want to redirect to [menu page](FoodList)
+      - i want to redirect to [menu page](FoodList)
+      - show me the [menu page](FoodList)
+      - show us the [menu page](FoodList)
+      - i want you to take me to the [menu page](FoodList)
+      - she want to visit [menu page](FoodList)
+
+  - synonym: menu
+    examples: |
+      - cusine
+      - meal list
+      - food
+      - menu card
+      - snacks
+      - menu page
+
   - intent: reservation_page
     examples: |
       - Take me to [reservation page](pagethree)
@@ -89,6 +152,13 @@ nlu:
       - we want to make [reservation](pagethree)
       - i want to do [reservation](pagethree)
       - we want to do [reservation](pagethree)
+      - [reservation page](pagethree)
+      - [reservation](pagethree)
+
+  - synonym: reservation 
+    examples: |
+      - reservation page
+
   - intent: contactus_page
     examples: |
       - Take me to [contactus page](pagefour)
@@ -114,7 +184,12 @@ nlu:
       - i want you to take me to the [contact us page](pagefour)
       - she want to visit [contact us page](pagefour)
       - [contactus page](pagefour)
-      - [contact us page](pagefour)    
+      - [contact us page](pagefour)
+
+  - synonym: contact us page
+    examples: |
+      - contactus page
+
   - intent: signup_Login
     examples: |
       - show me the [signup](pagefive)
@@ -136,6 +211,44 @@ nlu:
       - open the [login](pagefive) form  so i can login
       - i want to see [signup](pagefive) page
       - i want to see [login](pagefive) page
+
+  - intent: cart
+    examples: |
+      - Can you show me my [cart](list)
+      - I want to see my [cart](list)
+      - I want you to pop up the [cart](list)
+      - I want to see my [cart](list)
+      - I want to check my [cart](list)
+      - I want you to bring my [cart](list)
+      - I want to update my [cart](list)
+      - I want to add and delete the [quantity](list)
+      - Can you show me my [cart](list) so i can do changes
+      - i want you to bring up my [cart](list)
+      - we want you to show our [cart](list)
+      - we demand you to show our [cart](list)
+      - we demand you to bring up our [cart](list)
+      - i demand you to show our [cart](list)
+      - can you please show me my [cart](list) so i can do changes
+      - can you please bring up my [cart](list) so i can update it 
+      - i have done with the order kindly show me the cart
+      - can you please open the [cart](list)
+      - show us the [cart](list)
+      - open [cart](list)
+      - [cart](list) 
+      - show me the [cart](list)
+      - show me the [cart](list) please
+      - i want to see the [cart](list) please
+      - i want you to show me the [cart](list) please
+      - i demand you to show [cart](list)
+      - we demand you to show [cart](list)
+      - we want to see the [cart](list)
+      - i demand you to bring up the [cart](list)
+      - we demand you to bring up the [cart](list)
+      - add to [cart](list)
+      - add to [cart](list) item
+      - click on [cart](list) item
+      - [cart](list) item
+
   - intent: order_online_page
     examples: |
       - Take me to [order online page](pagesix)
@@ -162,185 +275,250 @@ nlu:
       - she want to visit [order online page](pagesix)
       - [order online page](pagesix)
       - [order online page](pagesix)
-  - intent: menu_list
-    examples: |
-      - Hey, I am Hungry what's the [menu](FoodList) today
-      - Hello, I am searching for a good food today. What's the [menu](FoodList)
-      - Hello, I am searching for a good [cusine](FoodList) today. What's the [menu](FoodList)
-      - Hi, May i check the [meal list](FoodList)
-      - Hi, The weather is so good outside so i want to  have good [food](FoodList)
-      - hey, What's the best [cusine](FoodList) at your restaurant?
-      - May i have the [menu card](FoodList) please
-      - Can you please share me your [menu card](FoodList) please
-      - May i have the [food list](FoodList)
-      - i am looking for some good [food](FoodList)
-      - hey, today is a good day so i am looking for good [food](FoodList)
-      - Anything good in [snacks](FoodList)
-      - i demand [menu card](FoodList)
-      - i request you to bring [menu card](FoodList)
-      - can you bring up the [menu](FoodList) please
-      - Show [menu](FoodList) please
-      - i am looking for some good [cusine](FoodList) at your restaurant
-      - i am hungry so can you show me good [snacks](FoodList) at your restaurant
-      - Show me the [menu](FoodList)
-      - [menu](FoodList)
-      - Bring me the [menu card](FoodList)
-      - get me the [menu card](FoodList)
-      - Would you please show me the [menu](FoodList)
-      - would you please show me the [menu card](FoodList)
-      - Take me to [menu page](FoodList)
-      - i want to visit [menu page](FoodList)
-      - open [menu page](FoodList) please
-      - i want to see the [menu page](FoodList)
-      - can you please redirect me to [menu page](FoodList)
-      - he want to redirect to [menu page](FoodList)
-      - i want to redirect to [menu page](FoodList)
-      - show me the [menu page](FoodList)
-      - show us the [menu page](FoodList)
-      - i want you to take me to the [menu page](FoodList)
-      - she want to visit [menu page](FoodList) 
+
+
   - intent: menu_category
     examples: |
       - I want to order from [burger](categoryName)
       - We want to order from [burger](categoryName)
-      - I want to order from [sandwich](categoryName)
-      - We want to order from [sandwich](categoryName)
-      - I want to order from [starters](categoryName)
-      - We want to order from [starters](categoryName)
-      - I want to order from [desserts](categoryName)
-      - We want to order from [desserts](categoryName)
-      - I want to order from [drinks] (categoryName)
-      - We want to order from [drinks](categoryName)
-      - I want to order from [today's special](categoryName)
-      - We want to order from [today's special](categoryName)
+      - show me the [burger](categoryName) category
+      - i want to see the [burger](categoryName) category
+      - can you pop up the [burger](categoryName) category
+      - I want to eat [burger](categoryName)
+      - We want to eat [burger](categoryName)
+      - I request you to bring [burger](categoryName)
+      - We request you to bring [burger](categoryName)
+      - I want to make a request you to bring [burger](categoryName)
+      - We want to make a request you to bring [burger](categoryName)
+      - I demand you to bring [burger](categoryName)
+      - We demand you to bring [burger](categoryName)
+      - I want ask for [burger](categoryName)
+      - We want ask for [burger](categoryName)
+      - [burger](categoryName)
+      - I want to order from [plates](categoryName)
+      - We want to order from [plates](categoryName)
+      - show me the [plates](categoryName) category
+      - i want to see the [plates](categoryName) category
+      - can you pop up the [plates](categoryName) category
+      - I want to have [plates](categoryName)
+      - We want to have [plates](categoryName)
+      - I want to eat [plates](categoryName)
+      - We want to eat plates
+      - We request you to bring plates
+      - I demand you to bring [plates](categoryName)
+      - We demand you to bring plates
+      - I want to make a request you to bring plates
+      - We want to make a request you to bring [plates](categoryName)
+      - [plates](categoryName)
+      - I want to order from [Make Your Own Bowl](categoryName)
+      - We want to order from [Make Your Own Bowl](categoryName)
+      - show me the [Make Your Own Bowl](categoryName) category
+      - i want to see the [Make Your Own Bowl](categoryName) category
+      - can you pop up the [Make Your Own Bowl](categoryName) category
+      - I want to eat [Make Your Own Bowl](categoryName)
+      - We want to eat [Make Your Own Bowl](categoryName)
+      - I request you to bring [Make Your Own Bowl](categoryName)
+      - We request you to bring [Make Your Own Bowl](categoryName)
+      - I want to make a request you to bring [Make Your Own Bowl](categoryName)
+      - We want to make a request you to bring [Make Your Own Bowl](categoryName)
+      - I demand you to bring [Make Your Own Bowl](categoryName)
+      - We demand you to bring [Make Your Own Bowl](categoryName)
+      - I want ask for [Make Your Own Bowl](categoryName)
+      - We want ask for [Make Your Own Bowl](categoryName)
+      - [Make Your Own Bowl](categoryName)
+      - I want to order from [Family Platters](categoryName)
+      - We want to order from [Family Platters](categoryName)
+      - show me the [Family Platters](categoryName) category
+      - i want to see the [Family Platters](categoryName) category
+      - can you pop up the [Family Platters](categoryName) category
+      - I want to eat [Family Platters](categoryName)
+      - We want to eat [Family Platters](categoryName)
+      - I request you to bring [Family Platters](categoryName)
+      - We request you to bring [Family Platters](categoryName)
+      - I want to make a request you to bring [Family Platters](categoryName)
+      - We want to make a request you to bring [Family Platters](categoryName)
+      - I demand you to bring [Family Platters](categoryName)
+      - We demand you to bring [Family Platters](categoryName)
+      - I want ask for [Family Platters](categoryName)
+      - We want ask for [Family Platters](categoryName)
+      - [Family Platters](categoryName)
+      - I want to order from [todays special](categoryName)
+      - We want to order from [todays special](categoryName)
+      - show me the [todays special](categoryName) category
+      - i want to see the [todays special](categoryName) category
+      - can you pop up the [todays special](categoryName) category
+      - I want to have [todays special](categoryName)
+      - We want to have [todays special](categoryName)
+      - I want to eat [todays special](categoryName)
+      - We want to eat todays special
+      - I request you to bring todays special
+      - We request you to bring [todays special](categoryName)
+      - I want to make a request you to bring [todays special](categoryName)
+      - We want to make a request you to bring todays special
+      - I demand you to bring todays special
+      - We demand you to bring [todays special](categoryName)
+      - I want ask for todays special
+      - We want ask for [todays special](categoryName)
+      - [todays special](categoryName)
       - I want to order from [wraps](categoryName)
       - We want to order from [wraps](categoryName)
-      - I want to order from [kids meal](categoryName)
-      - We want to order from [kids meal](categoryName)
-      - I want to order from [sides](categoryName)
-      - We want to order from [sides](categoryName)
-      - I want to order from [salads](categoryName)
-      - We want to order from [salads](categoryName)     
-      - I want to have [burger](categoryName)
-      - We want to have [burger](categoryName)
-      - I want to have [sandwich](categoryName)
-      - We want to have [sandwich](categoryName)
-      - I want to have [starters](categoryName)
-      - We want to have [starters](categoryName)
-      - I want to have [desserts](categoryName)
-      - We want to have [desserts](categoryName)
-      - I want to have [drinks](categoryName)
-      - We want to have [drinks](categoryName)
-      - I want to have [today's special](categoryName)
-      - We want to have [today's special](categoryName)
+      - show me the [wraps](categoryName) category
+      - i want to see the [wraps](categoryName) category
+      - can you pop up the [wraps](categoryName) category
       - I want to have [wraps](categoryName)
       - We want to have [wraps](categoryName)
-      - I want to have [kids meal](categoryName)
-      - We want to have [kids meal](categoryName)
-      - I want to have [sides](categoryName)
-      - We want to have [sides](categoryName)
-      - I want to have [salads](categoryName)
-      - We want to have [salads](categoryName)
-      - I want to eat burger
-      - We want to eat [burger](categoryName)
-      - I want to eat [sandwich](categoryName)
-      - We want to eat sandwich
-      - I want to eat [starters](categoryName)
-      - We want to eat starters
-      - I want to eat desserts
-      - We want to eat [desserts](categoryName)
-      - I want to eat drinks
-      - We want to eat [drinks](categoryName)
-      - I want to eat [today's special](categoryName)
-      - We want to eat today's special
       - I want to eat [wraps](categoryName)
       - We want to eat wraps
-      - I want to eat [kids meal](categoryName)
-      - We want to eat kids meal
-      - I want to eat sides
-      - We want to eat [sides](categoryName)
-      - I want to eat salads
-      - We want to eat [salads](categoryName)
-      - I request you to bring [burger](categoryName)
-      - We request you to bring burger
-      - I request you to bring sandwich
-      - We request you to bring [sandwich](categoryName)
-      - I request you to bring starters
-      - We request you to bring starters
-      - I request you to bring [desserts](categoryName)
-      - We request you to bring desserts
-      - I request you to bring drinks
-      - We request you to bring [drinks](categoryName)
-      - I request you to bring today's special
-      - We request you to bring [today's special](categoryName)
       - I request you to bring [wraps](categoryName)
       - We request you to bring wraps
-      - I request you to bring kids meal
-      - We request you to bring [kids meal](categoryName)
-      - I request you to bring [sides](categoryName)
-      - We request you to bring sides
-      - I request you to bring [salads](categoryName)
-      - We request you to bring salads
-      - I want to make a request you to bring [burger](categoryName)
-      - We want to make a request you to bring burger
-      - I want to make a request you to bring sandwich
-      - We want to make a request you to bring [sandwich](categoryName)
-      - I want to make a request you to bring starters
-      - We want to make a request you to bring [starters](categoryName)
-      - I want to make a request you to bring [desserts](categoryName)
-      - We want to make a request you to bring desserts
-      - I want to make a request you to bring [drinks](categoryName)
-      - We want to make a request you to bring drinks
-      - I want to make a request you to bring [today's special](categoryName)
-      - We want to make a request you to bring today's special
       - I want to make a request you to bring [wraps](categoryName)
       - We want to make a request you to bring wraps
-      - I want to make a request you to bring [kids meal](categoryName)
-      - We want to make a request you to bring kids meal
-      - I want to make a request you to bring [sides](categoryName)
-      - We want to make a request you to bring sides
-      - I want to make a request you to bring [salads](categoryName)
-      - We want to make a request you to bring salads
-      - I demand you to bring [burger](categoryName)
-      - We demand you to bring burger
-      - I demand you to bring sandwich
-      - We demand you to bring [sandwich](categoryName)
-      - I demand you to bring [starters](categoryName)
-      - We demand you to bring starters
-      - I demand you to bring desserts
-      - We demand you to bring [desserts](categoryName)
-      - I demand you to bring [drinks](categoryName)
-      - We demand you to bring drinks
-      - I demand you to bring today's special
-      - We demand you to bring [today's special](categoryName)
       - I demand you to bring wraps
       - We demand you to bring [wraps](categoryName)
-      - I demand you to bring kids meal
-      - We demand you to bring [kids meal](categoryName)
-      - I demand you to bring [sides](categoryName)
-      - We demand you to bring sides
-      - I demand you to bring [salads](categoryName)
-      - We demand you to bring salads
-      - I want ask for burger
-      - We want ask for [burger](categoryName)
-      - I want ask for [sandwich](categoryName)
-      - We want ask for sandwich
-      - I want ask for starters
-      - We want ask for [starters](categoryName)
-      - I want ask for desserts
-      - We want ask for [desserts](categoryName)
-      - I want ask for drinks
-      - We want ask for [drinks](categoryName)
-      - I want ask for today's special
-      - We want ask for [today's special](categoryName)
       - I want ask for [wraps](categoryName)
       - We want ask for wraps
+      - [wraps](categoryName)
+      - I want to order from [kids meal](categoryName)
+      - We want to order from [kids meal](categoryName)
+      - show me the [kids meal](categoryName) category
+      - i want to see the [kids meal](categoryName) category
+      - can you pop up the [kids meal](categoryName) category
+      - I want to have [kids meal](categoryName)
+      - We want to have [kids meal](categoryName)
+      - I want to eat [kids meal](categoryName)
+      - We want to eat kids meal
+      - I demand you to bring kids meal
+      - We demand you to bring [kids meal](categoryName)
+      - I request you to bring kids meal
+      - We request you to bring [kids meal](categoryName)
+      - I want to make a request you to bring [kids meal](categoryName)
+      - We want to make a request you to bring kids meal
       - I want ask for [kids meal](categoryName)
       - We want ask for kids meal
-      - I want ask for sides
-      - We want ask for [sides](categoryName)
+      - [kids meal](categoryName)
+      - I want to order from [drinks] (categoryName)
+      - We want to order from [drinks](categoryName)
+      - show me the [drinks](categoryName) category
+      - i want to see the [drinks](categoryName) category
+      - can you pop up the [drinks](categoryName) category
+      - I want to have [drinks](categoryName)
+      - We want to have [drinks](categoryName)
+      - I want to eat drinks
+      - We want to eat [drinks](categoryName)
+      - I request you to bring drinks
+      - We request you to bring [drinks](categoryName)
+      - I want to make a request you to bring [drinks](categoryName)
+      - We want to make a request you to bring drinks
+      - I demand you to bring [drinks](categoryName)
+      - We demand you to bring drinks
+      - I want ask for drinks
+      - We want ask for [drinks](categoryName)
+      - [drinks](categoryName)
+      - I want to order from [salads](categoryName)
+      - We want to order from [salads](categoryName)   
+      - show me the [salads](categoryName) category
+      - i want to see the [salads](categoryName) category
+      - can you pop up the [salads](categoryName) category  
+      - I want to have [salads](categoryName)
+      - We want to have [salads](categoryName)
+      - I want to have [salads](categoryName)
+      - We want to have [salads](categoryName)
+      - I want to eat salads
+      - We want to eat [salads](categoryName)
+      - I request you to bring [salads](categoryName)
+      - We request you to bring salads
+      - I want to make a request you to bring [salads](categoryName)
+      - We want to make a request you to bring salads
+      - I demand you to bring [salads](categoryName)
+      - We demand you to bring salads
       - I want ask for salads
       - We want ask for [salads](categoryName)
+      - [salads](categoryName)
+      - I want to order from [sides](categoryName)
+      - We want to order from [sides](categoryName)
+      - show me the [sides](categoryName) category
+      - i want to see the [sides](categoryName) category
+      - can you pop up the [sides](categoryName) category
+      - I want to have [sides](categoryName)
+      - We want to have [sides](categoryName)
+      - I want to eat sides
+      - We want to eat [sides](categoryName)
+      - I request you to bring [sides](categoryName)
+      - We request you to bring sides
+      - I want to make a request you to bring [sides](categoryName)
+      - We want to make a request you to bring sides
+      - I demand you to bring [sides](categoryName)
+      - We demand you to bring sides
+      - I want ask for sides
+      - We want ask for [sides](categoryName)
+      - [sides](categoryName)
+      - I want to order from [desserts](categoryName)
+      - We want to order from [desserts](categoryName)
+      - show me the [desserts](categoryName) category
+      - i want to see the [desserts](categoryName) category
+      - can you pop up the [desserts](categoryName) category
+      - I want to have [desserts](categoryName)
+      - We want to have [desserts](categoryName)
+      - I want to eat desserts
+      - We want to eat [desserts](categoryName)
+      - I request you to bring [desserts](categoryName)
+      - We request you to bring desserts
+      - I want to make a request you to bring [desserts](categoryName)
+      - We want to make a request you to bring desserts
+      - I demand you to bring desserts
+      - We demand you to bring [desserts](categoryName)
+      - I want ask for desserts
+      - We want ask for [desserts](categoryName) 
+      - [desserts](categoryName)
+      - I want to order from [sandwich](categoryName)
+      - We want to order from [sandwich](categoryName)
+      - can you pop up the [sandwich](categoryName) category
+      - I want to have [sandwich](categoryName)
+      - We want to have [sandwich](categoryName)
+      - show me the [sandwich](categoryName) category
+      - i want to see the [sandwich](categoryName) category
+      - I want to eat [sandwich](categoryName)
+      - We want to eat sandwich
+      - I want to make a request you to bring sandwich
+      - We want to make a request you to bring [sandwich](categoryName)
+      - I demand you to bring sandwich
+      - We demand you to bring [sandwich](categoryName)
+      - I want ask for [sandwich](categoryName)
+      - We want ask for sandwich
+      - [sandwich](categoryName)
+      - I want to order from [Ingredients](categoryName)
+      - We want to order from [Ingredients](categoryName)
+      - show me the [Ingredients](categoryName) category
+      - i want to see the [Ingredients](categoryName) category
+      - can you pop up the [Ingredients](categoryName) category
+      - I want to eat [Ingredients](categoryName)
+      - We want to eat [Ingredients](categoryName)
+      - I request you to bring [Ingredients](categoryName)
+      - We request you to bring [Ingredients](categoryName)
+      - I want to make a request you to bring [Ingredients](categoryName)
+      - We want to make a request you to bring [Ingredients](categoryName)
+      - I demand you to bring [Ingredients](categoryName)
+      - We demand you to bring [Ingredients](categoryName)
+      - I want ask for [Ingredients](categoryName)
+      - We want ask for [Ingredients](categoryName)
+      - [Ingredients](categoryName)
+      - I want to order from [Pizza](categoryName)
+      - We want to order from [Pizza](categoryName)
+      - show me the [Pizza](categoryName) category
+      - i want to see the [Pizza](categoryName) category
+      - can you pop up the [Pizza](categoryName) category
+      - I want to eat [Pizza](categoryName)
+      - We want to eat [Pizza](categoryName)
+      - I request you to bring [Pizza](categoryName)
+      - We request you to bring [Pizza](categoryName)
+      - I want to make a request you to bring [Pizza](categoryName)
+      - We want to make a request you to bring [Pizza](categoryName)
+      - I demand you to bring [Pizza](categoryName)
+      - We demand you to bring [Pizza](categoryName)
+      - I want ask for [Pizza](categoryName)
+      - We want ask for [Pizza](categoryName)
+      - [Pizza](categoryName)
+
   - intent: Navigation_left
     examples: |
       - can you move the slider to [left](slide)
@@ -361,28 +539,32 @@ nlu:
       - we want to add cheese slice to my cart
       - I would like to order a [cheese slice](productName)
       - I want to place an order for [cheese slice](productName)
+      - add [cheese slice](productName) to cart
       - I want to order [Nacho Burger](productName)
       - I like to buy [Nacho Burger](productName)
       - i want to add Nacho Burger to my cart
       - we want to add nacho burger to my cart
       - I would like to order a [nacho burger](productName)
       - I want to place an order for [nacho burger](productName)
-      - I would like to order a Nacho Burger
+      - I would like to order a [Nacho Burger](productName)
+      - add [Nacho Burger](productName) to cart
       - I want to order [Nacho Cheese](productName)
       - I like to buy [Nacho Cheese](productName)
       - i want to add nacho cheese to my cart
       - we want to add Nacho Cheese to my cart
       - I want to place an order for [nacho cheese](productName)
       - I would like to order a [nacho cheese](productName)
+      - add [Nacho Cheese](productName) to cart
       - I want to order [Cole Slaw](productName)
       - I like to buy [Cole Slaw](productName)
       - i want to add Cole Slaw to my cart
       - we want to add [cole slaw](productName) to my cart
       - I would like to order a [cole slaw](productName)
       - I want to place an order for [cole slaw](productName)
+      - add [cole slaw](productName) to cart
       - I want to order [French Fries](productName)
       - I like to buy [French Fries](productName)
-      - add french fries to cart
+      - add [french fries](productName) to cart
       - i want to add [French Fries](productName) to cart
       - I would like to order a [french fries](productName)
       - I want to place an order for [french fries](productName)
@@ -478,7 +660,7 @@ nlu:
       - I want to order [Beiruti](productName)
       - I like to buy [beiruti](productName)
       - I want to place an order for [beiruti](productName)
-      - I would like to order a [Mushroom Swiss)](productName)
+      - I would like to order a [Mushroom Swiss](productName)
       - I want to order [Mushroom Swiss](productName)
       - I like to buy [mushroom swiss](productName)
       - I want to place an order for [mushroom swiss](productName)
@@ -653,38 +835,25 @@ nlu:
       - I want to order [Cookies & Creme Shake](productName)
       - I like to buy [cookies & creme shake](productName)
       - I want to place an order for [cookies & creme shake](productName)
-  - intent: cart
+
+  - intent: food_size
     examples: |
-      - Can you show me my [cart](list)
-      - I want to see my [cart](list)
-      - I want you to pop up the [cart](list)
-      - I want to see my [cart](list)
-      - I want to check my [cart](list)
-      - I want you to bring my [cart](list)
-      - I want to update my [cart](list)
-      - I want to add and delete the [quantity](list)
-      - Can you show me my [cart](list) so i can do changes
-      - i want you to bring up my [cart](list)
-      - we want you to show our [cart](list)
-      - we demand you to show our [cart](list)
-      - we demand you to bring up our [cart](list)
-      - i demand you to show our [cart](list)
-      - can you please show me my [cart](list) so i can do changes
-      - can you please bring up my [cart](list) so i can update it 
-      - i have done with the order kindly show me the cart
-      - can you please open the [cart](list)
-      - show us the [cart](list)
-      - open [cart](list)
-      - [cart](list) 
-      - show me the [cart](list)
-      - show me the [cart](list) please
-      - i want to see the [cart](list) please
-      - i want you to show me the [cart](list) please
-      - i demand you to show [cart](list)
-      - we demand you to show [cart](list)
-      - we want to see the [cart](list)
-      - i demand you to bring up the [cart](list)
-      - we demand you to bring up the [cart](list)
+      - [small](size)
+      - [medium](size)
+      - [large](size)
+  - intent: next
+    examples: |
+      - [Next]{"entity":"nextoption","value":"next"}
+      - [next](nextoption)
+  - intent: Back
+    examples: |
+      - [back](previous)
+      - [Back]{"entity":"previous","value":"back"}
+  - intent: Cancel
+    examples: |
+      - [cancel](drop)
+      - [Cancel]{"entity":"drop","value":"cancel"}
+
   - intent: remove_item
     examples: |
       - i want to remove nacho cheese burger
@@ -704,42 +873,633 @@ nlu:
       - can you please generate my [invoice](receipt)
       - may i have my [invoice](receipt) please
       - please issue me the [invoice](receipt)
+
   - intent: reserve_table
     examples: |
       - i want a table on [friday](date) for [5](person) people
       - i want to reserve a table for [3](person) people for the next [monday](date)
-      - i need a table reservation for [4](person) person on [tomorrow](date)
-      - table for [2](person) person on [Friday the 13th](date)
-      - i want to reserve a table for [3](person) people on [sunday](date)
-      - i need to reserve a table
-      - need a table
-      - want to make a reservation
+      - i need a table reservation for [4](person) person on [tomFamily Platters		
       - i need a table for reservation
       - need a table for [9](person) people
       - [tomorrow](date) i need a table for [4](person) people on your patio
-  - intent: inform
+  - intent: unexpected_answer
+    examples: |
+      - Why do you need to know that
+      - why its important to tell people
+      - why should i tell you
+      - why you need to know?
+  - intent: unreserve_table
+    examples: |
+      - I want to know about [seating](table) for lunch
+      - I want to ask about [seating](table) for lunch
+      - please tell me if [seating](table) is available 
+      - let me know about the [seating](table) for lunch
+      - is [seating](table) available for lunch
+      - do u have [seating](table) arrangement here for lunch
+      - can u arrange [seating](table) for us
+      - could you please manage a [seating](table) for us
+      - can you help me to find out [seating](table) for lunch
+      - is there any [seating](table) available today
+      - I want to know about [table](table) for lunch
+      - I want to ask about [table](table) for lunch
+      - please tell me if [table](table) is available 
+      - let me know about the [table](table) for lunch
+      - is any [table](table) available for lunch
+      - do u have any [table](table) arrangement here for lunch
+      - can u arrange a [table](table) for us
+      - could you please manage a [table](table) for us
+      - can you help me to find out [table](table) for lunch
+      - is there any [table](table) available today
+      - I want to know about [dining table](table) for lunch
+      - I want to ask about [dining table](table) for lunch
+      - please tell me if [dining table](table) is available
+      - let me know about the [dining table](table) for lunch
+      - is any [dining table](table) available for lunch
+      - do u have any [dining table](table) arrangement here for lunch?
+      - can u arrange a [dining table](table) for us?
+      - could you please manage a [dining table](table) for us
+      - can you help me to find out [dining table](table) for lunch
+      - is there any [dining table](table) available today
+      - I want to know about some [desk](table) for lunch
+      - I want to ask about [desk](table) for lunch
+      - please tell me if [desk](table) is available 
+      - let me know about the [desk](table) for lunch
+      - is some [desk](table) available for lunch
+      - do u have [desk](table) arrangement here for lunch
+      - can u arrange a [desk](table) for us
+      - could you please manage a [desk](table) for us
+      - can you help me to find out any [desk](table) for lunch
+      - is there any [desk](table) available today
+  
+  - intent: unreserved_table_person
+    examples: |
+      - I want to know about seating for lunch for [one](number) persons
+      - I want to ask about seating for lunch for [one](number) persons
+      - please tell me if seating is available for [one](number) persons
+      - let me know about the seating table for [one](number) persons
+      - do u have any table arrangement here for lunch for [one](number) persons
+      - can u arrange a table for us we are [one](number) persons
+      - could you please manage a table for us we are [one](number) persons
+      - can you help me to find out table for lunch for [one](number) persons
+      - is there any table available today for [one](number) persons
+      - I want to know about diningtable for lunch for [one](number) persons
+      - I want to ask about dining table for lunch for [one](number) persons
+      - please tell me if dining table is available for [one](number) persons
+      - let me know about the dining table for lunch for [one](number) persons
+      - is any dining table available for lunch for [one](number) persons
+      - do u have any dining table arrangement here for lunch for [one](number) persons
+      - can u arrange a dining table for us we are [one](number) persons
+      - could you please manage a dining table for us we are [one](number) persons
+      - can you help me to find out dining table for lunch for [one](number) persons
+      - is there any dining table available today for [one](number) persons
+      - I want to know about some desk for lunch for [one](number) persons
+      - I want to ask about desk for lunch for [one](number) persons
+      - please tell me if desk is available for [one](number) persons
+      - let me know about the desk for lunch for [one](number) persons
+      - is some desk available for lunch for [one](number) persons
+      - can you help me to find out any desk for lunch for [one](number) persons
+      - is there any desk available today for [one](number) persons
+      - I want to know about seating for lunch for [1](number) persons
+      - I want to ask about seating for lunch for [1](number) persons
+      - please tell me if seating is available for [1](number) persons
+      - let me know about the seating for lunch for [1](number) persons
+      - is seating available for lunch for [1](number) persons
+      - do u have seating arrangement here for lunch for [1](number) persons
+      - can u arrange seating for us we are [1](number) persons
+      - could you please manage a seating for us we are [1](number) persons
+      - can you help me to find out seating for lunch for [1](number) persons
+      - is there any seating available today for [1](number) persons
+      - I want to know about table for lunch for [1](number) persons
+      - I want to ask about table for lunch for [1](number) persons
+      - please tell me if table is available for [1](number) persons
+      - let me know about the table for lunch for [1](number) persons
+      - is any table available for lunch for [1](number) persons
+      - do u have any table arrangement here for lunch for [1](number) persons
+      - can u arrange a table for us we are [1](number) persons
+      - could you please manage a table for us we are [1](number) persons
+      - can you help me to find out table for lunch for [1](number) persons
+      - is there any table available today for [1](number) persons
+      - I want to know about diningtable for lunch for [1](number) persons
+      - I want to ask about dining table for lunch for [1](number) persons
+      - please tell me if dining table is available for [1](number) persons
+      - let me know about the dining table for lunch for [1](number) persons
+      - is any dining table available for lunch for [1](number) persons
+      - do u have any dining table arrangement here for lunch for [1](number) persons
+      - can u arrange a dining table for us we are [1](number) persons
+      - could you please manage a dining table for us we are [1](number) persons
+      - can you help me to find out dining table for lunch for [1](number) persons
+      - is there any dining table available today for [1](number) persons
+      - I want to know about some desk for lunch for [1](number) persons
+      - I want to ask about desk for lunch for [1](number) persons
+      - please tell me if desk is available for [1](number) persons
+      - let me know about the desk for lunch for [1](number) persons
+      - is some desk available for lunch for [1](number) persons
+      - can you help me to find out any desk for lunch for [1](number) persons
+      - is there any desk available today for [1](number) persons
+      - I want to know about seating for lunch for [two](number) persons
+      - I want to ask about seating for lunch for [two](number) persons
+      - please tell me if seating is available for [two](number) persons
+      - let me know about the seating for lunch for [two](number) persons
+      - is seating available for lunch for [two](number) persons
+      - do u have seating arrangement here for lunch for [two](number) persons
+      - can u arrange seating for us we are [two](number) persons
+      - could you please manage a seating for us we are [two](number) persons
+      - can you help me to find out seating for lunch for [two](number) persons
+      - is there any seating available today for [two](number) persons
+      - I want to know about table for lunch for [two](number) persons
+      - I want to ask about table for lunch for [two](number) persons
+      - please tell me if table is available for [two](number) persons
+      - let me know about the table for lunch for [two](number) persons
+      - is any table available for lunch for [two](number) persons
+      - do u have any table arrangement here for lunch for [two](number) persons
+      - can u arrange a table for us we are [two](number) persons
+      - could you please manage a table for us we are [two](number) persons
+      - can you help me to find out table for lunch for [two](number) persons
+      - is there any table available today for [two](number) persons
+      - I want to know about diningtable for lunch for [two](number) persons
+      - I want to ask about dining table for lunch for [two](number) persons
+      - please tell me if dining table is available for [two](number) persons
+      - let me know about the dining table for lunch for [two](number) persons
+      - is any dining table available for lunch for [two](number) persons
+      - do u have any dining table arrangement here for lunch for [two](number) persons
+      - can u arrange a dining table for us we are [two](number) persons
+      - could you please manage a dining table for us we are [two](number) persons
+      - can you help me to find out dining table for lunch for [two](number) persons
+      - is there any dining table available today for [two](number) persons
+      - I want to know about some desk for lunch for [two](number) persons
+      - I want to ask about desk for lunch for [two](number) persons
+      - please tell me if desk is available for [two](number) persons
+      - let me know about the desk for lunch for [two](number) persons
+      - is some desk available for lunch for [two](number) persons
+      - can you help me to find out any desk for lunch for [two](number) persons
+      - is there any desk available today for [two](number) persons
+      - I want to know about seating for lunch for [2](number) persons
+      - I want to ask about seating for lunch for [2](number) persons
+      - please tell me if seating is available for [2](number) persons
+      - let me know about the seating for lunch for [2](number) persons
+      - is seating available for lunch for [2](number) persons
+      - do u have seating arrangement here for lunch for [2](number) persons
+      - can u arrange seating for us we are [2](number) persons
+      - could you please manage a seating for us we are [2](number) persons
+      - can you help me to find out seating for lunch for [2](number) persons
+      - is there any seating available today for [2](number) persons
+      - I want to know about table for lunch for [2](number) persons
+      - I want to ask about table for lunch for [2](number) persons
+      - please tell me if table is available for [2](number) persons
+      - let me know about the table for lunch for [2](number) persons
+      - is any table available for lunch for [2](number) persons
+      - do u have any table arrangement here for lunch for [2](number) persons
+      - can u arrange a table for us we are [2](number) persons
+      - could you please manage a table for us we are [2](number) persons
+      - can you help me to find out table for lunch for [2](number) persons
+      - is there any table available today for [2](number) persons
+      - I want to know about diningtable for lunch for [2](number) persons
+      - I want to ask about dining table for lunch for [2](number) persons
+      - please tell me if dining table is available for [2](number) persons
+      - let me know about the dining table for lunch for [2](number) persons
+      - is any dining table available for lunch for [2](number) persons
+      - do u have any dining table arrangement here for lunch for [2](number) persons
+      - can u arrange a dining table for us we are [2](number) persons
+      - could you please manage a dining table for us we are [2](number) persons
+      - can you help me to find out dining table for lunch for [2](number) persons
+      - is there any dining table available today for [2](number) persons
+      - I want to know about some desk for lunch for [2](number) persons
+      - I want to ask about desk for lunch for [2](number) persons
+      - please tell me if desk is available for [2](number) persons
+      - let me know about the desk for lunch for [2](number) persons
+      - is some desk available for lunch for [2](number) persons
+      - can you help me to find out any desk for lunch for [2](number) persons
+      - is there any desk available today for [2](number) persons
+      - I want to know about seating for lunch for [three](number) persons
+      - I want to ask about seating for lunch for [three](number) persons
+      - please tell me if seating is available for [three](number) persons
+      - let me know about the seating table for [three](number) persons
+      - do u have any table arrangement here for lunch for [three](number) persons
+      - can u arrange a table for us we are [three](number) persons
+      - could you please manage a table for us we are [three](number) persons
+      - can you help me to find out table for lunch for [three](number) persons
+      - is there any table available today for [three](number) persons
+      - I want to know about diningtable for lunch for [three](number) persons
+      - I want to ask about dining table for lunch for [three](number) persons
+      - please tell me if dining table is available for [three](number) persons
+      - let me know about the dining table for lunch for [three](number) persons
+      - is any dining table available for lunch for [three](number) persons
+      - do u have any dining table arrangement here for lunch for [three](number) persons
+      - can u arrange a dining table for us we are [three](number) persons
+      - could you please manage a dining table for us we are [three](number) persons
+      - can you help me to find out dining table for lunch for [three](number) persons
+      - is there any dining table available today for [three](number) persons
+      - I want to know about some desk for lunch for [three](number) persons
+      - I want to ask about desk for lunch for [three](number) persons
+      - please tell me if desk is available for [three](number) persons
+      - let me know about the desk for lunch for [three](number) persons
+      - is some desk available for lunch for [three](number) persons
+      - can you help me to find out any desk for lunch for [three](number) persons
+      - is there any desk available today for [three](number) persons
+      - I want to know about seating for lunch for [3](number) persons
+      - I want to ask about seating for lunch for [3](number) persons
+      - please tell me if seating is available for [3](number) persons
+      - let me know about the seating for lunch for [3](number) persons
+      - is seating available for lunch for [3](number) persons
+      - do u have seating arrangement here for lunch for [3](number) persons
+      - can u arrange seating for us we are [3](number) persons
+      - could you please manage a seating for us we are [3](number) persons
+      - can you help me to find out seating for lunch for [3](number) persons
+      - is there any seating available today for [3](number) persons
+      - I want to know about table for lunch for [3](number) persons
+      - I want to ask about table for lunch for [3](number) persons
+      - please tell me if table is available for [3](number) persons
+      - let me know about the table for lunch for [3](number) persons
+      - is any table available for lunch for [3](number) persons
+      - do u have any table arrangement here for lunch for [3](number) persons
+      - can u arrange a table for us we are [3](number) persons
+      - could you please manage a table for us we are [3](number) persons
+      - can you help me to find out table for lunch for [3](number) persons
+      - is there any table available today for [3](number) persons
+      - I want to know about diningtable for lunch for [3](number) persons
+      - I want to ask about dining table for lunch for [3](number) persons
+      - please tell me if dining table is available for [3](number) persons
+      - let me know about the dining table for lunch for [3](number) persons
+      - is any dining table available for lunch for [3](number) persons
+      - do u have any dining table arrangement here for lunch for [3](number) persons
+      - can u arrange a dining table for us we are [3](number) persons
+      - could you please manage a dining table for us we are [3](number) persons
+      - can you help me to find out dining table for lunch for [3](number) persons
+      - is there any dining table available today for [3](number) persons
+      - I want to know about some desk for lunch for [3](number) persons
+      - I want to ask about desk for lunch for [3](number) persons
+      - please tell me if desk is available for [3](number) persons
+      - let me know about the desk for lunch for [3](number) persons
+      - is some desk available for lunch for [3](number) persons
+      - can you help me to find out any desk for lunch for [3](number) persons
+      - is there any desk available today for [3](number) persons
+      - I want to know about seating for lunch for [four](number) persons
+      - I want to ask about seating for lunch for [four](number) persons
+      - please tell me if seating is available for [four](number) persons
+      - let me know about the seating for lunch for [four](number) persons
+      - is seating available for lunch for [four](number) persons
+      - do u have seating arrangement here for lunch for [four](number) persons
+      - can u arrange seating for us we are [four](number) persons
+      - could you please manage a seating for us we are [four](number) persons
+      - can you help me to find out seating for lunch for [four](number) persons
+      - is there any seating available today for [four](number) persons
+      - I want to know about table for lunch for [four](number) persons
+      - I want to ask about table for lunch for [four](number) persons
+      - please tell me if table is available for [four](number) persons
+      - let me know about the table for lunch for [four](number) persons
+      - is any table available for lunch for [four](number) persons
+      - do u have any table arrangement here for lunch for [four](number) persons
+      - can u arrange a table for us we are [four](number) persons
+      - could you please manage a table for us we are [four](number) persons
+      - can you help me to find out table for lunch for [four](number) persons
+      - is there any table available today for [four](number) persons
+      - I want to know about diningtable for lunch for [four](number) persons
+      - I want to ask about dining table for lunch for [four](number) persons
+      - please tell me if dining table is available for [four](number) persons
+      - let me know about the dining table for lunch for [four](number) persons
+      - is any dining table available for lunch for [four](number) persons
+      - do u have any dining table arrangement here for lunch for [four](number) persons
+      - can u arrange a dining table for us we are [four](number) persons
+      - could you please manage a dining table for us we are [four](number) persons
+      - can you help me to find out dining table for lunch for [four](number) persons
+      - is there any dining table available today for [four](number) persons
+      - I want to know about some desk for lunch for [four](number) persons
+      - I want to ask about desk for lunch for [four](number) persons
+      - please tell me if desk is available for [four](number) persons
+      - let me know about the desk for lunch for [four](number) persons
+      - is some desk available for lunch for [four](number) persons
+      - can you help me to find out any desk for lunch for [four](number) persons
+      - is there any desk available today for [four](number) persons
+      - I want to know about seating for lunch for [4](number) persons
+      - I want to ask about seating for lunch for [4](number) persons
+      - please tell me if seating is available for [4](number) persons
+      - let me know about the seating for lunch for [4](number) persons
+      - is seating available for lunch for [4](number) persons
+      - I want to ask about table for lunch for [4](number) persons
+      - please tell me if table is available for [4](number) persons
+      - let me know about the table for lunch for [4](number) persons
+      - is any table available for lunch for [4](number) persons
+      - do u have any table arrangement here for lunch for [4](number) persons
+      - can u arrange a table for us we are [4](number) persons
+      - could you please manage a table for us we are [4](number) persons
+      - can you help me to find out table for lunch for [4](number) persons
+      - is there any table available today for [4](number) persons
+      - I want to know about diningtable for lunch for [4](number) persons
+      - I want to ask about dining table for lunch for [4](number) persons
+      - please tell me if dining table is available for [4](number) persons
+      - let me know about the dining table for lunch for [4](number) persons
+      - is any dining table available for lunch for [4](number) persons
+      - do u have any dining table arrangement here for lunch for [4](number) persons
+      - can u arrange a dining table for us we are [4](number) persons
+      - could you please manage a dining table for us we are [4](number) persons
+      - can you help me to find out dining table for lunch for [4](number) persons
+      - is there any dining table available today for [4](number) persons
+      - I want to know about some desk for lunch for [4](number) persons
+      - I want to ask about desk for lunch for [4](number) persons
+      - please tell me if desk is available for [4](number) persons
+      - let me know about the desk for lunch for [4](number) persons
+      - is some desk available for lunch for [4](number) persons
+      - can you help me to find out any desk for lunch for [4](number) persons
+      - is there any desk available today for [4](number) persons
+      - I want to know about seating for lunch for [five](number) persons
+      - I want to ask about seating for lunch for [five](number) persons
+      - please tell me if seating is available for [five](number) persons
+      - let me know about the seating table for [five](number) persons
+      - do u have any table arrangement here for lunch for [five](number) persons
+      - can u arrange a table for us we are [five](number) persons
+      - could you please manage a table for us we are [five](number) persons
+      - can you help me to find out table for lunch for [five](number) persons
+      - is there any table available today for [five](number) persons
+      - I want to know about diningtable for lunch for [five](number) persons
+      - I want to ask about dining table for lunch for [five](number) persons
+      - please tell me if dining table is available for [five](number) persons
+      - let me know about the dining table for lunch for [five](number) persons
+      - is any dining table available for lunch for [five](number) persons
+      - do u have any dining table arrangement here for lunch for [five](number) persons
+      - can u arrange a dining table for us we are [five](number) persons
+      - could you please manage a dining table for us we are [five](number) persons
+      - can you help me to find out dining table for lunch for [five](number) persons
+      - is there any dining table available today for [five](number) persons
+      - I want to know about some desk for lunch for [five](number) persons
+      - I want to ask about desk for lunch for [five](number) persons
+      - please tell me if desk is available for [five](number) persons
+      - let me know about the desk for lunch for [five](number) persons
+      - is some desk available for lunch for [five](number) persons
+      - can you help me to find out any desk for lunch for [five](number) persons
+      - is there any desk available today for [five](number) persons
+      - I want to know about seating for lunch for [5](number) persons
+      - I want to ask about seating for lunch for [5](number) persons
+      - please tell me if seating is available for [5](number) persons
+      - let me know about the seating for lunch for [5](number) persons
+      - is seating available for lunch for [5](number) persons
+      - do u have seating arrangement here for lunch for [5](number) persons
+      - can u arrange seating for us we are [5](number) persons
+      - could you please manage a seating for us we are [5](number) persons
+      - can you help me to find out seating for lunch for [5](number) persons
+      - is there any seating available today for [5](number) persons
+      - I want to know about table for lunch for [5](number) persons
+      - I want to ask about table for lunch for [5](number) persons
+      - please tell me if table is available for [5](number) persons
+      - let me know about the table for lunch for [5](number) persons
+      - is any table available for lunch for [5](number) persons
+      - do u have any table arrangement here for lunch for [5](number) persons
+      - can u arrange a table for us we are [5](number) persons
+      - could you please manage a table for us we are [5](number) persons
+      - can you help me to find out table for lunch for [5](number) persons
+      - is there any table available today for [5](number) persons
+      - I want to know about diningtable for lunch for [5](number) persons
+      - I want to ask about dining table for lunch for [5](number) persons
+      - please tell me if dining table is available for [5](number) persons
+      - let me know about the dining table for lunch for [5](number) persons
+      - is any dining table available for lunch for [5](number) persons
+      - do u have any dining table arrangement here for lunch for [5](number) persons
+      - can u arrange a dining table for us we are [5](number) persons
+      - could you please manage a dining table for us we are [5](number) persons
+      - can you help me to find out dining table for lunch for [5](number) persons
+      - is there any dining table available today for [5](number) persons
+      - I want to know about some desk for lunch for [5](number) persons
+      - I want to ask about desk for lunch for [5](number) persons
+      - please tell me if desk is available for [5](number) persons
+      - let me know about the desk for lunch for [5](number) persons
+      - is some desk available for lunch for [5](number) persons
+      - can you help me to find out any desk for lunch for [5](number) persons
+      - is there any desk available today for [5](number) persons
+      - I want to know about seating for lunch for [six](number) persons
+      - I want to ask about seating for lunch for [six](number) persons
+      - please tell me if seating is available for [six](number) persons
+      - let me know about the seating for lunch for [six](number) persons
+      - is seating available for lunch for [six](number) persons
+      - do u have seating arrangement here for lunch for [six](number) persons
+      - can u arrange seating for us we are [six](number) persons
+      - could you please manage a seating for us we are [six](number) persons
+      - can you help me to find out seating for lunch for [six](number) persons
+      - is there any seating available today for [six](number) persons
+      - I want to know about table for lunch for [six](number) persons
+      - I want to ask about table for lunch for [six](number) persons
+      - please tell me if table is available for [six](number) persons
+      - let me know about the table for lunch for [six](number) persons
+      - is any table available for lunch for [six](number) persons
+      - do u have any table arrangement here for lunch for [six](number) persons
+      - can u arrange a table for us we are [six](number) persons
+      - could you please manage a table for us we are [six](number) persons
+      - can you help me to find out table for lunch for [six](number) persons
+      - is there any table available today for [six](number) persons
+      - I want to know about diningtable for lunch for [six](number) persons
+      - I want to ask about dining table for lunch for [six](number) persons
+      - please tell me if dining table is available for [six](number) persons
+      - let me know about the dining table for lunch for [six](number) persons
+      - is any dining table available for lunch for [six](number) persons
+      - do u have any dining table arrangement here for lunch for [six](number) persons
+      - can u arrange a dining table for us we are [six](number) persons
+      - could you please manage a dining table for us we are [six](number) persons
+      - can you help me to find out dining table for lunch for [six](number) persons
+      - is there any dining table available today for [six](number) persons
+      - I want to know about some desk for lunch for [six](number) persons
+      - I want to ask about desk for lunch for [six](number) persons
+      - please tell me if desk is available for [six](number) persons
+      - let me know about the desk for lunch for [six](number) persons
+      - is some desk available for lunch for [six](number) persons
+      - can you help me to find out any desk for lunch for [six](number) persons
+      - is there any desk available today for [six](number) persons
+      - I want to know about seating for lunch for [6](number) persons
+      - I want to ask about seating for lunch for [6](number) persons
+      - please tell me if seating is available for [6](number) persons
+      - let me know about the seating for lunch for [6](number) persons
+      - is seating available for lunch for [6](number) persons
+      - do u have seating arrangement here for lunch for [6](number) persons
+      - can u arrange seating for us we are [6](number) persons
+      - could you please manage a seating for us we are [6](number) persons
+      - can you help me to find out seating for lunch for [6](number) persons
+      - is there any seating available today for [6](number) persons
+      - I want to know about table for lunch for [6](number) persons
+      - I want to ask about table for lunch for [6](number) persons
+      - please tell me if table is available for [6](number) persons
+      - let me know about the table for lunch for [6](number) persons
+      - is any table available for lunch for [6](number) persons
+      - do u have any table arrangement here for lunch for [6](number) persons
+      - can u arrange a table for us we are [6](number) persons
+      - could you please manage a table for us we are [6](number) persons
+      - can you help me to find out table for lunch for [6](number) persons
+      - is there any table available today for [6](number) persons
+      - I want to know about diningtable for lunch for [6](number) persons
+      - I want to ask about dining table for lunch for [6](number) persons
+      - please tell me if dining table is available for [6](number) persons
+      - let me know about the dining table for lunch for [6](number) persons
+      - is any dining table available for lunch for [6](number) persons
+      - do u have any dining table arrangement here for lunch for [6](number) persons
+      - can u arrange a dining table for us we are [6](number) persons
+      - could you please manage a dining table for us we are [6](number) persons
+      - can you help me to find out dining table for lunch for [6](number) persons
+      - is there any dining table available today for [6](number) persons
+      - I want to know about some desk for lunch for [6](number) persons
+      - I want to ask about desk for lunch for [6](number) persons
+      - please tell me if desk is available for [6](number) persons
+      - let me know about the desk for lunch for [6](number) persons
+      - is some desk available for lunch for [6](number) persons
+      - can you help me to find out any desk for lunch for [6](number) persons
+      - is there any desk available today for [6](number) persons
+      - I want to know about seating for lunch for [seven](number) persons
+      - I want to ask about seating for lunch for [seven](number) persons
+      - please tell me if seating is available for [seven](number) persons
+      - let me know about the seating for lunch for [seven](number) persons
+      - is seating available for lunch for [seven](number) persons
+      - do u have seating arrangement here for lunch for [seven](number) persons
+      - can u arrange seating for us we are [seven](number) persons
+      - could you please manage a seating for us we are [seven](number) persons
+      - can you help me to find out seating for lunch for [seven](number) persons
+      - is there any seating available today for [seven](number) persons
+      - I want to know about table for lunch for [seven](number) persons
+      - I want to ask about table for lunch for [seven](number) persons
+      - please tell me if table is available for [seven](number) persons
+      - let me know about the table for lunch for [seven](number) persons
+      - is any table available for lunch for [seven](number) persons
+      - do u have any table arrangement here for lunch for [seven](number) persons
+      - can u arrange a table for us we are [seven](number) persons
+      - could you please manage a table for us we are [seven](number) persons
+      - can you help me to find out table for lunch for [seven](number) persons
+      - is there any table available today for [seven](number) persons
+      - I want to know about diningtable for lunch for [seven](number) persons
+      - I want to ask about dining table for lunch for [seven](number) persons
+      - please tell me if dining table is available for [seven](number) persons
+      - let me know about the dining table for lunch for [seven](number) persons
+      - is any dining table available for lunch for [seven](number) persons
+      - do u have any dining table arrangement here for lunch for [seven](number) persons
+      - can u arrange a dining table for us we are [seven](number) persons
+      - could you please manage a dining table for us we are [seven](number) persons
+      - can you help me to find out dining table for lunch for [seven](number) persons
+      - is there any dining table available today for [seven](number) persons
+      - I want to know about some desk for lunch for [seven](number) persons
+      - I want to ask about desk for lunch for [seven](number) persons
+      - please tell me if desk is available for [seven](number) persons
+      - let me know about the desk for lunch for [seven](number) persons
+      - is some desk available for lunch for [seven](number) persons
+      - can you help me to find out any desk for lunch for [seven](number) persons
+      - is there any desk available today for [seven](number) persons
+      - I want to know about seating for lunch for [7](number) persons
+      - I want to ask about seating for lunch for [7](number) persons
+      - please tell me if seating is available for [7](number) persons
+      - let me know about the seating for lunch for [7](number) persons
+      - is seating available for lunch for [7](number) persons
+      - do u have seating arrangement here for lunch for [7](number) persons
+      - can u arrange seating for us we are [7](number) persons
+      - could you please manage a seating for us we are [7](number) persons
+      - can you help me to find out seating for lunch for [7](number) persons
+      - is there any seating available today for [7](number) persons
+      - I want to know about table for lunch for [7](number) persons
+      - I want to ask about table for lunch for [7](number) persons
+      - please tell me if table is available for [7](number) persons
+      - let me know about the table for lunch for [7](number) persons
+      - is any table available for lunch for [7](number) persons
+      - do u have any table arrangement here for lunch for [7](number) persons
+      - can u arrange a table for us we are [7](number) persons
+      - could you please manage a table for us we are [7](number) persons
+      - can you help me to find out table for lunch for [7](number) persons
+      - is there any table available today for [7](number) persons
+      - I want to know about diningtable for lunch for [7](number) persons
+      - I want to ask about dining table for lunch for [7](number) persons
+      - please tell me if dining table is available for [7](number) persons
+      - let me know about the dining table for lunch for [7](number) persons
+      - is any dining table available for lunch for [7](number) persons
+      - do u have any dining table arrangement here for lunch for [7](number) persons
+      - can u arrange a dining table for us we are [7](number) persons
+      - could you please manage a dining table for us we are [7](number) persons
+      - can you help me to find out dining table for lunch for [7](number) persons
+      - is there any dining table available today for [7](number) persons
+      - I want to know about some desk for lunch for [7](number) persons
+      - I want to ask about desk for lunch for [7](number) persons
+      - please tell me if desk is available for [7](number) persons
+      - let me know about the desk for lunch for [7](number) persons
+      - is some desk available for lunch for [7](number) persons
+      - can you help me to find out any desk for lunch for [7](number) persons
+      - is there any desk available today for [7](number) persons
+      - [4](number) person
+      - [1](number)
+      - [2](number) people
+      - [3](number)
+      - [7](number) people
+      - [6](number)
+      - [8](number)
+      - [10](number) people
+      - [9](number) person
+      - [11](number)
+      - [5](number) 
+      - [12](number)
+      - [one](number)
+      - [two](number)
+      - [three](number) person
+      - [four](number)
+      - [five](number) people
+      - [six](number) people
+      - [seven](number)
+      - [eight](number)
+      - [nine](number)
+      - [ten](number)
+      - [eleven](number) people
+      - [twelve](number)
+
+  - synonym: table
+    examples: |
+      - seating
+      - dining table
+      - desk
+  - synonym: '1'
+    examples: |
+      - one
+  - synonym: '2'
+    examples: |
+      - two
+  - synonym: '3'
+    examples: |
+      - three
+  - synonym: '4'
+    examples: |
+      - four
+  - synonym: '5'
+    examples: |
+      - five
+  - synonym: '6'
+    examples: |
+      - six
+  - synonym: '7'
+    examples: |
+      - seven
+  - synonym: '8'
+    examples: |
+      - eight
+  - synonym: '9'
+    examples: |
+      - nine
+  - synonym: '10'
+    examples: |
+      - ten
+  - synonym: '11'
+    examples: |
+      - eleven
+  - synonym: '12'
+    examples: |
+      - twelve
+
+  - intent: inform_phone_no
     examples: |
       - [22222211114](phoneNumber)
+      - [0123456789](phoneNumber)
+      - [0000000000](phoneNumber)
+
+  - intent: inform_name
+    examples: |
       - [Hassan](customerName)
       - [Alan Smith](customerName)
       - [John Smith](customerName)
       - [Steve Jobs](customerName)
       - [Robert Downey](customerName)
-      - [0123456789](phoneNumber)
-      - [0000000000](phoneNumber)
-      - [O-12345](orderId)
-      - [O-00000](orderId)
-      - [O-99999](orderId)
-      - [pickup](orderType)
-      - [dinein](orderType)
-      - [delivery](orderType)
-      - [4](person)
-      - [1](person)
-      - [2](person) people
-      - [3](person)
-      - [7](person)
-      - [9](person) person
-      - [11](person)
+      - [Alan Smith](customerName)
+      - [John Smith](customerName)
+      - [Steve Jobs](customerName)
+      - [Robert Downey](customerName)
+      - [Hassan](customerName)
+
+  - intent: inform_date
+    examples: |
       - [tuesday](date)
       - [wednesday](date)
       - [tomorrow](date)
@@ -747,8 +1507,6 @@ nlu:
       - [next month](date)
       - [weekend](date)
       - [today](date)
-      - [tonight](date)
-      - [sunday](date)
       - [now](date)
       - [1st of this month](date)
       - [2nd June](date)
@@ -757,9 +1515,7 @@ nlu:
       - [monday](date)
       - [friday](date)
       - [friday](date) [12th june](date)
-      - [12](person)
       - on coming [saturday](date)
-      - [5](person)
       - [en](lang)
       - [ar](lang)
       - [english](lang)
@@ -768,6 +1524,27 @@ nlu:
       - [اليوم](date)
       - [غدا](date)
       - [عطلة نهاية الاسبوع](date)
+
+  - intent: inform_order
+    examples: |
+      - [O-12345](orderId)
+      - [O-00000](orderId)
+      - [O-99999](orderId)
+
+  - intent: inform_order
+    examples: |
+      - [pickup](orderType)
+      - [dinein](orderType)
+      - [delivery](orderType)
+  
+  - intent: inform_lang
+    examples: |
+      - [en](lang)
+      - [ar](lang)
+      - [english](lang)
+      - [arabic](lang)
+      - [arabi](lang)
+
   - intent: deny
     examples: |
       - no
@@ -777,12 +1554,25 @@ nlu:
       - don't like that
       - no way
       - not really
+
+  - intent: out_of_scope
+    examples: |
+      - What is 2 + 2?
+      - Who's the US President?
+      - i am a recruiter
+      - are you looking for a job?
+      - I need a thesis topics
+      - how many continents are there?
+      - how many seas are there?
   - intent: bot_challenge
     examples: |
-      - are you a bot?
-      - are you a human?
-      - am I talking to a bot?
-      - am I talking to a human?
+      - are you a [bot](challenge)?
+      - are you a [human](challenge)?
+      - am I talking to a [bot](challenge)?
+      - am I talking to a [human](challenge)?
+      - what is your [name](challenge)?
+      - who are [you](challenge)?
+
   # - intent: ar_greet
   #   examples: |
   #     - أهلا
@@ -865,14 +1655,18 @@ nlu:
     examples: |
       - burgers
       - sandwich
-      - starters
+      - plates
       - desserts
       - drinks
-      - today's special
+      - todays special
       - wraps
       - kids meal
       - sides
       - salads
+      - Family Platters		
+      - pizza
+      - ingredients
+      - Make Your Own Bowl
   - lookup: productName
     examples: |
       - Cookies & Creme Shake
