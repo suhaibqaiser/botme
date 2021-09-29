@@ -292,6 +292,7 @@ export class SearchGridSectionComponent implements OnInit {
   editToCart() {
     this.cartService.addToCart(this.cartService.singleCustomProductObj, true);
     document.getElementById("btnProductCart")?.click()
+    document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style','display:block')
   }
 
   sendWSMessage(text: string) {

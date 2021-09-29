@@ -108,6 +108,11 @@ export class CartSectionComponent implements OnInit {
     return total
   }
 
+  editToCart() {
+    this.cartService.addToCart(this.cartService.singleCustomProductObj, true);
+    document.getElementById("btnProductCart")?.click()
+  }
+
   editFromCart(product: any) {
     // document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style','display:none')
     this.cartService.singleCustomProductObj = JSON.parse(JSON.stringify(product))
