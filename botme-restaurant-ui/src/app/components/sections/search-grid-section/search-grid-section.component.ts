@@ -292,7 +292,7 @@ export class SearchGridSectionComponent implements OnInit {
   editToCart() {
     this.cartService.addToCart(this.cartService.singleCustomProductObj, true);
     document.getElementById("btnProductCart")?.click()
-    document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style','display:block')
+    document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:block')
   }
 
   sendWSMessage(text: string) {
@@ -453,7 +453,7 @@ export class SearchGridSectionComponent implements OnInit {
       product.productFlavor.forEach((item: any, index: any) => {
         productFlavoursList.push({
           flavorName: item,
-          selected: false
+          selected: (index == 0)
         })
       })
     }
