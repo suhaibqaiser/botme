@@ -28,7 +28,7 @@
                               <select (change)="selectProductRate()" [formControl]="cartService.selectProductRatesField"
                                       class="drop-down"
                                       id="exampleFormControlSelect1">
-                                <option [value]="item" *ngFor="let item of productSizeList">{{item}}</option>
+                                <option [value]="item" *ngFor="let item of cartService.productSizeList">{{item}}</option>
                               </select>
                             </div>
                           </div>
