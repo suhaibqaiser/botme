@@ -581,12 +581,21 @@ export class SearchGridSectionComponent implements OnInit {
     return total
   }
 
-  setOrderedProductList(data: any) {
-    this.orderedProductsList.push({
-      id: Math.floor(Math.random() * 1000000000),
-
-    })
+  checkCommas(objectList: any, optIndex: any) {
+    const selectedList = objectList.filter((item: any) => item.selected)
+    return optIndex + 1 < selectedList.length
   }
+
+  checkCommasWithQuantity(objectList: any, optIndex: any) {
+    const selectedList = objectList.filter((item: any) => item.productQuantity)
+    return optIndex + 1 < selectedList.length
+  }
+
+  checkCommasWithAttribute(objectList: any, optIndex: any) {
+    const selectedList = objectList.filter((item: any) => item.productQuantity)
+    return optIndex + 1 < selectedList.length
+  }
+
 
   reset() {
     this.cartService.singleCustomProductObj = {

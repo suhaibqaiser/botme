@@ -177,16 +177,18 @@
                             </tr>
                             <tr>
                               <td>Options</td>
-                              <td><span *ngFor="let opt of cartService.singleCustomProductObj.productOptions">
-                                <span *ngIf="opt.selected">{{opt.productName }} , </span>
+                              <td><span *ngFor="let opt of cartService.singleCustomProductObj.productOptions;let optIndex = index">
+                                <span *ngIf="opt.selected">{{opt.productName }} </span>
+                                <span *ngIf="checkCommas(cartService.singleCustomProductObj.productOptions,optIndex)"> , </span>
                               </span>
                               </td>
                               <td>--</td>
                             </tr>
                             <tr>
                               <td>Ingredients</td>
-                              <td><span *ngFor="let ing of cartService.singleCustomProductObj.productIngredients">
-                                <span *ngIf="ing.selected">{{ing.productName }} , </span>
+                              <td><span *ngFor="let ing of cartService.singleCustomProductObj.productIngredients;let ingIndex = index">
+                                <span *ngIf="ing.selected">{{ing.productName }} </span>
+                                <span *ngIf="checkCommas(cartService.singleCustomProductObj.productIngredients,ingIndex)"> , </span>
                               </span>
                               </td>
                               <td>--</td>
@@ -194,31 +196,33 @@
                             <tr>
                               <td>Flavour</td>
                               <td><span *ngFor="let flav of cartService.singleCustomProductObj.productFlavors">
-                                <span *ngIf="flav.selected">{{flav.flavorName }} , </span>
+                                <span *ngIf="flav.selected">{{flav.flavorName }} </span>
                               </span>
                               </td>
                               <td>--</td>
                             </tr>
                             <tr>
                               <td>Toppings</td>
-                              <td><span *ngFor="let top of cartService.singleCustomProductObj.productToppings">
-                                <span *ngIf="top.productQuantity">{{top.productName }} , </span>
+                              <td><span *ngFor="let top of cartService.singleCustomProductObj.productToppings;let topIndex = index">
+                                <span *ngIf="top.productQuantity">{{top.productName }}  </span>
+                                <span *ngIf="checkCommasWithQuantity(cartService.singleCustomProductObj.productToppings,topIndex)"> , </span>
                               </span>
                               </td>
                               <td>${{getTotalPrice(cartService.singleCustomProductObj.productToppings)}}</td>
                             </tr>
                             <tr>
                               <td>Addons</td>
-                              <td><span *ngFor="let add of cartService.singleCustomProductObj.productAddons">
-                                <span *ngIf="add.productQuantity">{{add.productName }} , </span>
+                              <td><span *ngFor="let add of cartService.singleCustomProductObj.productAddons;let addIndex = index">
+                                <span *ngIf="add.productQuantity">{{add.productName }}  </span>
+                                <span *ngIf="checkCommasWithQuantity(cartService.singleCustomProductObj.productAddons,addIndex)"> , </span>
                               </span>
                               </td>
                               <td>${{getTotalPrice(cartService.singleCustomProductObj.productAddons)}}</td>
                             </tr>
                             <tr>
                               <td>Attributes</td>
-                              <td><span *ngFor="let attr of cartService.singleCustomProductObj.productAttributes | keyvalue">
-                                <span *ngIf="attr.value">{{attr.key }} , </span>
+                              <td><span *ngFor="let attr of cartService.singleCustomProductObj.productAttributes | keyvalue;let attrIndex = index">
+                                <span *ngIf="attr.value">{{attr.key }} <br> </span>
                               </span></td>
                               <td>--</td>
                             </tr>
