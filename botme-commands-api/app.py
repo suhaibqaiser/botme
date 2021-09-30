@@ -11,7 +11,9 @@ app = Flask(__name__)
 def send_Response():
     req_data = request.get_json()
     text = req_data['text']
+    print(text)
     pageId = req_data['pageId']
+    print(type(pageId))
     sectionID = req_data['sectionId']
     rasa_data = getIntent(text)
     print(rasa_data)
