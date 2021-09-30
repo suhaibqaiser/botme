@@ -23,4 +23,5 @@ def send_Response():
 
 
 if __name__ == '__main__':
-    app.run(port=5010)
+    from waitress import serve
+    serve(app, host="0.0.0.0", port=5010)
