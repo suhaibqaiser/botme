@@ -31,6 +31,8 @@ export class CartService {
     productTotalPrice: 0,
     isEditable: false
   }
+  productSizeList: any = []
+  tempProductSizeList = ['standard', 'medium', 'large', 'small']
   selectProductRatesField = new FormControl('')
 
   constructor() {

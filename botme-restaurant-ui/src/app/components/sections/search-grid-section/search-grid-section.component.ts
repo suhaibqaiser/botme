@@ -73,7 +73,8 @@ export class SearchGridSectionComponent implements OnInit {
   slideToShow: any
 
   orderedProductsList: any
-  productSizeList = ['standard', 'medium', 'large', 'small']
+  productSizeList: any = []
+  tempProductSizeList = ['standard', 'medium', 'large', 'small']
 
   constructor(private _http: HttpClient, private menuservice: MenuService,
               public cartService: CartService,
@@ -394,9 +395,19 @@ export class SearchGridSectionComponent implements OnInit {
     return this.products.filter((item: any) => item.productType == productType)
   }
 
+  setProductRateSize(product: any) {
+    this.cartService.productSizeList = []
+    let i = 0
+    this.cartService.tempProductSizeList.forEach((item: any, index: any) => {
+      if (product.productRate[item] > 0) {
+        this.cartService.productSizeList[i++] = item
+      }
+    })
+  }
 
   setProductCustomization(product: any) {
     this.reset()
+    this.setProductRateSize(product)
     this.slideToShow = 0
     let productOptionsList: any = []
     let productIngredientList: any = []
@@ -477,7 +488,7 @@ export class SearchGridSectionComponent implements OnInit {
       productId: product.productId,
       productImage: product.productImage,
       productRate: product.productRate,
-      productServingSize: this.productSizeList[0],
+      productServingSize: this.cartService.productSizeList[0],
       productOptions: productOptionsList,
       productIngredients: productIngredientList,
       productFlavors: productFlavoursList,
@@ -486,10 +497,10 @@ export class SearchGridSectionComponent implements OnInit {
       productQuantity: 1,
       productAttributes: product.productAttributes,
       productNutrition: product.productNutrition,
-      productPrice: Math.ceil(product.productRate[this.productSizeList[0]]),
-      productTotalPrice: Math.ceil(product.productRate[this.productSizeList[0]])
+      productPrice: Math.ceil(product.productRate[this.cartService.productSizeList[0]]),
+      productTotalPrice: Math.ceil(product.productRate[this.cartService.productSizeList[0]])
     }
-    this.cartService.selectProductRatesField.setValue(this.productSizeList[0])
+    this.cartService.selectProductRatesField.setValue(this.cartService.productSizeList[0])
   }
 
   selectProductRate() {
@@ -581,12 +592,21 @@ export class SearchGridSectionComponent implements OnInit {
     return total
   }
 
-  setOrderedProductList(data: any) {
-    this.orderedProductsList.push({
-      id: Math.floor(Math.random() * 1000000000),
-
-    })
+  checkCommas(objectList: any, optIndex: any) {
+    const selectedList = objectList.filter((item: any) => item.selected)
+    return optIndex + 1 < selectedList.length
   }
+
+  checkCommasWithQuantity(objectList: any, optIndex: any) {
+    const selectedList = objectList.filter((item: any) => item.productQuantity)
+    return optIndex + 1 < selectedList.length
+  }
+
+  checkCommasWithAttribute(objectList: any, optIndex: any) {
+    const selectedList = objectList.filter((item: any) => item.productQuantity)
+    return optIndex + 1 < selectedList.length
+  }
+
 
   reset() {
     this.cartService.singleCustomProductObj = {
