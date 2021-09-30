@@ -50,13 +50,13 @@ nlu:
 
   - intent: affirm
     examples: |
-      - yes
-      - y
-      - indeed
-      - of course
-      - that sounds good
-      - correct
-
+      - [yes](positive)
+      - [indeed]{"entity":"positive","value":"yes"}
+      - [of course]{"entity":"positive","value":"yes"}
+      - [that sounds good]{"entity":"positive","value":"yes"}
+      - [correct]{"entity":"positive","value":"yes"}
+      - [done]{"entity":"positive","value":"yes"}
+  
   - intent: Home_page
     examples: |
       - Take me to [home page](pageone)
@@ -245,9 +245,14 @@ nlu:
       - i demand you to bring up the [cart](list)
       - we demand you to bring up the [cart](list)
       - add to [cart](list)
-      - add to [cart](list) item
-      - click on [cart](list) item
-      - [cart](list) item
+      - add to [cart item](list) 
+      - click on [cart item](list)
+      - [cart item](list) 
+      - select [cart item](list)
+    
+  - synonym: cart
+    examples: |
+      - cart item
 
   - intent: order_online_page
     examples: |
@@ -478,14 +483,30 @@ nlu:
       - show me the [sandwich](categoryName) category
       - i want to see the [sandwich](categoryName) category
       - I want to eat [sandwich](categoryName)
-      - We want to eat sandwich
-      - I want to make a request you to bring sandwich
+      - We want to eat [sandwich](categoryName)
+      - I want to make a request you to bring [sandwich](categoryName)
       - We want to make a request you to bring [sandwich](categoryName)
-      - I demand you to bring sandwich
+      - I demand you to bring [sandwich](categoryName)
       - We demand you to bring [sandwich](categoryName)
       - I want ask for [sandwich](categoryName)
-      - We want ask for sandwich
+      - We want ask for [sandwich](categoryName)
       - [sandwich](categoryName)
+      - I want to order from [sandwiches]{"entity":"categoryName","value":"sandwich"}
+      - We want to order from [sandwiches]{"entity":"categoryName","value":"sandwich"}
+      - can you pop up the [sandwiches]{"entity":"categoryName","value":"sandwich"} category
+      - I want to have [sandwiches]{"entity":"categoryName","value":"sandwich"}
+      - We want to have [sandwiches]{"entity":"categoryName","value":"sandwich"}
+      - show me the [sandwiches]{"entity":"categoryName","value":"sandwich"} category
+      - i want to see the [sandwiches]{"entity":"categoryName","value":"sandwich"} category
+      - I want to eat [sandwiches]{"entity":"categoryName","value":"sandwich"}
+      - We want to eat [sandwiches]{"entity":"categoryName","value":"sandwich"}
+      - I want to make a request you to bring [sandwiches]{"entity":"categoryName","value":"sandwich"}
+      - We want to make a request you to bring [sandwiches]{"entity":"categoryName","value":"sandwich"}
+      - I demand you to bring [sandwiches]{"entity":"categoryName","value":"sandwich"}
+      - We demand you to bring [sandwiches]{"entity":"categoryName","value":"sandwich"}
+      - I want ask for [sandwiches]{"entity":"categoryName","value":"sandwich"}
+      - We want ask for [sandwiches]{"entity":"categoryName","value":"sandwich"}
+      - [sandwiches]{"entity":"categoryName","value":"sandwich"}
       - I want to order from [Ingredients](categoryName)
       - We want to order from [Ingredients](categoryName)
       - show me the [Ingredients](categoryName) category
@@ -835,9 +856,127 @@ nlu:
       - I want to order [Cookies & Creme Shake](productName)
       - I like to buy [cookies & creme shake](productName)
       - I want to place an order for [cookies & creme shake](productName)
-
+      
+  - intent: product_flavour
+    examples: |
+      - [Chicken](flavour)
+      - [chicken]{"entity":"flavour","value":"Chicken"}
+      - select [Chicken](flavour) flavour
+      - select [chicken]{"entity":"flavour","value":"Chicken"} flavour
+      - add [Chicken](flavour) flavour
+      - add [chicken]{"entity":"flavour","value":"Chicken"} flavour
+      - i want to select [Chicken](flavour)
+      - i want to select [chicken]{"entity":"flavour","value":"Chicken"}
+      - choose [Chicken](flavour) flavour
+      - choose [chicken]{"entity":"flavour","value":"Chicken"} flavour
+      - [Beef](flavour)
+      - [beef]{"entity":"flavour","value":"Beef"}
+      - select [Beef](flavour) flavour
+      - select [beef]{"entity":"flavour","value":"Beef"} flavour
+      - add [Beef](flavour) flavour
+      - add [beef]{"entity":"flavour","value":"Beef"} flavour
+      - i want to select [Beef](flavour)
+      - i want to select [beef]{"entity":"flavour","value":"Beef"}
+      - choose [Beef](flavour) flavour
+      - choose [beef]{"entity":"flavour","value":"Beef"} flavour
+      - [Lamb](flavour)
+      - [lamb]{"entity":"flavour","value":"Lamb"}
+      - [Lamb](flavour)
+      - [lamb]{"entity":"flavour","value":"Lamb"}
+      - select [Lamb](flavour) flavour
+      - select [lamb]{"entity":"flavour","value":"Lamb"} flavour
+      - add [Lamb](flavour) flavour
+      - add [lamb]{"entity":"flavour","value":"Lamb"} flavour
+      - i want to select [Lamb](flavour)
+      - i want to select [lamb]{"entity":"flavour","value":"Lamb"}
+      - choose [Lamb](flavour) flavour
+      - choose [lamb]{"entity":"flavour","value":"Lamb"} flavour
+      - [Fish](flavour)
+      - [fish]{"entity":"flavour","value":"Fish"}
+      - [Fish](flavour)
+      - [fish]{"entity":"flavour","value":"Fish"}
+      - select [Fish](flavour) flavour
+      - select [fish]{"entity":"flavour","value":"Fish"} flavour
+      - add [Fish](flavour) flavour
+      - add [fish]{"entity":"flavour","value":"Fish"} flavour
+      - i want to select [Fish](flavour)
+      - i want to select [fish]{"entity":"flavour","value":"Fish"}
+      - choose [Fish](flavour) flavour
+      - choose [fish]{"entity":"flavour","value":"Fish"} flavour
+      - [Beef Shawarma](flavour)
+      - [beef shawarma]{"entity":"flavour","value":"Beef Shawarma"}
+      - select [Beef Shawarma](flavour) flavour
+      - select [beef shawarma]{"entity":"flavour","value":"Beef Shawarma"} flavour
+      - add [Beef Shawarma](flavour) flavour
+      - add [beef shawarma]{"entity":"flavour","value":"Beef Shawarma"} flavour
+      - i want to select [Beef Shawarma](flavour)
+      - i want to select [beef shawarma]{"entity":"flavour","value":"Beef Shawarma"}
+      - choose [Beef Shawarma](flavour) flavour
+      - choose [beef shawarma]{"entity":"flavour","value":"Beef Shawarma"} flavour
+      - [Chicken Shawarma](flavour)
+      - [chicken shawarma]{"entity":"flavour","value":"Chicken Shawarma"}
+      - select [Chicken Shawarma](flavour) flavour
+      - select [chicken shawarma]{"entity":"flavour","value":"Chicken Shawarma"} flavour
+      - add [Chicken Shawarma](flavour) flavour
+      - add [chicken shawarma]{"entity":"flavour","value":"Chicken Shawarma"} flavour
+      - i want to select [Chicken Shawarma](flavour)
+      - i want to select [chicken shawarma]{"entity":"flavour","value":"Chicken Shawarma"}
+      - choose [Chicken Shawarma](flavour) flavour
+      - choose [chicken shawarma]{"entity":"flavour","value":"Chicken Shawarma"} flavour
+      - [Grilled Chicken](flavour)
+      - [grilled chicken]{"entity":"flavour","value":"Grilled Chicken"}
+      - select [Grilled Chicken](flavour) flavour
+      - select [grilled chicken]{"entity":"flavour","value":"Grilled Chicken"} flavour
+      - add [Grilled Chicken](flavour) flavour
+      - add [grilled chicken]{"entity":"flavour","value":"Grilled Chicken"} flavour
+      - i want to select [Grilled Chicken](flavour)
+      - i want to select [grilled chicken]{"entity":"flavour","value":"Grilled Chicken"}
+      - choose [Grilled Chicken](flavour) flavour
+      - choose [grilled chicken]{"entity":"flavour","value":"Grilled Chicken"} flavour
+      - [Crispy Chicken](flavour)
+      - [crispy chicken]{"entity":"flavour","value":"Crispy Chicken"}
+      - select [Crispy Chicken](flavour) flavour
+      - select [crispy chicken]{"entity":"flavour","value":"Crispy Chicken"} flavour
+      - add [Crispy Chicken](flavour) flavour
+      - add [crispy chicken]{"entity":"flavour","value":"Crispy Chicken"} flavour
+      - i want to select [Crispy Chicken](flavour)
+      - i want to select [crispy chicken]{"entity":"flavour","value":"Crispy Chicken"}
+      - choose [Crispy Chicken](flavour) flavour
+      - choose [crispy chicken]{"entity":"flavour","value":"Crispy Chicken"} flavour
+      - [Falafel](flavour)
+      - [falafel]{"entity":"flavour","value":"Falafel"}
+      - select [Falafel](flavour) flavour
+      - select [falafel]{"entity":"flavour","value":"Falafel"} flavour
+      - add [Falafel](flavour) flavour
+      - add [falafel]{"entity":"flavour","value":"Falafel"} flavour
+      - i want to select [Falafel](flavour)
+      - i want to select [falafel]{"entity":"flavour","value":"Falafel"}
+      - choose [Falafel](flavour) flavour
+      - choose [falafel]{"entity":"flavour","value":"Falafel"} flavour
+      - [Spicy](flavour)
+      - [spicy]{"entity":"flavour","value":"Spicy"}
+      - select [Spicy](flavour) flavour
+      - select [spicy]{"entity":"flavour","value":"Spicy"} flavour
+      - add [Spicy](flavour) flavour
+      - add [spicy]{"entity":"flavour","value":"Spicy"} flavour
+      - i want to select [Spicy](flavour)
+      - i want to select [spicy]{"entity":"flavour","value":"Spicy"}
+      - choose [Spicy](flavour) flavour
+      - choose [spicy]{"entity":"flavour","value":"Spicy"} flavour
+      - [Light](flavour)
+      - [light]{"entity":"flavour","value":"Light"}
+      - select [Light](flavour) flavour
+      - select [light]{"entity":"flavour","value":"Light"} flavour
+      - add [Light](flavour) flavour
+      - add [light]{"entity":"flavour","value":"Light"} flavour
+      - i want to select [Light](flavour)
+      - i want to select [light]{"entity":"flavour","value":"Light"}
+      - choose [Light](flavour) flavour
+      - choose [light]{"entity":"flavour","value":"Light"} flavour
+      
   - intent: food_size
     examples: |
+      - [standard](size)
       - [small](size)
       - [medium](size)
       - [large](size)
@@ -1547,13 +1686,15 @@ nlu:
 
   - intent: deny
     examples: |
-      - no
-      - n
-      - never
-      - I don't think so
-      - don't like that
-      - no way
-      - not really
+      - [no](negative)
+      - [never]{"entity":"negative","value":"no"}
+      - [I don't think so]{"entity":"negative","value":"no"}
+      - [don't like that]{"entity":"negative","value":"no"}
+      - [no way]{"entity":"negative","value":"no"}
+      - [not really]{"entity":"negative","value":"no"}
+      - [negative]{"entity":"negative","value":"no"}
+      - [not]{"entity":"negative","value":"no"}
+      - [Not]{"entity":"negative","value":"no"}
 
   - intent: out_of_scope
     examples: |
@@ -1666,6 +1807,7 @@ nlu:
       - Family Platters		
       - pizza
       - ingredients
+      - sandwiches
       - Make Your Own Bowl
   - lookup: productName
     examples: |
