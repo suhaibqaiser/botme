@@ -8,13 +8,13 @@ def getDbCta(intent, entity):
     db = mydb['food']
     mycollection = db['ctas']
     if not entity:
-        my_query = {"intentName":intent}
+        my_query = {"intentName":intent,"context.pageId":"","context.sectionId":""}
         mycta = mycollection.find(my_query)
         for x in mycta:
             return x
     else:
         value = entity.title()
-        my_query = {"intentName":intent,"context.entities.entityName":value}
+        my_query = {"intentName":intent,"context.entities.entityName":value,"context.pageId":"","context.sectionId":""}
         mycta = mycollection.find(my_query)
         for x in mycta:
             if(len(x) == 0):

@@ -4,7 +4,7 @@ import requests
 import json
 
 
-def getResponse(intent,entity,text):
+def getResponse(intent,entity,text,pageId,sectionId):
     blob =TextBlob(text)
     senti = blob.sentiment.polarity
     print(senti)
@@ -17,26 +17,16 @@ def getResponse(intent,entity,text):
         elif(intent == "unexpected_answer"):
             return {"Response":"I need to know how many people are in your party to ensure that we can accomodate you."}
         elif(intent == "Order_meal"):
-            Response = checkingForProduct(intent,value,senti)
+            Response = checkingForProduct(intent,value,senti,pageId,sectionId)
             return Response
         elif(intent == 'nlu_fallback'):
             return {"Response":"I'm sorry, I didn't quite understand that. Could you rephrase?"}
-        elif(intent == 'next'):
-            sectionId = input('give the SectionID: ')
-            db = searchBySectionId(intent,value,sectionId)
-            print(db)
-            return {"Response":db['response']}
-        elif(intent == 'Back'):
-            sectionId = input('give the SectionID: ')
-            db = searchBySectionId(intent,value,sectionId)
-            print(db)
-            return {"Response":db['response']}
         else:
-            db = getDbCta(intent,value)
+            db = getDbCta(intent,value,pageId,sectionId)
             return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"sentimentScore":senti}
 
     elif(senti > 0.5):
-        db = getDbCta(intent,value)
+        db = getDbCta(intent,value,pageId,sectionId)
         if db is not None:
             sentimentResponse = db['sentimentResponse']
             return {"Response":sentimentResponse['positive'],"ctaCommandId":db['ctaCommandId'],"sentimentScore":senti}
@@ -45,7 +35,7 @@ def getResponse(intent,entity,text):
         else:
             return {"Response":"I do not understand, Can you repeat it again"}
     elif(senti < -0.5):
-        db = getDbCta(intent,value)
+        db = getDbCta(intent,value,pageId,sectionId)
         if db is not None:
             sentimentResponse = db['sentimentResponse']
             return {"Response":sentimentResponse['negative'],"ctaCommandId":db['ctaCommandId'],"sentimentScore":senti}
@@ -58,13 +48,12 @@ def parseEntityValue(entity):
     for x in entity:
         return x['value']
 
-def checkingForProduct(intent,value,senti):
+def checkingForProduct(intent,value,senti,pageId,sectionId):
     response = requests.get('http://localhost:3100/food/product/search?productName='+value)
     data = response.json()
-    print(data)
     if(data['status']=="success"):
         if(len(data['payload']) == 1):
-            db = getDbCta(intent,value)
+            db = getDbCta(intent,value,pageId,sectionId)
             if(db == None):
                 return {"Response":"What do you mean by " + value + "?"}
             else:
