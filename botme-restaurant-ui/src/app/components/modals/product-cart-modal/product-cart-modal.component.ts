@@ -80,20 +80,9 @@ export class ProductCartModalComponent implements OnInit {
 
   editFromCart(product: any) {
     document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:none')
-    this.setProductRateSize(product)
     this.cartService.singleCustomProductObj = JSON.parse(JSON.stringify(product))
     this.cartService.singleCustomProductObj.isEditable = true
     this.cartService.selectProductRatesField.setValue(product.productServingSize)
     $('#productCustomizeModal').modal('show')
-  }
-
-  setProductRateSize(product: any) {
-    this.cartService.productSizeList = []
-    let i = 0
-    this.cartService.tempProductSizeList.forEach((item: any, index: any) => {
-      if (product.productRate[item] > 0) {
-        this.cartService.productSizeList[i++] = item
-      }
-    })
   }
 }

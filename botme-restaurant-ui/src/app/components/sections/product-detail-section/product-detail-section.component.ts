@@ -3,6 +3,8 @@ import {MenuService} from 'src/app/services/menu.service';
 import {ActivatedRoute} from "@angular/router";
 import {CartService} from "../../../services/cart.service";
 
+declare var $: any;
+
 @Component({
   selector: 'app-product-detail-section',
   templateUrl: './product-detail-section.component.html',
@@ -19,6 +21,7 @@ export class ProductDetailSectionComponent implements OnInit {
   }
 
   async ngOnInit() {
+    await this.getProducts()
     await this.getCategory()
     await this.getProductDetail(this.route.snapshot.queryParams['productId'])
     await this.getRelatedProducts()
@@ -36,6 +39,13 @@ export class ProductDetailSectionComponent implements OnInit {
     );
   }
 
+  async getProducts() {
+    this.menuservice.getProducts()
+      .subscribe(result => {
+        this.cartService.products = result.payload
+      });
+  }
+
   async getCategory() {
     return this.menuservice.getCategory()
       .subscribe(result => {
@@ -51,9 +61,9 @@ export class ProductDetailSectionComponent implements OnInit {
     return null;
   }
 
-  addToCart(productId: string) {
-    this.cartService.addToCart(productId);
-    document.getElementById("btnProductCart")?.click()
+  addToCart(product: any) {
+    this.cartService.setProductCustomization(JSON.parse(JSON.stringify(product)))
+    // document.getElementById("btnProductCart")?.click()
   }
 
   async getRelatedProducts() {
@@ -78,6 +88,7 @@ export class ProductDetailSectionComponent implements OnInit {
     }
     return
   }
+
   resolveImages() {
     if (this.product.productImage && this.product.productImage.length) {
       return 'assets/images/products/' + this.product.productImage[0]
