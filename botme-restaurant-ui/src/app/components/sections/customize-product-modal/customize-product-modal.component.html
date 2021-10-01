@@ -1,0 +1,265 @@
+<!-- Dynamic product cartModal -->
+<div class="modal product-customization-modal fade" id="productCustomizeModal" tabindex="-1"
+     aria-labelledby="productCustomizeModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row m-auto main-grid">
+          <div class="left col-lg-12">
+            <div class="customization">
+              <div class="m-auto item">
+                <div class="blog-card-slide">
+                  <div class="blog-card-thumb">
+                    <img [src]="cartService.resolveImages(cartService.singleCustomProductObj)" alt="blog">
+                  </div>
+                  <div class="blog-card-content">
+                    <div class="section p-2" *ngIf="cartService.slideToShow===0">
+                      <h3 class="text-center">{{cartService.singleCustomProductObj.productName}}</h3>
+                      <div class="main-selection-container">
+                        <div class="list mb-2 d-flex justify-content-between">
+                          <div class="d-flex left">
+                            <h6>Serving Size</h6>
+                          </div>
+                          <div class="right">
+                            <select (change)="cartService.selectProductRate()" [formControl]="cartService.selectProductRatesField"
+                                    class="drop-down"
+                                    id="exampleFormControlSelect1">
+                              <option [value]="item" *ngFor="let item of cartService.productSizeList">{{item}}</option>
+                            </select>
+                          </div>
+                        </div>
+                        <hr>
+                        <div
+                          *ngIf="cartService.singleCustomProductObj.productOptions && cartService.singleCustomProductObj.productOptions.length"
+                          class="container multi-select-list row">
+                          <h6 class="mb-4">Product Options</h6>
+                          <div *ngFor="let options of cartService.singleCustomProductObj.productOptions"
+                               (click)="cartService.selectProductOptions(options)" class="mb-3 col-lg-4">
+                            <span *ngIf="options.selected"><i class="fas fa-check"></i></span>
+                            <div [class.multi-selection]="options.selected"
+                                 class="d-flex align-items-center justify-content-around ">
+                              <img [src]="options.productImage"/>
+                              <h6>{{options.productName}}</h6>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="section p-2" *ngIf="cartService.slideToShow===1">
+                      <h3 class="text-center">Product Ingredients</h3>
+                      <div class="main-selection-container">
+                        <div
+                          *ngIf="cartService.singleCustomProductObj.productIngredients && cartService.singleCustomProductObj.productIngredients.length"
+                          class="container multi-select-list row">
+                          <div *ngFor="let ingredients of cartService.singleCustomProductObj.productIngredients"
+                               (click)="cartService.selectIngredients(ingredients)" class="mb-3 col-lg-4">
+                            <span *ngIf="ingredients.selected"><i class="fas fa-check"></i></span>
+                            <div [class.multi-selection]="ingredients.selected"
+                                 class="d-flex align-items-center justify-content-around ">
+                              <img [src]="ingredients.productImage"/>
+                              <h6>{{ingredients.productName}}</h6>
+                            </div>
+                          </div>
+                        </div>
+                        <hr>
+                        <h6
+                          style="letter-spacing: 1px;font-size: 17px;font-weight: 600;font-family: Abril Fatface, cursive"
+                          class="text-center mb-4">Product Flavours</h6>
+                        <div
+                          *ngIf="cartService.singleCustomProductObj.productFlavors && cartService.singleCustomProductObj.productFlavors.length"
+                          class="container multi-select-list row">
+                          <div *ngFor="let flavor of cartService.singleCustomProductObj.productFlavors"
+                               (click)="cartService.selectFlavor(flavor)" class="mb-3 col-lg-4">
+                            <span *ngIf="flavor.selected"><i class="fas fa-check"></i></span>
+                            <div [class.multi-selection]="flavor.selected"
+                                 class="d-flex align-items-center justify-content-around ">
+                              <h6>{{flavor.flavorName}}</h6>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="section p-2" *ngIf="cartService.slideToShow===2">
+                      <h3 class="text-center">Product Topping</h3>
+                      <div
+                        *ngIf="cartService.singleCustomProductObj.productToppings && cartService.singleCustomProductObj.productToppings.length"
+                        class="main-selection-container">
+                        <div *ngFor="let toppings of cartService.singleCustomProductObj.productToppings"
+                             class="list mb-2 d-flex justify-content-between">
+                          <div class="d-flex left">
+                            <img [src]="toppings.productImage"/>
+                            <h6>{{toppings.productName}}
+                              <br>
+                              <span class="mt-3">${{toppings.productPrice}}</span>
+                            </h6>
+                          </div>
+                          <div class="counter-section">
+                            <h6 class="text-center">${{toppings.productTotalPrice}}</h6>
+                            <div class="btn-group">
+                              <button style="padding: 4px 28px;" type="button"
+                                      (click)="cartService.addToppingQuantity(toppings,'subtracting')"
+                                      class="btn btn-secondary"><strong>-</strong></button>
+                              <button
+                                style="width: 70px;padding: 4px 28px;border: 1px solid lightgray;background: whitesmoke;color: black"
+                                type="button" class="btn btn-secondary ml-1 mr-1">
+                                <strong>{{toppings.productQuantity}}</strong></button>
+                              <button style="padding: 4px 28px;" type="button"
+                                      (click)="cartService.addToppingQuantity(toppings,'adding')"
+                                      class="btn btn-secondary"><strong>+</strong></button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="section p-2" *ngIf="cartService.slideToShow===3">
+                      <h3 class="text-center">Addons</h3>
+                      <div *ngIf="cartService.singleCustomProductObj.productAddons && cartService.singleCustomProductObj.productAddons.length"
+                           class="main-selection-container">
+                        <div *ngFor="let addons of cartService.singleCustomProductObj.productAddons"
+                             class="list mb-2 d-flex justify-content-between">
+                          <div class="d-flex left">
+                            <img [src]="addons.productImage"/>
+                            <h6>{{addons.productName}}
+                              <br>
+                              <span class="mt-3">${{addons.productPrice}}</span>
+                            </h6>
+                          </div>
+                          <div class="counter-section">
+                            <h6 class="text-center">${{addons.productTotalPrice}}</h6>
+                            <div class="btn-group">
+                              <button style="padding: 4px 28px;" type="button"
+                                      (click)="cartService.addAddonQuantity(addons,'subtracting')"
+                                      class="btn btn-grp btn-secondary"><strong>-</strong></button>
+                              <button
+                                style="width: 70px;padding: 4px 28px;border: 1px solid lightgray;background: whitesmoke;color: black"
+                                type="button" class="btn ml-1 mr-1">
+                                <strong>{{addons.productQuantity}}</strong></button>
+                              <button style="padding: 4px 28px;" type="button"
+                                      (click)="cartService.addAddonQuantity(addons,'adding')"
+                                      class="btn btn-secondary"><strong>+</strong></button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="section p-2" *ngIf="cartService.slideToShow===4">
+                      <h3 class="text-center">Product Summary</h3>
+                      <div class="d-flex mt-2 align-items-center justify-content-center">
+                        <div class="btn-group">
+                          <button style="padding: 4px 28px;" type="button"
+                                  (click)="cartService.addProductQuantity(cartService.singleCustomProductObj,'subtracting')"
+                                  class="btn btn-grp btn-secondary"><strong>-</strong></button>
+                          <button style="width: 70px;padding: 4px 28px;border: 1px solid lightgray;background: whitesmoke;color: black" type="button" class="btn ml-1 mr-1">
+                            <strong>{{cartService.singleCustomProductObj.productQuantity}}</strong></button>
+                          <button style="padding: 4px 28px;" type="button"
+                                  (click)="cartService.addProductQuantity(cartService.singleCustomProductObj,'adding')"
+                                  class="btn btn-secondary"><strong>+</strong></button>
+                        </div>
+                      </div>
+                      <div style="height: 286px;" class="main-selection-container">
+                        <table class="table table-bordered">
+                          <thead>
+                          <tr>
+                            <th style="width: 25%"></th>
+                            <th style="width: 26%"></th>
+                            <th style="width: 5%"></th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr style="height: 20%">
+                            <td>Item Name</td>
+                            <td>{{cartService.singleCustomProductObj.productName}}</td>
+                            <td>${{cartService.singleCustomProductObj.productPrice}}</td>
+                          </tr>
+                          <tr>
+                            <td>Options</td>
+                            <td><span *ngFor="let opt of cartService.singleCustomProductObj.productOptions;let optIndex = index">
+                                <span *ngIf="opt.selected">{{opt.productName }} </span>
+                                <span *ngIf="cartService.checkCommas(cartService.singleCustomProductObj.productOptions,optIndex)"> , </span>
+                              </span>
+                            </td>
+                            <td>--</td>
+                          </tr>
+                          <tr>
+                            <td>Ingredients</td>
+                            <td><span *ngFor="let ing of cartService.singleCustomProductObj.productIngredients;let ingIndex = index">
+                                <span *ngIf="ing.selected">{{ing.productName }} </span>
+                                <span *ngIf="cartService.checkCommas(cartService.singleCustomProductObj.productIngredients,ingIndex)"> , </span>
+                              </span>
+                            </td>
+                            <td>--</td>
+                          </tr>
+                          <tr>
+                            <td>Flavour</td>
+                            <td><span *ngFor="let flav of cartService.singleCustomProductObj.productFlavors">
+                                <span *ngIf="flav.selected">{{flav.flavorName }} </span>
+                              </span>
+                            </td>
+                            <td>--</td>
+                          </tr>
+                          <tr>
+                            <td>Toppings</td>
+                            <td><span *ngFor="let top of cartService.singleCustomProductObj.productToppings;let topIndex = index">
+                                <span *ngIf="top.productQuantity">{{top.productName }}  </span>
+                                <span *ngIf="cartService.checkCommasWithQuantity(cartService.singleCustomProductObj.productToppings,topIndex)"> , </span>
+                              </span>
+                            </td>
+                            <td>${{cartService.getTotalPrice(cartService.singleCustomProductObj.productToppings)}}</td>
+                          </tr>
+                          <tr>
+                            <td>Addons</td>
+                            <td><span *ngFor="let add of cartService.singleCustomProductObj.productAddons;let addIndex = index">
+                                <span *ngIf="add.productQuantity">{{add.productName }}  </span>
+                                <span *ngIf="cartService.checkCommasWithQuantity(cartService.singleCustomProductObj.productAddons,addIndex)"> , </span>
+                              </span>
+                            </td>
+                            <td>${{cartService.getTotalPrice(cartService.singleCustomProductObj.productAddons)}}</td>
+                          </tr>
+                          <tr>
+                            <td>Attributes</td>
+                            <td><span *ngFor="let attr of cartService.singleCustomProductObj.productAttributes | keyvalue;let attrIndex = index">
+                                <span *ngIf="attr.value">{{attr.key }} <br> </span>
+                              </span></td>
+                            <td>--</td>
+                          </tr>
+                          <tr>
+                            <td>Nutrition</td>
+                            <td><span *ngFor="let nut of cartService.singleCustomProductObj.productNutrition | keyvalue">
+                                ({{nut.key}} : {{nut.value}}) <br>
+                              </span></td>
+                            <td>--</td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="total">
+                      <h6 class="text-end">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
+                    </div>
+                    <div class="d-flex justify-content-between button-group">
+                      <button *ngIf="cartService.slideToShow!==0" (click)="cartService.previousSlide()" type="button" class="btn btn-yellow">
+                        <i class="fas fa-arrow-left"></i> Back
+                      </button>
+                      <div [class.apply-left-margin]="cartService.slideToShow===0" class="d-flex">
+                        <button data-bs-dismiss="modal" type="button" class="btn btn-yellow">Cancel</button>
+                        <button *ngIf="cartService.slideToShow!==4" (click)="cartService.nextSlide()" type="button"
+                                class="btn ml-2 btn-primary">Next
+                          <i class="fas fa-arrow-right"></i></button>
+                        <button *ngIf="cartService.slideToShow==4 && !cartService.singleCustomProductObj.isEditable" (click)="addToCart()" type="button"
+                                data-bs-dismiss="modal" class="btn ml-2 btn-primary">Cart Item
+                          <i class="fas ml-2 fa-cart-plus"></i></button>
+                        <button *ngIf="cartService.slideToShow==4 && cartService.singleCustomProductObj.isEditable" (click)="editToCart()" type="button"
+                                data-bs-dismiss="modal" class="btn ml-2 btn-primary">Edit Cart Item
+                          <i class="fas ml-2 fa-cart-plus"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

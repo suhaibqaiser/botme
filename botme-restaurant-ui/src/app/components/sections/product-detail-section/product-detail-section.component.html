@@ -1,3 +1,4 @@
+<app-customize-product-modal></app-customize-product-modal>
 <div class="product-details-section pt-100 pb-70 bg-black">
   <div class="container">
     <div class="row align-items-center">
@@ -72,15 +73,10 @@
             <div class="product-action-info mb-20">
               <div class="d-flex flex-wrap align-items-center
                                     product-quantity">
-                <button (click)="addToCart(product.productId)" class="btn btn-icon product-quantity-item">
+                <button (click)="addToCart(product)" class="btn btn-icon product-quantity-item">
                   Add To Cart
                   <i class="flaticon-shopping-cart-black-shape"></i>
                 </button>
-                <div class="cart-quantity product-quantity-item">
-                  <button class="qu-btn dec">-</button>
-                  <input type="text" class="qu-input" value="1">
-                  <button class="qu-btn inc">+</button>
-                </div>
               </div>
             </div>
             <div class="product-action-info">

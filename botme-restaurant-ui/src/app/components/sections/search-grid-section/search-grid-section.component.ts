@@ -5,7 +5,7 @@ import {SocketService} from 'src/app/services/socket.service';
 import {FormControl} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
-
+declare var $: any;
 @Component({
   selector: 'app-search-grid-section',
   templateUrl: './search-grid-section.component.html',
@@ -67,14 +67,8 @@ export class SearchGridSectionComponent implements OnInit {
   }
 
   /// product customization
-
-  productCustomizeModal: any
   productCustomizationSlider: any
-  slideToShow: any
-
   orderedProductsList: any
-  productSizeList: any = []
-  tempProductSizeList = ['standard', 'medium', 'large', 'small']
 
   constructor(private _http: HttpClient, private menuservice: MenuService,
               public cartService: CartService,
@@ -85,15 +79,14 @@ export class SearchGridSectionComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.productCustomizeModal = {}
     this.productCustomizationSlider = [0, 1, 2, 3]
-    this.slideToShow = 0
     this.searchList = []
     this.isLoading = true
     await this.getQueryParams()
     await this.getCategory();
     this.getWSMessage();
     // this.filterProductsByName('first-call')
+    $('#productCustomizeModal').modal('show')
   }
 
   async getQueryParams() {
@@ -116,7 +109,7 @@ export class SearchGridSectionComponent implements OnInit {
     this.menuservice.getProducts()
       .subscribe(result => {
         this.products = result.payload
-
+        this.cartService.products = result.payload
         if (Array.isArray(this.products)) {
           for (let product of this.products) {
             product.productCategoryName = this.getCategoryName(product.productCategory);
@@ -393,239 +386,5 @@ export class SearchGridSectionComponent implements OnInit {
 
   getProductByType(productType: any) {
     return this.products.filter((item: any) => item.productType == productType)
-  }
-
-  setProductRateSize(product: any) {
-    this.cartService.productSizeList = []
-    let i = 0
-    this.cartService.tempProductSizeList.forEach((item: any, index: any) => {
-      if (product.productRate[item] > 0) {
-        this.cartService.productSizeList[i++] = item
-      }
-    })
-  }
-
-  setProductCustomization(product: any) {
-    this.reset()
-    this.setProductRateSize(product)
-    this.slideToShow = 0
-    let productOptionsList: any = []
-    let productIngredientList: any = []
-    let productFlavoursList: any = []
-    let productAddonsList: any = []
-    let productToppingsList: any = []
-    if (product.productOptions && product.productOptions.length) {
-      product.productOptions.forEach((array: any) => {
-        array.forEach((item: any, i: any) => {
-          let obj = this.getProductById(item)
-          if (obj) {
-            productOptionsList.push({
-              productId: obj.productId,
-              productName: obj.productName,
-              productImage: this.resolveImages(obj),
-              selected: false
-            })
-          }
-        })
-      })
-    }
-
-    if (product.productIngredients && product.productIngredients.length) {
-      product.productIngredients.forEach((item: any, index: any) => {
-        let obj = this.getProductById(item)
-        if (obj) {
-          productIngredientList.push({
-            productId: obj.productId,
-            productName: obj.productName,
-            productImage: this.resolveImages(obj),
-            selected: true
-          })
-        }
-      })
-    }
-
-    if (product.productToppings && product.productToppings.length) {
-      product.productToppings.forEach((item: any, index: any) => {
-        let obj = this.getProductById(item)
-        if (obj) {
-          productToppingsList.push({
-            productId: obj.productId,
-            productName: obj.productName,
-            productImage: this.resolveImages(obj),
-            productQuantity: 0,
-            productPrice: Math.ceil(obj.productRate.standard),
-            productTotalPrice: 0
-          })
-        }
-      })
-    }
-
-    if (product.productFlavor && product.productFlavor.length) {
-      product.productFlavor.forEach((item: any, index: any) => {
-        productFlavoursList.push({
-          flavorName: item,
-          selected: (index == 0)
-        })
-      })
-    }
-    let productlist = this.getProductByType('Addon')
-    if (productlist && productlist.length) {
-      productlist.forEach((item: any) => {
-        productAddonsList.push({
-          productId: item.productId,
-          productName: item.productName,
-          productImage: this.resolveImages(item),
-          selected: false,
-          productQuantity: 0,
-          productPrice: Math.ceil(item.productRate.standard),
-          productTotalPrice: 0
-        })
-      })
-    }
-
-    this.cartService.singleCustomProductObj = {
-      productName: product.productName,
-      productId: product.productId,
-      productImage: product.productImage,
-      productRate: product.productRate,
-      productServingSize: this.cartService.productSizeList[0],
-      productOptions: productOptionsList,
-      productIngredients: productIngredientList,
-      productFlavors: productFlavoursList,
-      productAddons: productAddonsList,
-      productToppings: productToppingsList,
-      productQuantity: 1,
-      productAttributes: product.productAttributes,
-      productNutrition: product.productNutrition,
-      productPrice: Math.ceil(product.productRate[this.cartService.productSizeList[0]]),
-      productTotalPrice: Math.ceil(product.productRate[this.cartService.productSizeList[0]])
-    }
-    this.cartService.selectProductRatesField.setValue(this.cartService.productSizeList[0])
-  }
-
-  selectProductRate() {
-    this.cartService.singleCustomProductObj.productPrice = Math.ceil(this.cartService.singleCustomProductObj.productRate[this.cartService.selectProductRatesField.value])
-    this.cartService.singleCustomProductObj.productServingSize = this.cartService.selectProductRatesField.value
-    this.customizeBillCalculation()
-  }
-
-  selectFlavor(flavor: any) {
-    this.cartService.singleCustomProductObj.productFlavors.forEach((item: any) => {
-      item.selected = item.flavorName === flavor.flavorName
-    })
-  }
-
-  previousSlide() {
-    this.slideToShow--
-    if (this.slideToShow === 2 && !this.cartService.singleCustomProductObj.productToppings.length) {
-      this.slideToShow--
-    }
-  }
-
-  nextSlide() {
-    this.slideToShow++
-    if (this.slideToShow === 2 && !this.cartService.singleCustomProductObj.productToppings.length) {
-      this.slideToShow++
-    }
-  }
-
-
-  selectIngredients(ingredient: any) {
-    ingredient.selected = !ingredient.selected
-  }
-
-  selectProductOptions(option: any) {
-    option.selected = !option.selected
-  }
-
-  customizeBillCalculation() {
-    this.cartService.singleCustomProductObj.productTotalPrice = this.cartService.singleCustomProductObj.productPrice
-    this.cartService.singleCustomProductObj.productToppings.forEach((item: any) => {
-      this.cartService.singleCustomProductObj.productTotalPrice += Math.ceil(item.productTotalPrice)
-    })
-
-    this.cartService.singleCustomProductObj.productAddons.forEach((item: any) => {
-      this.cartService.singleCustomProductObj.productTotalPrice += item.productTotalPrice
-    })
-  }
-
-  addToppingQuantity(toppings: any, type: any) {
-    if (type === 'adding') {
-      toppings.productQuantity = toppings.productQuantity + 1
-    } else if (type === 'subtracting') {
-      if (toppings.productQuantity === 0) return
-      toppings.productQuantity = toppings.productQuantity - 1
-    }
-    toppings.productTotalPrice = toppings.productPrice * toppings.productQuantity
-    this.customizeBillCalculation()
-  }
-
-  addAddonQuantity(addons: any, type: any) {
-    if (type === 'adding') {
-      addons.productQuantity = addons.productQuantity + 1
-    } else if (type === 'subtracting') {
-      if (addons.productQuantity === 0) return
-      addons.productQuantity = addons.productQuantity - 1
-    }
-    addons.productTotalPrice = addons.productPrice * addons.productQuantity
-    this.customizeBillCalculation()
-  }
-
-  addProductQuantity(product: any, type: any) {
-    this.customizeBillCalculation()
-    if (type === 'adding') {
-      product.productQuantity = product.productQuantity + 1
-    } else if (type === 'subtracting') {
-      if (product.productQuantity === 1) return
-      product.productQuantity = product.productQuantity - 1
-    }
-    product.productTotalPrice = product.productTotalPrice * product.productQuantity
-  }
-
-  getTotalPrice(obj: any) {
-    let total = 0
-    obj.forEach((item: any) => {
-      if (item.productQuantity) {
-        total += item.productTotalPrice
-      }
-    })
-    return total
-  }
-
-  checkCommas(objectList: any, optIndex: any) {
-    const selectedList = objectList.filter((item: any) => item.selected)
-    return optIndex + 1 < selectedList.length
-  }
-
-  checkCommasWithQuantity(objectList: any, optIndex: any) {
-    const selectedList = objectList.filter((item: any) => item.productQuantity)
-    return optIndex + 1 < selectedList.length
-  }
-
-  checkCommasWithAttribute(objectList: any, optIndex: any) {
-    const selectedList = objectList.filter((item: any) => item.productQuantity)
-    return optIndex + 1 < selectedList.length
-  }
-
-
-  reset() {
-    this.cartService.singleCustomProductObj = {
-      productName: '',
-      productId: '',
-      productImage: '',
-      productRate: {},
-      productServingSize: '',
-      productOptions: [],
-      productIngredients: [],
-      productFlavors: [],
-      productAddons: [],
-      productToppings: [],
-      productAttributes: {},
-      productNutrition: {},
-      productQuantity: 1,
-      productPrice: 0,
-      productTotalPrice: 0,
-      isEditable: false
-    }
   }
 }
