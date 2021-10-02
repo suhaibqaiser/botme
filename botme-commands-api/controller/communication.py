@@ -9,6 +9,7 @@ def getResponse(intent,entity,text,pageId,sectionId):
     senti = blob.sentiment.polarity
     print(senti)
     value = parseEntityValue(entity)
+    print(value)
     
     if ( -0.5 < senti < 0.5):
         if(intent == "unreserved_table_person"):
@@ -22,8 +23,14 @@ def getResponse(intent,entity,text,pageId,sectionId):
         elif(intent == 'nlu_fallback'):
             return {"Response":"I'm sorry, I didn't quite understand that. Could you rephrase?"}
         else:
+            print(sectionId)
+            print(pageId)
             db = getDbCta(intent,value,pageId,sectionId)
-            return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"sentimentScore":senti}
+            print(db)
+            if db is not None:
+                return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"sentimentScore":senti}
+            else:
+                return {"Response":"I'm sorry, I didn't quite understand that. Could you rephrase?"}
 
     elif(senti > 0.5):
         db = getDbCta(intent,value,pageId,sectionId)
@@ -46,32 +53,42 @@ def getResponse(intent,entity,text,pageId,sectionId):
 
 def parseEntityValue(entity):
     for x in entity:
-        return x['value']
-
+        if (len(x) == 0):
+            return x['value']
+        else:
+            return "Null"
 def checkingForProduct(intent,value,senti,pageId,sectionId):
-    response = requests.get('http://localhost:3100/food/product/search?productName='+value)
-    data = response.json()
-    if(data['status']=="success"):
-        if(len(data['payload']) == 1):
-            db = getDbCta(intent,value,pageId,sectionId)
-            if(db == None):
-                return {"Response":"What do you mean by " + value + "?"}
-            else:
-                return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"sentimentScore":senti}
-        elif(len(data['payload']) > 1):
-            return {"Response":"What do you mean by " + value + " ?"}
-    else:
-        return {"Response":"Product not available"}
-
+    try:
+        response = requests.get('http://localhost:3100/food/product/search?productName='+value)
+        data = response.json()
+        if(data['status']=="success"):
+            if(len(data['payload']) == 1):
+                db = getDbCta(intent,value,pageId,sectionId)
+                if(db == None):
+                    return {"Response":"What do you mean by " + value + "?"}
+                else:
+                    return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"sentimentScore":senti}
+            elif(len(data['payload']) > 1):
+                return {"Response":"What do you mean by " + value + " ?"}
+        else:
+            return {"Response":"Product not available"}
+    except:
+        print("error in checking for product")
+        return "error in checking for product"
 
 def searchingTable(value):
-    response = requests.get('http://localhost:3100/food/tables/search?seats='+value)
-    data = response.json()
-    if(data['status'] == "success"):
-        table_no = getTableNo(data['payload'])
-        return {"Response":"you can move to the table number " + table_no}
-    else:
-        return {"Response":"Sorry, All tables are occupied"}
+    try:
+        response = requests.get('http://localhost:3100/food/tables/search?seats='+value)
+        data = response.json()
+        if(data['status'] == "success"):
+            table_no = getTableNo(data['payload'])
+            return {"Response":"you can move to the table number " + table_no}
+        else:
+            return {"Response":"Sorry, All tables are occupied"}
+    except:
+        print("error in searching for table")
+        return "error in searching for table"
+
 
 def getTableNo(payload):
     for x in payload:
