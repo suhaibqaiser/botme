@@ -52,8 +52,9 @@ def getResponse(intent,entity,text,pageId,sectionId):
             return {"Response":"I do not understand, Can you repeat it again"}
 
 def parseEntityValue(entity):
+    print(entity)
     for x in entity:
-        if (len(x) == 0):
+        if (len(x) != 0):
             return x['value']
         else:
             return "Null"
