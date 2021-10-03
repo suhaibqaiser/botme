@@ -43,7 +43,8 @@
               </div>
             </div>
           </td>
-          <td>${{product.productPrice}}</td>
+          <td *ngIf="!product.status">In Waiting</td>
+          <td *ngIf="product.status">In Progress</td>
           <td>
             <div class="cart-quantity">
               <button (click)="addProductQuantity(product,'subtracting')" class="qu-btn dec">-</button>
@@ -69,7 +70,7 @@
 <!--      </div>-->
       <div class="col-sm-12 col-md-12 col-lg-12">
         <div class="cart-update text-center cart-info-item">
-          <a href="/online-shop" class="btn">
+          <a (click)="placeOrder()" class="btn">
             Place Order
           </a>
         </div>
