@@ -23,10 +23,7 @@ def getResponse(intent,entity,text,pageId,sectionId):
         elif(intent == 'nlu_fallback'):
             return {"Response":"I'm sorry, I didn't quite understand that. Could you rephrase?"}
         else:
-            print(sectionId)
-            print(pageId)
             db = getDbCta(intent,value,pageId,sectionId)
-            print(db)
             if db is not None:
                 return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"sentimentScore":senti}
             else:
@@ -52,12 +49,19 @@ def getResponse(intent,entity,text,pageId,sectionId):
             return {"Response":"I do not understand, Can you repeat it again"}
 
 def parseEntityValue(entity):
-    print(entity)
+    array =[]
+    # print(entity)
     for x in entity:
-        if (len(x) != 0):
+        print(x['value'])
+        if(len(entity) == 1):
             return x['value']
+        elif(len(entity)>1):
+            array.append(x['value'])
         else:
-            return "Null"
+            return None
+    value = array[0] +" "+ array[1]
+    return value
+
 def checkingForProduct(intent,value,senti,pageId,sectionId):
     try:
         response = requests.get('http://localhost:3100/food/product/search?productName='+value)
@@ -74,7 +78,6 @@ def checkingForProduct(intent,value,senti,pageId,sectionId):
         else:
             return {"Response":"Product not available"}
     except:
-        print("error in checking for product")
         return "error in checking for product"
 
 def searchingTable(value):
@@ -87,7 +90,6 @@ def searchingTable(value):
         else:
             return {"Response":"Sorry, All tables are occupied"}
     except:
-        print("error in searching for table")
         return "error in searching for table"
 
 
