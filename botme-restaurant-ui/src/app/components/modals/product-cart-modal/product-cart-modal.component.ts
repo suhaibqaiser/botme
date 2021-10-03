@@ -37,6 +37,7 @@ export class ProductCartModalComponent implements OnInit {
       res => {
         // this.productIds = JSON.parse(res)
         this.cartProducts = JSON.parse(res)
+
         this.cartTotal = 0
         // for (let id in this.productIds) {
         //   this.cartProducts.push(this.products.find((product: { productId: string }) => product.productId === this.productIds[id]));
@@ -79,6 +80,7 @@ export class ProductCartModalComponent implements OnInit {
   }
 
   editFromCart(product: any) {
+    this.cartService.setProductRateSize(product)
     document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:none')
     this.cartService.singleCustomProductObj = JSON.parse(JSON.stringify(product))
     this.cartService.singleCustomProductObj.isEditable = true

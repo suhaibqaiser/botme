@@ -3,7 +3,9 @@ import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {environment} from 'src/environments/environment';
 import {FormControl} from "@angular/forms";
+
 declare var $: any;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -32,7 +34,8 @@ export class CartService {
     productQuantity: 1,
     productPrice: 0,
     productTotalPrice: 0,
-    isEditable: false
+    isEditable: false,
+    status: false
   }
   productSizeList: any = []
   tempProductSizeList = ['standard', 'medium', 'large', 'small']
@@ -53,10 +56,12 @@ export class CartService {
     this.cartProducts.next(JSON.stringify(this.cartProduct));
   }
 
-  addToCart(singleCustomProductObj: any, isEdit: any = false) {
+  addToCart(singleCustomProductObj: any, isEdit: any = false, type: any = '') {
     if (!isEdit) {
       this.cartProduct.push(singleCustomProductObj)
-    } else {
+    } else if (isEdit && type == 'place-order') {
+      this.cartProduct = singleCustomProductObj
+    } else if (isEdit) {
       this.cartProduct.splice(this.cartProduct.indexOf(singleCustomProductObj.productId), 1)
       this.cartProduct.push(singleCustomProductObj)
     }
@@ -176,6 +181,7 @@ export class CartService {
       productAddons: productAddonsList,
       productToppings: productToppingsList,
       productQuantity: 1,
+      status: false,
       productAttributes: product.productAttributes,
       productNutrition: product.productNutrition,
       productPrice: Math.ceil(product.productRate[this.productSizeList[0]]),
@@ -306,7 +312,8 @@ export class CartService {
       productQuantity: 1,
       productPrice: 0,
       productTotalPrice: 0,
-      isEditable: false
+      isEditable: false,
+      status: false
     }
   }
 
