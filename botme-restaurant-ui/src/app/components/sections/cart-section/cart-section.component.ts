@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CartService} from "../../../services/cart.service";
 import {MenuService} from 'src/app/services/menu.service';
-
+declare var $: any;
 @Component({
   selector: 'app-cart-section',
   templateUrl: './cart-section.component.html',
@@ -95,7 +95,6 @@ export class CartSectionComponent implements OnInit {
       product.productQuantity = product.productQuantity - 1
     }
     product.productTotalPrice = product.productTotalPrice * product.productQuantity
-    this.editFromCart(product)
   }
 
   getSubTotal() {
@@ -114,10 +113,11 @@ export class CartSectionComponent implements OnInit {
   }
 
   editFromCart(product: any) {
-    // document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style','display:none')
+    // document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:none')
     this.cartService.singleCustomProductObj = JSON.parse(JSON.stringify(product))
     this.cartService.singleCustomProductObj.isEditable = true
     this.cartService.selectProductRatesField.setValue(product.productServingSize)
+    $('#productCustomizeModal').modal('show')
   }
 
 }
