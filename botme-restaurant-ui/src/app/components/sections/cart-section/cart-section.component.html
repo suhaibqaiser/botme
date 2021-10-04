@@ -17,7 +17,7 @@
         <tr *ngFor="let product of cartProducts">
           <td class="cancel">
             <a (click)="removeFromCart(product.productId)"><i class='flaticon-cancel'></i></a>
-            <a style="font-size: medium;margin-left: 16px" (click)="editFromCart(product)"><i class="fas fa-edit"></i></a>
+            <a *ngIf="!product.status" style="font-size: medium;margin-left: 16px" (click)="editFromCart(product)"><i class="fas fa-edit"></i></a>
           </td>
           <td>
             <div class="product-table-info">
