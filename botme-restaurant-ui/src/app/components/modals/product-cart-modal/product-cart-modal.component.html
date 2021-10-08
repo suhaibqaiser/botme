@@ -38,7 +38,7 @@
                 class="icofont-ui-delete"></i></a>
             </div>
             <div class="cart-modal-delete">
-              <a href="javascript:void(0)" (click)="editFromCart(product)">
+              <a *ngIf="!product.status" href="javascript:void(0)" (click)="editFromCart(product)">
                 <i class="fas fa-edit"></i></a>
             </div>
           </div>

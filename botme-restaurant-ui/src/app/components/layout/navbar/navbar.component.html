@@ -4,7 +4,7 @@
     <!-- mobile menu -->
     <div class="mobile-nav">
       <a href="home" class="mobile-brand">
-        <img src="assets/images/logo.png" alt="logo" class="blue-logo">
+        <img src="assets/images/logo/web-logo.png" alt="logo" class="blue-logo">
       </a>
       <!-- mobile navbar-option -->
       <div class="navbar-option d-flex align-items-center">
@@ -18,14 +18,14 @@
               <span class="option-badge">0</span>
             </div>
             <div class="navbar-option-item navbar-option-order">
-              <a href="shops-grid" class="btn">
-                <i class="flaticon-shopping-cart-black-shape"></i>
+              <a href="online-shop" class="btn text-nowrap">
+                 <i class="flaticon-shopping-cart-black-shape"></i>
               </a>
             </div>
           </div>
         </div>
         <div class="navbar-option-item navbar-option-authentication">
-          <button class="navbar-authentication-button" type="button" id="auth2" data-bs-toggle="dropdown" aria-haspopup="true" ><i class="flaticon-add-user"></i></button>
+<!--          <button class="navbar-authentication-button" type="button" id="auth2" data-bs-toggle="dropdown" aria-haspopup="true" ><i class="flaticon-add-user"></i></button>-->
           <div class="authentication-box dropdown-menu" aria-labelledby="auth2">
             <div class="authentication-close"><i class="flaticon-cancel"></i></div>
             <div class="authentication-body">
@@ -103,36 +103,41 @@
             </div>
           </div>
         </div>
-        <div class="navbar-option-item navbar-option-search">
-          <button class="dropdown-toggle" type="button" id="search2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="flaticon-loupe"></i>
-          </button>
-          <div class="dropdown-menu" aria-labelledby="search2">
-            <form>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search">
-                <button><i class="flaticon-loupe"></i></button>
-              </div>
-            </form>
-          </div>
+<!--        <div class="navbar-option-item navbar-option-search">-->
+<!--          <button class="dropdown-toggle" type="button" id="search2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--            <i class="flaticon-loupe"></i>-->
+<!--          </button>-->
+<!--          <div class="dropdown-menu" aria-labelledby="search2">-->
+<!--            <form>-->
+<!--              <div class="form-group">-->
+<!--                <input type="text" class="form-control" placeholder="Search">-->
+<!--                <button><i class="flaticon-loupe"></i></button>-->
+<!--              </div>-->
+<!--            </form>-->
+<!--          </div>-->
+<!--        </div>-->
+        <div class="navbar-option-item mobile-block navbar-option-order">
+          <a href="online-shop" class="btn text-nowrap">
+            <i class="flaticon-shopping-cart-black-shape"></i>
+          </a>
         </div>
         <div class="navbar-option-item navbar-option-cart mobile-block">
           <a href="#" id="btnProductCart" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
           <span class="option-badge">0</span>
         </div>
-        <div class="navbar-option-item navbar-option-order mobile-block">
-          <a href="shops-grid" class="btn">
-            <i class="flaticon-shopping-cart-black-shape"></i>
-          </a>
-        </div>
       </div>
+<!--        <div class="navbar-option-item navbar-option-order mobile-block">-->
+<!--          <a href="shops-grid" class="btn">-->
+<!--            <i class="flaticon-shopping-cart-black-shape"></i>-->
+<!--          </a>-->
+<!--        </div>-->
     </div>
     <!-- desktop menu -->
     <div class="main-nav">
       <div class="container">
         <nav class="navbar navbar-expand-md navbar-light">
           <a class="navbar-brand" href="home">
-            <img src="assets/images/logo.png" alt="logo" class="logo">
+            <img src="assets/images/logo/web-logo.png" alt="logo" class="logo">
           </a>
           <!-- nav-list -->
           <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
@@ -154,7 +159,7 @@
           <!-- navbar-option -->
           <div class="navbar-option d-flex align-items-center">
             <div class="navbar-option-item navbar-option-authentication">
-              <button class="navbar-authentication-button" type="button" id="auth1" data-bs-toggle="dropdown" aria-haspopup="true" ><i class="flaticon-add-user"></i></button>
+<!--              <button class="navbar-authentication-button" type="button" id="auth1" data-bs-toggle="dropdown" aria-haspopup="true" ><i class="flaticon-add-user"></i></button>-->
               <div class="authentication-box dropdown-menu" aria-labelledby="auth1">
                 <div class="authentication-close"><i class="flaticon-cancel"></i></div>
                 <div class="authentication-body">
@@ -232,19 +237,19 @@
                 </div>
               </div>
             </div>
-            <div class="navbar-option-item navbar-option-search">
-              <button class="dropdown-toggle" type="button" id="search1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="flaticon-loupe"></i>
-              </button>
-              <div class="dropdown-menu" aria-labelledby="search1">
-                <form>
-                  <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
-                    <button><i class="flaticon-loupe"></i></button>
-                  </div>
-                </form>
-              </div>
-            </div>
+<!--            <div class="navbar-option-item navbar-option-search">-->
+<!--              <button class="dropdown-toggle" type="button" id="search1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                <i class="flaticon-loupe"></i>-->
+<!--              </button>-->
+<!--              <div class="dropdown-menu" aria-labelledby="search1">-->
+<!--                <form>-->
+<!--                  <div class="form-group">-->
+<!--                    <input type="text" class="form-control" placeholder="Search">-->
+<!--                    <button><i class="flaticon-loupe"></i></button>-->
+<!--                  </div>-->
+<!--                </form>-->
+<!--              </div>-->
+<!--            </div>-->
             <div class="navbar-option-item navbar-option-cart">
               <a href="#" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
               <span class="option-badge">{{getCartProductCount()}}</span>
