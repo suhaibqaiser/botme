@@ -5,7 +5,7 @@
  <app-customize-product-modal></app-customize-product-modal>
   <div class="container">
     <div class="row">
-      <div class="col-sm-12 col-md-9 col-lg-9 pb-30">
+      <div class="col-sm-12 col-md-8 col-lg-8 col-xl-9 pb-30">
         <div class="product-list-header">
           <!--          <div class="product-list-header-item">-->
           <!--            <div *ngIf="false" class="product-list-result">-->
@@ -41,7 +41,7 @@
         <div class="product-content" id="s01">
           <app-spinner *ngIf="isLoading"></app-spinner>
           <div *ngIf="filteredProducts && filteredProducts.length" class="row">
-            <div class="col-sm-12 col-md-6 col-lg-4 pb-30" *ngFor="let product of filteredProducts">
+            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 pb-30" *ngFor="let product of filteredProducts">
               <div class="product-card product-card-dark" id="{{product.productId}}">
                 <div class="product-card-thumb">
                   <div class="product-card-thumb-inner">
@@ -97,7 +97,7 @@
           </div> -->
         </div>
       </div>
-      <div class="col-sm-12 col-md-3 col-lg-3 pb-30">
+      <div class="col-sm-12 col-md-4 col-lg-4 col-xl-3 pb-30">
         <div class="sidebar-item around-border sidebar-search">
           <form>
             <div class="form-group">
@@ -109,7 +109,7 @@
         </div>
         <div class="sidebar-item mb-30">
           <div class="sidebar-title">
-            <h3 class="color-white">Filter By Price</h3>
+            <h4 class="color-white">Filter By Price</h4>
           </div>
           <div class="sidebar-content">
             <form class="price-range-content">
@@ -128,7 +128,7 @@
         </div>
         <div class="sidebar-item mb-30">
           <div class="sidebar-title">
-            <h3 class="color-white">Filter By Rating</h3>
+            <h4 class="color-white">Filter By Rating</h4>
           </div>
           <div class="sidebar-content">
             <form class="price-range-content">
@@ -147,7 +147,7 @@
         </div>
         <div class="sidebar-item">
           <div class="sidebar-title">
-            <h3 class="color-white">Categories</h3>
+            <h4 class="color-white">Categories</h4>
           </div>
           <ul class="sidebar-list">
             <li *ngFor="let category of categoryList" id="{{category.categoryId}}">
