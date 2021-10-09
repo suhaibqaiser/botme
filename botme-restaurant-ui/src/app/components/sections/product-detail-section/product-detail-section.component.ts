@@ -17,7 +17,7 @@ export class ProductDetailSectionComponent implements OnInit {
   relatedProduct: any
   productsList: any
 
-  constructor(private cartService: CartService, private route: ActivatedRoute, private menuservice: MenuService) {
+  constructor(public cartService: CartService, private route: ActivatedRoute, private menuservice: MenuService) {
   }
 
   async ngOnInit() {

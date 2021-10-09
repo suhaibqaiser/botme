@@ -19,14 +19,14 @@
           <h4><a href="javascript:void(0)">{{product.productName}}</a></h4>
           <div class="cart-modal-action">
             <div class="cart-modal-action-item">
-              <div class="cart-modal-quantity">
-                <p class="cart-quantity-price">
-                  <span *ngFor="let top of product.productToppings"><span *ngIf="top.productQuantity">{{top.productName }}( ${{top.productTotalPrice}})<br></span></span></p>
-              </div>
-              <div class="cart-modal-quantity">
-                <p class="cart-quantity-price">
-                  <span *ngFor="let addon of product.productAddons"><span *ngIf="addon.productQuantity">{{addon.productName }}( ${{addon.productTotalPrice}})<br> </span></span></p>
-              </div>
+<!--              <div class="cart-modal-quantity">-->
+<!--                <p class="cart-quantity-price">-->
+<!--                  <span *ngFor="let top of product.productToppings"><span *ngIf="top.productQuantity">{{top.productName }}( ${{top.productTotalPrice}})<br></span></span></p>-->
+<!--              </div>-->
+<!--              <div class="cart-modal-quantity">-->
+<!--                <p class="cart-quantity-price">-->
+<!--                  <span *ngFor="let addon of product.productAddons"><span *ngIf="addon.productQuantity">{{addon.productName }}( ${{addon.productTotalPrice}})<br> </span></span></p>-->
+<!--              </div>-->
               <div class="mt-2 cart-modal-quantity">
                 <p class="cart-quantity-price"><strong>Sub Total</strong> : ${{product.productTotalPrice}}
               </div>
@@ -40,6 +40,10 @@
             <div class="cart-modal-delete">
               <a *ngIf="!product.status" href="javascript:void(0)" (click)="editFromCart(product)">
                 <i class="fas fa-edit"></i></a>
+            </div>
+            <div class="cart-modal-delete">
+              <a *ngIf="!product.status" href="javascript:void(0)" (click)="editFromCart(product)">
+                <i class="far fa-eye"></i></a>
             </div>
           </div>
         </div>
