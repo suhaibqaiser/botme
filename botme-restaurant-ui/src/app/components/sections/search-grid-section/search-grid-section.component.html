@@ -5,7 +5,7 @@
  <app-customize-product-modal></app-customize-product-modal>
   <div class="container">
     <div class="row">
-      <div class="col-sm-12 col-md-8 col-lg-8 col-xl-9 pb-30">
+      <div class="col-sm-12 col-md-8 col-lg-9 col-xl-9 pb-30">
         <div class="product-list-header">
           <!--          <div class="product-list-header-item">-->
           <!--            <div *ngIf="false" class="product-list-result">-->
@@ -41,7 +41,7 @@
         <div class="product-content" id="s01">
           <app-spinner *ngIf="isLoading"></app-spinner>
           <div *ngIf="filteredProducts && filteredProducts.length" class="row">
-            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 pb-30" *ngFor="let product of filteredProducts">
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 pb-30" *ngFor="let product of filteredProducts">
               <div class="product-card product-card-dark" id="{{product.productId}}">
                 <div class="product-card-thumb">
                   <div class="product-card-thumb-inner">
@@ -56,7 +56,7 @@
                     <ul>
                       <li *ngFor="let item of resolveRating(product)" class="full-star"><i [class]="item.star"></i></li>
                     </ul>
-                    <p>({{product.productRating}} Reviews)</p>
+                    <p><small>({{product.productRating}} Reviews)</small></p>
                   </div>
                 </div>
                 <div class="product-card-content">
@@ -97,7 +97,7 @@
           </div> -->
         </div>
       </div>
-      <div class="col-sm-12 col-md-4 col-lg-4 col-xl-3 pb-30">
+      <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3 pb-30">
         <div class="sidebar-item around-border sidebar-search">
           <form>
             <div class="form-group">
