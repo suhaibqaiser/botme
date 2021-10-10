@@ -28,4 +28,8 @@ export class NavbarComponent implements OnInit {
     return this.products.length
   }
 
+  showCartModal(){
+    document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:block')
+  }
+
 }

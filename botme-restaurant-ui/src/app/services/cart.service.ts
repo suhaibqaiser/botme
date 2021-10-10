@@ -35,6 +35,7 @@ export class CartService {
     productPrice: 0,
     productTotalPrice: 0,
     isEditable: false,
+    isShowInfo: false,
     status: false
   }
   productSizeList: any = []
@@ -324,6 +325,7 @@ export class CartService {
       productPrice: 0,
       productTotalPrice: 0,
       isEditable: false,
+      isShowInfo: false,
       status: false
     }
   }

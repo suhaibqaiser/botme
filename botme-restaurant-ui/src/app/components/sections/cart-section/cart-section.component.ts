@@ -123,6 +123,17 @@ export class CartSectionComponent implements OnInit {
     $('#productCustomizeModal').modal('show')
   }
 
+  showProductInfo(product: any) {
+    this.cartService.setProductRateSize(product)
+    // document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:none')
+    this.cartService.singleCustomProductObj = JSON.parse(JSON.stringify(product))
+    this.cartService.singleCustomProductObj.isShowInfo = true
+    this.cartService.singleCustomProductObj.isEditable = false
+    this.cartService.slideToShow = 4
+    this.cartService.selectProductRatesField.setValue(product.productServingSize)
+    $('#productCustomizeModal').modal('show')
+  }
+
   placeOrder() {
     this.cartProducts.forEach((item: any) => {
         item.status = true
