@@ -23,6 +23,7 @@ export class HeadingbannerComponent implements OnInit {
     if (this.currentRoute !== 'online shop') {
       localStorage.setItem('searchList', JSON.stringify([]))
     }
-  }
+    if (this.currentRoute == 'online shop') this.currentRoute = 'Place Order'
 
+  }
 }
