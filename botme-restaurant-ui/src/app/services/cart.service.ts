@@ -35,6 +35,7 @@ export class CartService {
     productPrice: 0,
     productTotalPrice: 0,
     isEditable: false,
+    isShowInfo: false,
     status: false
   }
   productSizeList: any = []
@@ -290,6 +291,17 @@ export class CartService {
     return optIndex + 1 < selectedList.length
   }
 
+
+  isSelected(objectList: any, type: any = '') {
+    let selectedList = []
+    if (type && type.length) {
+      selectedList = objectList.filter((item: any) => item.productQuantity)
+      return selectedList.length
+    }
+    selectedList = objectList.filter((item: any) => item.selected)
+    return selectedList.length
+  }
+
   checkCommasWithAttribute(objectList: any, optIndex: any) {
     const selectedList = objectList.filter((item: any) => item.productQuantity)
     return optIndex + 1 < selectedList.length
@@ -313,20 +325,25 @@ export class CartService {
       productPrice: 0,
       productTotalPrice: 0,
       isEditable: false,
+      isShowInfo: false,
       status: false
     }
   }
 
   previousSlide() {
     this.slideToShow--
-    if (this.slideToShow === 2 && !this.singleCustomProductObj.productToppings.length) {
+    if (this.slideToShow === 3 && !this.singleCustomProductObj.productIngredients.length && !this.singleCustomProductObj.productFlavors.length) {
+      this.slideToShow = 0
+    } else if (this.slideToShow === 2 && !this.singleCustomProductObj.productToppings.length) {
       this.slideToShow--
     }
   }
 
   nextSlide() {
     this.slideToShow++
-    if (this.slideToShow === 2 && !this.singleCustomProductObj.productToppings.length) {
+    if (this.slideToShow === 1 && !this.singleCustomProductObj.productIngredients.length && !this.singleCustomProductObj.productFlavors.length) {
+      this.slideToShow = 4
+    } else if (this.slideToShow === 2 && !this.singleCustomProductObj.productToppings.length) {
       this.slideToShow++
     }
   }

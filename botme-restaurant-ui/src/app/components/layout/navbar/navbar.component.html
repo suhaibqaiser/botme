@@ -14,7 +14,7 @@
           </button>
           <div class="dropdown-menu" aria-labelledby="mobileOptionDropdown">
             <div class="navbar-option-item navbar-option-cart">
-              <a href="#" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
+              <a (click)="showCartModal()" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
               <span class="option-badge">{{getCartProductCount()}}</span>
             </div>
             <div class="navbar-option-item navbar-option-order">
@@ -116,13 +116,13 @@
 <!--            </form>-->
 <!--          </div>-->
 <!--        </div>-->
-        <div class="navbar-option-item mobile-block navbar-option-order">
-          <a href="online-shop" class="btn text-nowrap">
+        <div class="navbar-option-item tap-view-place-order mobile-block navbar-option-order">
+          <a href="online-shop" class="btn">Place order
             <i class="flaticon-shopping-cart-black-shape"></i>
           </a>
         </div>
         <div class="navbar-option-item navbar-option-cart mobile-block">
-          <a href="#" id="btnProductCart" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
+          <a (click)="showCartModal()" id="btnProductCart" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
           <span class="option-badge">{{getCartProductCount()}}</span>
         </div>
       </div>
@@ -251,7 +251,7 @@
 <!--              </div>-->
 <!--            </div>-->
             <div class="navbar-option-item navbar-option-cart">
-              <a href="#" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
+              <a (click)="showCartModal()" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
               <span class="option-badge">{{getCartProductCount()}}</span>
             </div>
             <div class="navbar-option-item navbar-option-order">
