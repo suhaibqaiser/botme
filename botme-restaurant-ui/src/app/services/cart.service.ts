@@ -71,7 +71,12 @@ export class CartService {
   }
 
   removeFromCart(productId: string) {
-    this.cartProduct.splice(this.cartProduct.indexOf(productId), 1);
+    this.cartProduct.forEach((item:any,index)=>{
+      if(item.productId == productId){
+        this.cartProduct.splice(index, 1);
+      }
+    })
+    // this.cartProduct.splice(this.cartProduct.indexOf(productId), 1);
     this.setToLocalStorage("cart-products", this.cartProduct);
   }
 
