@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const { stringify } = require('uuid');
+const {stringify} = require('uuid');
 const config = require('../config');
 
 // Service to access RASA NLU API
@@ -22,34 +22,36 @@ async function getIntent(text) {
         console.log(err);
     }
     for (let e of data.entities) {
-        entities.push({ name: e.entity, value: e.value })
+        entities.push({name: e.entity, value: e.value})
     }
     response = {
         "intent": data.intent.name,
         "entities": entities,
-        "text" : data.text
+        "text": data.text
     }
     return response;
 }
-async function getResponse(text,pageID,sectionId){
+
+async function getResponse(text, pageId, sectionId) {
     let data
     let response
-    try{
-        let body ={"text":text,"pageId":pageID,"sectionId":sectionId};
-        const resp = await fetch(config.commandapi + '/response',{
-            method:'post',
-            body:JSON.stringify(body),
+    try {
+        let body = {"text": text, "pageId": pageId, "sectionId": sectionId};
+        console.log('body =>', body)
+        const resp = await fetch('http://api.gofindmenu.com:5010/response', {
+            method: 'post',
+            body: body,
             headers: {
-                'Content-Type':'application/json'
+                'Content-Type': 'application/json'
             }
         });
         data = await resp.json()
-        console.log(data)
-    }catch (err) {
+        console.log('reponse data  =>', data)
+    } catch (err) {
         console.log(err);
     }
-    return data 
+    return data
 
 }
 
-module.exports = ({getIntent,getResponse})
+module.exports = ({getIntent, getResponse})

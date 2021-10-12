@@ -1,22 +1,18 @@
 const restaurantService = require('./restaurantService')
 const commandService = require('./commandService')
-const PromptSync = require('prompt-sync')
-const prompt = PromptSync()
-async function generateAnswer(input,text) {
+async function generateAnswer(textToSpeech,pageId,sectionId) {
     // TODO: list of intents in RASA need to get from DB
     // let intents = ['Order_meal', 'menu_list', 'menu_category', 'page_navigation']
     // console.log(input);
     // let intent = input.intent
     // let entities = input.entities
-    var pageId = prompt("pageid:");
-    var sectionId = prompt("sectionid:");
-    var Response = await commandService.getResponse(text,pageId,sectionId)
-    console.log(text)
+    var Response = await commandService.getResponse(textToSpeech,pageId,sectionId)
+    console.log(textToSpeech)
     let answer = {
         text: Response.Response,
         ctaId: Response.ctaCommandId
     };
-    
+
     // check if identified intent exists in intents list above
     // if (intents.includes(intent)) {
 
@@ -43,7 +39,7 @@ async function generateAnswer(input,text) {
     //     if (intent === 'page_navigation') {
     //         answer.navLink = entities[0].value
     //         answer.text = "Lets go..."
-    //     }       
+    //     }
 
     // } else {
     //     // fall back answer intent is not recognized

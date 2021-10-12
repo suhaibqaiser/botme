@@ -16,6 +16,8 @@ async function processCommunication(payload) {
         response.message = "Error: Cannot process empty request";
         return response
     }
+
+
     let request = new Request(payload);
 
     if (!request.message_text) {
@@ -35,7 +37,8 @@ async function processCommunication(payload) {
         sessionStatus.status === "success" &&
         sessionStatus.payload === true
     ) {
-        let reply = await processConversation(request.message_text, request.authToken);
+        console.log('request =>', request.sectionId, request.pageId)
+        let reply = await processConversation(request, request.authToken);
         response.message = reply.payload;
         response.status = reply.status;
     } else {
@@ -46,13 +49,13 @@ async function processCommunication(payload) {
 }
 
 
-async function processConversation(message, clientToken) {
+async function processConversation(request, clientToken) {
     let response = {
         status: "",
         payload: ""
     };
 
-    let communication = await processMessage(message)
+    let communication = await processMessage(request)
     if (communication.status === 'error') {
         response.status = communication.status
     } else {
@@ -63,22 +66,24 @@ async function processConversation(message, clientToken) {
     let conversationId = await conversationController.getConversationId(clientToken)
     console.log(communication.intent)
     if (communication.intent === 'conversation.end') {
-        conversationController.addConversationLog(conversationId, message, communication.payload)
+        conversationController.addConversationLog(conversationId, request.message_text, communication.payload)
         conversationController.endConversation(conversationId, 0)
     } else {
-        conversationController.addConversationLog(conversationId, message, communication.payload)
+        conversationController.addConversationLog(conversationId, request.message_text, communication.payload)
     }
     return response
 }
 
-async function processMessage(text) {
+async function processMessage(request) {
     let response = {
         status: "",
         payload: ""
     };
-    //let textToSpeech = await communicationService.getSpeechToText(text)
-    //console.log('textToSpeech', textToSpeech)
-    let message = await answeringService.generateAnswer(await commandService.getIntent(text),text);
+    let textToSpeech = await communicationService.getSpeechToText(request.message_text)
+    console.log('textToSpeech =>', textToSpeech)
+    console.log('pageId =>',request.pageId)
+    console.log('sectionId =>',request.sectionId)
+    let message = await answeringService.generateAnswer(textToSpeech, request.pageId, request.sectionId);
     if (message) {
         response.payload = message;
         //response.intent = message.intent;
