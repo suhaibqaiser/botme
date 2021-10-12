@@ -29,9 +29,11 @@
   "dependencies": {
     "@aws-sdk/client-sqs": "^3.16.0",
     "@google-cloud/speech": "^4.8.0",
+    "@google-cloud/storage": "^5.14.2",
     "axios": "^0.21.1",
     "mongoose": "^5.12.10",
     "node-fetch": "^2.6.1",
+    "prompt-sync": "^4.2.0",
     "uuid": "^8.3.2",
     "ws": "7.4.3"
   }

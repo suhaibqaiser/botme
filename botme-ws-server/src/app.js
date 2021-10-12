@@ -25,6 +25,7 @@ wss.on('connection', function connection(ws) {
         response.clientID = parsedPayload.clientID;
         console.log(response)
         ws.send(JSON.stringify(response))
+        // ws.emit('message',JSON.stringify(response))
     });
 
 // TODO: set interval timeout to 0 when deploying
