@@ -86,7 +86,7 @@ export class SearchGridSectionComponent implements OnInit {
     await this.getCategory();
     this.getWSMessage();
     // this.filterProductsByName('first-call')
-    $('#productCustomizeModal').modal('show')
+    $('#pageId-productCustomizeModal').modal('show')
   }
 
   async getQueryParams() {

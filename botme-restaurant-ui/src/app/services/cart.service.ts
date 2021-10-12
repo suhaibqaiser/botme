@@ -194,7 +194,7 @@ export class CartService {
       productTotalPrice: Math.ceil(product.productRate[this.productSizeList[0]])
     }
     this.selectProductRatesField.setValue(this.productSizeList[0])
-    $('#productCustomizeModal').modal('show')
+    $('#pageId-productCustomizeModal').modal('show')
   }
 
   resolveImages(product: any) {

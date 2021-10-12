@@ -1,6 +1,6 @@
 <!-- Dynamic product cartModal -->
-<div class="modal product-customization-modal fade" id="productCustomizeModal" tabindex="-1"
-     aria-labelledby="productCustomizeModal" aria-hidden="true">
+<div class="modal product-customization-modal fade" id="pageId-productCustomizeModal" tabindex="-1"
+     aria-labelledby="pageId-productCustomizeModal" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-body">
@@ -13,7 +13,7 @@
                     <img [src]="cartService.resolveImages(cartService.singleCustomProductObj)" alt="blog">
                   </div>
                   <div class="blog-card-content">
-                    <div class="section p-2" *ngIf="cartService.slideToShow===0">
+                    <div id="sectionId-servingSize-productOptions" class="section p-2" *ngIf="cartService.slideToShow===0">
                       <h3 class="text-center">{{cartService.singleCustomProductObj.productName}}</h3>
                       <div class="main-selection-container">
                         <div class="list mb-2 d-flex justify-content-between">
