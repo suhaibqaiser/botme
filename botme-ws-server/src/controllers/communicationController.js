@@ -78,7 +78,7 @@ async function processMessage(text) {
     };
     //let textToSpeech = await communicationService.getSpeechToText(text)
     //console.log('textToSpeech', textToSpeech)
-    let message = await answeringService.generateAnswer(await commandService.getIntent(text));
+    let message = await answeringService.generateAnswer(await commandService.getIntent(text),text);
     if (message) {
         response.payload = message;
         //response.intent = message.intent;
