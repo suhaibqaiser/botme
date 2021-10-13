@@ -38,7 +38,7 @@ async function getResponse(text, pageId, sectionId) {
     try {
         let body = {"text": text,"pageId": pageId,"sectionId": sectionId};
         console.log('body =>', body)
-        const response = await fetch(config.commandapi + "/response" ,{
+        const response = await fetch('http://api.gofindmenu.com:5010' + "/response" ,{
             method: 'post',
             body: JSON.stringify(body),
             headers: {
