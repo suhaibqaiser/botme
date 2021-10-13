@@ -13,7 +13,7 @@ def send_Response():
     text = req_data['text']
     print(text)
     pageId = req_data['pageId']
-    print(type(pageId))
+    print(pageId)
     sectionID = req_data['sectionId']
     rasa_data = getIntent(text)
     print(rasa_data)

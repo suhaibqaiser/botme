@@ -34,18 +34,19 @@ async function getIntent(text) {
 
 async function getResponse(text, pageId, sectionId) {
     let data
-    let response
+    // let response
     try {
-        let body = {"text": text, "pageId": pageId, "sectionId": sectionId};
+        let body = {"text": text,"pageId": pageId,"sectionId": sectionId};
         console.log('body =>', body)
-        const resp = await fetch('http://api.gofindmenu.com:5010/response', {
+        const response = await fetch(config.commandapi + "/response" ,{
             method: 'post',
-            body: body,
+            body: JSON.stringify(body),
             headers: {
                 'Content-Type': 'application/json'
             }
         });
-        data = await resp.json()
+        console.log(response)
+        data = response.json()
         console.log('reponse data  =>', data)
     } catch (err) {
         console.log(err);
