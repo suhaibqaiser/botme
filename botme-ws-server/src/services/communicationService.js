@@ -33,7 +33,7 @@ async function getSpeechToText(text) {
     }
     const config = {
         encoding: 'LINEAR16',
-        sampleRateHertz: 48000,
+        sampleRateHertz: 44100,
         languageCode: 'en-US',
         audioChannelCount: 2
     }
