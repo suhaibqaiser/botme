@@ -15,29 +15,30 @@
 
 
 
-.chat-bot{
-  position: fixed;
-  bottom: 60px;
-  float: right;
-  z-index: 999;
-  margin-left: 60px;
-  border-radius: 10px;
-  height: 200px;
-
-}
+//.chat-bot{
+//  position: fixed;
+//  bottom: 60px;
+//  float: right;
+//  z-index: 999;
+//  margin-left: 60px;
+//  border-radius: 10px;
+//  height: 200px;
+//
+//}
 
 
 
 .sofia-bot-button{
-  position: fixed;
-  bottom: 20px;
-  float: right;
-  margin-left: 20px;
-  z-index: 999;
+  //position: fixed;
+  //bottom: 20px;
+  //float: right;
+  //margin-left: 20px;
+  //z-index: 999;
+  width: 5rem;
   img{
     border-radius: 100px;
-    width: 70px;
-    height: 70px;
+    width: 43px;
+    height: 43px;
     background: #FFCC00;
     padding: 4px;
   }
