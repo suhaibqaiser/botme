@@ -45,7 +45,7 @@
               <div class="product-card product-card-dark" id="{{product.productId}}">
                 <div class="product-card-thumb">
                   <div class="product-card-thumb-inner">
-                    <a href="/product-detail/?productId={{product.productId}}"><img [src]="resolveImages(product)" alt="product"></a>
+                    <a id="ctaId-product-detail-page" href="/product-detail/?productId={{product.productId}}"><img [src]="resolveImages(product)" alt="product"></a>
                     <div class="product-card-button">
                       <!--                      <a (click)="addToCart(product.productId)" class="btn btn-yellow">Add To-->
                       <!--                        Cart</a>-->
@@ -60,10 +60,10 @@
                   </div>
                 </div>
                 <div class="product-card-content">
-                  <h3><a href="/product-detail/?productId={{product.productId}}">{{product.productName}}</a></h3>
+                  <h3><a id="ctaId-product-detail-page" href="/product-detail/?productId={{product.productId}}">{{product.productName}}</a></h3>
                   <h4 class="product-price">${{product.productRate.standard}}</h4>
                   <div class="d-flex product-icons justify-content-around">
-                    <a (click)="cartService.setProductCustomization(product)" data-bs-toggle="modal"
+                    <a id="ctaId-product-add-to-cart" (click)="cartService.setProductCustomization(product)" data-bs-toggle="modal"
                        data-bs-target="#pageId-productCustomizeModal"><i class="fas fa-cart-plus"></i></a>
                     <a><i class="fas fa-heart"></i></a>
                   </div>

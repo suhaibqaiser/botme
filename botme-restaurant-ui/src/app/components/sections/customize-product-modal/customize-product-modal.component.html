@@ -23,7 +23,7 @@
                           <div class="right">
                             <select (change)="cartService.selectProductRate()" [formControl]="cartService.selectProductRatesField"
                                     class="drop-down"
-                                    id="exampleFormControlSelect1">
+                                    id="ctaId-select-serving-size">
                               <option [value]="item" *ngFor="let item of cartService.productSizeList">{{item}}</option>
                             </select>
                           </div>
@@ -33,7 +33,7 @@
                           *ngIf="cartService.singleCustomProductObj.productOptions && cartService.singleCustomProductObj.productOptions.length"
                           class="container multi-select-list row">
                           <h6 class="mb-4">Product Options</h6>
-                          <div *ngFor="let options of cartService.singleCustomProductObj.productOptions"
+                          <div id="ctaId-select-product-options" *ngFor="let options of cartService.singleCustomProductObj.productOptions"
                                (click)="cartService.selectProductOptions(options)" class="mb-3 col-lg-4">
                             <span *ngIf="options.selected"><i class="fas fa-check"></i></span>
                             <div [class.multi-selection]="options.selected"
@@ -242,15 +242,15 @@
                         <i class="fas fa-arrow-left"></i> Back
                       </button>
                       <div [class.apply-left-margin]="cartService.slideToShow===0" class="d-flex">
-                        <button data-bs-dismiss="modal" type="button" class="btn btn-yellow">Cancel</button>
-                        <button *ngIf="cartService.slideToShow!==4" (click)="cartService.nextSlide()" type="button"
+                        <button data-bs-dismiss="modal" id="ctaId-cancel-add-to-cart-modal" type="button" class="btn btn-yellow">Cancel</button>
+                        <button id="ctaId-next-section" *ngIf="cartService.slideToShow!==4" (click)="cartService.nextSlide()" type="button"
                                 class="btn ml-2 btn-primary">Next
                           <i class="fas fa-arrow-right"></i></button>
                         <div *ngIf="!cartService.singleCustomProductObj.isShowInfo">
-                        <button *ngIf="cartService.slideToShow==4 && !cartService.singleCustomProductObj.isEditable" (click)="addToCart()" type="button"
+                        <button id="ctaId-cart-item" *ngIf="cartService.slideToShow==4 && !cartService.singleCustomProductObj.isEditable" (click)="addToCart()" type="button"
                                 data-bs-dismiss="modal" class="btn ml-2 btn-primary">Cart Item
                           <i class="fas ml-2 fa-cart-plus"></i></button>
-                        <button *ngIf="cartService.slideToShow==4 && cartService.singleCustomProductObj.isEditable" (click)="editToCart()" type="button"
+                        <button id="ctaId-edit-cart-item" *ngIf="cartService.slideToShow==4 && cartService.singleCustomProductObj.isEditable" (click)="editToCart()" type="button"
                                 data-bs-dismiss="modal" class="btn ml-2 btn-primary">Edit Cart Item
                           <i class="fas ml-2 fa-cart-plus"></i></button>
                         </div>
