@@ -64,7 +64,7 @@ async function processConversation(request, clientToken) {
     }
 
     let conversationId = await conversationController.getConversationId(clientToken)
-    console.log(communication.intent)
+    // console.log(communication.intent)
     if (communication.intent === 'conversation.end') {
         conversationController.addConversationLog(conversationId, request.message_text, communication.payload)
         conversationController.endConversation(conversationId, 0)
@@ -83,6 +83,7 @@ async function processMessage(request) {
     console.log('textToSpeech =>', textToSpeech)
     console.log('pageId =>',request.pageId)
     console.log('sectionId =>',request.sectionId)
+
     let message = await answeringService.generateAnswer(textToSpeech, request.pageId, request.sectionId);
     if (message) {
         response.payload = message;

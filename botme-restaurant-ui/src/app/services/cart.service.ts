@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {environment} from 'src/environments/environment';
 import {FormControl} from "@angular/forms";
+import {SocketService} from "./socket.service";
 
 declare var $: any;
 
@@ -42,7 +43,7 @@ export class CartService {
   tempProductSizeList = ['standard', 'medium', 'large', 'small']
   selectProductRatesField = new FormControl('')
 
-  constructor() {
+  constructor(private _socketService:SocketService) {
     this.getFromLocalstorage();
   }
 
@@ -98,6 +99,8 @@ export class CartService {
 
   //
   setProductCustomization(product: any) {
+    this._socketService.pageId = 'pageId-product-customize-modal'
+    this._socketService.sectionId = 'sectionId-servingSize-productOptions'
     this.slideToShow = 0
     this.reset()
     this.setProductRateSize(product)

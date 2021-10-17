@@ -33,7 +33,6 @@ async function getSpeechToText(text) {
     }
     const config = {
         encoding: 'LINEAR16',
-        sampleRateHertz: 44100,
         languageCode: 'en-US',
         audioChannelCount: 2
     }
@@ -46,7 +45,6 @@ async function getSpeechToText(text) {
         ([response]) => {
             return response.results.map(result =>
                 result.alternatives[0].transcript).join('\n')
-            console.log('communication service => ', text)
         }, (err) => {
             console.log(err)
             return err

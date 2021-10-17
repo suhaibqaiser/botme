@@ -1,18 +1,23 @@
 const restaurantService = require('./restaurantService')
 const commandService = require('./commandService')
-async function generateAnswer(textToSpeech,pageId,sectionId) {
+
+async function generateAnswer(textToSpeech, pageId, sectionId) {
     // TODO: list of intents in RASA need to get from DB
     // let intents = ['Order_meal', 'menu_list', 'menu_category', 'page_navigation']
     // console.log(input);
     // let intent = input.intent
     // let entities = input.entities
-    var Response = await commandService.getResponse(textToSpeech,pageId,sectionId)
-    console.log(textToSpeech)
+    var Response = await commandService.getResponse(textToSpeech, pageId, sectionId)
     let answer = {
         text: Response.Response,
-        ctaId: Response.ctaCommandId
+        ctaId: Response.ctaCommandId,
+        entityId:Response.entityId,
+        entityName:Response.entityName,
+        pageId:Response.pageId,
+        sectionId:Response.sectionId,
+        sentimentScore:Response.sentimentScore
     };
-
+    // console.log('Response =>', Response)
     // check if identified intent exists in intents list above
     // if (intents.includes(intent)) {
 
@@ -48,4 +53,4 @@ async function generateAnswer(textToSpeech,pageId,sectionId) {
     return answer
 }
 
-module.exports = ({ generateAnswer })
+module.exports = ({generateAnswer})

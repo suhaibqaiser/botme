@@ -12,6 +12,8 @@ export class SocketService {
   private socket$: any;
   private messagesSubject = new Subject();
   messages = this.messagesSubject.asObservable();
+  pageId = 'pageId-order-online'
+  sectionId = 'sectionId-product-list'
 
   constructor() {
     this.connect();
@@ -23,6 +25,8 @@ export class SocketService {
       this.socket$.subscribe(
         (msg: string) => {
           this.messagesSubject.next(msg)
+          console.log('coonet =>', this.messagesSubject)
+          this.fireInteractionEvent(msg)
         },
         (err: any) => console.log(err),
         () => this.close()
@@ -43,13 +47,38 @@ export class SocketService {
       "language": "en-US",
       "message_text": msg,
       "authToken": "qbw/fcQKvC6SY+AelUs5VpRYOhnRvzZsz39xVU06LYI=",
-      "pageId": "pageId-order-online",
-      "sectionId": "sectionId-product-list"
+      "pageId": this.pageId,
+      "sectionId": this.sectionId
     }
     this.socket$.next(wsPayload);
   }
 
   close() {
     this.socket$.complete();
+  }
+
+  fireInteractionEvent(msg: any) {
+    console.log('yobro :=', msg.message)
+    let tempMessage = msg.message
+
+    // order online page
+    if (tempMessage.pageId === 'pageId-order-online' && tempMessage.sectionId === 'sectionId-product-list') {
+      // @ts-ignore
+      // pass entity id as parameter
+      let a = document.getElementById(tempMessage.entityId)
+      // @ts-ignore
+      console.log(a.getElementsByTagName('a'))
+      // @ts-ignore
+      let list = a.getElementsByTagName('a')
+      for (let i = 0; i < list.length; i++) {
+        //pass ctaId in here
+        if (list[i].getAttribute('id') == tempMessage.ctaId) {
+          list[i].click()
+        }
+      }
+    } else if (tempMessage.pageId === 'pageId-product-customize-modal' && tempMessage.sectionId === 'sectionId-servingSize-productOptions') {
+      // @ts-ignore
+      document.getElementById(tempMessage.entityId).click()
+    }
   }
 }
