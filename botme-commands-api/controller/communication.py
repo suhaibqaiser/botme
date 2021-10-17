@@ -24,8 +24,10 @@ def getResponse(intent,entity,text,pageId,sectionId):
             return {"Response":"I'm sorry, I didn't quite understand that. Could you rephrase?"}
         else:
             db = getDbCta(intent,value,pageId,sectionId)
+            # context = db['context']
             if db is not None:
-                return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"sentimentScore":senti}
+                context = db['context']
+                return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":context['pageId'],"sectionId":context['sectionId'],"entityName":value,"sentimentScore":senti}
             else:
                 return {"Response":"I'm sorry, I didn't quite understand that. Could you rephrase?"}
 
@@ -69,10 +71,12 @@ def checkingForProduct(intent,value,senti,pageId,sectionId):
         if(data['status']=="success"):
             if(len(data['payload']) == 1):
                 db = getDbCta(intent,value,pageId,sectionId)
+                context = db['context']
+                iD = getEntityId(context['entities'])
                 if(db == None):
                     return {"Response":"What do you mean by " + value + "?"}
                 else:
-                    return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"sentimentScore":senti}
+                    return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":context['pageId'],"sectionId":context['sectionId'],"entityName":value,"entityId":iD,"sentimentScore":senti}
             elif(len(data['payload']) > 1):
                 return {"Response":"What do you mean by " + value + " ?"}
         else:
@@ -98,3 +102,7 @@ def getTableNo(payload):
         number = str(x['tableLabel'])
         return number
 
+
+def getEntityId(entity):
+    for x in entity:
+        return x['entityId']
