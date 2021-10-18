@@ -24,10 +24,11 @@ def getResponse(intent,entity,text,pageId,sectionId):
             return {"Response":"I'm sorry, I didn't quite understand that. Could you rephrase?"}
         else:
             db = getDbCta(intent,value,pageId,sectionId)
-            # context = db['context']
+            context = db['context']
+            iD = getEntityId(context['entities'])
             if db is not None:
                 context = db['context']
-                return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":context['pageId'],"sectionId":context['sectionId'],"entityName":value,"sentimentScore":senti}
+                return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":context['pageId'],"sectionId":context['sectionId'],"entityName":value,"entityId":iD,"sentimentScore":senti}
             else:
                 return {"Response":"I'm sorry, I didn't quite understand that. Could you rephrase?"}
 
