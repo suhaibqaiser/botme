@@ -74,7 +74,8 @@ export class SearchGridSectionComponent implements OnInit {
               public cartService: CartService,
               private socketService: SocketService,
               private _router: Router,
-              private _route: ActivatedRoute
+              private _route: ActivatedRoute,
+              public _socketService:SocketService
   ) {
   }
 

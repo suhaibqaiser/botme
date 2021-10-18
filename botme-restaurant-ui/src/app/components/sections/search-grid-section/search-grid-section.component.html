@@ -4,6 +4,8 @@
 
  <app-customize-product-modal></app-customize-product-modal>
   <div class="container">
+    <input [formControl]="_socketService.speachInput">
+    <button (click)="_socketService.sendMessage(_socketService.speachInput.value)" class="btn btn-success">send</button>
     <div class="row">
       <div class="col-sm-12 col-md-8 col-lg-9 col-xl-9 pb-30">
         <div class="product-list-header" id="sectionId-search-tags">

@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {webSocket, WebSocketSubject} from 'rxjs/webSocket';
 import {environment} from '../../environments/environment';
 import {Subject} from 'rxjs';
+import {FormControl} from "@angular/forms";
 
 export const WS_ENDPOINT = environment.wsEndpoint;
 
@@ -14,6 +15,7 @@ export class SocketService {
   messages = this.messagesSubject.asObservable();
   pageId = 'pageId-order-online'
   sectionId = 'sectionId-product-list'
+  speachInput = new FormControl('')
 
   constructor() {
     this.connect();
@@ -39,6 +41,7 @@ export class SocketService {
   }
 
   sendMessage(msg: any) {
+
     let wsPayload = {
       "clientID": "987530c0-998d-4cfc-b86d-596b5f7cd7d7",
       "current_time": Date.now(),
@@ -50,6 +53,7 @@ export class SocketService {
       "pageId": this.pageId,
       "sectionId": this.sectionId
     }
+    console.log('sendMessage =>',wsPayload)
     this.socket$.next(wsPayload);
   }
 

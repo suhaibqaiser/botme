@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CartService} from "../../../services/cart.service";
+import {SocketService} from "../../../services/socket.service";
 
 @Component({
   selector: 'app-customize-product-modal',
@@ -8,7 +9,7 @@ import {CartService} from "../../../services/cart.service";
 })
 export class CustomizeProductModalComponent implements OnInit {
 
-  constructor(public cartService:CartService) { }
+  constructor(public cartService:CartService,public _socketService:SocketService) { }
 
   ngOnInit(): void {
   }

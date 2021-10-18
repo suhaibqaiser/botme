@@ -79,12 +79,12 @@ async function processMessage(request) {
         status: "",
         payload: ""
     };
-    let textToSpeech = await communicationService.getSpeechToText(request.message_text)
-    console.log('textToSpeech =>', textToSpeech)
-    console.log('pageId =>',request.pageId)
-    console.log('sectionId =>',request.sectionId)
-
-    let message = await answeringService.generateAnswer(textToSpeech, request.pageId, request.sectionId);
+    // let textToSpeech = await communicationService.getSpeechToText(request.message_text)
+    // console.log('textToSpeech =>', textToSpeech)
+    console.log('pageId =>', request.pageId)
+    console.log('sectionId =>', request.sectionId)
+    console.log('text =>', request.message_text)
+    let message = await answeringService.generateAnswer(request.message_text, request.pageId, request.sectionId);
     if (message) {
         response.payload = message;
         //response.intent = message.intent;
