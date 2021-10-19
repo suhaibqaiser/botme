@@ -2086,7 +2086,7 @@ nlu:
       - unselect [Sprite](productName)
       - remove [Sprite](productName) quantity
   
-  - intent: Quantity
+  - intent: add_quantity
     examples: |
       - add [quantity](Quantity)
       - increase [quantity](Quantity)
@@ -2094,6 +2094,9 @@ nlu:
       - i want to increase [quantity](Quantity) of the product
       - select [quantity](Quantity)
       - i want to select [quantity](Quantity) 
+
+  - intent: remove_quantity
+    examples: |
       - delete [quantity](Quantity) of the product
       - remove [quantity](Quantity)
       - decrease [quantity](Quantity)
