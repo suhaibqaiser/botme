@@ -599,12 +599,27 @@ nlu:
       - move to the [left](slide)
       - I want the slider to move [left](slide)
       - can you shift the slider to [left](slide)
-  - intent: Navigation_right
-    examples: |
       - can you move the slider to [right](slide)
       - move to the [right](slide)
       - I want the slider to move [right](slide)
       - can you shift the slider to [right](slide)
+  
+  - intent: Scroll_up_down
+    examples: |
+      - i want to scroll [down](move)
+      - can you scroll [down](move) please 
+      - scroll [down](move)
+      - i want to go [down](move)
+      - go [down](move)
+      - move [down](move)
+      - i want to scroll [up](move)
+      - can you scroll [up](move) please 
+      - scroll [up](move)
+      - i want to go [up](move)
+      - go [up](move)
+      - move [up](move)
+
+
   - intent: Order_meal
     examples: |
       - I want to order [Cheese Slice](productName)
@@ -1513,12 +1528,32 @@ nlu:
       - i want to select [light]{"entity":"flavour","value":"Light"}
       - choose [Light](flavour) flavour
       - choose [light]{"entity":"flavour","value":"Light"} flavour
-      
+
+  - intent: remove_product_flavour
+    examples: |
+      - 
+
   - intent: food_size
     examples: |
+      - i want to select [standard](size) size
+      - i want serving size [standard](size)
+      - choose [standard](size) serving size
+      - pick [standard](size) serving size
       - [standard](size)
+      - i want to select [small](size) size
+      - i want serving size [small](size)
+      - choose [small](size) serving size
+      - pick [small](size) serving size
       - [small](size)
+      - i want to select [medium](size) size
+      - i want serving size [medium](size)
+      - choose [medium](size) serving size
+      - pick [medium](size) serving size
       - [medium](size)
+      - i want to select [large](size) size
+      - i want serving size [large](size)
+      - choose [large](size) serving size
+      - pick [large](size) serving size
       - [large](size)
   - intent: next
     examples: |
@@ -1544,19 +1579,19 @@ nlu:
       - i want to unpick [Cheese Slice](productName)
       - can you please unselect [cheese slice](productName)
       - we want to remove cheese slice to my cart
-      - I would like to take out out a [cheese slice](productName)
-      - I want to place an take out out for [cheese slice](productName)
+      - I would like to take out a [cheese slice](productName)
+      - I want to place an take out for [cheese slice](productName)
       - remove [cheese slice](productName) to cart
-      - I want to take out out [Nacho Burger](productName)
+      - I want to take out [Nacho Burger](productName)
       - I like to take out off [Nacho Burger](productName)
       - i want to remove Nacho Burger to my cart
       - we want to remove nacho burger to my cart
-      - I would like to take out out a [nacho burger](productName)
-      - I want to place an take out out for [nacho burger](productName)
-      - I would like to take out out a [Nacho Burger](productName)
+      - I would like to take out a [nacho burger](productName)
+      - I want to place an take out  for [nacho burger](productName)
+      - I would like to take out  a [Nacho Burger](productName)
       - remove [Nacho Burger](productName) to cart
-      - I want to take out out [Nacho Cheese](productName)
-      - I like to take out off [Nacho Cheese](productName)
+      - I want to take out [Nacho Cheese](productName)
+      - I like to take out [Nacho Cheese](productName)
       - i want to remove nacho cheese to my cart
       - we want to remove Nacho Cheese to my cart
       - I want to place an take out out for [nacho cheese](productName)
@@ -2004,7 +2039,7 @@ nlu:
       - i want to unpick [Baba Ghanoush](productName)
       - can you please unselect [Baba Ghanoush](productName)
       - remove [Baba Ghanoush](productName)
-      - i want to remove [Baba Ghanoush](productName) quantity
+      - i want to delete [Baba Ghanoush](productName) quantity
       - i want to take out [Baba Ghanoush](productName) 
       - take out [Baba Ghanoush](productName)
       - unpick [Baba Ghanoush](productName)
@@ -2017,7 +2052,7 @@ nlu:
       - i want to unpick [Water Bottle](productName)
       - can you please unselect [Water Bottle](productName)
       - remove [Water Bottle](productName)
-      - i want to remove [Water Bottle](productName) quantity
+      - i want to delete [Water Bottle](productName) quantity
       - i want to take out [Water Bottle](productName) 
       - take out [Water Bottle](productName)
       - unpick [Water Bottle](productName)
@@ -2050,7 +2085,23 @@ nlu:
       - unselect [Sprite](productName)
       - unselect [Sprite](productName)
       - remove [Sprite](productName) quantity
-      
+  
+  - intent: Quantity
+    examples: |
+      - add [quantity](Quantity)
+      - increase [quantity](Quantity)
+      - i want to add [quantity](Quantity)
+      - i want to increase [quantity](Quantity) of the product
+      - select [quantity](Quantity)
+      - i want to select [quantity](Quantity) 
+      - delete [quantity](Quantity) of the product
+      - remove [quantity](Quantity)
+      - decrease [quantity](Quantity)
+      - i want to decrease [quantity](Quantity) of the product
+      - i want to remove [quantity](Quantity)
+      - i want to delete [quantity](Quantity)
+      - i want to take out [quantity](Quantity)
+
   - intent: Order_Receipt
     examples: |
       - i want to have my [bill](receipt) please
