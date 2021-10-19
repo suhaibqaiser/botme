@@ -26,6 +26,7 @@ export class ProductDetailSectionComponent implements OnInit {
     await this.getCategory()
     await this.getProductDetail(this.route.snapshot.queryParams['productId'])
     await this.getRelatedProducts()
+
     this._socketService.pageId = 'pageId-product-detial-page'
     this._socketService.sectionId = 'sectionId-product-detial-page'
   }

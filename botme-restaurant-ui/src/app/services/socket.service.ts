@@ -13,8 +13,10 @@ export class SocketService {
   private socket$: any;
   private messagesSubject = new Subject();
   messages = this.messagesSubject.asObservable();
+
   pageId = 'pageId-order-online'
   sectionId = 'sectionId-product-list'
+  responseLabel = 'Noting to display'
   speachInput = new FormControl('')
 
   constructor() {
@@ -27,7 +29,6 @@ export class SocketService {
       this.socket$.subscribe(
         (msg: string) => {
           this.messagesSubject.next(msg)
-          console.log('coonet =>', this.messagesSubject)
           this.fireInteractionEvent(msg)
         },
         (err: any) => console.log(err),
@@ -61,24 +62,25 @@ export class SocketService {
     this.socket$.complete();
   }
 
+  /**
+   * Here we are passing the response from web server and interacting with web ui
+   * @param msg
+   */
   fireInteractionEvent(msg: any) {
-    console.log('yobro :=', msg.message)
+    console.log('Response =>', msg.message)
     let tempMessage = msg.message
+    this.responseLabel = tempMessage.text
     // @ts-ignore
-    let a = document.getElementById(tempMessage.entityId)
-    console.log('elements =>', a)
+    let template = document.getElementById(tempMessage.entityId)
+    console.log('template =>', template)
     // @ts-ignore
-    console.log(a.getElementsByTagName('a'))
-    // @ts-ignore
-    let list = a.getElementsByTagName('a')
+    let list = template.getElementsByTagName('a')
     for (let i = 0; i < list.length; i++) {
-      //pass ctaId in here
       if (list[i].getAttribute('id') == tempMessage.ctaId) {
         list[i].click()
       }
     }
     // @ts-ignore
     document.getElementById(tempMessage.entityId).click()
-
   }
 }

@@ -88,6 +88,9 @@ export class SearchGridSectionComponent implements OnInit {
     this.getWSMessage();
     // this.filterProductsByName('first-call')
     $('#pageId-productCustomizeModal').modal('show')
+
+    this._socketService.pageId = 'pageId-order-online'
+    this._socketService.sectionId = 'sectionId-product-list'
   }
 
   async getQueryParams() {
@@ -379,10 +382,6 @@ export class SearchGridSectionComponent implements OnInit {
       'value': value
     })
     localStorage.setItem('searchList', JSON.stringify(this.searchList))
-  }
-
-  getProductById(productId: any) {
-    return this.products.find((item: any) => item.productId == productId)
   }
 
   getProductByType(productType: any) {
