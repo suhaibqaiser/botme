@@ -340,6 +340,13 @@ export class CartService {
 
   previousSlide() {
     this.slideToShow--
+
+    if(this.slideToShow == 0) this._socketService.sectionId = 'sectionId-servingSize-productOptions'
+    if(this.slideToShow == 1) this._socketService.sectionId = 'sectionId-ingredients-flavour'
+    if(this.slideToShow == 2) this._socketService.sectionId = 'sectionId-toppings'
+    if(this.slideToShow == 3) this._socketService.sectionId = 'sectionId-addons'
+    if(this.slideToShow == 4) this._socketService.sectionId = 'sectionId-summary'
+
     if (this.slideToShow === 3 && !this.singleCustomProductObj.productIngredients.length && !this.singleCustomProductObj.productFlavors.length) {
       this.slideToShow = 0
     } else if (this.slideToShow === 2 && !this.singleCustomProductObj.productToppings.length) {
@@ -349,6 +356,12 @@ export class CartService {
 
   nextSlide() {
     this.slideToShow++
+    if(this.slideToShow == 0) this._socketService.sectionId = 'sectionId-servingSize-productOptions'
+    if(this.slideToShow == 1) this._socketService.sectionId = 'sectionId-ingredients-flavour'
+    if(this.slideToShow == 2) this._socketService.sectionId = 'sectionId-toppings'
+    if(this.slideToShow == 3) this._socketService.sectionId = 'sectionId-addons'
+    if(this.slideToShow == 4) this._socketService.sectionId = 'sectionId-summary'
+
     if (this.slideToShow === 1 && !this.singleCustomProductObj.productIngredients.length && !this.singleCustomProductObj.productFlavors.length) {
       this.slideToShow = 4
     } else if (this.slideToShow === 2 && !this.singleCustomProductObj.productToppings.length) {

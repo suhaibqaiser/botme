@@ -53,7 +53,7 @@ export class SocketService {
       "pageId": this.pageId,
       "sectionId": this.sectionId
     }
-    console.log('sendMessage =>',wsPayload)
+    console.log('sendMessage =>', wsPayload)
     this.socket$.next(wsPayload);
   }
 
@@ -64,25 +64,21 @@ export class SocketService {
   fireInteractionEvent(msg: any) {
     console.log('yobro :=', msg.message)
     let tempMessage = msg.message
-
-    // order online page
-    if (tempMessage.pageId === 'pageId-order-online' && tempMessage.sectionId === 'sectionId-product-list') {
-      // @ts-ignore
-      // pass entity id as parameter
-      let a = document.getElementById(tempMessage.entityId)
-      // @ts-ignore
-      console.log(a.getElementsByTagName('a'))
-      // @ts-ignore
-      let list = a.getElementsByTagName('a')
-      for (let i = 0; i < list.length; i++) {
-        //pass ctaId in here
-        if (list[i].getAttribute('id') == tempMessage.ctaId) {
-          list[i].click()
-        }
+    // @ts-ignore
+    let a = document.getElementById(tempMessage.entityId)
+    console.log('elements =>', a)
+    // @ts-ignore
+    console.log(a.getElementsByTagName('a'))
+    // @ts-ignore
+    let list = a.getElementsByTagName('a')
+    for (let i = 0; i < list.length; i++) {
+      //pass ctaId in here
+      if (list[i].getAttribute('id') == tempMessage.ctaId) {
+        list[i].click()
       }
-    } else if (tempMessage.pageId === 'pageId-product-customize-modal' && tempMessage.sectionId === 'sectionId-servingSize-productOptions') {
-      // @ts-ignore
-      document.getElementById(tempMessage.entityId).click()
     }
+    // @ts-ignore
+    document.getElementById(tempMessage.entityId).click()
+
   }
 }
