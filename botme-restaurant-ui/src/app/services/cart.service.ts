@@ -1,8 +1,7 @@
-import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
-import {environment} from 'src/environments/environment';
 import {FormControl} from "@angular/forms";
+import {SocketService} from "./socket.service";
 
 declare var $: any;
 
@@ -42,7 +41,7 @@ export class CartService {
   tempProductSizeList = ['standard', 'medium', 'large', 'small']
   selectProductRatesField = new FormControl('')
 
-  constructor() {
+  constructor(private _socketService: SocketService) {
     this.getFromLocalstorage();
   }
 
@@ -71,8 +70,8 @@ export class CartService {
   }
 
   removeFromCart(productId: string) {
-    this.cartProduct.forEach((item:any,index)=>{
-      if(item.productId == productId){
+    this.cartProduct.forEach((item: any, index) => {
+      if (item.productId == productId) {
         this.cartProduct.splice(index, 1);
       }
     })
@@ -98,6 +97,8 @@ export class CartService {
 
   //
   setProductCustomization(product: any) {
+    this._socketService.pageId = 'pageId-product-customize-modal'
+    this._socketService.sectionId = 'sectionId-servingSize-productOptions'
     this.slideToShow = 0
     this.reset()
     this.setProductRateSize(product)
@@ -194,7 +195,7 @@ export class CartService {
       productTotalPrice: Math.ceil(product.productRate[this.productSizeList[0]])
     }
     this.selectProductRatesField.setValue(this.productSizeList[0])
-    $('#productCustomizeModal').modal('show')
+    $('#pageId-productCustomizeModal').modal('show')
   }
 
   resolveImages(product: any) {
@@ -213,9 +214,11 @@ export class CartService {
   }
 
   selectProductRate() {
+    if(this._socketService.voiceServingSize) this.selectProductRatesField.setValue(this._socketService.voiceServingSize)
     this.singleCustomProductObj.productPrice = Math.ceil(this.singleCustomProductObj.productRate[this.selectProductRatesField.value])
     this.singleCustomProductObj.productServingSize = this.selectProductRatesField.value
     this.customizeBillCalculation()
+    this._socketService.voiceServingSize = ''
   }
 
   selectFlavor(flavor: any) {
@@ -337,6 +340,7 @@ export class CartService {
 
   previousSlide() {
     this.slideToShow--
+    this.setCurrentContext()
     if (this.slideToShow === 3 && !this.singleCustomProductObj.productIngredients.length && !this.singleCustomProductObj.productFlavors.length) {
       this.slideToShow = 0
     } else if (this.slideToShow === 2 && !this.singleCustomProductObj.productToppings.length) {
@@ -346,10 +350,19 @@ export class CartService {
 
   nextSlide() {
     this.slideToShow++
+    this.setCurrentContext()
     if (this.slideToShow === 1 && !this.singleCustomProductObj.productIngredients.length && !this.singleCustomProductObj.productFlavors.length) {
       this.slideToShow = 4
     } else if (this.slideToShow === 2 && !this.singleCustomProductObj.productToppings.length) {
       this.slideToShow++
     }
+  }
+
+  setCurrentContext() {
+    if (this.slideToShow == 0) this._socketService.sectionId = 'sectionId-servingSize-productOptions'
+    if (this.slideToShow == 1) this._socketService.sectionId = 'sectionId-ingredients-flavour'
+    if (this.slideToShow == 2) this._socketService.sectionId = 'sectionId-toppings'
+    if (this.slideToShow == 3) this._socketService.sectionId = 'sectionId-addons'
+    if (this.slideToShow == 4) this._socketService.sectionId = 'sectionId-summary'
   }
 }

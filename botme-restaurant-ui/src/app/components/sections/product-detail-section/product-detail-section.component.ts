@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MenuService} from 'src/app/services/menu.service';
 import {ActivatedRoute} from "@angular/router";
 import {CartService} from "../../../services/cart.service";
+import {SocketService} from "../../../services/socket.service";
 
 declare var $: any;
 
@@ -17,7 +18,7 @@ export class ProductDetailSectionComponent implements OnInit {
   relatedProduct: any
   productsList: any
 
-  constructor(public cartService: CartService, private route: ActivatedRoute, private menuservice: MenuService) {
+  constructor(public _socketService: SocketService, public cartService: CartService, private route: ActivatedRoute, private menuservice: MenuService) {
   }
 
   async ngOnInit() {
@@ -25,6 +26,9 @@ export class ProductDetailSectionComponent implements OnInit {
     await this.getCategory()
     await this.getProductDetail(this.route.snapshot.queryParams['productId'])
     await this.getRelatedProducts()
+
+    this._socketService.pageId = 'pageId-product-detial-page'
+    this._socketService.sectionId = 'sectionId-product-detial-page'
   }
 
   async getProductDetail(productId: string) {

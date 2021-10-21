@@ -1,26 +1,15 @@
-<!-- shop-section -->
-<section class="shop-section pt-100 pb-70 bg-black" id="p01">
-  <!-- Button trigger modal -->
-
+<!-- Product List Section -->
+<section class="shop-section pt-100 pb-70 bg-black" id="sectionId-search-grid">
+  <!-- Product customization modal -->
  <app-customize-product-modal></app-customize-product-modal>
+
   <div class="container">
+    <input [formControl]="_socketService.speachInput">
+    <button style="padding: 6px" (click)="_socketService.sendMessage(_socketService.speachInput.value)" class="btn btn-success">send</button>
+    <p>{{_socketService.responseLabel}}</p>
     <div class="row">
       <div class="col-sm-12 col-md-8 col-lg-9 col-xl-9 pb-30">
-        <div class="product-list-header">
-          <!--          <div class="product-list-header-item">-->
-          <!--            <div *ngIf="false" class="product-list-result">-->
-          <!--              &lt;!&ndash; <p>Showing 1-6 Of 35 Results</p> &ndash;&gt;-->
-          <!--              <div class="around-border pr-5">-->
-          <!--                <input type="text" class="form-control" placeholder="Message to Sofia" id="sofiaInput" #sofiaInput-->
-          <!--                       (keyup.enter)="sendWSMessage(sofiaInput.value)">-->
-          <!--              </div>-->
-          <!--              <div class="sidebar-title">-->
-          <!--                <p class="color-white"-->
-          <!--                   style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">-->
-          <!--                  {{sofiaMessage}}</p>-->
-          <!--              </div>-->
-          <!--            </div>-->
-          <!--          </div>-->
+        <div class="product-list-header" id="sectionId-search-tags">
           <div *ngIf="!searchList.length" class="product-list-header-item"></div>
           <div *ngIf="searchList && searchList.length" class="product-list-header-item">
             <a (click)="removeFilter(item,i)" *ngFor="let item of searchList;let i = index"
@@ -38,19 +27,14 @@
             </div>
           </div>
         </div>
-        <div class="product-content" id="s01">
+        <div class="product-content" id="sectionId-product-list">
           <app-spinner *ngIf="isLoading"></app-spinner>
           <div *ngIf="filteredProducts && filteredProducts.length" class="row">
             <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 pb-30" *ngFor="let product of filteredProducts">
               <div class="product-card product-card-dark" id="{{product.productId}}">
                 <div class="product-card-thumb">
                   <div class="product-card-thumb-inner">
-                    <a href="/product-detail/?productId={{product.productId}}"><img [src]="resolveImages(product)" alt="product"></a>
-                    <div class="product-card-button">
-                      <!--                      <a (click)="addToCart(product.productId)" class="btn btn-yellow">Add To-->
-                      <!--                        Cart</a>-->
-                      <!--                      <a class="btn">Add To Wishlist</a>-->
-                    </div>
+                    <a id="ctaId-product-detail-page" href="/product-detail/?productId={{product.productId}}"><img [src]="resolveImages(product)" alt="product"></a>
                   </div>
                   <div class="review-star mt-3">
                     <ul>
@@ -60,17 +44,16 @@
                   </div>
                 </div>
                 <div class="product-card-content">
-                  <h3><a href="/product-detail/?productId={{product.productId}}">{{product.productName}}</a></h3>
+                  <h3><a id="ctaId-product-detail-page" href="/product-detail/?productId={{product.productId}}">{{product.productName}}</a></h3>
                   <h4 class="product-price">${{product.productRate.standard}}</h4>
                   <div class="d-flex product-icons justify-content-around">
-                    <a (click)="cartService.setProductCustomization(product)" data-bs-toggle="modal"
-                       data-bs-target="#productCustomizeModal"><i class="fas fa-cart-plus"></i></a>
+                    <a id="ctaId-product-add-to-cart" (click)="cartService.setProductCustomization(product)" data-bs-toggle="modal"
+                       data-bs-target="#pageId-productCustomizeModal"><i class="fas fa-cart-plus"></i></a>
                     <a><i class="fas fa-heart"></i></a>
                   </div>
                 </div>
               </div>
             </div>
-
           </div>
           <div *ngIf="!isLoading && filteredProducts && !filteredProducts.length" class="error-product">Sorry product
             not found!
@@ -98,7 +81,7 @@
         </div>
       </div>
       <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3 pb-30">
-        <div class="sidebar-item around-border sidebar-search">
+        <div id="sectionId-filters" class="sidebar-item around-border sidebar-search">
           <form>
             <div class="form-group">
               <input (change)="filterProductsByName($event)" class="form-control" id="productSearch" type="text"

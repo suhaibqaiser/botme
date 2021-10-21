@@ -33,7 +33,6 @@ async function getSpeechToText(text) {
     }
     const config = {
         encoding: 'LINEAR16',
-        sampleRateHertz: 44100,
         languageCode: 'en-US',
         audioChannelCount: 2
     }
@@ -42,11 +41,10 @@ async function getSpeechToText(text) {
         config: config
     }
     console.log('please wait.......')
-   return await client.recognize(request).then(
+    return await client.recognize(request).then(
         ([response]) => {
             return response.results.map(result =>
                 result.alternatives[0].transcript).join('\n')
-            // console.log('communication service => ',text)
         }, (err) => {
             console.log(err)
             return err

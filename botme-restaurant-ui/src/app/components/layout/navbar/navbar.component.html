@@ -116,10 +116,13 @@
 <!--            </form>-->
 <!--          </div>-->
 <!--        </div>-->
-        <div class="navbar-option-item tap-view-place-order mobile-block navbar-option-order">
-          <a href="online-shop" class="btn">Place order
+        <div class="d-flex align-items-center navbar-option-item tap-view-place-order mobile-block navbar-option-order">
+          <a href="online-shop" style="padding: 10px 20px" class="btn">Place order
             <i class="flaticon-shopping-cart-black-shape"></i>
           </a>
+          <div class="navbar-option-item navbar-option-order">
+            <app-sofia-bot></app-sofia-bot>
+          </div>
         </div>
         <div class="navbar-option-item navbar-option-cart mobile-block">
           <a (click)="showCartModal()" id="btnProductCart" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
@@ -255,9 +258,12 @@
               <span class="option-badge">{{getCartProductCount()}}</span>
             </div>
             <div class="navbar-option-item navbar-option-order">
-              <a href="online-shop" class="btn text-nowrap">
+              <a href="online-shop" style="padding: 10px 20px" class="btn text-nowrap">
                 Place Order <i class="flaticon-shopping-cart-black-shape"></i>
               </a>
+            </div>
+            <div class="navbar-option-item navbar-option-order">
+                <app-sofia-bot></app-sofia-bot>
             </div>
           </div>
         </nav>

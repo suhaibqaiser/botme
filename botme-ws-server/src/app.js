@@ -17,13 +17,13 @@ const wss = new WebSocket.Server({server});
 
 wss.on('connection', function connection(ws) {
     console.log('Client Connected');
-    
+
 
     ws.on('message', async function incoming(payload) {
         let response = await communicate.processCommunication(payload)
         let parsedPayload = JSON.parse(payload)
         response.clientID = parsedPayload.clientID;
-        console.log(response)
+        // console.log(response)
         ws.send(JSON.stringify(response))
         // ws.emit('message',JSON.stringify(response))
     });

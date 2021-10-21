@@ -74,7 +74,8 @@ export class SearchGridSectionComponent implements OnInit {
               public cartService: CartService,
               private socketService: SocketService,
               private _router: Router,
-              private _route: ActivatedRoute
+              private _route: ActivatedRoute,
+              public _socketService:SocketService
   ) {
   }
 
@@ -86,7 +87,10 @@ export class SearchGridSectionComponent implements OnInit {
     await this.getCategory();
     this.getWSMessage();
     // this.filterProductsByName('first-call')
-    $('#productCustomizeModal').modal('show')
+    $('#pageId-productCustomizeModal').modal('show')
+
+    this._socketService.pageId = 'pageId-order-online'
+    this._socketService.sectionId = 'sectionId-product-list'
   }
 
   async getQueryParams() {
@@ -378,10 +382,6 @@ export class SearchGridSectionComponent implements OnInit {
       'value': value
     })
     localStorage.setItem('searchList', JSON.stringify(this.searchList))
-  }
-
-  getProductById(productId: any) {
-    return this.products.find((item: any) => item.productId == productId)
   }
 
   getProductByType(productType: any) {
