@@ -28,7 +28,7 @@ def getResponse(intent,entity,text,pageId,sectionId):
             iD = getEntityId(context['entities'])
             if db is not None:
                 context = db['context']
-                return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":context['pageId'],"sectionId":context['sectionId'],"entityName":value,"entityId":iD,"sentimentScore":senti}
+                return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":context['pageId'],"sectionId":context['sectionId'],"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":senti} 
             else:
                 return {"Response":"I'm sorry, I didn't quite understand that. Could you rephrase?"}
 
@@ -69,15 +69,18 @@ def checkingForProduct(intent,value,senti,pageId,sectionId):
     try:
         response = requests.get('http://localhost:3100/food/product/search?productName='+value)
         data = response.json()
+        print(data)
         if(data['status']=="success"):
             if(len(data['payload']) == 1):
                 db = getDbCta(intent,value,pageId,sectionId)
+                print(db)
                 context = db['context']
+                print(context)
                 iD = getEntityId(context['entities'])
                 if(db == None):
                     return {"Response":"What do you mean by " + value + "?"}
                 else:
-                    return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":context['pageId'],"sectionId":context['sectionId'],"entityName":value,"entityId":iD,"sentimentScore":senti}
+                    return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":context['pageId'],"sectionId":context['sectionId'],"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":senti} 
             elif(len(data['payload']) > 1):
                 return {"Response":"What do you mean by " + value + " ?"}
         else:
@@ -106,4 +109,4 @@ def getTableNo(payload):
 
 def getEntityId(entity):
     for x in entity:
-        return x['entityId']
+        return {"entityId":x['entityId'],"actionType":x['clickAttribute']}
