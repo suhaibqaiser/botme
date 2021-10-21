@@ -1,7 +1,5 @@
-import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
-import {environment} from 'src/environments/environment';
 import {FormControl} from "@angular/forms";
 import {SocketService} from "./socket.service";
 
@@ -43,7 +41,7 @@ export class CartService {
   tempProductSizeList = ['standard', 'medium', 'large', 'small']
   selectProductRatesField = new FormControl('')
 
-  constructor(private _socketService:SocketService) {
+  constructor(private _socketService: SocketService) {
     this.getFromLocalstorage();
   }
 
@@ -72,8 +70,8 @@ export class CartService {
   }
 
   removeFromCart(productId: string) {
-    this.cartProduct.forEach((item:any,index)=>{
-      if(item.productId == productId){
+    this.cartProduct.forEach((item: any, index) => {
+      if (item.productId == productId) {
         this.cartProduct.splice(index, 1);
       }
     })
@@ -216,9 +214,11 @@ export class CartService {
   }
 
   selectProductRate() {
+    if(this._socketService.voiceServingSize) this.selectProductRatesField.setValue(this._socketService.voiceServingSize)
     this.singleCustomProductObj.productPrice = Math.ceil(this.singleCustomProductObj.productRate[this.selectProductRatesField.value])
     this.singleCustomProductObj.productServingSize = this.selectProductRatesField.value
     this.customizeBillCalculation()
+    this._socketService.voiceServingSize = ''
   }
 
   selectFlavor(flavor: any) {
@@ -358,11 +358,11 @@ export class CartService {
     }
   }
 
-  setCurrentContext(){
-    if(this.slideToShow == 0) this._socketService.sectionId = 'sectionId-servingSize-productOptions'
-    if(this.slideToShow == 1) this._socketService.sectionId = 'sectionId-ingredients-flavour'
-    if(this.slideToShow == 2) this._socketService.sectionId = 'sectionId-toppings'
-    if(this.slideToShow == 3) this._socketService.sectionId = 'sectionId-addons'
-    if(this.slideToShow == 4) this._socketService.sectionId = 'sectionId-summary'
+  setCurrentContext() {
+    if (this.slideToShow == 0) this._socketService.sectionId = 'sectionId-servingSize-productOptions'
+    if (this.slideToShow == 1) this._socketService.sectionId = 'sectionId-ingredients-flavour'
+    if (this.slideToShow == 2) this._socketService.sectionId = 'sectionId-toppings'
+    if (this.slideToShow == 3) this._socketService.sectionId = 'sectionId-addons'
+    if (this.slideToShow == 4) this._socketService.sectionId = 'sectionId-summary'
   }
 }

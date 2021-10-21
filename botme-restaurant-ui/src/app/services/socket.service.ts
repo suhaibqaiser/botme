@@ -16,6 +16,7 @@ export class SocketService {
 
   pageId = 'pageId-order-online'
   sectionId = 'sectionId-product-list'
+  voiceServingSize = ''
   responseLabel = 'Noting to display'
   speachInput = new FormControl('')
 
@@ -70,6 +71,14 @@ export class SocketService {
     console.log('Response =>', msg.message)
     let tempMessage = msg.message
     this.responseLabel = tempMessage.text
+
+    if (tempMessage.entityId == 'entityId-select-serving-size') {
+      this.voiceServingSize = tempMessage.entityName.toLowerCase()
+      // @ts-ignore
+      document.getElementById('ctaId-select-serving-size').click()
+      return
+    }
+
     // @ts-ignore
     let template = document.getElementById(tempMessage.entityId)
     console.log('template =>', template)
