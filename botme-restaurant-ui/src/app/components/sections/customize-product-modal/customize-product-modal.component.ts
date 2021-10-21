@@ -16,18 +16,22 @@ export class CustomizeProductModalComponent implements OnInit {
   }
 
   addToCart() {
+    this._socketService.speachInput.reset()
+    this._socketService.getCurrentContext()
     this.cartService.addToCart(this.cartService.singleCustomProductObj);
     document.getElementById("btnProductCart")?.click()
   }
 
   editToCart() {
+    this._socketService.speachInput.reset()
+    this._socketService.getCurrentContext()
     this.cartService.addToCart(this.cartService.singleCustomProductObj, true);
     document.getElementById("btnProductCart")?.click()
     document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:block')
   }
 
   cancelModal() {
-    this._socketService.pageId = 'pageId-order-online'
-    this._socketService.sectionId = 'sectionId-product-list'
+    this._socketService.speachInput.reset()
+    this._socketService.getCurrentContext()
   }
 }

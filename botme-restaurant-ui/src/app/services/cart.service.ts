@@ -97,8 +97,8 @@ export class CartService {
 
   //
   setProductCustomization(product: any) {
-    this._socketService.pageId = 'pageId-product-customize-modal'
-    this._socketService.sectionId = 'sectionId-servingSize-productOptions'
+    this._socketService.currentContextObj.pageId = 'pageId-product-customize-modal'
+    this._socketService.currentContextObj.sectionId = 'sectionId-servingSize-productOptions'
     this.slideToShow = 0
     this.reset()
     this.setProductRateSize(product)
@@ -359,10 +359,10 @@ export class CartService {
   }
 
   setCurrentContext() {
-    if (this.slideToShow == 0) this._socketService.sectionId = 'sectionId-servingSize-productOptions'
-    if (this.slideToShow == 1) this._socketService.sectionId = 'sectionId-ingredients-flavour'
-    if (this.slideToShow == 2) this._socketService.sectionId = 'sectionId-toppings'
-    if (this.slideToShow == 3) this._socketService.sectionId = 'sectionId-addons'
-    if (this.slideToShow == 4) this._socketService.sectionId = 'sectionId-summary'
+    if (this.slideToShow == 0) this._socketService.currentContextObj.sectionId = 'sectionId-servingSize-productOptions'
+    if (this.slideToShow == 1) this._socketService.currentContextObj.sectionId = 'sectionId-ingredients-flavour'
+    if (this.slideToShow == 2) this._socketService.currentContextObj.sectionId = 'sectionId-toppings'
+    if (this.slideToShow == 3) this._socketService.currentContextObj.sectionId = 'sectionId-addons'
+    if (this.slideToShow == 4) this._socketService.currentContextObj.sectionId = 'sectionId-summary'
   }
 }

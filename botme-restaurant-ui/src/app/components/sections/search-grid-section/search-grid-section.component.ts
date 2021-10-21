@@ -80,6 +80,7 @@ export class SearchGridSectionComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this._socketService.getCurrentContext()
     this.productCustomizationSlider = [0, 1, 2, 3]
     this.searchList = []
     this.isLoading = true
@@ -88,9 +89,6 @@ export class SearchGridSectionComponent implements OnInit {
     this.getWSMessage();
     // this.filterProductsByName('first-call')
     $('#pageId-productCustomizeModal').modal('show')
-
-    this._socketService.pageId = 'pageId-order-online'
-    this._socketService.sectionId = 'sectionId-product-list'
   }
 
   async getQueryParams() {

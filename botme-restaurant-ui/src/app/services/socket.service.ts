@@ -3,6 +3,7 @@ import {webSocket, WebSocketSubject} from 'rxjs/webSocket';
 import {environment} from '../../environments/environment';
 import {Subject} from 'rxjs';
 import {FormControl} from "@angular/forms";
+import {Router} from "@angular/router";
 
 export const WS_ENDPOINT = environment.wsEndpoint;
 
@@ -14,13 +15,29 @@ export class SocketService {
   private messagesSubject = new Subject();
   messages = this.messagesSubject.asObservable();
 
-  pageId = 'pageId-order-online'
-  sectionId = 'sectionId-product-list'
+  currentContextList = [
+    {
+      currentRoute:'online shop',
+      pageId:'pageId-order-online',
+      sectionId: 'sectionId-product-list'
+    },
+    {
+      currentRoute: 'product detail',
+      pageId: 'pageId-product-detial-page',
+      sectionId: 'sectionId-product-detial-page'
+    }
+  ]
+  currentContextObj = {
+    currentRoute:'',
+    pageId:'',
+    sectionId: ''
+  }
+
   voiceServingSize = ''
   responseLabel = 'Noting to display'
   speachInput = new FormControl('')
 
-  constructor() {
+  constructor(private router: Router) {
     this.connect();
   }
 
@@ -52,8 +69,8 @@ export class SocketService {
       "language": "en-US",
       "message_text": msg,
       "authToken": "qbw/fcQKvC6SY+AelUs5VpRYOhnRvzZsz39xVU06LYI=",
-      "pageId": this.pageId,
-      "sectionId": this.sectionId
+      "pageId": this.currentContextObj.pageId,
+      "sectionId": this.currentContextObj.sectionId
     }
     console.log('sendMessage =>', wsPayload)
     this.socket$.next(wsPayload);
@@ -91,5 +108,19 @@ export class SocketService {
     }
     // @ts-ignore
     document.getElementById(tempMessage.entityId).click()
+  }
+
+  getCurrentContext(){
+    let currentRoute = this.router.url.replace(/\//g, "").replace("-", " ");
+    if (currentRoute.indexOf('?') > 0) {
+      currentRoute = currentRoute.substr(0, currentRoute.indexOf('?'))
+    }
+    console.log('getCurrentContext route=>',currentRoute)
+    this.currentContextList.filter((item:any)=>{
+      if( item.currentRoute === currentRoute){
+        this.currentContextObj = JSON.parse(JSON.stringify(item))
+      }
+    })
+    console.log('currentContextObj =>',this.currentContextObj)
   }
 }
