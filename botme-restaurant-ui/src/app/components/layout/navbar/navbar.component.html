@@ -14,11 +14,11 @@
           </button>
           <div class="dropdown-menu" aria-labelledby="mobileOptionDropdown">
             <div class="navbar-option-item navbar-option-cart">
-              <a id="entityId-order-online" (click)="showCartModal()" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
+              <a id="entityId-show-cart" (click)="showCartModal()" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
               <span class="option-badge">{{getCartProductCount()}}</span>
             </div>
             <div class="navbar-option-item navbar-option-order">
-              <a id="entityId-order-online" href="online-shop" class="btn text-nowrap">
+              <a id="entityId-show-cart" href="online-shop" class="btn text-nowrap">
                  <i class="flaticon-shopping-cart-black-shape"></i>
               </a>
             </div>
@@ -125,7 +125,7 @@
           </div>
         </div>
         <div class="navbar-option-item navbar-option-cart mobile-block">
-          <a (click)="showCartModal()"  id="entityId-order-online" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
+          <a (click)="showCartModal()"  id="entityId-show-cart" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
           <span class="option-badge">{{getCartProductCount()}}</span>
         </div>
       </div>
@@ -254,7 +254,7 @@
 <!--              </div>-->
 <!--            </div>-->
             <div class="navbar-option-item navbar-option-cart">
-              <a (click)="showCartModal()" id="entityId-order-online" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
+              <a (click)="showCartModal()" id="entityId-show-cart" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
               <span class="option-badge">{{getCartProductCount()}}</span>
             </div>
             <div class="navbar-option-item navbar-option-order">

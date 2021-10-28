@@ -66,7 +66,7 @@ export class ProductDetailSectionComponent implements OnInit {
 
   addToCart(product: any) {
     this.cartService.setProductCustomization(JSON.parse(JSON.stringify(product)))
-    // document.getElementById("btnProductCart")?.click()
+    // document.getElementById("entityId-show-cart")?.click()
   }
 
   async getRelatedProducts() {

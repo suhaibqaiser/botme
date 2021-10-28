@@ -25,6 +25,11 @@ export class SocketService {
       currentRoute: 'product detail',
       pageId: 'pageId-product-detial-page',
       sectionId: 'sectionId-product-detial-page'
+    },
+    {
+      currentRoute: 'home',
+      pageId: 'pageId-home',
+      sectionId: 'sectionId-product-list'
     }
   ]
   currentContextObj = {
