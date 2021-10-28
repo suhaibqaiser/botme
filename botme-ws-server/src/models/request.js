@@ -2,7 +2,7 @@ class Request {
     constructor(payload) {
         try {
             if (payload) {
-                payload = JSON.parse(payload);
+                //payload = JSON.parse(payload);
                 this.clientID = payload.clientID,
                     this.current_time = payload.current_time,
                     this.message_format = payload.message_format,
