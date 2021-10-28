@@ -19,14 +19,14 @@ export class CustomizeProductModalComponent implements OnInit {
     this._socketService.speachInput.reset()
     this._socketService.getCurrentContext()
     this.cartService.addToCart(this.cartService.singleCustomProductObj);
-    document.getElementById("btnProductCart")?.click()
+    document.getElementById("entityId-order-online")?.click()
   }
 
   editToCart() {
     this._socketService.speachInput.reset()
     this._socketService.getCurrentContext()
     this.cartService.addToCart(this.cartService.singleCustomProductObj, true);
-    document.getElementById("btnProductCart")?.click()
+    document.getElementById("entityId-order-online")?.click()
     document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:block')
   }
 

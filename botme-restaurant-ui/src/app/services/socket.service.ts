@@ -85,6 +85,13 @@ export class SocketService {
    * @param msg
    */
   fireInteractionEvent(msg: any) {
+
+    /**
+     * var sel = document.getElementById('ctaId-select-serving-size');
+     var len = sel.options.length;
+
+     sel.setAttribute('size', len);
+     */
     console.log('Response =>', msg.message)
     let tempMessage = msg.message
     this.responseLabel = tempMessage.text

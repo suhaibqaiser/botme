@@ -14,7 +14,7 @@
           </button>
           <div class="dropdown-menu" aria-labelledby="mobileOptionDropdown">
             <div class="navbar-option-item navbar-option-cart">
-              <a id="btnProductCart" (click)="showCartModal()" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
+              <a id="entityId-order-online" (click)="showCartModal()" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
               <span class="option-badge">{{getCartProductCount()}}</span>
             </div>
             <div class="navbar-option-item navbar-option-order">
@@ -125,7 +125,7 @@
           </div>
         </div>
         <div class="navbar-option-item navbar-option-cart mobile-block">
-          <a (click)="showCartModal()"  id="btnProductCart" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
+          <a (click)="showCartModal()"  id="entityId-order-online" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
           <span class="option-badge">{{getCartProductCount()}}</span>
         </div>
       </div>
@@ -146,7 +146,7 @@
           <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto">
               <li class="nav-item">
-                <a href="#" class="nav-link dropdown-toggle active">HOME</a>
+                <a href="#" id="entityId-home" class="nav-link dropdown-toggle active">HOME</a>
               </li>
 <!--              <li class="nav-item">-->
 <!--                <a href="menu" class="nav-link">MENU</a>-->
@@ -254,7 +254,7 @@
 <!--              </div>-->
 <!--            </div>-->
             <div class="navbar-option-item navbar-option-cart">
-              <a (click)="showCartModal()" id="btnProductCart" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
+              <a (click)="showCartModal()" id="entityId-order-online" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
               <span class="option-badge">{{getCartProductCount()}}</span>
             </div>
             <div class="navbar-option-item navbar-option-order">

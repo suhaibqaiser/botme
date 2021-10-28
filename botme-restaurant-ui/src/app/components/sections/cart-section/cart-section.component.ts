@@ -111,7 +111,7 @@ export class CartSectionComponent implements OnInit {
 
   editToCart() {
     this.cartService.addToCart(this.cartService.singleCustomProductObj, true);
-    document.getElementById("btnProductCart")?.click()
+    document.getElementById("entityId-order-online")?.click()
   }
 
   editFromCart(product: any) {
