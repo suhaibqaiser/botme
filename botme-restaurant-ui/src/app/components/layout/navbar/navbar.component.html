@@ -14,7 +14,7 @@
           </button>
           <div class="dropdown-menu" aria-labelledby="mobileOptionDropdown">
             <div class="navbar-option-item navbar-option-cart">
-              <a id="entityId-show-cart" (click)="showCartModal()" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
+              <a id="btnProductCart" (click)="showCartModal()" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
               <span class="option-badge">{{getCartProductCount()}}</span>
             </div>
             <div class="navbar-option-item navbar-option-order">
@@ -125,7 +125,7 @@
           </div>
         </div>
         <div class="navbar-option-item navbar-option-cart mobile-block">
-          <a (click)="showCartModal()"  id="entityId-show-cart" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
+          <a (click)="showCartModal()"  id="btnProductCart" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
           <span class="option-badge">{{getCartProductCount()}}</span>
         </div>
       </div>
@@ -254,7 +254,7 @@
 <!--              </div>-->
 <!--            </div>-->
             <div class="navbar-option-item navbar-option-cart">
-              <a (click)="showCartModal()" id="entityId-show-cart" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
+              <a (click)="showCartModal()" id="btnProductCart" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
               <span class="option-badge">{{getCartProductCount()}}</span>
             </div>
             <div class="navbar-option-item navbar-option-order">

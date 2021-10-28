@@ -214,7 +214,7 @@ export class CartService {
   }
 
   selectProductRate() {
-    if(this._socketService.voiceServingSize) this.selectProductRatesField.setValue(this._socketService.voiceServingSize)
+    if (this._socketService.voiceServingSize) this.selectProductRatesField.setValue(this._socketService.voiceServingSize)
     this.singleCustomProductObj.productPrice = Math.ceil(this.singleCustomProductObj.productRate[this.selectProductRatesField.value])
     this.singleCustomProductObj.productServingSize = this.selectProductRatesField.value
     this.customizeBillCalculation()
@@ -294,9 +294,17 @@ export class CartService {
     return optIndex + 1 < selectedList.length
   }
 
-  checkCommasWithQuantity(objectList: any, optIndex: any) {
+  checkCommasWithQuantity(objectList: any) {
     const selectedList = objectList.filter((item: any) => item.productQuantity)
-    return optIndex + 1 < selectedList.length
+    let selectedProductNames = ''
+    selectedList.forEach((item: any, index: any) => {
+      if (index == 0) {
+        selectedProductNames += item.productName
+      }else{
+        selectedProductNames += ' , ' + item.productName
+      }
+    })
+    return selectedProductNames
   }
 
 

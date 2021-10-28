@@ -309,20 +309,13 @@
                           </tr>
                           <tr *ngIf="cartService.isSelected(cartService.singleCustomProductObj.productToppings,'quantity')">
                             <td>Toppings</td>
-                            <td><span *ngFor="let top of cartService.singleCustomProductObj.productToppings;let topIndex = index">
-                                <span *ngIf="top.productQuantity">{{top.productName }}  </span>
-                                <span *ngIf="cartService.checkCommasWithQuantity(cartService.singleCustomProductObj.productToppings,topIndex)"> , </span>
-                              </span>
+                            <td><span>{{cartService.checkCommasWithQuantity(cartService.singleCustomProductObj.productToppings)}}</span>
                             </td>
                             <td>${{cartService.getTotalPrice(cartService.singleCustomProductObj.productToppings)}}</td>
                           </tr>
                           <tr *ngIf="cartService.isSelected(cartService.singleCustomProductObj.productAddons,'quantity')">
                             <td>Addons</td>
-                            <td><span *ngFor="let add of cartService.singleCustomProductObj.productAddons;let addIndex = index">
-                                <span *ngIf="add.productQuantity">{{add.productName }}  </span>
-                                <span *ngIf="cartService.checkCommasWithQuantity(cartService.singleCustomProductObj.productAddons,addIndex)"> , </span>
-                              </span>
-                            </td>
+                            <td><span>{{cartService.checkCommasWithQuantity(cartService.singleCustomProductObj.productAddons)}}</span>
                             <td>${{cartService.getTotalPrice(cartService.singleCustomProductObj.productAddons)}}</td>
                           </tr>
                           <tr>
