@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { Subject } from 'rxjs';
 import { FormControl } from "@angular/forms";
+import {Router} from "@angular/router";
 
 
 @Injectable({
@@ -41,7 +42,7 @@ export class SocketService {
   speachInput = new FormControl('')
 
 
-  constructor(private socket: Socket) {
+  constructor(private socket: Socket,private router:Router) {
     this.socket.fromEvent('message').subscribe(data => {
       console.log(data)
       this.messagesSubject.next(data)
