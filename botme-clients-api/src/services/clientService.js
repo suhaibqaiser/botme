@@ -4,8 +4,16 @@ async function getClientList() {
     return Client.find({}, {_id: 0, __v: 0});
 }
 
-async function getClientDetail(clientID) {
-    return Client.findOne({clientID: clientID}, {_id: 0, __v: 0})
+async function getClientDetail(clientID, clientDeviceId, clientSecret) {
+    return Client.findOne({
+        clientID: clientID,
+        clientDeviceId: clientDeviceId,
+        clientSecret: clientSecret,
+        clientActive: true
+    }, {
+        _id: 0,
+        __v: 0
+    })
 }
 
 async function addClient(client) {
