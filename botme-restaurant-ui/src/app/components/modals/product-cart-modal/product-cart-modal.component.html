@@ -1,5 +1,5 @@
 <!-- product-cart -->
-<div class="cart-modal-wrapper">
+<div id="sectionId-cart-modal" class="cart-modal-wrapper">
   <div class="cart-modal modal-item">
     <div class="cart-modal-header">
       <h3 class="color-white">Cart</h3>
@@ -9,7 +9,9 @@
     </div>
     <div class="cart-modal-body">
       <h2 class="color-white">My Order</h2>
-      <div class="cart-modal-product" *ngFor="let product of cartProducts">
+      <input [formControl]="_socketService.speachInput">
+      <button style="padding: 6px" (click)="_socketService.sendMessage(_socketService.speachInput.value)" class="btn btn-success">send</button>
+      <div id="{{product.productId + product.productName}}" class="cart-modal-product" *ngFor="let product of cartProducts">
         <div class="cart-modal-thumb">
           <a href="/product-detail/?productId={{product.productId}}">
             <img [src]="resolveImages(product)" alt="product">
@@ -34,15 +36,15 @@
           </div>
           <div class="d-flex justify-content-between mt-2 cart-modal-action-item">
             <div class="cart-modal-delete">
-              <a href="javascript:void(0)" (click)="removeFromCart(product.productId)"><i
+              <a id="ctaId-remove" href="javascript:void(0)" (click)="removeFromCart(product.productId)"><i
                 class="icofont-ui-delete"></i></a>
             </div>
             <div class="cart-modal-delete">
-              <a *ngIf="!product.status" href="javascript:void(0)" (click)="editFromCart(product)">
+              <a id="ctaId-edit" *ngIf="!product.status" href="javascript:void(0)" (click)="editFromCart(product)">
                 <i class="fas fa-edit"></i></a>
             </div>
             <div class="cart-modal-delete">
-              <a *ngIf="!product.status" href="javascript:void(0)" (click)="showProductInfo(product)">
+              <a id="ctaId-view" *ngIf="!product.status" href="javascript:void(0)" (click)="showProductInfo(product)">
                 <i class="far fa-eye"></i></a>
             </div>
           </div>
