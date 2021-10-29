@@ -42,6 +42,10 @@ io.on("connection", (socket) => {
         socket.emit("notification", message);
     }
 
+    socket.on("disconnect", () => {
+        console.log(`Socket ${socket.id} disconnected`);
+    })
+
 });
 
 server.listen(port);

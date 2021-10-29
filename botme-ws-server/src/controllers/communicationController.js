@@ -9,6 +9,7 @@ const communicationService = require('../services/communicationService')
 
 // Main entry point for processing communication
 async function processCommunication(payload) {
+    console.log(payload);
     let response = new Response();
 
     if (!payload) {
