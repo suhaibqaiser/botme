@@ -1,7 +1,7 @@
 // requires for libraries
 const config = require('./config');
-const WebSocket = require('ws');
 const http = require('http');
+const { Server } = require("socket.io");
 const db = require('./utils/dbUtil');
 const communicate = require("./controllers/communicationController");
 //const queue = require('./utils/queue');
@@ -13,40 +13,40 @@ const bearerToken = config.bearerToken
 // application initialization
 db.initDbConnection();
 const server = http.createServer();
-const wss = new WebSocket.Server({server});
+const options = {
+    cors: {
+        origin: '*',
+    },
+};
+const io = new Server(server, options);
 
-wss.on('connection', function connection(ws) {
-    console.log('Client Connected');
+io.on("connection", (socket) => {
+    io.emit("notification", `Socket ${socket.id} has connected`)
+    console.log(`Socket ${socket.id} has connected`);
 
-
-    ws.on('message', async function incoming(payload) {
+    socket.on("message", async (payload) => {
         let response = await communicate.processCommunication(payload)
-        let parsedPayload = JSON.parse(payload)
-        response.clientID = parsedPayload.clientID;
-        // console.log(response)
-        ws.send(JSON.stringify(response))
-        // ws.emit('message',JSON.stringify(response))
+        response.clientID = payload.clientID;
+        sendMessage(response)
     });
 
-// TODO: set interval timeout to 0 when deploying
+    socket.on("notification", (data) => {
+        console.log("notification", data);
+    });
 
-// FIXME: This is functional code commenting for testing
-// setInterval(async function () {
-//     // receive message from SQS
-//     var recMessage = await queue.receiveMessage();
-//     if (recMessage.clientID) {
+    function sendMessage(message) {
+        socket.emit("message", message);
+    }
 
-//         var clientID = recMessage.clientID;
-//         var command = recMessage.command;
-//         if (sessions.hasOwnProperty(clientID))
-//             sessions[clientID].send(JSON.stringify({ "clientID": clientID, "command": command }));
+    function sendNotification(message) {
+        socket.emit("notification", message);
+    }
 
-//         queue.deleteMessage(recMessage.ReceiptHandle);
-//     }
-// }, 50000);
+    socket.on("disconnect", () => {
+        console.log(`Socket ${socket.id} disconnected`);
+    })
 
-})
-;
+});
 
 server.listen(port);
 console.log('Websocket server started on port : ' + port);
