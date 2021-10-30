@@ -11,6 +11,7 @@
       <h2 class="color-white">My Order</h2>
       <input [formControl]="_socketService.speachInput">
       <button style="padding: 6px" (click)="_socketService.sendMessage(_socketService.speachInput.value)" class="btn btn-success">send</button>
+      <p>{{_socketService.responseLabel}}</p>
       <div id="{{product.productId + product.productName}}" class="cart-modal-product" *ngFor="let product of cartProducts">
         <div class="cart-modal-thumb">
           <a href="/product-detail/?productId={{product.productId}}">
@@ -57,7 +58,7 @@
       </div>
       <div class="cart-modal-button">
 <!--        <button [disabled]="cartProducts && !cartProducts.length" routerLink="/checkout" class="btn full-width">Proceed To Checkout</button>-->
-        <button [disabled]="cartProducts && !cartProducts.length" routerLink="/cart" class="btn btn-yellow full-width">View Order</button>
+        <a (click)="navigateToCart()" id="ctaId-view-order" class="btn btn-yellow full-width">View Order</a>
       </div>
       <!-- The commented content in below is currently used "display: none". If no data is in the modal, just add "active" class with it and hide rest of the data. -->
       <!-- <div class="modal-no-data">

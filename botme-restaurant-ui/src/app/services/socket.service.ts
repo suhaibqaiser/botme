@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { Subject } from 'rxjs';
 import { FormControl } from "@angular/forms";
+import {Router} from "@angular/router";
 
 
 @Injectable({
@@ -29,6 +30,11 @@ export class SocketService {
       currentRoute: 'home',
       pageId: 'pageId-home',
       sectionId: 'sectionId-product-list'
+    },
+    {
+      currentRoute: 'cart',
+      pageId: 'pageId-cart',
+      sectionId: 'sectionId-product-list'
     }
   ]
   currentContextObj = {
@@ -42,7 +48,7 @@ export class SocketService {
   speachInput = new FormControl('')
 
 
-  constructor(private socket: Socket) {
+  constructor(private socket: Socket,private router:Router) {
     this.socket.fromEvent('message').subscribe(data => {
       this.messagesSubject.next(data)
       this.fireInteractionEvent(data)

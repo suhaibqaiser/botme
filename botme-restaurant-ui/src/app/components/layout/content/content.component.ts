@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
+import {BotmeClientService} from "../../../services/botme-client.service";
 
 @Component({
   selector: 'app-content',
@@ -8,7 +9,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class ContentComponent implements OnInit {
 
-  constructor(private router: Router, private actRouter: ActivatedRoute) { }
+  constructor(public botMeClientService:BotmeClientService,private router: Router, private actRouter: ActivatedRoute) { }
 
   ngOnInit(): void {
   }

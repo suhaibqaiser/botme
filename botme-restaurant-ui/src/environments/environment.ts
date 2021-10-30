@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   apiRestaurantUrl: "http://localhost:3100",
+  botMeClientAPI: "http://localhost:3000",
   wsEndpoint: "ws://localhost:6380"
 };
 
