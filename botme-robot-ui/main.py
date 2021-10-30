@@ -87,18 +87,21 @@ def open_eyes():
 
 # Talk button action
 def btn_action():
-    socket.sendMessage(listen())
+    socket.processing_start()
+    socket.send_message(listen())
+
 
 
 
 def update_text():
     global old_message
-    message = socket.messageSubject
+    message = socket.message_subject
     if old_message != message:
         old_message = message
         sub_text_disp = message
         sub_titles.config(text=sub_text_disp)
         speak(sub_text_disp)
+        socket.processing_end()
     sub_titles.after(1000, update_text)
 
 

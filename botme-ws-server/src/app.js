@@ -32,6 +32,7 @@ io.on("connection", (socket) => {
 
     socket.on("notification", (data) => {
         console.log("notification", data);
+        sendNotification(data)
     });
 
     function sendMessage(message) {
@@ -39,7 +40,7 @@ io.on("connection", (socket) => {
     }
 
     function sendNotification(message) {
-        socket.emit("notification", message);
+        io.emit("notification", message);
     }
 
     socket.on("disconnect", () => {

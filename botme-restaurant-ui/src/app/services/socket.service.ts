@@ -11,6 +11,7 @@ export class SocketService {
   private notificationSubject = new Subject();
   messages = this.messagesSubject.asObservable();
   notifications = this.notificationSubject.asObservable();
+  processing = false
 
   pageId = 'pageId-order-online'
   sectionId = 'sectionId-product-list'
@@ -19,13 +20,12 @@ export class SocketService {
 
   constructor(private socket: Socket) {
     this.socket.fromEvent('message').subscribe(data => {
-      console.log(data)
       this.messagesSubject.next(data)
       this.fireInteractionEvent(data)
     })
-    this.socket.fromEvent('notification').subscribe(data => {
-      console.log(data)
-      this.notificationSubject.next(data)
+    this.socket.fromEvent('notification').subscribe((data:any) => {
+      this.notificationSubject.next(data);
+      (data.message_text === "processing started") ? this.processing = true : this.processing = false;
     })
    }
 
