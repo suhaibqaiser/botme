@@ -14,52 +14,58 @@
           </button>
           <div class="dropdown-menu" aria-labelledby="mobileOptionDropdown">
             <div class="navbar-option-item navbar-option-cart">
-              <a (click)="showCartModal()" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
+              <a id="entityId-show-cart" (click)="showCartModal()" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
               <span class="option-badge">{{getCartProductCount()}}</span>
             </div>
             <div class="navbar-option-item navbar-option-order">
-              <a href="online-shop" class="btn text-nowrap">
+              <a id="entityId-show-cart" href="online-shop" class="btn text-nowrap">
                  <i class="flaticon-shopping-cart-black-shape"></i>
               </a>
             </div>
           </div>
         </div>
         <div class="navbar-option-item navbar-option-authentication">
-<!--          <button class="navbar-authentication-button" type="button" id="auth2" data-bs-toggle="dropdown" aria-haspopup="true" ><i class="flaticon-add-user"></i></button>-->
+          <button class="navbar-authentication-button" type="button" id="auth2" data-bs-toggle="dropdown" aria-haspopup="true" ><i class="flaticon-add-user"></i></button>
           <div class="authentication-box dropdown-menu" aria-labelledby="auth2">
             <div class="authentication-close"><i class="flaticon-cancel"></i></div>
             <div class="authentication-body">
+              <h4 class="text-white text-center">Log In</h4>
               <ul class="authentication-tab">
-                <li class="authentication-tab-item active" data-authentication-tab="1">Log In</li>
-                <li class="authentication-tab-item" data-authentication-tab="2">Sign Up</li>
+<!--                <li class="authentication-tab-item active" data-authentication-tab="1">Log In</li>-->
+<!--                <li class="authentication-tab-item" data-authentication-tab="2">Sign Up</li>-->
               </ul>
               <div class="authentication-details">
                 <div class="authentication-details-item active" data-authentication-details="1">
-                  <form>
+                  <form [formGroup]="loginForm">
                     <div class="form-group mb-20">
                       <div class="input-group">
-                        <input type="text" class="form-control" placeholder="User Name" />
+                        <input required type="text" formControlName="clientID" class="form-control" placeholder="Client Id" />
                       </div>
                     </div>
                     <div class="form-group mb-20">
                       <div class="input-group">
-                        <input type="password" class="form-control" placeholder="Password" />
+                        <input required type="password" formControlName="clientSecret" class="form-control" placeholder="Client Secret" />
                       </div>
                     </div>
-                    <div class="authentication-action mb-20">
-                      <div class="authentication-action-item">
-                        <a href="forget-password">Forget Password?</a>
-                      </div>
-                      <div class="authentication-action-item">
-                        <div class="custom-control custom-checkbox">
-                          <input type="checkbox" class="custom-control-input" id="check3">
-                          <label class="custom-control-label" for="check3">Remember Me</label>
-                        </div>
+                    <div class="form-group mb-20">
+                      <div class="input-group">
+                        <input required type="text" formControlName="clientDeviceId" class="form-control" placeholder="Device Id" />
                       </div>
                     </div>
+                    <!--                        <div class="authentication-action mb-20">-->
+                    <!--                          <div class="authentication-action-item">-->
+                    <!--                            <a href="forget-password">Forget Password?</a>-->
+                    <!--                          </div>-->
+                    <!--                          <div class="authentication-action-item">-->
+                    <!--                            <div class="custom-control custom-checkbox">-->
+                    <!--                              <input type="checkbox" class="custom-control-input" id="check1">-->
+                    <!--                              <label class="custom-control-label" for="check1">Remember Me</label>-->
+                    <!--                            </div>-->
+                    <!--                          </div>-->
+                    <!--                        </div>-->
                     <div class="authentication-btn">
-                      <button class="btn full-width btn-border mb-20">Log In</button>
-                      <button class="btn full-width"><i class="icofont-google-plus"></i>Log In With Google</button>
+                      <button (click)="login()" [disabled]="!loginForm.valid" class="btn full-width btn-border mb-20">Log In</button>
+                      <!--                          <button class="btn full-width"><i class="icofont-google-plus"></i>Log In With Google</button>-->
                     </div>
                   </form>
                 </div>
@@ -95,7 +101,7 @@
                     </div>
                     <div class="authentication-btn">
                       <button class="btn full-width btn-border mb-20">Log In</button>
-                      <button class="btn full-width"><i class="icofont-google-plus"></i>Log In With Google</button>
+<!--                      <button class="btn full-width"><i class="icofont-google-plus"></i>Log In With Google</button>-->
                     </div>
                   </form>
                 </div>
@@ -117,7 +123,7 @@
 <!--          </div>-->
 <!--        </div>-->
         <div class="d-flex align-items-center navbar-option-item tap-view-place-order mobile-block navbar-option-order">
-          <a href="online-shop" style="padding: 10px 20px" class="btn">Place order
+          <a id="entityId-order-online" href="online-shop" style="padding: 10px 20px" class="btn">Place order
             <i class="flaticon-shopping-cart-black-shape"></i>
           </a>
           <div class="navbar-option-item navbar-option-order">
@@ -125,7 +131,7 @@
           </div>
         </div>
         <div class="navbar-option-item navbar-option-cart mobile-block">
-          <a (click)="showCartModal()" id="btnProductCart" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
+          <a (click)="showCartModal()"  id="entityId-show-cart" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
           <span class="option-badge">{{getCartProductCount()}}</span>
         </div>
       </div>
@@ -146,7 +152,7 @@
           <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto">
               <li class="nav-item">
-                <a href="#" class="nav-link dropdown-toggle active">HOME</a>
+                <a href="#" id="entityId-home" class="nav-link dropdown-toggle active">HOME</a>
               </li>
 <!--              <li class="nav-item">-->
 <!--                <a href="menu" class="nav-link">MENU</a>-->
@@ -162,41 +168,46 @@
           <!-- navbar-option -->
           <div class="navbar-option d-flex align-items-center">
             <div class="navbar-option-item navbar-option-authentication">
-<!--              <button class="navbar-authentication-button" type="button" id="auth1" data-bs-toggle="dropdown" aria-haspopup="true" ><i class="flaticon-add-user"></i></button>-->
+              <button class="navbar-authentication-button" type="button" id="auth1" data-bs-toggle="dropdown" aria-haspopup="true" ><i class="flaticon-add-user"></i></button>
               <div class="authentication-box dropdown-menu" aria-labelledby="auth1">
                 <div class="authentication-close"><i class="flaticon-cancel"></i></div>
                 <div class="authentication-body">
+                  <h4 class="text-white text-center">Log In</h4>
                   <ul class="authentication-tab">
-                    <li class="authentication-tab-item active" data-authentication-tab="1">Log In</li>
-                    <li class="authentication-tab-item" data-authentication-tab="2">Sign Up</li>
+<!--                    <li class="authentication-tab-item active" data-authentication-tab="1">Log In</li>-->
                   </ul>
                   <div class="authentication-details">
                     <div class="authentication-details-item active" data-authentication-details="1">
-                      <form>
+                      <form [formGroup]="loginForm">
                         <div class="form-group mb-20">
                           <div class="input-group">
-                            <input type="text" class="form-control" placeholder="User Name" />
+                            <input required type="text" formControlName="clientID" class="form-control" placeholder="Client Id" />
                           </div>
                         </div>
                         <div class="form-group mb-20">
                           <div class="input-group">
-                            <input type="password" class="form-control" placeholder="Password" />
+                            <input required type="password" formControlName="clientSecret" class="form-control" placeholder="Client Secret" />
                           </div>
                         </div>
-                        <div class="authentication-action mb-20">
-                          <div class="authentication-action-item">
-                            <a href="forget-password">Forget Password?</a>
-                          </div>
-                          <div class="authentication-action-item">
-                            <div class="custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input" id="check1">
-                              <label class="custom-control-label" for="check1">Remember Me</label>
-                            </div>
+                        <div class="form-group mb-20">
+                          <div class="input-group">
+                            <input required type="text" formControlName="clientDeviceId" class="form-control" placeholder="Device Id" />
                           </div>
                         </div>
+                        <!--                        <div class="authentication-action mb-20">-->
+                        <!--                          <div class="authentication-action-item">-->
+                        <!--                            <a href="forget-password">Forget Password?</a>-->
+                        <!--                          </div>-->
+                        <!--                          <div class="authentication-action-item">-->
+                        <!--                            <div class="custom-control custom-checkbox">-->
+                        <!--                              <input type="checkbox" class="custom-control-input" id="check1">-->
+                        <!--                              <label class="custom-control-label" for="check1">Remember Me</label>-->
+                        <!--                            </div>-->
+                        <!--                          </div>-->
+                        <!--                        </div>-->
                         <div class="authentication-btn">
-                          <button class="btn full-width btn-border mb-20">Log In</button>
-                          <button class="btn full-width"><i class="icofont-google-plus"></i>Log In With Google</button>
+                          <button (click)="login()" [disabled]="!loginForm.valid" class="btn full-width btn-border mb-20">Log In</button>
+                          <!--                          <button class="btn full-width"><i class="icofont-google-plus"></i>Log In With Google</button>-->
                         </div>
                       </form>
                     </div>
@@ -232,7 +243,7 @@
                         </div>
                         <div class="authentication-btn">
                           <button class="btn full-width btn-border mb-20">Log In</button>
-                          <button class="btn full-width"><i class="icofont-google-plus"></i>Log In With Google</button>
+<!--                          <button class="btn full-width"><i class="icofont-google-plus"></i>Log In With Google</button>-->
                         </div>
                       </form>
                     </div>
@@ -254,11 +265,11 @@
 <!--              </div>-->
 <!--            </div>-->
             <div class="navbar-option-item navbar-option-cart">
-              <a (click)="showCartModal()" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
+              <a (click)="showCartModal()" id="entityId-show-cart" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
               <span class="option-badge">{{getCartProductCount()}}</span>
             </div>
             <div class="navbar-option-item navbar-option-order">
-              <a href="online-shop" style="padding: 10px 20px" class="btn text-nowrap">
+              <a id="entityId-order-online" href="online-shop" style="padding: 10px 20px" class="btn text-nowrap">
                 Place Order <i class="flaticon-shopping-cart-black-shape"></i>
               </a>
             </div>

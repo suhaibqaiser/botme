@@ -9,6 +9,7 @@ const communicationService = require('../services/communicationService')
 
 // Main entry point for processing communication
 async function processCommunication(payload) {
+    console.log(payload);
     let response = new Response();
 
     if (!payload) {
@@ -66,7 +67,7 @@ async function processConversation(request, clientToken) {
     let conversationId = await conversationController.getConversationId(clientToken)
     // console.log(communication.intent)
     if (communication.intent === 'conversation.end') {
-        conversationController.addConversationLog(conversationId, request.message_text, communication.payload)
+        conversationController.addConversationLog(conversationId, JSON.stringify(request.message_text), communication.payload)
         conversationController.endConversation(conversationId, 0)
     } else {
         conversationController.addConversationLog(conversationId, request.message_text, communication.payload)

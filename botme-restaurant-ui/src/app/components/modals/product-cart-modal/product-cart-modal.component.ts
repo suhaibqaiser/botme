@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {CartService} from 'src/app/services/cart.service';
 import {MenuService} from 'src/app/services/menu.service';
+import {SocketService} from "../../../services/socket.service";
+import {Router} from "@angular/router";
 
 declare var $: any;
 
@@ -17,7 +19,9 @@ export class ProductCartModalComponent implements OnInit {
   cartTotal = 0
 
   constructor(private cartService: CartService,
-              private MenuService: MenuService) {
+              private _router:Router,
+              private MenuService: MenuService,
+              public _socketService:SocketService) {
   }
 
   ngOnInit(): void {
@@ -96,5 +100,9 @@ export class ProductCartModalComponent implements OnInit {
     this.cartService.slideToShow = 4
     this.cartService.selectProductRatesField.setValue(product.productServingSize)
     $('#pageId-productCustomizeModal').modal('show')
+  }
+  navigateToCart(){
+    if(!this.cartProducts.length) return
+    this._router.navigate(['/cart'])
   }
 }

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {BotmeClientService} from "../../../services/botme-client.service";
 
 
 @Component({
@@ -11,7 +12,7 @@ export class HeadingbannerComponent implements OnInit {
 
   currentRoute: string = "";
 
-  constructor(private router: Router) {
+  constructor(public botMeClientService: BotmeClientService, private router: Router) {
   }
 
   ngOnInit(): void {

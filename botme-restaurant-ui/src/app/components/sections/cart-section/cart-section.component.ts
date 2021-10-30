@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CartService} from "../../../services/cart.service";
 import {MenuService} from 'src/app/services/menu.service';
+import {SocketService} from "../../../services/socket.service";
 
 declare var $: any;
 
@@ -16,10 +17,12 @@ export class CartSectionComponent implements OnInit {
   cartTotal = 0
 
   constructor(private cartService: CartService,
-              private MenuService: MenuService) {
+              private MenuService: MenuService,
+              public _socketService:SocketService) {
   }
 
   ngOnInit(): void {
+    this._socketService.getCurrentContext()
     this.getProducts();
     this.getCartProducts();
   }
@@ -111,7 +114,7 @@ export class CartSectionComponent implements OnInit {
 
   editToCart() {
     this.cartService.addToCart(this.cartService.singleCustomProductObj, true);
-    document.getElementById("btnProductCart")?.click()
+    document.getElementById("entityId-show-cart")?.click()
   }
 
   editFromCart(product: any) {
