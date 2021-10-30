@@ -48,6 +48,7 @@ import { SpinnerComponent } from './components/layout/spinner/spinner.component'
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { CustomizeProductModalComponent } from './components/sections/customize-product-modal/customize-product-modal.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import {BotmeClientService} from "./services/botme-client.service";
 
 const config: SocketIoConfig = {
   url: 'http://localhost:6380', options: {  }
@@ -107,7 +108,7 @@ const config: SocketIoConfig = {
     SocketIoModule.forRoot(config),
     NgMultiSelectDropDownModule.forRoot(),
   ],
-  providers: [SpeechRecognitionService],
+  providers: [SpeechRecognitionService,BotmeClientService],
   bootstrap: [AppComponent],
   entryComponents: [CustomizeProductModalComponent]
 })

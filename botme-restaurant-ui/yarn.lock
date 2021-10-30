@@ -5068,6 +5068,13 @@ ng-multiselect-dropdown@^0.3.4:
   dependencies:
     tslib "^1.9.0"
 
+ngx-cookie-service@^12.0.3:
+  version "12.0.3"
+  resolved "https://registry.yarnpkg.com/ngx-cookie-service/-/ngx-cookie-service-12.0.3.tgz#eb2fc73b40dcc5ef8282eb78e82986afc299537f"
+  integrity sha512-F5xJBTrrreI2DERGOrO6U+L7s031HxTER+3Z4gDCwxdTl4AXmtWddMxxQVw7KflOLZ4InYEs6FjQsXmKU4HsJg==
+  dependencies:
+    tslib "^2.0.0"
+
 ngx-socket-io@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/ngx-socket-io/-/ngx-socket-io-4.1.0.tgz#f4780d43da3a75be58f0a4da72bdfe21442731b3"
