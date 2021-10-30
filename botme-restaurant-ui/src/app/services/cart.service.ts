@@ -1,7 +1,5 @@
-import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
-import {environment} from 'src/environments/environment';
 import {FormControl} from "@angular/forms";
 import {SocketService} from "./socket.service";
 
@@ -43,7 +41,7 @@ export class CartService {
   tempProductSizeList = ['standard', 'medium', 'large', 'small']
   selectProductRatesField = new FormControl('')
 
-  constructor(private _socketService:SocketService) {
+  constructor(private _socketService: SocketService) {
     this.getFromLocalstorage();
   }
 
@@ -72,8 +70,8 @@ export class CartService {
   }
 
   removeFromCart(productId: string) {
-    this.cartProduct.forEach((item:any,index)=>{
-      if(item.productId == productId){
+    this.cartProduct.forEach((item: any, index) => {
+      if (item.productId == productId) {
         this.cartProduct.splice(index, 1);
       }
     })
@@ -99,8 +97,8 @@ export class CartService {
 
   //
   setProductCustomization(product: any) {
-    this._socketService.pageId = 'pageId-product-customize-modal'
-    this._socketService.sectionId = 'sectionId-servingSize-productOptions'
+    this._socketService.currentContextObj.pageId = 'pageId-product-customize-modal'
+    this._socketService.currentContextObj.sectionId = 'sectionId-servingSize-productOptions'
     this.slideToShow = 0
     this.reset()
     this.setProductRateSize(product)
@@ -216,9 +214,11 @@ export class CartService {
   }
 
   selectProductRate() {
+    if (this._socketService.voiceServingSize) this.selectProductRatesField.setValue(this._socketService.voiceServingSize)
     this.singleCustomProductObj.productPrice = Math.ceil(this.singleCustomProductObj.productRate[this.selectProductRatesField.value])
     this.singleCustomProductObj.productServingSize = this.selectProductRatesField.value
     this.customizeBillCalculation()
+    this._socketService.voiceServingSize = ''
   }
 
   selectFlavor(flavor: any) {
@@ -294,9 +294,17 @@ export class CartService {
     return optIndex + 1 < selectedList.length
   }
 
-  checkCommasWithQuantity(objectList: any, optIndex: any) {
+  checkCommasWithQuantity(objectList: any) {
     const selectedList = objectList.filter((item: any) => item.productQuantity)
-    return optIndex + 1 < selectedList.length
+    let selectedProductNames = ''
+    selectedList.forEach((item: any, index: any) => {
+      if (index == 0) {
+        selectedProductNames += item.productName
+      }else{
+        selectedProductNames += ' , ' + item.productName
+      }
+    })
+    return selectedProductNames
   }
 
 
@@ -358,11 +366,11 @@ export class CartService {
     }
   }
 
-  setCurrentContext(){
-    if(this.slideToShow == 0) this._socketService.sectionId = 'sectionId-servingSize-productOptions'
-    if(this.slideToShow == 1) this._socketService.sectionId = 'sectionId-ingredients-flavour'
-    if(this.slideToShow == 2) this._socketService.sectionId = 'sectionId-toppings'
-    if(this.slideToShow == 3) this._socketService.sectionId = 'sectionId-addons'
-    if(this.slideToShow == 4) this._socketService.sectionId = 'sectionId-summary'
+  setCurrentContext() {
+    if (this.slideToShow == 0) this._socketService.currentContextObj.sectionId = 'sectionId-servingSize-productOptions'
+    if (this.slideToShow == 1) this._socketService.currentContextObj.sectionId = 'sectionId-ingredients-flavour'
+    if (this.slideToShow == 2) this._socketService.currentContextObj.sectionId = 'sectionId-toppings'
+    if (this.slideToShow == 3) this._socketService.currentContextObj.sectionId = 'sectionId-addons'
+    if (this.slideToShow == 4) this._socketService.currentContextObj.sectionId = 'sectionId-summary'
   }
 }

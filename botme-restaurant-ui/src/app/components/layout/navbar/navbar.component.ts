@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { CartService } from 'src/app/services/cart.service';
+import {Component, OnInit} from '@angular/core';
+import {CartService} from 'src/app/services/cart.service';
+import {SocketService} from "../../../services/socket.service";
 
 @Component({
   selector: 'app-navbar',
@@ -10,7 +11,8 @@ export class NavbarComponent implements OnInit {
 
   products: [] = []
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService, private _socketService: SocketService) {
+  }
 
   ngOnInit(): void {
     this.getCartProducts()
@@ -28,7 +30,8 @@ export class NavbarComponent implements OnInit {
     return this.products.length
   }
 
-  showCartModal(){
+  showCartModal() {
+    this._socketService.currentContextObj.sectionId = 'sectionId-cart-modal'
     document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:block')
   }
 

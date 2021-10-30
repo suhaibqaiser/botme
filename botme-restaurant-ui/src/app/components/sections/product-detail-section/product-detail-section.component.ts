@@ -27,8 +27,7 @@ export class ProductDetailSectionComponent implements OnInit {
     await this.getProductDetail(this.route.snapshot.queryParams['productId'])
     await this.getRelatedProducts()
 
-    this._socketService.pageId = 'pageId-product-detial-page'
-    this._socketService.sectionId = 'sectionId-product-detial-page'
+    this._socketService.getCurrentContext()
   }
 
   async getProductDetail(productId: string) {
@@ -67,7 +66,7 @@ export class ProductDetailSectionComponent implements OnInit {
 
   addToCart(product: any) {
     this.cartService.setProductCustomization(JSON.parse(JSON.stringify(product)))
-    // document.getElementById("btnProductCart")?.click()
+    // document.getElementById("entityId-show-cart")?.click()
   }
 
   async getRelatedProducts() {
