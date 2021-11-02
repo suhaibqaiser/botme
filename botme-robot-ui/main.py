@@ -259,7 +259,7 @@ def updateText():
         old_message = message
         sub_text_disp = message['message']
         print(sub_text_disp)
-        imageOnSentiment(sub_text_disp['sentiment'],sub_text_disp['status'],sub_text_disp['text'],sub_text_disp['intent'])
+        imageOnSentiment(sub_text_disp['sentimentScore'],message['status'],sub_text_disp['text'],sub_text_disp['intentName'])
         text=sub_text_disp['text']
         print(text)
         send_message(text1,text)   

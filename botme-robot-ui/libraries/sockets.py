@@ -6,7 +6,7 @@ sio = socketio.Client()
 
 
 class Sockets:
-    message_subject = {"message": {"text": 'Waiting', "sentiment":0, "status":"", "intent":""}}
+    message_subject = {"message": {"text": 'Waiting', "sentimentScore":0, "intentName":""},"status":""}
     notification_subject = ''
 
     @sio.event
