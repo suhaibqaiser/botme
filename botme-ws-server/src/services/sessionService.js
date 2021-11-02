@@ -3,7 +3,7 @@ const Session = require('../models/session');
 async function getSession(clientToken) {
     let session;
     try {
-        session = await Session.findOne({clientToken: clientToken})
+        session = await Session.findOne({clientToken: clientToken, sessionActive: true})
     } catch (err) {
         console.log(err);
     }

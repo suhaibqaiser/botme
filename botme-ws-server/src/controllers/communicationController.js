@@ -1,11 +1,8 @@
-const session = require("../controllers/sessionsController");
 const Request = require("../models/request");
 const Response = require("../models/response");
-const commService = require("../services/communicationService");
-const commandService = require("../services/commandService");
 const answeringService = require('../services/answeringService');
 const conversationController = require("../controllers/conversationController")
-const communicationService = require('../services/communicationService')
+
 
 // Main entry point for processing communication
 async function processCommunication(payload) {
@@ -18,7 +15,6 @@ async function processCommunication(payload) {
         return response
     }
 
-
     let request = new Request(payload);
 
     if (!request.message_text) {
@@ -27,25 +23,25 @@ async function processCommunication(payload) {
         return response
     }
 
-    if (!request.authToken) {
-        response.status = "error";
-        response.message = "Error: Authentication token not found";
-        return response
-    }
+    // if (!request.authToken) {
+    //     response.status = "error";
+    //     response.message = "Error: Authentication token not found";
+    //     return response
+    // }
 
-    let sessionStatus = await session.validateSession(request.authToken);
-    if (
-        sessionStatus.status === "success" &&
-        sessionStatus.payload === true
-    ) {
-        console.log('request =>', request.sectionId, request.pageId)
-        let reply = await processConversation(request, request.authToken);
-        response.message = reply.payload;
-        response.status = reply.status;
-    } else {
-        response.message = sessionStatus.payload;
-        response.status = sessionStatus.status;
-    }
+    // let sessionStatus = await session.validateSession(request.authToken);
+    // if (
+    //     sessionStatus.status === "success" &&
+    //     sessionStatus.payload === true
+    // ) {
+    console.log('request =>', request.sectionId, request.pageId)
+    let reply = await processConversation(request, request.authToken);
+    response.message = reply.payload;
+    response.status = reply.status;
+    // } else {
+    //     response.message = sessionStatus.payload;
+    //     response.status = sessionStatus.status;
+    // }
     return response;
 }
 
@@ -82,9 +78,6 @@ async function processMessage(request) {
     };
     // let textToSpeech = await communicationService.getSpeechToText(request.message_text)
     // console.log('textToSpeech =>', textToSpeech)
-    console.log('pageId =>', request.pageId)
-    console.log('sectionId =>', request.sectionId)
-    console.log('text =>', request.message_text)
     let message = await answeringService.generateAnswer(request.message_text, request.pageId, request.sectionId);
     if (message) {
         response.payload = message;
@@ -97,4 +90,4 @@ async function processMessage(request) {
     return response;
 }
 
-module.exports = {processCommunication, processMessage};
+module.exports = { processCommunication, processMessage };

@@ -4,6 +4,7 @@ const http = require('http');
 const { Server } = require("socket.io");
 const db = require('./utils/dbUtil');
 const communicate = require("./controllers/communicationController");
+const sessionService = require("./services/sessionService")
 //const queue = require('./utils/queue');
 
 // application config
@@ -22,8 +23,18 @@ const io = new Server(server, options);
 
 io.on("connection", (socket) => {
     io.emit("notification", `Socket ${socket.id} has connected`)
-    socket.emit("auth")
-    console.log(`Socket ${socket.id} has connected`);
+    socket.emit("auth","login")
+    
+
+    socket.on("auth", async (token) => {
+        session = await sessionService.getSession(token)
+        if (session) {
+            socket.id = session.clientID
+            console.log(`Socket ${socket.id} has connected`);
+        } else {
+            socket.disconnect()
+        }
+    })
 
     socket.on("message", async (payload) => {
         let response = await communicate.processCommunication(payload)

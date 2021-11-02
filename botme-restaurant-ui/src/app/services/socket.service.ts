@@ -48,7 +48,14 @@ export class SocketService {
   speachInput = new FormControl('')
 
 
-  constructor(private socket: Socket,private router:Router) {
+  constructor(private socket: Socket, private router: Router) {
+    let authToken = 'LvsVhA3Yx0JED98w/L/5olOgrtHPmt1UB7JMMOxOncQ='
+    this.socket.fromEvent('auth').subscribe(data => {
+      console.log(data)
+      if (data === "login") {
+        this.socket.emit('auth', authToken);
+      }
+    })
     this.socket.fromEvent('message').subscribe(data => {
       this.messagesSubject.next(data)
       this.fireInteractionEvent(data)
