@@ -42,6 +42,8 @@ login.configure(width=600,height=600)
 label_login = Label(login,text="Please login to continue",justify=CENTER,font=sub_text_font)
 label_login.place(relheight = 0.15,relx = 0.1,rely = 0.07)
 
+
+
 #create a label for clientID,clientSecret,clientDeviceId
 labelclientID = Label(login,text="clientID: ",font=text_font)
 labelclientID.place(relheight = 0.1,relx = 0.1,rely = 0.2)
@@ -240,26 +242,31 @@ def btn_action():
     processImage()
     socketText()
 
+text1 = ''
+
 def socketText():
+    global text1
     socket.processing_start()
     text1 = listen()
-    threading.Thread(target=socket.send_message(text1)).start()
-    socket.processing_end()
-    updateText(text1)
+    socket.send_message(text1)
     
 
 
-def updateText(get_message):
-    global old_message
+def updateText():
+    global old_message,text1
     message = socket.message_subject
     print(message)
-    if old_message != message['text']:
-        old_message = message['text']
-        sub_text_disp = message
+    if old_message != message['message']['text']:
+        old_message = message['message']['text']
+        sub_text_disp = message['message']
+        print(sub_text_disp)
         imageOnSentiment(sub_text_disp['sentiment'],sub_text_disp['status'],sub_text_disp['text'],sub_text_disp['intent'])
-        text=sub_text_disp['text']   
+        text=sub_text_disp['text']
+        print(text)
+        send_message(text1,text)   
         speak(sub_text_disp['text'])
-        send_message(get_message,text)
+        socket.processing_end()
+    main1.after(1000,updateText)
         
 def send_message(msg,response):
     if not msg:
@@ -280,7 +287,9 @@ def send_message(msg,response):
 
 # Loop call for updating UI and background
 update_background()
+updateText()
 update_ui()
+
 # open_eyes()
 
 

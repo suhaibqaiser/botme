@@ -1,5 +1,6 @@
 import datetime
 import socketio
+import json
 
 sio = socketio.Client()
 
@@ -18,8 +19,9 @@ class Sockets:
 
     @sio.on('message')
     def incoming(data):
-        print(data)
-        Sockets.message_subject = {"text":data['message']['text'],"sentiment":data['message']['sentimentScore'],"status":data['status'],"intent":data['message']['intentName']}
+        data = json.loads(data)
+        # print(data['message']['text'])
+        Sockets.message_subject = data
 
     @sio.on('notification')
     def incoming(data):
