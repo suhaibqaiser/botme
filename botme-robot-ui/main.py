@@ -255,9 +255,8 @@ def socketText():
 def updateText():
     global old_message,text1
     message = socket.message_subject
-    print(message)
-    if old_message != message['message']['text']:
-        old_message = message['message']['text']
+    if old_message != message:
+        old_message = message
         sub_text_disp = message['message']
         print(sub_text_disp)
         imageOnSentiment(sub_text_disp['sentiment'],sub_text_disp['status'],sub_text_disp['text'],sub_text_disp['intent'])

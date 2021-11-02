@@ -4,8 +4,9 @@ import json
 
 sio = socketio.Client()
 
+
 class Sockets:
-    message_subject = 'Waiting'
+    message_subject = {"message": {"text": 'Waiting', "sentiment":0, "status":"", "intent":""}}
     notification_subject = ''
 
     @sio.event
@@ -19,14 +20,13 @@ class Sockets:
 
     @sio.on('message')
     def incoming(data):
-        data = json.loads(data)
-        # print(data['message']['text'])
+        print(data)
         Sockets.message_subject = data
 
     @sio.on('notification')
     def incoming(data):
         print(data)
-        Sockets.notification_subject = data['message']['text']
+        Sockets.notification_subject = data
 
     @sio.event
     def disconnect(self):
