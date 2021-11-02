@@ -22,6 +22,7 @@ const io = new Server(server, options);
 
 io.on("connection", (socket) => {
     io.emit("notification", `Socket ${socket.id} has connected`)
+    socket.emit("auth")
     console.log(`Socket ${socket.id} has connected`);
 
     socket.on("message", async (payload) => {
@@ -43,8 +44,8 @@ io.on("connection", (socket) => {
         io.emit("notification", message);
     }
 
-    socket.on("disconnect", () => {
-        console.log(`Socket ${socket.id} disconnected`);
+    socket.on("disconnect", (reason) => {
+        console.log(`Socket ${socket.id} disconnected because ${reason}`);
     })
 
 });
