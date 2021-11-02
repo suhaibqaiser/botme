@@ -19,7 +19,7 @@ class Sockets:
     @sio.on('message')
     def incoming(data):
         print(data)
-        Sockets.message_subject = data['message']['text']
+        Sockets.message_subject = {"text":data['message']['text'],"sentiment":data['message']['sentimentScore'],"status":data['status'],"intent":data['message']['intentName']}
 
     @sio.on('notification')
     def incoming(data):

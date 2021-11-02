@@ -9,7 +9,8 @@ async function generateAnswer(textToSpeech, pageId, sectionId) {
         entityName:Response.entityName,
         pageId:Response.pageId,
         sectionId:Response.sectionId,
-        sentimentScore:Response.sentimentScore
+        sentimentScore:Response.sentimentScore,
+        intentName:Response.intentName
     };
     return answer
 }

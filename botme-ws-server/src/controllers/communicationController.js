@@ -82,6 +82,7 @@ async function processMessage(request) {
     };
     // let textToSpeech = await communicationService.getSpeechToText(request.message_text)
     // console.log('textToSpeech =>', textToSpeech)
+    
     console.log('pageId =>', request.pageId)
     console.log('sectionId =>', request.sectionId)
     console.log('text =>', request.message_text)
