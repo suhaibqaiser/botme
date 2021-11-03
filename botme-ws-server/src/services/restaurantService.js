@@ -1,3 +1,10 @@
+//
+//
+// THIS SERVICE IS NOT IN USE BUT IS KEPT FOR FUTURE IMPLEMENTATION
+//
+//
+
+
 const config = require('../config');
 const fetch = require('node-fetch');
 

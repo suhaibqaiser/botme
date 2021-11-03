@@ -48,14 +48,22 @@ export class SocketService {
   speachInput = new FormControl('')
 
 
-  constructor(private socket: Socket,private router:Router) {
+  constructor(private socket: Socket, private router: Router) {
+    let authToken = 'LvsVhA3Yx0JED98w/L/5olOgrtHPmt1UB7JMMOxOncQ=' // TODO: Update code with functioning token 
+    this.socket.fromEvent('auth').subscribe(data => {
+      console.log(data)
+      if (data === "login") {
+        this.socket.emit('auth', authToken);
+      }
+    })
     this.socket.fromEvent('message').subscribe(data => {
+      console.log(data);
       this.messagesSubject.next(data)
       this.fireInteractionEvent(data)
     })
     this.socket.fromEvent('notification').subscribe((data:any) => {
       this.notificationSubject.next(data);
-      (data.message_text === "processing started") ? this.processing = true : this.processing = false;
+      (data.text === "processing started") ? this.processing = true : this.processing = false;
     })
    }
 
@@ -66,13 +74,8 @@ export class SocketService {
 
   sendMessage(msg: any) {
     let wsPayload = {
-      "clientID": "987530c0-998d-4cfc-b86d-596b5f7cd7d7",
       "current_time": Date(),
-      "message_format": "text",
-      "message_command": "find",
-      "language": "en-US",
-      "message_text": msg,
-      "authToken": "qbw/fcQKvC6SY+AelUs5VpRYOhnRvzZsz39xVU06LYI=",
+      "text": msg,
       "pageId": this.currentContextObj.pageId,
       "sectionId": this.currentContextObj.sectionId
     }
