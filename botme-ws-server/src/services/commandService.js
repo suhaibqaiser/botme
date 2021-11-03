@@ -1,5 +1,4 @@
 const fetch = require('node-fetch');
-const {stringify} = require('uuid');
 const config = require('../config');
 
 async function getResponse(text, pageId, sectionId) {
@@ -8,20 +7,20 @@ async function getResponse(text, pageId, sectionId) {
     pageId ='pageId-order-online'
     sectionId ='sectionId-product-list'
     try {
-        let body = {"text": text,"pageId": pageId,"sectionId": sectionId};
-        const response = await fetch(config.commandapi + "/response" ,{
+        let body = { "text": text, "pageId": pageId, "sectionId": sectionId };
+        const res = await fetch(config.commandapi + "/response", {
             method: 'post',
             body: JSON.stringify(body),
             headers: {
                 'Content-Type': 'application/json'
             }
         });
-        data = response.json()
+        data = res.json()
+        
     } catch (err) {
         console.log(err);
     }
     return data
-
 }
 
 

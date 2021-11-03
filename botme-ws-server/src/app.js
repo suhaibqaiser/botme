@@ -24,21 +24,26 @@ const io = new Server(server, options);
 io.on("connection", (socket) => {
     // Challanging socket to authenticate before connection
     socket.emit("auth", "login")
-    
+
     socket.on("auth", async (token) => {
         session = await sessionService.getSession(token)
         if (session) {
-            socket.id = session.sessionId
-            console.log(`Socket ${socket.id} has connected`);
+            socket.sessionId = session.sessionId
+            socket.clientId = session.clientID
+            console.log(`Session:${socket.sessionId}, clientId:${socket.clientId} has connected`)
+            socket.join(socket.clientId)
+            socket.to(socket.clientId).emit("notification",`${socket.sessionId} joined room:${socket.clientId}`)
         } else {
             socket.disconnect()
         }
     })
 
     socket.on("message", async (payload) => {
-        let response = await communicate.processMessage(socket.id, payload)
-        socket.conversationId = response.conversationId
-        sendMessage(response)
+        let response = await communicate.processMessage(socket.sessionId, socket.conversationId, payload)
+        if (response.status === "success") {
+            socket.conversationId = response.conversationId
+            sendMessage(socket.clientId, response)
+        }
     });
 
     socket.on("notification", (data) => {
@@ -46,12 +51,13 @@ io.on("connection", (socket) => {
         sendNotification(data)
     });
 
-    function sendMessage(message) {
-        socket.emit("message", message);
+    function sendMessage(room, message) {
+        console.log(room, message);
+        io.to(room).emit("message", message);
     }
 
-    function sendNotification(message) {
-        io.emit("notification", message);
+    function sendNotification(room, message) {
+        socket.to(room).emit("notification", message);
     }
 
     socket.on("disconnect", (reason) => {

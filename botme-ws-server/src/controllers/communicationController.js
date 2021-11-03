@@ -5,7 +5,7 @@ const conversationController = require("../controllers/conversationController")
 
 
 // Main entry point for processing communication
-async function processMessage(sessionId, payload) {
+async function processMessage(sessionId, conversationId, payload) {
     let response = new Response();
 
     if (!payload) {
@@ -23,16 +23,18 @@ async function processMessage(sessionId, payload) {
     }
 
     let message = await answeringService.generateAnswer(request.text, request.pageId, request.sectionId);
-    if (!message) {
+    if (message === undefined) {
         response.status = "error";
         response.payload = "Error: There is an error in communication api";
+        return
     }
-
-    message.conversationId = await conversationController.getConversationId(sessionId)
+    
+    (!conversationId) ? message.conversationId = await conversationController.getConversationId(sessionId) : message.conversationId = conversationId
     conversationController.addConversationLog(message.conversationId, request.text, message.text)
 
-    response.payload = message;
+    response.message = message;
     response.status = "success";
+
     return response;
 }
 
