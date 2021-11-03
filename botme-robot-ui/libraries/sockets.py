@@ -18,6 +18,12 @@ class Sockets:
     def connect_error(self):
         print("The connection failed!")
 
+    @sio.on('auth')
+    def incoming(data):
+        if data == 'login':
+            authToken = 'LvsVhA3Yx0JED98w/L/5olOgrtHPmt1UB7JMMOxOncQ='
+            sio.emit('auth', authToken)
+
     @sio.on('message')
     def incoming(data):
         print(data)

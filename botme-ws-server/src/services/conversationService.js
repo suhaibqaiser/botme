@@ -1,11 +1,11 @@
 const Session = require('../models/session');
 const {v4: uuidv4} = require('uuid');
 
-async function addConversation(clientToken) {
+async function addConversation(sessionId) {
     try {
         let uniqueConversationId = uuidv4()
         await Session.updateOne(
-            {"clientToken": clientToken},
+            {"sessionId": sessionId},
             {
                 $push: {
                     "conversations": {
@@ -65,9 +65,9 @@ async function endConversation(conversationId, rating) {
     }
 }
 
-async function getConversationId(clientToken) {
+async function getConversationId(sessionId) {
     let conversation = await Session.findOne({
-        "clientToken": clientToken,
+        "sessionId": sessionId,
         "conversations.conversationActive": true
     }, {"conversations.conversationId.$": 1});
     if (conversation) {

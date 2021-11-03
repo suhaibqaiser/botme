@@ -22,14 +22,13 @@ const options = {
 const io = new Server(server, options);
 
 io.on("connection", (socket) => {
-    io.emit("notification", `Socket ${socket.id} has connected`)
-    socket.emit("auth","login")
+    // Challanging socket to authenticate before connection
+    socket.emit("auth", "login")
     
-
     socket.on("auth", async (token) => {
         session = await sessionService.getSession(token)
         if (session) {
-            socket.id = session.clientID
+            socket.id = session.sessionId
             console.log(`Socket ${socket.id} has connected`);
         } else {
             socket.disconnect()
@@ -37,8 +36,8 @@ io.on("connection", (socket) => {
     })
 
     socket.on("message", async (payload) => {
-        let response = await communicate.processCommunication(payload)
-        response.clientID = payload.clientID;
+        let response = await communicate.processMessage(socket.id, payload)
+        socket.conversationId = response.conversationId
         sendMessage(response)
     });
 

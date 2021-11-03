@@ -1,3 +1,8 @@
+//
+//
+// THIS SERVICE IS NOT IN USE BUT IS KEPT FOR FUTURE IMPLEMENTATION
+//
+//
 // run this command first in you terminal
 // export GOOGLE_APPLICATION_CREDENTIALS=innate-shell-323716-78b758d1671c.json
 

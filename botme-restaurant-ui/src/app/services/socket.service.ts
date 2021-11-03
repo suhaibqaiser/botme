@@ -49,7 +49,7 @@ export class SocketService {
 
 
   constructor(private socket: Socket, private router: Router) {
-    let authToken = 'LvsVhA3Yx0JED98w/L/5olOgrtHPmt1UB7JMMOxOncQ='
+    let authToken = 'LvsVhA3Yx0JED98w/L/5olOgrtHPmt1UB7JMMOxOncQ=' // TODO: Update code with functioning token 
     this.socket.fromEvent('auth').subscribe(data => {
       console.log(data)
       if (data === "login") {
