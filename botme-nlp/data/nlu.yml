@@ -155,9 +155,8 @@ nlu:
       - [reservation page](pagethree)
       - [reservation](pagethree)
 
-  - synonym: reservation 
+  - synonym: contactus_page 
     examples: |
-      - reservation page
       - Take me to [contactus page](pagefour)
       - i want to visit [contactus page](pagefour)
       - open [contactus page](pagefour) please
@@ -264,23 +263,30 @@ nlu:
 
   - intent: place_order
     examples: |
-      - [place order](done)
-      - i want [place order](done)
-      - all done [place](done) my order
-      - we want to [place order](done)
-      - i want to [place](done) my order
-      - we want to [place](done) our order
+      - [order now](done)
+      - i want [order now](done)
+      - all done [order now](done) my order
+      - we want to [order now](done)
+      - i want to [order](done) my order
+      - we want to [order](done) our order
+      - [place order] please
+      - [place] the order please
+      - i want to [place] the order
 
-  - synonym: place order
+  - synonym: order now
     examples: |
       - place
+      - order
 
   - intent: proceed_to_checkout
     examples: |
-      - [proceed to checkout](checkout)
-      - i want to [proceed to checkout](checkout)
-      - please [proceed to checkout](checkout)
-      - we want to [proceed to checkout](checkout)
+      - [checkout](checkout)
+      - i want to [checkout](checkout)
+      - please [checkout](checkout)
+      - we want to [checkout](checkout)
+      - please [checkout](checkout) my order
+      - can you please [checkout](checkout) my order
+      - i want to do [checkout](checkout)
 
   - intent: place_order_page
     examples: |
@@ -295,19 +301,28 @@ nlu:
       - show us the [place order page](pagesix)
       - i want you to take me to the [place order page](pagesix)
       - she want to visit [place order page](pagesix)
-      - Take me to [place order page](pagesix)
+      - Take me to [place order](pagesix)
       - i want to visit [place order page](pagesix)
       - open [place order page](pagesix) please
       - i want to see the [place order page](pagesix)
       - can you please redirect me to [place order page](pagesix)
       - he want to redirect to [place order page](pagesix)
-      - i want to redirect to [place order page](pagesix)
+      - i want to redirect to [place order](pagesix)
       - show me the [place order page](pagesix)
-      - show us the [place order page](pagesix)
+      - show us the [place order](pagesix)
       - i want you to take me to the [place order page](pagesix)
-      - she want to visit [place order page](pagesix)
+      - she want to visit [place order](pagesix)
+      - [place order](pagesix)
       - [place order page](pagesix)
-      - [place order page](pagesix)
+      - i want to redirect to [place order](pagesix)
+      - i want to redirect to [place order page](pagesix)
+      - Redirect me to [place order](pagesix)
+      - Redirect me to [place order page](pagesix)
+  
+  - synonym: place order page
+    examples: |
+      - place order
+      
 
   - intent: menu_category
     examples: |
@@ -2138,15 +2153,21 @@ nlu:
       - [large](size)
   - intent: next
     examples: |
+      - go [Next]{"entity":"nextoption","value":"next"}
       - [Next]{"entity":"nextoption","value":"next"}
+      - go [next](nextoption)
       - [next](nextoption)
   - intent: Back
     examples: |
+      - go [back](previous)
+      - go [Back]{"entity":"previous","value":"back"}
       - [back](previous)
       - [Back]{"entity":"previous","value":"back"}
   - intent: Cancel
     examples: |
+      - i want to [cancel](drop) the cart
       - [cancel](drop)
+      - i want to [Cancel]{"entity":"drop","value":"cancel"} the cart
       - [Cancel]{"entity":"drop","value":"cancel"}
 
   - intent: remove_item
