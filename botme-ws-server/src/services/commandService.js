@@ -4,11 +4,9 @@ const config = require('../config');
 async function getResponse(text, pageId, sectionId) {
     let data
     // let response
-    pageId ='pageId-order-online'
-    sectionId ='sectionId-product-list'
     try {
         let body = { "text": text, "pageId": pageId, "sectionId": sectionId };
-        const res = await fetch(config.commandapi + "/response", {
+        const res = await fetch('http://api.gofindmenu.com:5010' + "/response", {
             method: 'post',
             body: JSON.stringify(body),
             headers: {
