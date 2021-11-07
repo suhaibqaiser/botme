@@ -24,18 +24,19 @@
             </div>
           </div>
         </div>
+
+
         <div class="navbar-option-item navbar-option-authentication">
-          <button class="navbar-authentication-button" type="button" id="auth2" data-bs-toggle="dropdown" aria-haspopup="true" ><i class="flaticon-add-user"></i></button>
+          <button class="navbar-authentication-button" type="button" id="auth2" data-bs-toggle="dropdown" aria-haspopup="true" ><i class="fas fa-sign-in-alt"></i></button>
           <div class="authentication-box dropdown-menu" aria-labelledby="auth2">
             <div class="authentication-close"><i class="flaticon-cancel"></i></div>
             <div class="authentication-body">
-              <h4 class="text-white text-center">Log In</h4>
+              <h4 class="text-white text-center" *ngIf="!_botMeClientService.getCookie().isLoggedIn">Log In</h4>
+              <h4 class="text-white text-center" *ngIf="_botMeClientService.getCookie().isLoggedIn">Dashboard</h4>
               <ul class="authentication-tab">
-<!--                <li class="authentication-tab-item active" data-authentication-tab="1">Log In</li>-->
-<!--                <li class="authentication-tab-item" data-authentication-tab="2">Sign Up</li>-->
               </ul>
               <div class="authentication-details">
-                <div class="authentication-details-item active" data-authentication-details="1">
+                <div *ngIf="!_botMeClientService.getCookie().isLoggedIn" class="authentication-details-item active" data-authentication-details="1">
                   <form [formGroup]="loginForm">
                     <div class="form-group mb-20">
                       <div class="input-group">
@@ -52,58 +53,17 @@
                         <input required type="text" formControlName="clientDeviceId" class="form-control" placeholder="Device Id" />
                       </div>
                     </div>
-                    <!--                        <div class="authentication-action mb-20">-->
-                    <!--                          <div class="authentication-action-item">-->
-                    <!--                            <a href="forget-password">Forget Password?</a>-->
-                    <!--                          </div>-->
-                    <!--                          <div class="authentication-action-item">-->
-                    <!--                            <div class="custom-control custom-checkbox">-->
-                    <!--                              <input type="checkbox" class="custom-control-input" id="check1">-->
-                    <!--                              <label class="custom-control-label" for="check1">Remember Me</label>-->
-                    <!--                            </div>-->
-                    <!--                          </div>-->
-                    <!--                        </div>-->
                     <div class="authentication-btn">
                       <button (click)="login()" [disabled]="!loginForm.valid" class="btn full-width btn-border mb-20">Log In</button>
-                      <!--                          <button class="btn full-width"><i class="icofont-google-plus"></i>Log In With Google</button>-->
                     </div>
                   </form>
                 </div>
-                <div class="authentication-details-item" data-authentication-details="2">
-                  <form>
-                    <div class="form-group mb-20">
-                      <div class="input-group">
-                        <input type="text" class="form-control" placeholder="User Name" />
-                      </div>
-                    </div>
-                    <div class="form-group mb-20">
-                      <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Email" />
-                      </div>
-                    </div>
-                    <div class="form-group mb-20">
-                      <div class="input-group">
-                        <input type="password" class="form-control" placeholder="Password" />
-                      </div>
-                    </div>
-                    <div class="form-group mb-20">
-                      <div class="input-group">
-                        <input type="password" class="form-control" placeholder="Confirm Password" />
-                      </div>
-                    </div>
-                    <div class="authentication-action mb-20">
-                      <div class="authentication-action-item">
-                        <div class="custom-control custom-checkbox">
-                          <input type="checkbox" class="custom-control-input" id="check4">
-                          <label class="custom-control-label" for="check4">I agree that my submitted data is being collected and stored. For further details on handling user data, see our <a href="privacy-policy">Privacy Policy</a>.</label>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="authentication-btn">
-                      <button class="btn full-width btn-border mb-20">Log In</button>
-<!--                      <button class="btn full-width"><i class="icofont-google-plus"></i>Log In With Google</button>-->
-                    </div>
-                  </form>
+                <div *ngIf="_botMeClientService.getCookie().isLoggedIn" class="authentication-details-item active" data-authentication-details="1">
+                  <h6 class="mt-2 text-white">Device Id : {{_botMeClientService.getCookie().clientDeviceId}}</h6>
+                  <h6 class="mt-2 text-white">Client Id : {{_botMeClientService.getCookie().clientID}}</h6>
+                  <div class="mt-4 authentication-btn">
+                    <button (click)="logout()" class="btn full-width btn-border mb-20">Logout</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -123,11 +83,11 @@
 <!--          </div>-->
 <!--        </div>-->
         <div class="d-flex align-items-center navbar-option-item tap-view-place-order mobile-block navbar-option-order">
-          <a id="entityId-order-online" href="online-shop" style="padding: 10px 20px" class="btn">Place order
+          <a *ngIf="_botMeClientService.getCookie().isLoggedIn" id="entityId-order-online" href="online-shop" style="padding: 10px 20px" class="btn">Place order
             <i class="flaticon-shopping-cart-black-shape"></i>
           </a>
           <div class="navbar-option-item navbar-option-order">
-            <app-sofia-bot></app-sofia-bot>
+<!--            <app-sofia-bot></app-sofia-bot>-->
           </div>
         </div>
         <div class="navbar-option-item navbar-option-cart mobile-block">
@@ -168,16 +128,22 @@
           <!-- navbar-option -->
           <div class="navbar-option d-flex align-items-center">
             <div class="navbar-option-item navbar-option-authentication">
-              <button class="navbar-authentication-button" type="button" id="auth1" data-bs-toggle="dropdown" aria-haspopup="true" ><i class="flaticon-add-user"></i></button>
+              <button *ngIf="!_botMeClientService.getCookie().isLoggedIn" class="navbar-authentication-button" type="button" id="auth1" data-bs-toggle="dropdown" aria-haspopup="true" >
+                <i  style="font-size: x-large" class="fas fa-sign-in-alt"></i>
+              </button>
+              <button *ngIf="_botMeClientService.getCookie().isLoggedIn" class="navbar-authentication-button" type="button" id="auth1" data-bs-toggle="dropdown" aria-haspopup="true" >
+              <i  style="font-size: x-large" class="fas fa-sign-out-alt"></i>
+              </button>
               <div class="authentication-box dropdown-menu" aria-labelledby="auth1">
                 <div class="authentication-close"><i class="flaticon-cancel"></i></div>
                 <div class="authentication-body">
-                  <h4 class="text-white text-center">Log In</h4>
+                  <h4 class="text-white text-center" *ngIf="!_botMeClientService.getCookie().isLoggedIn">Log In</h4>
+                  <h4 class="text-white text-center" *ngIf="_botMeClientService.getCookie().isLoggedIn">Dashboard</h4>
                   <ul class="authentication-tab">
 <!--                    <li class="authentication-tab-item active" data-authentication-tab="1">Log In</li>-->
                   </ul>
                   <div class="authentication-details">
-                    <div class="authentication-details-item active" data-authentication-details="1">
+                    <div *ngIf="!_botMeClientService.getCookie().isLoggedIn" class="authentication-details-item active" data-authentication-details="1">
                       <form [formGroup]="loginForm">
                         <div class="form-group mb-20">
                           <div class="input-group">
@@ -194,87 +160,33 @@
                             <input required type="text" formControlName="clientDeviceId" class="form-control" placeholder="Device Id" />
                           </div>
                         </div>
-                        <!--                        <div class="authentication-action mb-20">-->
-                        <!--                          <div class="authentication-action-item">-->
-                        <!--                            <a href="forget-password">Forget Password?</a>-->
-                        <!--                          </div>-->
-                        <!--                          <div class="authentication-action-item">-->
-                        <!--                            <div class="custom-control custom-checkbox">-->
-                        <!--                              <input type="checkbox" class="custom-control-input" id="check1">-->
-                        <!--                              <label class="custom-control-label" for="check1">Remember Me</label>-->
-                        <!--                            </div>-->
-                        <!--                          </div>-->
-                        <!--                        </div>-->
                         <div class="authentication-btn">
                           <button (click)="login()" [disabled]="!loginForm.valid" class="btn full-width btn-border mb-20">Log In</button>
-                          <!--                          <button class="btn full-width"><i class="icofont-google-plus"></i>Log In With Google</button>-->
                         </div>
                       </form>
                     </div>
-                    <div class="authentication-details-item" data-authentication-details="2">
-                      <form>
-                        <div class="form-group mb-20">
-                          <div class="input-group">
-                            <input type="text" class="form-control" placeholder="User Name" />
-                          </div>
-                        </div>
-                        <div class="form-group mb-20">
-                          <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Email" />
-                          </div>
-                        </div>
-                        <div class="form-group mb-20">
-                          <div class="input-group">
-                            <input type="password" class="form-control" placeholder="Password" />
-                          </div>
-                        </div>
-                        <div class="form-group mb-20">
-                          <div class="input-group">
-                            <input type="password" class="form-control" placeholder="Confirm Password" />
-                          </div>
-                        </div>
-                        <div class="authentication-action mb-20">
-                          <div class="authentication-action-item">
-                            <div class="custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input" id="check2">
-                              <label class="custom-control-label" for="check2">I agree that my submitted data is being collected and stored. For further details on handling user data, see our <a href="privacy-policy">Privacy Policy</a>.</label>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="authentication-btn">
-                          <button class="btn full-width btn-border mb-20">Log In</button>
-<!--                          <button class="btn full-width"><i class="icofont-google-plus"></i>Log In With Google</button>-->
-                        </div>
-                      </form>
+                    <div *ngIf="_botMeClientService.getCookie().isLoggedIn" class="authentication-details-item active" data-authentication-details="1">
+                      <h6 class="mt-2 text-white">Device Id : {{_botMeClientService.getCookie().clientDeviceId}}</h6>
+                      <h6 class="mt-2 text-white">Client Id : {{_botMeClientService.getCookie().clientID}}</h6>
+                      <div class="mt-4 authentication-btn">
+                        <button (click)="logout()" class="btn full-width btn-border mb-20">Logout</button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-<!--            <div class="navbar-option-item navbar-option-search">-->
-<!--              <button class="dropdown-toggle" type="button" id="search1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--                <i class="flaticon-loupe"></i>-->
-<!--              </button>-->
-<!--              <div class="dropdown-menu" aria-labelledby="search1">-->
-<!--                <form>-->
-<!--                  <div class="form-group">-->
-<!--                    <input type="text" class="form-control" placeholder="Search">-->
-<!--                    <button><i class="flaticon-loupe"></i></button>-->
-<!--                  </div>-->
-<!--                </form>-->
-<!--              </div>-->
-<!--            </div>-->
             <div class="navbar-option-item navbar-option-cart">
               <a (click)="showCartModal()" id="entityId-show-cart" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
               <span class="option-badge">{{getCartProductCount()}}</span>
             </div>
             <div class="navbar-option-item navbar-option-order">
-              <a id="entityId-order-online" href="online-shop" style="padding: 10px 20px" class="btn text-nowrap">
+              <a *ngIf="_botMeClientService.getCookie().isLoggedIn" id="entityId-order-online" href="online-shop" style="padding: 10px 20px" class="btn text-nowrap">
                 Place Order <i class="flaticon-shopping-cart-black-shape"></i>
               </a>
             </div>
             <div class="navbar-option-item navbar-option-order">
-                <app-sofia-bot></app-sofia-bot>
+<!--                <app-sofia-bot></app-sofia-bot>-->
             </div>
           </div>
         </nav>

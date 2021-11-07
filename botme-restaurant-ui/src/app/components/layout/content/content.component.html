@@ -7,5 +7,5 @@
     <router-outlet></router-outlet>
   </div>
   <!-- /.content -->
-  <app-footer *ngIf="botMeClientService.getCookie() !== 'robot'"></app-footer>
+  <app-footer *ngIf="botMeClientService.getCookie().clientName !== 'robot'"></app-footer>
 </div>

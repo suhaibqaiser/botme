@@ -106,7 +106,10 @@ async function authorizeClient(req, res) {
         if (newSession) {
             response.payload = {
                 "clientToken": newSession.clientToken,
-                'clientName': client.clientName
+                'clientName': client.clientName,
+                'clientDeviceId': client.clientDeviceId,
+                'clientID': client.clientID,
+                'isLoggedIn': true
             }
             response.status = "success"
             return res.status(200).send(response)
