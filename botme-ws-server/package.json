@@ -2,40 +2,26 @@
   "name": "botme-ws-server",
   "version": "1.0.0",
   "description": "BotMe WebSocket Server",
-  "main": "src/app.js",
+  "repository": {},
+  "main": "src/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "rimraf build && mkdir build",
-    "build-babel": "babel -d ./build ./src -s",
-    "build": "npm run clean && npm run build-babel",
-    "start": "npm run build && node ./build/app.js",
-    "format": "prettier --write \"src/**/*.js\"",
-    "format:check": "prettier --list-different \"src/**/*.js\"",
-    "lint": "eslint \"src/**/*.js\"",
-    "lint:fix": "eslint --fix \"src/**/*.js\""
+    "dev": "tsc-watch --onSuccess \"node ./dist/server.js\"",
+    "build": "tsc -p .",
+    "start": "npm run dev"
   },
   "author": "Aman Subhan <amansubhan929@gmail.com>",
   "license": "ISC",
   "devDependencies": {
-    "@babel/cli": "^7.14.3",
-    "@babel/core": "^7.14.3",
-    "@babel/preset-env": "^7.14.2",
-    "eslint": "^6.2.1",
-    "eslint-config-prettier": "^6.1.0",
-    "eslint-plugin-prettier": "^3.1.0",
-    "prettier": "^1.18.2",
-    "wscat": "^5.0.0"
+    "tslint": "^5.20.1",
+    "typescript": "^3.9.10"
   },
   "dependencies": {
-    "@aws-sdk/client-sqs": "^3.16.0",
-    "@google-cloud/speech": "^4.8.0",
-    "@google-cloud/storage": "^5.14.2",
-    "axios": "^0.21.1",
-    "mongoose": "^5.12.10",
-    "node-fetch": "^2.6.1",
-    "prompt-sync": "^4.2.0",
+    "@types/node": "^16.11.6",
+    "@types/node-fetch": "^3.0.3",
+    "@types/socket.io": "^3.0.2",
+    "node-fetch": "^2.6.6",
     "socket.io": "^4.3.1",
-    "uuid": "^8.3.2",
-    "ws": "7.4.3"
+    "tsc-watch": "^4.5.0"
   }
 }

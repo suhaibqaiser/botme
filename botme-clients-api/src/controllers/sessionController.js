@@ -57,8 +57,22 @@ async function createSession(session) {
     return sessionService.createSession(session)
 }
 
-async function getSessionByToken(clientToken) {
-    return sessionService.getSessionByToken(clientToken)
+async function getSessionByToken(req, res) {
+    let response = new Response()
+    if (!req.query.clientToken) {
+        response.payload = {message: 'clientToken is required'};
+        return res.status(400).send(response);
+    }
+    let session = await sessionService.getSessionByToken(req.query.clientToken)
+    if (session) {
+        response.payload = session
+        response.status = "success"
+        return res.status(200).send(response)
+    } else {
+        response.payload = "Session not found"
+        response.status = "error"
+        return res.status(404).send(response)
+    }
 }
 
 async function updateSession(clientToken, session) {

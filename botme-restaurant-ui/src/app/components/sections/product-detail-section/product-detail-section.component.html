@@ -1,7 +1,7 @@
 <app-customize-product-modal></app-customize-product-modal>
 <div id="sectionId-product-detial-page" class="product-details-section pt-100 pb-70 bg-black">
   <input [formControl]="_socketService.speachInput">
-  <button style="padding: 6px" (click)="_socketService.sendMessage(_socketService.speachInput.value)" class="btn btn-success">send</button>
+  <button style="padding: 6px" (click)="_socketService.sendMessage('communication', _socketService.speachInput.value)" class="btn btn-success">send</button>
   <p>{{_socketService.responseLabel}}</p>
   <div class="container">
     <div class="row align-items-center">

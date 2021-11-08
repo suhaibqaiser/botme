@@ -1,8 +1,9 @@
-import { NgModule } from '@angular/core';
+import { Injectable, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { AppRoutingModule } from './app-routing.module';
+import { environment } from '../environments/environment'
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/pages/home/home.component';
 import { ReservationsComponent } from './components/pages/reservations/reservations.component';
@@ -48,11 +49,17 @@ import { SpinnerComponent } from './components/layout/spinner/spinner.component'
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { CustomizeProductModalComponent } from './components/sections/customize-product-modal/customize-product-modal.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import {BotmeClientService} from "./services/botme-client.service";
+import { Socket } from 'ngx-socket-io';
+import { BotmeClientService } from "./services/botme-client.service";
 
-const config: SocketIoConfig = {
-  url: 'http://localhost:6380', options: {  }
-};
+@Injectable()
+export class Sockets extends Socket {
+  constructor() {
+    super({ url: environment.wsEndpoint, options: {} });
+    let authToken = 'LvsVhA3Yx0JED98w/L/5olOgrtHPmt1UB7JMMOxOncQ=' // TODO: Update code with functioning token 
+    this.ioSocket['auth'] = { token: authToken }
+  }
+}
 
 @NgModule({
   declarations: [
@@ -105,10 +112,10 @@ const config: SocketIoConfig = {
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    SocketIoModule.forRoot(config),
+    SocketIoModule,
     NgMultiSelectDropDownModule.forRoot(),
   ],
-  providers: [SpeechRecognitionService,BotmeClientService],
+  providers: [SpeechRecognitionService, BotmeClientService, Sockets],
   bootstrap: [AppComponent],
   entryComponents: [CustomizeProductModalComponent]
 })

@@ -56,7 +56,7 @@ export class SofiaBotComponent implements OnInit {
       let blobString: any
       blobString = await this.convertBlobToString()
       blobString = blobString.substring(22)
-      this.socketService.sendMessage(blobString)
+      this.socketService.sendMessage('communication',blobString)
     }, 6000)
   }
 

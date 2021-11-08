@@ -88,7 +88,7 @@ export class SearchGridSectionComponent implements OnInit {
     await this.getCategory();
     this.getWSMessage();
     // this.filterProductsByName('first-call')
-    $('#pageId-productCustomizeModal').modal('show')
+    //$('#pageId-productCustomizeModal').modal('show')
   }
 
   async getQueryParams() {
@@ -135,7 +135,6 @@ export class SearchGridSectionComponent implements OnInit {
     this.menuservice.getCategory()
       .subscribe(result => {
         this.categories = result.payload
-        console.log('categories', result.payload)
         if (Array.isArray(this.categories)) {
           this.getProducts();
         } else {
@@ -292,13 +291,13 @@ export class SearchGridSectionComponent implements OnInit {
   }
 
   sendWSMessage(text: string) {
-    this.socketService.sendMessage(text);
+    this.socketService.sendMessage('communication',text);
   }
 
   getWSMessage() {
     this.socketService.messages.subscribe(r => {
         let res: any = r
-        this.sofiaMessage = res.message.text
+        this.sofiaMessage = res.text
       }
     )
   }

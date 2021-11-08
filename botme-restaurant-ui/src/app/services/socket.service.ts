@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { Subject } from 'rxjs';
 import { FormControl } from "@angular/forms";
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
+import { environment } from 'src/environments/environment';
+import { Sockets } from '../app.module';
+
 
 
 @Injectable({
@@ -17,8 +20,8 @@ export class SocketService {
 
   currentContextList = [
     {
-      currentRoute:'online shop',
-      pageId:'pageId-order-online',
+      currentRoute: 'online shop',
+      pageId: 'pageId-order-online',
       sectionId: 'sectionId-product-list'
     },
     {
@@ -38,8 +41,8 @@ export class SocketService {
     }
   ]
   currentContextObj = {
-    currentRoute:'',
-    pageId:'',
+    currentRoute: '',
+    pageId: '',
     sectionId: ''
   }
 
@@ -48,39 +51,53 @@ export class SocketService {
   speachInput = new FormControl('')
 
 
-  constructor(private socket: Socket, private router: Router) {
-    let authToken = 'LvsVhA3Yx0JED98w/L/5olOgrtHPmt1UB7JMMOxOncQ=' // TODO: Update code with functioning token 
-    this.socket.fromEvent('auth').subscribe(data => {
-      console.log(data)
-      if (data === "login") {
-        this.socket.emit('auth', authToken);
-      }
-    })
-    this.socket.fromEvent('message').subscribe(data => {
-      console.log(data);
-      this.messagesSubject.next(data)
-      this.fireInteractionEvent(data)
-    })
-    this.socket.fromEvent('notification').subscribe((data:any) => {
-      this.notificationSubject.next(data);
-      (data.text === "processing started") ? this.processing = true : this.processing = false;
-    })
-   }
+  constructor(private socket: Sockets, private router: Router) {
 
+    this.socket.fromEvent('message')
+      .subscribe((data: any) => {
 
-  sendNotification(msg: any) {
-    this.socket.emit('notification', msg);
+        let payload = data.payload
+
+        switch (data.type) {
+          case "communication":
+            this.messagesSubject.next(payload)
+            this.fireInteractionEvent(payload)
+            break;
+          case "notification":
+            this.notificationSubject.next(payload)
+            console.log(payload);
+            break;
+          case "action":
+            console.log(payload);
+            break;
+          case "action callback":
+            console.log(payload);
+            break;
+          default:
+            break;
+        }
+      })
   }
 
-  sendMessage(msg: any) {
-    let wsPayload = {
-      "current_time": Date(),
-      "text": msg,
-      "pageId": this.currentContextObj.pageId,
-      "sectionId": this.currentContextObj.sectionId
+
+  sendMessage(type: string, message: any) {
+    interface SocketMessage {
+      payload: object,
+      type: string,
+      timestamp: string
     }
-    console.log('sendMessage =>', wsPayload)
-    this.socket.emit('message', wsPayload);
+
+    let SocketPayload: SocketMessage = {
+      payload: {
+        "text": message,
+        "pageId": this.currentContextObj.pageId,
+        "sectionId": this.currentContextObj.sectionId
+      },
+      type: type,
+      timestamp: Date()
+
+    }
+    this.socket.emit('message', SocketPayload);
   }
 
   /**
@@ -95,42 +112,40 @@ export class SocketService {
 
      sel.setAttribute('size', len);
      */
-    console.log('Response =>', msg.message)
-    let tempMessage = msg.message
+    let tempMessage = msg
     this.responseLabel = tempMessage.text
+    if (tempMessage.entityId) {
 
-    if (tempMessage.entityId == 'entityId-select-serving-size') {
-      this.voiceServingSize = tempMessage.entityName.toLowerCase()
-      // @ts-ignore
-      document.getElementById('ctaId-select-serving-size').click()
-      return
-    }
-
-    // @ts-ignore
-    let template = document.getElementById(tempMessage.entityId)
-    console.log('template =>', template)
-    // @ts-ignore
-    let list = template.getElementsByTagName('a')
-    for (let i = 0; i < list.length; i++) {
-      if (list[i].getAttribute('id') == tempMessage.ctaId) {
-        list[i].click()
+      if (tempMessage.entityId == 'entityId-select-serving-size') {
+        this.voiceServingSize = tempMessage.entityName.toLowerCase()
+        // @ts-ignore
+        document.getElementById('ctaId-select-serving-size').click()
+        return
       }
+
+      // @ts-ignore
+      let template = document.getElementById(tempMessage.entityId)
+      // @ts-ignore
+      let list = template.getElementsByTagName('a')
+      for (let i = 0; i < list.length; i++) {
+        if (list[i].getAttribute('id') == tempMessage.ctaId) {
+          list[i].click()
+        }
+      }
+      // @ts-ignore
+      document.getElementById(tempMessage.entityId).click()
     }
-    // @ts-ignore
-    document.getElementById(tempMessage.entityId).click()
   }
 
-  getCurrentContext(){
+  getCurrentContext() {
     let currentRoute = this.router.url.replace(/\//g, "").replace("-", " ");
     if (currentRoute.indexOf('?') > 0) {
       currentRoute = currentRoute.substr(0, currentRoute.indexOf('?'))
     }
-    console.log('getCurrentContext route=>',currentRoute)
-    this.currentContextList.filter((item:any)=>{
-      if( item.currentRoute === currentRoute){
+    this.currentContextList.filter((item: any) => {
+      if (item.currentRoute === currentRoute) {
         this.currentContextObj = JSON.parse(JSON.stringify(item))
       }
     })
-    console.log('currentContextObj =>',this.currentContextObj)
   }
 }

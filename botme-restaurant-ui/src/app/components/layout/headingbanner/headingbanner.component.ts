@@ -20,7 +20,6 @@ export class HeadingbannerComponent implements OnInit {
     if (this.currentRoute.indexOf('?') > 0) {
       this.currentRoute = this.currentRoute.substr(0, this.currentRoute.indexOf('?'))
     }
-    console.log(this.currentRoute)
     if (this.currentRoute !== 'online shop') {
       localStorage.setItem('searchList', JSON.stringify([]))
     }
