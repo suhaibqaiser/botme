@@ -49,6 +49,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { CustomizeProductModalComponent } from './components/sections/customize-product-modal/customize-product-modal.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import {BotmeClientService} from "./services/botme-client.service";
+import { ProgressLoaderComponent } from './components/sections/progress-loader/progress-loader.component';
 
 const config: SocketIoConfig = {
   url: 'http://localhost:6380', options: {  }
@@ -96,7 +97,8 @@ const config: SocketIoConfig = {
     CartSectionComponent,
     CheckoutSectionComponent,
     SpinnerComponent,
-    CustomizeProductModalComponent
+    CustomizeProductModalComponent,
+    ProgressLoaderComponent
   ],
   imports: [
     BrowserModule,

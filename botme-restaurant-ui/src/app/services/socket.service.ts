@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { Socket } from 'ngx-socket-io';
-import { Subject } from 'rxjs';
-import { FormControl } from "@angular/forms";
+import {Injectable} from '@angular/core';
+import {Socket} from 'ngx-socket-io';
+import {Subject} from 'rxjs';
+import {FormControl} from "@angular/forms";
 import {Router} from "@angular/router";
 
 
@@ -17,8 +17,8 @@ export class SocketService {
 
   currentContextList = [
     {
-      currentRoute:'online shop',
-      pageId:'pageId-order-online',
+      currentRoute: 'online shop',
+      pageId: 'pageId-order-online',
       sectionId: 'sectionId-product-list'
     },
     {
@@ -38,8 +38,8 @@ export class SocketService {
     }
   ]
   currentContextObj = {
-    currentRoute:'',
-    pageId:'',
+    currentRoute: '',
+    pageId: '',
     sectionId: ''
   }
 
@@ -49,7 +49,7 @@ export class SocketService {
 
 
   constructor(private socket: Socket, private router: Router) {
-    let authToken = 'LvsVhA3Yx0JED98w/L/5olOgrtHPmt1UB7JMMOxOncQ=' // TODO: Update code with functioning token 
+    let authToken = 'LvsVhA3Yx0JED98w/L/5olOgrtHPmt1UB7JMMOxOncQ=' // TODO: Update code with functioning token
     this.socket.fromEvent('auth').subscribe(data => {
       console.log(data)
       if (data === "login") {
@@ -61,11 +61,12 @@ export class SocketService {
       this.messagesSubject.next(data)
       this.fireInteractionEvent(data)
     })
-    this.socket.fromEvent('notification').subscribe((data:any) => {
+    this.socket.fromEvent('notification').subscribe((data: any) => {
+      console.log('notification =>', data);
       this.notificationSubject.next(data);
       (data.text === "processing started") ? this.processing = true : this.processing = false;
     })
-   }
+  }
 
 
   sendNotification(msg: any) {
@@ -120,17 +121,17 @@ export class SocketService {
     document.getElementById(tempMessage.entityId).click()
   }
 
-  getCurrentContext(){
+  getCurrentContext() {
     let currentRoute = this.router.url.replace(/\//g, "").replace("-", " ");
     if (currentRoute.indexOf('?') > 0) {
       currentRoute = currentRoute.substr(0, currentRoute.indexOf('?'))
     }
-    console.log('getCurrentContext route=>',currentRoute)
-    this.currentContextList.filter((item:any)=>{
-      if( item.currentRoute === currentRoute){
+    console.log('getCurrentContext route=>', currentRoute)
+    this.currentContextList.filter((item: any) => {
+      if (item.currentRoute === currentRoute) {
         this.currentContextObj = JSON.parse(JSON.stringify(item))
       }
     })
-    console.log('currentContextObj =>',this.currentContextObj)
+    console.log('currentContextObj =>', this.currentContextObj)
   }
 }
