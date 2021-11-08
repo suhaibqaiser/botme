@@ -10,21 +10,22 @@ class Sockets:
                                    "sentimentScore": 0, "intentName": ""}, "status": ""}
     notification_subject = ''
 
+    auth = 'LvsVhA3Yx0JED98w/L/5olOgrtHPmt1UB7JMMOxOncQ='
+    
     @sio.event
     def connect(self):
         print('Connection established')
-        sio.emit('notification', 'hello')
 
     @sio.event
     def connect_error(self):
         print("The connection failed!")
 
-    @sio.on('auth')
-    def incoming(data):
-        if data == 'login':
-            # TODO: Update code with functioning token
-            authToken = 'LvsVhA3Yx0JED98w/L/5olOgrtHPmt1UB7JMMOxOncQ='
-            sio.emit('auth', authToken)
+    # @sio.on('auth')
+    # def incoming(data):
+    #     if data == 'login':
+    #         # TODO: Update code with functioning token
+    #         authToken = 'LvsVhA3Yx0JED98w/L/5olOgrtHPmt1UB7JMMOxOncQ='
+    #         sio.emit('auth', authToken)
 
     @sio.on('message')
     def incoming(data):

@@ -1,7 +1,7 @@
 <div id="pageId-home">
   <app-topbanner></app-topbanner>
   <input [formControl]="_socketService.speachInput">
-  <button style="padding: 6px" (click)="_socketService.sendMessage(_socketService.speachInput.value)" class="btn btn-success">send</button>
+  <button style="padding: 6px" (click)="_socketService.sendMessage('communication',_socketService.speachInput.value)" class="btn btn-success">send</button>
   <p>{{_socketService.responseLabel}}</p>
   <app-customize-product-modal></app-customize-product-modal>
   <app-welcome-section></app-welcome-section>
