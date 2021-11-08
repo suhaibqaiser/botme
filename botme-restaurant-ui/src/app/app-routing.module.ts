@@ -45,7 +45,8 @@ const routes: Routes = [
   },
   {
     path: "product-detail",
-    component: ProductDetailComponent
+    component: ProductDetailComponent,
+    canActivate: [AuthenticationGuard]
   },
   {
     path: "cart",
