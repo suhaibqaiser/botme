@@ -21,17 +21,15 @@ const io = new Server(httpServer, options);
 
 io.use(async (socket: Socket, next) => {
     const token = socket.handshake.auth.token;
-    console.log(token);
 
     let session: any = await getSession(token)
     if (session.sessionId) {
         socket.data.sessionId = session.sessionId
         socket.data.clientId = session.clientID
-        console.log(`Session:${socket.data.sessionId}, clientId:${socket.data.clientId} has connected`)
         socket.join(socket.data.clientId)
         next()
     } else {
-        console.log(`Socket Disconnected due to invalid token`)
+        console.log(`Socket disconnected due to invalid token`)
         socket.disconnect()
     }
 });
@@ -51,7 +49,7 @@ io.on("connection", (socket: Socket) => {
             sendMessage(socket.data.clientId, "notification", data.payload)
 
         } else if (data.type === "action") {
-            
+
 
         } else if (data.type === "action callback") {
 
