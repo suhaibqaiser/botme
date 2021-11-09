@@ -8,7 +8,7 @@ sio = socketio.Client()
 class Sockets:
     message_subject = {"payload": {"text": 'Waiting',
                                    "sentimentScore": 0, "intentName": ""}, "status": ""}
-    notification_subject = ''
+    notification_subject = {"text": "", "pageId": "", "sectionId": ""}
 
     @sio.event
     def connect(self):
@@ -32,9 +32,10 @@ class Sockets:
 
     def send_message(self, type, message):
         msg = {
-            "payload": {"text": message,
-                        "pageId": "pageId-order-online",
-                        "sectionId": "sectionId-product-list"
+            "payload": {
+                "text": message,
+                "pageId": Sockets.notification_subject['pageId'],
+                "sectionId": Sockets.notification_subject['sectionId']
             },
             "type": type,
             "timestamp": datetime.datetime.now().strftime("%a %b %d %Y %H:%M:%S")
