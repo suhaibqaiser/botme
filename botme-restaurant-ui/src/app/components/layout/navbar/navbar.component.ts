@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit {
     clientDeviceId: new FormControl('', Validators.required)
   })
 
-  constructor(private _router: Router, public _botMeClientService: BotmeClientService, private cartService: CartService, private _socketService: SocketService) {
+  constructor(public socketService: SocketService,private _router: Router, public _botMeClientService: BotmeClientService, private cartService: CartService, private _socketService: SocketService) {
   }
 
   ngOnInit(): void {

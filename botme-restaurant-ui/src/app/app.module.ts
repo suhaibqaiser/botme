@@ -46,6 +46,7 @@ import { CartComponent } from './components/pages/cart/cart.component';
 import { CartSectionComponent } from './components/sections/cart-section/cart-section.component';
 import { CheckoutSectionComponent } from './components/sections/checkout-section/checkout-section.component';
 import { SpinnerComponent } from './components/layout/spinner/spinner.component';
+import {ProgressLoaderComponent} from "./components/sections/progress-loader/progress-loader.component";
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { CustomizeProductModalComponent } from './components/sections/customize-product-modal/customize-product-modal.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
@@ -85,6 +86,7 @@ export class Sockets extends Socket {
     TestimonialSectionComponent,
     VideoSectionComponent,
     BlogSectionComponent,
+    ProgressLoaderComponent,
     SubscribeSectionComponent,
     ProductCartModalComponent,
     MenuComponent,
