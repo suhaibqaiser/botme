@@ -35,7 +35,9 @@ export class NavbarComponent implements OnInit {
           this._botMeClientService.setCookie('clientDeviceId', res.payload.clientDeviceId)
           this._botMeClientService.setCookie('clientID', res.payload.clientID)
           this._botMeClientService.setCookie('isLoggedIn', res.payload.isLoggedIn)
-          this._router.navigate(['/home'])
+          this._router.navigate(['/home']).then(() => {
+            window.location.reload();
+          });
         } else {
           alert('Invalid Record')
         }

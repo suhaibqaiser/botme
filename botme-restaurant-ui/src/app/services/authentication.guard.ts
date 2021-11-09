@@ -10,7 +10,7 @@ export class AuthenticationGuard implements CanActivate {
   }
 
   canActivate(): boolean {
-    if (this._botMeClientService.getCookieToken()) {
+    if (this._botMeClientService.isCookieTokenValid()) {
       return true
     } else {
       this._router.navigate(['/home'])

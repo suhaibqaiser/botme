@@ -34,7 +34,11 @@ export class BotmeClientService {
     this.cookieService.deleteAll()
   }
 
-  getCookieToken(){
+  isCookieTokenValid(){
     return !!this.cookieService.get('clientToken')
+  }
+
+  getCookieToken(){
+    return this.cookieService.get('clientToken')
   }
 }
