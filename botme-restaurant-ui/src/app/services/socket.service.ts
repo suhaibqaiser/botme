@@ -65,6 +65,8 @@ export class SocketService {
             break;
           case "notification":
             this.notificationSubject.next(payload)
+            if (payload.text === 'processing started')
+              this.sendMessage('notification', 'context')
             console.log(payload);
             break;
           case "action":

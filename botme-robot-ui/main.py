@@ -139,13 +139,17 @@ talk_btn.place(anchor=CENTER, x=250, y=25)
 
 
 def checkForClient(clientID, clientSecret, clientDeviceId):
+    login.destroy()
+    app_root.deiconify()
     try:
         print(clientID)
         print(clientDeviceId)
         print(clientSecret)
-        body = {"clientID":clientID,"clientSecret":clientSecret,"clientDeviceId":clientDeviceId}
+        body = {"clientID": clientID, "clientSecret": clientSecret,
+                "clientDeviceId": clientDeviceId}
         auth_token = 'ea2d3aeaad77865f9769974a920892f5'
-        response = requests.post("http://localhost:3000/client/auth",body,headers={'Authorization':'Bearer ' + auth_token})
+        response = requests.post("http://localhost:3000/client/auth",
+                                 body, headers={'Authorization': 'Bearer ' + auth_token})
         print(response)
         data = response.json()
         print(data)
@@ -153,11 +157,13 @@ def checkForClient(clientID, clientSecret, clientDeviceId):
             login.destroy()
             app_root.deiconify()
         elif data['status'] == '':
-            labelError = Label(login,text=data['payload'],font=text_font,fg='red')
-            labelError.place(relheight = 0.15,relx = 0.09,rely = 0.7)
+            labelError = Label(
+                login, text=data['payload'], font=text_font, fg='red')
+            labelError.place(relheight=0.15, relx=0.09, rely=0.7)
         else:
-            labelError = Label(login,text=data['payload']['message'],font=text_font,fg='red')
-            labelError.place(relheight = 0.15,relx = 0.09,rely = 0.7)
+            labelError = Label(
+                login, text=data['payload']['message'], font=text_font, fg='red')
+            labelError.place(relheight=0.15, relx=0.09, rely=0.7)
     except(error):
         print(error)
 
