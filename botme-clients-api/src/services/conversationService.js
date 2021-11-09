@@ -3,7 +3,7 @@ const Conversation = require("../models/nlp/conversation")
 
 async function getConversation(sessionId) {
 
-    let session = await Session.findOne({sessionId: sessionId})
+    let session = await Session.findOne({ sessionId: sessionId })
 
     if (!session) {
         return null
@@ -37,4 +37,89 @@ async function getConversation(sessionId) {
     return conversationArray
 }
 
-module.exports = ({getConversation})
+async function addConversation(sessionId) {
+    try {
+        let uniqueConversationId = uuidv4()
+        let session = await Session.updateOne(
+            { "sessionId": sessionId },
+            {
+                $push: {
+                    "conversations": {
+                        conversationId: uniqueConversationId,
+                        conversationStart: Date(),
+                        conversationActive: true
+                    }
+                }
+            }
+        )
+        if (!session) {
+            return undefined
+        }
+        return uniqueConversationId;
+    } catch (err) {
+        console.log(err);
+        return undefined
+    }
+}
+
+async function addConversationLog(conversationId, query, response) {
+
+    try {
+        let session = await Session.updateOne(
+            { "conversations.conversationId": conversationId },
+            {
+                $push: {
+                    "conversations.$.conversationLog": {
+                        query: query,
+                        response: response,
+                        timeStamp: Date()
+                    }
+                }
+            }
+        )
+
+        if (!session) {
+            return undefined
+        }
+        return session
+    } catch (err) {
+        console.log(err);
+        return undefined
+    }
+}
+
+async function endConversation(conversationId, rating) {
+    try {
+        let session = await Session.updateOne(
+            { "conversations.conversationId": conversationId },
+            {
+                $set: {
+                    "conversations.$.conversationEnd": Date(),
+                    "conversations.$.conversationActive": false,
+                    "conversations.$.conversationRating": rating
+                }
+            }
+        )
+        if (!session) {
+            return undefined
+        }
+        return session
+    } catch (err) {
+        console.log(err);
+        return undefined
+    }
+}
+
+async function getConversationId(sessionId) {
+    let conversation = await Session.findOne({
+        "sessionId": sessionId,
+        "conversations.conversationActive": true
+    }, { "conversations.conversationId.$": 1 });
+    if (conversation) {
+        return conversation.conversations[0].conversationId
+    } else {
+        return null
+    }
+}
+
+module.exports = ({ getConversation, addConversation, addConversationLog, endConversation, getConversationId })
