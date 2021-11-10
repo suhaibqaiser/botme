@@ -49,4 +49,5 @@ class Sockets:
         self.send_message('notification', 'processing ended')
 
     authToken = {"token": 'LvsVhA3Yx0JED98w/L/5olOgrtHPmt1UB7JMMOxOncQ='}
-    sio.connect('http://localhost:6380', auth=authToken)
+    sio.connect(url="wss://api.gofindmenu.com/ws/",
+                socketio_path="/ws/", auth=authToken)
