@@ -9,9 +9,9 @@
     </div>
     <div class="cart-modal-body">
       <h2 class="color-white">My Order</h2>
-      <input [formControl]="_socketService.speachInput">
-      <button style="padding: 6px" (click)="_socketService.sendMessage('communication',_socketService.speachInput.value)" class="btn btn-success">send</button>
-      <p>{{_socketService.responseLabel}}</p>
+<!--      <input [formControl]="_socketService.speachInput">-->
+<!--      <button style="padding: 6px" (click)="_socketService.sendMessage('communication',_socketService.speachInput.value)" class="btn btn-success">send</button>-->
+<!--      <p>{{_socketService.responseLabel}}</p>-->
       <div id="{{product.productId + product.productName}}" class="cart-modal-product" *ngFor="let product of cartProducts">
         <div class="cart-modal-thumb">
           <a href="/product-detail/?productId={{product.productId}}">
