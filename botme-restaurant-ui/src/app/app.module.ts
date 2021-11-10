@@ -59,7 +59,7 @@ export class Sockets extends Socket {
     super({ url: environment.wsEndpoint, options: {path: "/ws/"} });
     console.log(environment.wsEndpoint);
     
-    let authToken = _botMeClientService.getCookieToken() // TODO: Update code with functioning token
+    let authToken = "LvsVhA3Yx0JED98w/L/5olOgrtHPmt1UB7JMMOxOncQ=" // TODO: Update code with functioning token
     console.log('authToken =>', authToken)
     this.ioSocket['auth'] = {token: authToken}
   }
