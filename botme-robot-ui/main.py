@@ -131,8 +131,7 @@ scrollbar.configure(command=text_widget.yview)
 bottom_label = Label(main1, bg='#808080', height=80)
 bottom_label.place(relwidth=1, rely=0.825)
 # Talk Button
-talk_btn = tk.Button(bottom_label, text="Talk",
-                     command=lambda: btn_action(), width=5)
+talk_btn = tk.Button(bottom_label, text="Talk",command=lambda: btn_action(), width=5)
 talk_btn.place(anchor=CENTER, x=250, y=25)
 # talk_btn.grid(column=0, row=2, pady=10)
 # Update bg color
