@@ -2,8 +2,6 @@ from http.client import BAD_GATEWAY, error
 import tkinter as tk
 from tkinter import Button, Label, Scrollbar, Text, Entry, Toplevel
 from tkinter.constants import BOTH, BOTTOM, CENTER, DISABLED, END, N, NORMAL, S, TOP, TRUE, X, Y
-import requests
-import json
 from proto import message
 # from tkinter.font import Font
 # from typing import Text
@@ -12,13 +10,12 @@ from libraries.speech_services import listen, speak
 import random
 from libraries.sockets import Sockets
 from PIL import Image, ImageTk
-import datetime
-import threading
+import requests
 from asyncio.tasks import sleep
+import sys
 
 # Class Initialization for Socket Communication
 socket = Sockets()
-
 
 # Main app window
 app_root = tk.Tk()
@@ -32,48 +29,82 @@ foreground = "#fff"
 border_width = 25
 background_color = ["#ff9aa2", "#ffb7b2",
                     "#ffdac1", "#e2f0cb", "#b5ead7", "#c7ceea"]
+class Login:
+    # login window
+    login = Toplevel()
+    login.title("Login")
+    login.resizable(width=False, height=False)
+    login.configure(width=600, height=600)
 
-# login window
-login = Toplevel()
-login.title("Login")
-login.resizable(width=False, height=False)
-login.configure(width=600, height=600)
-
-# create a label for login
-label_login = Label(login, text="Please login to continue",
+    # create a label for login
+    label_login = Label(login, text="Please login to continue",
                     justify=CENTER, font=sub_text_font)
-label_login.place(relheight=0.15, relx=0.1, rely=0.07)
+    label_login.place(relheight=0.15, relx=0.1, rely=0.07)
 
 
-# create a label for clientID,clientSecret,clientDeviceId
-labelclientID = Label(login, text="clientID: ", font=text_font)
-labelclientID.place(relheight=0.1, relx=0.1, rely=0.2)
+    # create a label for clientID,clientSecret,clientDeviceId
+    labelclientID = Label(login, text="clientID: ", font=text_font)
+    labelclientID.place(relheight=0.1, relx=0.1, rely=0.2)
 
-labelclientSecret = Label(login, text="clientSecret: ", font=text_font)
-labelclientSecret.place(relheight=0.1, relx=0.1, rely=0.4)
+    labelclientSecret = Label(login, text="clientSecret: ", font=text_font)
+    labelclientSecret.place(relheight=0.1, relx=0.1, rely=0.4)
 
-labelclientDeviceId = Label(login, text="clientDeviceId: ", font=text_font)
-labelclientDeviceId.place(relheight=0.1, relx=0.1, rely=0.6)
-# create a entry box for
-# typing the message
+    labelclientDeviceId = Label(login, text="clientDeviceId: ", font=text_font)
+    labelclientDeviceId.place(relheight=0.1, relx=0.1, rely=0.6)
 
-clientID = Entry(login, font=text_font)
-clientID.place(relwidth=0.5, relheight=0.1, relx=0.35, rely=0.2)
-clientID.focus()
+    # create a entry box for
+    # typing the message
+    clientID = Entry(login, font=text_font)
+    clientID.place(relwidth=0.5, relheight=0.1, relx=0.35, rely=0.2)
+    clientID.focus()
 
-clientSecret = Entry(login, font=text_font)
-clientSecret.place(relwidth=0.5, relheight=0.1, relx=0.35, rely=0.4)
-clientSecret.focus()
+    clientSecret = Entry(login, font=text_font)
+    clientSecret.place(relwidth=0.5, relheight=0.1, relx=0.35, rely=0.4)
+    clientSecret.focus()
 
-clientDeviceId = Entry(login, font=text_font)
-clientDeviceId.place(relwidth=0.5, relheight=0.1, relx=0.35, rely=0.6)
-clientDeviceId.focus()
+    clientDeviceId = Entry(login, font=text_font)
+    clientDeviceId.place(relwidth=0.5, relheight=0.1, relx=0.35, rely=0.6)
+    clientDeviceId.focus()
 
 
-# login button
-button = Button(login, text="Login", font=text_font, command=lambda: checkForClient(
-    clientID.get(), clientSecret.get(), clientDeviceId.get()))
-button.place(relx=0.7, rely=0.9, relheight=0.06, relwidth=0.22)
+    # login button
+    button1 = Button(login, text="Login", font=text_font, command=lambda: Login.checkForClient())
+    button1.place(relx=0.7, rely=0.9, relheight=0.06, relwidth=0.22)
+    
+    button2 = Button(login,text="Cancel",font=text_font,command=lambda: Login.CancelButton())
+    button2.place(relx=0.1,rely=0.9,relheight=0.06,relwidth=0.22)
+
+    clientToken = {"clientToken":''}
+
+    def checkForClient():
+        try:
+            print(Login.clientID)
+            print(Login.clientDeviceId)
+            print(Login.clientSecret)
+            body = {"clientID":Login.clientID.get(),"clientSecret":Login.clientSecret.get(),"clientDeviceId":Login.clientDeviceId.get()}
+            auth_token = 'ea2d3aeaad77865f9769974a920892f5'
+            response = requests.post("http://localhost:3000/client/auth",body,headers={'Authorization':'Bearer ' + auth_token})
+            print(response)
+            data = response.json()
+            print(data)
+            if data['status'] == 'success':
+                Login.login.destroy()
+                app_root.deiconify()
+            elif data['status'] == '':
+                labelError = Label(Login.login,text=data['payload'],font=text_font,fg='red')
+                labelError.place(relheight = 0.15,relx = 0.09,rely = 0.7)
+            else:
+                labelError = Label(Login.login,text=data['payload']['message'],font=text_font,fg='red')
+                labelError.place(relheight = 0.15,relx = 0.09,rely = 0.7)
+        except:
+            print("error in connecting client Api")
+    
+    def CancelButton():
+        Login.login.destroy()
+        app_root.destroy()
+        sys.exit()
+
+        
 
 app_root.title("Sofia Robot")
 # Canvas to hold display elements
@@ -96,6 +127,13 @@ imageGlad = Image.open("images/glad.png")
 imageGlad = ImageTk.PhotoImage(imageGlad)
 imageThinking = Image.open("images/thinking.jpeg")
 imageThinking = ImageTk.PhotoImage(imageThinking)
+
+# imageGIF = Image.open("images/index.gif")
+# frames = imageGIF.n_frames
+# print("total frames: " ,frames)
+# image = ImageTk.PhotoImage(imageGIF)
+
+
 old_message = ''
 # Main display
 main = tk.Canvas(canvas, bg='#000')
@@ -137,29 +175,9 @@ talk_btn.place(anchor=CENTER, x=250, y=25)
 # talk_btn.grid(column=0, row=2, pady=10)
 # Update bg color
 
-
-def checkForClient(clientID, clientSecret, clientDeviceId):
-    try:
-        print(clientID)
-        print(clientDeviceId)
-        print(clientSecret)
-        body = {"clientID":clientID,"clientSecret":clientSecret,"clientDeviceId":clientDeviceId}
-        auth_token = 'ea2d3aeaad77865f9769974a920892f5'
-        response = requests.post("http://localhost:3000/client/auth",body,headers={'Authorization':'Bearer ' + auth_token})
-        print(response)
-        data = response.json()
-        print(data)
-        if data['status'] == 'success':
-            login.destroy()
-            app_root.deiconify()
-        elif data['status'] == '':
-            labelError = Label(login,text=data['payload'],font=text_font,fg='red')
-            labelError.place(relheight = 0.15,relx = 0.09,rely = 0.7)
-        else:
-            labelError = Label(login,text=data['payload']['message'],font=text_font,fg='red')
-            labelError.place(relheight = 0.15,relx = 0.09,rely = 0.7)
-    except(error):
-        print(error)
+# count = 0
+# def animation():
+#     im = image[count]
 
 
 def update_background():
@@ -199,10 +217,19 @@ def imageOnSentiment(senti, status, text, intent):
                 label.config(image=imageGlad)
                 bot_image = 'imageGlad'
                 label.after(5000, defaultImage)
+            elif (intent == 'nlu_fallback'):
+                print(10)
+                label.config(image=imageSad)
+                bot_image = 'imageSad'
+                label.after(5000, defaultImage)
             elif (intent == 'out_of_scope'):
                 print(2)
                 label.config(image=imageAnnoyed)
                 bot_image = 'imageAnnoyed'
+                label.after(5000, defaultImage)
+            elif (intent == 'question'):
+                label.config(image=imageThinking)
+                bot_image = 'imageThinking'
                 label.after(5000, defaultImage)
             elif(intent == 'Order_meal'):
                 print(3)

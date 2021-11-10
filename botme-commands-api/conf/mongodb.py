@@ -25,17 +25,3 @@ def getDbCta(intent,entity,pageId,sectionId):
                 return None
             else:
                 return x
-        
-        
-def searchBySectionId(intent,entity,SectionId):
-    mydb = MongoClient(MONGO_URL)
-    db = mydb['food']
-    mycollection = db['ctas']
-    value = entity.title()
-    my_query = {"intentName":intent,"context.entities.entityName":value,"context.sectionId":SectionId}
-    mycta = mycollection.find(my_query)
-    for x in mycta:
-        if(len(x) == 0):
-            return None
-        else:
-            return x
