@@ -1,16 +1,22 @@
-import {Injectable} from '@angular/core';
-import {Socket} from 'ngx-socket-io';
-import {Subject} from 'rxjs';
-import {FormControl} from "@angular/forms";
-import {Router} from "@angular/router";
-import {environment} from 'src/environments/environment';
-import {Sockets} from '../app.module';
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+import { FormControl } from "@angular/forms";
+import { Router } from "@angular/router";
+import { environment } from 'src/environments/environment';
+import { io } from "socket.io-client";
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class SocketService {
+  authToken = "LvsVhA3Yx0JED98w/L/5olOgrtHPmt1UB7JMMOxOncQ="
+  socket = io(environment.wsEndpoint, {
+    auth: { token: this.authToken },
+    path: "/ws/"
+  });
+
+
   private messagesSubject = new Subject();
   private notificationSubject = new Subject();
   messages = this.messagesSubject.asObservable();
@@ -50,34 +56,33 @@ export class SocketService {
   speachInput = new FormControl('')
 
 
-  constructor(private socket: Sockets, private router: Router) {
+  constructor(private router: Router) {
 
-    this.socket.fromEvent('message')
-      .subscribe((data: any) => {
+    this.socket.on('message', (data: any) => {
 
-        let payload = data.payload
+      let payload = data.payload
 
-        switch (data.type) {
-          case "communication":
-            this.messagesSubject.next(payload)
-            this.fireInteractionEvent(payload)
-            break;
-          case "notification":
-            this.notificationSubject.next(payload)
-            if (payload.text === 'processing started')
-              this.sendMessage('notification', 'context')
-            console.log(payload);
-            break;
-          case "action":
-            console.log(payload);
-            break;
-          case "action callback":
-            console.log(payload);
-            break;
-          default:
-            break;
-        }
-      })
+      switch (data.type) {
+        case "communication":
+          this.messagesSubject.next(payload)
+          this.fireInteractionEvent(payload)
+          break;
+        case "notification":
+          this.notificationSubject.next(payload)
+          if (payload.text === 'processing started')
+            this.sendMessage('notification', 'context')
+          console.log(payload);
+          break;
+        case "action":
+          console.log(payload);
+          break;
+        case "action callback":
+          console.log(payload);
+          break;
+        default:
+          break;
+      }
+    })
   }
 
 
