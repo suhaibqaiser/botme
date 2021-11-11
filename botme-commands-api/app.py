@@ -1,9 +1,6 @@
 from flask import Flask,jsonify,request
-from conf.mongodb import getDbCta
-from flask_pymongo import MongoClient
 from controller.communication import getResponse
 from controller.servicerasa import getIntent
-import json
 
 app = Flask(__name__)
 

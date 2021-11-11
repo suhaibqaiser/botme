@@ -1,4 +1,4 @@
-from conf.mongodb import getDbCta ,searchBySectionId
+from conf.mongodb import getDbCta
 from textblob import TextBlob
 import requests
 import json
@@ -33,7 +33,7 @@ def getResponse(intent,entity,text,pageId,sectionId):
                 iD = getEntityId(context['entities'])
                 return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":context['pageId'],"sectionId":context['sectionId'],"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":senti,"intentName":intent} 
             else:
-                return {"Response":"I'm sorry, I didn't quite understand that. Could you rephrase?","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":intent}
+                return {"Response":"I'm sorry, I didn't quite understand that. Could you rephrase?","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":'nlu_fallback'}
 
     elif(senti > 0.5):
         db = getDbCta(intent,value,pageId,sectionId)
@@ -41,9 +41,9 @@ def getResponse(intent,entity,text,pageId,sectionId):
             sentimentResponse = db['sentimentResponse']
             return {"Response":sentimentResponse['positive'],"ctaCommandId":db['ctaCommandId'],"sentimentScore":senti,"intentName":intent}
         elif(intent == 'nlu_fallback'):
-            return {"Response":"I'm sorry, I didn't quite understand that. Could you rephrase?","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":intent}
+            return {"Response":"I'm sorry, I didn't quite understand that. Could you rephrase?","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":'nlu_fallback'}
         else:
-            return {"Response":"I do not understand, Can you repeat it again","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":intent}
+            return {"Response":"I do not understand, Can you repeat it again","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":'nlu_fallback'}
     elif(senti < -0.5):
         db = getDbCta(intent,value,pageId,sectionId)
         if db is not None:
@@ -52,7 +52,7 @@ def getResponse(intent,entity,text,pageId,sectionId):
         elif(intent == 'nlu_fallback'):
             return {"Response":"I'm sorry, I didn't quite understand that. Could you rephrase?","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":intent}
         else:
-            return {"Response":"I do not understand, Can you repeat it again","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":intent}
+            return {"Response":"I do not understand, Can you repeat it again","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":'nlu_fallback'}
 
 def parseEntityValue(entity):
     print(len(entity))
@@ -75,15 +75,13 @@ def checkingForProduct(intent,value,senti,pageId,sectionId):
             if(len(data['payload']) == 1):
                 db = getDbCta(intent,value,pageId,sectionId)
                 print(db)
-                if(db == None):
-                    return {"Response":"What do you mean by " + value + "?","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":intent}
+                if(db == None or len(data['payload']) > 1):
+                    return {"Response":"What do you mean by " + value + "?","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":'question'}
                 else:
                     context = db['context']
                     print(context)
                     iD = getEntityId(context['entities'])
                     return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":context['pageId'],"sectionId":context['sectionId'],"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":senti,"intentName":intent} 
-            elif(len(data['payload']) > 1):
-                return {"Response":"What do you mean by " + value + " ?","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":intent}
         else:
             return {"Response":"Product not available","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":intent}
     except:
