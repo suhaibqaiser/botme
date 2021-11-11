@@ -23,10 +23,22 @@ export class BotmeClientService {
   }
 
   getCookie() {
-    return this.cookieService.get('clientName')
+    return this.cookieService.getAll()
   }
 
-  setCookie(cookie: any) {
-    this.cookieService.set('clientName', cookie)
+  setCookie(key: any, cookie: any) {
+    this.cookieService.set(key, cookie)
+  }
+
+  reSetCookie() {
+    this.cookieService.deleteAll()
+  }
+
+  isCookieTokenValid(){
+    return !!this.cookieService.get('clientToken')
+  }
+
+  getCookieToken(){
+    return this.cookieService.get('clientToken')
   }
 }

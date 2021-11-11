@@ -31,5 +31,15 @@ export class AppComponent {
         }
       }
     })
+
+    this.socketService.notifications.subscribe(r => {
+      let res: any = r
+      console.log('notifications =>',res)
+      if(res.text === 'processing started'){
+        this.socketService.processing = true
+      }else{
+        this.socketService.processing = false
+      }
+    })
   }
 }

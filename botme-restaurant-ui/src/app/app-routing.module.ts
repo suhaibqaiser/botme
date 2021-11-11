@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from "./components/pages/home/home.component";
 import {MenuComponent} from "./components/pages/menu/menu.component";
 import {ReservationsComponent} from "./components/pages/reservations/reservations.component";
@@ -10,6 +10,7 @@ import {ContactUsComponent} from "./components/pages/contact-us/contact-us.compo
 import {ProductDetailComponent} from "./components/pages/product-detail/product-detail.component";
 import {CartComponent} from "./components/pages/cart/cart.component";
 import {CheckoutComponent} from "./components/pages/checkout/checkout.component";
+import {AuthenticationGuard} from "./services/authentication.guard";
 
 const routes: Routes = [
   {
@@ -22,7 +23,8 @@ const routes: Routes = [
   },
   {
     path: "online-shop",
-    component: SearchMenuComponent
+    component: SearchMenuComponent,
+    canActivate: [AuthenticationGuard]
   },
   {
     path: "contact-us",
@@ -43,11 +45,13 @@ const routes: Routes = [
   },
   {
     path: "product-detail",
-    component: ProductDetailComponent
+    component: ProductDetailComponent,
+    canActivate: [AuthenticationGuard]
   },
   {
     path: "cart",
-    component: CartComponent
+    component: CartComponent,
+    canActivate: [AuthenticationGuard]
   },
   {
     path: "checkout",
@@ -60,4 +64,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

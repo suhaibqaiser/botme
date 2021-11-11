@@ -3,6 +3,7 @@ import {CartService} from 'src/app/services/cart.service';
 import {SocketService} from "../../../services/socket.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {BotmeClientService} from "../../../services/botme-client.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-navbar',
@@ -18,7 +19,7 @@ export class NavbarComponent implements OnInit {
     clientDeviceId: new FormControl('', Validators.required)
   })
 
-  constructor(private _botMeClientService: BotmeClientService, private cartService: CartService, private _socketService: SocketService) {
+  constructor(public socketService: SocketService,private _router: Router, public _botMeClientService: BotmeClientService, private cartService: CartService, private _socketService: SocketService) {
   }
 
   ngOnInit(): void {
@@ -29,7 +30,14 @@ export class NavbarComponent implements OnInit {
     this._botMeClientService.loginBotMeClientApi(this.loginForm.value).subscribe(
       (res: any) => {
         if (res.status) {
-          this._botMeClientService.setCookie(res.payload.clientName)
+          this._botMeClientService.setCookie('clientToken', res.payload.clientToken)
+          this._botMeClientService.setCookie('clientName', res.payload.clientName)
+          this._botMeClientService.setCookie('clientDeviceId', res.payload.clientDeviceId)
+          this._botMeClientService.setCookie('clientID', res.payload.clientID)
+          this._botMeClientService.setCookie('isLoggedIn', res.payload.isLoggedIn)
+          this._router.navigate(['/home']).then(() => {
+            window.location.reload();
+          });
         } else {
           alert('Invalid Record')
         }
@@ -58,4 +66,8 @@ export class NavbarComponent implements OnInit {
     document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:block')
   }
 
+  logout() {
+    this._botMeClientService.reSetCookie()
+    this._router.navigate(['/home'])
+  }
 }
