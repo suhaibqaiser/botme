@@ -49,7 +49,6 @@ import { SpinnerComponent } from './components/layout/spinner/spinner.component'
 import { ProgressLoaderComponent } from "./components/sections/progress-loader/progress-loader.component";
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { CustomizeProductModalComponent } from './components/sections/customize-product-modal/customize-product-modal.component';
-import { SocketIoModule } from 'ngx-socket-io';
 import { SocketService } from './services/socket.service'; 
 import { BotmeClientService } from "./services/botme-client.service";
 
@@ -105,7 +104,6 @@ import { BotmeClientService } from "./services/botme-client.service";
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    SocketIoModule,
     NgMultiSelectDropDownModule.forRoot(),
   ],
   providers: [SpeechRecognitionService, BotmeClientService,SocketService],
