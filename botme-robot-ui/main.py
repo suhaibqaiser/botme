@@ -17,7 +17,7 @@ import threading
 from asyncio.tasks import sleep
 
 # Class Initialization for Socket Communication
-socket = Sockets()
+
 
 
 # Main app window
@@ -136,34 +136,36 @@ talk_btn = tk.Button(bottom_label, text="Talk",
 talk_btn.place(anchor=CENTER, x=250, y=25)
 # talk_btn.grid(column=0, row=2, pady=10)
 # Update bg color
-
+socket = Sockets()
 
 def checkForClient(clientID, clientSecret, clientDeviceId):
-    try:
-        print(clientID)
-        print(clientDeviceId)
-        print(clientSecret)
-        body = {"clientID": clientID, "clientSecret": clientSecret,
-                "clientDeviceId": clientDeviceId}
-        auth_token = 'ea2d3aeaad77865f9769974a920892f5'
-        response = requests.post("https://api.gofindmenu.com/client/client/auth",
-                                 body, headers={'Authorization': 'Bearer ' + auth_token})
-        print(response)
-        data = response.json()
-        print(data)
-        if data['status'] == 'success':
-            login.destroy()
-            app_root.deiconify()
-        elif data['status'] == '':
-            labelError = Label(
-                login, text=data['payload'], font=text_font, fg='red')
-            labelError.place(relheight=0.15, relx=0.09, rely=0.7)
-        else:
-            labelError = Label(
-                login, text=data['payload']['message'], font=text_font, fg='red')
-            labelError.place(relheight=0.15, relx=0.09, rely=0.7)
-    except(error):
-        print(error)
+    login.destroy()
+    app_root.deiconify()
+    # try:
+    #     print(clientID)
+    #     print(clientDeviceId)
+    #     print(clientSecret)
+    #     body = {"clientID": clientID, "clientSecret": clientSecret,
+    #             "clientDeviceId": clientDeviceId}
+    #     auth_token = 'ea2d3aeaad77865f9769974a920892f5'
+    #     response = requests.post("https://api.gofindmenu.com/client/client/auth",
+    #                              body, headers={'Authorization': 'Bearer ' + auth_token})
+    #     print(response)
+    #     data = response.json()
+    #     print(data)
+    #     if data['status'] == 'success':
+    #         login.destroy()
+    #         app_root.deiconify()
+    #     elif data['status'] == '':
+    #         labelError = Label(
+    #             login, text=data['payload'], font=text_font, fg='red')
+    #         labelError.place(relheight=0.15, relx=0.09, rely=0.7)
+    #     else:
+    #         labelError = Label(
+    #             login, text=data['payload']['message'], font=text_font, fg='red')
+    #         labelError.place(relheight=0.15, relx=0.09, rely=0.7)
+    # except(error):
+    #     print(error)
 
 
 def update_background():

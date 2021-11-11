@@ -46,24 +46,12 @@ import { CartComponent } from './components/pages/cart/cart.component';
 import { CartSectionComponent } from './components/sections/cart-section/cart-section.component';
 import { CheckoutSectionComponent } from './components/sections/checkout-section/checkout-section.component';
 import { SpinnerComponent } from './components/layout/spinner/spinner.component';
-import {ProgressLoaderComponent} from "./components/sections/progress-loader/progress-loader.component";
+import { ProgressLoaderComponent } from "./components/sections/progress-loader/progress-loader.component";
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { CustomizeProductModalComponent } from './components/sections/customize-product-modal/customize-product-modal.component';
-import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import { Socket } from 'ngx-socket-io';
+import { SocketIoModule } from 'ngx-socket-io';
+import { SocketService } from './services/socket.service'; 
 import { BotmeClientService } from "./services/botme-client.service";
-
-@Injectable()
-export class Sockets extends Socket {
-  constructor(private _botMeClientService: BotmeClientService) {
-    super({ url: environment.wsEndpoint, options: {path: "/ws/"} });
-    console.log(environment.wsEndpoint);
-    
-    let authToken = "LvsVhA3Yx0JED98w/L/5olOgrtHPmt1UB7JMMOxOncQ=" // TODO: Update code with functioning token
-    console.log('authToken =>', authToken)
-    this.ioSocket['auth'] = {token: authToken}
-  }
-}
 
 @NgModule({
   declarations: [
@@ -120,7 +108,7 @@ export class Sockets extends Socket {
     SocketIoModule,
     NgMultiSelectDropDownModule.forRoot(),
   ],
-  providers: [SpeechRecognitionService, BotmeClientService, Sockets],
+  providers: [SpeechRecognitionService, BotmeClientService,SocketService],
   bootstrap: [AppComponent],
   entryComponents: [CustomizeProductModalComponent]
 })
