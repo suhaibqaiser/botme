@@ -103,6 +103,7 @@ export class SocketService {
       timestamp: Date()
 
     }
+    console.log('SocketPayload =>', SocketPayload)
     this.socket.emit('message', SocketPayload);
   }
 
@@ -125,21 +126,24 @@ export class SocketService {
       if (tempMessage.entityId == 'entityId-select-serving-size') {
         this.voiceServingSize = tempMessage.entityName.toLowerCase()
         // @ts-ignore
-        document.getElementById('ctaId-select-serving-size').click()
+        document.getElementById('ctaId-select-serving-size')?.click()
         return
       }
 
       // @ts-ignore
       let template = document.getElementById(tempMessage.entityId)
+      console.log('template =>',template)
       // @ts-ignore
       let list = template.getElementsByTagName('a')
+      console.log('list =>',list)
       for (let i = 0; i < list.length; i++) {
         if (list[i].getAttribute('id') == tempMessage.ctaId) {
-          list[i].click()
+          console.log('list =>',list[i].getAttribute('id'))
+          list[i]?.click()
         }
       }
       // @ts-ignore
-      document.getElementById(tempMessage.entityId).click()
+      document.getElementById(tempMessage.entityId)?.click()
     }
   }
 
