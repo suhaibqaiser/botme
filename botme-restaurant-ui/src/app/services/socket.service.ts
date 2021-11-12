@@ -11,9 +11,10 @@ import { io } from "socket.io-client";
 })
 export class SocketService {
   authToken = "LvsVhA3Yx0JED98w/L/5olOgrtHPmt1UB7JMMOxOncQ="
+
   socket = io(environment.wsEndpoint, {
     auth: { token: this.authToken },
-    path: "/ws/"
+    path: (environment.production) ? "/ws/" : ""
   });
 
 
@@ -132,13 +133,13 @@ export class SocketService {
 
       // @ts-ignore
       let template = document.getElementById(tempMessage.entityId)
-      console.log('template =>',template)
+      console.log('template =>', template)
       // @ts-ignore
       let list = template.getElementsByTagName('a')
-      console.log('list =>',list)
+      console.log('list =>', list)
       for (let i = 0; i < list.length; i++) {
         if (list[i].getAttribute('id') == tempMessage.ctaId) {
-          console.log('list =>',list[i].getAttribute('id'))
+          console.log('list =>', list[i].getAttribute('id'))
           list[i]?.click()
         }
       }
