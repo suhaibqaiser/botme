@@ -36,7 +36,7 @@ io.use(async (socket: Socket, next) => {
 
 
 io.on("connection", (socket: Socket) => {
-    sendMessage(socket.data.clientId, "notification", `device:${socket.data.sessionId} attached on robot:${socket.data.clientId}`)
+    //sendMessage(socket.data.clientId, "notification", `device:${socket.data.sessionId} attached on robot:${socket.data.clientId}`)
 
     socket.on("message", async (data: models.SocketMessage) => {
         console.log(data);
