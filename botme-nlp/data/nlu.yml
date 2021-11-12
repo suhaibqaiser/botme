@@ -261,6 +261,23 @@ nlu:
     examples: |
       - cart item
 
+  - intent: view_order
+    examples: |
+      - [view order](view)
+      - i want to [view order](view)
+      - click on [view order](view)
+      - select [view order](view)
+      - i want to [view](view) my order
+      - i want to [see](view) my order
+      - [show](view) me my order 
+      - we want to [view](view) our order
+
+  - synonym: view order
+    examples: |
+      - view
+      - see
+      - show
+
   - intent: place_order
     examples: |
       - [order now](done)
@@ -2103,9 +2120,6 @@ nlu:
       - choose [Light](flavour) flavour
       - choose [light]{"entity":"flavour","value":"Light"} flavour
 
-  # - intent: remove_product_flavour
-  #   examples: |
-
   - intent: see_serving_size
     examples: |
       - i want to see [serving size](open)
@@ -2135,22 +2149,27 @@ nlu:
       - i want serving size [standard](size)
       - choose [standard](size) serving size
       - pick [standard](size) serving size
+      - select serving size [standard](size)
       - [standard](size)
       - i want to select [small](size) size
       - i want serving size [small](size)
       - choose [small](size) serving size
       - pick [small](size) serving size
+      - select serving size [small](size)
       - [small](size)
       - i want to select [medium](size) size
       - i want serving size [medium](size)
       - choose [medium](size) serving size
       - pick [medium](size) serving size
+      - select serving size [medium](size)
       - [medium](size)
       - i want to select [large](size) size
       - i want serving size [large](size)
       - choose [large](size) serving size
       - pick [large](size) serving size
+      - select serving size [large](size)
       - [large](size)
+      
   - intent: next
     examples: |
       - go [Next]{"entity":"nextoption","value":"next"}
