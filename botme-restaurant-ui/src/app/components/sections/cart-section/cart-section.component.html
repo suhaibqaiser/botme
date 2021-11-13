@@ -50,9 +50,9 @@
           <td *ngIf="product.status">In Progress</td>
           <td>
             <div class="cart-quantity">
-              <button id="ctaId-remove-quanitty" (click)="addProductQuantity(product,'subtracting')" class="qu-btn dec">-</button>
+              <a id="ctaId-remove-quantity" (click)="addProductQuantity(product,'subtracting')" class="qu-btn dec">-</a>
               <input type="text" class="qu-input" [value]="product.productQuantity">
-              <button id="ctaId-add-quantity" (click)="addProductQuantity(product,'adding')" class="qu-btn inc">+</button>
+              <a id="ctaId-add-quantity" (click)="addProductQuantity(product,'adding')" class="qu-btn inc">+</a>
             </div>
           </td>
           <td class="td-total-price">${{product.productTotalPrice}}</td>
@@ -73,7 +73,7 @@
 <!--      </div>-->
       <div class="col-sm-12 col-md-12 col-lg-12">
         <div class="cart-update text-center cart-info-item">
-          <a id="entityId-order-now" (click)="placeOrder()" class="btn">
+          <a *ngIf="cartProducts && cartProducts.length" id="entityId-order-now" (click)="placeOrder()" class="btn">
              Order Now
           </a>
         </div>
