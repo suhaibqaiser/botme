@@ -118,7 +118,10 @@ export class CartSectionComponent implements OnInit {
   }
 
   editFromCart(product: any) {
+    this.cartService.slideToShow = 0
     // document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:none')
+    this._socketService.currentContextObj.sectionId = 'sectionId-servingSize-productOptions'
+    this._socketService.currentContextObj.pageId = 'pageId-product-customize-modal'
     this.cartService.setProductRateSize(product)
     this.cartService.singleCustomProductObj = JSON.parse(JSON.stringify(product))
     this.cartService.singleCustomProductObj.isEditable = true
@@ -127,6 +130,8 @@ export class CartSectionComponent implements OnInit {
   }
 
   showProductInfo(product: any) {
+    this._socketService.currentContextObj.sectionId = 'sectionId-summary'
+    this._socketService.currentContextObj.pageId = 'pageId-product-customize-modal'
     this.cartService.setProductRateSize(product)
     // document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:none')
     this.cartService.singleCustomProductObj = JSON.parse(JSON.stringify(product))

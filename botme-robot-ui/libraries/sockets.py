@@ -51,7 +51,7 @@ class Sockets:
     authToken = {"token": 'LvsVhA3Yx0JED98w/L/5olOgrtHPmt1UB7JMMOxOncQ='}
 
     # Development WS String
-    # sio.connect(url="ws://localhost:6380", auth=authToken)
+#       sio.connect(url="ws://localhost:6380", auth=authToken)
 
 
     # Production WS String
