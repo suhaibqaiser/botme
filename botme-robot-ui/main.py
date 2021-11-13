@@ -268,8 +268,11 @@ def imageOnSentiment(senti, status, text, intent):
 
 
 def btn_action():
-    processImage()
-    socketText()
+    try:
+        processImage()
+        socketText()
+    except(error):
+        print(error)
 
 
 text1 = ''

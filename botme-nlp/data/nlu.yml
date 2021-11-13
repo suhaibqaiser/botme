@@ -157,17 +157,6 @@ nlu:
 
   - synonym: contactus_page 
     examples: |
-      - Take me to [contactus page](pagefour)
-      - i want to visit [contactus page](pagefour)
-      - open [contactus page](pagefour) please
-      - i want to see the [contactus page](pagefour)
-      - can you please redirect me to [contactus page](pagefour)
-      - he want to redirect to [contactus page](pagefour)
-      - i want to redirect to [contactus page](pagefour)
-      - show me the [contactus page](pagefour)
-      - show us the [contactus page](pagefour)
-      - i want you to take me to the [contactus page](pagefour)
-      - she want to visit [contactus page](pagefour)
       - Take me to [contact us page](pagefour)
       - i want to visit [contact us page](pagefour)
       - open [contact us page](pagefour) please
@@ -179,12 +168,18 @@ nlu:
       - show us the [contact us page](pagefour)
       - i want you to take me to the [contact us page](pagefour)
       - she want to visit [contact us page](pagefour)
-      - [contactus page](pagefour)
+      - Take me to [contact us page](pagefour)
+      - i want to visit [contact us page](pagefour)
+      - open [contact us page](pagefour) please
+      - i want to see the [contact us page](pagefour)
+      - can you please redirect me to [contact us page](pagefour)
+      - he want to redirect to [contact us page](pagefour)
+      - i want to redirect to [contact us page](pagefour)
+      - show me the [contact us page](pagefour)
+      - show us the [contact us page](pagefour)
+      - i want you to take me to the [contact us page](pagefour)
+      - she want to visit [contact us page](pagefour)
       - [contact us page](pagefour)
-
-  - synonym: contact us page
-    examples: |
-      - contactus page
 
   - intent: signup_Login
     examples: |
@@ -297,13 +292,13 @@ nlu:
 
   - intent: proceed_to_checkout
     examples: |
-      - [checkout](checkout)
-      - i want to [checkout](checkout)
-      - please [checkout](checkout)
-      - we want to [checkout](checkout)
-      - please [checkout](checkout) my order
-      - can you please [checkout](checkout) my order
-      - i want to do [checkout](checkout)
+      - [check out](checkout)
+      - i want to [check out](checkout)
+      - please [check out](checkout)
+      - we want to [check out](checkout)
+      - please [check out](checkout) my order
+      - can you please [check out](checkout) my order
+      - i want to do [check out](checkout)
 
   - intent: place_order_page
     examples: |
