@@ -20,8 +20,13 @@ class Sockets:
 
     @sio.on('message')
     def incoming(data):
-        print(data)
         if data['type'] == "communication":
+            if "payload" in data:
+                print('Payload exists')
+            else:
+                print('Payload doesnt exists')
+                data['payload'] = {"text": "This command doesnt exist in database, try something else!",
+                                   "sentimentScore": 0.0, "intentName": "nlu_fallback"}
             Sockets.message_subject = data
         elif data['type'] == "notification":
             Sockets.notification_subject = data['payload']
@@ -48,11 +53,11 @@ class Sockets:
     def processing_end(self):
         self.send_message('notification', 'processing ended')
 
-    authToken = {"token": 'LvsVhA3Yx0JED98w/L/5olOgrtHPmt1UB7JMMOxOncQ='}
+    authToken = {
+        "token": 'fd44ab5607994ef415c07f2eea5cc39a9a3d577702f1edb7159b2cc69d094ffa'}
 
     # Development WS String
 #       sio.connect(url="ws://localhost:6380", auth=authToken)
-
 
     # Production WS String
     sio.connect(url="wss://api.gofindmenu.com/ws/",
