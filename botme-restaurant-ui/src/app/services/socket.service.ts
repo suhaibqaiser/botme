@@ -4,18 +4,13 @@ import { FormControl } from "@angular/forms";
 import { Router } from "@angular/router";
 import { environment } from 'src/environments/environment';
 import { io } from "socket.io-client";
+import { BotmeClientService } from './botme-client.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class SocketService {
-  authToken = "LvsVhA3Yx0JED98w/L/5olOgrtHPmt1UB7JMMOxOncQ="
-
-  socket = io(environment.wsEndpoint, {
-    auth: { token: this.authToken },
-    path: (environment.production) ? "/ws/" : ""
-  });
 
 
   private messagesSubject = new Subject();
@@ -23,6 +18,8 @@ export class SocketService {
   messages = this.messagesSubject.asObservable();
   notifications = this.notificationSubject.asObservable();
   processing = false
+  authToken: string
+  socket: any
 
   currentContextList = [
     {
@@ -57,35 +54,45 @@ export class SocketService {
   speachInput = new FormControl('')
 
 
-  constructor(private router: Router) {
 
-    this.socket.on('message', (data: any) => {
+  constructor(private router: Router, private clients: BotmeClientService) {
 
-      let payload = data.payload
+    this.authToken = clients.getCookieToken();
 
-      switch (data.type) {
-        case "communication":
-          this.messagesSubject.next(payload)
-          this.fireInteractionEvent(payload)
-          break;
-        case "notification":
-          this.notificationSubject.next(payload)
-          if (payload.text === 'processing started')
-            this.sendMessage('notification', 'context')
-          console.log(payload);
-          break;
-        case "action":
-          console.log(payload);
-          break;
-        case "action callback":
-          console.log(payload);
-          break;
-        default:
-          break;
-      }
-    })
+    if (this.authToken) {
+      this.socket = io(environment.wsEndpoint, {
+        auth: { token: this.authToken },
+        path: (environment.production) ? "/ws/" : ""
+      });
+
+
+      this.socket.on('message', (data: any) => {
+
+        let payload = data.payload
+
+        switch (data.type) {
+          case "communication":
+            this.messagesSubject.next(payload)
+            this.fireInteractionEvent(payload)
+            break;
+          case "notification":
+            this.notificationSubject.next(payload)
+            if (payload.text === 'processing started')
+              this.sendMessage('notification', 'context')
+            console.log(payload);
+            break;
+          case "action":
+            console.log(payload);
+            break;
+          case "action callback":
+            console.log(payload);
+            break;
+          default:
+            break;
+        }
+      })
+    }
   }
-
 
   sendMessage(type: string, message: any) {
     interface SocketMessage {
@@ -117,7 +124,7 @@ export class SocketService {
     /**
      * var sel = document.getElementById('ctaId-select-serving-size');
      var len = sel.options.length;
-
+  
      sel.setAttribute('size', len);
      */
     let tempMessage = msg
