@@ -20,7 +20,6 @@ import sys
 # Class Initialization for Socket Communication
 
 
-
 # Main app window
 app_root = tk.Tk()
 app_root.withdraw()
@@ -33,8 +32,14 @@ foreground = "#fff"
 border_width = 25
 background_color = ["#ff9aa2", "#ffb7b2",
                     "#ffdac1", "#e2f0cb", "#b5ead7", "#c7ceea"]
+clientToken = ""
+
+
+socket = Sockets()
+
 
 class Login:
+    global clientToken
     # login window
     login = Toplevel()
     login.title("Login")
@@ -43,9 +48,8 @@ class Login:
 
     # create a label for login
     label_login = Label(login, text="Please login to continue",
-                    justify=CENTER, font=sub_text_font)
+                        justify=CENTER, font=sub_text_font)
     label_login.place(relheight=0.15, relx=0.1, rely=0.07)
-
 
     # create a label for clientID,clientSecret,clientDeviceId
     labelclientID = Label(login, text="clientID: ", font=text_font)
@@ -71,39 +75,43 @@ class Login:
     clientDeviceId.place(relwidth=0.5, relheight=0.1, relx=0.35, rely=0.6)
     clientDeviceId.focus()
 
-
     # login button
-    button1 = Button(login, text="Login", font=text_font, command=lambda: Login.checkForClient())
+    button1 = Button(login, text="Login", font=text_font,
+                     command=lambda: Login.checkForClient())
     button1.place(relx=0.7, rely=0.9, relheight=0.06, relwidth=0.22)
-    
-    button2 = Button(login,text="Cancel",font=text_font,command=lambda: Login.CancelButton())
-    button2.place(relx=0.1,rely=0.9,relheight=0.06,relwidth=0.22)
 
-    clientToken = {"clientToken":''}
+    button2 = Button(login, text="Cancel", font=text_font,
+                     command=lambda: Login.CancelButton())
+    button2.place(relx=0.1, rely=0.9, relheight=0.06, relwidth=0.22)
 
     def checkForClient():
+        global clientToken
         try:
             print(Login.clientID)
             print(Login.clientDeviceId)
             print(Login.clientSecret)
-            body = {"clientID":Login.clientID.get(),"clientSecret":Login.clientSecret.get(),"clientDeviceId":Login.clientDeviceId.get()}
+            body = {"clientID": Login.clientID.get(), "clientSecret": Login.clientSecret.get(
+            ), "clientDeviceId": Login.clientDeviceId.get()}
             auth_token = 'ea2d3aeaad77865f9769974a920892f5'
-            response = requests.post("https://api.gofindmenu.com/client/client/auth",body,headers={'Authorization':'Bearer ' + auth_token})
-            print(response)
+            response = requests.post("https://api.gofindmenu.com/client/client/auth",
+                                     body, headers={'Authorization': 'Bearer ' + auth_token})
             data = response.json()
             print(data)
+            clientToken = data['payload']['clientToken']
             if data['status'] == 'success':
                 Login.login.destroy()
                 app_root.deiconify()
-            elif data['status'] == '':
-                labelError = Label(Login.login,text=data['payload'],font=text_font,fg='red')
-                labelError.place(relheight = 0.15,relx = 0.09,rely = 0.7)
+            elif data['status'] != 'success':
+                labelError = Label(
+                    Login.login, text=data['payload']['message'], font=text_font, fg='red')
+                labelError.place(relheight=0.15, relx=0.09, rely=0.7)
             else:
-                labelError = Label(Login.login,text=data['payload']['message'],font=text_font,fg='red')
-                labelError.place(relheight = 0.15,relx = 0.09,rely = 0.7)
+                labelError = Label(
+                    Login.login, text=data['payload']['message'], font=text_font, fg='red')
+                labelError.place(relheight=0.15, relx=0.09, rely=0.7)
         except:
             print("error in connecting client Api")
-    
+
     def CancelButton():
         Login.login.destroy()
         app_root.destroy()
@@ -166,11 +174,12 @@ scrollbar.configure(command=text_widget.yview)
 bottom_label = Label(main1, bg='#808080', height=80)
 bottom_label.place(relwidth=1, rely=0.825)
 # Talk Button
-talk_btn = tk.Button(bottom_label, text="Talk",command=lambda: btn_action(), width=5)
+talk_btn = tk.Button(bottom_label, text="Talk",
+                     command=lambda: btn_action(), width=5)
 talk_btn.place(anchor=CENTER, x=250, y=25)
 # talk_btn.grid(column=0, row=2, pady=10)
 # Update bg color
-socket = Sockets()
+
 
 def update_background():
     bg = random.choice(background_color)
@@ -286,16 +295,11 @@ def updateText():
     global old_message, text1
     message = socket.message_subject
     if old_message != message:
-        if not message['payload']:
-            print("1")
-            sub_text_disp = {"text":"i did not not understand that,could you rephrase","sentimentScore":0.0,"intentName":"nlu_fallback"}
-            text = sub_text_disp['text']   
-        else:
-            print("2")
-            old_message = message
-            sub_text_disp = message['payload']
-            text = sub_text_disp['text']
-        imageOnSentiment(sub_text_disp['sentimentScore'],"success",sub_text_disp['text'], sub_text_disp['intentName'])
+        old_message = message
+        sub_text_disp = message['payload']
+        text = sub_text_disp['text']
+        imageOnSentiment(sub_text_disp['sentimentScore'], "success",
+                             sub_text_disp['text'], sub_text_disp['intentName'])
         send_message(text1, text)
         speak(sub_text_disp['text'])
         socket.processing_end()
@@ -324,6 +328,7 @@ def send_message(msg, response):
 update_background()
 updateText()
 update_ui()
+
 
 # open_eyes()
 
