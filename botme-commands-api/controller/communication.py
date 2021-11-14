@@ -33,26 +33,35 @@ def getResponse(intent,entity,text,pageId,sectionId):
                 iD = getEntityId(context['entities'])
                 return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":context['pageId'],"sectionId":context['sectionId'],"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":senti,"intentName":intent} 
             else:
-                return {"Response":"I'm sorry, I didn't quite understand that. Could you rephrase?","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":'nlu_fallback'}
+                return {"Response":"I'm sorry, I didn't quite understand that. Could you rephrase?","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":'nlu_fallback'}
 
     elif(senti > 0.5):
-        db = getDbCta(intent,value,pageId,sectionId)
-        if db is not None:
-            sentimentResponse = db['sentimentResponse']
-            return {"Response":sentimentResponse['positive'],"ctaCommandId":db['ctaCommandId'],"sentimentScore":senti,"intentName":intent}
+        if(intent == "Order_meal"):
+            Response = checkingForProduct(intent,value,senti,pageId,sectionId)
+            return Response
         elif(intent == 'nlu_fallback'):
             return {"Response":"I'm sorry, I didn't quite understand that. Could you rephrase?","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":'nlu_fallback'}
         else:
-            return {"Response":"I do not understand, Can you repeat it again","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":'nlu_fallback'}
+            db = getDbCta(intent,value,pageId,sectionId)
+            if db is not None:
+                sentimentResponse = db['sentimentResponse']
+                return {"Response":sentimentResponse['positive'],"ctaCommandId":db['ctaCommandId'],"sentimentScore":senti,"intentName":intent}
+            else: 
+                return {"Response":"I do not understand, Can you repeat it again","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":'nlu_fallback'}
+
     elif(senti < -0.5):
-        db = getDbCta(intent,value,pageId,sectionId)
-        if db is not None:
-            sentimentResponse = db['sentimentResponse']
-            return {"Response":sentimentResponse['negative'],"ctaCommandId":db['ctaCommandId'],"sentimentScore":senti,"intentName":intent}
+        if(intent == "Order_meal"):
+            Response = checkingForProduct(intent,value,senti,pageId,sectionId)
+            return Response
         elif(intent == 'nlu_fallback'):
-            return {"Response":"I'm sorry, I didn't quite understand that. Could you rephrase?","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":intent}
+            return {"Response":"I'm sorry, I didn't quite understand that. Could you rephrase?","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":'nlu_fallback'}
         else:
-            return {"Response":"I do not understand, Can you repeat it again","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":'nlu_fallback'}
+            db = getDbCta(intent,value,pageId,sectionId)
+            if db is not None:
+                sentimentResponse = db['sentimentResponse']
+                return {"Response":sentimentResponse['positive'],"ctaCommandId":db['ctaCommandId'],"sentimentScore":senti,"intentName":intent}
+            else: 
+                return {"Response":"I do not understand, Can you repeat it again","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":'nlu_fallback'}
 
 def parseEntityValue(entity):
     print(len(entity))

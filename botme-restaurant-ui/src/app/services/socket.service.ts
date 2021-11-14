@@ -146,7 +146,7 @@ export class SocketService {
       console.log('list =>', list)
       for (let i = 0; i < list.length; i++) {
         if (list[i].getAttribute('id') == tempMessage.ctaId) {
-          console.log('list =>', list[i].getAttribute('id'))
+          console.log('select item =>', list[i].getAttribute('id'))
           list[i]?.click()
         }
       }

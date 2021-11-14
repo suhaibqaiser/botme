@@ -62,6 +62,12 @@ export class NavbarComponent implements OnInit {
   }
 
   showCartModal() {
+    if(!this._botMeClientService.isCookieTokenValid()) {
+      document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:none')
+      return
+    }
+    console.log('showCartModal =>')
+    this._socketService.currentContextObj.pageId = 'pageId-cart-modal'
     this._socketService.currentContextObj.sectionId = 'sectionId-cart-modal'
     document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:block')
   }

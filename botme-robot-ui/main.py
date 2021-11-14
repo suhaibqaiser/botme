@@ -287,12 +287,14 @@ def updateText():
     message = socket.message_subject
     if old_message != message:
         old_message = message
-        sub_text_disp = message['payload']
-        imageOnSentiment(sub_text_disp['sentimentScore'], 'success',
-                         sub_text_disp['text'], sub_text_disp['intentName'])
-        text = sub_text_disp['text']
-        send_message(text1, text)
-        speak(sub_text_disp['text'])
+        try:
+            sub_text_disp = message['payload']
+            imageOnSentiment(sub_text_disp['sentimentScore'], 'success',sub_text_disp['text'], sub_text_disp['intentName'])
+            text = sub_text_disp['text']
+            send_message(text1, text)
+            speak(sub_text_disp['text'])
+        except(error):
+            print(error)
         socket.processing_end()
     main1.after(1000, updateText)
 

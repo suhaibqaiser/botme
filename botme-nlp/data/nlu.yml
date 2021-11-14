@@ -157,17 +157,6 @@ nlu:
 
   - synonym: contactus_page 
     examples: |
-      - Take me to [contactus page](pagefour)
-      - i want to visit [contactus page](pagefour)
-      - open [contactus page](pagefour) please
-      - i want to see the [contactus page](pagefour)
-      - can you please redirect me to [contactus page](pagefour)
-      - he want to redirect to [contactus page](pagefour)
-      - i want to redirect to [contactus page](pagefour)
-      - show me the [contactus page](pagefour)
-      - show us the [contactus page](pagefour)
-      - i want you to take me to the [contactus page](pagefour)
-      - she want to visit [contactus page](pagefour)
       - Take me to [contact us page](pagefour)
       - i want to visit [contact us page](pagefour)
       - open [contact us page](pagefour) please
@@ -179,12 +168,18 @@ nlu:
       - show us the [contact us page](pagefour)
       - i want you to take me to the [contact us page](pagefour)
       - she want to visit [contact us page](pagefour)
-      - [contactus page](pagefour)
+      - Take me to [contact us page](pagefour)
+      - i want to visit [contact us page](pagefour)
+      - open [contact us page](pagefour) please
+      - i want to see the [contact us page](pagefour)
+      - can you please redirect me to [contact us page](pagefour)
+      - he want to redirect to [contact us page](pagefour)
+      - i want to redirect to [contact us page](pagefour)
+      - show me the [contact us page](pagefour)
+      - show us the [contact us page](pagefour)
+      - i want you to take me to the [contact us page](pagefour)
+      - she want to visit [contact us page](pagefour)
       - [contact us page](pagefour)
-
-  - synonym: contact us page
-    examples: |
-      - contactus page
 
   - intent: signup_Login
     examples: |
@@ -297,13 +292,13 @@ nlu:
 
   - intent: proceed_to_checkout
     examples: |
-      - [checkout](checkout)
-      - i want to [checkout](checkout)
-      - please [checkout](checkout)
-      - we want to [checkout](checkout)
-      - please [checkout](checkout) my order
-      - can you please [checkout](checkout) my order
-      - i want to do [checkout](checkout)
+      - [check out](checkout)
+      - i want to [check out](checkout)
+      - please [check out](checkout)
+      - we want to [check out](checkout)
+      - please [check out](checkout) my order
+      - can you please [check out](checkout) my order
+      - i want to do [check out](checkout)
 
   - intent: place_order_page
     examples: |
@@ -1485,6 +1480,7 @@ nlu:
       - I like to correct [Cheese Slice](productName)
       - i want to improve Cheese Slice to my cart
       - i want to check [Cheese Slice](productName)
+      - i want to customize the [Cheese Slice](productName)
       - check [cheese slice](productName)
       - i want to edit [Cheese Slice](productName)
       - i want to edit [Cheese Slice](productName)
@@ -1494,6 +1490,7 @@ nlu:
       - I want to place an edit for [cheese slice](productName)
       - improve [cheese slice](productName) to cart
       - I want to edit [Nacho Burger](productName)
+      - i want to customize the [Nacho Burger](productName)
       - I like to correct [Nacho Burger](productName)
       - i want to improve Nacho Burger to my cart
       - we want to improve nacho burger to my cart
@@ -1501,6 +1498,7 @@ nlu:
       - I want to place an edit for [nacho burger](productName)
       - I would like to edit a [Nacho Burger](productName)
       - improve [Nacho Burger](productName) to cart
+      - i want to customize the [Nacho Cheese](productName)
       - I want to edit [Nacho Cheese](productName)
       - I like to correct [Nacho Cheese](productName)
       - i want to improve nacho cheese to my cart
@@ -1509,38 +1507,46 @@ nlu:
       - I would like to edit a [nacho cheese](productName)
       - improve [Nacho Cheese](productName) to cart
       - I want to edit [Cole Slaw](productName)
+      - i want to customize the [Cole Slaw](productName)
       - I like to correct [Cole Slaw](productName)
       - i want to improve Cole Slaw to my cart
       - we want to improve [cole slaw](productName) to my cart
       - I would like to edit a [cole slaw](productName)
       - I want to place an edit for [cole slaw](productName)
       - improve [cole slaw](productName) to cart
+      - i want to customize the [French Fries](productName)
       - I want to edit [French Fries](productName)
       - I like to correct [French Fries](productName)
       - improve [french fries](productName) to cart
       - i want to improve [French Fries](productName) to cart
       - I would like to edit a [french fries](productName)
       - I want to place an edit for [french fries](productName)
+      - i want to customize the [Beef Bacon](productName)
       - I want to edit [Beef Bacon](productName)
       - I like to correct [Beef Bacon](productName)
       - I would like to edit a [beef bacon](productName)
       - I want to place an edit for [beef bacon](productName)
+      - i want to customize the [Onion Rings](productName)
       - I want to edit [Onion Rings](productName)
       - I like to correct [Onion Rings](productName)
       - I would like to edit a [onion rings](productName)
       - I want to place an edit for [onion rings](productName)
+      - i want to customize the [Cheese Sticks](productName)
       - I want to edit [Cheese Sticks](productName)
       - I like to correct [Cheese Sticks](productName)
       - I want to place an edit for [cheese sticks](productName)
       - I would like to edit a [cheese sticks](productName)
+      - i want to customize the [Jalapeno Poppers](productName)
       - I want to edit [Jalapeno Poppers](productName)
       - I like to correct [Jalapeno Poppers](productName)
       - I would like to edit a [jalapeno poppers](productName)
       - I want to place an edit for [jalapeno poppers](productName)
+      - i want to customize the [Beef Patty](productName)
       - I want to edit [Beef Patty](productName)
       - I like to correct [Beef Patty](productName)
       - I want to place an edit for [beef patty](productName)
       - I would like to edit a [beef patty](productName)
+      - i want to customize the [beef patty](productName)
       - I want to edit [Chicken Patty](productName)
       - I like to correct [Chicken Patty](productName)
       - I would like to edit a [chicken patty](productName)
@@ -1895,6 +1901,7 @@ nlu:
       - i want to check [Garlic Sauce](productName)
       - check [Garlic Sauce](productName)
       - i want to edit [Garlic Sauce](productName)
+      - i want to customize the [Garlic Sauce](productName)
       - i want to edit [Garlic Sauce](productName)
       - can you please check [Garlic Sauce](productName)
       - improve [Garlic Sauce](productName)
