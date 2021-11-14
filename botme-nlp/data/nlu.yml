@@ -137,49 +137,56 @@ nlu:
 
   - intent: reservation_page
     examples: |
-      - Take me to [reservation page](pagethree)
-      - i want to visit [reservation page](pagethree)
-      - open [reservation page](pagethree) please
-      - i want to see the [reservation page](pagethree)
-      - can you please redirect me to [reservation page](pagethree)
-      - he want to redirect to [reservation page](pagethree)
-      - i want to redirect to [reservation page](pagethree)
-      - show me the [reservation page](pagethree)
-      - show us the [reservation page](pagethree)
-      - i want you to take me to the [reservation page](pagethree)
-      - she want to visit [reservation page](pagethree)
+      - Take me to [reservation](pagethree) page
+      - take me to [reservation](pagethree)
+      - i want to see the [reservation](pagethree)
+      - i want to see the [reservation](pagethree) page
+      - i want to visit [reservation](pagethree) page
+      - open [reservation](pagethree) page please 
+      - i want to see the [reservation](pagethree) page
+      - can you please redirect me to [reservation ](pagethree) page
+      - he want to redirect to [reservation](pagethree) page
+      - i want to redirect to [reservation](pagethree) page
+      - show me the [reservation](pagethree) page
+      - show us the [reservation](pagethree) page
+      - i want you to take me to the [reservation](pagethree)
+      - she want to visit [reservation](pagethree) page
       - i want to make [reservation](pagethree)
       - we want to make [reservation](pagethree)
       - i want to do [reservation](pagethree)
       - we want to do [reservation](pagethree)
-      - [reservation page](pagethree)
       - [reservation](pagethree)
+  
+  #  - synonym: reservation
+  #   examples: |
+  #     - reservation page
 
   - synonym: contactus_page 
     examples: |
-      - Take me to [contact us page](pagefour)
-      - i want to visit [contact us page](pagefour)
-      - open [contact us page](pagefour) please
-      - i want to see the [contact us page](pagefour)
-      - can you please redirect me to [contact us page](pagefour)
-      - he want to redirect to [contact us page](pagefour)
-      - i want to redirect to [contact us page](pagefour)
-      - show me the [contact us page](pagefour)
-      - show us the [contact us page](pagefour)
-      - i want you to take me to the [contact us page](pagefour)
-      - she want to visit [contact us page](pagefour)
-      - Take me to [contact us page](pagefour)
-      - i want to visit [contact us page](pagefour)
-      - open [contact us page](pagefour) please
-      - i want to see the [contact us page](pagefour)
-      - can you please redirect me to [contact us page](pagefour)
-      - he want to redirect to [contact us page](pagefour)
-      - i want to redirect to [contact us page](pagefour)
-      - show me the [contact us page](pagefour)
-      - show us the [contact us page](pagefour)
-      - i want you to take me to the [contact us page](pagefour)
-      - she want to visit [contact us page](pagefour)
-      - [contact us page](pagefour)
+      - Take me to [contact](pagefour) us page
+      - i want to visit [contact](pagefour) us page
+      - open [contact](pagefour) please page
+      - i want to see the [contact](pagefour) us page
+      - can you please redirect me to [contact](pagefour) us page
+      - he want to redirect to [contact](pagefour) us page
+      - i want to redirect to [contact](pagefour) us page
+      - show me the [contact](pagefour)
+      - show us your [contact](pagefour)
+      - i want you to take me to the [contact](pagefour) us page
+      - she want to see the [contact](pagefour)
+      - Take me to [contact](pagefour) us page
+      - i want to visit [contact](pagefour) us page
+      - open [contact](pagefour) us page please 
+      - i want to see your [contact](pagefour)
+      - can you please redirect me to [contact](pagefour) us page
+      - he want to redirect to [contact](pagefour) us page
+      - i want to redirect to [contact](pagefour) us page
+      - show me the [contact](pagefour)
+      - show us your [contact](pagefour)
+      - i want you to take me to the [contact](pagefour) us page
+      - she want to visit [contact](pagefour) us page
+      - [contact](pagefour) us page
+      - [contact](pagefour)
 
   - intent: signup_Login
     examples: |
@@ -237,7 +244,27 @@ nlu:
       - we demand you to bring up the [cart](cartlist)
       - i want to check my [cart](cartlist)
 
-      
+  - intent: close_cart
+    examples: |
+      - i want to close the [cart](cancel)
+      - can you please close the [cart](cancel)
+      - remove [cart](cancel) please
+      - i want to remove [cart](cancel) window
+      - stop the [cart](cancel) window
+      - shut the [cart](cancel) window
+      - i want to stop the [cart](cancel) window
+      - close [cart](cancel)
+      - close [cart](cancel) window
+      - please close the [cart](cancel) 
+      - please close [cart](cancel) window
+      - i want you to close the [cart](cancel) please
+      - stop showing me the [cart](cancel) window
+      - cancel the [cart](cancel) window
+      - can you please cancel the [cart](cancel)
+      - can you please stop showing the [cart](cancel)
+      - i want you to cancel the [cart](cancel) please
+      - remove the [cart](cancel) window
+
   - intent: add_edit_cart
     examples: |
       - add to [cart](list)
@@ -276,15 +303,18 @@ nlu:
   - intent: place_order
     examples: |
       - [order now](done)
-      - i want [order now](done)
-      - all done [order now](done) my order
+      - i want to [order now](done)
+      - all done [order now](done) please
       - we want to [order now](done)
       - i want to [order](done) my order
       - we want to [order](done) our order
-      - [place order] please
-      - [place] the order please
-      - i want to [place] the order
-
+      - [place order](done) please
+      - [place](done) the order please
+      - i want to [place](done) the order
+      - everything is done [order now](done)
+      - click on [order now](done)
+      - please [place](done) my order now
+       
   - synonym: order now
     examples: |
       - place

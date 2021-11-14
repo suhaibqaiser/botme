@@ -110,4 +110,7 @@ export class ProductCartModalComponent implements OnInit {
     if(!this.cartProducts.length) return
     this._router.navigate(['/cart'])
   }
+  closeCart(){
+    document.getElementsByClassName('cart-modal-wrapper')[0]?.setAttribute('style', 'display:none')
+  }
 }
