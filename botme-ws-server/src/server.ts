@@ -21,7 +21,7 @@ const io = new Server(httpServer, options);
 
 io.use(async (socket: Socket, next) => {
     const token = socket.handshake.auth.token;
-
+    
     let session: any = await getSession(token)
     if (session.sessionId) {
         socket.data.sessionId = session.sessionId
@@ -36,7 +36,7 @@ io.use(async (socket: Socket, next) => {
 
 
 io.on("connection", (socket: Socket) => {
-    //sendMessage(socket.data.clientId, "notification", `device:${socket.data.sessionId} attached on robot:${socket.data.clientId}`)
+    console.log(socket.data.clientId, "notification", `device:${socket.data.sessionId} attached on robot:${socket.data.clientId}`)
 
     socket.on("message", async (data: models.SocketMessage) => {
         console.log(data);

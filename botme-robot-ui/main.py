@@ -2,23 +2,14 @@ from http.client import BAD_GATEWAY, error
 import tkinter as tk
 from tkinter import Button, Label, Scrollbar, Text, Entry, Toplevel
 from tkinter.constants import BOTH, BOTTOM, CENTER, DISABLED, END, N, NORMAL, S, TOP, TRUE, X, Y
+
 import requests
-import json
-from proto import message
-# from tkinter.font import Font
-# from typing import Text
 from libraries.ui import fade
 from libraries.speech_services import listen, speak
-import random
 from libraries.sockets import Sockets
+import random
 from PIL import Image, ImageTk
-import datetime
-import threading
-from asyncio.tasks import sleep
 import sys
-
-# Class Initialization for Socket Communication
-
 
 # Main app window
 app_root = tk.Tk()
@@ -33,9 +24,6 @@ border_width = 25
 background_color = ["#ff9aa2", "#ffb7b2",
                     "#ffdac1", "#e2f0cb", "#b5ead7", "#c7ceea"]
 clientToken = ""
-
-
-socket = Sockets()
 
 
 class Login:
@@ -85,32 +73,34 @@ class Login:
     button2.place(relx=0.1, rely=0.9, relheight=0.06, relwidth=0.22)
 
     def checkForClient():
-        global clientToken
+        
+        global clientToken, socket
         try:
-            print(Login.clientID)
-            print(Login.clientDeviceId)
-            print(Login.clientSecret)
             body = {"clientID": Login.clientID.get(), "clientSecret": Login.clientSecret.get(
             ), "clientDeviceId": Login.clientDeviceId.get()}
             auth_token = 'ea2d3aeaad77865f9769974a920892f5'
             response = requests.post("https://api.gofindmenu.com/client/client/auth",
                                      body, headers={'Authorization': 'Bearer ' + auth_token})
-            data = response.json()
-            print(data)
-            clientToken = data['payload']['clientToken']
-            if data['status'] == 'success':
-                Login.login.destroy()
-                app_root.deiconify()
-            elif data['status'] != 'success':
-                labelError = Label(
-                    Login.login, text=data['payload']['message'], font=text_font, fg='red')
-                labelError.place(relheight=0.15, relx=0.09, rely=0.7)
-            else:
-                labelError = Label(
-                    Login.login, text=data['payload']['message'], font=text_font, fg='red')
-                labelError.place(relheight=0.15, relx=0.09, rely=0.7)
         except:
             print("error in connecting client Api")
+
+        data = response.json()
+        print(data)
+        if data['status'] == 'success':
+            clientToken = data['payload']['clientToken']
+            Login.login.destroy()
+            app_root.deiconify()
+            if clientToken:
+                print('clientToken:', clientToken)
+                socket = Sockets(clientToken)
+        elif data['status'] != 'success':
+            labelError = Label(
+                Login.login, text=data['payload']['message'], font=text_font, fg='red')
+            labelError.place(relheight=0.15, relx=0.09, rely=0.7)
+        else:
+            labelError = Label(
+                Login.login, text=data['payload']['message'], font=text_font, fg='red')
+            labelError.place(relheight=0.15, relx=0.09, rely=0.7)
 
     def CancelButton():
         Login.login.destroy()
@@ -286,23 +276,25 @@ text1 = ''
 
 def socketText():
     global text1
-    socket.processing_start()
-    text1 = listen()
-    socket.send_message('communication', text1)
+    if clientToken:
+        socket.processing_start()
+        text1 = listen()
+        socket.send_message('communication', text1)
 
 
 def updateText():
     global old_message, text1
-    message = socket.message_subject
-    if old_message != message:
-        old_message = message
-        sub_text_disp = message['payload']
-        text = sub_text_disp['text']
-        imageOnSentiment(sub_text_disp['sentimentScore'], "success",
+    if clientToken:
+        message = socket.message_subject
+        if old_message != message:
+            old_message = message
+            sub_text_disp = message['payload']
+            text = sub_text_disp['text']
+            imageOnSentiment(sub_text_disp['sentimentScore'], "success",
                              sub_text_disp['text'], sub_text_disp['intentName'])
-        send_message(text1, text)
-        speak(sub_text_disp['text'])
-        socket.processing_end()
+            send_message(text1, text)
+            speak(sub_text_disp['text'])
+            socket.processing_end()
     main1.after(1000, updateText)
 
 
@@ -328,8 +320,6 @@ def send_message(msg, response):
 update_background()
 updateText()
 update_ui()
-
-
 # open_eyes()
 
 

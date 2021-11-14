@@ -1,11 +1,24 @@
 import datetime
 import socketio
-import json
 
 sio = socketio.Client()
 
-
 class Sockets:
+
+    authToken = ""
+
+    def __init__(self, token):
+        print("Class called")
+        self.authToken = token
+        print("inside:" , self.authToken)
+        if self.authToken:
+            # Development WS String
+            #sio.connect(url="ws://localhost:6380", auth={"token": self.authToken})
+            # Production WS String
+            sio.connect(url="wss://api.gofindmenu.com/ws/", socketio_path="/ws/", auth={"token": self.authToken})
+
+
+
     message_subject = {"payload": {"text": 'Waiting',
                                    "sentimentScore": 0, "intentName": ""}, "status": ""}
     notification_subject = {"text": "", "pageId": "", "sectionId": ""}
@@ -35,6 +48,10 @@ class Sockets:
     def disconnect(self):
         print('Disconnected from server')
 
+    # @sio.on('*')
+    # def catch_all(event, sid, data):
+    #     pass
+
     def send_message(self, type, message):
         msg = {
             "payload": {
@@ -53,12 +70,5 @@ class Sockets:
     def processing_end(self):
         self.send_message('notification', 'processing ended')
 
-    authToken = {
-        "token": 'fd44ab5607994ef415c07f2eea5cc39a9a3d577702f1edb7159b2cc69d094ffa'}
 
-    # Development WS String
-#       sio.connect(url="ws://localhost:6380", auth=authToken)
-
-    # Production WS String
-    sio.connect(url="wss://api.gofindmenu.com/ws/",
-                socketio_path="/ws/", auth=authToken)
+    

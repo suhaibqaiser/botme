@@ -86,7 +86,8 @@ async function authorizeClient(req, res) {
     let response = new Response()
 
     if (!req.body.clientID || !req.body.clientSecret) {
-        response.payload = {message: 'clientID or clientSecret is required'};
+        response.payload = { message: 'clientID, clientDeviceId and clientSecret is required' };
+        response.status = "error"
         return res.status(400).send(response);
     }
 
