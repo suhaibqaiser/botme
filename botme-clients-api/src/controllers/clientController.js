@@ -95,7 +95,7 @@ async function authorizeClient(req, res) {
 
     if (client) {
         let hash = crypto.createHash('sha256');
-        let clientToken = hash.update(Date()).digest('base64');
+        let clientToken = hash.update(Date()).digest('hex');
 
         let session = {
             clientID: req.body.clientID,
