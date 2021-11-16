@@ -96,13 +96,13 @@
           <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto">
               <li class="nav-item">
-                <a href="#" id="entityId-home" class="nav-link dropdown-toggle active">HOME</a>
+                <a routerLink="home" id="entityId-home" class="nav-link dropdown-toggle" [class.active]="router.url=='/home'">HOME</a>
               </li>
               <li class="nav-item">
-                <a href="reservations" class="nav-link dropdown-toggle">RESERVATION</a>
+                <a routerLink="reservations" class="nav-link dropdown-toggle" [class.active]="router.url=='/reservations'">RESERVATION</a>
               </li>
               <li class="nav-item">
-                <a href="contact-us" id="entityId-contact-us" class="nav-link">CONTACT US</a>
+                <a routerLink="contact-us" id="entityId-contact-us" class="nav-link" [class.active]="router.url=='/contact-us'">CONTACT US</a>
               </li>
               <li class="nav-item">
 

@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit {
     clientDeviceId: new FormControl('', Validators.required)
   })
 
-  constructor(public socketService: SocketService,private _router: Router, public _botMeClientService: BotmeClientService, private cartService: CartService, private _socketService: SocketService) {
+  constructor(public router: Router,public socketService: SocketService,private _router: Router, public _botMeClientService: BotmeClientService, private cartService: CartService, private _socketService: SocketService) {
     document.getElementsByClassName('cart-modal-wrapper')[0]?.setAttribute('style', 'display:none')
   }
 
