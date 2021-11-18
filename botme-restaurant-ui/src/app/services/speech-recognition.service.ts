@@ -1,13 +1,8 @@
-import {Injectable, NgZone} from '@angular/core';
+import { Injectable } from '@angular/core';
 import * as RecordRTC from 'recordrtc';
-import * as moment from 'moment';
-import {Observable, Subject} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
-
-interface RecordedAudioOutput {
-  blob: Blob;
-  title: string;
-}
+import { Subject } from 'rxjs';
+import { SocketService } from './socket.service';
+import * as hark from 'hark'
 
 @Injectable({
   providedIn: 'root'
@@ -15,111 +10,83 @@ interface RecordedAudioOutput {
 export class SpeechRecognitionService {
   private stream: any
   private recorder: any
-  private interval: any
-  private startTime: any
-  private _recorded = new Subject<RecordedAudioOutput>();
-  private _recordingTime = new Subject<string>();
-  private _recordingFailed = new Subject<string>();
+  private speechEvents: any
+  private isRecording = new Subject<boolean>();
+  private isrecording: boolean = false
+  recording = this.isRecording.asObservable();
 
-  constructor(private _http: HttpClient) {
-  }
+  constructor(private socketService: SocketService) {
+    this.recording.subscribe(data => {
+      this.isrecording = data
+    })
 
-  getRecordedBlob(): Observable<RecordedAudioOutput> {
-    return this._recorded.asObservable();
-  }
-
-  getRecordedTime(): Observable<string> {
-    return this._recordingTime.asObservable();
-  }
-
-  recordingFailed(): Observable<string> {
-    return this._recordingFailed.asObservable();
+    navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+      this.stream = stream;
+    }).catch(error => {
+      console.log(error);
+    });
   }
 
   startRecording() {
-
-    if (this.recorder) {
-      // It means recording is already started or it is already recording something
-      return;
-    }
-
-    this._recordingTime.next('00:00');
-    navigator.mediaDevices.getUserMedia({audio: true}).then(s => {
-      this.stream = s;
+    if (this.recorder) { return }
+    this.record();
+    this.speechEvents = hark(this.stream, {})
+    this.speechEvents.on('speaking', () => {
+      console.log('speaking!');
       this.record();
-    }).catch(error => {
-      this._recordingFailed.next();
     });
 
+    this.speechEvents.on('stopped_speaking', () => {
+      console.log('stopped_speaking!');
+      if (this.isrecording) {
+        this.stopRecording()
+
+      }
+    });
+
+  }
+
+  record() {
+    if (!this.isrecording) {
+      this.recorder = new RecordRTC.StereoAudioRecorder(this.stream, {
+        type: 'audio',
+        mimeType: 'audio/webm;codecs=pcm',
+        numberOfAudioChannels: 1,
+        disableLogs: true,
+        timeSlice: 500,
+        desiredSampRate: 16000,
+        // ondataavailable: (blob: any) => {
+        //   _socketService.sendMessage("voice", blob)
+        // }
+      });
+      this.recorder.record();
+      this.isRecording.next(true);
+    }
+  }
+
+  stopRecording() {
+    if (this.recorder) {
+      this.recorder.stop((blob: any) => {
+        //this.stopMedia();
+        this.socketService.sendMessage('voice', blob)
+        this.isRecording.next(false);
+      }, () => {
+        this.stopMedia();
+      });
+    }
   }
 
   abortRecording() {
     this.stopMedia();
   }
 
-  private record() {
-
-    this.recorder = new RecordRTC.StereoAudioRecorder(this.stream, {
-      type: 'audio',
-      mimeType: 'audio/webm'
-    });
-
-    this.recorder.record();
-    this.startTime = moment();
-    this.interval = setInterval(
-      () => {
-        const currentTime = moment();
-        const diffTime = moment.duration(currentTime.diff(this.startTime));
-        const time = this.toString(diffTime.minutes()) + ':' + this.toString(diffTime.seconds());
-        this._recordingTime.next(time);
-      },
-      1000
-    );
-  }
-
-  private toString(value: any) {
-    let val = value;
-    if (!value) {
-      val = '00';
-    }
-    if (value < 10) {
-      val = '0' + value;
-    }
-    return val;
-  }
-
-  stopRecording() {
-
-    if (this.recorder) {
-      this.recorder.stop((blob: any) => {
-        if (this.startTime) {
-          const mp3Name = encodeURIComponent('audio_' + new Date().getTime() + '.mp3');
-          console.log('mp3Name =>', mp3Name)
-          this.stopMedia();
-          this._recorded.next({blob: blob, title: mp3Name});
-          console.log('_recorded.next', this._recorded.next({blob: blob, title: mp3Name}))
-        }
-      }, () => {
-        this.stopMedia();
-        this._recordingFailed.next();
-      });
-    }
-  }
-
   private stopMedia() {
     if (this.recorder) {
       this.recorder = null;
-      clearInterval(this.interval);
-      this.startTime = null;
       if (this.stream) {
-        console.log(this.stream.getAudioTracks().forEach((track: any) => track.stop()))
-        this.stream.getAudioTracks().forEach((track: any) => track.stop());
         this.stream = null;
       }
     }
   }
 
-  getTextFromSpeech(data:any) {
-    return this._http.post('http://localhost:3000/getTextFromSpeech', data)
-  }
 }

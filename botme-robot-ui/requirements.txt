@@ -34,3 +34,4 @@ typing-extensions==3.10.0.2
 typing-inspect==0.7.1
 zope.event==4.5.0
 zope.interface==5.4.0
+python-socketio==5.5.0

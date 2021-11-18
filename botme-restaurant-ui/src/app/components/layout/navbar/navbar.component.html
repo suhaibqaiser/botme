@@ -9,17 +9,19 @@
       <!-- mobile navbar-option -->
       <div class="navbar-option d-flex align-items-center">
         <div class="navbar-option-item navbar-option-dots mobile-hide">
-          <button class="dropdown-toggle" type="button" id="mobileOptionDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button class="dropdown-toggle" type="button" id="mobileOptionDropdown" data-bs-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
             <i class="flaticon-menu-1"></i>
           </button>
           <div class="dropdown-menu" aria-labelledby="mobileOptionDropdown">
             <div class="navbar-option-item navbar-option-cart">
-              <a id="entityId-show-cart" (click)="showCartModal()" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
+              <a id="entityId-show-cart" (click)="showCartModal()" class="productCart"><i
+                  class="flaticon-supermarket-basket"></i></a>
               <span class="option-badge">{{getCartProductCount()}}</span>
             </div>
             <div class="navbar-option-item navbar-option-order">
               <a id="entityId-show-cart" href="online-shop" class="btn text-nowrap">
-                 <i class="flaticon-shopping-cart-black-shape"></i>
+                <i class="flaticon-shopping-cart-black-shape"></i>
               </a>
             </div>
           </div>
@@ -27,7 +29,8 @@
 
 
         <div class="navbar-option-item navbar-option-authentication">
-          <button class="navbar-authentication-button" type="button" id="auth2" data-bs-toggle="dropdown" aria-haspopup="true" ><i class="fas fa-sign-in-alt"></i></button>
+          <button class="navbar-authentication-button" type="button" id="auth2" data-bs-toggle="dropdown"
+            aria-haspopup="true"><i class="fas fa-sign-in-alt"></i></button>
           <div class="authentication-box dropdown-menu" aria-labelledby="auth2">
             <div class="authentication-close"><i class="flaticon-cancel"></i></div>
             <div class="authentication-body">
@@ -36,29 +39,35 @@
               <ul class="authentication-tab">
               </ul>
               <div class="authentication-details">
-                <div *ngIf="!_botMeClientService.getCookie().isLoggedIn" class="authentication-details-item active" data-authentication-details="1">
+                <div *ngIf="!_botMeClientService.getCookie().isLoggedIn" class="authentication-details-item active"
+                  data-authentication-details="1">
                   <form [formGroup]="loginForm">
                     <div class="form-group mb-20">
                       <div class="input-group">
-                        <input required type="text" formControlName="clientID" class="form-control" placeholder="Client Id" />
+                        <input required type="text" formControlName="clientID" class="form-control"
+                          placeholder="Client Id" />
                       </div>
                     </div>
                     <div class="form-group mb-20">
                       <div class="input-group">
-                        <input required type="password" formControlName="clientSecret" class="form-control" placeholder="Client Secret" />
+                        <input required type="password" formControlName="clientSecret" class="form-control"
+                          placeholder="Client Secret" />
                       </div>
                     </div>
                     <div class="form-group mb-20">
                       <div class="input-group">
-                        <input required type="text" formControlName="clientDeviceId" class="form-control" placeholder="Device Id" />
+                        <input required type="text" formControlName="clientDeviceId" class="form-control"
+                          placeholder="Device Id" />
                       </div>
                     </div>
                     <div class="authentication-btn">
-                      <button (click)="login()" [disabled]="!loginForm.valid" class="btn full-width btn-border mb-20">Log In</button>
+                      <button (click)="login()" [disabled]="!loginForm.valid"
+                        class="btn full-width btn-border mb-20">Log In</button>
                     </div>
                   </form>
                 </div>
-                <div *ngIf="_botMeClientService.getCookie().isLoggedIn" class="authentication-details-item active" data-authentication-details="1">
+                <div *ngIf="_botMeClientService.getCookie().isLoggedIn" class="authentication-details-item active"
+                  data-authentication-details="1">
                   <h6 class="mt-2 text-white">Device Id : {{_botMeClientService.getCookie().clientDeviceId}}</h6>
                   <h6 class="mt-2 text-white">Client Id : {{_botMeClientService.getCookie().clientID}}</h6>
                   <div class="mt-4 authentication-btn">
@@ -69,37 +78,39 @@
             </div>
           </div>
         </div>
-<!--        <div class="navbar-option-item navbar-option-search">-->
-<!--          <button class="dropdown-toggle" type="button" id="search2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--            <i class="flaticon-loupe"></i>-->
-<!--          </button>-->
-<!--          <div class="dropdown-menu" aria-labelledby="search2">-->
-<!--            <form>-->
-<!--              <div class="form-group">-->
-<!--                <input type="text" class="form-control" placeholder="Search">-->
-<!--                <button><i class="flaticon-loupe"></i></button>-->
-<!--              </div>-->
-<!--            </form>-->
-<!--          </div>-->
-<!--        </div>-->
+        <!--        <div class="navbar-option-item navbar-option-search">-->
+        <!--          <button class="dropdown-toggle" type="button" id="search2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+        <!--            <i class="flaticon-loupe"></i>-->
+        <!--          </button>-->
+        <!--          <div class="dropdown-menu" aria-labelledby="search2">-->
+        <!--            <form>-->
+        <!--              <div class="form-group">-->
+        <!--                <input type="text" class="form-control" placeholder="Search">-->
+        <!--                <button><i class="flaticon-loupe"></i></button>-->
+        <!--              </div>-->
+        <!--            </form>-->
+        <!--          </div>-->
+        <!--        </div>-->
         <div class="d-flex align-items-center navbar-option-item tap-view-place-order mobile-block navbar-option-order">
-          <a *ngIf="_botMeClientService.getCookie().isLoggedIn" id="entityId-order-online" href="online-shop" style="padding: 10px 20px" class="btn">Place order
+          <a *ngIf="_botMeClientService.getCookie().isLoggedIn" id="entityId-order-online" href="online-shop"
+            style="padding: 10px 20px" class="btn">Place order
             <i class="flaticon-shopping-cart-black-shape"></i>
           </a>
           <div class="navbar-option-item navbar-option-order">
-<!--            <app-sofia-bot></app-sofia-bot>-->
+            <!--            <app-sofia-bot></app-sofia-bot>-->
           </div>
         </div>
         <div class="navbar-option-item navbar-option-cart mobile-block">
-          <a (click)="showCartModal()"  id="entityId-show-cart" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
+          <a (click)="showCartModal()" id="entityId-show-cart" class="productCart"><i
+              class="flaticon-supermarket-basket"></i></a>
           <span class="option-badge">{{getCartProductCount()}}</span>
         </div>
       </div>
-<!--        <div class="navbar-option-item navbar-option-order mobile-block">-->
-<!--          <a href="shops-grid" class="btn">-->
-<!--            <i class="flaticon-shopping-cart-black-shape"></i>-->
-<!--          </a>-->
-<!--        </div>-->
+      <!--        <div class="navbar-option-item navbar-option-order mobile-block">-->
+      <!--          <a href="shops-grid" class="btn">-->
+      <!--            <i class="flaticon-shopping-cart-black-shape"></i>-->
+      <!--          </a>-->
+      <!--        </div>-->
     </div>
     <!-- desktop menu -->
     <div class="main-nav">
@@ -114,9 +125,9 @@
               <li class="nav-item">
                 <a href="#" id="entityId-home" class="nav-link dropdown-toggle active">HOME</a>
               </li>
-<!--              <li class="nav-item">-->
-<!--                <a href="menu" class="nav-link">MENU</a>-->
-<!--              </li>-->
+              <!--              <li class="nav-item">-->
+              <!--                <a href="menu" class="nav-link">MENU</a>-->
+              <!--              </li>-->
               <li class="nav-item">
                 <a href="reservations" class="nav-link dropdown-toggle">RESERVATION</a>
               </li>
@@ -128,11 +139,13 @@
           <!-- navbar-option -->
           <div class="navbar-option d-flex align-items-center">
             <div class="navbar-option-item navbar-option-authentication">
-              <button *ngIf="!_botMeClientService.getCookie().isLoggedIn" class="navbar-authentication-button" type="button" id="auth1" data-bs-toggle="dropdown" aria-haspopup="true" >
-                <i  style="font-size: x-large" class="fas fa-sign-in-alt"></i>
+              <button *ngIf="!_botMeClientService.getCookie().isLoggedIn" class="navbar-authentication-button"
+                type="button" id="auth1" data-bs-toggle="dropdown" aria-haspopup="true">
+                <i style="font-size: x-large" class="fas fa-sign-in-alt"></i>
               </button>
-              <button *ngIf="_botMeClientService.getCookie().isLoggedIn" class="navbar-authentication-button" type="button" id="auth1" data-bs-toggle="dropdown" aria-haspopup="true" >
-              <i  style="font-size: x-large" class="fas fa-sign-out-alt"></i>
+              <button *ngIf="_botMeClientService.getCookie().isLoggedIn" class="navbar-authentication-button"
+                type="button" id="auth1" data-bs-toggle="dropdown" aria-haspopup="true">
+                <i style="font-size: x-large" class="fas fa-sign-out-alt"></i>
               </button>
               <div class="authentication-box dropdown-menu" aria-labelledby="auth1">
                 <div class="authentication-close"><i class="flaticon-cancel"></i></div>
@@ -140,32 +153,38 @@
                   <h4 class="text-white text-center" *ngIf="!_botMeClientService.getCookie().isLoggedIn">Log In</h4>
                   <h4 class="text-white text-center" *ngIf="_botMeClientService.getCookie().isLoggedIn">Dashboard</h4>
                   <ul class="authentication-tab">
-<!--                    <li class="authentication-tab-item active" data-authentication-tab="1">Log In</li>-->
+                    <!--                    <li class="authentication-tab-item active" data-authentication-tab="1">Log In</li>-->
                   </ul>
                   <div class="authentication-details">
-                    <div *ngIf="!_botMeClientService.getCookie().isLoggedIn" class="authentication-details-item active" data-authentication-details="1">
+                    <div *ngIf="!_botMeClientService.getCookie().isLoggedIn" class="authentication-details-item active"
+                      data-authentication-details="1">
                       <form [formGroup]="loginForm">
                         <div class="form-group mb-20">
                           <div class="input-group">
-                            <input required type="text" formControlName="clientID" class="form-control" placeholder="Client Id" />
+                            <input required type="text" formControlName="clientID" class="form-control"
+                              placeholder="Client Id" />
                           </div>
                         </div>
                         <div class="form-group mb-20">
                           <div class="input-group">
-                            <input required type="password" formControlName="clientSecret" class="form-control" placeholder="Client Secret" />
+                            <input required type="password" formControlName="clientSecret" class="form-control"
+                              placeholder="Client Secret" />
                           </div>
                         </div>
                         <div class="form-group mb-20">
                           <div class="input-group">
-                            <input required type="text" formControlName="clientDeviceId" class="form-control" placeholder="Device Id" />
+                            <input required type="text" formControlName="clientDeviceId" class="form-control"
+                              placeholder="Device Id" />
                           </div>
                         </div>
                         <div class="authentication-btn">
-                          <button (click)="login()" [disabled]="!loginForm.valid" class="btn full-width btn-border mb-20">Log In</button>
+                          <button (click)="login()" [disabled]="!loginForm.valid"
+                            class="btn full-width btn-border mb-20">Log In</button>
                         </div>
                       </form>
                     </div>
-                    <div *ngIf="_botMeClientService.getCookie().isLoggedIn" class="authentication-details-item active" data-authentication-details="1">
+                    <div *ngIf="_botMeClientService.getCookie().isLoggedIn" class="authentication-details-item active"
+                      data-authentication-details="1">
                       <h6 class="mt-2 text-white">Device Id : {{_botMeClientService.getCookie().clientDeviceId}}</h6>
                       <h6 class="mt-2 text-white">Client Id : {{_botMeClientService.getCookie().clientID}}</h6>
                       <div class="mt-4 authentication-btn">
@@ -177,16 +196,18 @@
               </div>
             </div>
             <div class="navbar-option-item navbar-option-cart">
-              <a (click)="showCartModal()" id="entityId-show-cart" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
+              <a (click)="showCartModal()" id="entityId-show-cart" class="productCart"><i
+                  class="flaticon-supermarket-basket"></i></a>
               <span class="option-badge">{{getCartProductCount()}}</span>
             </div>
             <div class="navbar-option-item navbar-option-order">
-              <a *ngIf="_botMeClientService.getCookie().isLoggedIn" id="entityId-order-online" href="online-shop" style="padding: 10px 20px" class="btn text-nowrap">
+              <a *ngIf="_botMeClientService.getCookie().isLoggedIn" id="entityId-order-online" href="online-shop"
+                style="padding: 10px 20px" class="btn text-nowrap">
                 Place Order <i class="flaticon-shopping-cart-black-shape"></i>
               </a>
             </div>
             <div class="navbar-option-item navbar-option-order">
-<!--                <app-sofia-bot></app-sofia-bot>-->
+              <app-sofia-bot></app-sofia-bot>
             </div>
           </div>
         </nav>

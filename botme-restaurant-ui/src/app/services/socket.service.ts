@@ -81,7 +81,7 @@ export class SocketService {
               this.sendMessage('notification', 'context')
             console.log(payload);
             break;
-          case "action":
+          case "voice":
             console.log(payload);
             break;
           case "action callback":
