@@ -5,7 +5,7 @@ import { getSession } from './services/sessionService'
 import { getCommandResponse } from './services/commandService'
 import config from './config.json'
 import models = require("./models")
-import { getSpeechToText } from "./services/speechService"
+import { getSpeechToText, getTextToSpeech } from "./services/speechService"
 
 // application config
 const port = process.env.WS_PORT || config.port
@@ -54,9 +54,12 @@ io.on("connection", (socket: Socket) => {
             let voiceResponse = await getSpeechToText(payload.text)
             if (voiceResponse) {
                 console.log(voiceResponse);
-
-                let response = await getCommandResponse(socket.data.sessionId, voiceResponse, payload.pageId, payload.sectionId)
-                sendMessage(socket.data.clientId, "communication", response)
+                let response: any = await getCommandResponse(socket.data.sessionId, voiceResponse, payload.pageId, payload.sectionId)
+                console.log(response);
+                if (response?.intentName) {
+                    // response.audio = await getTextToSpeech(response.text)
+                    sendMessage(socket.data.clientId, "communication", response)
+                }
             }
 
 

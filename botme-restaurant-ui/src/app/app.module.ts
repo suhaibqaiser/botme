@@ -37,7 +37,7 @@ import { SearchGridSectionComponent } from './components/sections/search-grid-se
 import { ContactSectionComponent } from './components/sections/contact-section/contact-section.component';
 import { MapSectionComponent } from './components/sections/map-section/map-section.component';
 import { ContactUsComponent } from './components/pages/contact-us/contact-us.component';
-import { SpeechRecognitionService } from "./services/speech-recognition.service";
+import { SpeechService } from "./services/speech.service";
 import { HttpClientModule } from '@angular/common/http';
 import { SofiaBotComponent } from './components/sections/sofia-bot/sofia-bot.component';
 import { ProductDetailComponent } from './components/pages/product-detail/product-detail.component';
@@ -49,8 +49,9 @@ import { SpinnerComponent } from './components/layout/spinner/spinner.component'
 import { ProgressLoaderComponent } from "./components/sections/progress-loader/progress-loader.component";
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { CustomizeProductModalComponent } from './components/sections/customize-product-modal/customize-product-modal.component';
-import { SocketService } from './services/socket.service'; 
+import { SocketService } from './services/socket.service';
 import { BotmeClientService } from "./services/botme-client.service";
+import { WindowService } from './services/window.service';
 
 @NgModule({
   declarations: [
@@ -106,7 +107,7 @@ import { BotmeClientService } from "./services/botme-client.service";
     ReactiveFormsModule,
     NgMultiSelectDropDownModule.forRoot(),
   ],
-  providers: [SpeechRecognitionService, BotmeClientService,SocketService],
+  providers: [SpeechService, BotmeClientService, SocketService, WindowService],
   bootstrap: [AppComponent],
   entryComponents: [CustomizeProductModalComponent]
 })

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { SpeechRecognitionService } from "../../../services/speech-recognition.service";
-import { SocketService } from "../../../services/socket.service";
+import { SocketService } from 'src/app/services/socket.service';
+import { SpeechService } from "../../../services/speech.service";
 
 @Component({
   selector: 'app-sofia-bot',
@@ -16,10 +15,14 @@ export class SofiaBotComponent implements OnInit {
   text: any
   loader: any
   closeChatModal = true
+  voice: any
 
-  constructor(private audioRecordingService: SpeechRecognitionService) {
-    this.audioRecordingService.recording.subscribe((state) => {
+  constructor(private speechService: SpeechService, private socketService: SocketService) {
+    this.speechService.recording.subscribe((state) => {
       this.isRecording = state;
+    });
+    this.socketService.messages.subscribe((message: any) => {
+      this.voice = message.voice;
     });
   }
 
@@ -31,7 +34,7 @@ export class SofiaBotComponent implements OnInit {
     this.closeChatModal = false
     this.text = ''
     if (!this.isRecording) {
-      this.audioRecordingService.startRecording();
+      this.speechService.startRecording();
     } else {
       this.stopRecording()
     }
@@ -39,13 +42,13 @@ export class SofiaBotComponent implements OnInit {
 
   abortRecording() {
     if (this.isRecording) {
-      this.audioRecordingService.abortRecording();
+      this.speechService.abortRecording();
     }
   }
 
   stopRecording() {
     if (this.isRecording) {
-      this.audioRecordingService.stopRecording();
+      this.speechService.stopRecording();
     }
   }
 
@@ -60,4 +63,6 @@ export class SofiaBotComponent implements OnInit {
   close() {
     this.closeChatModal = true
   }
+
+
 }
