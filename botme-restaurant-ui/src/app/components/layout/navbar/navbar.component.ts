@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit {
     clientDeviceId: new FormControl('', Validators.required)
   })
 
-  constructor(public socketService: SocketService,private _router: Router, public _botMeClientService: BotmeClientService, private cartService: CartService, private _socketService: SocketService) {
+  constructor(public router: Router,public socketService: SocketService,private _router: Router, public _botMeClientService: BotmeClientService, private cartService: CartService, private _socketService: SocketService) {
     document.getElementsByClassName('cart-modal-wrapper')[0]?.setAttribute('style', 'display:none')
   }
 
@@ -63,11 +63,6 @@ export class NavbarComponent implements OnInit {
   }
 
   showCartModal() {
-    if(!this._botMeClientService.isCookieTokenValid()) {
-      document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:none')
-      return
-    }
-    console.log('showCartModal =>')
     this._socketService.currentContextObj.pageId = 'pageId-cart-modal'
     this._socketService.currentContextObj.sectionId = 'sectionId-cart-modal'
     document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:block')
