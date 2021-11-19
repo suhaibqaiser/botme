@@ -6,6 +6,8 @@ const ttsclient = new textToSpeech.TextToSpeechClient();
 const fs = require('fs');
 const util = require('util');
 
+process.env['GOOGLE_APPLICATION_CREDENTIALS'] = 'google-cloud-credentials.json'
+
 
 const config = {
     encoding: 'LINEAR16',
