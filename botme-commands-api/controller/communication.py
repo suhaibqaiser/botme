@@ -14,7 +14,6 @@ def getResponse(intent,entity,text,pageId,sectionId):
     if ( -0.5 < senti < 0.5):
         if (intent == "unreserved_table_person"):
             db = getDbCta(intent,value,pageId,sectionId)
-            print(db)
             if db is not None:
                 context = db['context']
                 iD = getEntityClickAttribute(context['entities'])
