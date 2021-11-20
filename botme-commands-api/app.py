@@ -1,6 +1,8 @@
 from flask import Flask,jsonify,request
 from controller.communication import getResponse
 from controller.servicerasa import getIntent
+from timefhuman import timefhuman
+import datetime
 
 app = Flask(__name__)
 
@@ -12,6 +14,7 @@ def send_Response():
     pageId = req_data['pageId']
     print(pageId)
     sectionID = req_data['sectionId']
+    timefhuman('noon next week')
     rasa_data = getIntent(text)
     print(rasa_data)
     intent = rasa_data['intent']
