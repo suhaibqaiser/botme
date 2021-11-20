@@ -3,17 +3,15 @@
 
 @keyframes zoomInZoomOutInfinite {
   0% {
-    transform: scale(1,1);
+    transform: scale(1, 1);
   }
   50% {
-    transform: scale(1.1,1.1);
+    transform: scale(1.1, 1.1);
   }
   100% {
-    transform: scale(1,1);
+    transform: scale(1, 1);
   }
 }
-
-
 
 //.chat-bot{
 //  position: fixed;
@@ -26,24 +24,23 @@
 //
 //}
 
-
-
-.sofia-bot-button{
-  //position: fixed;
-  //bottom: 20px;
-  //float: right;
-  //margin-left: 20px;
-  //z-index: 999;
+.sofia-bot-button {
+  // position: fixed;
+  // bottom: 20px;
+  // float: right;
+  // margin-left: 20px;
+  z-index: 999;
   width: 5rem;
-  img{
+  img {
+    z-index: 999;
     border-radius: 100px;
-    width: 43px;
-    height: 43px;
-    background: #FFCC00;
+    width: 60px;
+    height: 60px;
+    background: #ffcc00;
     padding: 4px;
   }
 }
 
-.bot-animation{
+.bot-animation {
   animation: zoomInZoomOutInfinite 1s infinite;
 }

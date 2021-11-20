@@ -52,6 +52,7 @@ import { CustomizeProductModalComponent } from './components/sections/customize-
 import { SocketService } from './services/socket.service';
 import { BotmeClientService } from "./services/botme-client.service";
 import { WindowService } from './services/window.service';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -106,6 +107,7 @@ import { WindowService } from './services/window.service';
     FormsModule,
     ReactiveFormsModule,
     NgMultiSelectDropDownModule.forRoot(),
+    DragDropModule
   ],
   providers: [SpeechService, BotmeClientService, SocketService, WindowService],
   bootstrap: [AppComponent],

@@ -22,9 +22,6 @@ export class SpeechService {
   private isrecording: boolean = false
   recording = this.isRecording.asObservable();
 
-
-  public sayCommand: string;
-  public recommendedVoices: RecommendedVoices;
   public rates: number[];
   public selectedRate: number;
   public selectedVoice: SpeechSynthesisVoice | null;
@@ -58,32 +55,11 @@ export class SpeechService {
     this.rates = [.25, .5, .75, 1, 1.25, 1.5, 1.75, 2];
     this.selectedVoice = null;
     this.selectedRate = 1;
-    // Dirty Dancing for the win!
     this.text = "";
-    this.sayCommand = "";
-
-
-    this.recommendedVoices = Object.create(null);
-    this.recommendedVoices["Alex"] = true;
-    this.recommendedVoices["Alva"] = true;
-    this.recommendedVoices["Damayanti"] = true;
-    this.recommendedVoices["Daniel"] = true;
-    this.recommendedVoices["Fiona"] = true;
-    this.recommendedVoices["Fred"] = true;
-    this.recommendedVoices["Karen"] = true;
-    this.recommendedVoices["Mei-Jia"] = true;
-    this.recommendedVoices["Melina"] = true;
-    this.recommendedVoices["Moira"] = true;
-    this.recommendedVoices["Rishi"] = true;
-    this.recommendedVoices["Samantha"] = true;
-    this.recommendedVoices["Tessa"] = true;
-    this.recommendedVoices["Veena"] = true;
-    this.recommendedVoices["Victoria"] = true;
-    this.recommendedVoices["Yuri"] = true;
 
 
     this.ngOnInit()
-
+    speechSynthesis.speaking
   }
 
 
@@ -102,7 +78,6 @@ export class SpeechService {
 
     this.voices = speechSynthesis.getVoices();
     this.selectedVoice = (this.voices[2] || null);
-    this.updateSayCommand();
 
     // The voices aren't immediately available (or so it seems). As such, if no
     // voices came back, let's assume they haven't loaded yet and we need to wait for
@@ -116,8 +91,6 @@ export class SpeechService {
 
           this.selectedVoice = (this.voices[2] || null);
           console.log(this.selectedVoice);
-
-          this.updateSayCommand();
         }
       );
     }
@@ -138,22 +111,6 @@ export class SpeechService {
     }
   }
 
-  // current speech synthesis configuration.
-  public updateSayCommand(): void {
-    if (!this.selectedVoice || !this.text) {
-      return;
-    }
-
-    // With the say command, the rate is the number of words-per-minute. As such, we
-    // have to finagle the SpeechSynthesis rate into something roughly equivalent for
-    // the terminal-based invocation.
-    var sanitizedRate = Math.floor(200 * this.selectedRate);
-    var sanitizedText = this.text
-      .replace(/[\r\n]/g, " ")
-      .replace(/(["'\\\\/])/g, "\\$1");
-    this.sayCommand = `say --voice ${this.selectedVoice.name} --rate ${sanitizedRate} --output-file=demo.aiff "${sanitizedText}"`;
-  }
-
   private synthesizeSpeechFromText(
     voice: SpeechSynthesisVoice,
     rate: number,
@@ -168,19 +125,23 @@ export class SpeechService {
 
 
   startRecording() {
+
+
     if (this.recorder) { return }
     this.record();
     this.speechEvents = hark(this.stream, {})
     this.speechEvents.on('speaking', () => {
-      console.log('speaking!');
-      this.record();
+      console.log(speechSynthesis.speaking);
+      if (!speechSynthesis.speaking) {
+        console.log('speaking!');
+        this.record();
+      }
     });
 
     this.speechEvents.on('stopped_speaking', () => {
       console.log('stopped_speaking!');
       if (this.isrecording) {
         this.stopRecording()
-
       }
     });
 
