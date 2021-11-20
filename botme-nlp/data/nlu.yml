@@ -161,7 +161,7 @@ nlu:
   #   examples: |
   #     - reservation page
 
-  - synonym: contactus_page 
+  - intent: contactus_page 
     examples: |
       - Take me to [contact](pagefour) us page
       - i want to visit [contact](pagefour) us page
@@ -3430,14 +3430,6 @@ nlu:
       - [friday](date)
       - [friday](date) [12th june](date)
       - on coming [saturday](date)
-      - [en](lang)
-      - [ar](lang)
-      - [english](lang)
-      - [arabic](lang)
-      - [arabi](lang)
-      - [اليوم](date)
-      - [غدا](date)
-      - [عطلة نهاية الاسبوع](date)
 
   - intent: inform_order
     examples: |
