@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import { FormControl } from "@angular/forms";
-import { Router } from "@angular/router";
-import { environment } from 'src/environments/environment';
-import { io } from "socket.io-client";
-import { BotmeClientService } from './botme-client.service';
+import {Injectable} from '@angular/core';
+import {Subject} from 'rxjs';
+import {FormControl} from "@angular/forms";
+import {Router} from "@angular/router";
+import {environment} from 'src/environments/environment';
+import {io} from "socket.io-client";
+import {BotmeClientService} from './botme-client.service';
 
 
 @Injectable({
@@ -41,6 +41,11 @@ export class SocketService {
       currentRoute: 'cart',
       pageId: 'pageId-cart',
       sectionId: 'sectionId-product-list'
+    },
+    {
+      currentRoute: 'reservations',
+      pageId: 'pageId-reservation',
+      sectionId: 'sectionId-reservation-form'
     }
   ]
   currentContextObj = {
@@ -54,14 +59,13 @@ export class SocketService {
   speachInput = new FormControl('')
 
 
-
   constructor(private router: Router, private clients: BotmeClientService) {
 
     this.authToken = clients.getCookieToken();
 
     if (this.authToken) {
       this.socket = io(environment.wsEndpoint, {
-        auth: { token: this.authToken },
+        auth: {token: this.authToken},
         path: (environment.production) ? "/ws/" : ""
       });
 
@@ -124,12 +128,18 @@ export class SocketService {
     /**
      * var sel = document.getElementById('ctaId-select-serving-size');
      var len = sel.options.length;
-  
+
      sel.setAttribute('size', len);
      */
+    console.log('fireInteractionEvent =>', msg)
     let tempMessage = msg
     this.responseLabel = tempMessage.text
     if (tempMessage.entityId) {
+
+      //for reservation form
+      // @ts-ignore
+      document.getElementById(tempMessage.entityId)?.value = tempMessage.entityName
+
 
       if (tempMessage.entityId == 'entityId-select-serving-size') {
         this.voiceServingSize = tempMessage.entityName.toLowerCase()
