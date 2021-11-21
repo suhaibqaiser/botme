@@ -156,12 +156,8 @@ nlu:
       - i want to do [reservation](pagethree)
       - we want to do [reservation](pagethree)
       - [reservation](pagethree)
-  
-  #  - synonym: reservation
-  #   examples: |
-  #     - reservation page
 
-  - synonym: contactus_page 
+  - intent: contactus_page 
     examples: |
       - Take me to [contact](pagefour) us page
       - i want to visit [contact](pagefour) us page
@@ -243,27 +239,6 @@ nlu:
       - i demand you to bring up the [cart](cartlist)
       - we demand you to bring up the [cart](cartlist)
       - i want to check my [cart](cartlist)
-
-  - intent: close_cart
-    examples: |
-      - i want to close the [cart](cancel)
-      - can you please close the [cart](cancel)
-      - remove [cart](cancel) please
-      - i want to remove [cart](cancel) window
-      - stop the [cart](cancel) window
-      - shut the [cart](cancel) window
-      - i want to stop the [cart](cancel) window
-      - close [cart](cancel)
-      - close [cart](cancel) window
-      - please close the [cart](cancel) 
-      - please close [cart](cancel) window
-      - i want you to close the [cart](cancel) please
-      - stop showing me the [cart](cancel) window
-      - cancel the [cart](cancel) window
-      - can you please cancel the [cart](cancel)
-      - can you please stop showing the [cart](cancel)
-      - i want you to cancel the [cart](cancel) please
-      - remove the [cart](cancel) window
 
   - intent: add_edit_cart
     examples: |
@@ -365,7 +340,6 @@ nlu:
     examples: |
       - place order
       
-
   - intent: menu_category
     examples: |
       - I want to order from [burger](categoryName)
@@ -702,7 +676,6 @@ nlu:
       - i want to go [up](move)
       - go [up](move)
       - move [up](move)
-
 
   - intent: Order_meal
     examples: |
@@ -2179,7 +2152,7 @@ nlu:
       - reveal the [serving size](open) please
       - i want you to reveal the [serving size](open)
       - we want you to reveal the [serving size](open) 
-
+      
   - intent: food_size
     examples: |
       - i want to select [standard](size) size
@@ -2221,6 +2194,19 @@ nlu:
       - [Back]{"entity":"previous","value":"back"}
   - intent: Cancel
     examples: |
+      - i want to [close]{"entity":"drop","value":"cancel"} the cart
+      - can you please [close]{"entity":"drop","value":"cancel"} the cart
+      - [remove]{"entity":"drop","value":"cancel"} cart please
+      - i want to [remove]{"entity":"drop","value":"cancel"} cart window
+      - [shut]{"entity":"drop","value":"cancel"} the cart window
+      - [close]{"entity":"drop","value":"cancel"} cart window
+      - please [close]{"entity":"drop","value":"cancel"} the cart
+      - please [close]{"entity":"drop","value":"cancel"} cart window
+      - i want you to [close]{"entity":"drop","value":"cancel"} the cart please
+      - [cancel] the cart window
+      - can you please [cancel] the cart
+      - i want you to [cancel] the cart please
+      - [remove] the cart window
       - i want to [cancel](drop) the cart
       - [cancel](drop)
       - i want to [Cancel]{"entity":"drop","value":"cancel"} the cart
@@ -3430,14 +3416,6 @@ nlu:
       - [friday](date)
       - [friday](date) [12th june](date)
       - on coming [saturday](date)
-      - [en](lang)
-      - [ar](lang)
-      - [english](lang)
-      - [arabic](lang)
-      - [arabi](lang)
-      - [اليوم](date)
-      - [غدا](date)
-      - [عطلة نهاية الاسبوع](date)
 
   - intent: inform_order
     examples: |

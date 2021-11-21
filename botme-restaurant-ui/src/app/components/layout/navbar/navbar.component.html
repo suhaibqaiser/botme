@@ -16,16 +16,19 @@
           <a class="navbar-brand" href="home">
             <img src="assets/images/logo/web-logo.png" alt="logo" class="logo">
           </a>
+          <li class="nav-item">
+            <app-sofia-bot></app-sofia-bot>
+          </li>
           <!-- nav-list -->
           <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto d-flex align-items-center">
               <li class="nav-item">
                 <a routerLink="home" id="entityId-home" class="nav-link dropdown-toggle"
-                   [class.active]="router.url=='/home'">HOME</a>
+                  [class.active]="router.url=='/home'">HOME</a>
               </li>
               <li class="nav-item">
                 <a routerLink="reservations" id="entityId-reservation" class="nav-link dropdown-toggle"
-                   [class.active]="router.url=='/reservations'">RESERVATION</a>
+                  [class.active]="router.url=='/reservations'">RESERVATION</a>
               </li>
               <li class="nav-item">
                 <a routerLink="contact-us" id="entityId-contact-us" class="nav-link"
@@ -98,7 +101,7 @@
               </form>
             </div>
             <div *ngIf="_botMeClientService.getCookie().isLoggedIn" class="authentication-details-item active"
-                 data-authentication-details="1">
+              data-authentication-details="1">
               <h6 class="mt-2 text-white">Device Id : {{_botMeClientService.getCookie().clientDeviceId}}</h6>
               <h6 class="mt-2 text-white">Client Id : {{_botMeClientService.getCookie().clientID}}</h6>
               <div class="mt-4 authentication-btn">
