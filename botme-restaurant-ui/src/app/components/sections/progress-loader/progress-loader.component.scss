@@ -1,7 +1,7 @@
 /* Absolute Center Spinner */
 .loading {
   position: fixed;
-  z-index: 999;
+  z-index: 999999 !important;
   overflow: show;
   margin: auto;
   top: 0;
@@ -12,30 +12,35 @@
   height: 50px;
 }
 
-.text-black {
+.text {
   position: fixed;
-  z-index: 999;
+  z-index: 9999999 !important;
   overflow: show;
   margin: auto;
-  top: 100;
+  padding-top: 0.2em;
+  top: 0;
   left: 0;
   bottom: 0;
   right: 0;
   width: auto;
-  height: 50px;
+  height: 6em;
   text-align: center;
+  font-size: 4rem;
+  font-weight: bold;
+  color: white;
+  background-color: #e7272dc2;
 }
 
 /* Transparent Overlay */
 .loading:before {
-  content: '';
+  content: "";
   display: block;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(255,255,255,0.5);
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 /* :not(:required) hides these rules from IE9 and below */
@@ -49,20 +54,17 @@
 }
 
 .loading:not(:required):after {
-  content: '';
+  content: "";
   display: block;
   font-size: 30px;
   width: 50px;
   height: 50px;
-  margin-top: -0.5em;
-
-  border: 8px solid #E7272D;
+  margin-top: 1.5em;
+  border: 8px solid #e7272d;
   border-radius: 100%;
   border-bottom-color: transparent;
   -webkit-animation: spinner 1s linear 0s infinite;
   animation: spinner 1s linear 0s infinite;
-
-
 }
 
 /* Animation */
