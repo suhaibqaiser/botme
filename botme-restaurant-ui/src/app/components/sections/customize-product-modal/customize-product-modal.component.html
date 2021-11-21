@@ -283,19 +283,13 @@
                           </tr>
                           <tr *ngIf="cartService.isSelected(cartService.singleCustomProductObj.productOptions)">
                             <td>Options</td>
-                            <td><span *ngFor="let opt of cartService.singleCustomProductObj.productOptions;let optIndex = index">
-                                <span *ngIf="opt.selected">{{opt.productName }} </span>
-                                <span *ngIf="cartService.checkCommas(cartService.singleCustomProductObj.productOptions,optIndex)"> , </span>
-                              </span>
+                            <td><span>{{cartService.checkCommas(cartService.singleCustomProductObj.productOptions)}}</span>
                             </td>
                             <td>--</td>
                           </tr>
                           <tr *ngIf="cartService.isSelected(cartService.singleCustomProductObj.productIngredients)">
                             <td>Ingredients</td>
-                            <td><span *ngFor="let ing of cartService.singleCustomProductObj.productIngredients;let ingIndex = index">
-                                <span *ngIf="ing.selected">{{ing.productName }} </span>
-                                <span *ngIf="cartService.checkCommas(cartService.singleCustomProductObj.productIngredients,ingIndex)"> , </span>
-                              </span>
+                            <td><span>{{cartService.checkCommas(cartService.singleCustomProductObj.productIngredients)}}</span>
                             </td>
                             <td>--</td>
                           </tr>
