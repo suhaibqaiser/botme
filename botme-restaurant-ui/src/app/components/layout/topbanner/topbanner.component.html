@@ -52,7 +52,7 @@
                  data-frames='[{"from":"x:-50px;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
                  data-textAlign="['left','center','center','center']"
                  style="z-index: 7;white-space: normal;font-style:normal; display: flex;align-items: center; max-width: 300px;">
-              <a routerLink="product-detail/?productId={{corusalProductList[0].productId}}" id="ctaId-order-now" class="btn">Order Now <i class="flaticon-shopping-cart-black-shape"></i>
+              <a [routerLink]="['/product-detail',corusalProductList[0].productId]" id="ctaId-order-now" class="btn">Order Now <i class="flaticon-shopping-cart-black-shape"></i>
               </a>
               <p class="header-product-price color-white">${{corusalProductList[0].productPrice}}</p>
             </div>
@@ -112,7 +112,7 @@
                  data-frames='[{"from":"x:-50px;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
                  data-textAlign="['left','center','center','center']"
                  style="z-index: 7;white-space: normal;font-style:normal; display: flex;align-items: center; max-width: 300px;">
-              <a id="ctaId-order-now" routerLink="product-detail/?productId={{corusalProductList[1].productId}}" class="btn">Order Now <i class="flaticon-shopping-cart-black-shape"></i>
+              <a id="ctaId-order-now" [routerLink]="['/product-detail',corusalProductList[1].productId]" class="btn">Order Now <i class="flaticon-shopping-cart-black-shape"></i>
               </a>
               <p class="header-product-price color-white">${{corusalProductList[1].productPrice}}</p>
             </div>
@@ -172,7 +172,7 @@
                  data-frames='[{"from":"x:-50px;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
                  data-textAlign="['left','center','center','center']"
                  style="z-index: 7;white-space: normal;font-style:normal; display: flex;align-items: center; max-width: 300px;">
-              <a id="ctaId-order-now" routerLink="product-detail/?productId={{corusalProductList[2].productId}}" class="btn">Order Now <i class="flaticon-shopping-cart-black-shape"></i>
+              <a id="ctaId-order-now" [routerLink]="['/product-detail',corusalProductList[2].productId]" class="btn">Order Now <i class="flaticon-shopping-cart-black-shape"></i>
               </a>
               <p class="header-product-price color-white">${{corusalProductList[2].productPrice}}</p>
             </div>

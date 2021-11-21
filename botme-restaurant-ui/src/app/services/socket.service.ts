@@ -28,7 +28,7 @@ export class SocketService {
       sectionId: 'sectionId-product-list'
     },
     {
-      currentRoute: 'product detail',
+      currentRoute: 'product-detail',
       pageId: 'pageId-product-detial-page',
       sectionId: 'sectionId-product-detial-page'
     },
@@ -170,6 +170,11 @@ export class SocketService {
     if (currentRoute.indexOf('?') > 0) {
       currentRoute = currentRoute.substr(0, currentRoute.indexOf('?'))
     }
+    if(this.router.url.split('/')[1]==='product-detail'){
+      currentRoute = this.router.url.split('/')[1]
+    }
+
+    console.log('currentRoute =>',currentRoute)
     this.currentContextList.filter((item: any) => {
       if (item.currentRoute === currentRoute) {
         this.currentContextObj = JSON.parse(JSON.stringify(item))

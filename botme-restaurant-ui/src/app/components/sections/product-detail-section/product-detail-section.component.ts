@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuService} from 'src/app/services/menu.service';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {CartService} from "../../../services/cart.service";
 import {SocketService} from "../../../services/socket.service";
 
@@ -18,19 +18,20 @@ export class ProductDetailSectionComponent implements OnInit {
   relatedProduct: any
   productsList: any
 
-  constructor(public _socketService: SocketService, public cartService: CartService, private route: ActivatedRoute, private menuservice: MenuService) {
+  constructor(private router: Router,public _socketService: SocketService, public cartService: CartService, private route: ActivatedRoute, private menuservice: MenuService) {
   }
 
   async ngOnInit() {
     await this.getProducts()
     await this.getCategory()
-    await this.getProductDetail(this.route.snapshot.queryParams['productId'])
+    await this.getProductDetail(this.router.url.split('/')[2])
     await this.getRelatedProducts()
 
     this._socketService.getCurrentContext()
   }
 
   async getProductDetail(productId: string) {
+    console.log('getProductDetail =>',productId)
     this.menuservice.getProductById(productId).subscribe(
       async result => {
         if (result.status === 'success') {
