@@ -21,7 +21,7 @@ export class TopbannerComponent implements OnInit {
     {
       productId: '8a676882-6173-49b4-b123-866899b796eb',
       productName: 'Falafel Sandwich',
-      productDescription: '6 pieces of falafel served with lettuce, tomato, pickle, turnip, parsl...',
+      productDescription: '6 pieces of falafel served with lettuce, tomato, pickle, turnip, parsley, onion and tahini sauce.',
       productPrice: 12.99,
       productImage: ['Falafel Sandwich.jpg']
     },

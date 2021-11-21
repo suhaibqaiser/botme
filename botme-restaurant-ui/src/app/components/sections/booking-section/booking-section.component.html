@@ -4,11 +4,11 @@
     <div class="row align-items-center">
       <div class="col-sm-12 col-md-12 col-lg-12 pb-30">
         <div class="reservation-form-area reservation-item">
-          <form id="sectionId-reservation-form">
+          <form [formGroup]="reservationForm" id="sectionId-reservation-form">
             <div class="reservation-form reservation-form-two reservation-form-white">
               <div class="form-group">
                 <div class="input-group">
-                  <input type="text" id="ctaId-name" placeholder="Name" class="form-control">
+                  <input formControlName="name" type="text" id="entityId-name" placeholder="Name" class="form-control">
                   <div class="input-group-append">
                     <div class="input-group-text">
                       <i class="flaticon-user-2"></i>
@@ -19,7 +19,7 @@
 
               <div class="form-group">
                 <div class="input-group">
-                  <input id="ctaId-number-of-persons" type="text" placeholder="Number of persons" class="form-control">
+                  <input  formControlName="number_of_person" id="entityId-number-of-persons" type="text" placeholder="Number of persons" class="form-control">
                   <div class="input-group-append">
                     <div class="input-group-text">
                       <i class="flaticon-add-user"></i>
@@ -29,7 +29,7 @@
               </div>
               <div class="form-group">
                 <div class="input-group">
-                  <input id="ctaId-date" type="text" placeholder="Date" class="form-control">
+                  <input formControlName="date"  id="entityId-date" type="text" placeholder="Date" class="form-control">
                   <div class="input-group-append">
                     <div class="input-group-text">
                       <i class="flaticon-calendar-1"></i>
@@ -39,7 +39,7 @@
               </div>
               <div class="form-group">
                 <div class="input-group">
-                  <input id="ctaId-time" type="text" name="startTime" class="form-control" placeholder="Time" />
+                  <input formControlName="time" id="entityId-time" type="text" name="startTime" class="form-control" placeholder="Time" />
                   <div class="input-group-append">
                     <div class="input-group-text">
                       <i class="flaticon-clock"></i>
@@ -48,7 +48,7 @@
                 </div>
               </div>
             </div>
-            <button id="ctaId-book-now" class="btn full-width" type="button">Book Now</button>
+            <button id="entityId-book-now" (click)="addReservation()" class="btn full-width" type="button">Book Now</button>
           </form>
         </div>
       </div>

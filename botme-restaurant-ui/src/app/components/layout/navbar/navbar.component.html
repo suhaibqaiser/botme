@@ -6,11 +6,8 @@
       <a href="home" class="mobile-brand">
         <img src="assets/images/logo/web-logo.png" alt="logo" class="blue-logo">
       </a>
-      <li class="nav-item">
-        <app-sofia-bot></app-sofia-bot>
-      </li>
+      <app-sofia-bot class="mobile-brand" style="margin-left: auto;margin-right: 20px;z-index: 999"></app-sofia-bot>
     </div>
-
 
     <!-- desktop menu -->
     <div class="main-nav">
@@ -19,19 +16,14 @@
           <a class="navbar-brand" href="home">
             <img src="assets/images/logo/web-logo.png" alt="logo" class="logo">
           </a>
-          <li class="nav-item">
-            <app-sofia-bot></app-sofia-bot>
-          </li>
           <!-- nav-list -->
           <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto d-flex align-items-center">
-
+            <ul class="navbar-nav ms-auto align-items-center">
               <li class="nav-item">
-                <a routerLink="home" id="entityId-home" class="nav-link dropdown-toggle"
-                  [class.active]="router.url=='/home'">HOME</a>
+                <a routerLink="home" id="entityId-home" class="nav-link" [class.active]="router.url=='/home'">HOME</a>
               </li>
               <li class="nav-item">
-                <a routerLink="reservations" class="nav-link dropdown-toggle"
+                <a routerLink="reservations" id="entityId-reservation" class="nav-link"
                   [class.active]="router.url=='/reservations'">RESERVATION</a>
               </li>
               <li class="nav-item">
@@ -51,12 +43,15 @@
               </li>
               <li class="nav-item">
                 <a *ngIf="_botMeClientService.getCookie().isLoggedIn" (click)="showCartModal()" id="entityId-show-cart"
-                  class="productCart"><i style="font-size: x-large" class="flaticon-supermarket-basket">
-                    <span style="top:14px;right: 0px;" class="option-badge">{{getCartProductCount()}}</span>
-                  </i>
+                  class="productCart"><i style="font-size: x-large" class="flaticon-supermarket-basket"></i>
+                  <span
+                    style="position: relative;background-color:#E7272D;border-radius: 10px;margin-top: -33px;margin-left: -8px;"
+                    class="badge">{{getCartProductCount()}}</span>
                 </a>
               </li>
-
+              <li class="nav-item">
+                <app-sofia-bot class="nav-link"></app-sofia-bot>
+              </li>
             </ul>
           </div>
           <!-- navbar-option -->
