@@ -6,7 +6,7 @@
       <a href="home" class="mobile-brand">
         <img src="assets/images/logo/web-logo.png" alt="logo" class="blue-logo">
       </a>
-      <app-sofia-bot class="mobile-brand" style="margin-left: auto;margin-right: 20px;z-index: 999"></app-sofia-bot>
+      <app-sofia-bot style="z-index: 999 !important;"></app-sofia-bot>
     </div>
 
     <!-- desktop menu -->
@@ -16,6 +16,9 @@
           <a class="navbar-brand" href="home">
             <img src="assets/images/logo/web-logo.png" alt="logo" class="logo">
           </a>
+          <li class="nav-item">
+            <app-sofia-bot></app-sofia-bot>
+          </li>
           <!-- nav-list -->
           <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto align-items-center">
@@ -49,9 +52,7 @@
                     class="badge">{{getCartProductCount()}}</span>
                 </a>
               </li>
-              <li class="nav-item">
-                <app-sofia-bot class="nav-link"></app-sofia-bot>
-              </li>
+
             </ul>
           </div>
           <!-- navbar-option -->
