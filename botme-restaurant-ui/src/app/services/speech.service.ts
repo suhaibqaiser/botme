@@ -19,6 +19,7 @@ export class SpeechService {
   private voiceWelcomeMessage = "Welcome to the interactive online shop experience. Start your order by saying something like. I want to make a reservation!"
   private voiceEndingMessage = "Handing the controls over to you. Happy Ordering!"
   speechText = new Subject<string>()
+  speechState = new Subject<string>()  // State for monitoring speech service eg. listening, processing, speaking, idle
   speechEnabled = new Subject<boolean>();
   recording = this.isRecording.asObservable();
 
@@ -52,7 +53,7 @@ export class SpeechService {
         }
       );
     }
-
+    this.updateState('i')
     // this.socketService.processing = true
 
   }
@@ -62,24 +63,28 @@ export class SpeechService {
       return;
     }
     this.stop();
-    this.speechText.next(speechText)
+    this.updateState('s')
     this.synthesizeSpeechFromText(this.selectedVoice, this.selectedRate, speechText);
-    this.socketService.processing = false
+
   }
 
   public stop(): void {
     if (speechSynthesis.speaking) {
+      this.updateState('i')
       speechSynthesis.cancel();
     }
 
   }
 
-  private synthesizeSpeechFromText(voice: SpeechSynthesisVoice, rate: number, text: string) {
+  private async synthesizeSpeechFromText(voice: SpeechSynthesisVoice, rate: number, text: string) {
     var utterance = new SpeechSynthesisUtterance(text);
     utterance.voice = voice;
     utterance.rate = rate;
     utterance.lang = utterance.voice.lang
     speechSynthesis.speak(utterance);
+    while (speechSynthesis.speaking) { await this.delay(100) }
+    // Hide processing overlay
+    this.socketService.processing = false
   }
 
 
@@ -119,7 +124,12 @@ export class SpeechService {
   record() {
     if (!this.speechEvents) { return }
     if (!this.isrecording) {
+      this.updateState('l')
+
+      // Show processing overlay
       this.socketService.processing = true
+
+
       this.recorder = new RecordRTC.StereoAudioRecorder(this.stream, {
         type: 'audio',
         mimeType: 'audio/webm;codecs=pcm',
@@ -134,7 +144,14 @@ export class SpeechService {
 
   stopRecording() {
     if (this.recorder) {
+      this.updateState('p')
+      setTimeout(() => {
+        if (!speechSynthesis.speaking && this.socketService.processing === true) {
+          this.speak("Well, that didn't went according to the plan, please say again!")
+        }
+      }, 3000);
       this.recorder.stop((blob: any) => {
+
         this.socketService.sendMessage('voice', blob)
         this.isRecording.next(false);
       }, () => {
@@ -161,4 +178,22 @@ export class SpeechService {
   delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
+
+  updateState(state: string) {
+    if (state === 'p') {
+      this.speechText.next('Processing...')
+      this.speechState.next('processing')
+    } else if (state === 'l') {
+      this.speechState.next('listening')
+      this.speechText.next('Listening...')
+    } else if (state === 'i') {
+      this.speechState.next('idle')
+    } else if (state === 's') {
+      this.speechState.next('speaking')
+      this.speechText.next('Speaking...')
+    }
+  }
+
 }
+
+
