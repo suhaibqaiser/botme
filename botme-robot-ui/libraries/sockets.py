@@ -13,9 +13,9 @@ class Sockets:
         print("inside:" , self.authToken)
         if self.authToken:
             # Development WS String
-            #sio.connect(url="ws://localhost:6380", auth={"token": self.authToken})
+            sio.connect(url="ws://localhost:6380", auth={"token": self.authToken})
             # Production WS String
-            sio.connect(url="wss://api.gofindmenu.com/ws/", socketio_path="/ws/", auth={"token": self.authToken})
+            #sio.connect(url="wss://api.gofindmenu.com/ws/", socketio_path="/ws/", auth={"token": self.authToken})
 
 
 
