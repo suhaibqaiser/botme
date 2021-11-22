@@ -22,6 +22,7 @@ export class SpeechService {
   speechEnabled = new Subject<boolean>();
   recording = this.isRecording.asObservable();
 
+
   constructor(private socketService: SocketService) {
     this.recording.subscribe(data => {
       this.isrecording = data
@@ -41,7 +42,13 @@ export class SpeechService {
         "voiceschanged",
         () => {
           this.voices = speechSynthesis.getVoices();
-          this.selectedVoice = (this.voices[2] || null);
+          let selectVoice: number = 2
+          this.voices.forEach(function (voice, index) {
+            if (voice.lang === 'en-UK' && voice.name.includes('Female')) {
+              selectVoice = index
+            }
+          });
+          this.selectedVoice = this.voices[selectVoice]
         }
       );
     }
@@ -71,6 +78,7 @@ export class SpeechService {
     var utterance = new SpeechSynthesisUtterance(text);
     utterance.voice = voice;
     utterance.rate = rate;
+    utterance.lang = utterance.voice.lang
     speechSynthesis.speak(utterance);
   }
 
