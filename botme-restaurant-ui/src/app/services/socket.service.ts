@@ -46,6 +46,11 @@ export class SocketService {
       currentRoute: 'reservations',
       pageId: 'pageId-reservation',
       sectionId: 'sectionId-reservation-form'
+    },
+    {
+      currentRoute: 'contact us',
+      pageId: 'pageId-contact-us',
+      sectionId: 'sectionId-message-form'
     }
   ]
   currentContextObj = {
