@@ -1,12 +1,16 @@
 from conf.mongodb import getDbCta
 import requests
+import dateparser
+from timefhuman import timefhuman
+from datetime import datetime
+
 
 def parseEntityValue(entity):
     for x in entity:
         if(len(entity) == 1):
             return x['value']
         elif(len(entity)>1):
-            value = joinTwoEntity(x)
+            value = joinTwoEntity(entity)
             return value
         elif(len(entity)==0):
             return None
@@ -19,14 +23,17 @@ def checkingForProduct(intent,value,senti,pageId,sectionId):
         if(data['status']=="success"):
             if(len(data['payload']) == 1):
                 db = getDbCta(intent,value,pageId,sectionId)
-                print("2 => ", db)
-                if(db == None):
-                    return {"Response":"Product not found in database","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":intent}
-                else:
+                if(db != None):
                     context = db['context']
                     productID = parseProductId(payload)
                     iD = getEntityClickAttribute(context['entities'])
-                    return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":productID,"actionType":iD['actionType'],"sentimentScore":senti,"intentName":intent}
+                    if(sectionId == "sectionId-cart-modal"):
+                        name = value.title()
+                        return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":productID+name,"actionType":iD['actionType'],"sentimentScore":senti,"intentName":intent}
+                    else:
+                        return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":productID,"actionType":iD['actionType'],"sentimentScore":senti,"intentName":intent}
+                else:
+                    return {"Response":"Product not found in database","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":intent} 
             else:
                 return {"Response":"What do you mean by " + value + "?","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":'question'}
         else:
@@ -57,10 +64,53 @@ def getEntityClickAttribute(entity):
 
 def joinTwoEntity(entity):
     array = []
-    array.append(entity['value'])
-    value = array[0] +" "+ array[1]
+    for x in entity:
+        array.append(x['value'])
+    value = " ".join(array)
     return value
 
 def parseProductId(payload):
     for x in payload:
         return x['productId']
+
+def parseDate(text,db,pageId,sectionId,intent,senti):
+    context = db['context']
+    iD = getEntityClickAttribute(context['entities'])
+    try:
+        t = dateparser.parse(text)
+        print("time =>" ,t)
+        if t is not None:
+            print("dateparser call")
+            time = t.strftime("%d/%m/%Y")
+            print(time)
+        else:
+            print("timefhuman call")
+            now = datetime.now()
+            t = timefhuman(text,now=now)
+            print(t)
+            time = t.strftime("%d/%m/%Y")
+            print(time)
+        return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":time,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":senti,"intentName":intent}     
+    except:
+        return "Error in parsing date"
+
+def parseTime(text,db,pageId,sectionId,intent,senti):
+    context = db['context']
+    iD = getEntityClickAttribute(context['entities'])
+    try:
+        t = dateparser.parse(text)
+        print("time =>" ,t)
+        if t is not None:
+            print("dateparser call")
+            time = t.strftime("%H:%M:%S")
+            print(time)
+        else:
+            print("timefhuman call")
+            now = datetime.now()
+            t = timefhuman(text,now=now)
+            print(t)
+            time = t.strftime("%H:%M:%S")
+            print(time)
+        return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":time,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":senti,"intentName":intent}     
+    except:
+        return "Error in parsing date"
