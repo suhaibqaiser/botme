@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-import {Subject} from 'rxjs';
-import {FormControl} from "@angular/forms";
-import {Router} from "@angular/router";
-import {environment} from 'src/environments/environment';
-import {io} from "socket.io-client";
-import {BotmeClientService} from './botme-client.service';
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+import { FormControl } from "@angular/forms";
+import { Router } from "@angular/router";
+import { environment } from 'src/environments/environment';
+import { io } from "socket.io-client";
+import { BotmeClientService } from './botme-client.service';
 
 
 @Injectable({
@@ -65,10 +65,9 @@ export class SocketService {
 
     if (this.authToken) {
       this.socket = io(environment.wsEndpoint, {
-        auth: {token: this.authToken},
+        auth: { token: this.authToken },
         path: (environment.production) ? "/ws/" : ""
       });
-
 
       this.socket.on('message', (data: any) => {
 
@@ -76,6 +75,7 @@ export class SocketService {
 
         switch (data.type) {
           case "communication":
+            console.log(payload);
             this.messagesSubject.next(payload)
             this.fireInteractionEvent(payload)
             break;
@@ -170,11 +170,11 @@ export class SocketService {
     if (currentRoute.indexOf('?') > 0) {
       currentRoute = currentRoute.substr(0, currentRoute.indexOf('?'))
     }
-    if(this.router.url.split('/')[1]==='product-detail'){
+    if (this.router.url.split('/')[1] === 'product-detail') {
       currentRoute = this.router.url.split('/')[1]
     }
 
-    console.log('currentRoute =>',currentRoute)
+    console.log('currentRoute =>', currentRoute)
     this.currentContextList.filter((item: any) => {
       if (item.currentRoute === currentRoute) {
         this.currentContextObj = JSON.parse(JSON.stringify(item))
