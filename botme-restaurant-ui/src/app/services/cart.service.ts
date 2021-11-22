@@ -22,7 +22,7 @@ export class CartService {
     productId: '',
     productImage: '',
     productRate: {},
-    productServingSize: '',
+    productServingSize: {},
     productOptions: [],
     productIngredients: [],
     productFlavors: [],
@@ -39,6 +39,28 @@ export class CartService {
   }
   productSizeList: any = []
   tempProductSizeList = ['standard', 'medium', 'large', 'small']
+  productSizeArrayList = [
+    {
+      sizeId: '3ab61ecf-61f8-4608-b4a0-2a66e85c299a',
+      name: 'standard',
+      selected: false
+    },
+    {
+      sizeId: '987f4971-8fea-45c0-99ba-97eb5b96b241',
+      name: 'medium',
+      selected: false
+    },
+    {
+      sizeId: '10286d1a-e0b8-4f22-911a-8f407b4d034a',
+      name: 'large',
+      selected: false
+    },
+    {
+      sizeId: '318c21cc-dad7-41ad-838d-1f82d7ff6071',
+      name: 'small',
+      selected: false
+    }
+  ]
   selectProductRatesField = new FormControl('')
 
   constructor(private _socketService: SocketService) {
@@ -88,9 +110,9 @@ export class CartService {
   setProductRateSize(product: any) {
     this.productSizeList = []
     let i = 0
-    this.tempProductSizeList.forEach((item: any, index: any) => {
-      if (product.productRate[item] > 0) {
-        this.productSizeList[i++] = item
+    this.productSizeArrayList.forEach((item: any, index: any) => {
+      if (product.productRate[item.name] > 0) {
+        this.productSizeList.push(item)
       }
     })
   }
@@ -191,10 +213,10 @@ export class CartService {
       status: false,
       productAttributes: product.productAttributes,
       productNutrition: product.productNutrition,
-      productPrice: this.roundToTwo(product.productRate[this.productSizeList[0]]),
-      productTotalPrice: this.roundToTwo(product.productRate[this.productSizeList[0]])
+      productPrice: this.roundToTwo(product.productRate[this.productSizeList[0].name]),
+      productTotalPrice: this.roundToTwo(product.productRate[this.productSizeList[0].name])
     }
-    this.selectProductRatesField.setValue(this.productSizeList[0])
+    // this.selectProductRatesField.setValue(this.productSizeList[0])
     $('#pageId-productCustomizeModal').modal('show')
   }
 
@@ -213,10 +235,19 @@ export class CartService {
     return this.products.filter((item: any) => item.productType == productType)
   }
 
-  selectProductRate() {
-    if (this._socketService.voiceServingSize) this.selectProductRatesField.setValue(this._socketService.voiceServingSize)
-    this.singleCustomProductObj.productPrice = this.roundToTwo(this.singleCustomProductObj.productRate[this.selectProductRatesField.value])
-    this.singleCustomProductObj.productServingSize = this.selectProductRatesField.value
+  selectProductRate(sizeObj: any) {
+    if (this._socketService.voiceServingSize) {
+      this.productSizeList.forEach((item: any) => {
+        if(item==this._socketService.voiceServingSize){
+          this.singleCustomProductObj.productServingSize = item
+        }
+      })
+    }
+    if (sizeObj.name && sizeObj.name.length) this.singleCustomProductObj.productServingSize = sizeObj.name
+    this.singleCustomProductObj.productPrice = this.roundToTwo(this.singleCustomProductObj.productRate[this.singleCustomProductObj.productServingSize])
+    this.productSizeList.forEach((item: any) => {
+      item.selected = item.name === this.singleCustomProductObj.productServingSize
+    })
     this.customizeBillCalculation()
     this._socketService.voiceServingSize = ''
   }
@@ -299,7 +330,7 @@ export class CartService {
     selectedList.forEach((item: any, index: any) => {
       if (index == 0) {
         selectedProductNames += item.productName
-      }else{
+      } else {
         selectedProductNames += ' , ' + item.productName
       }
     })
@@ -312,7 +343,7 @@ export class CartService {
     selectedList.forEach((item: any, index: any) => {
       if (index == 0) {
         selectedProductNames += item.productName
-      }else{
+      } else {
         selectedProductNames += ' , ' + item.productName
       }
     })
@@ -384,6 +415,10 @@ export class CartService {
     if (this.slideToShow == 2) this._socketService.currentContextObj.sectionId = 'sectionId-toppings'
     if (this.slideToShow == 3) this._socketService.currentContextObj.sectionId = 'sectionId-addons'
     if (this.slideToShow == 4) this._socketService.currentContextObj.sectionId = 'sectionId-summary'
+  }
+
+  selectServingSize(sizeObj: any) {
+
   }
 
   roundToTwo(num: number) {

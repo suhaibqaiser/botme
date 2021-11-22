@@ -25,11 +25,19 @@
                             <h6>Serving Size</h6>
                           </div>
                           <div class="right">
-                            <select (click)="cartService.selectProductRate()" [formControl]="cartService.selectProductRatesField"
+                            <select  [formControl]="cartService.selectProductRatesField"
                                     class="drop-down"
                                     id="ctaId-select-serving-size">
                               <option [value]="item" *ngFor="let item of cartService.productSizeList">{{item}}</option>
                             </select>
+                          </div>
+                          <div class="container multi-select-list row">
+                            <div id="{{i}}" (click)="cartService.selectProductRate(size)" *ngFor="let size of cartService.productSizeList;let i = index" class="mb-3 col-lg-4">
+                              <span *ngIf="size.selected"><i  class="fas fa-check"></i></span>
+                              <div [class.multi-selection]="size.selected" class="d-flex align-items-center justify-content-around ">
+                                <h6>{{size.name}}</h6>
+                              </div>
+                            </div>
                           </div>
                         </div>
                         <hr>

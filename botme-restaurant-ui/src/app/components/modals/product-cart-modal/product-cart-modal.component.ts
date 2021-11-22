@@ -76,7 +76,7 @@ export class ProductCartModalComponent implements OnInit {
         price += item.productTotalPrice
       })
     }
-    return price
+    return this.cartService.roundToTwo(price)
   }
 
   removeFromCart(productId: string) {
@@ -91,7 +91,6 @@ export class ProductCartModalComponent implements OnInit {
     document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:none')
     this.cartService.singleCustomProductObj = JSON.parse(JSON.stringify(product))
     this.cartService.singleCustomProductObj.isEditable = true
-    this.cartService.selectProductRatesField.setValue(product.productServingSize)
     $('#pageId-productCustomizeModal').modal('show')
   }
   showProductInfo(product: any) {
@@ -103,7 +102,6 @@ export class ProductCartModalComponent implements OnInit {
     this.cartService.singleCustomProductObj.isShowInfo = true
     this.cartService.singleCustomProductObj.isEditable = true
     this.cartService.slideToShow = 4
-    this.cartService.selectProductRatesField.setValue(product.productServingSize)
     $('#pageId-productCustomizeModal').modal('show')
   }
   navigateToCart(){

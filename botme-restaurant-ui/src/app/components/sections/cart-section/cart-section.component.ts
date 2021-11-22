@@ -125,7 +125,6 @@ export class CartSectionComponent implements OnInit {
     this.cartService.setProductRateSize(product)
     this.cartService.singleCustomProductObj = JSON.parse(JSON.stringify(product))
     this.cartService.singleCustomProductObj.isEditable = true
-    this.cartService.selectProductRatesField.setValue(product.productServingSize)
     $('#pageId-productCustomizeModal').modal('show')
   }
 
@@ -138,7 +137,6 @@ export class CartSectionComponent implements OnInit {
     this.cartService.singleCustomProductObj.isShowInfo = true
     this.cartService.singleCustomProductObj.isEditable = false
     this.cartService.slideToShow = 4
-    this.cartService.selectProductRatesField.setValue(product.productServingSize)
     $('#pageId-productCustomizeModal').modal('show')
   }
 
