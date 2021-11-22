@@ -146,7 +146,7 @@ export class CartService {
             productName: obj.productName,
             productImage: this.resolveImages(obj),
             productQuantity: 0,
-            productPrice: Math.ceil(obj.productRate.standard),
+            productPrice: this.roundToTwo(obj.productRate.standard),
             productTotalPrice: 0
           })
         }
@@ -170,7 +170,7 @@ export class CartService {
           productImage: this.resolveImages(item),
           selected: false,
           productQuantity: 0,
-          productPrice: Math.ceil(item.productRate.standard),
+          productPrice: this.roundToTwo(item.productRate.standard),
           productTotalPrice: 0
         })
       })
@@ -191,8 +191,8 @@ export class CartService {
       status: false,
       productAttributes: product.productAttributes,
       productNutrition: product.productNutrition,
-      productPrice: Math.ceil(product.productRate[this.productSizeList[0]]),
-      productTotalPrice: Math.ceil(product.productRate[this.productSizeList[0]])
+      productPrice: this.roundToTwo(product.productRate[this.productSizeList[0]]),
+      productTotalPrice: this.roundToTwo(product.productRate[this.productSizeList[0]])
     }
     this.selectProductRatesField.setValue(this.productSizeList[0])
     $('#pageId-productCustomizeModal').modal('show')
@@ -215,7 +215,7 @@ export class CartService {
 
   selectProductRate() {
     if (this._socketService.voiceServingSize) this.selectProductRatesField.setValue(this._socketService.voiceServingSize)
-    this.singleCustomProductObj.productPrice = Math.ceil(this.singleCustomProductObj.productRate[this.selectProductRatesField.value])
+    this.singleCustomProductObj.productPrice = this.roundToTwo(this.singleCustomProductObj.productRate[this.selectProductRatesField.value])
     this.singleCustomProductObj.productServingSize = this.selectProductRatesField.value
     this.customizeBillCalculation()
     this._socketService.voiceServingSize = ''
@@ -238,12 +238,13 @@ export class CartService {
   customizeBillCalculation() {
     this.singleCustomProductObj.productTotalPrice = this.singleCustomProductObj.productPrice
     this.singleCustomProductObj.productToppings.forEach((item: any) => {
-      this.singleCustomProductObj.productTotalPrice += Math.ceil(item.productTotalPrice)
+      this.singleCustomProductObj.productTotalPrice += item.productTotalPrice
     })
 
     this.singleCustomProductObj.productAddons.forEach((item: any) => {
       this.singleCustomProductObj.productTotalPrice += item.productTotalPrice
     })
+    this.singleCustomProductObj.productTotalPrice = this.roundToTwo(this.singleCustomProductObj.productTotalPrice)
   }
 
   addToppingQuantity(toppings: any, type: any) {
@@ -254,6 +255,7 @@ export class CartService {
       toppings.productQuantity = toppings.productQuantity - 1
     }
     toppings.productTotalPrice = toppings.productPrice * toppings.productQuantity
+    toppings.productTotalPrice = this.roundToTwo(toppings.productTotalPrice)
     this.customizeBillCalculation()
   }
 
@@ -265,6 +267,7 @@ export class CartService {
       addons.productQuantity = addons.productQuantity - 1
     }
     addons.productTotalPrice = addons.productPrice * addons.productQuantity
+    addons.productTotalPrice = this.roundToTwo(addons.productTotalPrice)
     this.customizeBillCalculation()
   }
 
@@ -277,6 +280,7 @@ export class CartService {
       product.productQuantity = product.productQuantity - 1
     }
     product.productTotalPrice = product.productTotalPrice * product.productQuantity
+    product.productTotalPrice = this.roundToTwo(product.productTotalPrice)
   }
 
   getTotalPrice(obj: any) {
@@ -286,7 +290,7 @@ export class CartService {
         total += item.productTotalPrice
       }
     })
-    return total
+    return this.roundToTwo(total)
   }
 
   checkCommas(objectList: any) {
@@ -380,5 +384,9 @@ export class CartService {
     if (this.slideToShow == 2) this._socketService.currentContextObj.sectionId = 'sectionId-toppings'
     if (this.slideToShow == 3) this._socketService.currentContextObj.sectionId = 'sectionId-addons'
     if (this.slideToShow == 4) this._socketService.currentContextObj.sectionId = 'sectionId-summary'
+  }
+
+  roundToTwo(num: number) {
+    return Math.round((num + Number.EPSILON) * 100) / 100;
   }
 }
