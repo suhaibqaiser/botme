@@ -1,4 +1,6 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
 import { SocketService } from 'src/app/services/socket.service';
 import { SpeechService } from "../../../services/speech.service";
 
@@ -16,11 +18,16 @@ export class SofiaBotComponent implements OnInit {
   loader: any
   closeChatModal = true
   voice: any
+  speechEnabled: boolean = false;
+  pageContext: string = ""
+
+
 
   constructor(private speechService: SpeechService, private socketService: SocketService) {
     this.speechService.recording.subscribe((state) => {
       this.isRecording = state;
     });
+
     this.socketService.messages.subscribe((message: any) => {
       this.voice = message.voice;
     });
@@ -29,12 +36,23 @@ export class SofiaBotComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  startRecording() {
+
+  updateInteractionState() {
+    this.speechService.speechEnabled.next(this.speechEnabled)
+    if (this.speechEnabled) {
+      this.startRecording(this.socketService.currentContextObj.pageId)
+    } else {
+      this.speechService.abortRecording();
+    }
+  }
+
+
+  startRecording(pageId: string) {
     console.log('start recording')
     this.closeChatModal = false
     this.text = ''
     if (!this.isRecording) {
-      this.speechService.startRecording();
+      this.speechService.startRecording(pageId);
     } else {
       this.stopRecording()
     }

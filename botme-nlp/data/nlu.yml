@@ -88,53 +88,6 @@ nlu:
     examples: |
       - home page
 
-  - intent: menu_list
-    examples: |
-      - I am Hungry what's the [menu](FoodList) today
-      - I am searching for a good food today. What's the [menu](FoodList)
-      - I am searching for a good [cusine](FoodList) today. What's the [menu](FoodList)
-      - May i check the [meal list](FoodList)
-      - The weather is so good outside so i want to  have good [food](FoodList)
-      - What's the best [cusine](FoodList) at your restaurant?
-      - May i have the [menu card](FoodList) please
-      - Can you please share me your [menu card](FoodList) please
-      - May i have the [food list](FoodList)
-      - i am looking for some good [food](FoodList)
-      - today is a good day so i am looking for good [food](FoodList)
-      - Anything good in [snacks](FoodList)
-      - i demand [menu card](FoodList)
-      - i request you to bring [menu card](FoodList)
-      - can you bring up the [menu](FoodList) please
-      - Show [menu](FoodList) please
-      - i am looking for some good [cusine](FoodList) at your restaurant
-      - i am hungry so can you show me good [snacks](FoodList) at your restaurant
-      - Show me the [menu](FoodList)
-      - [menu](FoodList)
-      - Bring me the [menu card](FoodList)
-      - get me the [menu card](FoodList)
-      - Would you please show me the [menu](FoodList)
-      - would you please show me the [menu card](FoodList)
-      - Take me to [menu page](FoodList)
-      - i want to visit [menu page](FoodList)
-      - open [menu page](FoodList) please
-      - i want to see the [menu page](FoodList)
-      - can you please redirect me to [menu page](FoodList)
-      - he want to redirect to [menu page](FoodList)
-      - i want to redirect to [menu page](FoodList)
-      - show me the [menu page](FoodList)
-      - show us the [menu page](FoodList)
-      - i want you to take me to the [menu page](FoodList)
-      - she want to visit [menu page](FoodList)
-
-  - synonym: menu
-    examples: |
-      - cusine
-      - meal list
-      - food
-      - menu card
-      - snacks
-      - menu page
-
   - intent: reservation_page
     examples: |
       - Take me to [reservation](pagethree) page
@@ -144,7 +97,7 @@ nlu:
       - i want to visit [reservation](pagethree) page
       - open [reservation](pagethree) page please 
       - i want to see the [reservation](pagethree) page
-      - can you please redirect me to [reservation ](pagethree) page
+      - can you please redirect me to [reservation](pagethree) page
       - he want to redirect to [reservation](pagethree) page
       - i want to redirect to [reservation](pagethree) page
       - show me the [reservation](pagethree) page
@@ -184,27 +137,27 @@ nlu:
       - [contact](pagefour) us page
       - [contact](pagefour)
 
-  - intent: signup_Login
-    examples: |
-      - show me the [signup](pagefive)
-      - i want to [login](pagefive)
-      - i want to [signup](pagefive)
-      - [login](pagefive)
-      - [signup](pagefive)
-      - show me the [signup](pagefive) form
-      - show me the [login](pagefive) form
-      - can you please open the [signup](pagefive) form
-      - can you please open the [login](pagefive) form
-      - i would like to do [signup](pagefive)
-      - i would like to do [login](pagefive)
-      - i want to see [signup](pagefive) page
-      - i want to see [login](pagefive) page
-      - open the [signup](pagefive) page so i can signup
-      - open the [login](pagefive) page  so i can login
-      - open the [signup](pagefive) form so i can signup
-      - open the [login](pagefive) form  so i can login
-      - i want to see [signup](pagefive) page
-      - i want to see [login](pagefive) page
+  # - intent: signup_Login
+  #   examples: |
+  #     - show me the [signup](pagefive)
+  #     - i want to [login](pagefive)
+  #     - i want to [signup](pagefive)
+  #     - [login](pagefive)
+  #     - [signup](pagefive)
+  #     - show me the [signup](pagefive) form
+  #     - show me the [login](pagefive) form
+  #     - can you please open the [signup](pagefive) form
+  #     - can you please open the [login](pagefive) form
+  #     - i would like to do [signup](pagefive)
+  #     - i would like to do [login](pagefive)
+  #     - i want to see [signup](pagefive) page
+  #     - i want to see [login](pagefive) page
+  #     - open the [signup](pagefive) page so i can signup
+  #     - open the [login](pagefive) page  so i can login
+  #     - open the [signup](pagefive) form so i can signup
+  #     - open the [login](pagefive) form  so i can login
+  #     - i want to see [signup](pagefive) page
+  #     - i want to see [login](pagefive) page
 
   - intent: see_cart
     examples: |
@@ -279,7 +232,7 @@ nlu:
     examples: |
       - [order now](done)
       - i want to [order now](done)
-      - all done [order now](done) please
+      - [order now](done) please
       - we want to [order now](done)
       - i want to [order](done) my order
       - we want to [order](done) our order
@@ -289,7 +242,7 @@ nlu:
       - everything is done [order now](done)
       - click on [order now](done)
       - please [place](done) my order now
-       
+
   - synonym: order now
     examples: |
       - place
@@ -651,31 +604,31 @@ nlu:
       - Pizzas
       - pizzas
 
-  - intent: Navigation_left
-    examples: |
-      - can you move the slider to [left](slide)
-      - move to the [left](slide)
-      - I want the slider to move [left](slide)
-      - can you shift the slider to [left](slide)
-      - can you move the slider to [right](slide)
-      - move to the [right](slide)
-      - I want the slider to move [right](slide)
-      - can you shift the slider to [right](slide)
+  # - intent: Navigation_left
+  #   examples: |
+  #     - can you move the slider to [left](slide)
+  #     - move to the [left](slide)
+  #     - I want the slider to move [left](slide)
+  #     - can you shift the slider to [left](slide)
+  #     - can you move the slider to [right](slide)
+  #     - move to the [right](slide)
+  #     - I want the slider to move [right](slide)
+  #     - can you shift the slider to [right](slide)
   
-  - intent: Scroll_up_down
-    examples: |
-      - i want to scroll [down](move)
-      - can you scroll [down](move) please 
-      - scroll [down](move)
-      - i want to go [down](move)
-      - go [down](move)
-      - move [down](move)
-      - i want to scroll [up](move)
-      - can you scroll [up](move) please 
-      - scroll [up](move)
-      - i want to go [up](move)
-      - go [up](move)
-      - move [up](move)
+  # - intent: Scroll_up_down
+  #   examples: |
+  #     - i want to scroll [down](move)
+  #     - can you scroll [down](move) please 
+  #     - scroll [down](move)
+  #     - i want to go [down](move)
+  #     - go [down](move)
+  #     - move [down](move)
+  #     - i want to scroll [up](move)
+  #     - can you scroll [up](move) please 
+  #     - scroll [up](move)
+  #     - i want to go [up](move)
+  #     - go [up](move)
+  #     - move [up](move)
 
   - intent: Order_meal
     examples: |
@@ -1194,6 +1147,454 @@ nlu:
       - select [Sprite](productName)
       - choose [Sprite](productName)
       - increase [Sprite](productName) quantity
+
+
+  - intent: reduce_product_quantity
+    examples: |
+      - I want to drop [Cheese Slice](productName)
+      - i want to minus Cheese Slice to my cart
+      - i want to reduce [Cheese Slice](productName)
+      - reduce [cheese slice](productName)
+      - i want to lessen [Cheese Slice](productName)
+      - i want to decline [Cheese Slice](productName)
+      - can you please reduce [cheese slice](productName)
+      - we want to minus cheese slice from my cart
+      - I would like to drop a [cheese slice](productName)
+      - I want to drop for [cheese slice](productName)
+      - minus [cheese slice](productName) to cart
+      - I want to drop [Nacho Burger](productName)
+      - i want to minus Nacho Burger to my cart
+      - we want to minus nacho burger to my cart
+      - I would like to drop a [nacho burger](productName)
+      - I want to drop for [nacho burger](productName)
+      - I would like to drop a [Nacho Burger](productName)
+      - minus [Nacho Burger](productName) to cart
+      - I want to drop [Nacho Cheese](productName)
+      - i want to minus nacho cheese to my cart
+      - we want to minus Nacho Cheese to my cart
+      - I want to drop for [nacho cheese](productName)
+      - I would like to drop a [nacho cheese](productName)
+      - minus [Nacho Cheese](productName) to cart
+      - I want to drop [Cole Slaw](productName)
+      - i want to minus Cole Slaw to my cart
+      - we want to minus [cole slaw](productName) to my cart
+      - I would like to drop a [cole slaw](productName)
+      - I want to drop for [cole slaw](productName)
+      - minus [cole slaw](productName) to cart
+      - I want to drop [French Fries](productName)
+      - minus [french fries](productName) to cart
+      - i want to minus [French Fries](productName) to cart
+      - I would like to drop a [french fries](productName)
+      - I want to drop for [french fries](productName)
+      - I want to drop [Beef Bacon](productName)
+      - I would like to drop a [beef bacon](productName)
+      - I want to drop for [beef bacon](productName)
+      - I want to drop [Onion Rings](productName)
+      - I would like to drop a [onion rings](productName)
+      - I want to drop for [onion rings](productName)
+      - I want to drop [Cheese Sticks](productName)
+      - I want to drop for [cheese sticks](productName)
+      - I would like to drop a [cheese sticks](productName)
+      - I want to drop [Jalapeno Poppers](productName)
+      - I would like to drop a [jalapeno poppers](productName)
+      - I want to drop for [jalapeno poppers](productName)
+      - I want to drop [Beef Patty](productName)
+      - I want to drop for [beef patty](productName)
+      - I would like to drop a [beef patty](productName)
+      - I want to drop [Chicken Patty](productName)
+      - I would like to drop a [chicken patty](productName)
+      - I want to drop for [chicken patty](productName)
+      - I want to drop [Fried Kibbeh](productName)
+      - I want to drop for [fried kibbeh](productName)
+      - I would like to drop a [fried kibbeh](productName)
+      - I want to drop [Pizza](productName) 
+      - I want to drop for [pizza](productName)
+      - I would like to drop a [pizza](productName)
+      - I want to drop [Spicy Potato](productName)
+      - I want to drop for [spicy potato](productName)
+      - I would like to drop a [spicy potato](productName)
+      - I want to drop [Curly Fries](productName)
+      - I want to drop for [curly fries](productName)
+      - I would like to drop a [curly fries](productName)
+      - I want to drop [Soup](productName) 
+      - I would like to drop a [soup](productName)
+      - I want to drop for [soup](productName)
+      - I want to drop [Poutine](productName) 
+      - I want to drop for [poutine](productName)
+      - I would like to drop a [poutine](productName)
+      - I want to drop [Hummus](productName) 
+      - I would like to drop a [hummus](productName)
+      - I want to drop for [hummus](productName)
+      - I want to drop [Baba Ghanoush](productName)
+      - I would like to drop a [baba ghanoush](productName)
+      - I want to drop for [baba ghanoush](productName)
+      - I want to drop [Spicy Deluxe](productName)
+      - I would like to drop a [spicy deluxe](productName)
+      - I want to drop for [spicy deluxe](productName)
+      - I want to drop [Lettuce](productName) 
+      - I would like to drop a lettuce(productName)
+      - I want to drop for [lettuce](productName)
+      - I want to drop [Tomato](productName) 
+      - I would like to drop a [tomato](productName)
+      - I want to drop for [tomato](productName)
+      - I want to drop [Beef Shawarma](productName)
+      - I would like to drop a [beef shawarma](productName)
+      - I want to drop for [beef shawarma](productName)
+      - I want to drop [Pickle](productName) 
+      - I would like to drop a [Pickle](productName)
+      - I want to drop for [Pickle](productName)
+      - I want to drop [Kafta Sandwich](productName)
+      - I would like to drop a [kafta sandwich](productName)
+      - I want to drop for [kafta sandwich](productName)
+      - I want to drop [Shish Kaboob Plate](productName))
+      - I would like to drop a [shish kaboob plate](productName)
+      - I want to drop for [shish kaboob plate](productName)
+      - I want to drop [Pepsi](productName) 
+      - I would like to drop a [pepsi](productName)
+      - I want to drop for [pepsi](productName)
+      - I would like to drop a [Beiruti](productName)
+      - I want to drop [Beiruti](productName) 
+      - I want to drop for [beiruti](productName)
+      - I would like to drop a [Mushroom Swiss](productName)
+      - I want to drop [Mushroom Swiss](productName)
+      - I want to drop for [mushroom swiss](productName)
+      - I would like to drop a [Taystee Fish](productName)
+      - I want to drop [Taystee Fish](productName)
+      - I want to drop for [taystee fish](productName)
+      - I would like to drop a [Chicken Taystee](productName)
+      - I want to drop [Chicken Taystee](productName)
+      - I want to drop for [chicken taystee](productName)
+      - I would like to drop a [Taystee Vegan](productName)
+      - I want to drop [Taystee Vegan](productName)
+      - I want to drop for [taystee vegan](productName)
+      - I would like to drop a [American Cheese](productName)
+      - I want to drop [American Cheese](productName)
+      - I want to drop for [american cheese](productName)
+      - I would like to drop a [Garlic Sauce](productName)
+      - I want to drop [Garlic Sauce](productName)
+      - I want to drop for [garlic sauce](productName)
+      - I would like to drop a [Chicken Shawarma Sandwich](productName)
+      - I want to drop [Chicken Shawarma Sandwich](productName))
+      - I want to drop for [chicken shawarma sandwich](productName)
+      - I would like to drop a [Tannour Sandwich](productName)
+      - I want to drop [Tannour Sandwich](productName)
+      - I want to drop for [tannour sandwich](productName)
+      - I would like to drop a [Tahini Sauce](productName)
+      - I want to drop [Tahini Sauce](productName)
+      - I want to drop for [tahini sauce](productName)
+      - I would like to drop a [Falafel Sandwich](productName)
+      - I want to drop [Falafel Sandwich](productName)
+      - I want to drop for [falafel sandwich](productName)
+      - I would like to drop a [Soujouk Sandwich](productName)
+      - I want to drop [Soujouk Sandwich](productName)
+      - I want to drop for [soujouk sandwich](productName)
+      - I would like to drop a [Shawarma Plate](productName)
+      - I want to drop [Shawarma Plate](productName)
+      - I want to drop for [shawarma plate](productName)
+      - I want to drop for [shawarma plate](productName)
+      - I would like to drop a [Shish Kafta Plate](productName)
+      - I want to drop [Shish Kafta Plate](productName))
+      - I want to drop for [shish kafta plate](productName)
+      - I would like to drop a [Shish Tawook Plate](productName)
+      - I want to drop [Shish Tawook Plate](productName))
+      - I want to drop for [shish tawook plate](productName)
+      - I would like to drop a [Falafel Plate](productName)
+      - I want to drop [Falafel Plate](productName)
+      - I want to drop for [falafel plate](productName)
+      - I would like to drop a [Potatoes](productName)
+      - I want to drop for [potatoes](productName)
+      - I would like to drop a [Make Your Own Bowl](productName)
+      - I want to drop [Make Your Own Bowl](productName)
+      - I want to drop for [make your own bowl](productName)
+      - I would like to drop a [BBQ Platter](productName)
+      - I want to drop [BBQ Platter](productName)
+      - I want to drop for [bbq platter](productName)
+      - I would like to drop a [Whole BBQ Chicken](productName)
+      - I want to drop [Whole BBQ Chicken](productName))
+      - I want to drop for [whole bbq chicken](productName)
+      - I would like to drop a [Crazy Taystee](productName)
+      - I want to drop [Crazy Taystee](productName)
+      - I want to drop for [crazy taystee](productName)
+      - I would like to drop a [Grilled Chicken Wrap](productName)
+      - I want to drop [Grilled Chicken Wrap](productName))
+      - I want to drop for [grilled chicken wrap](productName)
+      - I would like to drop a [Crispy Chicken Wrap](productName)
+      - I want to drop Crispy [Crispy Chicken Wrap](productName))
+      - I want to drop for [crispy chicken wrap](productName)
+      - I would like to drop a [Grilled Stake Wrap](productName)
+      - I want to drop [Grilled Stake Wrap](productName))
+      - I want to drop for [grilled stake wrap](productName)
+      - I would like to drop a [Junior Taystee Burger](productName)
+      - I want to drop [Junior Taystee Burger](productName))
+      - I want to drop for [junior taystee burger](productName)
+      - I would like to drop a [Chicken Tenders](productName)
+      - I want to drop [Chicken Tenders](productName)
+      - I want to drop for [chicken tenders](productName)
+      - I would like to drop a [Chicken Nuggets](productName)
+      - I want to drop [Chicken Nuggets](productName)
+      - I want to drop for [chicken nuggets](productName)
+      - I would like to drop a [Chicken Wings](productName)
+      - I want to drop [Chicken Wings](productName)
+      - I want to drop for [chicken wings](productName)
+      - I would like to drop a [Shawarma Salad](productName)
+      - I want to drop [Shawarma Salad](productName)
+      - I want to drop for [shawarma salad](productName)
+      - I would like to drop a [Fattoush Salad](productName)
+      - I want to drop [Fattoush Salad](productName)
+      - I want to drop for [fattoush salad](productName)
+      - I would like to drop a [Tabouli Salad](productName)
+      - I want to drop [Tabouli Salad](productName)
+      - I want to drop for [tabouli salad](productName)
+      - I would like to drop a [vegetable](productName)
+      - I want to drop [vegetable](productName) 
+      - I want to drop for [Vegetable](productName)
+      - I would like to drop a [Greek Salad](productName)
+      - I want to drop [Greek Salad](productName)
+      - I want to drop for [greek salad](productName)
+      - I would like to drop a [Caesars Salad](productName)
+      - I want to drop [Caesars Salad](productName)
+      - I want to drop for [caesars salad](productName)
+      - I would like to drop a [Baklawa](productName)
+      - I want to drop [Baklawa](productName)
+      - I want to drop for [baklawa](productName) 
+      - I would like to drop a [Water Bottle](productName)
+      - I want to drop [Water Bottle](productName)
+      - I want to drop for [water bottle](productName)
+      - I would like to drop a [Fresh Orange Juice](productName)
+      - I want to drop [Fresh Orange Juice](productName))
+      - I want to drop for [fresh orange juice](productName)
+      - I would like to drop a [Apple Juice](productName)
+      - I want to drop [Apple Juice](productName)
+      - I want to drop for [apple juice](productName)
+      - I would like to drop a [Strawberry Juice](productName)
+      - I want to drop [Strawberry Juice](productName)
+      - I want to drop for [strawberry juice](productName)
+      - I would like to drop a [Diet Pepsi](productName)
+      - I want to drop [Diet Pepsi](productName)
+      - I want to drop for [diet pepsi](productName)
+      - I would like to drop a [Sprite](productName)
+      - I want to drop [Sprite](productName) 
+      - I want to drop for [sprite](productName)
+      - I would like to drop a [Red Bull](productName)
+      - I want to drop [Red Bull](productName)
+      - I want to drop for [red bull](productName)
+      - I would like to drop a [Banana Shake](productName)
+      - I want to drop [Banana Shake](productName)
+      - I want to drop for [banana shake](productName)
+      - I would like to drop a [Chocolate Shake](productName)
+      - I want to drop [Chocolate Shake](productName)
+      - I want to drop for [chocolate shake](productName)
+      - I would like to drop a [Cookies & Creme Shake](productName)
+      - I want to drop [Cookies & Creme Shake](productName)
+      - I want to drop for [cookies & creme shake](productName)
+      - i want to reduce [American Cheese Slice](productName)
+      - reduce [American Cheese Slice](productName)
+      - i want to lessen [American Cheese Slice](productName)
+      - i want to decline [American Cheese Slice](productName)
+      - can you please reduce [american cheese slice](productName)
+      - minus [american cheese slice](productName)
+      - i want to decrease [American Cheese Slice](productName) quantity
+      - i want to take [American Cheese Slice](productName) 
+      - take [American Cheese Slice](productName)
+      - decline [American Cheese Slice](productName)
+      - reduce [American Cheese Slice](productName)
+      - lessen [American Cheese Slice](productName)
+      - decrease [American Cheese Slice](productName) quantity
+      - i want to reduce [Garlic Sauce](productName)
+      - reduce [Garlic Sauce](productName)
+      - i want to lessen [Garlic Sauce](productName)
+      - i want to decline [Garlic Sauce](productName)
+      - can you please reduce [Garlic Sauce](productName)
+      - minus [Garlic Sauce](productName)
+      - i want to decrease [Garlic Sauce](productName) quantity
+      - i want to take [Garlic Sauce](productName) 
+      - take [Garlic Sauce](productName)
+      - decline [Garlic Sauce](productName)
+      - reduce [Garlic Sauce](productName)
+      - lessen [Garlic Sauce](productName)
+      - decrease [Garlic Sauce](productName) quantity
+      - i want to reduce [Tomato](productName)
+      - reduce [Tomato](productName)
+      - i want to lessen [Tomato](productName)
+      - i want to decline [Tomato](productName)
+      - can you please reduce [Tomato](productName)
+      - minus [Tomato](productName)
+      - i want to decrease [Tomato](productName) quantity
+      - i want to take [Tomato](productName) 
+      - take [Tomato](productName)
+      - decline [Tomato](productName)
+      - reduce [Tomato](productName)
+      - lessen [Tomato](productName)
+      - decrease [Tomato](productName) quantity
+      - i want to reduce [Lettuce](productName)
+      - reduce [Lettuce](productName)
+      - i want to lessen [Lettuce](productName)
+      - i want to decline [Lettuce](productName)
+      - can you please reduce [Lettuce](productName)
+      - minus [Lettuce](productName)
+      - i want to decrease [Lettuce](productName) quantity
+      - i want to take [Lettuce](productName) 
+      - take [Lettuce](productName)
+      - decline [Lettuce](productName)
+      - reduce [Lettuce](productName)
+      - lessen [Lettuce](productName)
+      - decrease [Lettuce](productName) quantity
+      - i want to reduce [Pickle](productName)
+      - reduce [Pickle](productName)
+      - i want to lessen [Pickle](productName)
+      - i want to decline [Pickle](productName)
+      - can you please reduce [Pickle](productName)
+      - minus [Pickle](productName)
+      - i want to decrease [Pickle](productName) quantity
+      - i want to take [Pickle](productName) 
+      - take [Pickle](productName)
+      - decline [Pickle](productName)
+      - reduce [Pickle](productName)
+      - lessen [Pickle](productName)
+      - decrease [Pickle](productName) quantity
+      - i want to reduce [French Fries](productName)
+      - reduce [French Fries](productName)
+      - i want to lessen [French Fries](productName)
+      - i want to decline [French Fries](productName)
+      - can you please reduce [French Fries](productName)
+      - minus [French Fries](productName)
+      - i want to decrease [French Fries](productName) quantity
+      - i want to take [French Fries](productName) 
+      - take [French Fries](productName)
+      - decline [French Fries](productName)
+      - reduce [French Fries](productName)
+      - lessen [French Fries](productName)
+      - decrease [French Fries](productName) quantity
+      - i want to reduce [Rice](productName)
+      - reduce [Rice](productName)
+      - i want to lessen [Rice](productName)
+      - i want to decline [Rice](productName)
+      - can you please reduce [Rice](productName)
+      - minus [Rice](productName)
+      - i want to decrease [Rice](productName) quantity
+      - i want to take [Rice](productName) 
+      - take [Rice](productName)
+      - decline [Rice](productName)
+      - reduce [Rice](productName)
+      - lessen [Rice](productName)
+      - decrease [Rice](productName) quantity
+      - i want to reduce [Cole Slaw](productName)
+      - reduce [Cole Slaw](productName)
+      - i want to lessen [Cole Slaw](productName)
+      - i want to decline [Cole Slaw](productName)
+      - can you please reduce [Cole Slaw](productName)
+      - minus [Cole Slaw](productName)
+      - i want to decrease [Cole Slaw](productName) quantity
+      - i want to take [Cole Slaw](productName) 
+      - take [Cole Slaw](productName)
+      - decline [Cole Slaw](productName)
+      - reduce [Cole Slaw](productName)
+      - lessen [Cole Slaw](productName)
+      - decrease [Cole Slaw](productName) quantity
+      - i want to reduce [Garlic Sauce](productName)
+      - reduce [Garlic Sauce](productName)
+      - i want to lessen [Garlic Sauce](productName)
+      - i want to decline [Garlic Sauce](productName)
+      - can you please reduce [Garlic Sauce](productName)
+      - minus [Garlic Sauce](productName)
+      - i want to decrease [Garlic Sauce](productName) quantity
+      - i want to take [Garlic Sauce](productName) 
+      - take [Garlic Sauce](productName)
+      - decline [Garlic Sauce](productName)
+      - reduce [Garlic Sauce](productName)
+      - lessen [Garlic Sauce](productName)
+      - decrease [Garlic Sauce](productName) quantity
+      - i want to reduce [Spicy Potato](productName)
+      - reduce [Spicy Potato](productName)
+      - i want to lessen [Spicy Potato](productName)
+      - i want to decline [Spicy Potato](productName)
+      - can you please reduce [Spicy Potato](productName)
+      - minus [Spicy Potato](productName)
+      - i want to decrease [Spicy Potato](productName) quantity
+      - i want to take [Spicy Potato](productName) 
+      - take [Spicy Potato](productName)
+      - decline [Spicy Potato](productName)
+      - reduce [Spicy Potato](productName)
+      - lessen [Spicy Potato](productName)
+      - decrease [Spicy Potato](productName) quantity
+      - i want to reduce [Soup](productName)
+      - reduce [Soup](productName)
+      - i want to lessen [Soup](productName)
+      - i want to decline [Soup](productName)
+      - can you please reduce [Soup](productName)
+      - minus [Soup](productName)
+      - i want to decrease [Soup](productName) quantity
+      - i want to take [Soup](productName) 
+      - take [Soup](productName)
+      - decline [Soup](productName)
+      - reduce [Soup](productName)
+      - lessen [Soup](productName)
+      - decrease [Soup](productName) quantity
+      - i want to reduce [Hummus](productName)
+      - reduce [Hummus](productName)
+      - i want to lessen [Hummus](productName)
+      - i want to decline [Hummus](productName)
+      - can you please reduce [Hummus](productName)
+      - minus [Hummus](productName)
+      - i want to decrease [Hummus](productName) quantity
+      - i want to take [Hummus](productName) 
+      - take [Hummus](productName)
+      - decline [Hummus](productName)
+      - reduce [Hummus](productName)
+      - lessen [Hummus](productName)
+      - decrease [Hummus](productName) quantity
+      - i want to reduce [Baba Ghanoush](productName)
+      - reduce [Baba Ghanoush](productName)
+      - i want to lessen [Baba Ghanoush](productName)
+      - i want to decline [Baba Ghanoush](productName)
+      - can you please reduce [Baba Ghanoush](productName)
+      - minus [Baba Ghanoush](productName)
+      - i want to decrease [Baba Ghanoush](productName) quantity
+      - i want to take [Baba Ghanoush](productName) 
+      - take [Baba Ghanoush](productName)
+      - decline [Baba Ghanoush](productName)
+      - reduce [Baba Ghanoush](productName)
+      - lessen [Baba Ghanoush](productName)
+      - decrease [Baba Ghanoush](productName) quantity
+      - i want to reduce [Water Bottle](productName)
+      - reduce [Water Bottle](productName)
+      - i want to lessen [Water Bottle](productName)
+      - i want to decline [Water Bottle](productName)
+      - can you please reduce [Water Bottle](productName)
+      - minus [Water Bottle](productName)
+      - i want to decrease [Water Bottle](productName) quantity
+      - i want to take [Water Bottle](productName) 
+      - take [Water Bottle](productName)
+      - decline [Water Bottle](productName)
+      - reduce [Water Bottle](productName)
+      - lessen [Water Bottle](productName)
+      - decrease [Water Bottle](productName) quantity
+      - i want to reduce [Pepsi](productName)
+      - reduce [Pepsi](productName)
+      - i want to lessen [Pepsi](productName)
+      - i want to decline [Pepsi](productName)
+      - can you please reduce [Pepsi](productName)
+      - minus [Pepsi](productName)
+      - i want to decrease [Pepsi](productName) quantity
+      - i want to take [Pepsi](productName) 
+      - take [Pepsi](productName)
+      - decline [Pepsi](productName)
+      - reduce [Pepsi](productName)
+      - lessen [Pepsi](productName)
+      - decrease [Pepsi](productName) quantity
+      - i want to reduce [Sprite](productName)
+      - reduce [Sprite](productName)
+      - i want to lessen [Sprite](productName)
+      - i want to decline [Sprite](productName)
+      - can you please reduce [Sprite](productName)
+      - minus [Sprite](productName)
+      - i want to decrease [Sprite](productName) quantity
+      - i want to take [Sprite](productName) 
+      - take [Sprite](productName)
+      - decline [Sprite](productName)
+      - reduce [Sprite](productName)
+      - lessen [Sprite](productName)
+      - decrease [Sprite](productName) quantity
 
   - intent: product-detail
     examples: |
@@ -2735,7 +3136,6 @@ nlu:
       - take out [Sprite](productName)
       - unpick [Sprite](productName)
       - unselect [Sprite](productName)
-      - unselect [Sprite](productName)
       - remove [Sprite](productName) quantity
   
   - intent: add_quantity
@@ -3387,55 +3787,157 @@ nlu:
 
   - intent: inform_name
     examples: |
-      - [Hassan](customerName)
-      - [Alan Smith](customerName)
+      - my name is [Hassan](customerName)
+      - my name is [Alan Smith](customerName)
       - [John Smith](customerName)
       - [Steve Jobs](customerName)
       - [Robert Downey](customerName)
       - [Alan Smith](customerName)
       - [John Smith](customerName)
       - [Steve Jobs](customerName)
-      - [Robert Downey](customerName)
-      - [Hassan](customerName)
+      - my name is [Robert Downey](customerName)
+      - my name is [Theresa Allen](customerName)
+      - call me [Sandra Barnes](customerName)
+      - [Deborah Henderson] is my name
+      - [Larry Perry] is my name
+      - my name is [Frank Ramirez](customerName)
+      - my name is [Salima Jarosław Maryna Zappa](customerName)
+      - call me [Nika Herberto Enrique Gavrilyuk](customerName)
+      - my name is [Allycia Mihaela Aleksanteri Janvier](customerName)
+      - call me [Arethousa Robertina Calixta Rao](customerName)
+      - my name is [Demostrate Milena Vesela Kaiser](customerName)
+      - my name is [Stevan Kristina Sissinnguaq Shantae De Laurentis]
+      - call me [Mahsa Manel Bořek Kjersti Borde]
+      - call me [Samuel Citra Hagano Milan Nigro]
+      - my name is [Ernust Viktor Rokuro Evgeniy Hermanson]
+      - my name is [Dov Hrœrekr Amarante Halina Merx]
 
   - intent: inform_date
     examples: |
-      - [tuesday](date)
-      - [wednesday](date)
+      - upcoming [Monday](date)
+      - next [Tuesday](date)
+      - coming [Wednesday](date)
+      - next [Thursday](date)
+      - upcoming [Friday](date)
+      - oncoming [Saturday](date)
+      - coming [Sunday](date)
+      - oncoming [Friday](date)
       - [tomorrow](date)
       - [next week](date)
       - [next month](date)
       - [weekend](date)
       - [today](date)
       - [now](date)
-      - [1st of this month](date)
-      - [2nd June](date)
-      - [3rd of September](date)
-      - [10th july](date)
-      - [monday](date)
-      - [friday](date)
-      - [friday](date) [12th june](date)
-      - on coming [saturday](date)
+      - [January 1st](date)
+      - [2 January](date)
+      - [28th January](date)
+      - [February 3rd](date)
+      - [4th February](date)
+      - [March 6th](date)
+      - [7 March](date)
+      - [March 29th](date)
+      - [April 8](date)
+      - [9th April](date)
+      - [May 10](date)
+      - [12th May](date)
+      - [June 13](date)
+      - [14th June](date)
+      - [july 15th](date) 
+      - [16 july](date)
+      - [31st july](date)
+      - [August 17](date)
+      - [18th August](date)
+      - [September 19th](date)
+      - [20 September](date)
+      - [September 30](date)
+      - [21st October](date)
+      - [October 22](date)
+      - [November 23rd](date)
+      - [24 November](date)
+      - [25th December]
+      - [December 26](date)
+      - [27th December](date)
 
-  - intent: inform_order
+  - intent: inform_time
     examples: |
-      - [O-12345](orderId)
-      - [O-00000](orderId)
-      - [O-99999](orderId)
+      - [12 a.m](time)
+      - [12 01 a.m](time)
+      - [12 05 a.m](time)
+      - [12 10 a.m](time)
+      - [12 15 p.m](time)
+      - [1 a.m](time)
+      - [1 20 p.m](time)
+      - [1 25 a.m](time)
+      - [1 30 p.m](time)
+      - [1 35 a.m](time)
+      - [1 40 p.m](time)
+      - [2 p.m](time)
+      - [2 45 a.m](time)
+      - [2 50 p.m](time)
+      - [2 55 p.m](time)
+      - [3 a.m](time)
+      - [4 p.m](time)
+      - [5 a.m](time)
+      - [6 p.m](time)
+      - [7 a.m](time)
+      - [8 p.m](time)
+      - [9 a.m](time)
+      - [10 p.m](time)
+      - [11 a.m](time)
+      - [0 o'clock](time)
+      - [1 o'clock](time)
+      - [2 o clock](time)
+      - [3 o'clock](time)
+      - [4 o clock](time)
+      - [5 o'clock](time)
+      - [6 o'clock](time)
+      - [7 o clock](time)
+      - [8 o'clock](time)
+      - [9 o'clock](time)
+      - [10 o clock](time)
+      - [11 o clock](time)
+      - [12 o'clock](time)
+      - [13 o'clock](time)
+      - [14 o clock](time)
+      - [15 o'clock](time)
+      - [16 o clock](time)
+      - [17 o'clock](time)
+      - [18 o clock](time)
+      - [19 o'clock](time)
+      - [20 o clock](time)
+      - [21 o'clock](time)
+      - [22 o clock](time)
+      - [23 o'clock](time)
+      - [24 o clock](time)
 
-  - intent: inform_order
-    examples: |
-      - [pickup](orderType)
-      - [dinein](orderType)
-      - [delivery](orderType)
+  # - intent: inform_order
+  #   examples: |
+  #     - [O-12345](orderId)
+  #     - [O-00000](orderId)
+  #     - [O-99999](orderId)
+
+  # - intent: inform_order
+  #   examples: |
+  #     - [pickup](orderType)
+  #     - [dinein](orderType)
+  #     - [delivery](orderType)
   
-  - intent: inform_lang
+  - intent: book_now
     examples: |
-      - [en](lang)
-      - [ar](lang)
-      - [english](lang)
-      - [arabic](lang)
-      - [arabi](lang)
+      - [book now](reserved)
+      - i want to [book now](reserved)
+      - [book]{"entity":"reserved","value":"book now"}
+      - i want to [book]{"entity":"reserved","value":"book now"}
+      - please [book]{"entity":"reserved","value":"book now"}
+      - please [book now](reserved)
+      
+  # - intent: inform_lang
+  #   examples: |
+  #     - [en](lang)
+  #     - [ar](lang)
+  #     - [english](lang)
+  #     - [arabic](lang)
+  #     - [arabi](lang)
 
   - intent: deny
     examples: |
@@ -3467,65 +3969,6 @@ nlu:
       - what is your [name](challenge)?
       - who are [you](challenge)?
 
-  # - intent: ar_greet
-  #   examples: |
-  #     - أهلا
-  #     - مرحبا
-  #     - ازيك
-  #     - صباح الخير
-  #     - مساء الخير
-  #     - مرحبا هذا صدف
-  #     - أهلا مساء الخير
-  #     - مرحبا مساء الخير
-  #     - مرحبا، كيف حالك؟
-  #     - يا ما الجديد اليوم
-  #     - مرحبا ماذا يكون ما يصل؟
-  #     - مرحبا ما الجديد اليوم
-  #     - مرحبا من الجيد رؤيتك هنا
-  #     - مرحباً ، من الجيد رؤيتك هنا
-  # - intent: ar_reserve_table
-  #   examples: |
-  #     - أريد أن أعرف عن الجلوس لتناول طعام الغداء
-  #     - أريد أن أسأل عن الجلوس لتناول طعام الغداء
-  #     - من فضلك قل لي إذا كانت المقاعد متوفرة
-  #     - اسمحوا لي أن أعرف عن الجلوس لتناول طعام الغداء
-  #     - الجلوس متاح لتناول طعام الغداء
-  #     - هل لديكم ترتيب جلوس هنا لتناول طعام الغداء
-  #     - هل يمكنك ترتيب جلوس لنا
-  #     - هل يمكنك إدارة مقاعد لنا من فضلك
-  #     - هل يمكنك مساعدتي في العثور على أماكن جلوس لتناول طعام الغداء
-  #     - هل هناك أي مقاعد متاحة اليوم
-  #     - أريد أن أعرف عن مائدة الغداء
-  #     - أريد أن أسأل عن مائدة للغداء
-  #     - من فضلك قل لي إذا كان الجدول متاحًا
-  #     - اسمحوا لي أن أعرف عن الجدول لتناول طعام الغداء
-  #     - هل أي طاولة متاحة للغداء
-  #     - هل لديك أي ترتيب طاولة هنا لتناول طعام الغداء
-  #     - هل يمكنك ترتيب طاولة لنا
-  #     - هل يمكنك إدارة طاولة لنا من فضلك
-  #     - هل يمكنك مساعدتي في العثور على طاولة لتناول طعام الغداء
-  #     - هل هناك أي طاولة متاحة اليوم
-  #     - أريد أن أعرف عن مائدة طعام الغداء
-  #     - أريد أن أسأل عن مائدة طعام للغداء
-  #     - من فضلك قل لي إذا كانت طاولة الطعام متوفرة
-  #     - اسمحوا لي أن أعرف عن مائدة الطعام للغداء
-  #     - أي طاولة طعام متاحة للغداء
-  #     - هل لديكم أي ترتيب طاولة طعام هنا لتناول طعام الغداء?
-  #     - هل يمكنك ترتيب طاولة طعام لنا
-  #     - هل يمكنك إدارة طاولة طعام لنا من فضلك
-  #     - هل يمكنك مساعدتي في العثور على طاولة طعام للغداء
-  #     - هل هناك أي طاولة طعام متاحة اليوم
-  #     - أريد أن أعرف عن بعض المكاتب لتناول طعام الغداء
-  #     - أريد أن أسأل عن مكتب لتناول طعام الغداء
-  #     - من فضلك قل لي إذا كان المكتب متاح
-  #     - اسمحوا لي أن أعرف عن المكتب لتناول طعام الغداء
-  #     - هو بعض المكاتب المتاحة للغداء
-  #     - هل لديك ترتيب مكتب هنا لتناول طعام الغداء
-  #     - هل يمكنك ترتيب مكتب لنا
-  #     - هل يمكنك إدارة مكتب لنا من فضلك
-  #     - هل يمكنك مساعدتي في العثور على أي مكتب لتناول طعام الغداء
-  #     - هل هناك أي مكتب متاح اليوم
-
   - regex: orderId
     examples: |
       - O-\d{5}\b
@@ -3540,11 +3983,6 @@ nlu:
     examples: |
       - \d{6,}\b
 
-  - lookup: orderType
-    examples: |
-      - pickup
-      - dinein
-      - delivery
   - lookup: categoryName
     examples: |
       - burgers
@@ -3784,3 +4222,66 @@ nlu:
       - ten
       - eleven
       - twelve
+
+  - lookup: customerName
+    examples: |
+      - Sophia Howells
+      - Humphrey Ayala
+      - Chelsea Howard
+      - Wiktoria Barton
+      - Enoch Moore
+      - Dafydd Britton
+      - Josef Vaughan
+      - Frederic Andrade
+      - Rubi Chan
+      - Darcy Langley
+      - Owais Austin
+      - Tomos Mays
+      - Ann Dillard
+      - Kaison Burke
+      - Billy-Joe Peters
+      - Mindy Jensen
+      - Sion Fuentes
+      - Bo Ruiz
+      - Kenan Rayner
+      - Akshay West
+      - Tyrique Mcpherson
+      - Matei Hartman
+      - Noel Schultz
+      - Isobel Neal
+      - Sumaya Hester
+      - Cody Chaney
+      - Rahul Curry
+      - Ted Finney
+      - Anthony Liu
+      - Amanpreet Spencer
+      - Arran Joyce
+      - Jean-Luc Livingston
+      - Zackary Mcpherson
+      - Tania Bourne
+      - Albi Vo
+      - Gabriela Robinson
+      - Lindsay Khan
+      - Jonathon Martin
+      - Ailsa Pope
+      - Harmony Dupont
+      - Alayna Mccallum
+      - Rosanna Reyna
+      - Rhodri Roberson
+      - Prisha Garrison
+      - Ellie-May Best
+      - Bonita Johns
+      - Rajan Talbot
+      - Zacharias Horner
+      - Katherine Boyle
+      - Gail Boone
+      - Salima Jarosław Maryna Zappa
+      - Nika Herberto Enrique Gavrilyuk
+      - Allycia Mihaela Aleksanteri Janvier
+      - Arethousa Robertina Calixta Rao
+      - Demostrate Milena Vesela Kaiser
+      - Stevan Kristina Sissinnguaq Shantae De Laurentis
+      - Mahsa Manel Bořek Kjersti Borde
+      - Samuel Citra Hagano Milan Nigro
+      - Ernust Viktor Rokuro Evgeniy Hermanson
+      - Dov Hrœrekr Amarante Halina Merx

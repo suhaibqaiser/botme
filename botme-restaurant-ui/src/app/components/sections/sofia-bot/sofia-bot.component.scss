@@ -13,22 +13,21 @@
   }
 }
 
-//.chat-bot{
-//  position: fixed;
-//  bottom: 60px;
-//  float: right;
-//  z-index: 999;
-//  margin-left: 60px;
-//  border-radius: 10px;
-//  height: 200px;
-//
-//}
+.chat-bot {
+  position: fixed;
+  bottom: 60px;
+  float: right;
+  z-index: 999;
+  margin-left: 60px;
+  border-radius: 10px;
+  height: 200px;
+}
 
 .sofia-bot-button {
-  // position: fixed;
-  // bottom: 20px;
-  // float: right;
-  // margin-left: 20px;
+  position: fixed;
+  bottom: 20px;
+  float: right;
+  margin-left: 20px;
   z-index: 999;
   width: 5rem;
   img {
@@ -43,4 +42,30 @@
 
 .bot-animation {
   animation: zoomInZoomOutInfinite 1s infinite;
+}
+
+.i-heading {
+  color: white;
+  font-size: 1rem;
+  font-style: italic;
+}
+
+.interaction {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.align {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.btn-check:active + .btn-outline-primary,
+.btn-check:checked + .btn-outline-primary,
+.btn-outline-primary.active,
+.btn-outline-primary.dropdown-toggle.show,
+.btn-outline-primary:active {
+  background: #fff;
+  color: #e7272d;
+  border-color: #e7272d;
 }
