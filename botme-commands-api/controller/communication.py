@@ -41,7 +41,7 @@ def getResponse(intent,entity,text,pageId,sectionId):
 
     elif(senti > 0.5):
         if(intent == "Order_meal"):
-            Response = checkingForProduct(intent,value,senti,pageId,sectionId)
+            Response = checkingForProduct(intent,value,senti,pageId,sectionId,text)
             return Response
         else:
             if db is not None:
@@ -52,7 +52,7 @@ def getResponse(intent,entity,text,pageId,sectionId):
 
     elif(senti < -0.5):
         if(intent == "Order_meal"):
-            Response = checkingForProduct(intent,value,senti,pageId,sectionId)
+            Response = checkingForProduct(intent,value,senti,pageId,sectionId,text)
             return Response
         else:
             if db is not None:
