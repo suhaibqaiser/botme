@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import { FormControl } from "@angular/forms";
-import { Router } from "@angular/router";
-import { environment } from 'src/environments/environment';
-import { io } from "socket.io-client";
-import { BotmeClientService } from './botme-client.service';
+import {Injectable} from '@angular/core';
+import {Subject} from 'rxjs';
+import {FormControl} from "@angular/forms";
+import {Router} from "@angular/router";
+import {environment} from 'src/environments/environment';
+import {io} from "socket.io-client";
+import {BotmeClientService} from './botme-client.service';
 
 
 @Injectable({
@@ -70,7 +70,7 @@ export class SocketService {
 
     if (this.authToken) {
       this.socket = io(environment.wsEndpoint, {
-        auth: { token: this.authToken },
+        auth: {token: this.authToken},
         path: (environment.production) ? "/ws/" : ""
       });
 
@@ -155,13 +155,10 @@ export class SocketService {
 
       // @ts-ignore
       let template = document.getElementById(tempMessage.entityId)
-      console.log('template =>', template)
       // @ts-ignore
       let list = template.getElementsByTagName('a')
-      console.log('list =>', list)
       for (let i = 0; i < list.length; i++) {
         if (list[i].getAttribute('id') == tempMessage.ctaId) {
-          console.log('select item =>', list[i].getAttribute('id'))
           list[i]?.click()
         }
       }
@@ -179,7 +176,6 @@ export class SocketService {
       currentRoute = this.router.url.split('/')[1]
     }
 
-    console.log('currentRoute =>', currentRoute)
     this.currentContextList.filter((item: any) => {
       if (item.currentRoute === currentRoute) {
         this.currentContextObj = JSON.parse(JSON.stringify(item))

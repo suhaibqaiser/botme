@@ -74,9 +74,4 @@ export class NavbarComponent implements OnInit {
       window.location.reload();
     });
   }
-
-  navigateToPage(routeName: any) {
-    console.log('yo')
-    this.router.navigate([routeName])
-  }
 }

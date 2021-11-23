@@ -36,7 +36,6 @@ export class MenuSectionComponent implements OnInit {
           this.loading = false;
         }
       });
-    console.log(this.categoryList);
   }
 
   getProductsByCategory(category: string) {
@@ -64,5 +63,5 @@ export class MenuSectionComponent implements OnInit {
     return null;
   }
 
- 
+
 }

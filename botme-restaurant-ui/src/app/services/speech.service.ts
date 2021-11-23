@@ -37,7 +37,6 @@ export class SpeechService {
     })
 
     this.socketService.messages.subscribe((message: any) => {
-      console.log('from WS: ', message);
       this.speak(message.text, message.audio)
 
     });

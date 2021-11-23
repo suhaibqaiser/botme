@@ -148,6 +148,5 @@ export class CartSectionComponent implements OnInit {
       }
     )
     this.cartService.addToCart(this.cartProducts, true, 'place-order')
-    console.log(this.cartProducts)
   }
 }

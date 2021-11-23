@@ -43,7 +43,5 @@ export class BookingSectionComponent implements OnInit {
     if(time && time.length){
       this.reservationForm.get('time')?.setValue(time)
     }
-
-    console.log('reservation form =>', this.reservationForm.value)
   }
 }
