@@ -15,7 +15,7 @@ def parseEntityValue(entity):
         elif(len(entity)==0):
             return None
     
-def checkingForProduct(intent,value,senti,pageId,sectionId):
+def checkingForProduct(intent,value,senti,pageId,sectionId,text):
     try:
         response = requests.get('http://localhost:3100/food/product/search?productName='+value)
         data = response.json()
@@ -29,27 +29,27 @@ def checkingForProduct(intent,value,senti,pageId,sectionId):
                     iD = getEntityClickAttribute(context['entities'])
                     if(sectionId == "sectionId-cart-modal"):
                         name = value.title()
-                        return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":productID+name,"actionType":iD['actionType'],"sentimentScore":senti,"intentName":intent}
+                        return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":productID+name,"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent}
                     else:
-                        return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":productID,"actionType":iD['actionType'],"sentimentScore":senti,"intentName":intent}
+                        return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":productID,"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent}
                 else:
-                    return {"Response":"Product not found in database","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":intent} 
+                    return {"Response":"Product not found in database","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent} 
             else:
-                return {"Response":"What do you mean by " + value + "?","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":'question'}
+                return {"Response":"What do you mean by " + value + "?","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":'question'}
         else:
-            return {"Response":"Product not available","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":intent}
+            return {"Response":"Product not available","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent}
     except:
         return "error in checking for product"
 
-def searchingTable(value,senti,intent):
+def searchingTable(value,senti,intent,text):
     try:
         response = requests.get('http://localhost:3100/food/tables/search?seats='+value)
         data = response.json()
         if(data['status'] == "success"):
             table_no = getTableNo(data['payload'])
-            return {"Response":"you can move to the table number " + table_no,"ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":intent}
+            return {"Response":"you can move to the table number " + table_no,"ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent}
         else:
-            return {"Response":"Sorry, All tables are occupied","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":senti,"intentName":intent}
+            return {"Response":"Sorry, All tables are occupied","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent}
     except:
         return "error in searching for table"
 
@@ -90,7 +90,7 @@ def parseDate(text,db,pageId,sectionId,intent,senti):
             print(t)
             time = t.strftime("%d/%m/%Y")
             print(time)
-        return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":time,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":senti,"intentName":intent}     
+        return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":time,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent}     
     except:
         return "Error in parsing date"
 
@@ -111,6 +111,6 @@ def parseTime(text,db,pageId,sectionId,intent,senti):
             print(t)
             time = t.strftime("%H:%M:%S")
             print(time)
-        return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":time,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":senti,"intentName":intent}     
+        return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":time,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent}     
     except:
         return "Error in parsing date"
