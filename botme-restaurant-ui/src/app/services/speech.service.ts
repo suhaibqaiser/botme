@@ -41,9 +41,6 @@ export class SpeechService {
 
     });
 
-    // decide wether to use google chrome browser or WS server TTS api
-    // (this.selectedVoice) ? this.voiceFromServer = false : this.voiceFromServer = true;
-
     // Initalize Google Chrome voices for Text-to-speech
     if (!this.voices.length) {
       speechSynthesis.addEventListener(
@@ -62,6 +59,7 @@ export class SpeechService {
         });
     }
     this.updateState('i')
+
     // this.socketService.processing = true
   }
 

@@ -15,14 +15,14 @@ export class SofiaBotComponent implements OnInit {
 
   ngOnInit() { }
 
-  updateInteractionState() {
+  updateInteractionState(value: boolean) {
+    this.speechEnabled = value
     this.speechService.speechEnabled.next(this.speechEnabled)
 
     if (this.speechEnabled) {
       this.speechService.enableListening(this.socketService.currentContextObj.pageId)
     } else {
       this.speechService.disableListening();
-      // this.speechService.disableSpeaking()
     }
   }
 

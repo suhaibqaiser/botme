@@ -22,7 +22,7 @@ export async function getSpeechToText(payload: any) {
             audioChannelCount: 1,
             single_utterance: true
         },
-        interimResults: true
+        interimResults: false
     }
 
     const [response]: any = await client.recognize(request)

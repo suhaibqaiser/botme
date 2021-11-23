@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-import {Subject} from 'rxjs';
-import {FormControl} from "@angular/forms";
-import {Router} from "@angular/router";
-import {environment} from 'src/environments/environment';
-import {io} from "socket.io-client";
-import {BotmeClientService} from './botme-client.service';
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+import { FormControl } from "@angular/forms";
+import { Router } from "@angular/router";
+import { environment } from 'src/environments/environment';
+import { io } from "socket.io-client";
+import { BotmeClientService } from './botme-client.service';
 
 
 @Injectable({
@@ -70,7 +70,7 @@ export class SocketService {
 
     if (this.authToken) {
       this.socket = io(environment.wsEndpoint, {
-        auth: {token: this.authToken},
+        auth: { token: this.authToken },
         path: (environment.production) ? "/ws/" : ""
       });
 
@@ -85,8 +85,12 @@ export class SocketService {
             break;
           case "notification":
             this.notificationSubject.next(payload)
-            if (payload.text === 'processing started')
+            if (payload.text === 'processing started') {
+              this.processing = true
               this.sendMessage('notification', 'context', false)
+            } else if (payload.text === 'processing ended') {
+              this.processing = true
+            }
             console.log(payload);
             break;
           case "voice":

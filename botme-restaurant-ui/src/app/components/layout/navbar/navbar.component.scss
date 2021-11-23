@@ -1,6 +1,3 @@
-.navbar_top{
-  z-index: -1;
-}
 .tap-view-place-order {
   a {
     width: 100%;
@@ -9,12 +6,11 @@
       margin-left: 10px;
     }
   }
-
 }
 
-#loginModal{
-  .modal-dialog{
-    .modal-content{
+#loginModal {
+  .modal-dialog {
+    .modal-content {
       background: #222222 !important;
     }
   }

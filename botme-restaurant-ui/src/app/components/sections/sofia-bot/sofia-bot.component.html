@@ -1,12 +1,8 @@
 <div class="interaction">
-    <h2 class="i-heading align">Interaction Mode:</h2>
-    <div class="btn-group-sm align" role="group" aria-label="Interaction Mode" (change)="updateInteractionState()">
-        <input type="radio" class="btn-check" id="touch" autocomplete="off" [value]="false"
-            [(ngModel)]="speechEnabled" />
-        <label class="btn btn-outline-primary" for="touch">Touch Only 👆</label>
-
-        <input type="radio" class="btn-check" id="voice" autocomplete="off" [value]="true"
-            [(ngModel)]="speechEnabled" />
-        <label class="btn btn-outline-primary align" for="voice">Voice 🎙️</label>
-    </div>
+    <label class="i-heading">Voice:</label>
+    <label class="switch">
+        <input #voiceSwitch type="checkbox" (change)="updateInteractionState(voiceSwitch.checked)"
+            [checked]="speechEnabled">
+        <span class="slider round"></span>
+    </label>
 </div>
