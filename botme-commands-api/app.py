@@ -15,7 +15,7 @@ def send_Response():
     intent = rasa_data['intent']
     if(intent['name'] == "nlu_fallback"):
         print(1)
-        response = {"Response":"I'm sorry, I didn't quite understand that. Could you rephrase?","ctaCommandId":None,"pageId":pageId,"sectionId":sectionID,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":0.0,"intentName":intent['name']}
+        response = {"Response":"I'm sorry, I didn't quite understand that. Could you rephrase?","ctaCommandId":None,"pageId":pageId,"sectionId":sectionID,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent['name']}
         return jsonify(response)
     else:
         response = getResponse(intent['name'],rasa_data['entities'],text,pageId,sectionID)
