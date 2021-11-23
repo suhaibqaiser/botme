@@ -80,14 +80,13 @@ export class SocketService {
 
         switch (data.type) {
           case "communication":
-            console.log(payload);
             this.messagesSubject.next(payload)
-            this.fireInteractionEvent(payload)
+            if (payload.intentName) this.fireInteractionEvent(payload)
             break;
           case "notification":
             this.notificationSubject.next(payload)
             if (payload.text === 'processing started')
-              this.sendMessage('notification', 'context')
+              this.sendMessage('notification', 'context', false)
             console.log(payload);
             break;
           case "voice":
@@ -103,7 +102,7 @@ export class SocketService {
     }
   }
 
-  sendMessage(type: string, message: any) {
+  sendMessage(type: string, message: any, voice: boolean) {
     interface SocketMessage {
       payload: object,
       type: string,
@@ -112,7 +111,8 @@ export class SocketService {
 
     let SocketPayload: SocketMessage = {
       payload: {
-        "text": message,
+        "message": message,
+        "voice": voice,
         "pageId": this.currentContextObj.pageId,
         "sectionId": this.currentContextObj.sectionId
       },

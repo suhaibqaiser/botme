@@ -6,16 +6,8 @@ const ttsclient = new textToSpeech.TextToSpeechClient();
 const fs = require('fs');
 const util = require('util');
 
-process.env['GOOGLE_APPLICATION_CREDENTIALS'] = 'google-cloud-credentials.json'
+process.env['GOOGLE_APPLICATION_CREDENTIALS'] = 'amansubhan929-google-cloud-key.json'
 
-
-const config = {
-    encoding: 'LINEAR16',
-    sampleRateHertz: 16000,
-    languageCode: 'en-US',
-    audioChannelCount: 1,
-    single_utterance: true
-}
 
 // This method is used for Google TTS service
 export async function getSpeechToText(payload: any) {
@@ -23,7 +15,13 @@ export async function getSpeechToText(payload: any) {
         audio: {
             content: payload
         },
-        config: config,
+        config: {
+            encoding: 'LINEAR16',
+            sampleRateHertz: 16000,
+            languageCode: 'en-US',
+            audioChannelCount: 1,
+            single_utterance: true
+        },
         interimResults: true
     }
 
@@ -31,7 +29,7 @@ export async function getSpeechToText(payload: any) {
     let transcription = response.results.map((result: any) =>
         result.alternatives[0].transcript).join('\n');
 
-    if (transcription) { return transcription }
+    return transcription
 }
 
 
@@ -41,16 +39,12 @@ export async function getTextToSpeech(text: string) {
     const request = {
         input: { text: text },
         // Select the language and SSML voice gender (optional)
-        voice: { languageCode: 'en-US', ssmlGender: 'NEUTRAL' },
+        voice: { languageCode: 'en-UK', name: 'en-US-Wavenet-G', ssmlGender: 'FEMALE' },
         // select the type of audio encoding
-        audioConfig: { audioEncoding: 'MP3' },
+        audioConfig: { audioEncoding: 'OGG_OPUS' },
     };
 
     // Performs the text-to-speech request
     const [response] = await ttsclient.synthesizeSpeech(request);
-    // Write the binary audio content to a local file
-    const writeFile = util.promisify(fs.writeFile);
-    await writeFile('output.mp3', response.audioContent, 'binary');
-    console.log('Audio content written to file: output.mp3');
     return response.audioContent
 }
