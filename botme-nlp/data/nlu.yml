@@ -3965,10 +3965,10 @@ nlu:
     examples: |
       - \d{1,2}\b
 
-  # - regex: PERSON
-  #   examples: |
-  #     - ([A-Z])\w+
-  #     - [A-Za-z]{2,25} [A-Za-z]{2,25}
+  - regex: PERSON
+    examples: |
+      - ([A-Z])\w+
+      - [A-Za-z]{2,25} [A-Za-z]{2,25}
 
   - regex: phoneNumber
     examples: |
