@@ -10,8 +10,11 @@ def parseEntityValue(entity):
         if(len(entity) == 1):
             return x['value']
         elif(len(entity)>1):
-            value = joinTwoEntity(entity)
-            return value
+            if (x['extractor'] == "SpacyEntityExtractor"):
+                return x['value']
+            else:
+                value = joinTwoEntity(entity)
+                return value
         elif(len(entity)==0):
             return None
     
