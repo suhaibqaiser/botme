@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 import { addConversationLog } from './conversationService'
 import config from '../config.json'
 
-export async function getCommandResponse(sessionId:string ,text: string, pageId: string, sectionId: string) {
+export async function getCommandResponse(sessionId: string, text: string, pageId: string, sectionId: string) {
 
     try {
         let body = { "text": text, "pageId": pageId, "sectionId": sectionId };
@@ -16,6 +16,7 @@ export async function getCommandResponse(sessionId:string ,text: string, pageId:
         let data = await res.json()
         if (data) {
             let answer = {
+                inputText: text,
                 text: data.Response,
                 ctaId: data.ctaCommandId,
                 entityId: data.entityId,

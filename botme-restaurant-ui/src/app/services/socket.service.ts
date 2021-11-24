@@ -91,13 +91,7 @@ export class SocketService {
             } else if (payload.text === 'processing ended') {
               this.processing = true
             }
-            console.log(payload);
-            break;
-          case "voice":
-            console.log(payload);
-            break;
-          case "action callback":
-            console.log(payload);
+            console.info(payload);
             break;
           default:
             break;
@@ -124,7 +118,6 @@ export class SocketService {
       timestamp: Date()
 
     }
-    console.log('SocketPayload =>', SocketPayload)
     this.socket.emit('message', SocketPayload);
   }
 
@@ -140,7 +133,6 @@ export class SocketService {
 
      sel.setAttribute('size', len);
      */
-    console.log('fireInteractionEvent =>', msg)
     let tempMessage = msg
     this.responseLabel = tempMessage.text
     if (tempMessage.entityId) {

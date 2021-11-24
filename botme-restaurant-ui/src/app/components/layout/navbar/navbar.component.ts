@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {CartService} from 'src/app/services/cart.service';
-import {SocketService} from "../../../services/socket.service";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {BotmeClientService} from "../../../services/botme-client.service";
-import {Router} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { CartService } from 'src/app/services/cart.service';
+import { SocketService } from "../../../services/socket.service";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { BotmeClientService } from "../../../services/botme-client.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-navbar',
@@ -44,7 +44,7 @@ export class NavbarComponent implements OnInit {
         }
       },
       (err: any) => {
-        console.log(err)
+        console.error(err)
         alert('Invalid Record')
       }
     )

@@ -38,7 +38,7 @@ export class SpeechService {
 
     this.socketService.messages.subscribe((message: any) => {
       this.speak(message.text, message.audio)
-
+      console.log('You Said: ', message.inputText);
     });
 
     // Initalize Google Chrome voices for Text-to-speech
@@ -54,7 +54,6 @@ export class SpeechService {
             }
           });
           this.selectedVoice = this.voices[selectVoice]
-          console.log(this.selectedVoice);
           if (this.selectedVoice) this.voiceFromServer = false
         });
     }
@@ -73,7 +72,7 @@ export class SpeechService {
     navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
       this.stream = stream;
     }).catch(error => {
-      console.log(error);
+      console.error(error);
     });
 
     // wait until the audio stream is available
@@ -89,7 +88,6 @@ export class SpeechService {
 
   listen() {
     if (!this.speechEvents || this.isSpeaking) { return }
-    console.log('listening started', 'this.isSpeaking', this.isSpeaking, 'this.isListening', this.isListening);
     if (this.SpeechE && (!this.isSpeaking || !this.isListening)) {
       this.updateState('l')
 
@@ -109,7 +107,6 @@ export class SpeechService {
   }
 
   stopListening() {
-    console.log('listening ended');
     if (this.recorder && this.isListening) {
       this.updateState('p')
       setTimeout(() => {
@@ -140,7 +137,6 @@ export class SpeechService {
 
   public async speak(speechText: string, voice: any) {
     if (this.isSpeaking) return
-    console.log(this.voiceFromServer, speechText, voice);
 
     this.isSpeaking = true
 
@@ -160,6 +156,7 @@ export class SpeechService {
     } else {
       if (!speechText) return;
       this.updateState('s')
+      console.log('Bot Replied: ', speechText);
       let utterance = new SpeechSynthesisUtterance(speechText);
       utterance.voice = this.selectedVoice;
       utterance.rate = this.selectedRate;
