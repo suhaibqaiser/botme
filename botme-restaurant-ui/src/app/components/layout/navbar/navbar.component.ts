@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { CartService } from 'src/app/services/cart.service';
-import { SocketService } from "../../../services/socket.service";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { BotmeClientService } from "../../../services/botme-client.service";
-import { Router } from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {CartService} from 'src/app/services/cart.service';
+import {SocketService} from "../../../services/socket.service";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {BotmeClientService} from "../../../services/botme-client.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-navbar',
@@ -16,7 +16,8 @@ export class NavbarComponent implements OnInit {
   loginForm = new FormGroup({
     clientID: new FormControl('', Validators.required),
     clientSecret: new FormControl('', Validators.required),
-    clientDeviceId: new FormControl('', Validators.required)
+    clientDeviceId: new FormControl('', Validators.required),
+    voiceType: new FormControl('', Validators.required)
   })
 
   constructor(public router: Router, public socketService: SocketService, private _router: Router, public _botMeClientService: BotmeClientService, private cartService: CartService, private _socketService: SocketService) {
@@ -36,6 +37,7 @@ export class NavbarComponent implements OnInit {
           this._botMeClientService.setCookie('clientDeviceId', res.payload.clientDeviceId)
           this._botMeClientService.setCookie('clientID', res.payload.clientID)
           this._botMeClientService.setCookie('isLoggedIn', res.payload.isLoggedIn)
+          this._botMeClientService.setCookie('voiceType', this.loginForm.get('voiceType')?.value)
           this._router.navigate(['/home']).then(() => {
             window.location.reload();
           });

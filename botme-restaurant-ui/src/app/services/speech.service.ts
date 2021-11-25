@@ -1,8 +1,11 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import * as RecordRTC from 'recordrtc';
-import { Subject } from 'rxjs';
-import { SocketService } from './socket.service';
+import {Subject} from 'rxjs';
+import {SocketService} from './socket.service';
 import * as hark from 'hark'
+
+declare var webkitSpeechRecognition: any;
+
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +31,12 @@ export class SpeechService {
   isSpeaking: boolean = false
   isListening: boolean = false
 
+
+  //browser speech section
+  recognition = new webkitSpeechRecognition();
+  isStoppedSpeechRecog = false;
+  public text = '';
+  tempWords: any;
 
 
   constructor(private socketService: SocketService) {
@@ -62,14 +71,24 @@ export class SpeechService {
     // this.socketService.processing = true
   }
 
-  async enableListening(pageId: string) {
+  async enableListening(pageId: string, isBrowserSpeech = false) {
     if (pageId === "pageId-home") {
       this.speak(this.voiceWelcomeMessage, null);
     }
-    if (this.recorder) { return }
+
+    if (isBrowserSpeech) {
+      this.browserSpeechInit()
+      this.browserSpeechStart()
+      return
+    }
+
+
+    if (this.recorder) {
+      return
+    }
 
     // Get/Ask browser to provide MIC input
-    navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+    navigator.mediaDevices.getUserMedia({audio: true}).then(stream => {
       this.stream = stream;
     }).catch(error => {
       console.error(error);
@@ -87,7 +106,9 @@ export class SpeechService {
   }
 
   listen() {
-    if (!this.speechEvents || this.isSpeaking) { return }
+    if (!this.speechEvents || this.isSpeaking) {
+      return
+    }
     if (this.SpeechE && (!this.isSpeaking || !this.isListening)) {
       this.updateState('l')
 
@@ -148,11 +169,13 @@ export class SpeechService {
         return
       }
       this.updateState('s')
-      const blob = new Blob([voice], { type: "audio/ogg" });
+      const blob = new Blob([voice], {type: "audio/ogg"});
       this.audio.src = URL.createObjectURL(blob)
       this.audio.load();
       this.audio.play();
-      while (!this.audio.paused) { await this.delay(100) }
+      while (!this.audio.paused) {
+        await this.delay(100)
+      }
     } else {
       if (!speechText) return;
       this.updateState('s')
@@ -162,7 +185,9 @@ export class SpeechService {
       utterance.rate = this.selectedRate;
       utterance.lang = this.selectedVoice.lang
       speechSynthesis.speak(utterance);
-      while (speechSynthesis.speaking) { await this.delay(100) }
+      while (speechSynthesis.speaking) {
+        await this.delay(100)
+      }
     }
     // Hide processing overlay
     this.socketService.processing = false
@@ -203,6 +228,53 @@ export class SpeechService {
       this.speechText.next('Speaking...')
     }
   }
+
+  // browser speech section
+  browserSpeechInit() {
+
+    this.recognition.interimResults = false;
+    this.recognition.lang = 'en-US';
+
+    this.recognition.addEventListener('result', (e: any) => {
+      const transcript = Array.from(e.results)
+        .map((result: any) => result[0])
+        .map((result) => result.transcript)
+        .join('');
+      this.tempWords = transcript;
+      console.log(transcript);
+      if(!transcript.length) return
+      this.socketService.sendMessage('communication', transcript, false)
+    });
+  }
+
+  browserSpeechStart() {
+    this.isStoppedSpeechRecog = false;
+    this.recognition.start();
+    console.log("Speech recognition started")
+    this.recognition.addEventListener('end', (condition: any) => {
+      if (this.isStoppedSpeechRecog) {
+        this.recognition.browserSpeechStop();
+        console.log("End speech recognition")
+        //=======
+      } else {
+        this.wordConcat()
+        this.recognition.start();
+      }
+    });
+  }
+
+  browserSpeechStop() {
+    this.isStoppedSpeechRecog = true;
+    this.wordConcat()
+    this.recognition.stop();
+    console.log("End speech recognition")
+  }
+
+  wordConcat() {
+    this.text = this.text + ' ' + this.tempWords + '.';
+    this.tempWords = ''
+  }
+
 
 }
 
