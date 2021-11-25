@@ -15,7 +15,7 @@ export class BookingSectionComponent implements OnInit {
     time: new FormControl('', Validators.required),
   })
 
-  constructor(private _socketService:SocketService) {
+  constructor(private _socketService: SocketService) {
   }
 
   ngOnInit(): void {
@@ -25,23 +25,24 @@ export class BookingSectionComponent implements OnInit {
   addReservation() {
     // @ts-ignore
     let name = document.getElementById('entityId-name')?.value
-    if(name && name.length){
+    if (name && name.length) {
       this.reservationForm.get('name')?.setValue(name)
     }
     // @ts-ignore
     let number_of_person = document.getElementById('entityId-number-of-persons')?.value
-    if(number_of_person && number_of_person.length){
+    if (number_of_person && number_of_person.length) {
       this.reservationForm.get('number_of_person')?.setValue(number_of_person)
     }
     // @ts-ignore
     let date = document.getElementById('entityId-date')?.value
-    if(date && date.length){
+    if (date && date.length) {
       this.reservationForm.get('date')?.setValue(date)
     }
     // @ts-ignore
     let time = document.getElementById('entityId-time')?.value
-    if(time && time.length){
+    if (time && time.length) {
       this.reservationForm.get('time')?.setValue(time)
     }
+    console.log('reservation form =>', this.reservationForm.value)
   }
 }
