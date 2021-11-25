@@ -29,17 +29,17 @@ export class BookingSectionComponent implements OnInit {
       this.reservationForm.get('name')?.setValue(name)
     }
     // @ts-ignore
-    let number_of_person = document.getElementById('number_of_person')?.value
+    let number_of_person = document.getElementById('entityId-number-of-persons')?.value
     if(number_of_person && number_of_person.length){
       this.reservationForm.get('number_of_person')?.setValue(number_of_person)
     }
     // @ts-ignore
-    let date = document.getElementById('date')?.value
+    let date = document.getElementById('entityId-date')?.value
     if(date && date.length){
       this.reservationForm.get('date')?.setValue(date)
     }
     // @ts-ignore
-    let time = document.getElementById('time')?.value
+    let time = document.getElementById('entityId-time')?.value
     if(time && time.length){
       this.reservationForm.get('time')?.setValue(time)
     }
