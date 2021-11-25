@@ -270,9 +270,9 @@
                         <table class="table table-bordered">
                           <thead>
                           <tr>
-                            <th style="width: 25%"></th>
+                            <th style="width: 3%"></th>
                             <th style="width: 26%"></th>
-                            <th style="width: 5%"></th>
+                            <th style="width: 2%"></th>
                           </tr>
                           </thead>
                           <tbody>
@@ -315,14 +315,14 @@
                           <tr>
                             <td>Attributes</td>
                             <td><span *ngFor="let attr of cartService.singleCustomProductObj.productAttributes | keyvalue;let attrIndex = index">
-                                <span *ngIf="attr.value">{{attr.key }} <br> </span>
+                                <span class="p-1" *ngIf="attr.value">({{attr.key }})</span>
                               </span></td>
                             <td>--</td>
                           </tr>
                           <tr>
                             <td>Nutrition</td>
-                            <td><span *ngFor="let nut of cartService.singleCustomProductObj.productNutrition | keyvalue">
-                                ({{nut.key}} : {{nut.value}}) <br>
+                            <td><span class="p-1" *ngFor="let nut of cartService.singleCustomProductObj.productNutrition | keyvalue">
+                                ({{nut.key}} : {{nut.value}})
                               </span></td>
                             <td>--</td>
                           </tr>
