@@ -37,7 +37,7 @@ def getResponse(intent,entity,text,pageId,sectionId):
                 iD = getEntityClickAttribute(context['entities'])
                 return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent} 
             else:
-                return {"Response":"I'm sorry, I didn't quite understand that. Could you rephrase?","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":'nlu_fallback'}
+                return {"Response":"I’m sorry,Could you say it again?","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":'nlu_fallback'}
 
     elif(senti > 0.5):
         if(intent == "Order_meal"or intent == "product-detail" or intent == "remove_item" or intent == "edit_product" or intent == "reduce_product_quantity"):
@@ -55,7 +55,7 @@ def getResponse(intent,entity,text,pageId,sectionId):
                 sentimentResponse = db['sentimentResponse']
                 return {"Response":sentimentResponse['positive'],"ctaCommandId":db['ctaCommandId'],"sentimentScore":text,"intentName":intent}
             else: 
-                return {"Response":"I do not understand, Can you repeat it again","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":'nlu_fallback'}
+                return {"Response":"I’m sorry,Could you say it again?","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":'nlu_fallback'}
 
     elif(senti < -0.5):
         if(intent == "Order_meal"or intent == "product-detail" or intent == "remove_item" or intent == "edit_product" or intent == "reduce_product_quantity"):
@@ -73,4 +73,4 @@ def getResponse(intent,entity,text,pageId,sectionId):
                 sentimentResponse = db['sentimentResponse']
                 return {"Response":sentimentResponse['positive'],"ctaCommandId":db['ctaCommandId'],"sentimentScore":text,"intentName":intent}
             else: 
-                return {"Response":"I do not understand, Can you repeat it again","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":'nlu_fallback'}
+                return {"Response":"I’m sorry,Could you say it again?","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":'nlu_fallback'}
