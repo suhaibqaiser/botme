@@ -112,6 +112,7 @@ export class CartService {
     let i = 0
     this.productSizeArrayList.forEach((item: any, index: any) => {
       if (product.productRate[item.name] > 0) {
+        if(index == 0) item.selected = true
         this.productSizeList.push(item)
       }
     })
