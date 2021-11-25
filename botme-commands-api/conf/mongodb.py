@@ -24,7 +24,6 @@ def getDbCta(intent,entity,pageId,sectionId):
                     return None
                 else:
                     return x
-
     else:
         my_query = {"intentName":intent,"context.pageId":pageId,"context.sectionId":sectionId}
         mycta = mycollection.find(my_query)
