@@ -1,6 +1,15 @@
-<div>
+<!-- <div *ngIf="socketService.processing">
 
-  <h3 class="text">Processing request...</h3>
+  <h3 class="text" [ngClass]="{'listening': listening, 
+  'processing': processing,
+  'speaking': speaking}">{{displayText}}</h3>
   <div class="loading">Loading&#8230;</div>
-
+[ngClass]="{ 'overlay-open': socketService.processing}"
+</div> -->
+<div class="overlay" [ngClass]="socketService.processing && speechService.SpeechE ? 'overlay-open' : 'overlay-close'">
+  <div class="circle" *ngIf="socketService.processing && speechService.SpeechE" [ngClass]="{'listening': listening, 
+  'processing': processing,
+  'speaking': speaking}">
+    <label class="text">{{displayText}}</label>
+  </div>
 </div>

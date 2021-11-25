@@ -1,11 +1,11 @@
 <div>
-  <app-preloader></app-preloader>
-  <app-progress-loader *ngIf="socketService.processing"></app-progress-loader>
+  <!-- <app-preloader></app-preloader> -->
   <!--<app-topbar></app-topbar>-->
   <app-header></app-header>
   <!-- Main content -->
   <div class="content">
     <router-outlet></router-outlet>
+    <app-progress-loader></app-progress-loader>
   </div>
   <!-- /.content -->
   <app-footer *ngIf="botMeClientService.getCookie().clientName !== 'robot'"></app-footer>

@@ -31,13 +31,11 @@ export class ProductDetailSectionComponent implements OnInit {
   }
 
   async getProductDetail(productId: string) {
-    console.log('getProductDetail =>',productId)
     this.menuservice.getProductById(productId).subscribe(
       async result => {
         if (result.status === 'success') {
           this.product = result.payload[0]
           this.product.productCategoryName = await this.getCategoryName(this.product.productCategory);
-          console.log('product =>', this.product)
         }
       }
     );

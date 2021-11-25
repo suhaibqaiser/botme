@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-import {Subject} from 'rxjs';
-import {FormControl} from "@angular/forms";
-import {Router} from "@angular/router";
-import {environment} from 'src/environments/environment';
-import {io} from "socket.io-client";
-import {BotmeClientService} from './botme-client.service';
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+import { FormControl } from "@angular/forms";
+import { Router } from "@angular/router";
+import { environment } from 'src/environments/environment';
+import { io } from "socket.io-client";
+import { BotmeClientService } from './botme-client.service';
 
 
 @Injectable({
@@ -46,6 +46,11 @@ export class SocketService {
       currentRoute: 'reservations',
       pageId: 'pageId-reservation',
       sectionId: 'sectionId-reservation-form'
+    },
+    {
+      currentRoute: 'contact us',
+      pageId: 'pageId-contact-us',
+      sectionId: 'sectionId-message-form'
     }
   ]
   currentContextObj = {
@@ -65,10 +70,9 @@ export class SocketService {
 
     if (this.authToken) {
       this.socket = io(environment.wsEndpoint, {
-        auth: {token: this.authToken},
+        auth: { token: this.authToken },
         path: (environment.production) ? "/ws/" : ""
       });
-
 
       this.socket.on('message', (data: any) => {
 
@@ -77,19 +81,17 @@ export class SocketService {
         switch (data.type) {
           case "communication":
             this.messagesSubject.next(payload)
-            this.fireInteractionEvent(payload)
+            if (payload.intentName) this.fireInteractionEvent(payload)
             break;
           case "notification":
             this.notificationSubject.next(payload)
-            if (payload.text === 'processing started')
-              this.sendMessage('notification', 'context')
-            console.log(payload);
-            break;
-          case "voice":
-            console.log(payload);
-            break;
-          case "action callback":
-            console.log(payload);
+            if (payload.text === 'processing started') {
+              this.processing = true
+              this.sendMessage('notification', 'context', false)
+            } else if (payload.text === 'processing ended') {
+              this.processing = true
+            }
+            console.info(payload);
             break;
           default:
             break;
@@ -98,7 +100,7 @@ export class SocketService {
     }
   }
 
-  sendMessage(type: string, message: any) {
+  sendMessage(type: string, message: any, voice: boolean) {
     interface SocketMessage {
       payload: object,
       type: string,
@@ -107,7 +109,8 @@ export class SocketService {
 
     let SocketPayload: SocketMessage = {
       payload: {
-        "text": message,
+        "message": message,
+        "voice": voice,
         "pageId": this.currentContextObj.pageId,
         "sectionId": this.currentContextObj.sectionId
       },
@@ -115,7 +118,6 @@ export class SocketService {
       timestamp: Date()
 
     }
-    console.log('SocketPayload =>', SocketPayload)
     this.socket.emit('message', SocketPayload);
   }
 
@@ -131,7 +133,6 @@ export class SocketService {
 
      sel.setAttribute('size', len);
      */
-    console.log('fireInteractionEvent =>', msg)
     let tempMessage = msg
     this.responseLabel = tempMessage.text
     if (tempMessage.entityId) {
@@ -150,13 +151,10 @@ export class SocketService {
 
       // @ts-ignore
       let template = document.getElementById(tempMessage.entityId)
-      console.log('template =>', template)
       // @ts-ignore
       let list = template.getElementsByTagName('a')
-      console.log('list =>', list)
       for (let i = 0; i < list.length; i++) {
         if (list[i].getAttribute('id') == tempMessage.ctaId) {
-          console.log('select item =>', list[i].getAttribute('id'))
           list[i]?.click()
         }
       }
@@ -170,11 +168,10 @@ export class SocketService {
     if (currentRoute.indexOf('?') > 0) {
       currentRoute = currentRoute.substr(0, currentRoute.indexOf('?'))
     }
-    if(this.router.url.split('/')[1]==='product-detail'){
+    if (this.router.url.split('/')[1] === 'product-detail') {
       currentRoute = this.router.url.split('/')[1]
     }
 
-    console.log('currentRoute =>',currentRoute)
     this.currentContextList.filter((item: any) => {
       if (item.currentRoute === currentRoute) {
         this.currentContextObj = JSON.parse(JSON.stringify(item))

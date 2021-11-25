@@ -1,12 +1,13 @@
 <!-- navbar -->
-<div [class.navbar_top]="socketService.processing" class="fixed-top">
+<div class="fixed-top">
   <div class="navbar-area navbar-dark">
     <!-- mobile menu -->
     <div class="mobile-nav">
       <a href="home" class="mobile-brand">
         <img src="assets/images/logo/web-logo.png" alt="logo" class="blue-logo">
       </a>
-      <app-sofia-bot style="z-index: 999 !important;"></app-sofia-bot>
+      <app-sofia-bot *ngIf="_botMeClientService.getCookie().isLoggedIn" style="z-index: 999 !important;">
+      </app-sofia-bot>
     </div>
 
     <!-- desktop menu -->
@@ -17,7 +18,7 @@
             <img src="assets/images/logo/web-logo.png" alt="logo" class="logo">
           </a>
           <li class="nav-item">
-            <app-sofia-bot></app-sofia-bot>
+            <app-sofia-bot *ngIf="_botMeClientService.getCookie().isLoggedIn"></app-sofia-bot>
           </li>
           <!-- nav-list -->
           <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
@@ -35,7 +36,7 @@
               </li>
               <li class="nav-item">
                 <a *ngIf="_botMeClientService.getCookie().isLoggedIn" [class.active]="router.url=='/online-shop'"
-                  id="entityId-order-online" routerLink="online-shop" class="nav-link">Place Order</a>
+                  id="entityId-order-online" routerLink="online-shop" class="nav-link">PLACE ORDER</a>
               </li>
               <li class="nav-item">
                 <a data-bs-toggle="modal" data-bs-target="#loginModal"

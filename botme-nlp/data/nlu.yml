@@ -1,10 +1,5 @@
 version: "2.0"
-nlu:
-  - intent: select_lang
-    examples: |
-      - lang
-      - Language
-      
+nlu: 
   - intent: greet
     examples: |
       - hi
@@ -90,6 +85,8 @@ nlu:
 
   - intent: reservation_page
     examples: |
+      - [Reserve]{"entity":"pagethree","value":"reservation"} a table for me please
+      - I want to [reserve]{"entity":"pagethree","value":"reservation"} a table
       - Take me to [reservation](pagethree) page
       - take me to [reservation](pagethree)
       - i want to see the [reservation](pagethree)
@@ -632,47 +629,57 @@ nlu:
 
   - intent: Order_meal
     examples: |
-      - I want to order [Cheese Slice](productName)
-      - I like to buy [Cheese Slice](productName)
-      - i want to add Cheese Slice to my cart
+      - i want to eat [Cheese Slice](productName)
+      - i request you to order [Cheese Slice](productName)
+      - i want to have [Cheese Slice](productName)
+      - he want to order [Cheese Slice](productName)
+      - she like to buy [Cheese Slice](productName)
+      - i want to add [Cheese Slice](productName) to my cart
       - i want to select [Cheese Slice](productName)
       - select [cheese slice](productName)
-      - i want to choose [Cheese Slice](productName)
-      - i want to pick [Cheese Slice](productName)
+      - he want to choose [Cheese Slice](productName)
+      - she want to pick [Cheese Slice](productName)
       - can you please select [cheese slice](productName)
-      - we want to add cheese slice to my cart
+      - we want to add [cheese slice](productName) to my cart
       - I would like to order a [cheese slice](productName)
-      - I want to place an order for [cheese slice](productName)
+      - she want to place an order for [cheese slice](productName)
       - add [cheese slice](productName) to cart
       - I want to order [Nacho Burger](productName)
-      - I like to buy [Nacho Burger](productName)
-      - i want to add Nacho Burger to my cart
-      - we want to add nacho burger to my cart
-      - I would like to order a [nacho burger](productName)
+      - i want to open [Nacho Burger](productName)
+      - he like to buy [Nacho Burger](productName)
+      - i want to add [Nacho Burger](productName) to my cart
+      - we want to add [nacho burger](productName) to my cart
+      - he would like to order a [nacho burger](productName)
       - I want to place an order for [nacho burger](productName)
-      - I would like to order a [Nacho Burger](productName)
+      - she would like to order a [Nacho Burger](productName)
       - add [Nacho Burger](productName) to cart
-      - I want to order [Nacho Cheese](productName)
-      - I like to buy [Nacho Cheese](productName)
-      - i want to add nacho cheese to my cart
-      - we want to add Nacho Cheese to my cart
+      - he want to order [Nacho Cheese](productName)
+      - she like to buy [Nacho Cheese](productName)
+      - i want to add [nacho cheese](productName) to my cart
+      - we want to add [Nacho Cheese](productName) to my cart
       - I want to place an order for [nacho cheese](productName)
       - I would like to order a [nacho cheese](productName)
       - add [Nacho Cheese](productName) to cart
       - I want to order [Cole Slaw](productName)
       - I like to buy [Cole Slaw](productName)
+      - i want to open [Cole Slaw](productName) 
       - i want to add Cole Slaw to my cart
       - we want to add [cole slaw](productName) to my cart
-      - I would like to order a [cole slaw](productName)
-      - I want to place an order for [cole slaw](productName)
+      - he would like to order a [cole slaw](productName)
+      - she want to place an order for [cole slaw](productName)
+      - i want to have [cole slaw](productName)
       - add [cole slaw](productName) to cart
       - I want to order [French Fries](productName)
       - I like to buy [French Fries](productName)
+      - i want to have [French Fries](productName)
+      - i want to eat [French Fries](productName)
+      - i request you to order [French Fries](productName)
       - add [french fries](productName) to cart
       - i want to add [French Fries](productName) to cart
-      - I would like to order a [french fries](productName)
+      - He would like to order a [french fries](productName)
       - I want to place an order for [french fries](productName)
-      - I want to order [Beef Bacon](productName)
+      - She want to order [Beef Bacon](productName)
+      - i request you to order [Beef Bacon](productName)
       - I like to buy [Beef Bacon](productName)
       - I would like to order a [beef bacon](productName)
       - I want to place an order for [beef bacon](productName)
@@ -680,24 +687,27 @@ nlu:
       - I like to buy [Onion Rings](productName)
       - I would like to order a [onion rings](productName)
       - I want to place an order for [onion rings](productName)
-      - I want to order [Cheese Sticks](productName)
+      - he want to order [Cheese Sticks](productName)
       - I like to buy [Cheese Sticks](productName)
-      - I want to place an order for [cheese sticks](productName)
+      - she want to place an order for [cheese sticks](productName)
       - I would like to order a [cheese sticks](productName)
+      - i request you to order [cheese sticks](productName)
       - I want to order [Jalapeno Poppers](productName)
       - I like to buy [Jalapeno Poppers](productName)
+      - i request you to order [Jalapeno Poppers](productName)
       - I would like to order a [jalapeno poppers](productName)
       - I want to place an order for [jalapeno poppers](productName)
       - I want to order [Beef Patty](productName)
-      - I like to buy [Beef Patty](productName)
+      - she like to buy [Beef Patty](productName)
       - I want to place an order for [beef patty](productName)
-      - I would like to order a [beef patty](productName)
+      - he would like to order a [beef patty](productName)
       - I want to order [Chicken Patty](productName)
       - I like to buy [Chicken Patty](productName)
       - I would like to order a [chicken patty](productName)
       - I want to place an order for [chicken patty](productName)
       - I want to order [Fried Kibbeh](productName)
       - I like to buy [Fried Kibbeh](productName)
+      - i request you to order [Fried Kibbeh](productName)
       - I want to place an order for [fried kibbeh](productName)
       - I would like to order a [fried kibbeh](productName)
       - I want to order [Pizza](productName)
@@ -714,10 +724,12 @@ nlu:
       - I would like to order a [curly fries](productName)
       - I want to order [Soup](productName)
       - I like to buy [Soup](productName)
+      - he want to have [Soup](productName)
       - I would like to order a [soup](productName)
       - I want to place an order for [soup](productName)
       - I want to order [Poutine](productName)
       - I like to buy [Poutine](productName)
+      - she want to have [Poutine](productName)
       - I want to place an order for [poutine](productName)
       - I would like to order a [poutine](productName)
       - I want to order [Hummus](productName)
@@ -725,7 +737,9 @@ nlu:
       - I would like to order a [hummus](productName)
       - I want to place an order for [hummus](productName)
       - I want to order [Baba Ghanoush](productName)
+      - i want to eat [Baba Ghanoush](productName)
       - I like to buy [Baba Ghanoush](productName)
+      - we request you to order [Baba Ghanoush](productName)
       - I would like to order a [baba ghanoush](productName)
       - I want to place an order for [baba ghanoush](productName)
       - I want to order [Spicy Deluxe](productName)
@@ -744,6 +758,7 @@ nlu:
       - I like to buy [Beef Shawarma](productName)
       - I would like to order a [beef shawarma](productName)
       - I want to place an order for [beef shawarma](productName)
+      - we want to have [beef shawarma](productName)
       - I want to order [Pickle](productName)
       - I like to buy [Pickle](productName)
       - I would like to order a [pickle](productName)
@@ -752,6 +767,8 @@ nlu:
       - I like to buy [Kafta Sandwich](productName)
       - I would like to order a [kafta sandwich](productName)
       - I want to place an order for [kafta sandwich](productName)
+      - she want to have [kafta sandwich](productName)
+      - he want to eat [kafta sandwich](productName)
       - I want to order [Shish Kaboob Plate](productName)
       - I like to buy [Shish Kaboob Plate](productName)
       - I would like to order a [shish kaboob plate](productName)
@@ -765,6 +782,8 @@ nlu:
       - I like to buy [beiruti](productName)
       - I want to place an order for [beiruti](productName)
       - I would like to order a [Mushroom Swiss](productName)
+      - he want to have [Mushroom Swiss](productName)
+      - she want to eat [Mushroom Swiss](productName)
       - I want to order [Mushroom Swiss](productName)
       - I like to buy [mushroom swiss](productName)
       - I want to place an order for [mushroom swiss](productName)
@@ -774,6 +793,7 @@ nlu:
       - I want to place an order for [taystee fish](productName)
       - I would like to order a [Chicken Taystee](productName)
       - I want to order [Chicken Taystee](productName)
+      - i want to eat [Chicken Taystee](productName)
       - I like to buy [chicken taystee](productName)
       - I want to place an order for [chicken taystee](productName)
       - I would like to order a [Taystee Vegan](productName)
@@ -802,76 +822,80 @@ nlu:
       - I want to place an order for [tahini sauce](productName)
       - I would like to order a [Falafel Sandwich](productName)
       - I want to order [Falafel Sandwich](productName)
+      - we request you to order [Falafel Sandwich](productName)
+      - i want to open [falafel sandwich](productName)
+      - i want to eat [Falafel Sandwich](productName)
+      - we want to have [Falafel Sandwich](productName)
       - I want to place an order for [falafel sandwich](productName)
       - I like to buy [falafel sandwich](productName)
       - I would like to order a [Soujouk Sandwich](productName)
-      - I want to order [Soujouk Sandwich](productName)
+      - he want to order [Soujouk Sandwich](productName)
       - I like to buy [soujouk sandwich](productName)
-      - I want to place an order for [soujouk sandwich](productName)
+      - she want to place an order for [soujouk sandwich](productName)
       - I would like to order a [Shawarma Plate](productName)
-      - I want to order [Shawarma Plate](productName)
+      - we want to order [Shawarma Plate](productName)
       - I like to buy [shawarma plate](productName)
+      - he want to place an order for [shawarma plate](productName)
       - I want to place an order for [shawarma plate](productName)
-      - I want to place an order for [shawarma plate](productName)
-      - I would like to order a [Shish Kafta Plate](productName)
+      - she would like to order a [Shish Kafta Plate](productName)
       - I want to order [Shish Kafta Plate](productName)
-      - I like to buy [shish kafta plate](productName)
+      - we like to buy [shish kafta plate](productName)
       - I want to place an order for [shish kafta plate](productName)
       - I would like to order a [Shish Tawook Plate](productName)
-      - I want to order [Shish Tawook Plate](productName)
+      - he want to order [Shish Tawook Plate](productName)
       - I like to buy [shish tawook plate](productName)
       - I want to place an order for [shish tawook plate](productName)
-      - I would like to order a [Falafel Plate](productName)
+      - she would like to order a [Falafel Plate](productName)
       - I want to order [Falafel Plate](productName)
       - I like to buy [falafel plate](productName)
       - I want to place an order for [falafel plate](productName)
-      - I would like to order a [Potatoes](productName) - intent: contactus_page
+      - he would like to order a [Potatoes](productName) - intent: contactus_page
       - I want to place an order for [potatoes](productName)
       - I would like to order a [Make Your Own Bowl](productName)
-      - I want to order [Make Your Own Bowl](productName)
+      - we want to order [Make Your Own Bowl](productName)
       - I like to buy [make your own bowl](productName)
       - I want to place an order for [make your own bowl](productName)
       - I would like to order a [BBQ Platter](productName)
       - I want to order [BBQ Platter](productName)
       - I like to buy [bbq platter](productName)
-      - I want to place an order for [bbq platter](productName)
+      - she want to place an order for [bbq platter](productName)
       - I would like to order a [Whole BBQ Chicken](productName)
       - I want to order [Whole BBQ Chicken](productName)
       - I like to buy [whole bbq chicken](productName)
-      - I want to place an order for [whole bbq chicken](productName)
+      - he want to place an order for [whole bbq chicken](productName)
       - I would like to order a [Crazy Taystee](productName)
       - I want to order [Crazy Taystee](productName)
       - I like to buy [crazy taystee](productName)
       - I want to place an order for [crazy taystee](productName)
-      - I would like to order a [Grilled Chicken Wrap](productName)
+      - we would like to order a [Grilled Chicken Wrap](productName)
       - I want to order [Grilled Chicken Wrap](productName)
       - I like to buy [grilled chicken wrap](productName)
       - I want to place an order for [grilled chicken wrap](productName)
       - I would like to order a [Crispy Chicken Wrap](productName)
-      - I want to order Crispy [Crispy Chicken Wrap](productName)
+      - he want to order Crispy [Crispy Chicken Wrap](productName)
       - I like to buy [crispy chicken wrap](productName)
       - I want to place an order for [crispy chicken wrap](productName)
       - I would like to order a [Grilled Stake Wrap](productName)
       - I want to order [Grilled Stake Wrap](productName)
-      - I like to buy [grilled stake wrap](productName)
+      - we like to buy [grilled stake wrap](productName)
       - I want to place an order for [grilled stake wrap](productName)
       - I would like to order a [Junior Taystee Burger](productName)
       - I want to order [Junior Taystee Burger](productName)
-      - I like to buy [junior taystee burger](productName)
+      - she like to buy [junior taystee burger](productName)
       - I want to place an order for [junior taystee burger](productName)
-      - I would like to order a [Chicken Tenders](productName)
+      - he would like to order a [Chicken Tenders](productName)
       - I want to order [Chicken Tenders](productName)
       - I like to buy [chicken tenders](productName)
-      - I want to place an order for [chicken tenders](productName)
+      - she want to place an order for [chicken tenders](productName)
       - I would like to order a [Chicken Nuggets](productName)
       - I want to order [Chicken Nuggets](productName)
-      - I like to buy [chicken nuggets](productName)
+      - he like to buy [chicken nuggets](productName)
       - I want to place an order for [chicken nuggets](productName)
       - I would like to order a [Chicken Wings](productName)
       - I want to order [Chicken Wings](productName)
       - I like to buy [chicken wings](productName)
       - I want to place an order for [chicken wings](productName)
-      - I would like to order a [Shawarma Salad](productName)
+      - we would like to order a [Shawarma Salad](productName)
       - I want to order [Shawarma Salad](productName)
       - I like to buy [shawarma salad](productName)
       - I want to place an order for [shawarma salad](productName)
@@ -986,6 +1010,7 @@ nlu:
       - add [Lettuce](productName)
       - i want to increase [Lettuce](productName) quantity
       - i want to take [Lettuce](productName) 
+      - i want to eat [Lettuce](productName)
       - take [Lettuce](productName)
       - pick [Lettuce](productName)
       - select [Lettuce](productName)
@@ -998,7 +1023,8 @@ nlu:
       - can you please select [Pickle](productName)
       - add [Pickle](productName)
       - i want to increase [Pickle](productName) quantity
-      - i want to take [Pickle](productName) 
+      - i want to take [Pickle](productName)
+      - i want to eat [Pickle](productName)
       - take [Pickle](productName)
       - pick [Pickle](productName)
       - select [Pickle](productName)
@@ -1090,6 +1116,7 @@ nlu:
       - add [Hummus](productName)
       - i want to increase [Hummus](productName) quantity
       - i want to take [Hummus](productName) 
+      - i want to eat [Hummus](productName)
       - take [Hummus](productName)
       - pick [Hummus](productName)
       - select [Hummus](productName)
@@ -1147,7 +1174,6 @@ nlu:
       - select [Sprite](productName)
       - choose [Sprite](productName)
       - increase [Sprite](productName) quantity
-
 
   - intent: reduce_product_quantity
     examples: |
@@ -3172,15 +3198,6 @@ nlu:
       - may i have my [invoice](receipt) please
       - please issue me the [invoice](receipt)
 
-  - intent: reserve_table
-    examples: |
-      - i want a table on [friday](date) for [5](person) people
-      - i want to reserve a table for [3](person) people for the next [monday](date)
-      - i need a table reservation for [4](person) person on [tomFamily Platters		
-      - i need a table for reservation
-      - need a table for [9](person) people
-      - [tomorrow](date) i need a table for [4](person) people on your patio
-
   - intent: unexpected_answer
     examples: |
       - Why do you need to know that
@@ -3779,57 +3796,49 @@ nlu:
     examples: |
       - twelve
 
-  - intent: inform_phone_no
-    examples: |
-      - [22222211114](phoneNumber)
-      - [0123456789](phoneNumber)
-      - [0000000000](phoneNumber)
+  # - intent: inform_phone_no
+  #   examples: |
+  #     - [22222211114](phoneNumber)
+  #     - [0123456789](phoneNumber)
+  #     - [0000000000](phoneNumber)
 
   - intent: inform_name
     examples: |
-      - my name is [Hassan](customerName)
-      - my name is [Alan Smith](customerName)
-      - [John Smith](customerName)
-      - [Steve Jobs](customerName)
-      - [Robert Downey](customerName)
-      - [Alan Smith](customerName)
-      - [John Smith](customerName)
-      - [Steve Jobs](customerName)
-      - my name is [Robert Downey](customerName)
-      - my name is [Theresa Allen](customerName)
-      - call me [Sandra Barnes](customerName)
-      - [Deborah Henderson] is my name
-      - [Larry Perry] is my name
-      - my name is [Frank Ramirez](customerName)
-      - my name is [Salima Jarosław Maryna Zappa](customerName)
-      - call me [Nika Herberto Enrique Gavrilyuk](customerName)
-      - my name is [Allycia Mihaela Aleksanteri Janvier](customerName)
-      - call me [Arethousa Robertina Calixta Rao](customerName)
-      - my name is [Demostrate Milena Vesela Kaiser](customerName)
-      - my name is [Stevan Kristina Sissinnguaq Shantae De Laurentis]
-      - call me [Mahsa Manel Bořek Kjersti Borde]
-      - call me [Samuel Citra Hagano Milan Nigro]
-      - my name is [Ernust Viktor Rokuro Evgeniy Hermanson]
-      - my name is [Dov Hrœrekr Amarante Halina Merx]
+      - my name is [Hassan taha](PERSON)
+      - my name is [Alan smith](PERSON)
+      - [John Smith](PERSON) is my name
+      - my name is [Steve mark](PERSON)
+      - [Alan walker](PERSON) is my name
+      - my name is [Robert Downey](PERSON)
+      - my name is [Theresa Allen](PERSON)
+      - call me [Sandra Barnes](PERSON)
+      - [Deborah Henderson](PERSON) is my name
+      - [Larry Perry](PERSON) is my name
 
   - intent: inform_date
     examples: |
-      - upcoming [Monday](date)
-      - next [Tuesday](date)
-      - coming [Wednesday](date)
+      - i want to book my reservation for upcoming [Monday](date)
+      - please book my reservation for next [Tuesday](date)
+      - we want to make reservation for coming [Wednesday](date) noon
       - next [Thursday](date)
-      - upcoming [Friday](date)
-      - oncoming [Saturday](date)
+      - [Thursday](date) night is when we need the reservation for  
+      - i want to make reservation for upcoming [Friday](date) noon
+      - please make my reservation for oncoming [Saturday](date) dinner
+      - we will be coming to your restaurant on [Tuesday](date) night
+      - we will be coming to your restaurant on [Friday](date) evening
+      - i will be coming to your restaurant on [Sunday](date) evening
       - coming [Sunday](date)
+      - [Sunday](date) night is when we need the reservation for
       - oncoming [Friday](date)
+      - we will need the reservation for [Tuesday](date) night
       - [tomorrow](date)
       - [next week](date)
       - [next month](date)
       - [weekend](date)
-      - [today](date)
+      - i want to make reservation for [today](date) dinner
       - [now](date)
       - [January 1st](date)
-      - [2 January](date)
+      - the date of reservation is [2 January](date)
       - [28th January](date)
       - [February 3rd](date)
       - [4th February](date)
@@ -3838,90 +3847,78 @@ nlu:
       - [March 29th](date)
       - [April 8](date)
       - [9th April](date)
-      - [May 10](date)
+      - i want to make reservation for [May 10](date)
       - [12th May](date)
       - [June 13](date)
-      - [14th June](date)
+      - we want to make reservation for [14th June](date)
       - [july 15th](date) 
       - [16 july](date)
-      - [31st july](date)
+      - make reservation for [31st july](date)
       - [August 17](date)
       - [18th August](date)
-      - [September 19th](date)
-      - [20 September](date)
-      - [September 30](date)
-      - [21st October](date)
+      - i want to make reservation for [September 19th](date)
+      - we want to make reservation for [20 September](date)
+      - date of reservation is [September 30](date)
+      - date of reservation is [21st October](date)
       - [October 22](date)
       - [November 23rd](date)
-      - [24 November](date)
+      - the date of reservation is [24 November](date)
       - [25th December]
-      - [December 26](date)
+      - i want to make reservation for [December 26](date)
       - [27th December](date)
 
   - intent: inform_time
     examples: |
-      - [12 a.m](time)
-      - [12 01 a.m](time)
+      - We would prefer [12 a.m](time) 
+      - i want to make reservation for [12 01 a.m](time)
       - [12 05 a.m](time)
-      - [12 10 a.m](time)
-      - [12 15 p.m](time)
-      - [1 a.m](time)
-      - [1 20 p.m](time)
-      - [1 25 a.m](time)
-      - [1 30 p.m](time)
-      - [1 35 a.m](time)
-      - [1 40 p.m](time)
-      - [2 p.m](time)
+      - We would prefer [12 10 a.m](time)
+      - time of reservation would be [12 15 p.m](time)
+      - We would prefer [1 a.m](time)
+      - time of reservation would be [1 20 p.m](time)
+      - [1 25 a.m](time) would be best
+      - i want to make reservation for [1 30 p.m](time)
+      - time of reservation would be [1 35 a.m](time)
+      - [1 40 p.m](time) would be best
+      - i want to make reservation for [2 p.m](time)
       - [2 45 a.m](time)
-      - [2 50 p.m](time)
-      - [2 55 p.m](time)
-      - [3 a.m](time)
-      - [4 p.m](time)
-      - [5 a.m](time)
-      - [6 p.m](time)
-      - [7 a.m](time)
-      - [8 p.m](time)
-      - [9 a.m](time)
+      - We would prefer [2 50 p.m](time)
+      - we want to make reservation for [2 55 p.m](time)
+      - i want to make reservation for [3 a.m](time)
+      - We would prefer [4 p.m](time)
+      - we want to make reservation for [5 a.m](time)
+      - time of reservation would be [6 p.m](time)
+      - we want to make reservation for [7 a.m](time)
+      - [8 p.m](time) would be best
+      - time of reservation would be [9 a.m](time)
       - [10 p.m](time)
       - [11 a.m](time)
-      - [0 o'clock](time)
+      - We would prefer [0 o'clock](time)
       - [1 o'clock](time)
-      - [2 o clock](time)
-      - [3 o'clock](time)
+      - We would prefer [2 o clock](time)
+      - time of reservation is [3 o'clock](time)
       - [4 o clock](time)
-      - [5 o'clock](time)
+      - [5 o'clock](time) would be best
       - [6 o'clock](time)
-      - [7 o clock](time)
+      - We would prefer [7 o clock](time)
       - [8 o'clock](time)
-      - [9 o'clock](time)
+      - We would prefer [9 o'clock](time)
       - [10 o clock](time)
-      - [11 o clock](time)
-      - [12 o'clock](time)
+      - time of reservation is [11 o clock](time)
+      - [12 o'clock](time) would be best
       - [13 o'clock](time)
-      - [14 o clock](time)
+      - time of reservation is [14 o clock](time)
       - [15 o'clock](time)
       - [16 o clock](time)
-      - [17 o'clock](time)
+      - We would prefer [17 o'clock](time)
       - [18 o clock](time)
       - [19 o'clock](time)
-      - [20 o clock](time)
-      - [21 o'clock](time)
-      - [22 o clock](time)
-      - [23 o'clock](time)
-      - [24 o clock](time)
+      - [20 o clock](time) would be best
+      - we want to make reservation for [21 o'clock](time)
+      - we want to make reservation for [22 o clock](time)
+      - [23 o'clock](time) would be best
+      - [24 o clock](time) would be best
 
-  # - intent: inform_order
-  #   examples: |
-  #     - [O-12345](orderId)
-  #     - [O-00000](orderId)
-  #     - [O-99999](orderId)
-
-  # - intent: inform_order
-  #   examples: |
-  #     - [pickup](orderType)
-  #     - [dinein](orderType)
-  #     - [delivery](orderType)
-  
   - intent: book_now
     examples: |
       - [book now](reserved)
@@ -3931,14 +3928,6 @@ nlu:
       - please [book]{"entity":"reserved","value":"book now"}
       - please [book now](reserved)
       
-  # - intent: inform_lang
-  #   examples: |
-  #     - [en](lang)
-  #     - [ar](lang)
-  #     - [english](lang)
-  #     - [arabic](lang)
-  #     - [arabi](lang)
-
   - intent: deny
     examples: |
       - [no](negative)
@@ -3975,10 +3964,12 @@ nlu:
   - regex: person
     examples: |
       - \d{1,2}\b
-  - regex: customerName
+
+  - regex: PERSON
     examples: |
       - ([A-Z])\w+
       - [A-Za-z]{2,25} [A-Za-z]{2,25}
+
   - regex: phoneNumber
     examples: |
       - \d{6,}\b
@@ -4223,65 +4214,255 @@ nlu:
       - eleven
       - twelve
 
-  - lookup: customerName
+  - lookup: PERSON
     examples: |
-      - Sophia Howells
-      - Humphrey Ayala
-      - Chelsea Howard
-      - Wiktoria Barton
-      - Enoch Moore
-      - Dafydd Britton
-      - Josef Vaughan
-      - Frederic Andrade
-      - Rubi Chan
-      - Darcy Langley
-      - Owais Austin
-      - Tomos Mays
-      - Ann Dillard
-      - Kaison Burke
-      - Billy-Joe Peters
-      - Mindy Jensen
-      - Sion Fuentes
-      - Bo Ruiz
-      - Kenan Rayner
-      - Akshay West
-      - Tyrique Mcpherson
-      - Matei Hartman
-      - Noel Schultz
-      - Isobel Neal
-      - Sumaya Hester
-      - Cody Chaney
-      - Rahul Curry
-      - Ted Finney
-      - Anthony Liu
-      - Amanpreet Spencer
-      - Arran Joyce
-      - Jean-Luc Livingston
-      - Zackary Mcpherson
-      - Tania Bourne
-      - Albi Vo
-      - Gabriela Robinson
-      - Lindsay Khan
-      - Jonathon Martin
-      - Ailsa Pope
-      - Harmony Dupont
-      - Alayna Mccallum
-      - Rosanna Reyna
-      - Rhodri Roberson
-      - Prisha Garrison
-      - Ellie-May Best
-      - Bonita Johns
-      - Rajan Talbot
-      - Zacharias Horner
-      - Katherine Boyle
-      - Gail Boone
-      - Salima Jarosław Maryna Zappa
-      - Nika Herberto Enrique Gavrilyuk
-      - Allycia Mihaela Aleksanteri Janvier
-      - Arethousa Robertina Calixta Rao
-      - Demostrate Milena Vesela Kaiser
-      - Stevan Kristina Sissinnguaq Shantae De Laurentis
-      - Mahsa Manel Bořek Kjersti Borde
-      - Samuel Citra Hagano Milan Nigro
-      - Ernust Viktor Rokuro Evgeniy Hermanson
-      - Dov Hrœrekr Amarante Halina Merx
+      - Rachel Adams
+      - Betty Lewis
+      - Alice Thomas
+      - Roger Hill
+      - Paula Cox
+      - Janice Jones
+      - Teresa Taylor
+      - Craig Richardson
+      - Adam Hernandez
+      - Norma Edwards
+      - Gary Griffin
+      - Kathy Williams
+      - Marilyn Collins
+      - Terry Kelly
+      - Cheryl Jackson
+      - Phillip Murphy
+      - William Baker
+      - Jerry Lopez
+      - Thomas Rodriguez
+      - Patricia Diaz
+      - Catherine Campbell
+      - Karen Sanders
+      - Louise Washington
+      - Sean Simmons
+      - Nicole Coleman
+      - Carol Ross
+      - Frances Green
+      - Christine Parker
+      - Juan Rivera
+      - Theresa Watson
+      - Johnny Nelson
+      - Douglas Reed
+      - Nancy Wright
+      - Fred Stewart
+      - Mildred Garcia
+      - Jesse Martinez
+      - Jonathan Harris
+      - Nicholas Lee
+      - Michael Mitchell
+      - Cynthia Bennett
+      - Lisa Sanchez
+      - Evelyn Powell
+      - Peter Russell
+      - Andrea Scott
+      - Patrick Ward
+      - Rebecca Foster
+      - Barbara Wilson
+      - Frank Miller
+      - Willie Johnson
+      - Ruby King
+      - Sam Andrews
+      - Christina Simmons
+      - Jack Mclaughlin
+      - Tracy Ross
+      - Annette Mccoy
+      - Clifford Robertson
+      - Earl Olson
+      - Juanita Brock
+      - Ruben Elliott
+      - Caleb Aguilar
+      - Cathy Morton
+      - Howard Fisher
+      - Jaime Robbins
+      - Rachael Schmidt
+      - Dean Nunez
+      - Patricia Lamb
+      - Tanya Larson
+      - Katie Paul
+      - Kristy Yates
+      - Estelle Douglas
+      - Shirley Warren
+      - Ian Pierce
+      - Shelia Mason
+      - Maggie Patrick
+      - Kenneth Matthews
+      - Alfred Cannon
+      - Debbie Blair
+      - Kate Russell
+      - Marianne Gordon
+      - Elias Manning
+      - Merle Strickland
+      - Marion Briggs
+      - Mae Jones
+      - Alvin Love
+      - June Lambert
+      - Ira Little
+      - Alton Porter
+      - Mary Powell
+      - Tiffany Webster
+      - Archie Floyd
+      - Irving Hayes
+      - Margaret Steele
+      - Erin Stokes
+      - Edmund Conner
+      - Delia Harris
+      - Lionel Riley
+      - Brenda Soto
+      - Larry Austin
+      - Fredrick Owens
+      - Deanna West
+      - Glenn Spurlock
+      - Rocio Pritchard
+      - Avril Funderburk
+      - Annabell Noe
+      - Elisabeth Staton
+      - Deirdre Granados
+      - Leonor Souza
+      - Teresita Jaeger
+      - Sandy Pedersen
+      - Ila Watters
+      - Arica Cooney
+      - Eugenie Minton
+      - Toby Frantz
+      - Bridgett Ali
+      - Charisse Mcnutt
+      - Santa Candelaria
+      - Waldo Sun
+      - Claretha Derr
+      - Talisha Berryman
+      - Adela Solis
+      - Pierre Fishman
+      - Delilah Schubert
+      - Rufina Campos
+      - Penelope Bertrand
+      - Carmelita Marlow
+      - Lorie Andrew
+      - Prince Werner
+      - Yen Ammons
+      - Ermelinda Pollock
+      - Anthony Leary
+      - Billy Upton
+      - Olene Grey
+      - Vennie Skinner
+      - Loan Locklear
+      - Lonna Mcgrew
+      - Argelia Nagle
+      - Elissa Shuler
+      - Alysha Shea
+      - Eliz Beavers
+      - Vita Zapata
+      - Janay Carmichael
+      - Shantae Ashmore
+      - Shad Reynoso
+      - Dayle Diehl
+      - Kathrine Norfleet
+      - Alverta Otis
+      - Shirleen Knott
+      - Estella Ledoux
+      - Tamar Crump
+      - Jude Tan
+      - Darrell Thomson
+      - Ezekiel Walters
+      - Kester Farmer
+      - Karen Castillo
+      - Samiya Wyatt
+      - Jeremiah Evans
+      - Jess Cardenas
+      - Mari Avalos
+      - Murat Wheatley
+      - Nicky Juarez
+      - Hari Gill
+      - Charity Woodard
+      - Ibrar Wynn
+      - Safa Lam
+      - Cory Salazar
+      - Richard Espinosa
+      - Sienna-Rose Flower
+      - Lorenzo Strickland
+      - Clayton Gutierrez
+      - Jordon Russell
+      - Keeley Barry
+      - Liyana Charles
+      - Allison Michael
+      - Billie Devine
+      - Zainab Booker
+      - Paige Emerson
+      - Leonidas Petersen
+      - Johanna Martinez
+      - Gerald Bryant
+      - Arman Arellano
+      - Layan Pham
+      - Mathew Halliday
+      - Teri Lynn
+      - Matthew Mair
+      - Garrett Zuniga
+      - Subhan Moyer
+      - Carson Christian
+      - Mariah Spears
+      - Klara Wright
+      - Arissa Puckett
+      - Matteo Naylor
+      - Nyle Greer
+      - Danyaal Driscoll
+      - Sullivan Adkins
+      - Olivier Mcloughlin
+      - Fraya Crossley
+      - Aaminah Ibarra
+      - Shaquille Donald
+      - Ursula Parkes
+      - Courtney Hopkins
+      - Grover Whiteley
+      - Alaina Stokes
+      - Roma Squires
+      - Jimmy Garrison
+      - Imani Noble
+      - Andrei Flowers
+      - Inara Deleon
+      - Keeva Hunt
+      - Ephraim O'Reilly
+      - Neal Fitzpatrick
+      - Azra Palmer
+      - Hallam North
+      - Tasnia Zhang
+      - Jozef Doherty
+      - Ahyan Beech
+      - Dale Browne
+      - Teresa Jaramillo
+      - Rosanna Mccarthy
+      - Abigale Meadows
+      - Shereen Simmons
+      - Beyonce Benitez
+      - Vikki Freeman
+      - Thea Glover
+      - Fathima Goddard
+      - Guy Craig
+      - Lucca Barlow
+      - Om Bray
+      - Joan Haynes
+      - Elsie-Mae Eaton
+      - Cai Hail
+      - Keely Clark
+      - Emerson Ashton
+      - Kaden Alexander
+      - Ellenor Duggan
+      - Chloe Cole
+      - Selin Foley
+      - Micheal Tran
+      - Claude Major
+      - Salma Harrington
+      - Ernest Dodson
+      - Jasleen Watson
+      - Charley Thorne
+      - Nansi Malone
+      - Dottie Peel
+      - Kishan Campbell
+      - Beauden Blevins
+      - Felicity Matthams
+      - Vickie Booth
+      - Roxy Gallegos
+      - Aneesa Pearce
