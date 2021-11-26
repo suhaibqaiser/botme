@@ -94,7 +94,7 @@ export class SpeechService {
     }
 
     // Get/Ask browser to provide MIC input
-    navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+    navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true } }).then(stream => {
       this.stream = stream;
     }).catch(error => {
       console.error(error);
@@ -123,10 +123,13 @@ export class SpeechService {
 
       this.recorder = new RecordRTC.StereoAudioRecorder(this.stream, {
         type: 'audio',
-        mimeType: 'audio/webm;codecs=pcm',
+        mimeType: 'audio/webm',
+        sampleRate: 48000,
         numberOfAudioChannels: 1,
         disableLogs: true,
-        desiredSampRate: 16000,
+        // desiredSampRate: 16000,
+        timeSlice: 1000,
+        bufferSize: 16384,
       });
       this.recorder.record();
       this.isListening = true;

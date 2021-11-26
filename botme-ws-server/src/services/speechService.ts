@@ -11,16 +11,23 @@ process.env['GOOGLE_APPLICATION_CREDENTIALS'] = 'google-cloud-credentials.json'
 
 // This method is used for Google TTS service
 export async function getSpeechToText(payload: any) {
+    fs.writeFile('input.wav', payload, (err: any) => {
+        if (err)
+            console.log(err);
+        else {
+            console.log("File written successfully\n");
+        }
+    });
     const request = {
         audio: {
             content: payload
         },
         config: {
-            encoding: 'LINEAR16',
-            sampleRateHertz: 16000,
+            // encoding: 'LINEAR16',
+            sampleRateHertz: 48000,
             languageCode: 'en-US',
             audioChannelCount: 1,
-            single_utterance: true
+            single_utterance: false
         },
         interimResults: false
     }
