@@ -33,9 +33,7 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [
-              "src/assets/voice-module/voice.js"
-            ],
+            "scripts": [],
             "allowedCommonJsDependencies": [
               "hark"
             ]
@@ -67,7 +65,7 @@
               "optimization": false,
               "vendorChunk": true,
               "extractLicenses": false,
-              "sourceMap": true,
+              "sourceMap": false,
               "namedChunks": true
             }
           },

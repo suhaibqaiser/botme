@@ -30,8 +30,9 @@ export class SpeechService {
   cloudVoice: boolean = true;
   isSpeaking: boolean = false
   isListening: boolean = false
+
   //browser speech section
-  recognition = new webkitSpeechRecognition();
+  recognition: any
   isStoppedSpeechRecog = false;
   public text = '';
   tempWords: any;
@@ -246,6 +247,7 @@ export class SpeechService {
 
   // browser speech section
   enableBrowserListening() {
+    this.recognition = new webkitSpeechRecognition();
     this.recognition.interimResults = true;
     this.recognition.lang = 'en-US';
     this.recognition.maxAlternatives = 1;
