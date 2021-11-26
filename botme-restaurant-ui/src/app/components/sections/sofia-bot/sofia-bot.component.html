@@ -1,4 +1,4 @@
-<div class="interaction">
+<div *ngIf="voiceEnabled" class="interaction">
     <label class="i-heading">Voice:</label>
     <label class="switch">
         <input #voiceSwitch type="checkbox" (change)="updateInteractionState(voiceSwitch.checked)"

@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {SocketService} from 'src/app/services/socket.service';
-import {SpeechService} from "../../../services/speech.service";
+import { Component, OnInit } from '@angular/core';
+import { BotmeClientService } from 'src/app/services/botme-client.service';
+import { SocketService } from 'src/app/services/socket.service';
+import { SpeechService } from "../../../services/speech.service";
 
 
 @Component({
@@ -10,21 +11,29 @@ import {SpeechService} from "../../../services/speech.service";
 })
 export class SofiaBotComponent implements OnInit {
 
+  voiceEnabled: boolean = true;
   speechEnabled: boolean = false;
+  isBrowserSpeech: boolean = true
 
-  constructor(private speechService: SpeechService, private socketService: SocketService) {
+  constructor(private speechService: SpeechService,
+    private socketService: SocketService,
+    public clientService: BotmeClientService
+  ) {
   }
 
   ngOnInit() {
+    if (this.clientService.getVoiceType() === "cloud-voice") {
+      this.isBrowserSpeech = false
+    } else if (this.clientService.getVoiceType() === "no-voice") {
+      this.voiceEnabled = false
+    }
   }
 
   updateInteractionState(value: boolean) {
-
     this.speechEnabled = value
     this.speechService.speechEnabled.next(this.speechEnabled)
-
     if (this.speechEnabled) {
-      this.speechService.enableListening(this.socketService.currentContextObj.pageId, true)
+      this.speechService.enableListening(this.socketService.currentContextObj.pageId, this.isBrowserSpeech)
     } else {
       this.speechService.disableListening();
     }
@@ -33,5 +42,6 @@ export class SofiaBotComponent implements OnInit {
   ngOnDestroy() {
     this.speechService.disableListening();
   }
+
 
 }

@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import * as RecordRTC from 'recordrtc';
-import {Subject} from 'rxjs';
-import {SocketService} from './socket.service';
+import { Subject } from 'rxjs';
+import { SocketService } from './socket.service';
 import * as hark from 'hark'
 
 declare var webkitSpeechRecognition: any;
@@ -27,16 +27,15 @@ export class SpeechService {
   speechEnabled = new Subject<boolean>();
   SpeechE: boolean = false
   audio = new Audio();
-  voiceFromServer: boolean = true;
+  cloudVoice: boolean = true;
   isSpeaking: boolean = false
   isListening: boolean = false
-
-
   //browser speech section
   recognition = new webkitSpeechRecognition();
   isStoppedSpeechRecog = false;
   public text = '';
   tempWords: any;
+  isBrowserSpeech: boolean = false
 
 
   constructor(private socketService: SocketService) {
@@ -63,7 +62,8 @@ export class SpeechService {
             }
           });
           this.selectedVoice = this.voices[selectVoice]
-          if (this.selectedVoice) this.voiceFromServer = false
+          console.log(this.selectedVoice);
+
         });
     }
     this.updateState('i')
@@ -71,24 +71,30 @@ export class SpeechService {
     // this.socketService.processing = true
   }
 
-  async enableListening(pageId: string, isBrowserSpeech = false) {
+  enableListening(pageId: string, isBrowserSpeech: boolean) {
+    this.isBrowserSpeech = isBrowserSpeech
+    if (isBrowserSpeech) this.cloudVoice = false
     if (pageId === "pageId-home") {
       this.speak(this.voiceWelcomeMessage, null);
     }
 
     if (isBrowserSpeech) {
-      this.browserSpeechInit()
-      this.browserSpeechStart()
-      return
+      console.log('Voice Engine: Browser');
+      this.enableBrowserListening()
+    } else {
+      console.log('Voice Engine: Google Cloud');
+      this.enableCloudListenig()
     }
+    this.updateState('i')
+  }
 
-
+  async enableCloudListenig() {
     if (this.recorder) {
       return
     }
 
     // Get/Ask browser to provide MIC input
-    navigator.mediaDevices.getUserMedia({audio: true}).then(stream => {
+    navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
       this.stream = stream;
     }).catch(error => {
       console.error(error);
@@ -101,11 +107,11 @@ export class SpeechService {
 
     // initialize speech speaking and silence events
     this.speechEvents = hark(this.stream, {})
-    this.speechEvents.on('speaking', () => this.listen());
-    this.speechEvents.on('stopped_speaking', () => this.stopListening());
+    this.speechEvents.on('speaking', () => this.cloudlisten());
+    this.speechEvents.on('stopped_speaking', () => this.stopCloudListen());
   }
 
-  listen() {
+  cloudlisten() {
     if (!this.speechEvents || this.isSpeaking) {
       return
     }
@@ -127,7 +133,7 @@ export class SpeechService {
     }
   }
 
-  stopListening() {
+  stopCloudListen() {
     if (this.recorder && this.isListening) {
       this.updateState('p')
       setTimeout(() => {
@@ -136,7 +142,7 @@ export class SpeechService {
         }
       }, 3000);
       this.recorder.stop((blob: any) => {
-        this.socketService.sendMessage('voice', blob, this.voiceFromServer)
+        this.socketService.sendMessage('voice', blob, this.cloudVoice)
         this.isListening = false;
       }, () => {
         this.disableListening();
@@ -145,14 +151,19 @@ export class SpeechService {
   }
 
   disableListening() {
-    this.speak(this.voiceEndingMessage, null)
-    if (this.recorder) {
-      this.recorder = null;
-      if (this.stream) {
-        this.stream = null;
-        if (this.speechEvents) this.speechEvents = null
+    if (this.isBrowserSpeech) {
+      this.disableBrowserListening()
+    } else {
+      if (this.recorder) {
+        this.recorder = null;
+        if (this.stream) {
+          this.stream = null;
+          if (this.speechEvents) this.speechEvents = null
+        }
       }
     }
+    // TODO: should update this before comming 
+    this.speak(this.voiceEndingMessage, null)
   }
 
 
@@ -161,7 +172,7 @@ export class SpeechService {
 
     this.isSpeaking = true
 
-    if (this.voiceFromServer) {
+    if (this.cloudVoice) {
       if (!voice) {
         this.socketService.sendMessage('tts', speechText, true);
         this.isSpeaking = false;
@@ -169,7 +180,7 @@ export class SpeechService {
         return
       }
       this.updateState('s')
-      const blob = new Blob([voice], {type: "audio/ogg"});
+      const blob = new Blob([voice], { type: "audio/ogg" });
       this.audio.src = URL.createObjectURL(blob)
       this.audio.load();
       this.audio.play();
@@ -183,7 +194,7 @@ export class SpeechService {
       let utterance = new SpeechSynthesisUtterance(speechText);
       utterance.voice = this.selectedVoice;
       utterance.rate = this.selectedRate;
-      utterance.lang = this.selectedVoice.lang
+      // utterance.lang = this.selectedVoice.lang
       speechSynthesis.speak(utterance);
       while (speechSynthesis.speaking) {
         await this.delay(100)
@@ -194,16 +205,17 @@ export class SpeechService {
     this.stopSpeak()
   }
 
-  public stopSpeak(): void {
-    if (!this.voiceFromServer && speechSynthesis.speaking) {
-      this.updateState('i')
+  public async stopSpeak() {
+    this.updateState('i')
+    if (!this.cloudVoice && speechSynthesis.speaking) {
       speechSynthesis.cancel();
     }
-    if (this.voiceFromServer && !this.audio.paused) {
-      this.updateState('i')
+    if (this.cloudVoice && !this.audio.paused) {
       this.audio.pause();
     }
     this.isSpeaking = false
+    // console.log(speechSynthesis.speaking)
+    // this.recognition.start()
   }
 
   // disableSpeaking() {
@@ -230,51 +242,71 @@ export class SpeechService {
   }
 
   // browser speech section
-  browserSpeechInit() {
-
-    this.recognition.interimResults = false;
+  enableBrowserListening() {
+    this.recognition.interimResults = true;
     this.recognition.lang = 'en-US';
+    this.recognition.maxAlternatives = 1;
+    this.recognition.continuous = true;
+
+    this.recognition.start()
+    console.log('Speech recognition Started');
 
     this.recognition.addEventListener('result', (e: any) => {
-      const transcript = Array.from(e.results)
-        .map((result: any) => result[0])
+      let final: boolean = false
+      const transcript: any = Array.from(e.results)
+        .map((result: any) => { final = result.isFinal; return result[0]; })
         .map((result) => result.transcript)
-        .join('');
+      // .join('');
       this.tempWords = transcript;
-      console.log(transcript);
-      if(!transcript.length) return
-      this.socketService.sendMessage('communication', transcript, false)
-    });
-  }
-
-  browserSpeechStart() {
-    this.isStoppedSpeechRecog = false;
-    this.recognition.start();
-    console.log("Speech recognition started")
-    this.recognition.addEventListener('end', (condition: any) => {
-      if (this.isStoppedSpeechRecog) {
-        this.recognition.browserSpeechStop();
-        console.log("End speech recognition")
-        //=======
-      } else {
-        this.wordConcat()
-        this.recognition.start();
+      this.browserListen()
+      if (final && !this.isSpeaking) {
+        this.text = this.tempWords[this.tempWords.length - 1]
+        console.log(this.text);
+        this.stopBrowserListen()
       }
     });
+
+    this.recognition.addEventListener('speechstart', () => {
+      console.log('Speech Start');
+      //this.browserListen()
+    })
+
+    this.recognition.addEventListener('speechend', () => {
+      // this.stopBrowserListen()
+      console.log('Speech Ended');
+    })
   }
 
-  browserSpeechStop() {
-    this.isStoppedSpeechRecog = true;
-    this.wordConcat()
+  browserListen() {
+    if (this.isSpeaking) {
+      return
+    }
+    if (this.SpeechE && (!this.isSpeaking || !this.isListening)) {
+      // Show processing overlay
+      this.socketService.processing = true
+      this.isListening = true
+      this.updateState('l')
+    };
+  }
+
+  stopBrowserListen() {
+    this.isListening = false
+    if (!this.text.length) return
+    this.socketService.sendMessage('communication', this.text, false)
+    this.updateState('p')
+    this.text = ''
+    // this.recognition.start()
+  }
+
+  disableBrowserListening() {
     this.recognition.stop();
     console.log("End speech recognition")
   }
 
   wordConcat() {
-    this.text = this.text + ' ' + this.tempWords + '.';
+    this.text = this.text + ' ' + this.tempWords;
     this.tempWords = ''
   }
-
 
 }
 
