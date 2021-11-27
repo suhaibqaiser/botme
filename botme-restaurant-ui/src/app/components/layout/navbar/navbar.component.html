@@ -45,6 +45,9 @@
                   *ngIf="_botMeClientService.getCookie().isLoggedIn" class="nav-link" type="button">LOGOUT
                 </a>
               </li>
+              <li>
+                <a data-bs-toggle="modal" data-bs-target="#voiceTest" class="nav-link" type="button">VOICE TEST</a>
+              </li>
               <li class="nav-item">
                 <a *ngIf="_botMeClientService.getCookie().isLoggedIn" (click)="showCartModal()" id="entityId-show-cart"
                   class="productCart"><i style="font-size: x-large" class="flaticon-supermarket-basket"></i>
@@ -53,7 +56,6 @@
                     class="badge">{{getCartProductCount()}}</span>
                 </a>
               </li>
-
             </ul>
           </div>
           <!-- navbar-option -->
@@ -126,6 +128,29 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="voiceTest" tabindex="-1" aria-labelledby="bbb" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-white" id="bbb">Voice Test</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <label class="text-white">Voice Engine:</label>
+        <select class="w-100" [(ngModel)]="_voiceType" (change)="setVoiceType()">
+          <option value="no-voice">Disabled</option>
+          <option value="local-voice">Browser</option>
+          <option value="cloud-voice">Google Cloud</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="reload()">Done</button>
       </div>
     </div>
   </div>

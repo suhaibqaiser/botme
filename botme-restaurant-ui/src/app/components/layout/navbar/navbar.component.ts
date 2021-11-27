@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {CartService} from 'src/app/services/cart.service';
-import {SocketService} from "../../../services/socket.service";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {BotmeClientService} from "../../../services/botme-client.service";
-import {Router} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { CartService } from 'src/app/services/cart.service';
+import { SocketService } from "../../../services/socket.service";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { BotmeClientService } from "../../../services/botme-client.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-navbar',
@@ -19,8 +19,13 @@ export class NavbarComponent implements OnInit {
     clientDeviceId: new FormControl('', Validators.required),
     voiceType: new FormControl('', Validators.required)
   })
+  _voiceType?: string
 
-  constructor(public router: Router, public socketService: SocketService, private _router: Router, public _botMeClientService: BotmeClientService, private cartService: CartService, private _socketService: SocketService) {
+  constructor(public router: Router,
+    public socketService: SocketService,
+    public _botMeClientService: BotmeClientService,
+    private cartService: CartService,
+    private _socketService: SocketService) {
     document.getElementsByClassName('cart-modal-wrapper')[0]?.setAttribute('style', 'display:none')
   }
 
@@ -38,7 +43,7 @@ export class NavbarComponent implements OnInit {
           this._botMeClientService.setCookie('clientID', res.payload.clientID)
           this._botMeClientService.setCookie('isLoggedIn', res.payload.isLoggedIn)
           this._botMeClientService.setCookie('voiceType', this.loginForm.get('voiceType')?.value)
-          this._router.navigate(['/home']).then(() => {
+          this.router.navigate(['/home']).then(() => {
             window.location.reload();
           });
         } else {
@@ -72,8 +77,16 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     this._botMeClientService.reSetCookie()
-    this._router.navigate(['/home']).then(() => {
+    this.router.navigate(['/home']).then(() => {
       window.location.reload();
     });
+  }
+
+  setVoiceType() {
+    this._botMeClientService.setCookie('voiceType', this._voiceType)
+  }
+
+  reload() {
+    location.reload()
   }
 }
