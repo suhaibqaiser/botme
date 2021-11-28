@@ -20,7 +20,12 @@ export class ReservationService {
   isRequired(value: any) {
     return !(value && value.length)
   }
+
   isNumberRequired(value: any) {
     return !(value && value > 0)
+  }
+
+  isDateRequired(value: any) {
+    return !(value)
   }
 }

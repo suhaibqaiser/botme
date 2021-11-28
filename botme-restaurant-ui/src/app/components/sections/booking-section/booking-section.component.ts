@@ -55,7 +55,7 @@ export class BookingSectionComponent implements OnInit {
 
     this.validations.customerName = this._reservationService.isRequired(this.reservationForm.get('customerName')?.value)
     this.validations.reservationSeats = this._reservationService.isNumberRequired(this.reservationForm.get('reservationSeats')?.value)
-    this.validations.reservationDate = this._reservationService.isRequired(this.reservationForm.get('reservationDate')?.value)
+    this.validations.reservationDate = this._reservationService.isDateRequired(this.reservationForm.get('reservationDate')?.value)
     this.validations.reservationTime = this._reservationService.isRequired(this.reservationForm.get('reservationTime')?.value)
 
     if (Object.keys(this.validations).every(k => this.validations[k] === false)) {
