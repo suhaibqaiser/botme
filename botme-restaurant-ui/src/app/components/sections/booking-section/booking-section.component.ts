@@ -10,6 +10,13 @@ import {Router} from "@angular/router";
   styleUrls: ['./booking-section.component.scss']
 })
 export class BookingSectionComponent implements OnInit {
+  reservation: any = {
+    isReservationCompleted: false,
+    name: null,
+    reservationSeats: null,
+    reservationDate: null,
+    reservationTime: null
+  }
   reservationForm = new FormGroup({
     customerName: new FormControl('', Validators.required),
     reservationSeats: new FormControl('', Validators.required),
@@ -28,6 +35,10 @@ export class BookingSectionComponent implements OnInit {
 
   ngOnInit(): void {
     this._socketService.getCurrentContext()
+    let a = localStorage.getItem('reservation')
+    if (a != null) {
+      this.reservation = JSON.parse(a)
+    }
   }
 
   addReservation() {
@@ -61,10 +72,29 @@ export class BookingSectionComponent implements OnInit {
     if (Object.keys(this.validations).every(k => this.validations[k] === false)) {
       this._reservationService.addReservation(this.reservationForm.value).subscribe((res: any) => {
           if (res.status === "success") {
-            this._router.navigate(['/online-shop'])
+            this.reservation = {
+              isReservationCompleted: true,
+              name: this.reservationForm.get('customerName')?.value,
+              reservationSeats: this.reservationForm.get('reservationSeats')?.value,
+              reservationDate: this.reservationForm.get('reservationDate')?.value,
+              reservationTime: this.reservationForm.get('reservationTime')?.value
+            }
+            localStorage.setItem('reservation', JSON.stringify(this.reservation))
           }
         }
       )
+    }
+  }
+
+  createNewReservation() {
+    this.reservationForm.reset()
+    localStorage.setItem('reservation', '')
+    this.reservation = {
+      isReservationCompleted: false,
+      name: null,
+      reservationSeats: null,
+      reservationDate: null,
+      reservationTime: null
     }
   }
 }
