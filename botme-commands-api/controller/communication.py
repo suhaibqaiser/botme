@@ -30,10 +30,24 @@ def getResponse(intent,entity,text,pageId,sectionId):
             if db is not None:
                 Response = parseDate(text,db,pageId,sectionId,intent,senti)
                 return Response
+            else:
+                return {"Response":"Can't find the data in database","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent}
         elif (intent == "inform_time"):
             if db is not None:
                 Response = parseTime(text,db,pageId,sectionId,intent,senti)
                 return Response
+            else:
+                return {"Response":"Can't find the data in database","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent}
+        elif (intent == "inform_name"):
+            if db is not None:
+                if (value is not None):
+                    context = db['context']
+                    iD = getEntityClickAttribute(context['entities'])
+                    return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent}
+                else:
+                    return {"Response":"sorry,can you please tell me your name again?","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent}
+            else:
+                return {"Response":"Can't find the data in database","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent}
         else:
             if db is not None:
                 context = db['context']
