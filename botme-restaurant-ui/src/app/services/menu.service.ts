@@ -1,26 +1,42 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {environment} from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MenuService {
+  productsList = new Subject<any>()
+  categoriesList = new Subject<any>()
 
   constructor(private http: HttpClient) {
+    this.categoryApi()
+    this.productsApi()
   }
 
   apiBaseUrl = environment.apiRestaurantUrl;
 
-  getProducts(): Observable<any> {
-    const url = `${this.apiBaseUrl}/food/product/search`;
-    return this.http.get(url);
+  getProductList(): Observable<any> {
+    return this.productsList
   }
 
-  getCategory(): Observable<any> {
+  getCategoryList(): Observable<any> {
+    return this.categoriesList
+  }
+
+  productsApi() {
+    const url = `${this.apiBaseUrl}/food/product/search`;
+    this.http.get(url).subscribe((x: any) => {
+      this.productsList.next(x.payload);
+    })
+  }
+
+  categoryApi() {
     const url = `${this.apiBaseUrl}/food/category/all`;
-    return this.http.get(url);
+    this.http.get(url).subscribe((x: any) => {
+      this.categoriesList.next(x.payload);
+    })
   }
 
   getProductById(productId: string): Observable<any> {

@@ -25,7 +25,11 @@ export class ProductCartModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getProducts();
+    this.MenuService.getProductList().subscribe((res: any) => {
+      this.products = res
+      this.cartService.products = res
+      console.log('getProductList =>', res)
+    })
     this.getCartProducts();
   }
 
@@ -49,14 +53,6 @@ export class ProductCartModalComponent implements OnInit {
         // }
       }
     )
-  }
-
-  getProducts(): void {
-    this.MenuService.getProducts()
-      .subscribe(result => {
-        this.products = result.payload
-        this.getCartProducts();
-      });
   }
 
   calculateTotalPrice(productToppings: any) {

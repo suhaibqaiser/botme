@@ -199,6 +199,7 @@ export class CartService {
   }
 
   resolveImages(product: any) {
+    console.log('resolveImages =>', product)
     if (product.productImage && product.productImage.length) {
       return 'assets/images/products/' + product.productImage[0]
     }
@@ -299,7 +300,7 @@ export class CartService {
     selectedList.forEach((item: any, index: any) => {
       if (index == 0) {
         selectedProductNames += item.productName
-      }else{
+      } else {
         selectedProductNames += ' , ' + item.productName
       }
     })
@@ -312,7 +313,7 @@ export class CartService {
     selectedList.forEach((item: any, index: any) => {
       if (index == 0) {
         selectedProductNames += item.productName
-      }else{
+      } else {
         selectedProductNames += ' , ' + item.productName
       }
     })

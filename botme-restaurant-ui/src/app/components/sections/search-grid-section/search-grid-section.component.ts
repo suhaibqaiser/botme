@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { CartService } from 'src/app/services/cart.service';
-import { MenuService } from 'src/app/services/menu.service';
-import { SocketService } from 'src/app/services/socket.service';
-import { FormControl } from "@angular/forms";
-import { HttpClient } from "@angular/common/http";
-import { ActivatedRoute, Router } from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {CartService} from 'src/app/services/cart.service';
+import {MenuService} from 'src/app/services/menu.service';
+import {SocketService} from 'src/app/services/socket.service';
+import {FormControl} from "@angular/forms";
+import {HttpClient} from "@angular/common/http";
+import {ActivatedRoute, Router} from "@angular/router";
+
 declare var $: any;
+
 @Component({
   selector: 'app-search-grid-section',
   templateUrl: './search-grid-section.component.html',
@@ -66,29 +68,33 @@ export class SearchGridSectionComponent implements OnInit {
     ratingMax: 5
   }
 
-  /// product customization
-  productCustomizationSlider: any
-  orderedProductsList: any
-
   constructor(private _http: HttpClient, private menuservice: MenuService,
-    public cartService: CartService,
-    private socketService: SocketService,
-    private _router: Router,
-    private _route: ActivatedRoute,
-    public _socketService: SocketService
+              public cartService: CartService,
+              private socketService: SocketService,
+              private _router: Router,
+              private _route: ActivatedRoute,
+              public _socketService: SocketService
   ) {
   }
 
   async ngOnInit() {
     this._socketService.getCurrentContext()
-    this.productCustomizationSlider = [0, 1, 2, 3]
     this.searchList = []
     this.isLoading = true
     await this.getQueryParams()
-    await this.getCategory();
-    // this.getWSMessage();
-    // this.filterProductsByName('first-call')
-    //$('#pageId-productCustomizeModal').modal('show')
+
+    this.menuservice.getProductList().subscribe((res: any) => {
+      this.products = res
+      this.cartService.products = res
+      console.log('getProductList =>', res)
+    })
+
+    this.menuservice.getCategoryList().subscribe((res: any) => {
+      this.categories = res
+      this.categoryList = res
+      console.log('getCategoryList =>', res)
+    })
+    await this.getProducts()
   }
 
   async getQueryParams() {
@@ -108,40 +114,22 @@ export class SearchGridSectionComponent implements OnInit {
   }
 
   async getProducts() {
-    this.menuservice.getProducts()
-      .subscribe(result => {
-        this.products = result.payload
-        this.cartService.products = result.payload
-        if (Array.isArray(this.products)) {
-          for (let product of this.products) {
-            product.productCategoryName = this.getCategoryName(product.productCategory);
-            (!this.categoryList.find(category => category.categoryId === product.productCategory)) ?
-              this.categoryList.push({
-                categoryId: product.productCategory,
-                categoryName: product.productCategoryName,
-                selected: (this.payload.productCategory === product.productCategory)
-              }) : null;
-          }
-        } else {
-          this.products = []
-          this.filteredProducts = this.products
-          this.isLoading = false
-        }
-        this.filterFromQueryParam()
-      });
-  }
-
-  async getCategory() {
-    this.menuservice.getCategory()
-      .subscribe(result => {
-        this.categories = result.payload
-        if (Array.isArray(this.categories)) {
-          this.getProducts();
-        } else {
-          this.categories = []
-        }
-        return
-      });
+    if (Array.isArray(this.products)) {
+      for (let product of this.products) {
+        product.productCategoryName = this.getCategoryName(product.productCategory);
+        (!this.categoryList.find(category => category.categoryId === product.productCategory)) ?
+          this.categoryList.push({
+            categoryId: product.productCategory,
+            categoryName: product.productCategoryName,
+            selected: (this.payload.productCategory === product.productCategory)
+          }) : null;
+      }
+    } else {
+      this.products = []
+      this.filteredProducts = this.products
+      this.isLoading = false
+    }
+    this.filterFromQueryParam()
   }
 
   getCategoryName(catId: string) {
@@ -296,9 +284,9 @@ export class SearchGridSectionComponent implements OnInit {
 
   getWSMessage() {
     this.socketService.messages.subscribe(r => {
-      let res: any = r
-      this.sofiaMessage = res.text
-    }
+        let res: any = r
+        this.sofiaMessage = res.text
+      }
     )
   }
 
@@ -339,9 +327,9 @@ export class SearchGridSectionComponent implements OnInit {
     let data = []
     for (let i = 1; i <= 5; i++) {
       if (i <= product.productRating) {
-        data.push({ star: 'flaticon-star-1' })
+        data.push({star: 'flaticon-star-1'})
       } else {
-        data.push({ star: 'flaticon-star-2' })
+        data.push({star: 'flaticon-star-2'})
       }
     }
     return data
@@ -353,7 +341,7 @@ export class SearchGridSectionComponent implements OnInit {
       this.searchControl.setValue('')
       this.filterProductsByName(null)
     } else if (item.name == 'Category') {
-      this.filterProductsByCategory({ categoryId: '' })
+      this.filterProductsByCategory({categoryId: ''})
     } else if (item.name == 'Filter by price') {
       localStorage.clear()
       this.filterProductByPriceRange()

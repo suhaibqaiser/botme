@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuService } from 'src/app/services/menu.service';
+import {Component, OnInit} from '@angular/core';
+import {MenuService} from 'src/app/services/menu.service';
 
 @Component({
   selector: 'app-menu-section',
@@ -13,29 +13,38 @@ export class MenuSectionComponent implements OnInit {
   categoryList: { categoryId: string, categoryName: string }[] = []
   loading = true
 
-  constructor(private menuservice: MenuService) { }
+  constructor(private menuservice: MenuService) {
+  }
 
   ngOnInit(): void {
-    this.getCategory()
+    this.menuservice.getProductList().subscribe((res: any) => {
+      this.products = res
+      console.log('getProductList =>', res)
+    })
+
+    this.menuservice.getCategoryList().subscribe((res: any) => {
+      this.categories = res
+      this.categoryList = res
+      console.log('getCategoryList =>', res)
+    })
+    this.getProducts()
   }
 
   getProducts(): void {
-    this.menuservice.getProducts()
-      .subscribe(result => {
-        this.products = result.payload
-
-        if (Array.isArray(this.products)) {
-          for (let product of this.products) {
-            product.productCategoryName = this.getCategoryName(product.productCategory);
-            (!this.categoryList.find(category => category.categoryId === product.productCategory)) ?
-              this.categoryList.push({ categoryId: product.productCategory, categoryName: product.productCategoryName }) : null;
-            this.loading = false;
-          }
-        } else {
-          this.products = []
-          this.loading = false;
-        }
-      });
+    if (Array.isArray(this.products)) {
+      for (let product of this.products) {
+        product.productCategoryName = this.getCategoryName(product.productCategory);
+        (!this.categoryList.find(category => category.categoryId === product.productCategory)) ?
+          this.categoryList.push({
+            categoryId: product.productCategory,
+            categoryName: product.productCategoryName
+          }) : null;
+        this.loading = false;
+      }
+    } else {
+      this.products = []
+      this.loading = false;
+    }
   }
 
   getProductsByCategory(category: string) {
@@ -43,23 +52,9 @@ export class MenuSectionComponent implements OnInit {
     return products;
   }
 
-  getCategory() {
-    this.menuservice.getCategory()
-      .subscribe(result => {
-        this.categories = result.payload
-
-        if (Array.isArray(this.categories)) {
-          this.getProducts();
-        } else {
-          this.categories = []
-        }
-      });
-  }
-
   getCategoryName(catId: string) {
     let cat: any = this.categories.find((category: { categoryId: string; }) => category.categoryId === catId);
     if (cat) return cat.categoryName
-
     return null;
   }
 

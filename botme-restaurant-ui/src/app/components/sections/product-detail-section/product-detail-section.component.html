@@ -1,8 +1,5 @@
 <app-customize-product-modal></app-customize-product-modal>
 <div id="sectionId-product-detial-page" class="product-details-section pt-100 pb-70 bg-black">
-<!--  <input [formControl]="_socketService.speachInput">-->
-<!--  <button style="padding: 6px" (click)="_socketService.sendMessage('communication', _socketService.speachInput.value)" class="btn btn-success">send</button>-->
-<!--  <p>{{_socketService.responseLabel}}</p>-->
   <div class="container">
     <div class="row align-items-center">
       <div class="col-sm-12 col-md-12 col-lg-5 pb-30">
@@ -228,31 +225,31 @@
 <!--        </div>-->
 <!--      </div>-->
 <!--    </div>-->
-    <div class="related-product mt-50">
-      <div class="sub-section-title">
-        <h3 class="color-white">Related Items</h3>
-      </div>
-      <div class="receipe-grid receipe-grid-three">
-        <div *ngFor="let item of relatedProduct" class="receipe-item receipe-item-black pb-30">
-          <div class="receipe-item-inner">
-            <div class="receipe-image">
-              <img style="width:100px;height: 100px;border-radius: 10px" [src]="cartService.resolveImages(item)" alt="receipe">
-            </div>
-            <div class="receipe-content">
-              <div class="receipe-info">
-                <h3><a href="/product-detail/?productId={{product.productId}}">{{item.productName}}</a></h3>
-                <h4>${{item.productRate.standard}}</h4>
-              </div>
-              <div class="receipe-cart receipe-cart-main">
-                <a (click)="addToCart(item)">
-                  <i class="flaticon-supermarket-basket"></i>
-                  <i class="flaticon-supermarket-basket"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+<!--    <div class="related-product mt-50">-->
+<!--      <div class="sub-section-title">-->
+<!--        <h3 class="color-white">Related Items</h3>-->
+<!--      </div>-->
+<!--      <div class="receipe-grid receipe-grid-three">-->
+<!--        <div *ngFor="let item of relatedProduct" class="receipe-item receipe-item-black pb-30">-->
+<!--          <div class="receipe-item-inner">-->
+<!--            <div class="receipe-image">-->
+<!--              <img style="width:100px;height: 100px;border-radius: 10px" [src]="cartService.resolveImages(item)" alt="receipe">-->
+<!--            </div>-->
+<!--            <div class="receipe-content">-->
+<!--              <div class="receipe-info">-->
+<!--                <h3><a href="/product-detail/?productId={{product.productId}}">{{item.productName}}</a></h3>-->
+<!--                <h4>${{item.productRate.standard}}</h4>-->
+<!--              </div>-->
+<!--              <div class="receipe-cart receipe-cart-main">-->
+<!--                <a (click)="addToCart(item)">-->
+<!--                  <i class="flaticon-supermarket-basket"></i>-->
+<!--                  <i class="flaticon-supermarket-basket"></i>-->
+<!--                </a>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
   </div>
 </div>

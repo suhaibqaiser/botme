@@ -11,7 +11,6 @@ declare var $: any;
   styleUrls: ['./cart-section.component.scss']
 })
 export class CartSectionComponent implements OnInit {
-  productIds: string[] = []
   products: any[] = []
   cartProducts: any[] = []
   cartTotal = 0
@@ -23,7 +22,11 @@ export class CartSectionComponent implements OnInit {
 
   ngOnInit(): void {
     this._socketService.getCurrentContext()
-    this.getProducts();
+    this.MenuService.getProductList().subscribe((res: any) => {
+      this.products = res
+      this.cartService.products = res
+      console.log('getProductList =>', res)
+    })
     this.getCartProducts();
   }
 
@@ -39,14 +42,6 @@ export class CartSectionComponent implements OnInit {
         // }
       }
     )
-  }
-
-  getProducts(): void {
-    this.MenuService.getProducts()
-      .subscribe(result => {
-        this.products = result.payload
-        this.getCartProducts();
-      });
   }
 
   calculateTotalPrice(productToppings: any) {
