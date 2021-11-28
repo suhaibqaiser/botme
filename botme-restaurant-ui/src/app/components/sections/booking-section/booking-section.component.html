@@ -7,45 +7,49 @@
           <form [formGroup]="reservationForm" id="sectionId-reservation-form">
             <div class="reservation-form reservation-form-two reservation-form-white">
               <div class="form-group">
-                <div class="input-group">
-                  <input formControlName="name" type="text" id="entityId-name" placeholder="Name" class="form-control">
+                <div class="input-group mb-2">
+                  <input formControlName="customerName" type="text" id="entityId-name" placeholder="Name" class="form-control">
                   <div class="input-group-append">
                     <div class="input-group-text">
                       <i class="flaticon-user-2"></i>
                     </div>
                   </div>
                 </div>
+                <span *ngIf="validations.customerName" style="color: red;text-align: justify">Name is required!</span>
               </div>
 
               <div class="form-group">
-                <div class="input-group">
-                  <input  formControlName="number_of_person" id="entityId-number-of-persons" type="text" placeholder="Number of persons" class="form-control">
+                <div class="input-group mb-2">
+                  <input  formControlName="reservationSeats" id="entityId-number-of-persons" type="text" placeholder="Number of persons" class="form-control">
                   <div class="input-group-append">
                     <div class="input-group-text">
                       <i class="flaticon-add-user"></i>
                     </div>
                   </div>
                 </div>
+                <span *ngIf="validations.reservationSeats" style="color: red;text-align: justify">Seats are required!</span>
               </div>
               <div class="form-group">
-                <div class="input-group">
-                  <input formControlName="date"  id="entityId-date" type="text" placeholder="Date" class="form-control">
+                <div class="input-group mb-2">
+                  <input formControlName="reservationDate"  id="entityId-date" type="text" placeholder="Date" class="form-control">
                   <div class="input-group-append">
                     <div class="input-group-text">
                       <i class="flaticon-calendar-1"></i>
                     </div>
                   </div>
                 </div>
+                <span *ngIf="validations.reservationDate" style="color: red;text-align: justify">Date is required!</span>
               </div>
               <div class="form-group">
-                <div class="input-group">
-                  <input formControlName="time" id="entityId-time" type="text" name="startTime" class="form-control" placeholder="Time" />
+                <div class="input-group mb-2">
+                  <input formControlName="reservationTime" id="entityId-time" type="text" name="startTime" class="form-control" placeholder="Time" />
                   <div class="input-group-append">
                     <div class="input-group-text">
                       <i class="flaticon-clock"></i>
                     </div>
                   </div>
                 </div>
+                <span *ngIf="validations.reservationTime" style="color: red;text-align: justify">Time is required!</span>
               </div>
             </div>
             <button id="entityId-book-now" (click)="addReservation()" class="btn full-width" type="button">Book Now</button>

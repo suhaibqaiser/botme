@@ -2,8 +2,10 @@ import {restResponse} from "../../../utils/response";
 import {createReservation, getReservation, updateReservation, getAllReservation} from "./service";
 import {getMaxLabelValue} from "../../food/reservation/service";
 import {randomUUID} from "crypto";
+
 export async function addReservation(reservation: any) {
     let response = new restResponse()
+    console.log(reservation)
     if (!reservation) {
         response.payload = "reservation is required"
         response.status = "error"
