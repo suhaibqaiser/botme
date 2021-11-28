@@ -84,14 +84,14 @@ def parseDate(text,db,pageId,sectionId,intent,senti):
         print("time =>" ,t)
         if t is not None:
             print("dateparser call")
-            time = t.strftime("%d/%m/%Y")
+            time = t.strftime("%Y-%m-%d")
             print(time)
         else:
             print("timefhuman call")
             now = datetime.now()
             t = timefhuman(text,now=now)
             print(t)
-            time = t.strftime("%d/%m/%Y")
+            time = t.strftime("%Y-%m-%d")
             print(time)
         return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":time,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent}     
     except:
