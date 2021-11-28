@@ -88,7 +88,7 @@ export class BookingSectionComponent implements OnInit {
 
   createNewReservation() {
     this.reservationForm.reset()
-    localStorage.setItem('reservation', '')
+    localStorage.removeItem('reservation')
     this.reservation = {
       isReservationCompleted: false,
       name: null,
