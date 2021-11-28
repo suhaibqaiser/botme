@@ -189,9 +189,17 @@ nlu:
       - i demand you to bring up the [cart](cartlist)
       - we demand you to bring up the [cart](cartlist)
       - i want to check my [cart](cartlist)
+      - show me the [car](cartlist)
+      - i want to see the [card](cartlist)
+      - show me the [card](cartlist)
+      - i want to see the [car](cartlist)
 
   - intent: add_edit_cart
     examples: |
+      - add product to the [cart](list)
+      - i want to add product to [cart](list)
+      - we want to add product to [cart item](list)
+      - add product to the [cart item](list)
       - add to [cart](list)
       - add to [cart item](list) 
       - i want to add to [cart](list)
@@ -203,10 +211,18 @@ nlu:
       - i want to edit my [cart item](list)
       - we want to edit our [cart](list)
       - i want to do correction in my [cart](list)
+      - i want to edit my [car](list)
+      - we want to edit my [card](list)
+      - i want to add to [car](list)
+      - we want to add to [card](list)
+      - add product to the [car](list)
+      - add product to the [card](list)
     
   - synonym: cart
     examples: |
       - cart item
+      - car
+      - card
 
   - intent: view_order
     examples: |
@@ -257,7 +273,10 @@ nlu:
 
   - intent: place_order_page
     examples: |
+      - take me to [place order Beach](pagesix)
+      - show me the [place of the beach](pagesix)
       - Take me to [place order page](pagesix)
+      - i want to visit [place order pitch](pagesix)
       - i want to visit [place order page](pagesix)
       - open [place order page](pagesix) please
       - i want to see the [place order page](pagesix)
@@ -289,6 +308,9 @@ nlu:
   - synonym: place order page
     examples: |
       - place order
+      - place order Beach
+      - place of the beach
+      - place order pitch
       
   - intent: menu_category
     examples: |
@@ -1174,6 +1196,8 @@ nlu:
       - select [Sprite](productName)
       - choose [Sprite](productName)
       - increase [Sprite](productName) quantity
+      - i want to order [kofta sandwich]{"entity":"productName","value":"kafta sandwich"}
+      - i want to order [craft a sandwich]{"entity":"productName","value":"kafta sandwich"}
 
   - intent: reduce_product_quantity
     examples: |
@@ -1621,6 +1645,8 @@ nlu:
       - reduce [Sprite](productName)
       - lessen [Sprite](productName)
       - decrease [Sprite](productName) quantity
+      - i want to decrease [kofta sandwich]{"entity":"productName","value":"kafta sandwich"}
+      - i want to reduce [craft a sandwich]{"entity":"productName","value":"kafta sandwich"}
 
   - intent: product-detail
     examples: |
@@ -1903,6 +1929,8 @@ nlu:
       - i want to view [Chicken Tenders](detail)
       - i want to check the detail of the product [Chicken Tenders](detail)	
       - show us the product detail [Chicken Tenders](detail)
+      - i want to see [kofta sandwich]{"entity":"productName","value":"kafta sandwich"}
+      - i want to see the detail for [craft a sandwich]{"entity":"productName","value":"kafta sandwich"}
 
   - intent: edit_product
     examples: |
@@ -2433,6 +2461,8 @@ nlu:
       - check [Sprite](productName)
       - edit [Sprite](productName)
       - edit [Sprite](productName) quantity
+      - i want to edit [kofta sandwich]{"entity":"productName","value":"kafta sandwich"}
+      - i want to customize [craft a sandwich]{"entity":"productName","value":"kafta sandwich"}
 
   - intent: sort_by_price
     examples: |
@@ -2615,6 +2645,8 @@ nlu:
       - [next](nextoption)
   - intent: Back
     examples: |
+      - [beck]{"entity":"previous","value":"back"}
+      - go [beck]{"entity":"previous","value":"back"}
       - go [back](previous)
       - go [Back]{"entity":"previous","value":"back"}
       - [back](previous)
@@ -3163,6 +3195,8 @@ nlu:
       - unpick [Sprite](productName)
       - unselect [Sprite](productName)
       - remove [Sprite](productName) quantity
+      - i want to remove [kofta sandwich]{"entity":"productName","value":"kafta sandwich"}
+      - i want to unselect [craft a sandwich]{"entity":"productName","value":"kafta sandwich"}
   
   - intent: add_quantity
     examples: |
@@ -3175,13 +3209,19 @@ nlu:
 
   - intent: remove_quantity
     examples: |
-      - delete [quantity](Quantity) of the product
-      - remove [quantity](Quantity)
+      - reduce [quantity](Quantity) of the product
+      - lessen [quantity](Quantity)
       - decrease [quantity](Quantity)
       - i want to decrease [quantity](Quantity) of the product
       - i want to remove [quantity](Quantity)
-      - i want to delete [quantity](Quantity)
-      - i want to take out [quantity](Quantity)
+      - i want to minus [quantity](Quantity)
+      - i want to reduce [quantity](Quantity)
+      - we want to minus [quantity](Quantity)
+      - minus [quantity](Quantity)
+      - we want to lower the [quantity](Quantity)
+      - lower [quantity](Quantity)
+      - we want to bring down the [quantity](Quantity)
+      - bring down [quantity](Quantity)
 
   - intent: Order_Receipt
     examples: |
@@ -4036,6 +4076,8 @@ nlu:
       - Whopper Sandwich	
       - Make Your Own Bowl	
       - Chicken Tenders	
+      - kofta sandwich
+      - craft a sandwich
 
   - lookup: productName
     examples: |
@@ -4187,6 +4229,9 @@ nlu:
       - nacho burger     
       - American Cheese Slice	
       - american cheese slice	
+      - kofta sandwich
+      - craft a sandwich
+
   - lookup: number   
     examples: |
       - 4

@@ -1,6 +1,7 @@
 from conf.mongodb import getDbCta
 from textblob import TextBlob
 from controller.functions import parseEntityValue,checkingForProduct,searchingTable,getEntityClickAttribute,parseDate,parseTime
+import re
 
 # reminder need to change text to senti in responses
 
@@ -14,9 +15,11 @@ def getResponse(intent,entity,text,pageId,sectionId):
     if ( -0.5 < senti < 0.5):
         if (intent == "unreserved_table_person"):
             if db is not None:
+                V = re.findall(r'\d+', value)
+                number = "".join(V)
                 context = db['context']
                 iD = getEntityClickAttribute(context['entities'])
-                return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent} 
+                return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":number,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent} 
             else:
                 tableResponse = searchingTable(value,senti,intent,text)
                 return tableResponse
