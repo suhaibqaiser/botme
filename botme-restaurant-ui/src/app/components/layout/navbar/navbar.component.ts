@@ -77,6 +77,7 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     this._botMeClientService.reSetCookie()
+    localStorage.removeItem('reservation')
     this.router.navigate(['/home']).then(() => {
       window.location.reload();
     });
