@@ -88,11 +88,11 @@ nlu:
       - [Reserve]{"entity":"pagethree","value":"reservation"} a table for me please
       - I want to [reserve]{"entity":"pagethree","value":"reservation"} a table
       - Take me to [reservation](pagethree) page
-      - take me to [reservation](pagethree)
+      - take me to [reservation](pagethree) screen
       - i want to see the [reservation](pagethree)
       - i want to see the [reservation](pagethree) page
       - i want to visit [reservation](pagethree) page
-      - open [reservation](pagethree) page please 
+      - open [reservation](pagethree) page please screen
       - i want to see the [reservation](pagethree) page
       - can you please redirect me to [reservation](pagethree) page
       - he want to redirect to [reservation](pagethree) page
@@ -275,16 +275,16 @@ nlu:
     examples: |
       - take me to [place order Beach](pagesix)
       - show me the [place of the beach](pagesix)
-      - Take me to [place order page](pagesix)
+      - Take me to [place order page](pagesix) screen
       - i want to visit [place order pitch](pagesix)
       - i want to visit [place order page](pagesix)
-      - open [place order page](pagesix) please
+      - open [place order page](pagesix) screen please
       - i want to see the [place order page](pagesix)
       - can you please redirect me to [place order page](pagesix)
       - he want to redirect to [place order page](pagesix)
       - i want to redirect to [place order page](pagesix)
-      - show me the [place order page](pagesix)
-      - show us the [place order page](pagesix)
+      - show me the [place order page](pagesix) screen
+      - show us the [place order page](pagesix) screen
       - i want you to take me to the [place order page](pagesix)
       - she want to visit [place order page](pagesix)
       - Take me to [place order](pagesix)
@@ -1198,6 +1198,21 @@ nlu:
       - increase [Sprite](productName) quantity
       - i want to order [kofta sandwich]{"entity":"productName","value":"kafta sandwich"}
       - i want to order [craft a sandwich]{"entity":"productName","value":"kafta sandwich"}
+      - I want to eat [shish kebab plate]{"entity":"productName","value":"Shish Kabob Plate"}
+      - i want to order [mushroom switch burger]{"entity":"productName","value":"Mushroom Swiss Burger"}
+      - i want to have [Barbecue Platter]{"entity":"productName","value":"BBQ Platter"}
+      - I want to eat [Barbecue platter]{"entity":"productName","value":"BBQ Platter"}
+      - I want to order [Grilled Steak Wrap]{"entity":"productName","value":"Grilled Stake Wrap"}
+      - i want to have [Grilled Steak Wrap]{"entity":"productName","value":"Grilled Stake Wrap"}
+      - I want to eat [humans]{"entity":"productName","value":"Hummus"}
+      - I want to eat [momos]{"entity":"productName","value":"Hummus"}
+      - I want to order [letters]{"entity":"productName","value":"Lettuce"}
+      - add [letters]{"entity":"productName","value":"Lettuce"}
+      - I want to order [tickle] {"entity":"productName","value":"Pickle"}
+      - add [tickle] {"entity":"productName","value":"Pickle"}
+      - I want to order [tasty fish burger]{"entity":"productName","value":"Taystee Fish Burger"}
+      - I want to eat [tasty fish burger]{"entity":"productName","value":"Taystee Fish Burger"}
+
 
   - intent: reduce_product_quantity
     examples: |
@@ -1639,298 +1654,328 @@ nlu:
       - can you please reduce [Sprite](productName)
       - minus [Sprite](productName)
       - i want to decrease [Sprite](productName) quantity
-      - i want to take [Sprite](productName) 
-      - take [Sprite](productName)
+      - i want to take down [Sprite](productName) 
+      - take down [Sprite](productName)
       - decline [Sprite](productName)
       - reduce [Sprite](productName)
       - lessen [Sprite](productName)
       - decrease [Sprite](productName) quantity
       - i want to decrease [kofta sandwich]{"entity":"productName","value":"kafta sandwich"}
       - i want to reduce [craft a sandwich]{"entity":"productName","value":"kafta sandwich"}
+      - I want to decrease [shish kebab plate]{"entity":"productName","value":"Shish Kabob Plate"}
+      - i want to reduce [mushroom switch burger]{"entity":"productName","value":"Mushroom Swiss Burger"}
+      - i want to  lessen [Barbecue Platter]{"entity":"productName","value":"BBQ Platter"}
+      - I want to reduce [Barbecue platter]{"entity":"productName","value":"BBQ Platter"}
+      - I want to decrease [Grilled Steak Wrap]{"entity":"productName","value":"Grilled Stake Wrap"}
+      - i want to reduce [Grilled Steak Wrap]{"entity":"productName","value":"Grilled Stake Wrap"}
+      - I want to lessen [humans]{"entity":"productName","value":"Hummus"}
+      - I want to decrease [momos]{"entity":"productName","value":"Hummus"}
+      - I want to minus [letters]{"entity":"productName","value":"Lettuce"}
+      - minus [letters]{"entity":"productName","value":"Lettuce"}
+      - I want to decrease [tickle] {"entity":"productName","value":"Pickle"}
+      - minus [tickle] {"entity":"productName","value":"Pickle"}
+      - I want to reduce [tasty fish burger]{"entity":"productName","value":"Taystee Fish Burger"}
+      - I want to lessen [tasty fish burger]{"entity":"productName","value":"Taystee Fish Burger"}
 
   - intent: product-detail
     examples: |
-      - show me the product detail of [Falafel Sandwich](detail)
-      - i want to see the product detail page [Falafel Sandwich](detail)
-      - i want to know about the detail of this product [Falafel Sandwich](detail)
-      - can you show the detail of the product [Falafel Sandwich](detail)
-      - i want to check the detail of the product [Falafel Sandwich](detail)	
-      - show us the product detail [Falafel Sandwich](detail)
-      - i want to view 	[Falafel Sandwich](detail)
-      - can you bring the detail about this product [Falafel Sandwich](detail)
-      - show me the product detail of [Shish Kaboob Plate](detail)
-      - i want to see the product detail page [Shish Kaboob Plate](detail)
-      - i want to know about the detail of this product [Shish Kaboob Plate](detail)
-      - can you show the detail of the product [Shish Kaboob Plate](detail)
-      - i want to check the detail of the product [Shish Kaboob Plate](detail)
-      - show us the product detail [Shish Kaboob Plate](detail)	
-      - can you bring the detail about this product [Shish Kaboob Plate](detail)
-      - i want to view 	[Shish Kaboob Plate](detail)
-      - show me the product detail of [Nacho Burger](detail)
-      - i want to see the product detail page [Nacho Burger](detail)
-      - i want to know about the detail of this product [Nacho Burger](detail)
-      - can you show the detail of the product [Nacho Burger](detail)
-      - i want to check the detail of the product [Nacho Burger](detail)
-      - show us the product detail [Nacho Burger](detail)	
-      - can you bring the detail about this product [Nacho Burger](detail)
-      - i want to view 	[Nacho Burger](detail)
-      - show me the product detail of [Mushroom Swiss Burger](detail)
-      - i want to see the product detail page [Mushroom Swiss Burger](detail)
-      - i want to know about the detail of this product [Mushroom Swiss Burger](detail)
-      - can you show the detail of the product [Mushroom Swiss Burger](detail)
-      - i want to check the detail of the product [Mushroom Swiss Burger](detail)	
-      - show us the product detail [Mushroom Swiss Burger](detail)	
-      - can you bring the detail about this product [Mushroom Swiss Burger](detail)
-      - i want to view 	[Mushroom Swiss Burger](detail)
-      - show me the product detail of [Chicken Shawarma Sandwich](detail)
-      - i want to see the product detail page [Chicken Shawarma Sandwich](detail)
-      - i want to know about the detail of this product [Chicken Shawarma Sandwich](detail)
-      - can you show the detail of the product [Chicken Shawarma Sandwich](detail)
-      - i want to check the detail of the product [Chicken Shawarma Sandwich](detail)	
-      - show us the product detail [Chicken Shawarma Sandwich](detail)	
-      - can you bring the detail about this product [Chicken Shawarma Sandwich](detail)
-      - i want to view 	[Chicken Shawarma Sandwich](detail)
-      - show me the product detail of [Kafta Sandwich](detail)
-      - i want to see the product detail page [Kafta Sandwich](detail)
-      - i want to know about the detail of this product [Kafta Sandwich](detail)
-      - can you show the detail of the product [Kafta Sandwich](detail)
-      - i want to check the detail of the product [Kafta Sandwich](detail)	
-      - show us the product detail [Kafta Sandwich](detail)	
-      - can you bring the detail about this product [Kafta Sandwich](detail)
-      - i want to view 	[Kafta Sandwich](detail)
-      - show me the product detail of [BBQ Platter](detail)
-      - i want to see the product detail page [BBQ Platter](detail)
-      - i want to know about the detail of this product [BBQ Platter](detail)
-      - can you show the detail of the product [BBQ Platter](detail)
-      - i want to check the detail of the product [BBQ Platter](detail)	
-      - show us the product detail [BBQ Platter](detail)	
-      - can you bring the detail about this product [BBQ Platter](detail)
-      - i want to view 	[BBQ Platter](detail)
-      - show me the product detail of [Grilled Chicken Wrap](detail)
-      - i want to see the product detail page [Grilled Chicken Wrap](detail)
-      - i want to know about the detail of this product [Grilled Chicken Wrap](detail)
-      - can you show the detail of the product [Grilled Chicken Wrap](detail)
-      - i want to check the detail of the product [Grilled Chicken Wrap](detail)	
-      - show us the product detail [Grilled Chicken Wrap](detail)	
-      - can you bring the detail about this product [Grilled Chicken Wrap](detail)
-      - i want to view 	[Grilled Chicken Wrap](detail)
-      - show me the product detail of [Grilled Stake Wrap](detail)
-      - i want to see the product detail page [Grilled Stake Wrap](detail)
-      - i want to know about the detail of this product [Grilled Stake Wrap](detail)
-      - can you show the detail of the product [Grilled Stake Wrap](detail)
-      - i want to check the detail of the product [Grilled Stake Wrap](detail)	
-      - show us the product detail [Grilled Stake Wrap](detail)	
-      - can you bring the detail about this product [Grilled Stake Wrap](detail)
-      - i want to view 	[Grilled Stake Wrap](detail)
-      - show me the product detail of [Junior Tasty Burger](detail)
-      - i want to see the product detail page [Junior Tasty Burger](detail)
-      - i want to know about the detail of this product [Junior Tasty Burger](detail)
-      - can you show the detail of the product [Junior Tasty Burger](detail)
-      - i want to check the detail of the product [Junior Tasty Burger](detail)	
-      - show us the product detail [Junior Tasty Burger](detail)	
-      - can you bring the detail about this product [Junior Tasty Burger](detail)
-      - i want to view 	[Junior Tasty Burger](detail)
-      - show me the product detail of [Chicken Nuggets](detail)
-      - i want to see the product detail page [Chicken Nuggets](detail)
-      - i want to know about the detail of this product [Chicken Nuggets](detail)
-      - can you show the detail of the product [Chicken Nuggets](detail)
-      - i want to check the detail of the product [Chicken Nuggets](detail)	
-      - show us the product detail [Chicken Nuggets](detail)	
-      - can you bring the detail about this product [Chicken Nuggets](detail)
-      - i want to view 	[Chicken Nuggets](detail)
-      - show me the product detail of [French Fries](detail)
-      - i want to see the product detail page [French Fries](detail)
-      - i want to know about the detail of this product [French Fries](detail)
-      - can you show the detail of the product [French Fries](detail)
-      - i want to check the detail of the product [French Fries](detail)	
-      - show us the product detail [French Fries](detail)	
-      - can you bring the detail about this product [French Fries](detail)
-      - i want to view 	[French Fries](detail)
-      - show me the product detail of [Rice](detail)
-      - i want to see the product detail page [Rice](detail)
-      - i want to know about the detail of this product [Rice](detail)
-      - can you show the detail of the product [Rice](detail)
-      - i want to check the detail of the product [Rice](detail)	
-      - show us the product detail [Rice](detail)	
-      - i want to view 	[Rice](detail)
-      - show me the product detail of [Cole Slaw](detail)
-      - i want to see the product detail page [Cole Slaw](detail)
-      - i want to know about the detail of this product [Cole Slaw](detail)
-      - can you show the detail of the product [Cole Slaw](detail)
-      - i want to check the detail of the product [Cole Slaw](detail)	
-      - show us the product detail [Cole Slaw](detail)	
-      - can you bring the detail about this product [Cole Slaw](detail)
-      - show me the product detail of [Garlic Sauce](detail)
-      - i want to see the product detail page [Garlic Sauce](detail)
-      - i want to know about the detail of this product [Garlic Sauce](detail)
-      - can you show the detail of the product [Garlic Sauce](detail)
-      - i want to check the detail of the product [Garlic Sauce](detail)	
-      - show us the product detail [Garlic Sauce](detail)	
-      - show me the product detail of [Spicy Potato](detail)
-      - i want to see the product detail page [Spicy Potato](detail)
-      - i want to know about the detail of this product [Spicy Potato](detail)
-      - can you show the detail of the product [Spicy Potato](detail)
-      - i want to check the detail of the product [Spicy Potato](detail)	
-      - show us the product detail [Spicy Potato](detail)
-      - show me the product detail of [Soup](detail)
-      - i want to see the product detail page [Soup](detail)
-      - i want to know about the detail of this product [Soup](detail)
-      - can you show the detail of the product [Soup](detail)
-      - i want to check the detail of the product [Soup](detail)	
-      - show us the product detail [Soup](detail)	
-      - show me the product detail of [Hummus](detail)
-      - i want to see the product detail page [Hummus](detail)
-      - i want to know about the detail of this product [Hummus](detail)
-      - can you show the detail of the product [Hummus](detail)
-      - i want to check the detail of the product [Hummus](detail)	
-      - show us the product detail [Hummus](detail)	
-      - show me the product detail of [Baba Ghanoush](detail)
-      - i want to see the product detail page [Baba Ghanoush](detail)
-      - i want to know about the detail of this product [Baba Ghanoush](detail)
-      - can you show the detail of the product [Baba Ghanoush](detail)
-      - i want to check the detail of the product [Baba Ghanoush](detail)	
-      - show us the product detail [Baba Ghanoush](detail)	
-      - show me the product detail of [Tomato](detail)
-      - i want to see the product detail page [Tomato](detail)
-      - i want to know about the detail of this product [Tomato](detail)
-      - can you show the detail of the product [Tomato](detail)
-      - i want to check the detail of the product [Tomato](detail)	
-      - show us the product detail [Tomato](detail)
-      - show me the product detail of [Lettuce](detail)
-      - i want to see the product detail page [Lettuce](detail)
-      - i want to know about the detail of this product [Lettuce](detail)
-      - can you show the detail of the product [Lettuce](detail)
-      - i want to check the detail of the product [Lettuce](detail)	
-      - show us the product detail [Lettuce](detail)
-      - show me the product detail of [Pickle](detail)
-      - i want to see the product detail page [Pickle](detail)
-      - i want to know about the detail of this product [Pickle](detail)
-      - can you show the detail of the product [Pickle](detail)
-      - i want to check the detail of the product [Pickle](detail)	
-      - show us the product detail [Pickle](detail)
-      - show me the product detail of [American Cheese Slice](detail)
-      - i want to see the product detail page [American Cheese Slice](detail)
-      - i want to know about the detail of this product [American Cheese Slice](detail)
-      - can you show the detail of the product [American Cheese Slice](detail)
-      - i want to check the detail of the product [American Cheese Slice](detail)	
-      - show us the product detail [American Cheese Slice](detail)
-      - show me the product detail of [Taystee Fish Burger](detail)
-      - i want to see the product detail page [Taystee Fish Burger](detail)
-      - i want to know about the detail of this product [Taystee Fish Burger](detail)
-      - can you show the detail of the product [Taystee Fish Burger](detail)
-      - i want to check the detail of the product [Taystee Fish Burger](detail)	
-      - show us the product detail [Taystee Fish Burger](detail)
-      - show me the product detail of [Shawarma Salad](detail)
-      - i want to see the product detail page [Shawarma Salad](detail)
-      - i want to know about the detail of this product [Shawarma Salad](detail)
-      - can you show the detail of the product [Shawarma Salad](detail)
-      - i want to check the detail of the product [Shawarma Salad](detail)	
-      - show us the product detail [Shawarma Salad](detail)
-      - show me the product detail of [Caesars Salad](detail)
-      - i want to see the product detail page [Caesars Salad](detail)
-      - i want to know about the detail of this product [Caesars Salad](detail)
-      - can you show the detail of the product [Caesars Salad](detail)
-      - i want to check the detail of the product [Caesars Salad](detail)	
-      - show us the product detail [Caesars Salad](detail)
-      - show me the product detail of [Baklava](detail)
-      - i want to see the product detail page [Baklava](detail)
-      - i want to know about the detail of this product [Baklava](detail)
-      - can you show the detail of the product [Baklava](detail)
-      - i want to check the detail of the product [Baklava](detail)	
-      - show us the product detail [Baklava](detail)
-      - show me the product detail of [Water Bottle](detail)
-      - i want to see the product detail page [Water Bottle](detail)
-      - i want to know about the detail of this product [Water Bottle](detail)
-      - can you show the detail of the product [Water Bottle](detail)
-      - i want to check the detail of the product [Water Bottle](detail)	
-      - show us the product detail [Water Bottle](detail)
-      - show me the product detail of [Pepsi](detail)
-      - i want to see the product detail page [Pepsi](detail)
-      - i want to know about the detail of this product [Pepsi](detail)
-      - can you show the detail of the product [Pepsi](detail)
-      - i want to check the detail of the product [Pepsi](detail)	
-      - show us the product detail [Pepsi](detail)
-      - show me the product detail of [Sprite](detail)
-      - i want to see the product detail page [Sprite](detail)
-      - i want to know about the detail of this product [Sprite](detail)
-      - can you show the detail of the product [Sprite](detail)
-      - i want to check the detail of the product [Sprite](detail)	
-      - show us the product detail [Sprite](detail)
-      - show me the product detail of [Banana Shake](detail)
-      - i want to see the product detail page [Banana Shake](detail)
-      - i want to know about the detail of this product [Banana Shake](detail)
-      - can you show the detail of the product [Banana Shake](detail)
-      - i want to check the detail of the product [Banana Shake](detail)	
-      - show us the product detail [Banana Shake](detail)
-      - show me the product detail of [Fresh Orange Juice](detail)
-      - i want to see the product detail page [Fresh Orange Juice](detail)
-      - i want to know about the detail of this product [Fresh Orange Juice](detail)
-      - can you show the detail of the product [Fresh Orange Juice](detail)
-      - i want to check the detail of the product [Fresh Orange Juice](detail)	
-      - show us the product detail [Fresh Orange Juice](detail)
-      - show me the product detail of [Cheese Burger](detail)
-      - i want to see the product detail page [Cheese Burger](detail)
-      - i want to know about the detail of this product [Cheese Burger](detail)
-      - can you show the detail of the product [Cheese Burger](detail)
-      - i want to check the detail of the product [Cheese Burger](detail)	
-      - show us the product detail [Cheese Burger](detail)
-      - show me the product detail of [Spicy Mc Crispy Burger](detail)
-      - i want to see the product detail page [Spicy Mc Crispy Burger](detail)
-      - i want to know about the detail of this product [Spicy Mc Crispy Burger](detail)
-      - can you show the detail of the product [Spicy Mc Crispy Burger](detail)
-      - i want to check the detail of the product [Spicy Mc Crispy Burger](detail)	
-      - show us the product detail [Spicy Mc Crispy Burger](detail)
-      - show me the product detail of [Zinger Burger](detail)
-      - i want to see the product detail page [Zinger Burger](detail)
-      - i want to know about the detail of this product [Zinger Burger](detail)
-      - can you show the detail of the product [Zinger Burger](detail)
-      - i want to check the detail of the product [Zinger Burger](detail)	
-      - show us the product detail [Zinger Burger](detail)
-      - show me the product detail of [Chicken Burger](detail)
-      - i want to see the product detail page [Chicken Burger](detail)
-      - i want to know about the detail of this product [Chicken Burger](detail)
-      - can you show the detail of the product [Chicken Burger](detail)
-      - i want to check the detail of the product [Chicken Burger](detail)	
-      - show us the product detail [Chicken Burger](detail)
-      - show me the product detail of [Taystee Vegan Burger](detail)
-      - i want to see the product detail page [Taystee Vegan Burger](detail)
-      - i want to know about the detail of this product [Taystee Vegan Burger](detail)
-      - can you show the detail of the product [Taystee Vegan Burger](detail)
-      - i want to check the detail of the product [Taystee Vegan Burger](detail)	
-      - show us the product detail [Taystee Vegan Burger](detail)
-      - show me the product detail of [Beef Shawarma](detail)
-      - i want to see the product detail page [Beef Shawarma](detail)
-      - i want to know about the detail of this product [Beef Shawarma](detail)
-      - can you show the detail of the product [Beef Shawarma](detail)
-      - i want to check the detail of the product [Beef Shawarma](detail)	
-      - show us the product detail [Beef Shawarma](detail)
-      - show me the product detail of [Tannour Sandwich](detail)
-      - i want to see the product detail page [Tannour Sandwich](detail)
-      - i want to know about the detail of this product [Tannour Sandwich](detail)
-      - can you show the detail of the product [Tannour Sandwich](detail)
-      - i want to check the detail of the product [Tannour Sandwich](detail)	
-      - show us the product detail [Tannour Sandwich](detail)
-      - show me the product detail of [Whopper Sandwich](detail)
-      - i want to see the product detail page [Whopper Sandwich](detail)
-      - i want to know about the detail of this product [Whopper Sandwich](detail)
-      - can you show the detail of the product [Whopper Sandwich](detail)
-      - i want to check the detail of the product [Whopper Sandwich](detail)	
-      - show us the product detail [Whopper Sandwich](detail)
-      - show me the product detail of [Make Your Own Bowl](detail)
-      - i want to see the product detail page [Make Your Own Bowl](detail)
-      - i want to know about the detail of this product [Make Your Own Bowl](detail)
-      - can you show the detail of the product [Make Your Own Bowl](detail)
-      - i want to check the detail of the product [Make Your Own Bowl](detail)	
-      - show us the product detail [Make Your Own Bowl](detail)
-      - show me the product detail of [chicken tenders](detail)
-      - i want to see the product detail page [Chicken Tenders](detail)
-      - i want to know about the detail of this product [Chicken Tenders](detail)
-      - can you show the detail of the product [Chicken Tenders](detail)
-      - i want to view [Chicken Tenders](detail)
-      - i want to check the detail of the product [Chicken Tenders](detail)	
-      - show us the product detail [Chicken Tenders](detail)
+      - show me the product detail of [Falafel Sandwich](productName)
+      - i want to see the product detail page [Falafel Sandwich](productName)
+      - i want to know about the detail of this product [Falafel Sandwich](productName)
+      - can you show the detail of the product [Falafel Sandwich](productName)
+      - i want to check the detail of the product [Falafel Sandwich](productName)	
+      - show us the product detail [Falafel Sandwich](productName)
+      - i want to view 	[Falafel Sandwich](productName)
+      - can you bring the detail about this product [Falafel Sandwich](productName)
+      - show me the product detail of [Shish Kaboob Plate](productName)
+      - i want to see the product detail page [Shish Kaboob Plate](productName)
+      - i want to know about the detail of this product [Shish Kaboob Plate](productName)
+      - can you show the detail of the product [Shish Kaboob Plate](productName)
+      - i want to check the detail of the product [Shish Kaboob Plate](productName)
+      - show us the product detail [Shish Kaboob Plate](productName)	
+      - can you bring the detail about this product [Shish Kaboob Plate](productName)
+      - i want to view 	[Shish Kaboob Plate](productName)
+      - show me the product detail of [Nacho Burger](productName)
+      - i want to see the product detail page [Nacho Burger](productName)
+      - i want to know about the detail of this product [Nacho Burger](productName)
+      - can you show the detail of the product [Nacho Burger](productName)
+      - i want to check the detail of the product [Nacho Burger](productName)
+      - show us the product detail [Nacho Burger](productName)	
+      - can you bring the detail about this product [Nacho Burger](productName)
+      - i want to view 	[Nacho Burger](productName)
+      - show me the product detail of [Mushroom Swiss Burger](productName)
+      - i want to see the product detail page [Mushroom Swiss Burger](productName)
+      - i want to know about the detail of this product [Mushroom Swiss Burger](productName)
+      - can you show the detail of the product [Mushroom Swiss Burger](productName)
+      - i want to check the detail of the product [Mushroom Swiss Burger](productName)	
+      - show us the product detail [Mushroom Swiss Burger](productName)	
+      - can you bring the detail about this product [Mushroom Swiss Burger](productName)
+      - i want to view 	[Mushroom Swiss Burger](productName)
+      - show me the product detail of [Chicken Shawarma Sandwich](productName)
+      - i want to see the product detail page [Chicken Shawarma Sandwich](productName)
+      - i want to know about the detail of this product [Chicken Shawarma Sandwich](productName)
+      - can you show the detail of the product [Chicken Shawarma Sandwich](productName)
+      - i want to check the detail of the product [Chicken Shawarma Sandwich](productName)	
+      - show us the product detail [Chicken Shawarma Sandwich](productName)	
+      - can you bring the detail about this product [Chicken Shawarma Sandwich](productName)
+      - i want to view 	[Chicken Shawarma Sandwich](productName)
+      - show me the product detail of [Kafta Sandwich](productName)
+      - i want to see the product detail page [Kafta Sandwich](productName)
+      - i want to know about the detail of this product [Kafta Sandwich](productName)
+      - can you show the detail of the product [Kafta Sandwich](productName)
+      - i want to check the detail of the product [Kafta Sandwich](productName)	
+      - show us the product detail [Kafta Sandwich](productName)	
+      - can you bring the detail about this product [Kafta Sandwich](productName)
+      - i want to view 	[Kafta Sandwich](productName)
+      - show me the product detail of [BBQ Platter](productName)
+      - i want to see the product detail page [BBQ Platter](productName)
+      - i want to know about the detail of this product [BBQ Platter](productName)
+      - can you show the detail of the product [BBQ Platter](productName)
+      - i want to check the detail of the product [BBQ Platter](productName)	
+      - show us the product detail [BBQ Platter](productName)	
+      - can you bring the detail about this product [BBQ Platter](productName)
+      - i want to view 	[BBQ Platter](productName)
+      - show me the product detail of [Grilled Chicken Wrap](productName)
+      - i want to see the product detail page [Grilled Chicken Wrap](productName)
+      - i want to know about the detail of this product [Grilled Chicken Wrap](productName)
+      - can you show the detail of the product [Grilled Chicken Wrap](productName)
+      - i want to check the detail of the product [Grilled Chicken Wrap](productName)	
+      - show us the product detail [Grilled Chicken Wrap](productName)	
+      - can you bring the detail about this product [Grilled Chicken Wrap](productName)
+      - i want to view 	[Grilled Chicken Wrap](productName)
+      - show me the product detail of [Grilled Stake Wrap](productName)
+      - i want to see the product detail page [Grilled Stake Wrap](productName)
+      - i want to know about the detail of this product [Grilled Stake Wrap](productName)
+      - can you show the detail of the product [Grilled Stake Wrap](productName)
+      - i want to check the detail of the product [Grilled Stake Wrap](productName)	
+      - show us the product detail [Grilled Stake Wrap](productName)	
+      - can you bring the detail about this product [Grilled Stake Wrap](productName)
+      - i want to view 	[Grilled Stake Wrap](productName)
+      - show me the product detail of [Junior Tasty Burger](productName)
+      - i want to see the product detail page [Junior Tasty Burger](productName)
+      - i want to know about the detail of this product [Junior Tasty Burger](productName)
+      - can you show the detail of the product [Junior Tasty Burger](productName)
+      - i want to check the detail of the product [Junior Tasty Burger](productName)	
+      - show us the product detail [Junior Tasty Burger](productName)	
+      - can you bring the detail about this product [Junior Tasty Burger](productName)
+      - i want to view 	[Junior Tasty Burger](productName)
+      - show me the product detail of [Chicken Nuggets](productName)
+      - i want to see the product detail page [Chicken Nuggets](productName)
+      - i want to know about the detail of this product [Chicken Nuggets](productName)
+      - can you show the detail of the product [Chicken Nuggets](productName)
+      - i want to check the detail of the product [Chicken Nuggets](productName)
+      - show us the product detail [Chicken Nuggets](productName)	
+      - can you bring the detail about this product [Chicken Nuggets](productName)
+      - i want to view 	[Chicken Nuggets](productName)
+      - show me the product detail of [French Fries](productName)
+      - i want to see the product detail page [French Fries](productName)
+      - i want to know about the detail of this product [French Fries](productName)
+      - can you show the detail of the product [French Fries](productName)
+      - i want to check the detail of the product [French Fries](productName)	
+      - show us the product detail [French Fries](productName)	
+      - can you bring the detail about this product [French Fries](productName)
+      - i want to view 	[French Fries](productName)
+      - show me the product detail of [Rice](productName)
+      - i want to see the product detail page [Rice](productName)
+      - i want to know about the detail of this product [Rice](productName)
+      - can you show the detail of the product [Rice](productName)
+      - i want to check the detail of the product [Rice](productName)	
+      - show us the product detail [Rice](productName)	
+      - i want to view 	[Rice](productName)
+      - show me the product detail of [Cole Slaw](productName)
+      - i want to see the product detail page [Cole Slaw](productName)
+      - i want to know about the detail of this product [Cole Slaw](productName)
+      - can you show the detail of the product [Cole Slaw](productName)
+      - i want to check the detail of the product [Cole Slaw](productName)	
+      - show us the product detail [Cole Slaw](productName)	
+      - can you bring the detail about this product [Cole Slaw](productName)
+      - show me the product detail of [Garlic Sauce](productName)
+      - i want to see the product detail page [Garlic Sauce](productName)
+      - i want to know about the detail of this product [Garlic Sauce](productName)
+      - can you show the detail of the product [Garlic Sauce](productName)
+      - i want to check the detail of the product [Garlic Sauce](productName)	
+      - show us the product detail [Garlic Sauce](productName)	
+      - show me the product detail of [Spicy Potato](productName)
+      - i want to see the product detail page [Spicy Potato](productName)
+      - i want to know about the detail of this product [Spicy Potato](productName)
+      - can you show the detail of the product [Spicy Potato](productName)
+      - i want to check the detail of the product [Spicy Potato](productName)	
+      - show us the product detail [Spicy Potato](productName)
+      - show me the product detail of [Soup](productName)
+      - i want to see the product detail page [Soup](productName)
+      - i want to know about the detail of this product [Soup](productName)
+      - can you show the detail of the product [Soup](productName)
+      - i want to check the detail of the product [Soup](productName)	
+      - show us the product detail [Soup](productName)	
+      - show me the product detail of [Hummus](productName)
+      - i want to see the product detail page [Hummus](productName)
+      - i want to know about the detail of this product [Hummus](productName)
+      - can you show the detail of the product [Hummus](productName)
+      - i want to check the detail of the product [Hummus](productName)	
+      - show us the product detail [Hummus](productName)	
+      - show me the product detail of [Baba Ghanoush](productName)
+      - i want to see the product detail page [Baba Ghanoush](productName)
+      - i want to know about the detail of this product [Baba Ghanoush](productName)
+      - can you show the detail of the product [Baba Ghanoush](productName)
+      - i want to check the detail of the product [Baba Ghanoush](productName)	
+      - show us the product detail [Baba Ghanoush](productName)	
+      - show me the product detail of [Tomato](productName)
+      - i want to see the product detail page [Tomato](productName)
+      - i want to know about the detail of this product [Tomato](productName)
+      - can you show the detail of the product [Tomato](productName)
+      - i want to check the detail of the product [Tomato](productName)	
+      - show us the product detail [Tomato](productName)
+      - show me the product detail of [Lettuce](productName)
+      - i want to see the product detail page [Lettuce](productName)
+      - i want to know about the detail of this product [Lettuce](productName)
+      - can you show the detail of the product [Lettuce](productName)
+      - i want to check the detail of the product [Lettuce](productName)	
+      - show us the product detail [Lettuce](productName)
+      - show me the product detail of [Pickle](productName)
+      - i want to see the product detail page [Pickle](productName)
+      - i want to know about the detail of this product [Pickle](productName)
+      - can you show the detail of the product [Pickle](productName)
+      - i want to check the detail of the product [Pickle](productName)	
+      - show us the product detail [Pickle](productName)
+      - show me the product detail of [American Cheese Slice](productName)
+      - i want to see the product detail page [American Cheese Slice](productName)
+      - i want to know about the detail of this product [American Cheese Slice](productName)
+      - can you show the detail of the product [American Cheese Slice](productName)
+      - i want to check the detail of the product [American Cheese Slice](productName)	
+      - show us the product detail [American Cheese Slice](productName)
+      - show me the product detail of [Taystee Fish Burger](productName)
+      - i want to see the product detail page [Taystee Fish Burger](productName)
+      - i want to know about the detail of this product [Taystee Fish Burger](productName)
+      - can you show the detail of the product [Taystee Fish Burger](productName)
+      - i want to check the detail of the product [Taystee Fish Burger](productName)	
+      - show us the product detail [Taystee Fish Burger](productName)
+      - show me the product detail of [Shawarma Salad](productName)
+      - i want to see the product detail page [Shawarma Salad](productName)
+      - i want to know about the detail of this product [Shawarma Salad](productName)
+      - can you show the detail of the product [Shawarma Salad](productName)
+      - i want to check the detail of the product [Shawarma Salad](productName)	
+      - show us the product detail [Shawarma Salad](productName)
+      - show me the product detail of [Caesars Salad](productName)
+      - i want to see the product detail page [Caesars Salad](productName)
+      - i want to know about the detail of this product [Caesars Salad](productName)
+      - can you show the detail of the product [Caesars Salad](productName)
+      - i want to check the detail of the product [Caesars Salad](productName)	
+      - show us the product detail [Caesars Salad](productName)
+      - show me the product detail of [Baklava](productName)
+      - i want to see the product detail page [Baklava](productName)
+      - i want to know about the detail of this product [Baklava](productName)
+      - can you show the detail of the product [Baklava](productName)
+      - i want to check the detail of the product [Baklava](productName)	
+      - show us the product detail [Baklava](productName)
+      - show me the product detail of [Water Bottle](productName)
+      - i want to see the product detail page [Water Bottle](productName)
+      - i want to know about the detail of this product [Water Bottle](productName)
+      - can you show the detail of the product [Water Bottle](productName)
+      - i want to check the detail of the product [Water Bottle](productName)	
+      - show us the product detail [Water Bottle](productName)
+      - show me the product detail of [Pepsi](productName)
+      - i want to see the product detail page [Pepsi](productName)
+      - i want to know about the detail of this product [Pepsi](productName)
+      - can you show the detail of the product [Pepsi](productName)
+      - i want to check the detail of the product [Pepsi](productName)	
+      - show us the product detail [Pepsi](productName)
+      - show me the product detail of [Sprite](productName)
+      - i want to see the product detail page [Sprite](productName)
+      - i want to know about the detail of this product [Sprite](productName)
+      - can you show the detail of the product [Sprite](productName)
+      - i want to check the detail of the product [Sprite](productName)	
+      - show us the product detail [Sprite](productName)
+      - show me the product detail of [Banana Shake](productName)
+      - i want to see the product detail page [Banana Shake](productName)
+      - i want to know about the detail of this product [Banana Shake](productName)
+      - can you show the detail of the product [Banana Shake](productName)
+      - i want to check the detail of the product [Banana Shake](productName)	
+      - show us the product detail [Banana Shake](productName)
+      - show me the product detail of [Fresh Orange Juice](productName)
+      - i want to see the product detail page [Fresh Orange Juice](productName)
+      - i want to know about the detail of this product [Fresh Orange Juice](productName)
+      - can you show the detail of the product [Fresh Orange Juice](productName)
+      - i want to check the detail of the product [Fresh Orange Juice](productName)	
+      - show us the product detail [Fresh Orange Juice](productName)
+      - show me the product detail of [Cheese Burger](productName)
+      - i want to see the product detail page [Cheese Burger](productName)
+      - i want to know about the detail of this product [Cheese Burger](productName)
+      - can you show the detail of the product [Cheese Burger](productName)
+      - i want to check the detail of the product [Cheese Burger](productName)	
+      - show us the product detail [Cheese Burger](productName)
+      - show me the product detail of [Spicy Mc Crispy Burger](productName)
+      - i want to see the product detail page [Spicy Mc Crispy Burger](productName)
+      - i want to know about the detail of this product [Spicy Mc Crispy Burger](productName)
+      - can you show the detail of the product [Spicy Mc Crispy Burger](productName)
+      - i want to check the detail of the product [Spicy Mc Crispy Burger](productName)	
+      - show us the product detail [Spicy Mc Crispy Burger](productName)
+      - show me the product detail of [Zinger Burger](productName)
+      - i want to see the product detail page [Zinger Burger](productName)
+      - i want to know about the detail of this product [Zinger Burger](productName)
+      - can you show the detail of the product [Zinger Burger](productName)
+      - i want to check the detail of the product [Zinger Burger](productName)	
+      - show us the product detail [Zinger Burger](productName)
+      - show me the product detail of [Chicken Burger](productName)
+      - i want to see the product detail page [Chicken Burger](productName)
+      - i want to know about the detail of this product [Chicken Burger](productName)
+      - can you show the detail of the product [Chicken Burger](productName)
+      - i want to check the detail of the product [Chicken Burger](productName)	
+      - show us the product detail [Chicken Burger](productName)
+      - show me the product detail of [Taystee Vegan Burger](productName)
+      - i want to see the product detail page [Taystee Vegan Burger](productName)
+      - i want to know about the detail of this product [Taystee Vegan Burger](productName)
+      - can you show the detail of the product [Taystee Vegan Burger](productName)
+      - i want to check the detail of the product [Taystee Vegan Burger](productName)	
+      - show us the product detail [Taystee Vegan Burger](productName)
+      - show me the product detail of [Beef Shawarma](productName)
+      - i want to see the product detail page [Beef Shawarma](productName)
+      - i want to know about the detail of this product [Beef Shawarma](productName)
+      - can you show the detail of the product [Beef Shawarma](productName)
+      - i want to check the detail of the product [Beef Shawarma](productName)	
+      - show us the product detail [Beef Shawarma](productName)
+      - show me the product detail of [Tannour Sandwich](productName)
+      - i want to see the product detail page [Tannour Sandwich](productName)
+      - i want to know about the detail of this product [Tannour Sandwich](productName)
+      - can you show the detail of the product [Tannour Sandwich](productName)
+      - i want to check the detail of the product [Tannour Sandwich](productName)	
+      - show us the product detail [Tannour Sandwich](productName)
+      - show me the product detail of [Whopper Sandwich](productName)
+      - i want to see the product detail page [Whopper Sandwich](productName)
+      - i want to know about the detail of this product [Whopper Sandwich](productName)
+      - can you show the detail of the product [Whopper Sandwich](productName)
+      - i want to check the detail of the product [Whopper Sandwich](productName)	
+      - show us the product detail [Whopper Sandwich](productName)
+      - show me the product detail of [Make Your Own Bowl](productName)
+      - i want to see the product detail page [Make Your Own Bowl](productName)
+      - i want to know about the detail of this product [Make Your Own Bowl](productName)
+      - can you show the detail of the product [Make Your Own Bowl](productName)
+      - i want to check the detail of the product [Make Your Own Bowl](productName)	
+      - show us the product detail [Make Your Own Bowl](productName)
+      - show me the product detail of [chicken tenders](productName)
+      - i want to see the product detail page [Chicken Tenders](productName)
+      - i want to know about the detail of this product [Chicken Tenders](productName)
+      - can you show the detail of the product [Chicken Tenders](productName)
+      - i want to view [Chicken Tenders](productName)
+      - i want to check the detail of the product [Chicken Tenders](productName)	
+      - show us the product detail [Chicken Tenders](productName)
       - i want to see [kofta sandwich]{"entity":"productName","value":"kafta sandwich"}
       - i want to see the detail for [craft a sandwich]{"entity":"productName","value":"kafta sandwich"}
+      - i want to see [kofte sandwich]{"entity":"productName","value":"kafta sandwich"}
+      - i want to see the detail for [castor sandwich]{"entity":"productName","value":"kafta sandwich"}
+      - I want to see the detail for [shish kebab plate]{"entity":"productName","value":"Shish Kabob Plate"}
+      - i want to view the detail for [mushroom switch burger]{"entity":"productName","value":"Mushroom Swiss Burger"}
+      - i want to check the detail for [Barbecue Platter]{"entity":"productName","value":"BBQ Platter"}
+      - I want to see the detail for [Barbecue platter]{"entity":"productName","value":"BBQ Platter"}
+      - I want to see the summary of [Grilled Steak Wrap]{"entity":"productName","value":"Grilled Stake Wrap"}
+      - i want to check the detail for [Grilled Steak Wrap]{"entity":"productName","value":"Grilled Stake Wrap"}
+      - I want to view the detail for the product [humans]{"entity":"productName","value":"Hummus"}
+      - I want to see the detail for [momos]{"entity":"productName","value":"Hummus"}
+      - I want to view the detail for [letters]{"entity":"productName","value":"Lettuce"}
+      - can you show us the detail for [letters]{"entity":"productName","value":"Lettuce"}
+      - show us the detail for [tickle] {"entity":"productName","value":"Pickle"}
+      - show me the detail for the product [tickle] {"entity":"productName","value":"Pickle"}
+      - I want to see the the detail for [tasty fish burger]{"entity":"productName","value":"Taystee Fish Burger"}
+      - I want to view the detail for [tasty fish burger]{"entity":"productName","value":"Taystee Fish Burger"}
 
   - intent: edit_product
     examples: |
@@ -2463,12 +2508,20 @@ nlu:
       - edit [Sprite](productName) quantity
       - i want to edit [kofta sandwich]{"entity":"productName","value":"kafta sandwich"}
       - i want to customize [craft a sandwich]{"entity":"productName","value":"kafta sandwich"}
-
-  - intent: sort_by_price
-    examples: |
-      - [low to high](sort)
-      - [hight to low](sort)
-      - [sort by price](sort)
+      - I want to edit [shish kebab plate]{"entity":"productName","value":"Shish Kabob Plate"}
+      - i want to customize [mushroom switch burger]{"entity":"productName","value":"Mushroom Swiss Burger"}
+      - i want to edit [Barbecue Platter]{"entity":"productName","value":"BBQ Platter"}
+      - I want to customize [Barbecue platter]{"entity":"productName","value":"BBQ Platter"}
+      - I want to edit [Grilled Steak Wrap]{"entity":"productName","value":"Grilled Stake Wrap"}
+      - i want to customize [Grilled Steak Wrap]{"entity":"productName","value":"Grilled Stake Wrap"}
+      - I want to edit [humans]{"entity":"productName","value":"Hummus"}
+      - I want to customize [momos]{"entity":"productName","value":"Hummus"}
+      - I want to edit [letters]{"entity":"productName","value":"Lettuce"}
+      - edit [letters]{"entity":"productName","value":"Lettuce"}
+      - I want to edit [tickle] {"entity":"productName","value":"Pickle"}
+      - customize [tickle] {"entity":"productName","value":"Pickle"}
+      - I want to edit [tasty fish burger]{"entity":"productName","value":"Taystee Fish Burger"}
+      - I want to customize [tasty fish burger]{"entity":"productName","value":"Taystee Fish Burger"}
 
   - intent: product_flavour
     examples: |
@@ -3197,6 +3250,20 @@ nlu:
       - remove [Sprite](productName) quantity
       - i want to remove [kofta sandwich]{"entity":"productName","value":"kafta sandwich"}
       - i want to unselect [craft a sandwich]{"entity":"productName","value":"kafta sandwich"}
+      - I want to remove [shish kebab plate]{"entity":"productName","value":"Shish Kabob Plate"}
+      - i want to delete [mushroom switch burger]{"entity":"productName","value":"Mushroom Swiss Burger"}
+      - i want to unselect [Barbecue Platter]{"entity":"productName","value":"BBQ Platter"}
+      - I want to remove [Barbecue platter]{"entity":"productName","value":"BBQ Platter"}
+      - I want to delete [Grilled Steak Wrap]{"entity":"productName","value":"Grilled Stake Wrap"}
+      - i want to unselect [Grilled Steak Wrap]{"entity":"productName","value":"Grilled Stake Wrap"}
+      - I want to unselect [humans]{"entity":"productName","value":"Hummus"}
+      - I want to remove [momos]{"entity":"productName","value":"Hummus"}
+      - I want to unselect [letters]{"entity":"productName","value":"Lettuce"}
+      - delete [letters]{"entity":"productName","value":"Lettuce"}
+      - I want to edit [tickle] {"entity":"productName","value":"Pickle"}
+      - remove [tickle] {"entity":"productName","value":"Pickle"}
+      - I want to remove [tasty fish burger]{"entity":"productName","value":"Taystee Fish Burger"}
+      - I want to delete [tasty fish burger]{"entity":"productName","value":"Taystee Fish Burger"}
   
   - intent: add_quantity
     examples: |
@@ -3291,17 +3358,17 @@ nlu:
   - intent: unreserved_table_person
     examples: |
       - I want to know about seating for lunch for [one](number) persons
-      - I want to ask about seating for lunch for [one](number) persons
-      - please tell me if seating is available for [one](number) persons
-      - let me know about the seating table for [one](number) persons
+      - I want to ask about seating for lunch for [one](number) people
+      - please tell me if seating is available for [one](number) guests
+      - let me know about the seating table for [one](number) friends
       - do u have any table arrangement here for lunch for [one](number) persons
-      - can u arrange a table for us we are [one](number) persons
-      - could you please manage a table for us we are [one](number) persons
-      - can you help me to find out table for lunch for [one](number) persons
+      - can u arrange a table for us we are [one](number) people
+      - could you please manage a table for us we are [one](number) guests
+      - can you help me to find out table for lunch for [one](number) friends
       - is there any table available today for [one](number) persons
-      - I want to know about diningtable for lunch for [one](number) persons
-      - I want to ask about dining table for lunch for [one](number) persons
-      - please tell me if dining table is available for [one](number) persons
+      - I want to know about diningtable for lunch for [one](number) people
+      - I want to ask about dining table for lunch for [one](number) guests
+      - please tell me if dining table is available for [one](number) friends
       - let me know about the dining table for lunch for [one](number) persons
       - is any dining table available for lunch for [one](number) persons
       - do u have any dining table arrangement here for lunch for [one](number) persons
@@ -3764,25 +3831,29 @@ nlu:
       - is there any dining table available today for [7](number) persons
       - I want to know about some desk for lunch for [7](number) persons
       - I want to ask about desk for lunch for [7](number) persons
-      - please tell me if desk is available for [7](number) persons
-      - let me know about the desk for lunch for [7](number) persons
-      - is some desk available for lunch for [7](number) persons
+      - please tell me if desk is available for [7](number) people
+      - let me know about the desk for lunch for [7](number) guests
+      - is some desk available for lunch for [7](number) friends
       - can you help me to find out any desk for lunch for [7](number) persons
       - is there any desk available today for [7](number) persons
+      - we are [3](number) people
+      - we are [7](number) friends
+      - we are [5](number) guests
+      - we are [9](number) persons
       - [4](number) person
-      - [1](number)
-      - [2](number) people
-      - [3](number)
+      - [1](number) people
+      - [2](number) guests
+      - [3](number) friends
       - [7](number) people
-      - [6](number)
-      - [8](number)
+      - [6](number) friends
+      - [8](number) guests
       - [10](number) people
       - [9](number) person
-      - [11](number)
-      - [5](number) 
-      - [12](number)
-      - [one](number)
-      - [two](number)
+      - [11](number) person
+      - [5](number) friends
+      - [12](number) guests
+      - [one](number) friends
+      - [two](number) guests
       - [three](number) person
       - [four](number)
       - [five](number) people
@@ -3857,6 +3928,9 @@ nlu:
 
   - intent: inform_date
     examples: |
+      - [next day](date)
+      - i want to book my reservation for [next day](date)
+      - we want to make reservation for [next day](date)
       - i want to book my reservation for upcoming [Monday](date)
       - please book my reservation for next [Tuesday](date)
       - we want to make reservation for coming [Wednesday](date) noon
@@ -3906,6 +3980,14 @@ nlu:
       - [25th December]
       - i want to make reservation for [December 26](date)
       - [27th December](date)
+
+  - intent: other_day
+    examples: |
+      - some other day
+      - i want to make reservation for some other day
+      - we want to make reservation for some other day
+      - for some other day 
+      - he want to make reservation for some other day
 
   - intent: inform_time
     examples: |
@@ -3968,6 +4050,14 @@ nlu:
       - please [book]{"entity":"reserved","value":"book now"}
       - please [book now](reserved)
       
+  - intent: new_reservation
+    examples: |
+      - i want to make [new](newly) reservation
+      - i want to create [new](newly) reservation
+      - we want to make [new](newly) reservation
+      - we want to create [new](newly) reservation
+      - create [new](newly)  reservation
+
   - intent: deny
     examples: |
       - [no](negative)
@@ -3979,6 +4069,7 @@ nlu:
       - [negative]{"entity":"negative","value":"no"}
       - [not]{"entity":"negative","value":"no"}
       - [Not]{"entity":"negative","value":"no"}
+      - [deny]{"entity":"negative","value":"no"}
 
   - intent: out_of_scope
     examples: |
@@ -3989,6 +4080,7 @@ nlu:
       - I need a thesis topics
       - how many continents are there?
       - how many seas are there?
+      
   - intent: bot_challenge
     examples: |
       - are you a [bot](challenge)?
@@ -3998,21 +4090,21 @@ nlu:
       - what is your [name](challenge)?
       - who are [you](challenge)?
 
-  - regex: orderId
-    examples: |
-      - O-\d{5}\b
-  - regex: person
-    examples: |
-      - \d{1,2}\b
+  # - regex: orderId
+  #   examples: |
+  #     - O-\d{5}\b
+  # - regex: person
+  #   examples: |
+  #     - \d{1,2}\b
 
   - regex: PERSON
     examples: |
       - ([A-Z])\w+
       - [A-Za-z]{2,25} [A-Za-z]{2,25}
 
-  - regex: phoneNumber
-    examples: |
-      - \d{6,}\b
+  # - regex: phoneNumber
+  #   examples: |
+  #     - \d{6,}\b
 
   - lookup: categoryName
     examples: |
@@ -4031,53 +4123,6 @@ nlu:
       - ingredients
       - sandwiches
       - Make Your Own Bowl
-  
-  - lookup: detail
-    examples: |
-      - Falafel Sandwich
-      - Shish Kaboob Plate	
-      - Nacho Burger	
-      - Mushroom Swiss Burger	
-      - Chicken Shawarma Sandwich	
-      - Kafta Sandwich	
-      - BBQ Platter	
-      - Grilled Chicken Wrap	
-      - Grilled Stake Wrap	
-      - Junior Tasty Burger	
-      - Chicken Nuggets	
-      - French Fries	
-      - Rice
-      - Cole Slaw	
-      - Garlic Sauce	
-      - Spicy Potato	
-      - Soup
-      - Hummus
-      - Baba Ghanoush	
-      - Tomato
-      - Lettuce
-      - Pickle
-      - American Cheese Slice	
-      - Taystee Fish Burger	
-      - Shawarma Salad	
-      - Caesars Salad	
-      - Baklava
-      - Water Bottle	
-      - Pepsi
-      - Sprite
-      - Banana Shake	
-      - Fresh Orange Juice	
-      - Cheese Burger	
-      - Spicy Mc Crispy Burger	
-      - Zinger Burger	
-      - Chicken Burger	
-      - Taystee Vegan Burger	
-      - Beef Shawarma	
-      - Tannour Sandwich	
-      - Whopper Sandwich	
-      - Make Your Own Bowl	
-      - Chicken Tenders	
-      - kofta sandwich
-      - craft a sandwich
 
   - lookup: productName
     examples: |
