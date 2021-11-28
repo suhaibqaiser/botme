@@ -59,11 +59,12 @@ export class BookingSectionComponent implements OnInit {
     this.validations.reservationTime = this._reservationService.isRequired(this.reservationForm.get('reservationTime')?.value)
 
     if (Object.keys(this.validations).every(k => this.validations[k] === false)) {
-      this._reservationService.addReservation(this.reservationForm.value).subscribe((res => {
-        if (res.status === "success") {
-          this._router.navigate(['/online-shop'])
+      this._reservationService.addReservation(this.reservationForm.value).subscribe((res: any) => {
+          if (res.status === "success") {
+            this._router.navigate(['/online-shop'])
+          }
         }
-      }))
+      )
     }
   }
 }
