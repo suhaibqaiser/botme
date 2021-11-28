@@ -54,6 +54,7 @@ import {BotmeClientService} from "./services/botme-client.service";
 import {WindowService} from './services/window.service';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {ReservationService} from "./services/reservation.service";
+import { DemoPageComponent } from './components/pages/demo-page/demo-page.component';
 
 @NgModule({
   declarations: [
@@ -98,7 +99,8 @@ import {ReservationService} from "./services/reservation.service";
     CartSectionComponent,
     CheckoutSectionComponent,
     SpinnerComponent,
-    CustomizeProductModalComponent
+    CustomizeProductModalComponent,
+    DemoPageComponent
   ],
   imports: [
     BrowserModule,
