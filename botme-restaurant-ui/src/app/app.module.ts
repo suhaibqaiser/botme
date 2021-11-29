@@ -53,6 +53,8 @@ import {SocketService} from './services/socket.service';
 import {BotmeClientService} from "./services/botme-client.service";
 import {WindowService} from './services/window.service';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import {ReservationService} from "./services/reservation.service";
+import { DemoPageComponent } from './components/pages/demo-page/demo-page.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +99,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     CartSectionComponent,
     CheckoutSectionComponent,
     SpinnerComponent,
-    CustomizeProductModalComponent
+    CustomizeProductModalComponent,
+    DemoPageComponent
   ],
   imports: [
     BrowserModule,
@@ -109,7 +112,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     NgMultiSelectDropDownModule.forRoot(),
     DragDropModule
   ],
-  providers: [SpeechService, BotmeClientService, SocketService, WindowService],
+  providers: [ReservationService, SpeechService, BotmeClientService, SocketService, WindowService],
   bootstrap: [AppComponent],
   entryComponents: [CustomizeProductModalComponent]
 })

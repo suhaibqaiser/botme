@@ -21,4 +21,16 @@ const ReservationSchema = createSchema(
     {timestamps: {createdAt: true}}
 );
 
-export const Reservation = foodDB.model('Reservation', ReservationSchema);
+const tempReservationSchema = createSchema(
+    {
+        reservationId: Type.string({maxlength: 256, required: true, unique: true}),
+        customerName:Type.string({maxlength: 256, required: true}),
+        reservationLabel: Type.number({unique: true}),
+        reservationSeats: Type.number({required: true}),
+        reservationDate: Type.string({required: true}),
+        reservationTime: Type.string({required: true})
+    },
+    {timestamps: {createdAt: true}}
+);
+
+export const Reservation = foodDB.model('Reservation', tempReservationSchema);
