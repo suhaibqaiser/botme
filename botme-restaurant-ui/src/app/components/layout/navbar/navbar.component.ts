@@ -19,7 +19,9 @@ export class NavbarComponent implements OnInit {
     clientDeviceId: new FormControl('', Validators.required),
     voiceType: new FormControl('', Validators.required)
   })
-  _voiceType?: string
+  _voiceType: string = 'cloud-voice'
+  userVoice: string = ''
+  botVoice: string = ''
 
   constructor(public router: Router,
     public socketService: SocketService,
@@ -31,6 +33,11 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCartProducts()
+    this.socketService.messages.subscribe((message: any) => {
+      this.botVoice = message.text
+      this.userVoice = message.inputText;
+    });
+
   }
 
   login() {

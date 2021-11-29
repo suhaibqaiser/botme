@@ -46,7 +46,8 @@
                 </a>
               </li>
               <li>
-                <a data-bs-toggle="modal" data-bs-target="#voiceTest" class="nav-link" type="button">VOICE TEST</a>
+                <a *ngIf="_botMeClientService.getCookie().isLoggedIn" data-bs-toggle="modal" data-bs-target="#voiceTest"
+                  class="nav-link" type="button">VOICE TEST</a>
               </li>
               <li class="nav-item">
                 <a *ngIf="_botMeClientService.getCookie().isLoggedIn" (click)="showCartModal()" id="entityId-show-cart"
@@ -142,15 +143,21 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+        <label class="text-white">User:</label>
+        <textarea class="w-100" type="text" readonly [(ngModel)]="userVoice"></textarea>
+        <label class="text-white">Bot:</label>
+        <textarea class="w-100" type="text" readonly [(ngModel)]="botVoice"></textarea>
+        <hr>
         <label class="text-white">Voice Engine:</label>
-        <select class="w-100" [(ngModel)]="_voiceType" (change)="setVoiceType()">
+        <select class="w-100" [(ngModel)]="_voiceType" (change)="setVoiceType()" required>
           <option value="no-voice">Disabled</option>
           <option value="local-voice">Browser</option>
           <option value="cloud-voice">Google Cloud</option>
         </select>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="reload()">Done</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="reload()">Apply</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
