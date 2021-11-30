@@ -86,14 +86,18 @@ def parseDate(text,db,pageId,sectionId,intent,senti):
             print("dateparser call")
             time = t.strftime("%Y-%m-%d")
             print(time)
+            return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":time,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent}
         else:
             print("timefhuman call")
             now = datetime.now()
             t = timefhuman(text,now=now)
             print(t)
-            time = t.strftime("%Y-%m-%d")
-            print(time)
-        return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":time,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent}     
+            if t:
+                time = t.strftime("%Y-%m-%d")
+                print(time)
+                return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":time,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent}
+            else:
+                return {"Response":"sorry,can you please tell me the day again?","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent}                      
     except:
         return "Error in parsing date"
 
@@ -112,8 +116,11 @@ def parseTime(text,db,pageId,sectionId,intent,senti):
             now = datetime.now()
             t = timefhuman(text,now=now)
             print(t)
-            time = t.strftime("%H:%M:%S")
-            print(time)
-        return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":time,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent}     
+            if t:
+                time = t.strftime("%H:%M:%S")
+                print(time)
+                return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":time,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent}
+            else:
+                return {"Response":"sorry,can you please tell me the time again?","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent}
     except:
         return "Error in parsing date"

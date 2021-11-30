@@ -10,7 +10,8 @@ def send_Response():
     text = req_data['text']
     pageId = req_data['pageId']
     sectionID = req_data['sectionId']
-    rasa_data = getIntent(text)
+    message = text.title()
+    rasa_data = getIntent(message)
     print(rasa_data)
     intent = rasa_data['intent']
     if(intent['name'] == "nlu_fallback"):
