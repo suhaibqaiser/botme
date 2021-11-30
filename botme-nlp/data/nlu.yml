@@ -55,20 +55,25 @@ nlu:
   - intent: Home_page
     examples: |
       - Take me to [home page](pageone)
+      - take me to [homepage](pageone)
       - i want to visit [home page](pageone)
       - open [home page](pageone) please
       - i want to see the [home page](pageone)
       - can you please redirect me to [home page](pageone)
       - he want to redirect to [home page](pageone)
       - i want to redirect to [home page](pageone)
+      - redirect me to [homepage](pageone)
       - show me the [home page](pageone)
       - show us the [home page](pageone)
+      - show me the [homepage](pageone)
       - i want you to take me to the [home page](pageone)
       - she want to visit [home page](pageone)
       - Take me to [home](pageone)
+      - take me to [homepage](pageone)
       - i want to visit [home](pageone)
       - open [home](pageone) please
       - i want to see the [home](pageone)
+      - we want to see the [homepage](pageone)
       - can you please redirect me to [home](pageone)
       - he want to redirect to [home](pageone)
       - i want to redirect to [home](pageone)
@@ -78,10 +83,12 @@ nlu:
       - she want to visit [home](pageone)
       - [home page](pageone)
       - [home](pageone)
+      - [homepage](pageone)
 
   - synonym: home 
     examples: |
       - home page
+      - homepage
 
   - intent: reservation_page
     examples: |
