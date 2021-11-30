@@ -249,16 +249,11 @@ nlu:
       - we want to [order now](done)
       - i want to [order](done) my order
       - we want to [order](done) our order
-      - [place order](done) please
-      - [place](done) the order please
-      - i want to [place](done) the order
       - everything is done [order now](done)
       - click on [order now](done)
-      - please [place](done) my order now
 
   - synonym: order now
     examples: |
-      - place
       - order
 
   - intent: proceed_to_checkout
@@ -304,9 +299,16 @@ nlu:
       - i want to redirect to [place order page](pagesix)
       - Redirect me to [place order](pagesix)
       - Redirect me to [place order page](pagesix)
-  
+      - i want to [place] an order please
+      - we want to [place] an order please
+      - i want to [place an order] please
+      - he want to [place an order] please
+      - she want to [place] an order please 
+
   - synonym: place order page
     examples: |
+      - place an order
+      - place
       - place order
       - place order Beach
       - place of the beach
@@ -3840,6 +3842,12 @@ nlu:
       - we are [7](number) friends
       - we are [5](number) guests
       - we are [9](number) persons
+      - we will be [6](number)
+      - i will be [5](number)
+      - they will be [7](number)
+      - we will be [8](number)
+      - we will be [3](number)
+      - we will be [9](number)
       - [4](number) person
       - [1](number) people
       - [2](number) guests
