@@ -3,7 +3,7 @@ import requests
 import dateparser
 from timefhuman import timefhuman
 from datetime import datetime
-
+import re
 
 def parseEntityValue(entity):
     for x in entity:
@@ -124,3 +124,17 @@ def parseTime(text,db,pageId,sectionId,intent,senti):
                 return {"Response":"sorry,can you please tell me the time again?","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent}
     except:
         return "Error in parsing date"
+
+def reservation(db,value,pageId,sectionId,text,intent,senti):
+    if db is not None:
+        V = re.findall(r'\d+', value) 
+        number = "".join(V)
+        if number.isdigit():
+            context = db['context']
+            iD = getEntityClickAttribute(context['entities'])
+            return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":number,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent}
+        else:
+            return {"Response":"sorry,can you please tell me the number of people again?","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent}                 
+    else:
+        tableResponse = searchingTable(value,senti,intent,text)
+        return tableResponse

@@ -3940,6 +3940,11 @@ nlu:
       - call me [Sandra Barnes](PERSON)
       - [Deborah Henderson](PERSON) is my name
       - [Larry Perry](PERSON) is my name
+      - my name is [asif](PERSON)
+      - my name is [Sohaib](PERSON)
+      - [Sadaf](PERSON) is my name
+      - my name is (Taha)(PERSON)
+      - my name is [Ahmed](PERSON) 
 
   - intent: inform_date
     examples: |
@@ -4321,6 +4326,11 @@ nlu:
 
   - lookup: PERSON
     examples: |
+      - Hisein
+      - Youssef
+      - Ibraheem
+      - Sham'a
+      - Hamid
       - Rachel Adams
       - Betty Lewis
       - Alice Thomas
@@ -4571,3 +4581,28 @@ nlu:
       - Vickie Booth
       - Roxy Gallegos
       - Aneesa Pearce
+      - Junaid
+      - Hisham
+      - Nail
+      - Jamila
+      - Randa
+      - Adel
+      - Abdur-Rashid
+      - Abduh
+      - Medhat
+      - Shaima
+      - Fikri
+      - Imen
+      - Hafsa
+      - Nur
+      - Nuh  
+      - Malik
+      - Samra
+      - Yakub
+      - Arij
+      - Ebrahim    
+      - Samir
+      - Haider
+      - Farhan
+      - I'tidal
+      - Qusay
