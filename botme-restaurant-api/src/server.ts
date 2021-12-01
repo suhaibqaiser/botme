@@ -21,7 +21,7 @@ const server = http.createServer(router);
 
 
 async function start() {
-    // await initDependencies();
+    await initDependencies();
     server.listen(PORT, () =>
         console.log(`Server is running http://localhost:${PORT}...`))
 }
