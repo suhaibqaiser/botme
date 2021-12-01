@@ -60,6 +60,9 @@
               </div>
             </div>
             <button id="entityId-book-now" (click)="addReservation()" class="btn full-width" type="button">Book Now
+              <div *ngIf="reservationLoader" class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
             </button>
           </form>
         </div>
@@ -98,6 +101,6 @@
         </div>
       </div>
     </div>
-    <button id="entityId-create-new-reservation" (click)="createNewReservation()" class="btn full-width" type="button">Create New Reservation</button>
+<!--    <button id="entityId-create-new-reservation" (click)="createNewReservation()" class="btn full-width" type="button">Create New Reservation</button>-->
   </div>
 </div>

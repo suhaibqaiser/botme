@@ -29,16 +29,13 @@ export class BookingSectionComponent implements OnInit {
     reservationDate: false,
     reservationTime: false
   }
+  reservationLoader: boolean = false
 
   constructor(private _router: Router, private _reservationService: ReservationService, private _socketService: SocketService) {
   }
 
   ngOnInit(): void {
     this._socketService.getCurrentContext()
-    let a = localStorage.getItem('reservation')
-    if (a != null) {
-      this.reservation = JSON.parse(a)
-    }
   }
 
   addReservation() {
@@ -70,25 +67,24 @@ export class BookingSectionComponent implements OnInit {
     this.validations.reservationTime = this._reservationService.isRequired(this.reservationForm.get('reservationTime')?.value)
 
     if (Object.keys(this.validations).every(k => this.validations[k] === false)) {
+      this.reservationLoader = true
       this._reservationService.addReservation(this.reservationForm.value).subscribe((res: any) => {
           if (res.status === "success") {
-            this.reservation = {
-              isReservationCompleted: true,
-              name: this.reservationForm.get('customerName')?.value,
-              reservationSeats: this.reservationForm.get('reservationSeats')?.value,
-              reservationDate: this.reservationForm.get('reservationDate')?.value,
-              reservationTime: this.reservationForm.get('reservationTime')?.value
-            }
-            localStorage.setItem('reservation', JSON.stringify(this.reservation))
+            this.reservationLoader = false
+            this.reservation.isReservationCompleted = true
+            setTimeout(() => {
+              this._router.navigate(['home'])
+              this.reservation.isReservationCompleted = false
+              this.resetReservation()
+            }, 5000)
           }
         }
       )
     }
   }
 
-  createNewReservation() {
+  resetReservation() {
     this.reservationForm.reset()
-    localStorage.removeItem('reservation')
     this.reservation = {
       isReservationCompleted: false,
       name: null,
