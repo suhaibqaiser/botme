@@ -144,7 +144,7 @@ export class SpeechService {
         if (!this.isSpeaking && this.socketService.processing === true) {
           this.speak(this.voiceProcessingDelayed, null)
         }
-      }, 3000);
+      }, 5000);
       this.recorder.stop((blob: any) => {
         this.socketService.sendMessage('voice', blob, this.cloudVoice)
         this.isListening = false;
