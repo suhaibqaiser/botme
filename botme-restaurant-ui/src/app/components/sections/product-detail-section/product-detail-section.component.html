@@ -10,7 +10,7 @@
           <div class="product-details-slider">
             <div class="product-details-for popup-gallery">
               <div class="product-for-item">
-                <a href="assets/images/product-1.png"><img [src]="resolveImages()" alt="product"></a>
+                <a href="assets/images/product-1.png"><img [src]="_helperService.resolveProductImage(product)" alt="product"></a>
               </div>
 <!--              <div class="product-for-item">-->
 <!--                <a href="assets/images/product-1.png"><img src="assets/images/product-1.png" alt="product"></a>-->
@@ -236,7 +236,7 @@
         <div *ngFor="let item of relatedProduct" class="receipe-item receipe-item-black pb-30">
           <div class="receipe-item-inner">
             <div class="receipe-image">
-              <img style="width:100px;height: 100px;border-radius: 10px" [src]="cartService.resolveImages(item)" alt="receipe">
+              <img style="width:100px;height: 100px;border-radius: 10px" [src]="_helperService.resolveProductImage(item)" alt="receipe">
             </div>
             <div class="receipe-content">
               <div class="receipe-info">

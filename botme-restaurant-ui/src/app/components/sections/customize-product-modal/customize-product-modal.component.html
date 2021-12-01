@@ -10,7 +10,7 @@
               <div class="m-auto item">
                 <div class="blog-card-slide">
                   <div class="blog-card-thumb">
-                    <img [src]="cartService.resolveImages(cartService.singleCustomProductObj)" alt="blog">
+                    <img [src]="_helperService.resolveProductImage(cartService.singleCustomProductObj)" alt="blog">
                   </div>
                   <div class="blog-card-content">
                     <!-- <app-sofia-bot class="d-inline-flex"></app-sofia-bot> -->

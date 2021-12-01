@@ -26,7 +26,7 @@
             <div class="product-table-info">
               <div class="product-table-thumb">
                 <a href="/product-detail/?productId={{product.productId}}">
-                  <img [src]="resolveImages(product)" alt="product">
+                  <img [src]="_helperService.resolveProductImage(product)" alt="product">
                 </a>
               </div>
             </div>
