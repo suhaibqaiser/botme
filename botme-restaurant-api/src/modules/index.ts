@@ -6,6 +6,7 @@ import categoryRouter from "./dictionary/category/router"
 import productRouter from "./dictionary/product/router"
 import menuRouter from "./food/menu/router"
 import orderRouter from "./food/order/router"
+import commandApiRouter from "./tests/command-api/router"
 
 export default [
     ...customerRouter,
@@ -15,5 +16,6 @@ export default [
     ...categoryRouter,
     ...productRouter,
     ...menuRouter,
-    ...orderRouter
+    ...orderRouter,
+    ...commandApiRouter
 ];
