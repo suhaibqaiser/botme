@@ -45,4 +45,8 @@ export class BotmeClientService {
   getVoiceType() {
     return this.cookieService.get('voiceType')
   }
+
+  isRobotAuth(){
+    return this.getCookie().clientName.toLowerCase().includes('robot')
+  }
 }
