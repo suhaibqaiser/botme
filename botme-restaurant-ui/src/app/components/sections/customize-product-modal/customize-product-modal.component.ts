@@ -17,14 +17,12 @@ export class CustomizeProductModalComponent implements OnInit {
   }
 
   addToCart() {
-    this._socketService.speachInput.reset()
     this._socketService.getCurrentContext()
     this.cartService.addToCart(this.cartService.singleCustomProductObj);
     document.getElementById("entityId-show-cart")?.click()
   }
 
   editToCart() {
-    this._socketService.speachInput.reset()
     this._socketService.getCurrentContext()
     this.cartService.addToCart(this.cartService.singleCustomProductObj, true);
     document.getElementById("entityId-show-cart")?.click()
@@ -32,7 +30,6 @@ export class CustomizeProductModalComponent implements OnInit {
   }
 
   cancelModal() {
-    this._socketService.speachInput.reset()
     this._socketService.getCurrentContext()
   }
 }

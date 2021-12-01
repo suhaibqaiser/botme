@@ -17,9 +17,6 @@
                     <div id="sectionId-servingSize-productOptions" class="section p-2" *ngIf="cartService.slideToShow===0">
                       <h3 class="text-center">{{cartService.singleCustomProductObj.productName}}</h3>
 <!--                      <app-sofia-bot></app-sofia-bot>-->
-<!--                      <input [formControl]="_socketService.speachInput">-->
-<!--                      <button style="padding: 6px;" (click)="_socketService.sendMessage('communication',_socketService.speachInput.value)" class="btn btn-success">send</button>-->
-<!--                      <h6>{{_socketService.responseLabel}}</h6>-->
                       <div class="main-selection-container">
                         <div class="list mb-2 d-flex justify-content-between">
                           <div class="d-flex left">
@@ -74,9 +71,7 @@
                     </div>
                     <div id="sectionId-ingredients-flavour" class="section p-2" *ngIf="cartService.slideToShow===1">
                       <h3 *ngIf="cartService.singleCustomProductObj.productIngredients && cartService.singleCustomProductObj.productIngredients.length" class="text-center">Product Ingredients</h3>
-<!--                      <input [formControl]="_socketService.speachInput">-->
-<!--                      <button style="padding: 6px;" (click)="_socketService.sendMessage('communication',_socketService.speachInput.value)" class="btn btn-success">send</button>-->
-<!--                      <h6>{{_socketService.responseLabel}}</h6>-->
+
                       <div class="main-selection-container">
                         <div
                           *ngIf="cartService.singleCustomProductObj.productIngredients && cartService.singleCustomProductObj.productIngredients.length"
@@ -134,9 +129,6 @@
                     </div>
                     <div id="sectionId-toppings" class="section p-2" *ngIf="cartService.slideToShow===2">
                       <h3 class="text-center">Product Topping</h3>
-<!--                      <input [formControl]="_socketService.speachInput">-->
-<!--                      <button style="padding: 6px;" (click)="_socketService.sendMessage('communication',_socketService.speachInput.value)" class="btn btn-success">send</button>-->
-<!--                      <h6>{{_socketService.responseLabel}}</h6>-->
                       <div
                         *ngIf="cartService.singleCustomProductObj.productToppings && cartService.singleCustomProductObj.productToppings.length"
                         class="main-selection-container">
@@ -192,9 +184,6 @@
                     </div>
                     <div id="sectionId-addons" class="section p-2" *ngIf="cartService.slideToShow===3">
                       <h3 class="text-center">Addons</h3>
-<!--                      <input [formControl]="_socketService.speachInput">-->
-<!--                      <button style="padding: 6px;" (click)="_socketService.sendMessage('communication',_socketService.speachInput.value)" class="btn btn-success">send</button>-->
-<!--                      <h6>{{_socketService.responseLabel}}</h6>-->
                       <div *ngIf="cartService.singleCustomProductObj.productAddons && cartService.singleCustomProductObj.productAddons.length"
                            class="main-selection-container">
                         <div id="{{addons.productId}}" *ngFor="let addons of cartService.singleCustomProductObj.productAddons"
@@ -250,9 +239,6 @@
                     </div>
                     <div id="entityId-quantity" class="section p-2" *ngIf="cartService.slideToShow===4">
                       <h3 class="text-center">Product Summary</h3>
-<!--                      <input [formControl]="_socketService.speachInput">-->
-<!--                      <button style="padding: 6px;" (click)="_socketService.sendMessage('communication',_socketService.speachInput.value)" class="btn btn-success">send</button>-->
-<!--                      <h6>{{_socketService.responseLabel}}</h6>-->
                       <div *ngIf="!cartService.singleCustomProductObj.isShowInfo" class="d-flex mt-2 align-items-center justify-content-center">
                         <div class="btn-group">
                           <a style="padding: 4px 28px;" type="button"
