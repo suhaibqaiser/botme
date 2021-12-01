@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { environment } from "../../environments/environment";
-import { Observable } from "rxjs";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { CookieService } from 'ngx-cookie-service';
+import {Injectable} from '@angular/core';
+import {environment} from "../../environments/environment";
+import {Observable} from "rxjs";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {CookieService} from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class BotmeClientService {
       'Authorization': `Bearer ${'ea2d3aeaad77865f9769974a920892f5'}`
     })
     const url = `${this.botMeClientBaseURL}/client/auth`;
-    return this.http.post(url, obj, { headers: headers });
+    return this.http.post(url, obj, {headers: headers});
   }
 
   getCookie() {
@@ -46,7 +46,9 @@ export class BotmeClientService {
     return this.cookieService.get('voiceType')
   }
 
-  isRobotAuth(){
-    return this.getCookie().clientName.toLowerCase().includes('robot')
+  isRobotAuth() {
+    let clientName = this.getCookie().clientName
+    return (clientName && clientName.length) ? this.getCookie().clientName.toLowerCase().includes('robot') : false
+
   }
 }
