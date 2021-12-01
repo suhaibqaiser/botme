@@ -70,12 +70,17 @@ export class BookingSectionComponent implements OnInit {
       this.reservationLoader = true
       this._reservationService.addReservation(this.reservationForm.value).subscribe((res: any) => {
           if (res.status === "success") {
+            this.reservation = {
+              isReservationCompleted: true,
+              name: this.reservationForm.get('customerName')?.value,
+              reservationSeats: this.reservationForm.get('reservationSeats')?.value,
+              reservationDate: this.reservationForm.get('reservationDate')?.value,
+              reservationTime: this.reservationForm.get('reservationTime')?.value,
+            }
             this.reservationLoader = false
-            this.reservation.isReservationCompleted = true
             setTimeout(() => {
               this._router.navigate(['home'])
               this.reservation.isReservationCompleted = false
-              this.resetReservation()
             }, 5000)
           }
         }
@@ -92,5 +97,9 @@ export class BookingSectionComponent implements OnInit {
       reservationDate: null,
       reservationTime: null
     }
+  }
+
+  generateTableNumber() {
+    return Math.floor(Math.random() * 15)
   }
 }
