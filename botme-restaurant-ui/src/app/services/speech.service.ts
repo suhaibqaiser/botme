@@ -43,8 +43,17 @@ export class SpeechService {
 
     this.speechEnabled.subscribe(data => {
       this.SpeechE = data
+      if (!this.SpeechE) { this.stopSpeak() }
     })
 
+    if (this.SpeechE) {
+      this.init()
+    }
+
+    // this.socketService.processing = true
+  }
+
+  init() {
     this.socketService.messages.subscribe((message: any) => {
       this.speak(message.text, message.audio)
       console.log('You Said: ', message.inputText);
@@ -68,8 +77,6 @@ export class SpeechService {
         });
     }
     this.updateState('i')
-
-    // this.socketService.processing = true
   }
 
   enableListening(pageId: string, isBrowserSpeech: boolean) {

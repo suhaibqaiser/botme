@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit {
     clientDeviceId: new FormControl('', Validators.required),
     voiceType: new FormControl('', Validators.required)
   })
-  _voiceType: string = 'cloud-voice'
+  _voiceType: string = this._botMeClientService.getVoiceType()
   userVoice: string = ''
   botVoice: string = ''
 
