@@ -46,6 +46,11 @@ export class SpeechService {
       if (!this.SpeechE) { this.stopSpeak() }
     })
 
+    this.socketService.messages.subscribe((message: any) => {
+      this.speak(message.text, message.audio)
+      console.log('You Said: ', message.inputText);
+    });
+
     if (this.SpeechE) {
       this.init()
     }
@@ -54,10 +59,7 @@ export class SpeechService {
   }
 
   init() {
-    this.socketService.messages.subscribe((message: any) => {
-      this.speak(message.text, message.audio)
-      console.log('You Said: ', message.inputText);
-    });
+
 
     // Initalize Google Chrome voices for Text-to-speech
     if (!this.voices.length) {
