@@ -9,3 +9,9 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.spinner-border{
+  margin-left: 10px;
+  width: 1.5rem;
+  height: 1.5rem;
+}

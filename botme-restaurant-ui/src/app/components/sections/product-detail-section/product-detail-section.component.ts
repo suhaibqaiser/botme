@@ -3,6 +3,7 @@ import {MenuService} from 'src/app/services/menu.service';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CartService} from "../../../services/cart.service";
 import {SocketService} from "../../../services/socket.service";
+import {HelperService} from "../../../services/helper.service";
 
 declare var $: any;
 
@@ -18,7 +19,7 @@ export class ProductDetailSectionComponent implements OnInit {
   relatedProduct: any
   productsList: any
 
-  constructor(private router: Router,public _socketService: SocketService, public cartService: CartService, private route: ActivatedRoute, private menuservice: MenuService) {
+  constructor(public _helperService: HelperService, private router: Router, public _socketService: SocketService, public cartService: CartService, private route: ActivatedRoute, private menuservice: MenuService) {
   }
 
   async ngOnInit() {
@@ -89,12 +90,5 @@ export class ProductDetailSectionComponent implements OnInit {
       }
     }
     return
-  }
-
-  resolveImages() {
-    if (this.product.productImage && this.product.productImage.length) {
-      return 'assets/images/products/' + this.product.productImage[0]
-    }
-    return 'assets/images/product-1.png'
   }
 }

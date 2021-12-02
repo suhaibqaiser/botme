@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CartService} from "../../../services/cart.service";
 import {SocketService} from "../../../services/socket.service";
+import {HelperService} from "../../../services/helper.service";
 
 @Component({
   selector: 'app-customize-product-modal',
@@ -9,21 +10,19 @@ import {SocketService} from "../../../services/socket.service";
 })
 export class CustomizeProductModalComponent implements OnInit {
 
-  constructor(public cartService: CartService, public _socketService: SocketService) {
+  constructor(public _helperService: HelperService, public cartService: CartService, public _socketService: SocketService) {
   }
 
   ngOnInit(): void {
   }
 
   addToCart() {
-    this._socketService.speachInput.reset()
     this._socketService.getCurrentContext()
     this.cartService.addToCart(this.cartService.singleCustomProductObj);
     document.getElementById("entityId-show-cart")?.click()
   }
 
   editToCart() {
-    this._socketService.speachInput.reset()
     this._socketService.getCurrentContext()
     this.cartService.addToCart(this.cartService.singleCustomProductObj, true);
     document.getElementById("entityId-show-cart")?.click()
@@ -31,7 +30,6 @@ export class CustomizeProductModalComponent implements OnInit {
   }
 
   cancelModal() {
-    this._socketService.speachInput.reset()
     this._socketService.getCurrentContext()
   }
 }

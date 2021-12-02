@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {FormControl} from "@angular/forms";
 import {SocketService} from "./socket.service";
+import {HelperService} from "./helper.service";
 
 declare var $: any;
 
@@ -41,7 +42,7 @@ export class CartService {
   tempProductSizeList = ['standard', 'medium', 'large', 'small']
   selectProductRatesField = new FormControl('')
 
-  constructor(private _socketService: SocketService) {
+  constructor(public _helperService: HelperService, private _socketService: SocketService) {
     this.getFromLocalstorage();
   }
 
@@ -115,7 +116,7 @@ export class CartService {
             productOptionsList.push({
               productId: obj.productId,
               productName: obj.productName,
-              productImage: this.resolveImages(obj),
+              productImage: this._helperService.resolveProductImage(obj),
               selected: false
             })
           }
@@ -130,7 +131,7 @@ export class CartService {
           productIngredientList.push({
             productId: obj.productId,
             productName: obj.productName,
-            productImage: this.resolveImages(obj),
+            productImage: this._helperService.resolveProductImage(obj),
             selected: true
           })
         }
@@ -144,7 +145,7 @@ export class CartService {
           productToppingsList.push({
             productId: obj.productId,
             productName: obj.productName,
-            productImage: this.resolveImages(obj),
+            productImage: this._helperService.resolveProductImage(obj),
             productQuantity: 0,
             productPrice: this.roundToTwo(obj.productRate.standard),
             productTotalPrice: 0
@@ -167,7 +168,7 @@ export class CartService {
         productAddonsList.push({
           productId: item.productId,
           productName: item.productName,
-          productImage: this.resolveImages(item),
+          productImage: this._helperService.resolveProductImage(item),
           selected: false,
           productQuantity: 0,
           productPrice: this.roundToTwo(item.productRate.standard),
@@ -196,13 +197,6 @@ export class CartService {
     }
     this.selectProductRatesField.setValue(this.productSizeList[0])
     $('#pageId-productCustomizeModal').modal('show')
-  }
-
-  resolveImages(product: any) {
-    if (product.productImage && product.productImage.length) {
-      return 'assets/images/products/' + product.productImage[0]
-    }
-    return 'assets/images/product-1.png'
   }
 
   getProductById(productId: any) {
@@ -299,7 +293,7 @@ export class CartService {
     selectedList.forEach((item: any, index: any) => {
       if (index == 0) {
         selectedProductNames += item.productName
-      }else{
+      } else {
         selectedProductNames += ' , ' + item.productName
       }
     })
@@ -312,7 +306,7 @@ export class CartService {
     selectedList.forEach((item: any, index: any) => {
       if (index == 0) {
         selectedProductNames += item.productName
-      }else{
+      } else {
         selectedProductNames += ' , ' + item.productName
       }
     })

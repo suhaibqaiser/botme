@@ -54,7 +54,8 @@ import {BotmeClientService} from "./services/botme-client.service";
 import {WindowService} from './services/window.service';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {ReservationService} from "./services/reservation.service";
-import { DemoPageComponent } from './components/pages/demo-page/demo-page.component';
+import {DemoPageComponent} from './components/pages/demo-page/demo-page.component';
+import {HelperService} from "./services/helper.service";
 
 @NgModule({
   declarations: [
@@ -112,7 +113,7 @@ import { DemoPageComponent } from './components/pages/demo-page/demo-page.compon
     NgMultiSelectDropDownModule.forRoot(),
     DragDropModule
   ],
-  providers: [ReservationService, SpeechService, BotmeClientService, SocketService, WindowService],
+  providers: [HelperService, ReservationService, SpeechService, BotmeClientService, SocketService, WindowService],
   bootstrap: [AppComponent],
   entryComponents: [CustomizeProductModalComponent]
 })

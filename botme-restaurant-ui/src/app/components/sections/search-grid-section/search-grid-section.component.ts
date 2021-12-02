@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { CartService } from 'src/app/services/cart.service';
-import { MenuService } from 'src/app/services/menu.service';
-import { SocketService } from 'src/app/services/socket.service';
-import { FormControl } from "@angular/forms";
-import { HttpClient } from "@angular/common/http";
-import { ActivatedRoute, Router } from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {CartService} from 'src/app/services/cart.service';
+import {MenuService} from 'src/app/services/menu.service';
+import {SocketService} from 'src/app/services/socket.service';
+import {FormControl} from "@angular/forms";
+import {HttpClient} from "@angular/common/http";
+import {ActivatedRoute, Router} from "@angular/router";
+import {HelperService} from "../../../services/helper.service";
+
 declare var $: any;
+
 @Component({
   selector: 'app-search-grid-section',
   templateUrl: './search-grid-section.component.html',
@@ -71,11 +74,12 @@ export class SearchGridSectionComponent implements OnInit {
   orderedProductsList: any
 
   constructor(private _http: HttpClient, private menuservice: MenuService,
-    public cartService: CartService,
-    private socketService: SocketService,
-    private _router: Router,
-    private _route: ActivatedRoute,
-    public _socketService: SocketService
+              public cartService: CartService,
+              private socketService: SocketService,
+              private _router: Router,
+              private _route: ActivatedRoute,
+              public _socketService: SocketService,
+              public _helperService: HelperService
   ) {
   }
 
@@ -296,9 +300,9 @@ export class SearchGridSectionComponent implements OnInit {
 
   getWSMessage() {
     this.socketService.messages.subscribe(r => {
-      let res: any = r
-      this.sofiaMessage = res.text
-    }
+        let res: any = r
+        this.sofiaMessage = res.text
+      }
     )
   }
 
@@ -328,20 +332,13 @@ export class SearchGridSectionComponent implements OnInit {
     return true
   }
 
-  resolveImages(product: any) {
-    if (product.productImage && product.productImage.length) {
-      return 'assets/images/products/' + product.productImage[0]
-    }
-    return 'assets/images/product-1.png'
-  }
-
   resolveRating(product: any) {
     let data = []
     for (let i = 1; i <= 5; i++) {
       if (i <= product.productRating) {
-        data.push({ star: 'flaticon-star-1' })
+        data.push({star: 'flaticon-star-1'})
       } else {
-        data.push({ star: 'flaticon-star-2' })
+        data.push({star: 'flaticon-star-2'})
       }
     }
     return data
@@ -353,7 +350,7 @@ export class SearchGridSectionComponent implements OnInit {
       this.searchControl.setValue('')
       this.filterProductsByName(null)
     } else if (item.name == 'Category') {
-      this.filterProductsByCategory({ categoryId: '' })
+      this.filterProductsByCategory({categoryId: ''})
     } else if (item.name == 'Filter by price') {
       localStorage.clear()
       this.filterProductByPriceRange()

@@ -60,8 +60,6 @@ export class SocketService {
   }
 
   voiceServingSize = ''
-  responseLabel = 'Noting to display'
-  speachInput = new FormControl('')
 
 
   constructor(private router: Router, private clients: BotmeClientService) {
@@ -134,7 +132,6 @@ export class SocketService {
      sel.setAttribute('size', len);
      */
     let tempMessage = msg
-    this.responseLabel = tempMessage.text
     if (tempMessage.entityId) {
 
       //for reservation form
