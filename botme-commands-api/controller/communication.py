@@ -1,34 +1,44 @@
 from conf.mongodb import getDbCta
 from textblob import TextBlob
-from controller.functions import parseEntityValue,checkingForProduct,searchingTable,getEntityClickAttribute,parseDate,parseTime,reservation
+from models.Entity import Entity
+from models.DateTime import DateTime
+from models.Products import Product
+from models.Reservation import Reservation
 
 # reminder need to change text to senti in responses
 
 def getResponse(intent,entity,text,pageId,sectionId):
     blob =TextBlob(text)
     senti = blob.sentiment.polarity
-    value = parseEntityValue(entity)
-    print(value)
+    val = Entity(entity)
+    value = val.parseEntityValue()
     db = getDbCta(intent,value,pageId,sectionId)
+    datetime = DateTime(intent,value,senti,pageId,sectionId,text,db)
+    product = Product(intent,value,senti,pageId,sectionId,text)
+    reservation = Reservation(intent,value,senti,pageId,sectionId,text,db)
 
     if (intent == "unreserved_table_person"):
-        Response = reservation(db,value,pageId,sectionId,text,intent,senti)
+        Response = reservation.reservation()
         return Response
+
     elif (intent == "Order_meal"or intent == "product-detail" or intent == "remove_item" or intent == "edit_product" or intent == "reduce_product_quantity"):
-        Response = checkingForProduct(intent,value,senti,pageId,sectionId,text)
+        Response = product.checkingForProduct()
         return Response
+
     elif (intent == "inform_date"):
         if db is not None:
-            Response = parseDate(text,db,pageId,sectionId,intent,senti)
+            Response = datetime.parseDate()
             return Response
         else:
             return {"Response":"Can't find the data in database","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent}
+
     elif (intent == "inform_time"):
         if db is not None:
-            Response = parseTime(text,db,pageId,sectionId,intent,senti)
+            Response = datetime.parseTime()
             return Response
         else:
             return {"Response":"Can't find the data in database","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent}
+
     elif (intent == "inform_name"):
         if db is not None:
             if (value is not None):
@@ -39,6 +49,7 @@ def getResponse(intent,entity,text,pageId,sectionId):
                 return {"Response":"sorry,can you please tell me your name again?","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent}
         else:
             return {"Response":"Can't find the data in database","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent}
+
     else:
         if db is not None:
             context = db['context']
@@ -46,4 +57,8 @@ def getResponse(intent,entity,text,pageId,sectionId):
             return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent} 
         else:
             return {"Response":"I’m sorry,Could you say it again?","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":'nlu_fallback'}
+
+def getEntityClickAttribute(entity):
+        for x in entity:
+            return {"entityId":x['entityId'],"actionType":x['clickAttribute']}
     

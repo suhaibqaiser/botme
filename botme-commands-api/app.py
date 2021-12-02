@@ -1,6 +1,6 @@
 from flask import Flask,jsonify,request
 from controller.communication import getResponse
-from controller.servicerasa import getIntent
+from Service.servicerasa import getIntent
 
 app = Flask(__name__)
 
