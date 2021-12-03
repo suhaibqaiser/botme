@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import { FormControl } from "@angular/forms";
-import { Router } from "@angular/router";
-import { environment } from 'src/environments/environment';
-import { io } from "socket.io-client";
-import { BotmeClientService } from './botme-client.service';
+import {Injectable} from '@angular/core';
+import {Subject} from 'rxjs';
+import {FormControl} from "@angular/forms";
+import {Router} from "@angular/router";
+import {environment} from 'src/environments/environment';
+import {io} from "socket.io-client";
+import {BotmeClientService} from './botme-client.service';
 
 
 @Injectable({
@@ -59,6 +59,29 @@ export class SocketService {
     sectionId: ''
   }
 
+  reservationFormEntities = [
+    {
+      "entityId": "entityId-name",
+      "entityValue": "",
+      "entityStatus": false
+    },
+    {
+      "entityId": "entityId-number-of-persons",
+      "entityValue": "",
+      "entityStatus": false
+    },
+    {
+      "entityId": "entityId-date",
+      "entityValue": "",
+      "entityStatus": false
+    },
+    {
+      "entityId": "entityId-time",
+      "entityValue": "",
+      "entityStatus": false
+    }
+  ]
+
   voiceServingSize = ''
 
 
@@ -68,7 +91,7 @@ export class SocketService {
 
     if (this.authToken) {
       this.socket = io(environment.wsEndpoint, {
-        auth: { token: this.authToken },
+        auth: {token: this.authToken},
         path: (environment.production) ? "/ws/" : ""
       });
 
@@ -110,7 +133,8 @@ export class SocketService {
         "message": message,
         "voice": voice,
         "pageId": this.currentContextObj.pageId,
-        "sectionId": this.currentContextObj.sectionId
+        "sectionId": this.currentContextObj.sectionId,
+        "entities": this.reservationFormEntities
       },
       type: type,
       timestamp: Date()
@@ -134,10 +158,11 @@ export class SocketService {
     let tempMessage = msg
     if (tempMessage.entityId) {
 
+      if (tempMessage.entities && tempMessage.entities.length) this.reservationFormEntities = JSON.parse(JSON.stringify(tempMessage.entities))
       //for reservation form
       // @ts-ignore
       document.getElementById(tempMessage.entityId)?.value = tempMessage.entityName
-
+      this.setEntities(tempMessage.entityName)
 
       if (tempMessage.entityId == 'entityId-select-serving-size') {
         this.voiceServingSize = tempMessage.entityName.toLowerCase()
@@ -174,5 +199,18 @@ export class SocketService {
         this.currentContextObj = JSON.parse(JSON.stringify(item))
       }
     })
+  }
+
+  setEntities(value: any) {
+    this.reservationFormEntities.forEach((item: any) => {
+      if (item.entityStatus) {
+        item.entityValue = value
+      }
+    })
+  }
+
+  getFocusOnField(entityId: any) {
+    let obj = this.reservationFormEntities.find((item: any) => item.entityId == entityId && item.entityStatus)
+    return !!obj
   }
 }

@@ -1,17 +1,23 @@
-.reservation-form-area{
+.reservation-form-area {
   text-align: justify !important;
 }
+
 ::-webkit-calendar-picker-indicator {
   filter: invert(1);
 }
+
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-.spinner-border{
+.spinner-border {
   margin-left: 10px;
   width: 1.5rem;
   height: 1.5rem;
+}
+
+.high-light-field {
+  border: red 1px solid !important;
 }

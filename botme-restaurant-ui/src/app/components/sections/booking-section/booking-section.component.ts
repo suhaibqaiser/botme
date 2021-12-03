@@ -31,7 +31,7 @@ export class BookingSectionComponent implements OnInit {
   }
   reservationLoader: boolean = false
 
-  constructor(private _router: Router, private _reservationService: ReservationService, private _socketService: SocketService) {
+  constructor(private _router: Router, private _reservationService: ReservationService, public _socketService: SocketService) {
   }
 
   ngOnInit(): void {
@@ -59,8 +59,9 @@ export class BookingSectionComponent implements OnInit {
     if (time && time.length) {
       this.reservationForm.get('reservationTime')?.setValue(time)
     }
-    console.log('reservation form =>', this.reservationForm.value)
 
+
+    console.log('reservation form =>', this.reservationForm.value)
     this.validations.customerName = this._reservationService.isRequired(this.reservationForm.get('customerName')?.value)
     this.validations.reservationSeats = this._reservationService.isNumberRequired(this.reservationForm.get('reservationSeats')?.value)
     this.validations.reservationDate = this._reservationService.isDateRequired(this.reservationForm.get('reservationDate')?.value)
