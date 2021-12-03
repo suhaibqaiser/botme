@@ -43,7 +43,7 @@ io.on("connection", (socket: Socket) => {
 
         if (data.type === "communication") {
             let payload: any = data.payload
-            let response = await getCommandResponse(socket.data.sessionId, payload.message, payload.pageId, payload.sectionId)
+            let response = await getCommandResponse(socket.data.sessionId, payload.message, payload.pageId, payload.sectionId, payload.uniqueConversationId)
             sendMessage(socket.data.clientId, "communication", response)
 
         } else if (data.type === "notification") {
@@ -53,7 +53,7 @@ io.on("connection", (socket: Socket) => {
             let payload: any = data.payload
             let voiceResponse = await getSpeechToText(payload.message)
             if (voiceResponse) {
-                let response: any = await getCommandResponse(socket.data.sessionId, voiceResponse, payload.pageId, payload.sectionId)
+                let response: any = await getCommandResponse(socket.data.sessionId, voiceResponse, payload.pageId, payload.sectionId, payload.uniqueConversationId)
                 console.log(payload, response);
 
                 if (response?.intentName) {
@@ -67,6 +67,7 @@ io.on("connection", (socket: Socket) => {
             let payload: any = data.payload
             let response: any = {}
             response.text = payload.message
+            response.uniqueConversationId = payload.uniqueConversationId
             if (payload.voice) { response.audio = await getTextToSpeech(payload.message) }
             sendMessage(socket.data.clientId, "communication", response)
 
