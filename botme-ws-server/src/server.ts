@@ -54,7 +54,7 @@ io.on("connection", (socket: Socket) => {
             let payload: any = data.payload
             let voiceResponse = await getSpeechToText(payload.message)
             if (voiceResponse) {
-                let response: any = await getCommandResponse(socket.data.sessionId, voiceResponse, payload.pageId, payload.sectionId)
+                let response: any = await getCommandResponse(socket.data.sessionId, voiceResponse, payload.pageId, payload.sectionId, payload.entities)
                 console.log(payload, response);
 
                 if (response?.intentName) {

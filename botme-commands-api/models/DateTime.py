@@ -3,7 +3,7 @@ from timefhuman import timefhuman
 from datetime import datetime
 
 class DateTime():
-    def __init__(self,intent,value,senti,pageId,sectionId,text,db):
+    def __init__(self,intent,value,senti,pageId,sectionId,text,db,form):
           
         self.intent = intent
         self.value = value
@@ -12,6 +12,7 @@ class DateTime():
         self.sectionId = sectionId
         self.text = text
         self.db = db
+        self.form = form
 
     def parseDate(self):
         context = self.db['context']
@@ -22,19 +23,23 @@ class DateTime():
             if t is not None:
                 print("dateparser call")
                 time = t.strftime("%Y-%m-%d")
-                print(time)
-                return {"Response":self.db['response'],"ctaCommandId":self.db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityName":time,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent}
+                self.form[2]['entityValue'] = time
+                self.form[2]['entityStatus'] = False
+                self.form[3]['entityStatus'] = True
+                return {"Response":self.db['response'],"ctaCommandId":self.db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityName":time,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
             else:
                 print("timefhuman call")
                 now = datetime.now()
                 t = timefhuman(self.text,now=now)
-                print(t)
                 if t:
                     time = t.strftime("%Y-%m-%d")
+                    self.form[2]['entityValue'] = time
+                    self.form[2]['entityStatus'] = False
+                    self.form[3]['entityStatus'] = True
                     print(time)
-                    return {"Response":self.db['response'],"ctaCommandId":self.db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityName":time,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent}
+                    return {"Response":self.db['response'],"ctaCommandId":self.db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityName":time,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
                 else:
-                    return {"Response":"sorry,can you please tell me the day again?","ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent}                      
+                    return {"Response":"sorry,can you please tell me the day again?","ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}                      
         except:
             return "Error in parsing date"
 
@@ -47,7 +52,10 @@ class DateTime():
             if t is not None:
                 print("dateparser call")
                 time = t.strftime("%H:%M:%S")
+                self.form[3]['entityValue'] = time
+                self.form[3]['entityStatus'] = False
                 print(time)
+                return {"Response":self.db['response'],"ctaCommandId":self.db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityName":time,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
             else:
                 print("timefhuman call")
                 now = datetime.now()
@@ -55,10 +63,12 @@ class DateTime():
                 print(t)
                 if t:
                     time = t.strftime("%H:%M:%S")
+                    self.form[3]['entityValue'] = time
+                    self.form[3]['entityStatus'] = False
                     print(time)
-                    return {"Response":self.db['response'],"ctaCommandId":self.db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityName":time,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent}
+                    return {"Response":self.db['response'],"ctaCommandId":self.db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityName":time,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
                 else:
-                    return {"Response":"sorry,can you please tell me the time again?","ctaCommandId":None,"pageId":self.ageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent}
+                    return {"Response":"sorry,can you please tell me the time again?","ctaCommandId":None,"pageId":self.ageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
         except:
             return "Error in parsing date"
     

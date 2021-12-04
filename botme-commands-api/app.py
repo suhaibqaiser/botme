@@ -10,16 +10,15 @@ def send_Response():
     text = req_data['text']
     pageId = req_data['pageId']
     sectionID = req_data['sectionId']
+    form = req_data['entities']
     message = text.title()
     rasa_data = getIntent(message)
-    print(rasa_data)
     intent = rasa_data['intent']
     if(intent['name'] == "nlu_fallback"):
-        print(1)
         response = {"Response":"I’m sorry,Could you say it again?","ctaCommandId":None,"pageId":pageId,"sectionId":sectionID,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent['name']}
         return jsonify(response)
     else:
-        response = getResponse(intent['name'],rasa_data['entities'],text,pageId,sectionID)
+        response = getResponse(intent['name'],rasa_data['entities'],text,pageId,sectionID,form)
         return jsonify(response)
 
 
