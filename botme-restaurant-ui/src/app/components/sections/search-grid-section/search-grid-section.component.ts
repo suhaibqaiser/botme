@@ -5,7 +5,10 @@ import {SocketService} from 'src/app/services/socket.service';
 import {FormControl} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
+import {HelperService} from "../../../services/helper.service";
+
 declare var $: any;
+
 @Component({
   selector: 'app-search-grid-section',
   templateUrl: './search-grid-section.component.html',
@@ -75,7 +78,8 @@ export class SearchGridSectionComponent implements OnInit {
               private socketService: SocketService,
               private _router: Router,
               private _route: ActivatedRoute,
-              public _socketService:SocketService
+              public _socketService: SocketService,
+              public _helperService: HelperService
   ) {
   }
 
@@ -86,7 +90,7 @@ export class SearchGridSectionComponent implements OnInit {
     this.isLoading = true
     await this.getQueryParams()
     await this.getCategory();
-    this.getWSMessage();
+    // this.getWSMessage();
     // this.filterProductsByName('first-call')
     //$('#pageId-productCustomizeModal').modal('show')
   }
@@ -291,7 +295,7 @@ export class SearchGridSectionComponent implements OnInit {
   }
 
   sendWSMessage(text: string) {
-    this.socketService.sendMessage('communication',text);
+    this.socketService.sendMessage('communication', text, false);
   }
 
   getWSMessage() {
@@ -326,13 +330,6 @@ export class SearchGridSectionComponent implements OnInit {
       })
     )
     return true
-  }
-
-  resolveImages(product: any) {
-    if (product.productImage && product.productImage.length) {
-      return 'assets/images/products/' + product.productImage[0]
-    }
-    return 'assets/images/product-1.png'
   }
 
   resolveRating(product: any) {

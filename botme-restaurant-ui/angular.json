@@ -33,7 +33,10 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "hark"
+            ]
           },
           "configurations": {
             "production": {
@@ -62,7 +65,7 @@
               "optimization": false,
               "vendorChunk": true,
               "extractLicenses": false,
-              "sourceMap": true,
+              "sourceMap": false,
               "namedChunks": true
             }
           },

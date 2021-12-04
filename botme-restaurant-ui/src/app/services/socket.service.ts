@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import { FormControl } from "@angular/forms";
-import { Router } from "@angular/router";
-import { environment } from 'src/environments/environment';
-import { io } from "socket.io-client";
-import { BotmeClientService } from './botme-client.service';
+import {Injectable} from '@angular/core';
+import {Subject} from 'rxjs';
+import {FormControl} from "@angular/forms";
+import {Router} from "@angular/router";
+import {environment} from 'src/environments/environment';
+import {io} from "socket.io-client";
+import {BotmeClientService} from './botme-client.service';
 
 
 @Injectable({
@@ -28,7 +28,7 @@ export class SocketService {
       sectionId: 'sectionId-product-list'
     },
     {
-      currentRoute: 'product detail',
+      currentRoute: 'product-detail',
       pageId: 'pageId-product-detial-page',
       sectionId: 'sectionId-product-detial-page'
     },
@@ -41,6 +41,16 @@ export class SocketService {
       currentRoute: 'cart',
       pageId: 'pageId-cart',
       sectionId: 'sectionId-product-list'
+    },
+    {
+      currentRoute: 'reservations',
+      pageId: 'pageId-reservation',
+      sectionId: 'sectionId-reservation-form'
+    },
+    {
+      currentRoute: 'contact us',
+      pageId: 'pageId-contact-us',
+      sectionId: 'sectionId-message-form'
     }
   ]
   currentContextObj = {
@@ -49,10 +59,30 @@ export class SocketService {
     sectionId: ''
   }
 
-  voiceServingSize = ''
-  responseLabel = 'Noting to display'
-  speachInput = new FormControl('')
+  reservationFormEntities = [
+    {
+      "entityId": "entityId-name",
+      "entityValue": "",
+      "entityStatus": false
+    },
+    {
+      "entityId": "entityId-number-of-persons",
+      "entityValue": "",
+      "entityStatus": false
+    },
+    {
+      "entityId": "entityId-date",
+      "entityValue": "",
+      "entityStatus": false
+    },
+    {
+      "entityId": "entityId-time",
+      "entityValue": "",
+      "entityStatus": false
+    }
+  ]
 
+  voiceServingSize = ''
 
 
   constructor(private router: Router, private clients: BotmeClientService) {
@@ -61,10 +91,9 @@ export class SocketService {
 
     if (this.authToken) {
       this.socket = io(environment.wsEndpoint, {
-        auth: { token: this.authToken },
+        auth: {token: this.authToken},
         path: (environment.production) ? "/ws/" : ""
       });
-
 
       this.socket.on('message', (data: any) => {
 
@@ -73,19 +102,17 @@ export class SocketService {
         switch (data.type) {
           case "communication":
             this.messagesSubject.next(payload)
-            this.fireInteractionEvent(payload)
+            if (payload.intentName) this.fireInteractionEvent(payload)
             break;
           case "notification":
             this.notificationSubject.next(payload)
-            if (payload.text === 'processing started')
-              this.sendMessage('notification', 'context')
-            console.log(payload);
-            break;
-          case "action":
-            console.log(payload);
-            break;
-          case "action callback":
-            console.log(payload);
+            if (payload.text === 'processing started') {
+              this.processing = true
+              this.sendMessage('notification', 'context', false)
+            } else if (payload.text === 'processing ended') {
+              this.processing = true
+            }
+            console.info(payload);
             break;
           default:
             break;
@@ -94,7 +121,7 @@ export class SocketService {
     }
   }
 
-  sendMessage(type: string, message: any) {
+  sendMessage(type: string, message: any, voice: boolean) {
     interface SocketMessage {
       payload: object,
       type: string,
@@ -103,15 +130,16 @@ export class SocketService {
 
     let SocketPayload: SocketMessage = {
       payload: {
-        "text": message,
+        "message": message,
+        "voice": voice,
         "pageId": this.currentContextObj.pageId,
-        "sectionId": this.currentContextObj.sectionId
+        "sectionId": this.currentContextObj.sectionId,
+        "entities": this.reservationFormEntities
       },
       type: type,
       timestamp: Date()
 
     }
-    console.log('SocketPayload =>', SocketPayload)
     this.socket.emit('message', SocketPayload);
   }
 
@@ -124,12 +152,17 @@ export class SocketService {
     /**
      * var sel = document.getElementById('ctaId-select-serving-size');
      var len = sel.options.length;
-  
+
      sel.setAttribute('size', len);
      */
     let tempMessage = msg
-    this.responseLabel = tempMessage.text
     if (tempMessage.entityId) {
+
+      if (tempMessage.entities && tempMessage.entities.length) this.reservationFormEntities = JSON.parse(JSON.stringify(tempMessage.entities))
+      //for reservation form
+      // @ts-ignore
+      document.getElementById(tempMessage.entityId)?.value = tempMessage.entityName
+      this.setEntities(tempMessage.entityName)
 
       if (tempMessage.entityId == 'entityId-select-serving-size') {
         this.voiceServingSize = tempMessage.entityName.toLowerCase()
@@ -140,13 +173,10 @@ export class SocketService {
 
       // @ts-ignore
       let template = document.getElementById(tempMessage.entityId)
-      console.log('template =>', template)
       // @ts-ignore
       let list = template.getElementsByTagName('a')
-      console.log('list =>', list)
       for (let i = 0; i < list.length; i++) {
         if (list[i].getAttribute('id') == tempMessage.ctaId) {
-          console.log('select item =>', list[i].getAttribute('id'))
           list[i]?.click()
         }
       }
@@ -160,10 +190,27 @@ export class SocketService {
     if (currentRoute.indexOf('?') > 0) {
       currentRoute = currentRoute.substr(0, currentRoute.indexOf('?'))
     }
+    if (this.router.url.split('/')[1] === 'product-detail') {
+      currentRoute = this.router.url.split('/')[1]
+    }
+
     this.currentContextList.filter((item: any) => {
       if (item.currentRoute === currentRoute) {
         this.currentContextObj = JSON.parse(JSON.stringify(item))
       }
     })
+  }
+
+  setEntities(value: any) {
+    this.reservationFormEntities.forEach((item: any) => {
+      if (item.entityStatus) {
+        item.entityValue = value
+      }
+    })
+  }
+
+  getFocusOnField(entityId: any) {
+    let obj = this.reservationFormEntities.find((item: any) => item.entityId == entityId && item.entityStatus)
+    return !!obj
   }
 }

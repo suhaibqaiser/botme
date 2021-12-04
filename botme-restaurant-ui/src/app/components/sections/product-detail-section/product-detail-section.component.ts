@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuService} from 'src/app/services/menu.service';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {CartService} from "../../../services/cart.service";
 import {SocketService} from "../../../services/socket.service";
+import {HelperService} from "../../../services/helper.service";
 
 declare var $: any;
 
@@ -18,13 +19,13 @@ export class ProductDetailSectionComponent implements OnInit {
   relatedProduct: any
   productsList: any
 
-  constructor(public _socketService: SocketService, public cartService: CartService, private route: ActivatedRoute, private menuservice: MenuService) {
+  constructor(public _helperService: HelperService, private router: Router, public _socketService: SocketService, public cartService: CartService, private route: ActivatedRoute, private menuservice: MenuService) {
   }
 
   async ngOnInit() {
     await this.getProducts()
     await this.getCategory()
-    await this.getProductDetail(this.route.snapshot.queryParams['productId'])
+    await this.getProductDetail(this.router.url.split('/')[2])
     await this.getRelatedProducts()
 
     this._socketService.getCurrentContext()
@@ -36,7 +37,6 @@ export class ProductDetailSectionComponent implements OnInit {
         if (result.status === 'success') {
           this.product = result.payload[0]
           this.product.productCategoryName = await this.getCategoryName(this.product.productCategory);
-          console.log('product =>', this.product)
         }
       }
     );
@@ -90,12 +90,5 @@ export class ProductDetailSectionComponent implements OnInit {
       }
     }
     return
-  }
-
-  resolveImages() {
-    if (this.product.productImage && this.product.productImage.length) {
-      return 'assets/images/products/' + this.product.productImage[0]
-    }
-    return 'assets/images/product-1.png'
   }
 }

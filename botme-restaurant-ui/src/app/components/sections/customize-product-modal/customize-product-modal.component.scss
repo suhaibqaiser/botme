@@ -8,7 +8,6 @@
         height: 500px;
 
         .main-grid {
-
           .customization {
             .item {
               .blog-card-slide {
@@ -46,6 +45,23 @@
                     overflow: auto;
                     height: 328px;
 
+                    .table-bordered {
+                      thead {
+                        tr {
+                          th {
+                            padding: 0px !important;
+                          }
+                        }
+                      }
+                      tbody {
+                        tr {
+                          td {
+                            padding: 0.2rem 0.2rem !important;
+                          }
+                        }
+                      }
+                    }
+
                     img {
                       width: 60px;
                       height: 60px;
@@ -54,7 +70,7 @@
 
                     .list {
                       cursor: pointer;
-                      padding: 15px;
+                      padding: 5px 15px;
 
                       .left {
                         img {
@@ -86,7 +102,7 @@
 
                         .btn-group {
                           .btn {
-                            padding: 4px 12PX;
+                            padding: 4px 12px;
                           }
                         }
                       }
@@ -97,7 +113,7 @@
                         .fa-check {
                           font-size: large;
                           position: absolute;
-                          color: #AFC31B;
+                          color: #afc31b;
                           margin-top: -8px;
                         }
 
@@ -164,4 +180,8 @@
 .multi-selection {
   background: whitesmoke;
   border: none !important;
+}
+
+div#pageId-productCustomizeModal {
+  z-index: 1049;
 }

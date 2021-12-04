@@ -4,9 +4,6 @@
  <app-customize-product-modal></app-customize-product-modal>
 
   <div class="container">
-<!--    <input [formControl]="_socketService.speachInput">-->
-<!--    <button style="padding: 6px" (click)="_socketService.sendMessage('communication',_socketService.speachInput.value)" class="btn btn-success">send</button>-->
-<!--    <p>{{_socketService.responseLabel}}</p>-->
     <div class="row">
       <div class="col-sm-12 col-md-8 col-lg-9 col-xl-9 pb-30">
         <div class="product-list-header" id="sectionId-search-tags">
@@ -34,7 +31,7 @@
               <div class="product-card product-card-dark" id="{{product.productId}}">
                 <div class="product-card-thumb">
                   <div class="product-card-thumb-inner">
-                    <a id="ctaId-product-detail-page" href="/product-detail/?productId={{product.productId}}"><img [src]="resolveImages(product)" alt="product"></a>
+                    <a id="ctaId-product-detail-page" [routerLink]="['/product-detail',product.productId]"><img [src]="_helperService.resolveProductImage(product)" alt="product"></a>
                   </div>
                   <div class="review-star mt-3">
                     <ul>
@@ -44,7 +41,7 @@
                   </div>
                 </div>
                 <div class="product-card-content">
-                  <h3><a id="ctaId-product-detail-page" href="/product-detail/?productId={{product.productId}}">{{product.productName}}</a></h3>
+                  <h3><a id="ctaId-product-detail-page" [routerLink]="['/product-detail',product.productId]">{{product.productName}}</a></h3>
                   <h4 class="product-price">${{product.productRate.standard}}</h4>
                   <div class="d-flex product-icons justify-content-around">
                     <a id="ctaId-product-add-to-cart" (click)="cartService.setProductCustomization(product)" data-bs-toggle="modal"

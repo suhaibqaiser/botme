@@ -193,3 +193,4 @@ cython_debug/
 
 models/*
 botme-nlp/models/*.tar.gz
+botme-ws-server/input.wav

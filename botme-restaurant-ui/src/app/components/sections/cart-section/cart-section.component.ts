@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CartService} from "../../../services/cart.service";
 import {MenuService} from 'src/app/services/menu.service';
 import {SocketService} from "../../../services/socket.service";
+import {HelperService} from "../../../services/helper.service";
 
 declare var $: any;
 
@@ -18,7 +19,9 @@ export class CartSectionComponent implements OnInit {
 
   constructor(private cartService: CartService,
               private MenuService: MenuService,
-              public _socketService:SocketService) {
+              public _socketService: SocketService,
+              public _helperService: HelperService
+  ) {
   }
 
   ngOnInit(): void {
@@ -71,13 +74,6 @@ export class CartSectionComponent implements OnInit {
 
   removeFromCart(productId: string) {
     this.cartService.removeFromCart(productId);
-  }
-
-  resolveImages(product: any) {
-    if (product.productImage && product.productImage.length) {
-      return 'assets/images/products/' + product.productImage[0]
-    }
-    return 'assets/images/product-1.png'
   }
 
   customizeBillCalculation(product: any) {
@@ -148,6 +144,5 @@ export class CartSectionComponent implements OnInit {
       }
     )
     this.cartService.addToCart(this.cartProducts, true, 'place-order')
-    console.log(this.cartProducts)
   }
 }

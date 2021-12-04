@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {CartService} from 'src/app/services/cart.service';
-import {SocketService} from "../../../services/socket.service";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {BotmeClientService} from "../../../services/botme-client.service";
-import {Router} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { CartService } from 'src/app/services/cart.service';
+import { SocketService } from "../../../services/socket.service";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { BotmeClientService } from "../../../services/botme-client.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-navbar',
@@ -16,15 +16,28 @@ export class NavbarComponent implements OnInit {
   loginForm = new FormGroup({
     clientID: new FormControl('', Validators.required),
     clientSecret: new FormControl('', Validators.required),
-    clientDeviceId: new FormControl('', Validators.required)
+    clientDeviceId: new FormControl('', Validators.required),
+    voiceType: new FormControl('', Validators.required)
   })
+  _voiceType: string = this._botMeClientService.getVoiceType()
+  userVoice: string = ''
+  botVoice: string = ''
 
-  constructor(public socketService: SocketService,private _router: Router, public _botMeClientService: BotmeClientService, private cartService: CartService, private _socketService: SocketService) {
+  constructor(public router: Router,
+    public socketService: SocketService,
+    public _botMeClientService: BotmeClientService,
+    private cartService: CartService,
+    private _socketService: SocketService) {
     document.getElementsByClassName('cart-modal-wrapper')[0]?.setAttribute('style', 'display:none')
   }
 
   ngOnInit(): void {
     this.getCartProducts()
+    this.socketService.messages.subscribe((message: any) => {
+      this.botVoice = message.text
+      this.userVoice = message.inputText;
+    });
+
   }
 
   login() {
@@ -36,7 +49,8 @@ export class NavbarComponent implements OnInit {
           this._botMeClientService.setCookie('clientDeviceId', res.payload.clientDeviceId)
           this._botMeClientService.setCookie('clientID', res.payload.clientID)
           this._botMeClientService.setCookie('isLoggedIn', res.payload.isLoggedIn)
-          this._router.navigate(['/home']).then(() => {
+          this._botMeClientService.setCookie('voiceType', this.loginForm.get('voiceType')?.value)
+          this.router.navigate(['/home']).then(() => {
             window.location.reload();
           });
         } else {
@@ -44,7 +58,7 @@ export class NavbarComponent implements OnInit {
         }
       },
       (err: any) => {
-        console.log(err)
+        console.error(err)
         alert('Invalid Record')
       }
     )
@@ -63,11 +77,6 @@ export class NavbarComponent implements OnInit {
   }
 
   showCartModal() {
-    if(!this._botMeClientService.isCookieTokenValid()) {
-      document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:none')
-      return
-    }
-    console.log('showCartModal =>')
     this._socketService.currentContextObj.pageId = 'pageId-cart-modal'
     this._socketService.currentContextObj.sectionId = 'sectionId-cart-modal'
     document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:block')
@@ -75,8 +84,16 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     this._botMeClientService.reSetCookie()
-    this._router.navigate(['/home']).then(() => {
+    this.router.navigate(['/home']).then(() => {
       window.location.reload();
     });
+  }
+
+  setVoiceType() {
+    this._botMeClientService.setCookie('voiceType', this._voiceType)
+  }
+
+  reload() {
+    location.reload()
   }
 }

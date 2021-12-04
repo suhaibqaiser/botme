@@ -1,10 +1,8 @@
-<!--<div class="card chat-bot" [class.d-none]="closeChatModal" style="width: 18rem;">-->
-<!--  <div class="card-header">-->
-<!--    <h6 class="card-title d-inline">Sofia Bot</h6>-->
-<!--    <button type="button" class="btn-close float-end" (click)="close()" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--  </div>-->
-<!--  <div class="card-body">-->
-<!--    <h6 class="card-subtitle mb-2 text-muted">Sofia reply :<small> Good evening...</small></h6>-->
-<!--  </div>-->
-<!--</div>-->
-<a type="button" (click)="startRecording()" class="sofia-bot-button"><img  [class.bot-animation]="isRecording"  src="../../../../assets/images/logo/logo.png"></a>
+<div *ngIf="voiceEnabled" class="interaction">
+    <label class="i-heading">Voice:</label>
+    <label class="switch">
+        <input #voiceSwitch type="checkbox" (change)="updateInteractionState(voiceSwitch.checked)"
+            [checked]="speechEnabled">
+        <span class="slider round"></span>
+    </label>
+</div>

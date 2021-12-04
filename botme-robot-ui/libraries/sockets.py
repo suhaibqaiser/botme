@@ -71,4 +71,3 @@ class Sockets:
         self.send_message('notification', 'processing ended')
 
 
-    

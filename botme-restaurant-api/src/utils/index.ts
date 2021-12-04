@@ -1,4 +1,4 @@
-import {Router, Request, Response, NextFunction} from "express";
+import { Router, Request, Response, NextFunction } from "express";
 
 type Wrapper = ((router: Router) => void);
 
@@ -25,7 +25,7 @@ type Route = {
 
 export const applyRoutes = (module: string, routes: Route[], router: Router) => {
     for (const route of routes) {
-        let {method, path, handler} = route;
+        let { method, path, handler } = route;
         path = `${module}${path}`;
         (router as any)[method](path, handler);
     }

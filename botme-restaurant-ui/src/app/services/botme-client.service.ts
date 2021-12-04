@@ -27,18 +27,28 @@ export class BotmeClientService {
   }
 
   setCookie(key: any, cookie: any) {
-    this.cookieService.set(key, cookie)
+    this.cookieService.set(key, cookie, 30)
   }
 
   reSetCookie() {
     this.cookieService.deleteAll()
   }
 
-  isCookieTokenValid(){
+  isCookieTokenValid() {
     return !!this.cookieService.get('clientToken')
   }
 
-  getCookieToken(){
+  getCookieToken() {
     return this.cookieService.get('clientToken')
+  }
+
+  getVoiceType() {
+    return this.cookieService.get('voiceType')
+  }
+
+  isRobotAuth() {
+    let clientName = this.getCookie().clientName
+    return (clientName && clientName.length) ? this.getCookie().clientName.toLowerCase().includes('robot') : false
+
   }
 }

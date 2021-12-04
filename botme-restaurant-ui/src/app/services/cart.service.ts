@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {FormControl} from "@angular/forms";
 import {SocketService} from "./socket.service";
+import {HelperService} from "./helper.service";
 
 declare var $: any;
 
@@ -41,7 +42,7 @@ export class CartService {
   tempProductSizeList = ['standard', 'medium', 'large', 'small']
   selectProductRatesField = new FormControl('')
 
-  constructor(private _socketService: SocketService) {
+  constructor(public _helperService: HelperService, private _socketService: SocketService) {
     this.getFromLocalstorage();
   }
 
@@ -115,7 +116,7 @@ export class CartService {
             productOptionsList.push({
               productId: obj.productId,
               productName: obj.productName,
-              productImage: this.resolveImages(obj),
+              productImage: this._helperService.resolveProductImage(obj),
               selected: false
             })
           }
@@ -130,7 +131,7 @@ export class CartService {
           productIngredientList.push({
             productId: obj.productId,
             productName: obj.productName,
-            productImage: this.resolveImages(obj),
+            productImage: this._helperService.resolveProductImage(obj),
             selected: true
           })
         }
@@ -144,9 +145,9 @@ export class CartService {
           productToppingsList.push({
             productId: obj.productId,
             productName: obj.productName,
-            productImage: this.resolveImages(obj),
+            productImage: this._helperService.resolveProductImage(obj),
             productQuantity: 0,
-            productPrice: Math.ceil(obj.productRate.standard),
+            productPrice: this.roundToTwo(obj.productRate.standard),
             productTotalPrice: 0
           })
         }
@@ -167,10 +168,10 @@ export class CartService {
         productAddonsList.push({
           productId: item.productId,
           productName: item.productName,
-          productImage: this.resolveImages(item),
+          productImage: this._helperService.resolveProductImage(item),
           selected: false,
           productQuantity: 0,
-          productPrice: Math.ceil(item.productRate.standard),
+          productPrice: this.roundToTwo(item.productRate.standard),
           productTotalPrice: 0
         })
       })
@@ -191,18 +192,11 @@ export class CartService {
       status: false,
       productAttributes: product.productAttributes,
       productNutrition: product.productNutrition,
-      productPrice: Math.ceil(product.productRate[this.productSizeList[0]]),
-      productTotalPrice: Math.ceil(product.productRate[this.productSizeList[0]])
+      productPrice: this.roundToTwo(product.productRate[this.productSizeList[0]]),
+      productTotalPrice: this.roundToTwo(product.productRate[this.productSizeList[0]])
     }
     this.selectProductRatesField.setValue(this.productSizeList[0])
     $('#pageId-productCustomizeModal').modal('show')
-  }
-
-  resolveImages(product: any) {
-    if (product.productImage && product.productImage.length) {
-      return 'assets/images/products/' + product.productImage[0]
-    }
-    return 'assets/images/product-1.png'
   }
 
   getProductById(productId: any) {
@@ -215,7 +209,7 @@ export class CartService {
 
   selectProductRate() {
     if (this._socketService.voiceServingSize) this.selectProductRatesField.setValue(this._socketService.voiceServingSize)
-    this.singleCustomProductObj.productPrice = Math.ceil(this.singleCustomProductObj.productRate[this.selectProductRatesField.value])
+    this.singleCustomProductObj.productPrice = this.roundToTwo(this.singleCustomProductObj.productRate[this.selectProductRatesField.value])
     this.singleCustomProductObj.productServingSize = this.selectProductRatesField.value
     this.customizeBillCalculation()
     this._socketService.voiceServingSize = ''
@@ -238,12 +232,13 @@ export class CartService {
   customizeBillCalculation() {
     this.singleCustomProductObj.productTotalPrice = this.singleCustomProductObj.productPrice
     this.singleCustomProductObj.productToppings.forEach((item: any) => {
-      this.singleCustomProductObj.productTotalPrice += Math.ceil(item.productTotalPrice)
+      this.singleCustomProductObj.productTotalPrice += item.productTotalPrice
     })
 
     this.singleCustomProductObj.productAddons.forEach((item: any) => {
       this.singleCustomProductObj.productTotalPrice += item.productTotalPrice
     })
+    this.singleCustomProductObj.productTotalPrice = this.roundToTwo(this.singleCustomProductObj.productTotalPrice)
   }
 
   addToppingQuantity(toppings: any, type: any) {
@@ -254,6 +249,7 @@ export class CartService {
       toppings.productQuantity = toppings.productQuantity - 1
     }
     toppings.productTotalPrice = toppings.productPrice * toppings.productQuantity
+    toppings.productTotalPrice = this.roundToTwo(toppings.productTotalPrice)
     this.customizeBillCalculation()
   }
 
@@ -265,6 +261,7 @@ export class CartService {
       addons.productQuantity = addons.productQuantity - 1
     }
     addons.productTotalPrice = addons.productPrice * addons.productQuantity
+    addons.productTotalPrice = this.roundToTwo(addons.productTotalPrice)
     this.customizeBillCalculation()
   }
 
@@ -277,6 +274,7 @@ export class CartService {
       product.productQuantity = product.productQuantity - 1
     }
     product.productTotalPrice = product.productTotalPrice * product.productQuantity
+    product.productTotalPrice = this.roundToTwo(product.productTotalPrice)
   }
 
   getTotalPrice(obj: any) {
@@ -286,12 +284,20 @@ export class CartService {
         total += item.productTotalPrice
       }
     })
-    return total
+    return this.roundToTwo(total)
   }
 
-  checkCommas(objectList: any, optIndex: any) {
+  checkCommas(objectList: any) {
     const selectedList = objectList.filter((item: any) => item.selected)
-    return optIndex + 1 < selectedList.length
+    let selectedProductNames = ''
+    selectedList.forEach((item: any, index: any) => {
+      if (index == 0) {
+        selectedProductNames += item.productName
+      } else {
+        selectedProductNames += ' , ' + item.productName
+      }
+    })
+    return selectedProductNames
   }
 
   checkCommasWithQuantity(objectList: any) {
@@ -300,7 +306,7 @@ export class CartService {
     selectedList.forEach((item: any, index: any) => {
       if (index == 0) {
         selectedProductNames += item.productName
-      }else{
+      } else {
         selectedProductNames += ' , ' + item.productName
       }
     })
@@ -372,5 +378,9 @@ export class CartService {
     if (this.slideToShow == 2) this._socketService.currentContextObj.sectionId = 'sectionId-toppings'
     if (this.slideToShow == 3) this._socketService.currentContextObj.sectionId = 'sectionId-addons'
     if (this.slideToShow == 4) this._socketService.currentContextObj.sectionId = 'sectionId-summary'
+  }
+
+  roundToTwo(num: number) {
+    return Math.round((num + Number.EPSILON) * 100) / 100;
   }
 }
