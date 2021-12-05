@@ -140,7 +140,8 @@ export class SocketService {
         "voice": voice,
         "pageId": this.currentContextObj.pageId,
         "sectionId": this.currentContextObj.sectionId,
-        "uniqueConversationId": this.uniqueConversationId
+        "uniqueConversationId": this.uniqueConversationId,
+        "entities": this.reservationFormEntities
       },
       type: type,
       timestamp: Date()
@@ -163,7 +164,7 @@ export class SocketService {
      */
     if (msg.entityId) {
 
-      if (tempMessage.entities && tempMessage.entities.length) this.reservationFormEntities = JSON.parse(JSON.stringify(tempMessage.entities))
+      if (msg.entities && msg.entities.length) this.reservationFormEntities = JSON.parse(JSON.stringify(msg.entities))
       //for reservation form
       // @ts-ignore
       document.getElementById(msg.entityId)?.value = msg.entityName
