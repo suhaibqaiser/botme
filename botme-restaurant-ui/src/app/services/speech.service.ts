@@ -137,13 +137,14 @@ export class SpeechService {
     }
 
     // initialize speech speaking and silence events
-    this.speechEvents = hark(this.stream, { interval: 100 })
+    this.speechEvents = hark(this.stream, {})
     this.speechEvents.on('speaking', () => {
-      if ((this.speechEvents && this.SpeechE) && (!this.isSpeaking && !this.isListening && !this.isProcessing)) {
-        console.log(`Listening, Speaking: ${this.isSpeaking}, Listening: ${this.isListening}, Processing: ${this.isProcessing}`);
-        // this.timerStart()
-        this.cloudlisten()
-      }
+      // if ((this.speechEvents && this.SpeechE) && (!this.isSpeaking && !this.isListening && !this.isProcessing)) {
+      //   console.log(`Listening, Speaking: ${this.isSpeaking}, Listening: ${this.isListening}, Processing: ${this.isProcessing}`);
+      //   // this.timerStart()
+      //   this.cloudlisten()
+      // }
+
     });
     this.speechEvents.on('stopped_speaking', () => {
       // if (this.isListening && (this.timerEnd() >= 1000)) {
@@ -152,6 +153,14 @@ export class SpeechService {
       // }
       this.stopCloudListen()
     });
+  }
+
+  startListening() {
+    if ((this.SpeechE) && (!this.isSpeaking && !this.isListening && !this.isProcessing)) {
+      console.log(`Listening, Speaking: ${this.isSpeaking}, Listening: ${this.isListening}, Processing: ${this.isProcessing}`);
+      // this.timerStart()
+      this.cloudlisten()
+    }
   }
 
   cloudlisten() {
@@ -177,7 +186,7 @@ export class SpeechService {
     if (this.recorder && this.isListening) {
       this.updateState('p')
       setTimeout(() => {
-        if (!this.isSpeaking && this.socketService.processing === true) {
+        if (this.isProcessing) {
           this.speak(this.voiceProcessingDelayed, null)
         }
       }, 5000);

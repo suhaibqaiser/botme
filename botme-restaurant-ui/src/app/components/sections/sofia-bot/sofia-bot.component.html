@@ -5,4 +5,5 @@
             [checked]="speechEnabled">
         <span class="slider round"></span>
     </label>
+    <input *ngIf="speechEnabled" type="button" value="Speak 🎙️" (click)="startListening()" />
 </div>
