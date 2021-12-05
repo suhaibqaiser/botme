@@ -4,6 +4,7 @@ from models.Entity import Entity
 from models.DateTime import DateTime
 from models.Products import Product
 from models.Reservation import Reservation
+from controller.reservationField import reservationField
 
 # reminder need to change text to senti in responses
 
@@ -15,8 +16,8 @@ def getResponse(intent,entity,text,pageId,sectionId,form):
     value = val.parseEntityValue()
     db = getDbCta(intent,value,pageId,sectionId)
     product = Product(intent,value,senti,pageId,sectionId,text)
-    reservation = Reservation(intent,value,senti,pageId,sectionId,text,db,form,reservationField(db,form,pageId,sectionId,value,text,intent))
-    datetime = DateTime(intent,value,senti,pageId,sectionId,text,db,form,reservationField(db,form,pageId,sectionId,value,text,intent))
+    reservation = Reservation(intent,value,senti,pageId,sectionId,text,db,form)
+    datetime = DateTime(intent,value,senti,pageId,sectionId,text,db,form)
 
     if (intent == "Order_meal"or intent == "product-detail" or intent == "remove_item" or intent == "edit_product" or intent == "reduce_product_quantity"):
         Response = product.checkingForProduct()
@@ -90,23 +91,3 @@ def getResponse(intent,entity,text,pageId,sectionId,form):
 def getEntityClickAttribute(entity):
     for x in entity:
         return {"entityId":x['entityId'],"actionType":x['clickAttribute']}
-
-def reservationField(db,form,pageId,sectionId,value,text,intent):
-    if db is not None:
-            context = db['context']
-            iD = getEntityClickAttribute(context['entities'])
-            if not form[0]['entityValue']:
-                form[0]['entityStatus'] = True
-                return {"Response":"please fill the name field","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
-            elif not form[1]['entityValue']:
-                form[1]['entityStatus'] = True
-                return {"Response":"please fill the number of person field","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
-            elif not form[2]['entityValue']:
-                form[2]['entityStatus'] = True
-                return {"Response":"please fill the Date field","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
-            elif not form[3]['entityValue']:
-                form[3]['entityStatus'] = True
-                return {"Response":"please fill the Time field","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
-            else:
-                return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form} 
-
