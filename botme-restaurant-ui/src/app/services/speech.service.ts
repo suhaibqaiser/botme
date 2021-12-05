@@ -160,6 +160,7 @@ export class SpeechService {
   }
 
   stopListening() {
+    this.delay(500);
     this.stopCloudListen()
   }
 
