@@ -102,6 +102,7 @@ def getResponse(intent,entity,text,pageId,sectionId,form):
             return {"Response":"Can't find the data in database","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":""}
 
     elif (intent == "book_now"):
+        print(db)
         Response = reservationField(db,form,pageId,sectionId,value,text,intent)
         return Response 
     else:
