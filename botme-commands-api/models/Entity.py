@@ -10,11 +10,8 @@ class Entity():
             if(len(self.entity) == 1):
                 return x['value']
             elif(len(self.entity)>1):
-                if (x['extractor'] == "SpacyEntityExtractor"):
-                    return x['value']
-                else:
-                    value = Entity.joinTwoEntity()
-                    return value
+                value = Entity.joinTwoEntity()
+                return value
             elif(len(self.entity)==0):
                 return None
 

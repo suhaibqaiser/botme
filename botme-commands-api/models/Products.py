@@ -30,9 +30,15 @@ class Product():
                         else:
                             return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":productID,"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent,"entities":""}
                     else:
-                        return {"Response":"Product not found in database","ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""} 
+                        if(data['payload']):
+                            product = data['payload'][0]['productName']
+                            return {"Response":"Do you mean "+product,"ctaCommandId":"ctaId-search","pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":"entityId-search","actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""}
+                        else:
+                            return {"Response":"Product not found in database","ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""} 
                 else:
-                    return {"Response":"What do you mean by " + self.value + "?","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":'question',"entities":""}
+                    products = Product.getAllProducts(data['payload'])
+                    print(products)
+                    return {"Response":"Found this product "+ products +" for name "+self.value+" .Which one you want to order?","ctaCommandId":"ctaId-search","pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":"entityId-search","actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""}
             else:
                 return {"Response":"Product not available","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""}
         except:
@@ -45,4 +51,13 @@ class Product():
     def getEntityClickAttribute(entity):
         for x in entity:
             return {"entityId":x['entityId'],"actionType":x['clickAttribute']}
+    
+    def getAllProducts(payload):
+        array = []
+        for x in payload:
+            array.append(x['productName'])
+        product =",".join(array)
+        return product
+
+
  
