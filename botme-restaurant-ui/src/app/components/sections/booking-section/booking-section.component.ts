@@ -32,6 +32,7 @@ export class BookingSectionComponent implements OnInit {
   reservationLoader: boolean = false
 
   constructor(private _router: Router, private _reservationService: ReservationService, public _socketService: SocketService) {
+
   }
 
   ngOnInit(): void {
