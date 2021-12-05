@@ -59,6 +59,29 @@ export class SocketService {
     sectionId: ''
   }
 
+  reservationFormEntities = [
+    {
+      "entityId": "entityId-name",
+      "entityValue": "",
+      "entityStatus": false
+    },
+    {
+      "entityId": "entityId-number-of-persons",
+      "entityValue": "",
+      "entityStatus": false
+    },
+    {
+      "entityId": "entityId-date",
+      "entityValue": "",
+      "entityStatus": false
+    },
+    {
+      "entityId": "entityId-time",
+      "entityValue": "",
+      "entityStatus": false
+    }
+  ]
+
   voiceServingSize = ''
 
 
@@ -68,7 +91,7 @@ export class SocketService {
 
     if (this.authToken) {
       this.socket = io(environment.wsEndpoint, {
-        auth: { token: this.authToken },
+        auth: {token: this.authToken},
         path: (environment.production) ? "/ws/" : ""
       });
 
@@ -140,6 +163,7 @@ export class SocketService {
      */
     if (msg.entityId) {
 
+      if (tempMessage.entities && tempMessage.entities.length) this.reservationFormEntities = JSON.parse(JSON.stringify(tempMessage.entities))
       //for reservation form
       // @ts-ignore
       document.getElementById(msg.entityId)?.value = msg.entityName
@@ -180,5 +204,18 @@ export class SocketService {
         this.currentContextObj = JSON.parse(JSON.stringify(item))
       }
     })
+  }
+
+  setEntities(value: any) {
+    this.reservationFormEntities.forEach((item: any) => {
+      if (item.entityStatus) {
+        item.entityValue = value
+      }
+    })
+  }
+
+  getFocusOnField(entityId: any) {
+    let obj = this.reservationFormEntities.find((item: any) => item.entityId == entityId && item.entityStatus)
+    return !!obj
   }
 }

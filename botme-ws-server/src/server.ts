@@ -1,11 +1,11 @@
 // requires for libraries
-import { createServer } from "http"
-import { Server, Socket } from "socket.io"
-import { getSession } from './services/sessionService'
-import { getCommandResponse } from './services/commandService'
+import {createServer} from "http"
+import {Server, Socket} from "socket.io"
+import {getSession} from './services/sessionService'
+import {getCommandResponse} from './services/commandService'
 import config from './config.json'
 import models = require("./models")
-import { getSpeechToText, getTextToSpeech } from "./services/speechService"
+import {getSpeechToText, getTextToSpeech} from "./services/speechService"
 
 // application config
 const port = process.env.WS_PORT || config.port
@@ -43,7 +43,7 @@ io.on("connection", (socket: Socket) => {
 
         if (data.type === "communication") {
             let payload: any = data.payload
-            let response = await getCommandResponse(socket.data.sessionId, payload.message, payload.pageId, payload.sectionId, payload.uniqueConversationId)
+            let response = await getCommandResponse(socket.data.sessionId, payload.message, payload.pageId, payload.sectionId, payload.entities, payload.uniqueConversationId)
             sendMessage(socket.data.clientId, "communication", response)
 
         } else if (data.type === "notification") {
@@ -53,11 +53,13 @@ io.on("connection", (socket: Socket) => {
             let payload: any = data.payload
             let voiceResponse = await getSpeechToText(payload.message)
             if (voiceResponse) {
-                let response: any = await getCommandResponse(socket.data.sessionId, voiceResponse, payload.pageId, payload.sectionId, payload.uniqueConversationId)
+                let response: any = await getCommandResponse(socket.data.sessionId, voiceResponse, payload.pageId, payload.sectionId, payload.entities, payload.uniqueConversationId)
                 console.log(payload, response);
 
                 if (response?.intentName) {
-                    if (payload.voice) { response.audio = await getTextToSpeech(response.text) }
+                    if (payload.voice) {
+                        response.audio = await getTextToSpeech(response.text)
+                    }
                     sendMessage(socket.data.clientId, "communication", response)
                 }
             }
@@ -81,7 +83,7 @@ io.on("connection", (socket: Socket) => {
     });
 
     function sendMessage(room: string, type: string, data: any) {
-        let payload: models.SocketMessage = { payload: data, type: type, timestamp: Date() }
+        let payload: models.SocketMessage = {payload: data, type: type, timestamp: Date()}
         io.to(room).emit("message", payload);
     }
 
