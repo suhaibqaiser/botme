@@ -30,6 +30,7 @@ class DateTime():
                     Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
                     return Response
                 else:
+                    self.form[0]['entityStatus'] = False
                     self.form[2]['entityValue'] = time
                     self.form[2]['entityStatus'] = False
                     if not self.form[3]['entityValue']:
@@ -51,6 +52,7 @@ class DateTime():
                         Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
                         return Response
                     else:
+                        self.form[0]['entityStatus'] = False
                         self.form[2]['entityValue'] = time
                         self.form[2]['entityStatus'] = False
                         if not self.form[3]['entityValue']:
@@ -77,6 +79,7 @@ class DateTime():
                     Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
                     return Response
                 else:
+                    self.form[0]['entityStatus'] = False
                     self.form[3]['entityValue'] = time
                     self.form[3]['entityStatus'] = False
                     Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
@@ -94,6 +97,7 @@ class DateTime():
                         Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
                         return Response
                     else:
+                        self.form[0]['entityStatus'] = False
                         self.form[3]['entityValue'] = time
                         self.form[3]['entityStatus'] = False
                         Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
