@@ -86,13 +86,13 @@ async function authorizeClient(req, res) {
     let response = new Response()
 
     if (!req.body.clientID || !req.body.clientSecret) {
-        response.payload = { message: 'clientID, clientDeviceId and clientSecret is required' };
+        response.payload = {message: 'clientID, clientDeviceId and clientSecret is required'};
         response.status = "error"
         return res.status(400).send(response);
     }
 
 
-    let client = await clientService.getClientDetail(req.body.clientID, req.body.clientDeviceId, req.body.clientSecret)
+    let client = await clientService.getClientDetail(req.body.clientID, req.body.clientSecret)
 
     if (client) {
         let hash = crypto.createHash('sha256');
@@ -105,13 +105,7 @@ async function authorizeClient(req, res) {
 
         let newSession = await sessionController.createSession(session)
         if (newSession) {
-            response.payload = {
-                "clientToken": newSession.clientToken,
-                'clientName': client.clientName,
-                'clientDeviceId': client.clientDeviceId,
-                'clientID': client.clientID,
-                'isLoggedIn': true
-            }
+            response.payload = {...client._doc,"clientToken": newSession.clientToken,'isLoggedIn': true}
             response.status = "success"
             return res.status(200).send(response)
         } else {
