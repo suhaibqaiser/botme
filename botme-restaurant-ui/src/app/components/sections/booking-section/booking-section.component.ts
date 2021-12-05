@@ -31,7 +31,7 @@ export class BookingSectionComponent implements OnInit {
     reservationTime: false
   }
   reservationLoader: boolean = false
-
+  /// Time regex ^(0?[1-9]|1[0-2]):([0-5]\d)\s?((?:A|P)\.?M\.?)$
   constructor(private _router: Router, private _reservationService: ReservationService, public _socketService: SocketService) {
 
   }
@@ -104,6 +104,7 @@ export class BookingSectionComponent implements OnInit {
   }
 
   generateTableNumber() {
-    return Math.floor(Math.random() * 15)
+    let number = Math.floor(Math.random() * 15)
+    return (number >= 1) ? number : 1
   }
 }
