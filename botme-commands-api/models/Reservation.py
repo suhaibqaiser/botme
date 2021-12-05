@@ -1,5 +1,6 @@
 import requests
 import re
+from controller.reservationField import reservationField
 
 
 class Reservation():
@@ -13,8 +14,6 @@ class Reservation():
         self.text = text
         self.db = db
         self.form = form
-        self.reservationField = reservationField
-        print("reservationField ===>" ,self.reservationField)
 
     def reservation(self):
         if self.db is not None:
@@ -24,7 +23,7 @@ class Reservation():
                 if self.form[1]['entityValue']:
                     self.form[1]['entityValue'] = number
                     self.form[1]['entityStatus'] = False
-                    Response = self.reservationField
+                    Response = reservationField(self.db,self.form,self.pageId,self.sectionId,number,self.text,self.intent)
                     return Response
                 else:
                     self.form[1]['entityValue'] = number
@@ -35,7 +34,7 @@ class Reservation():
                         iD = Reservation.getEntityClickAttribute(context['entities'])
                         return {"Response":self.db['response'],"ctaCommandId":self.db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityName":number,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
                     else:
-                        Response = self.reservationField
+                        Response = reservationField(self.db,self.form,self.pageId,self.sectionId,number,self.text,self.intent)
                         return Response
             else:
                 return {"Response":"sorry,can you please tell me the number of people again?","ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}                 
