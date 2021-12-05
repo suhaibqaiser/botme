@@ -13,6 +13,7 @@ export class BookingSectionComponent implements OnInit {
   reservation: any = {
     isReservationCompleted: false,
     name: null,
+    tableNumber: 0,
     reservationSeats: null,
     reservationDate: null,
     reservationTime: null
@@ -74,6 +75,7 @@ export class BookingSectionComponent implements OnInit {
           if (res.status === "success") {
             this.reservation = {
               isReservationCompleted: true,
+              tableNumber: this.generateTableNumber(),
               name: this.reservationForm.get('customerName')?.value,
               reservationSeats: this.reservationForm.get('reservationSeats')?.value,
               reservationDate: this.reservationForm.get('reservationDate')?.value,
@@ -83,7 +85,7 @@ export class BookingSectionComponent implements OnInit {
             setTimeout(() => {
               this._router.navigate(['home'])
               this.reservation.isReservationCompleted = false
-            }, 5000)
+            }, 50000)
           }
         }
       )
