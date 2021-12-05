@@ -46,7 +46,7 @@
                 </a>
               </li>
               <li>
-                <a *ngIf="_botMeClientService.getCookie().isLoggedIn" data-bs-toggle="modal" data-bs-target="#voiceTest"
+                <a *ngIf="_botMeClientService.getCookie().clientDebug === 'yes'" data-bs-toggle="modal" data-bs-target="#voiceTest"
                   class="nav-link" type="button">VOICE TEST</a>
               </li>
               <li class="nav-item">
@@ -97,12 +97,6 @@
                 </div>
                 <div class="form-group mb-20">
                   <div class="input-group">
-                    <input required type="text" formControlName="clientDeviceId" class="form-control"
-                      placeholder="Device Id" />
-                  </div>
-                </div>
-                <div class="form-group mb-20">
-                  <div class="input-group">
                     <label class="text-white">Voice Engine:</label>
                     <select class="w-100" formControlName="voiceType">
                       <option value="no-voice">Disabled</option>
@@ -121,7 +115,6 @@
             </div>
             <div *ngIf="_botMeClientService.getCookie().isLoggedIn" class="authentication-details-item active"
               data-authentication-details="1">
-              <h6 class="mt-2 text-white">Device Id : {{_botMeClientService.getCookie().clientDeviceId}}</h6>
               <h6 class="mt-2 text-white">Client Id : {{_botMeClientService.getCookie().clientID}}</h6>
               <div class="mt-4 authentication-btn">
                 <button (click)="logout()" class="btn full-width btn-border mb-20">Logout</button>
@@ -135,11 +128,11 @@
 </div>
 
 <!-- Modal -->
-<div cdkDrag class="modal fade" id="voiceTest" tabindex="-1" aria-labelledby="bbb" aria-hidden="true">
+<div  cdkDrag class="modal fade" id="voiceTest" tabindex="-1" aria-labelledby="bbb" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title text-white" id="bbb">Voice Test</h5>
+        <h5 class="modal-title text-white" id="bbb">Voice Test {{_botMeClientService.getCookieByKey('isDebug')}}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">

@@ -49,6 +49,10 @@ export class BotmeClientService {
     return this.cookieService.get('voiceType')
   }
 
+  getCookieByKey(key: any) {
+    return this.cookieService.get(key)
+  }
+
   isRobotAuth() {
     return (this.deviceService.isMobile() || this.deviceService.isTablet())
   }

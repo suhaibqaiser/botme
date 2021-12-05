@@ -16,7 +16,6 @@ export class NavbarComponent implements OnInit {
   loginForm = new FormGroup({
     clientID: new FormControl('', Validators.required),
     clientSecret: new FormControl('', Validators.required),
-    clientDeviceId: new FormControl('', Validators.required),
     voiceType: new FormControl('', Validators.required)
   })
   _voiceType: string = this._botMeClientService.getVoiceType()
@@ -46,13 +45,13 @@ export class NavbarComponent implements OnInit {
         if (res.status) {
           this._botMeClientService.setCookie('clientToken', res.payload.clientToken)
           this._botMeClientService.setCookie('clientName', res.payload.clientName)
-          this._botMeClientService.setCookie('clientDeviceId', res.payload.clientDeviceId)
           this._botMeClientService.setCookie('clientID', res.payload.clientID)
           this._botMeClientService.setCookie('isLoggedIn', res.payload.isLoggedIn)
+          this._botMeClientService.setCookie('clientDebug', (res.payload.clientDebug) ? "yes" : "no")
           this._botMeClientService.setCookie('voiceType', this.loginForm.get('voiceType')?.value)
-          this.router.navigate(['/home']).then(() => {
-            window.location.reload();
-          });
+          // this.router.navigate(['/home']).then(() => {
+          //   window.location.reload();
+          // });
         } else {
           alert('Invalid Record')
         }
