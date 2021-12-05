@@ -4,7 +4,7 @@ from datetime import datetime
 from controller.reservationField import reservationField
 
 class DateTime():
-    def __init__(self,intent,value,senti,pageId,sectionId,text,db,form,reservationField):
+    def __init__(self,intent,value,senti,pageId,sectionId,text,db,form):
           
         self.intent = intent
         self.value = value
