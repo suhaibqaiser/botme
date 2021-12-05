@@ -1,10 +1,9 @@
-import {Injectable} from '@angular/core';
-import {Subject} from 'rxjs';
-import {FormControl} from "@angular/forms";
-import {Router} from "@angular/router";
-import {environment} from 'src/environments/environment';
-import {io} from "socket.io-client";
-import {BotmeClientService} from './botme-client.service';
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+import { Router } from "@angular/router";
+import { environment } from 'src/environments/environment';
+import { io } from "socket.io-client";
+import { BotmeClientService } from './botme-client.service';
 
 
 @Injectable({
@@ -20,6 +19,7 @@ export class SocketService {
   processing = false
   authToken: string
   socket: any
+  uniqueConversationId: number = 0
 
   currentContextList = [
     {
@@ -101,8 +101,12 @@ export class SocketService {
 
         switch (data.type) {
           case "communication":
-            this.messagesSubject.next(payload)
-            if (payload.intentName) this.fireInteractionEvent(payload)
+            if (payload.uniqueConversationId === this.uniqueConversationId) {
+              this.messagesSubject.next(payload)
+              if (payload.intentName) this.fireInteractionEvent(payload)
+            } else {
+              console.log(`Socket Message out of sync. This id: ${this.uniqueConversationId}, payload id: ${payload.uniqueConversationId}`);
+            }
             break;
           case "notification":
             this.notificationSubject.next(payload)
@@ -127,6 +131,8 @@ export class SocketService {
       type: string,
       timestamp: string
     }
+    this.uniqueConversationId++
+    console.log(`uniqueConversationId: ${this.uniqueConversationId}`);
 
     let SocketPayload: SocketMessage = {
       payload: {
@@ -134,7 +140,7 @@ export class SocketService {
         "voice": voice,
         "pageId": this.currentContextObj.pageId,
         "sectionId": this.currentContextObj.sectionId,
-        "entities": this.reservationFormEntities
+        "uniqueConversationId": this.uniqueConversationId
       },
       type: type,
       timestamp: Date()
@@ -155,33 +161,32 @@ export class SocketService {
 
      sel.setAttribute('size', len);
      */
-    let tempMessage = msg
-    if (tempMessage.entityId) {
+    if (msg.entityId) {
 
       if (tempMessage.entities && tempMessage.entities.length) this.reservationFormEntities = JSON.parse(JSON.stringify(tempMessage.entities))
       //for reservation form
       // @ts-ignore
-      document.getElementById(tempMessage.entityId)?.value = tempMessage.entityName
-      this.setEntities(tempMessage.entityName)
+      document.getElementById(msg.entityId)?.value = msg.entityName
 
-      if (tempMessage.entityId == 'entityId-select-serving-size') {
-        this.voiceServingSize = tempMessage.entityName.toLowerCase()
+
+      if (msg.entityId == 'entityId-select-serving-size') {
+        this.voiceServingSize = msg.entityName.toLowerCase()
         // @ts-ignore
         document.getElementById('ctaId-select-serving-size')?.click()
         return
       }
 
       // @ts-ignore
-      let template = document.getElementById(tempMessage.entityId)
+      let template = document.getElementById(msg.entityId)
       // @ts-ignore
       let list = template.getElementsByTagName('a')
       for (let i = 0; i < list.length; i++) {
-        if (list[i].getAttribute('id') == tempMessage.ctaId) {
+        if (list[i].getAttribute('id') == msg.ctaId) {
           list[i]?.click()
         }
       }
       // @ts-ignore
-      document.getElementById(tempMessage.entityId)?.click()
+      document.getElementById(msg.entityId)?.click()
     }
   }
 

@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 import {addConversationLog} from './conversationService'
 import config from '../config.json'
 
-export async function getCommandResponse(sessionId: string, text: string, pageId: string, sectionId: string, entities: string[]) {
+export async function getCommandResponse(sessionId: string, text: string, pageId: string, sectionId: string, uniqueConvId: number) {
 
     try {
         let body = {"text": text, "pageId": pageId, "sectionId": sectionId, "entities": entities};
@@ -25,7 +25,7 @@ export async function getCommandResponse(sessionId: string, text: string, pageId
                 sectionId: data.sectionId,
                 sentimentScore: data.sentimentScore,
                 intentName: data.intentName,
-                entities: data.entities
+                uniqueConversationId: uniqueConvId
             };
             addConversationLog(sessionId, text, answer)
             return answer
