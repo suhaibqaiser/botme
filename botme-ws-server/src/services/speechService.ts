@@ -11,13 +11,13 @@ process.env['GOOGLE_APPLICATION_CREDENTIALS'] = 'google-cloud-credentials.json'
 
 // This method is used for Google TTS service
 export async function getSpeechToText(payload: any) {
-    fs.writeFile('input.wav', payload, (err: any) => {
-        if (err)
-            console.log(err);
-        else {
-            console.log("File written successfully\n");
-        }
-    });
+    // fs.writeFile('input.wav', payload, (err: any) => {
+    //     if (err)
+    //         console.log(err);
+    //     else {
+    //         console.log("File written successfully\n");
+    //     }
+    // });
     const request = {
         audio: {
             content: payload

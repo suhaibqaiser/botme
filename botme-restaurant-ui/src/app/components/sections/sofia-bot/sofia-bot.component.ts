@@ -12,10 +12,12 @@ import { SpeechService } from "../../../services/speech.service";
 export class SofiaBotComponent implements OnInit {
 
   voiceEnabled: boolean = true;
-  speechEnabled: boolean = true;
+  speechEnabled: boolean = false;
   isBrowserSpeech: boolean = true;
+  speechText: string = ''
 
-  constructor(private speechService: SpeechService,
+
+  constructor(public speechService: SpeechService,
     private socketService: SocketService,
     public clientService: BotmeClientService
   ) {
@@ -27,7 +29,9 @@ export class SofiaBotComponent implements OnInit {
     } else if (this.clientService.getVoiceType() === "no-voice") {
       this.voiceEnabled = false
     }
-    this.updateInteractionState(this.voiceEnabled)
+    this.speechService.speechText.subscribe(data => {
+      this.speechText = data
+    })
   }
 
   updateInteractionState(value: boolean) {
@@ -39,6 +43,8 @@ export class SofiaBotComponent implements OnInit {
       this.speechService.disableListening();
     }
   }
+
+
 
   ngOnDestroy() {
     this.speechService.disableListening();
