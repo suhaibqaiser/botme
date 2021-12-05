@@ -9,7 +9,6 @@ from controller.reservationField import reservationField
 # reminder need to change text to senti in responses
 
 def getResponse(intent,entity,text,pageId,sectionId,form):
-    print(form)
     blob =TextBlob(text)
     senti = blob.sentiment.polarity
     val = Entity(entity)
@@ -55,8 +54,29 @@ def getResponse(intent,entity,text,pageId,sectionId,form):
                         Response = reservationField(db,form,pageId,sectionId,value,text,intent)
                         return Response
             else:
-                return {"Response":"sorry,can you please tell me your name again?","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":form}
-        else:
+                txt = text.split()
+                if "name" in txt:
+                    x = len(txt)
+                    name = txt[x-1]
+                    if form[0]['entityValue']:
+                        form[0]['entityValue'] = name
+                        form[0]['entityStatus'] = False
+                        Response = reservationField(db,form,pageId,sectionId,name,text,intent)
+                        return Response
+                    elif not form[0]['entityValue']:
+                        form[0]['entityValue'] = name
+                        form[0]['entityStatus'] = False
+                        if not form[1]['entityValue']:
+                            form[1]['entityStatus'] = True
+                            context = db['context']
+                            iD = getEntityClickAttribute(context['entities'])
+                            return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":name,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
+                        else:
+                            Response = reservationField(db,form,pageId,sectionId,name,text,intent)
+                            return Response       
+                else:
+                    return {"Response":"sorry,can you please tell me your name again?","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":form}
+        else:   
             return {"Response":"Can't find the data in database","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":form}
 
     elif (intent == "unreserved_table_person"):

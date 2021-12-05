@@ -118,16 +118,16 @@ nlu:
     examples: |
       - Take me to [contact](pagefour) us page
       - i want to visit [contact](pagefour) us page
-      - open [contact](pagefour) please page
+      - open [contact](pagefour) screen please
       - i want to see the [contact](pagefour) us page
       - can you please redirect me to [contact](pagefour) us page
       - he want to redirect to [contact](pagefour) us page
       - i want to redirect to [contact](pagefour) us page
-      - show me the [contact](pagefour)
-      - show us your [contact](pagefour)
+      - show me the [contact](pagefour) screen
+      - show us your [contact](pagefour) screen
       - i want you to take me to the [contact](pagefour) us page
       - she want to see the [contact](pagefour)
-      - Take me to [contact](pagefour) us page
+      - Take me to [contact](pagefour) us screen
       - i want to visit [contact](pagefour) us page
       - open [contact](pagefour) us page please 
       - i want to see your [contact](pagefour)
@@ -4063,6 +4063,11 @@ nlu:
 
   - intent: book_now
     examples: |
+      - [book]{"entity":"reserved","value":"book now"} my reservation
+      - please [Book]{"entity":"reserved","value":"book now"} my reservation
+      - i want to [book]{"entity":"reserved","value":"book now"} my reservation
+      - i want to [confirm]{"entity":"reserved","value":"book now"} my reservation
+      - please [Confirm]{"entity":"reserved","value":"book now"} my reservation
       - [book now](reserved)
       - i want to [book now](reserved)
       - [book]{"entity":"reserved","value":"book now"}
