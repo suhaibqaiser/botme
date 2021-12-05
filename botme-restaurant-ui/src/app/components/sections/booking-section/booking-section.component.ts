@@ -104,6 +104,7 @@ export class BookingSectionComponent implements OnInit {
   }
 
   generateTableNumber() {
-    return Math.floor(Math.random() * 15)
+    let number = Math.floor(Math.random() * 15)
+    return (number >= 1) ? number : 1
   }
 }
