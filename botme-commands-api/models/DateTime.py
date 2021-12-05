@@ -45,7 +45,7 @@ class DateTime():
                 t = timefhuman(self.text,now=now)
                 if t:
                     time = t.strftime("%Y-%m-%d")
-                    if self.form[2]:
+                    if self.form[2]['entityValue']:
                         self.form[2]['entityValue'] = time
                         self.form[2]['entityStatus'] = False
                         Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
