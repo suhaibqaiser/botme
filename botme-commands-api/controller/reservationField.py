@@ -15,7 +15,7 @@ def reservationField(db,form,pageId,sectionId,value,text,intent):
             elif not form[3]['entityValue']:
                 form[3]['entityStatus'] = True
                 return {"Response":"please fill the Time field","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
-            elif form[0]['entityValue'] and form[1]['entityValue'] and form[2]['entityValue'] and form[3]['entityValue']:
+            elif form[0]['entityValue'] and form[1]['entityValue'] and form[2]['entityValue'] and form[3]['entityValue'] and intent != "book_now":
                 return {"Response":"you can now book your reservation","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
             else:
                 return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form} 

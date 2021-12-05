@@ -10,17 +10,14 @@ class Entity():
             if(len(self.entity) == 1):
                 return x['value']
             elif(len(self.entity)>1):
-                if (x['extractor'] == "SpacyEntityExtractor"):
-                    return x['value']
-                else:
-                    value = Entity.joinTwoEntity()
-                    return value
+                value = Entity.joinTwoEntity(self.entity)
+                return value
             elif(len(self.entity)==0):
                 return None
 
-    def joinTwoEntity(self):
+    def joinTwoEntity(entity):
         array = []
-        for x in self.entity:
+        for x in entity:
             array.append(x['value'])
         value = " ".join(array)
         return value

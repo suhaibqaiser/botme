@@ -24,12 +24,13 @@ class DateTime():
             if t is not None:
                 print("dateparser call")
                 time = t.strftime("%Y-%m-%d")
-                if self.form[2]:
+                if self.form[2]['entityValue']:
                     self.form[2]['entityValue'] = time
                     self.form[2]['entityStatus'] = False
                     Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
                     return Response
                 else:
+                    self.form[0]['entityStatus'] = False
                     self.form[2]['entityValue'] = time
                     self.form[2]['entityStatus'] = False
                     if not self.form[3]['entityValue']:
@@ -39,17 +40,19 @@ class DateTime():
                         Resp = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
                         return Resp
             else:
+                print("Taha Hasan")
                 print("timefhuman call")
                 now = datetime.now()
                 t = timefhuman(self.text,now=now)
                 if t:
                     time = t.strftime("%Y-%m-%d")
-                    if self.form[2]:
+                    if self.form[2]['entityValue']:
                         self.form[2]['entityValue'] = time
                         self.form[2]['entityStatus'] = False
                         Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
                         return Response
                     else:
+                        self.form[0]['entityStatus'] = False
                         self.form[2]['entityValue'] = time
                         self.form[2]['entityStatus'] = False
                         if not self.form[3]['entityValue']:
@@ -70,12 +73,13 @@ class DateTime():
             if t is not None:
                 print("dateparser call")
                 time = t.strftime("%H:%M:%S")
-                if self.form[3]:
+                if self.form[3]['entityValue']:
                     self.form[3]['entityValue'] = time
                     self.form[3]['entityStatus'] = False
                     Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
                     return Response
                 else:
+                    self.form[0]['entityStatus'] = False
                     self.form[3]['entityValue'] = time
                     self.form[3]['entityStatus'] = False
                     Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
@@ -87,12 +91,13 @@ class DateTime():
                 print(t)
                 if t:
                     time = t.strftime("%H:%M:%S")
-                    if self.form[3]:
+                    if self.form[3]['entityValue']:
                         self.form[3]['entityValue'] = time
                         self.form[3]['entityStatus'] = False
                         Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
                         return Response
                     else:
+                        self.form[0]['entityStatus'] = False
                         self.form[3]['entityValue'] = time
                         self.form[3]['entityStatus'] = False
                         Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
