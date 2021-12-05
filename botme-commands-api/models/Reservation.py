@@ -16,31 +16,34 @@ class Reservation():
         self.form = form
 
     def reservation(self):
-        if self.db is not None:
-            V = re.findall(r'\d+', self.value) 
-            number = "".join(V)
-            if number.isdigit():
-                if self.form[1]['entityValue']:
-                    self.form[1]['entityValue'] = number
-                    self.form[1]['entityStatus'] = False
-                    Response = reservationField(self.db,self.form,self.pageId,self.sectionId,number,self.text,self.intent)
-                    return Response
-                else:
-                    self.form[1]['entityValue'] = number
-                    self.form[1]['entityStatus'] = False
-                    if not self.form[2]['entityValue']:
-                        self.form[2]['entityStatus'] = True
-                        context = self.db['context']
-                        iD = Reservation.getEntityClickAttribute(context['entities'])
-                        return {"Response":self.db['response'],"ctaCommandId":self.db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityName":number,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
-                    else:
+        try:
+            if self.db is not None:
+                V = re.findall(r'\d+', self.value) 
+                number = "".join(V)
+                if number.isdigit():
+                    if self.form[1]['entityValue']:
+                        self.form[1]['entityValue'] = number
+                        self.form[1]['entityStatus'] = False
                         Response = reservationField(self.db,self.form,self.pageId,self.sectionId,number,self.text,self.intent)
                         return Response
+                    else:
+                        self.form[1]['entityValue'] = number
+                        self.form[1]['entityStatus'] = False
+                        if not self.form[2]['entityValue']:
+                            self.form[2]['entityStatus'] = True
+                            context = self.db['context']
+                            iD = Reservation.getEntityClickAttribute(context['entities'])
+                            return {"Response":self.db['response'],"ctaCommandId":self.db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityName":number,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
+                        else:
+                            Response = reservationField(self.db,self.form,self.pageId,self.sectionId,number,self.text,self.intent)
+                            return Response
+                else:
+                    return {"Response":"sorry,can you please tell me the number of people again?","ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}                 
             else:
-                return {"Response":"sorry,can you please tell me the number of people again?","ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}                 
-        else:
-            tableResponse = Reservation.searchingTable(self.value,self.senti,self.intent,self.text)
-            return tableResponse    
+                tableResponse = Reservation.searchingTable(self.value,self.senti,self.intent,self.text)
+                return tableResponse
+        except:
+            print("error in parsing number of people")    
 
     def searchingTable(value,senti,intent,text):
         try:
