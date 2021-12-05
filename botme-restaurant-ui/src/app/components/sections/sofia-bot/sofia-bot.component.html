@@ -1,9 +1,7 @@
 <div *ngIf="voiceEnabled" class="interaction">
-    <label class="i-heading">Voice:</label>
     <label class="switch">
         <input #voiceSwitch type="checkbox" (change)="updateInteractionState(voiceSwitch.checked)"
             [checked]="speechEnabled">
         <span class="slider round"></span>
     </label>
-    <input *ngIf="speechEnabled" type="button" value="Speak 🎙️" (click)="startListening()" />
-</div>
+    <label class="i-heading">{{speechText}}</label>

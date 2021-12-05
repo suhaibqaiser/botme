@@ -31,6 +31,7 @@ export class SpeechService {
   isSpeaking: boolean = false
   isListening: boolean = false
   isProcessing: boolean = false
+  isIdle: boolean = true
   //browser speech section
   recognition: any
   isStoppedSpeechRecog = false;
@@ -60,6 +61,8 @@ export class SpeechService {
 
   constructor(private socketService: SocketService) {
 
+    this.speechState.next('idle')
+
     this.speechEnabled.subscribe(data => {
       this.SpeechE = data
       if (!this.SpeechE) {
@@ -77,6 +80,7 @@ export class SpeechService {
     }
 
     // this.socketService.processing = true
+
   }
 
   init() {
@@ -151,8 +155,12 @@ export class SpeechService {
       //   this.stopCloudListen()
       //   this.timerClear()
       // }
-      this.stopCloudListen()
+      // this.stopCloudListen()
     });
+  }
+
+  stopListening() {
+    this.stopCloudListen()
   }
 
   startListening() {
@@ -333,16 +341,19 @@ export class SpeechService {
   updateState(state: string) {
     if (state === 'l') {
       // show speech bubble
-      this.socketService.processing = true
+      // this.socketService.processing = true
       this.isListening = true;
+      this.isIdle = false
       this.speechState.next('listening')
       this.speechText.next('Listening...')
     } else if (state === 'p') {
       this.isListening = false;
       this.isProcessing = true;
+      this.isIdle = false
       this.speechText.next('Processing...')
       this.speechState.next('processing')
     } else if (state === 's') {
+      this.isIdle = false
       this.isProcessing = false;
       this.isSpeaking = true;
       this.speechState.next('speaking')
@@ -351,8 +362,10 @@ export class SpeechService {
       this.isListening = false;
       this.isSpeaking = false;
       this.isProcessing = false;
-      this.socketService.processing = false
+      this.isIdle = true
+      // this.socketService.processing = false
       this.speechState.next('idle')
+      this.speechText.next('')
     }
   }
 }

@@ -15,14 +15,14 @@ export class ProgressLoaderComponent implements OnInit {
   speaking: boolean = false
 
   constructor(public speechService: SpeechService, public socketService: SocketService) {
-    this.speechService.speechText.subscribe(data => {
-      this.displayText = data
-    })
-    this.speechService.speechState.subscribe(data => {
-      (data === "listening") ? this.listening = true : this.listening = false;
-      (data === "processing") ? this.processing = true : this.processing = false;
-      (data === "speaking") ? this.speaking = true : this.speaking = false;
-    })
+    // this.speechService.speechText.subscribe(data => {
+    //   this.displayText = data
+    // })
+    // this.speechService.speechState.subscribe(data => {
+    //   (data === "listening") ? this.listening = true : this.listening = false;
+    //   (data === "processing") ? this.processing = true : this.processing = false;
+    //   (data === "speaking") ? this.speaking = true : this.speaking = false;
+    // })
 
   }
 

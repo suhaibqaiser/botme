@@ -1,6 +1,7 @@
 <!-- Dynamic product cartModal -->
+
 <div class="modal product-customization-modal fade" id="pageId-productCustomizeModal" tabindex="-1"
-     aria-labelledby="pageId-productCustomizeModal" aria-hidden="true">
+  data-backdrop="false" aria-labelledby="pageId-productCustomizeModal" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-body">
@@ -14,18 +15,19 @@
                   </div>
                   <div class="blog-card-content">
                     <!-- <app-sofia-bot class="d-inline-flex"></app-sofia-bot> -->
-                    <div id="sectionId-servingSize-productOptions" class="section p-2" *ngIf="cartService.slideToShow===0">
+                    <div id="sectionId-servingSize-productOptions" class="section p-2"
+                      *ngIf="cartService.slideToShow===0">
                       <h3 class="text-center">{{cartService.singleCustomProductObj.productName}}</h3>
-<!--                      <app-sofia-bot></app-sofia-bot>-->
+                      <!-- <app-sofia-bot></app-sofia-bot> -->
                       <div class="main-selection-container">
                         <div class="list mb-2 d-flex justify-content-between">
                           <div class="d-flex left">
                             <h6>Serving Size</h6>
                           </div>
                           <div class="right">
-                            <select (click)="cartService.selectProductRate()" [formControl]="cartService.selectProductRatesField"
-                                    class="drop-down"
-                                    id="ctaId-select-serving-size">
+                            <select (click)="cartService.selectProductRate()"
+                              [formControl]="cartService.selectProductRatesField" class="drop-down"
+                              id="ctaId-select-serving-size">
                               <option [value]="item" *ngFor="let item of cartService.productSizeList">{{item}}</option>
                             </select>
                           </div>
@@ -35,12 +37,13 @@
                           *ngIf="cartService.singleCustomProductObj.productOptions && cartService.singleCustomProductObj.productOptions.length"
                           class="container multi-select-list row">
                           <h6 class="mb-4">Product Options</h6>
-                          <div id="{{options.productId}}" *ngFor="let options of cartService.singleCustomProductObj.productOptions"
-                               (click)="cartService.selectProductOptions(options)" class="mb-3 col-lg-4">
+                          <div id="{{options.productId}}"
+                            *ngFor="let options of cartService.singleCustomProductObj.productOptions"
+                            (click)="cartService.selectProductOptions(options)" class="mb-3 col-lg-4">
                             <span *ngIf="options.selected"><i class="fas fa-check"></i></span>
                             <div [class.multi-selection]="options.selected"
-                                 class="d-flex align-items-center justify-content-around ">
-                              <img [src]="options.productImage"/>
+                              class="d-flex align-items-center justify-content-around ">
+                              <img [src]="options.productImage" />
                               <h6>{{options.productName}}</h6>
                             </div>
                           </div>
@@ -50,38 +53,48 @@
                         <h6 class="text-end">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
                       </div>
                       <div class="d-flex justify-content-between button-group">
-                        <button id="entityId-back" *ngIf="cartService.slideToShow!==0 && !cartService.singleCustomProductObj.isShowInfo" (click)="cartService.previousSlide()" type="button" class="btn btn-yellow">
+                        <button id="entityId-back"
+                          *ngIf="cartService.slideToShow!==0 && !cartService.singleCustomProductObj.isShowInfo"
+                          (click)="cartService.previousSlide()" type="button" class="btn btn-yellow">
                           <i class="fas fa-arrow-left"></i> Back
                         </button>
                         <div [class.apply-left-margin]="cartService.slideToShow===0" class="d-flex">
-                          <button data-bs-dismiss="modal" id="entityId-cancel" (click)="cancelModal()" type="button" class="btn btn-yellow">Cancel</button>
-                          <button id="entityId-next" *ngIf="cartService.slideToShow!==4" (click)="cartService.nextSlide()" type="button"
-                                  class="btn ml-2 btn-primary">Next
+                          <button data-bs-dismiss="modal" id="entityId-cancel" (click)="cancelModal()" type="button"
+                            class="btn btn-yellow">Cancel</button>
+                          <button id="entityId-next" *ngIf="cartService.slideToShow!==4"
+                            (click)="cartService.nextSlide()" type="button" class="btn ml-2 btn-primary">Next
                             <i class="fas fa-arrow-right"></i></button>
                           <div *ngIf="!cartService.singleCustomProductObj.isShowInfo">
-                            <button id="entityId-cart-item" *ngIf="cartService.slideToShow==4 && !cartService.singleCustomProductObj.isEditable" (click)="addToCart()" type="button"
-                                    data-bs-dismiss="modal" class="btn ml-2 btn-primary">Cart Item
+                            <button id="entityId-cart-item"
+                              *ngIf="cartService.slideToShow==4 && !cartService.singleCustomProductObj.isEditable"
+                              (click)="addToCart()" type="button" data-bs-dismiss="modal"
+                              class="btn ml-2 btn-primary">Cart Item
                               <i class="fas ml-2 fa-cart-plus"></i></button>
-                            <button id="entityId-cart-item" *ngIf="cartService.slideToShow==4 && cartService.singleCustomProductObj.isEditable" (click)="editToCart()" type="button"
-                                    data-bs-dismiss="modal" class="btn ml-2 btn-primary">Edit Cart Item
+                            <button id="entityId-cart-item"
+                              *ngIf="cartService.slideToShow==4 && cartService.singleCustomProductObj.isEditable"
+                              (click)="editToCart()" type="button" data-bs-dismiss="modal"
+                              class="btn ml-2 btn-primary">Edit Cart Item
                               <i class="fas ml-2 fa-cart-plus"></i></button>
                           </div>
                         </div>
                       </div>
                     </div>
                     <div id="sectionId-ingredients-flavour" class="section p-2" *ngIf="cartService.slideToShow===1">
-                      <h3 *ngIf="cartService.singleCustomProductObj.productIngredients && cartService.singleCustomProductObj.productIngredients.length" class="text-center">Product Ingredients</h3>
+                      <h3
+                        *ngIf="cartService.singleCustomProductObj.productIngredients && cartService.singleCustomProductObj.productIngredients.length"
+                        class="text-center">Product Ingredients</h3>
 
                       <div class="main-selection-container">
                         <div
                           *ngIf="cartService.singleCustomProductObj.productIngredients && cartService.singleCustomProductObj.productIngredients.length"
                           class="container multi-select-list row">
-                          <div id="{{ingredients.productId}}" *ngFor="let ingredients of cartService.singleCustomProductObj.productIngredients"
-                               (click)="cartService.selectIngredients(ingredients)" class="mb-3 col-lg-4">
+                          <div id="{{ingredients.productId}}"
+                            *ngFor="let ingredients of cartService.singleCustomProductObj.productIngredients"
+                            (click)="cartService.selectIngredients(ingredients)" class="mb-3 col-lg-4">
                             <span *ngIf="ingredients.selected"><i class="fas fa-check"></i></span>
                             <div [class.multi-selection]="ingredients.selected"
-                                 class="d-flex align-items-center justify-content-around ">
-                              <img [src]="ingredients.productImage"/>
+                              class="d-flex align-items-center justify-content-around ">
+                              <img [src]="ingredients.productImage" />
                               <h6>{{ingredients.productName}}</h6>
                             </div>
                           </div>
@@ -94,11 +107,12 @@
                         <div
                           *ngIf="cartService.singleCustomProductObj.productFlavors && cartService.singleCustomProductObj.productFlavors.length"
                           class="container multi-select-list row">
-                          <div id="{{flavor.flavorName}}" *ngFor="let flavor of cartService.singleCustomProductObj.productFlavors"
-                               (click)="cartService.selectFlavor(flavor)" class="mb-3 col-lg-4">
+                          <div id="{{flavor.flavorName}}"
+                            *ngFor="let flavor of cartService.singleCustomProductObj.productFlavors"
+                            (click)="cartService.selectFlavor(flavor)" class="mb-3 col-lg-4">
                             <span *ngIf="flavor.selected"><i class="fas fa-check"></i></span>
                             <div [class.multi-selection]="flavor.selected"
-                                 class="d-flex align-items-center justify-content-around ">
+                              class="d-flex align-items-center justify-content-around ">
                               <h6>{{flavor.flavorName}}</h6>
                             </div>
                           </div>
@@ -108,20 +122,27 @@
                         <h6 class="text-end">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
                       </div>
                       <div class="d-flex justify-content-between button-group">
-                        <button id="entityId-back" *ngIf="cartService.slideToShow!==0 && !cartService.singleCustomProductObj.isShowInfo" (click)="cartService.previousSlide()" type="button" class="btn btn-yellow">
+                        <button id="entityId-back"
+                          *ngIf="cartService.slideToShow!==0 && !cartService.singleCustomProductObj.isShowInfo"
+                          (click)="cartService.previousSlide()" type="button" class="btn btn-yellow">
                           <i class="fas fa-arrow-left"></i> Back
                         </button>
                         <div [class.apply-left-margin]="cartService.slideToShow===0" class="d-flex">
-                          <button data-bs-dismiss="modal" id="entityId-cancel" (click)="cancelModal()" type="button" class="btn btn-yellow">Cancel</button>
-                          <button id="entityId-next" *ngIf="cartService.slideToShow!==4" (click)="cartService.nextSlide()" type="button"
-                                  class="btn ml-2 btn-primary">Next
+                          <button data-bs-dismiss="modal" id="entityId-cancel" (click)="cancelModal()" type="button"
+                            class="btn btn-yellow">Cancel</button>
+                          <button id="entityId-next" *ngIf="cartService.slideToShow!==4"
+                            (click)="cartService.nextSlide()" type="button" class="btn ml-2 btn-primary">Next
                             <i class="fas fa-arrow-right"></i></button>
                           <div *ngIf="!cartService.singleCustomProductObj.isShowInfo">
-                            <button id="entityId-cart-item" *ngIf="cartService.slideToShow==4 && !cartService.singleCustomProductObj.isEditable" (click)="addToCart()" type="button"
-                                    data-bs-dismiss="modal" class="btn ml-2 btn-primary">Cart Item
+                            <button id="entityId-cart-item"
+                              *ngIf="cartService.slideToShow==4 && !cartService.singleCustomProductObj.isEditable"
+                              (click)="addToCart()" type="button" data-bs-dismiss="modal"
+                              class="btn ml-2 btn-primary">Cart Item
                               <i class="fas ml-2 fa-cart-plus"></i></button>
-                            <button id="entityId-cart-item" *ngIf="cartService.slideToShow==4 && cartService.singleCustomProductObj.isEditable" (click)="editToCart()" type="button"
-                                    data-bs-dismiss="modal" class="btn ml-2 btn-primary">Edit Cart Item
+                            <button id="entityId-cart-item"
+                              *ngIf="cartService.slideToShow==4 && cartService.singleCustomProductObj.isEditable"
+                              (click)="editToCart()" type="button" data-bs-dismiss="modal"
+                              class="btn ml-2 btn-primary">Edit Cart Item
                               <i class="fas ml-2 fa-cart-plus"></i></button>
                           </div>
                         </div>
@@ -132,10 +153,11 @@
                       <div
                         *ngIf="cartService.singleCustomProductObj.productToppings && cartService.singleCustomProductObj.productToppings.length"
                         class="main-selection-container">
-                        <div id="{{toppings.productId}}" *ngFor="let toppings of cartService.singleCustomProductObj.productToppings"
-                             class="list mb-2 d-flex justify-content-between">
+                        <div id="{{toppings.productId}}"
+                          *ngFor="let toppings of cartService.singleCustomProductObj.productToppings"
+                          class="list mb-2 d-flex justify-content-between">
                           <div class="d-flex left">
-                            <img [src]="toppings.productImage"/>
+                            <img [src]="toppings.productImage" />
                             <h6>{{toppings.productName}}
                               <br>
                               <span class="mt-3">${{toppings.productPrice}}</span>
@@ -145,16 +167,14 @@
                             <h6 class="text-center">${{toppings.productTotalPrice}}</h6>
                             <div class="btn-group">
                               <a style="padding: 4px 28px;" type="button" id="ctaId-remove-topping"
-                                      (click)="cartService.addToppingQuantity(toppings,'subtracting')"
-                                      class="btn btn-secondary"><strong>-</strong></a>
-                              <a
-                                style="width: 70px;padding: 4px 28px;border: 1px solid lightgray;background: whitesmoke;color: black"
+                                (click)="cartService.addToppingQuantity(toppings,'subtracting')"
+                                class="btn btn-secondary"><strong>-</strong></a>
+                              <a style="width: 70px;padding: 4px 28px;border: 1px solid lightgray;background: whitesmoke;color: black"
                                 type="button" class="btn btn-secondary ml-1 mr-1">
                                 <strong>{{toppings.productQuantity}}</strong></a>
-                              <a style="padding: 4px 28px;" type="button"
-                                      id="ctaId-add-topping"
-                                      (click)="cartService.addToppingQuantity(toppings,'adding')"
-                                      class="btn btn-secondary"><strong>+</strong></a>
+                              <a style="padding: 4px 28px;" type="button" id="ctaId-add-topping"
+                                (click)="cartService.addToppingQuantity(toppings,'adding')"
+                                class="btn btn-secondary"><strong>+</strong></a>
                             </div>
                           </div>
                         </div>
@@ -163,20 +183,27 @@
                         <h6 class="text-end">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
                       </div>
                       <div class="d-flex justify-content-between button-group">
-                        <button id="entityId-back" *ngIf="cartService.slideToShow!==0 && !cartService.singleCustomProductObj.isShowInfo" (click)="cartService.previousSlide()" type="button" class="btn btn-yellow">
+                        <button id="entityId-back"
+                          *ngIf="cartService.slideToShow!==0 && !cartService.singleCustomProductObj.isShowInfo"
+                          (click)="cartService.previousSlide()" type="button" class="btn btn-yellow">
                           <i class="fas fa-arrow-left"></i> Back
                         </button>
                         <div [class.apply-left-margin]="cartService.slideToShow===0" class="d-flex">
-                          <button data-bs-dismiss="modal" id="entityId-cancel" (click)="cancelModal()" type="button" class="btn btn-yellow">Cancel</button>
-                          <button id="entityId-next" *ngIf="cartService.slideToShow!==4" (click)="cartService.nextSlide()" type="button"
-                                  class="btn ml-2 btn-primary">Next
+                          <button data-bs-dismiss="modal" id="entityId-cancel" (click)="cancelModal()" type="button"
+                            class="btn btn-yellow">Cancel</button>
+                          <button id="entityId-next" *ngIf="cartService.slideToShow!==4"
+                            (click)="cartService.nextSlide()" type="button" class="btn ml-2 btn-primary">Next
                             <i class="fas fa-arrow-right"></i></button>
                           <div *ngIf="!cartService.singleCustomProductObj.isShowInfo">
-                            <button id="entityId-cart-item" *ngIf="cartService.slideToShow==4 && !cartService.singleCustomProductObj.isEditable" (click)="addToCart()" type="button"
-                                    data-bs-dismiss="modal" class="btn ml-2 btn-primary">Cart Item
+                            <button id="entityId-cart-item"
+                              *ngIf="cartService.slideToShow==4 && !cartService.singleCustomProductObj.isEditable"
+                              (click)="addToCart()" type="button" data-bs-dismiss="modal"
+                              class="btn ml-2 btn-primary">Cart Item
                               <i class="fas ml-2 fa-cart-plus"></i></button>
-                            <button id="entityId-cart-item" *ngIf="cartService.slideToShow==4 && cartService.singleCustomProductObj.isEditable" (click)="editToCart()" type="button"
-                                    data-bs-dismiss="modal" class="btn ml-2 btn-primary">Edit Cart Item
+                            <button id="entityId-cart-item"
+                              *ngIf="cartService.slideToShow==4 && cartService.singleCustomProductObj.isEditable"
+                              (click)="editToCart()" type="button" data-bs-dismiss="modal"
+                              class="btn ml-2 btn-primary">Edit Cart Item
                               <i class="fas ml-2 fa-cart-plus"></i></button>
                           </div>
                         </div>
@@ -184,12 +211,14 @@
                     </div>
                     <div id="sectionId-addons" class="section p-2" *ngIf="cartService.slideToShow===3">
                       <h3 class="text-center">Addons</h3>
-                      <div *ngIf="cartService.singleCustomProductObj.productAddons && cartService.singleCustomProductObj.productAddons.length"
-                           class="main-selection-container">
-                        <div id="{{addons.productId}}" *ngFor="let addons of cartService.singleCustomProductObj.productAddons"
-                             class="list mb-2 d-flex justify-content-between">
+                      <div
+                        *ngIf="cartService.singleCustomProductObj.productAddons && cartService.singleCustomProductObj.productAddons.length"
+                        class="main-selection-container">
+                        <div id="{{addons.productId}}"
+                          *ngFor="let addons of cartService.singleCustomProductObj.productAddons"
+                          class="list mb-2 d-flex justify-content-between">
                           <div class="d-flex left">
-                            <img [src]="addons.productImage"/>
+                            <img [src]="addons.productImage" />
                             <h6>{{addons.productName}}
                               <br>
                               <span class="mt-3">${{addons.productPrice}}</span>
@@ -198,18 +227,16 @@
                           <div class="counter-section">
                             <h6 class="text-center">${{addons.productTotalPrice}}</h6>
                             <div class="btn-group">
-                              <a style="padding: 4px 28px;" type="button"
-                                      id="ctaId-remove-addons"
-                                      (click)="cartService.addAddonQuantity(addons,'subtracting')"
-                                      class="btn btn-grp btn-secondary"><strong>-</strong></a>
+                              <a style="padding: 4px 28px;" type="button" id="ctaId-remove-addons"
+                                (click)="cartService.addAddonQuantity(addons,'subtracting')"
+                                class="btn btn-grp btn-secondary"><strong>-</strong></a>
                               <button
                                 style="width: 70px;padding: 4px 28px;border: 1px solid lightgray;background: whitesmoke;color: black"
                                 type="button" class="btn ml-1 mr-1">
                                 <strong>{{addons.productQuantity}}</strong></button>
-                              <a style="padding: 4px 28px;" type="button"
-                                      id="ctaId-add-addons"
-                                      (click)="cartService.addAddonQuantity(addons,'adding')"
-                                      class="btn btn-secondary"><strong>+</strong></a>
+                              <a style="padding: 4px 28px;" type="button" id="ctaId-add-addons"
+                                (click)="cartService.addAddonQuantity(addons,'adding')"
+                                class="btn btn-secondary"><strong>+</strong></a>
                             </div>
                           </div>
                         </div>
@@ -218,20 +245,27 @@
                         <h6 class="text-end">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
                       </div>
                       <div class="d-flex justify-content-between button-group">
-                        <button id="entityId-back" *ngIf="cartService.slideToShow!==0 && !cartService.singleCustomProductObj.isShowInfo" (click)="cartService.previousSlide()" type="button" class="btn btn-yellow">
+                        <button id="entityId-back"
+                          *ngIf="cartService.slideToShow!==0 && !cartService.singleCustomProductObj.isShowInfo"
+                          (click)="cartService.previousSlide()" type="button" class="btn btn-yellow">
                           <i class="fas fa-arrow-left"></i> Back
                         </button>
                         <div [class.apply-left-margin]="cartService.slideToShow===0" class="d-flex">
-                          <button data-bs-dismiss="modal" id="entityId-cancel" (click)="cancelModal()" type="button" class="btn btn-yellow">Cancel</button>
-                          <button id="entityId-next" *ngIf="cartService.slideToShow!==4" (click)="cartService.nextSlide()" type="button"
-                                  class="btn ml-2 btn-primary">Next
+                          <button data-bs-dismiss="modal" id="entityId-cancel" (click)="cancelModal()" type="button"
+                            class="btn btn-yellow">Cancel</button>
+                          <button id="entityId-next" *ngIf="cartService.slideToShow!==4"
+                            (click)="cartService.nextSlide()" type="button" class="btn ml-2 btn-primary">Next
                             <i class="fas fa-arrow-right"></i></button>
                           <div *ngIf="!cartService.singleCustomProductObj.isShowInfo">
-                            <button id="entityId-cart-item" *ngIf="cartService.slideToShow==4 && !cartService.singleCustomProductObj.isEditable" (click)="addToCart()" type="button"
-                                    data-bs-dismiss="modal" class="btn ml-2 btn-primary">Cart Item
+                            <button id="entityId-cart-item"
+                              *ngIf="cartService.slideToShow==4 && !cartService.singleCustomProductObj.isEditable"
+                              (click)="addToCart()" type="button" data-bs-dismiss="modal"
+                              class="btn ml-2 btn-primary">Cart Item
                               <i class="fas ml-2 fa-cart-plus"></i></button>
-                            <button id="entityId-cart-item" *ngIf="cartService.slideToShow==4 && cartService.singleCustomProductObj.isEditable" (click)="editToCart()" type="button"
-                                    data-bs-dismiss="modal" class="btn ml-2 btn-primary">Edit Cart Item
+                            <button id="entityId-cart-item"
+                              *ngIf="cartService.slideToShow==4 && cartService.singleCustomProductObj.isEditable"
+                              (click)="editToCart()" type="button" data-bs-dismiss="modal"
+                              class="btn ml-2 btn-primary">Edit Cart Item
                               <i class="fas ml-2 fa-cart-plus"></i></button>
                           </div>
                         </div>
@@ -239,80 +273,90 @@
                     </div>
                     <div id="entityId-quantity" class="section p-2" *ngIf="cartService.slideToShow===4">
                       <h3 class="text-center">Product Summary</h3>
-                      <div *ngIf="!cartService.singleCustomProductObj.isShowInfo" class="d-flex mt-2 align-items-center justify-content-center">
+                      <div *ngIf="!cartService.singleCustomProductObj.isShowInfo"
+                        class="d-flex mt-2 align-items-center justify-content-center">
                         <div class="btn-group">
-                          <a style="padding: 4px 28px;" type="button"
-                             id="ctaId-remove-quantity"
-                                  (click)="cartService.addProductQuantity(cartService.singleCustomProductObj,'subtracting')"
-                                  class="btn btn-grp btn-secondary"><strong>-</strong></a>
-                          <button style="width: 70px;padding: 4px 28px;border: 1px solid lightgray;background: whitesmoke;color: black" type="button" class="btn ml-1 mr-1">
+                          <a style="padding: 4px 28px;" type="button" id="ctaId-remove-quantity"
+                            (click)="cartService.addProductQuantity(cartService.singleCustomProductObj,'subtracting')"
+                            class="btn btn-grp btn-secondary"><strong>-</strong></a>
+                          <button
+                            style="width: 70px;padding: 4px 28px;border: 1px solid lightgray;background: whitesmoke;color: black"
+                            type="button" class="btn ml-1 mr-1">
                             <strong>{{cartService.singleCustomProductObj.productQuantity}}</strong></button>
-                          <a style="padding: 4px 28px;" type="button"
-                             id="ctaId-add-quantity"
-                                  (click)="cartService.addProductQuantity(cartService.singleCustomProductObj,'adding')"
-                                  class="btn btn-secondary"><strong>+</strong></a>
+                          <a style="padding: 4px 28px;" type="button" id="ctaId-add-quantity"
+                            (click)="cartService.addProductQuantity(cartService.singleCustomProductObj,'adding')"
+                            class="btn btn-secondary"><strong>+</strong></a>
                         </div>
                       </div>
                       <div style="height: 286px;" class="main-selection-container">
                         <table class="table table-bordered">
                           <thead>
-                          <tr>
-                            <th style="width: 3%"></th>
-                            <th style="width: 26%"></th>
-                            <th style="width: 2%"></th>
-                          </tr>
+                            <tr>
+                              <th style="width: 3%"></th>
+                              <th style="width: 26%"></th>
+                              <th style="width: 2%"></th>
+                            </tr>
                           </thead>
                           <tbody>
-                          <tr style="height: 20%">
-                            <td>Item Name</td>
-                            <td>{{cartService.singleCustomProductObj.productName}}</td>
-                            <td>${{cartService.singleCustomProductObj.productPrice}}</td>
-                          </tr>
-                          <tr *ngIf="cartService.isSelected(cartService.singleCustomProductObj.productOptions)">
-                            <td>Options</td>
-                            <td><span>{{cartService.checkCommas(cartService.singleCustomProductObj.productOptions)}}</span>
-                            </td>
-                            <td>--</td>
-                          </tr>
-                          <tr *ngIf="cartService.isSelected(cartService.singleCustomProductObj.productIngredients)">
-                            <td>Ingredients</td>
-                            <td><span>{{cartService.checkCommas(cartService.singleCustomProductObj.productIngredients)}}</span>
-                            </td>
-                            <td>--</td>
-                          </tr>
-                          <tr *ngIf="cartService.isSelected(cartService.singleCustomProductObj.productFlavors)">
-                            <td>Flavour</td>
-                            <td><span *ngFor="let flav of cartService.singleCustomProductObj.productFlavors">
-                                <span *ngIf="flav.selected">{{flav.flavorName }} </span>
-                              </span>
-                            </td>
-                            <td>--</td>
-                          </tr>
-                          <tr *ngIf="cartService.isSelected(cartService.singleCustomProductObj.productToppings,'quantity')">
-                            <td>Toppings</td>
-                            <td><span>{{cartService.checkCommasWithQuantity(cartService.singleCustomProductObj.productToppings)}}</span>
-                            </td>
-                            <td>${{cartService.getTotalPrice(cartService.singleCustomProductObj.productToppings)}}</td>
-                          </tr>
-                          <tr *ngIf="cartService.isSelected(cartService.singleCustomProductObj.productAddons,'quantity')">
-                            <td>Addons</td>
-                            <td><span>{{cartService.checkCommasWithQuantity(cartService.singleCustomProductObj.productAddons)}}</span>
-                            <td>${{cartService.getTotalPrice(cartService.singleCustomProductObj.productAddons)}}</td>
-                          </tr>
-                          <tr>
-                            <td>Attributes</td>
-                            <td><span *ngFor="let attr of cartService.singleCustomProductObj.productAttributes | keyvalue;let attrIndex = index">
-                                <span class="p-1" *ngIf="attr.value">({{attr.key }})</span>
-                              </span></td>
-                            <td>--</td>
-                          </tr>
-                          <tr>
-                            <td>Nutrition</td>
-                            <td><span class="p-1" *ngFor="let nut of cartService.singleCustomProductObj.productNutrition | keyvalue">
-                                ({{nut.key}} : {{nut.value}})
-                              </span></td>
-                            <td>--</td>
-                          </tr>
+                            <tr style="height: 20%">
+                              <td>Item Name</td>
+                              <td>{{cartService.singleCustomProductObj.productName}}</td>
+                              <td>${{cartService.singleCustomProductObj.productPrice}}</td>
+                            </tr>
+                            <tr *ngIf="cartService.isSelected(cartService.singleCustomProductObj.productOptions)">
+                              <td>Options</td>
+                              <td>
+                                <span>{{cartService.checkCommas(cartService.singleCustomProductObj.productOptions)}}</span>
+                              </td>
+                              <td>--</td>
+                            </tr>
+                            <tr *ngIf="cartService.isSelected(cartService.singleCustomProductObj.productIngredients)">
+                              <td>Ingredients</td>
+                              <td>
+                                <span>{{cartService.checkCommas(cartService.singleCustomProductObj.productIngredients)}}</span>
+                              </td>
+                              <td>--</td>
+                            </tr>
+                            <tr *ngIf="cartService.isSelected(cartService.singleCustomProductObj.productFlavors)">
+                              <td>Flavour</td>
+                              <td><span *ngFor="let flav of cartService.singleCustomProductObj.productFlavors">
+                                  <span *ngIf="flav.selected">{{flav.flavorName }} </span>
+                                </span>
+                              </td>
+                              <td>--</td>
+                            </tr>
+                            <tr
+                              *ngIf="cartService.isSelected(cartService.singleCustomProductObj.productToppings,'quantity')">
+                              <td>Toppings</td>
+                              <td>
+                                <span>{{cartService.checkCommasWithQuantity(cartService.singleCustomProductObj.productToppings)}}</span>
+                              </td>
+                              <td>${{cartService.getTotalPrice(cartService.singleCustomProductObj.productToppings)}}
+                              </td>
+                            </tr>
+                            <tr
+                              *ngIf="cartService.isSelected(cartService.singleCustomProductObj.productAddons,'quantity')">
+                              <td>Addons</td>
+                              <td>
+                                <span>{{cartService.checkCommasWithQuantity(cartService.singleCustomProductObj.productAddons)}}</span>
+                              <td>${{cartService.getTotalPrice(cartService.singleCustomProductObj.productAddons)}}</td>
+                            </tr>
+                            <tr>
+                              <td>Attributes</td>
+                              <td><span
+                                  *ngFor="let attr of cartService.singleCustomProductObj.productAttributes | keyvalue;let attrIndex = index">
+                                  <span class="p-1" *ngIf="attr.value">({{attr.key }})</span>
+                                </span></td>
+                              <td>--</td>
+                            </tr>
+                            <tr>
+                              <td>Nutrition</td>
+                              <td><span class="p-1"
+                                  *ngFor="let nut of cartService.singleCustomProductObj.productNutrition | keyvalue">
+                                  ({{nut.key}} : {{nut.value}})
+                                </span></td>
+                              <td>--</td>
+                            </tr>
                           </tbody>
                         </table>
                       </div>
@@ -320,20 +364,27 @@
                         <h6 class="text-end">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
                       </div>
                       <div class="d-flex justify-content-between button-group">
-                        <button id="entityId-back" *ngIf="cartService.slideToShow!==0 && !cartService.singleCustomProductObj.isShowInfo" (click)="cartService.previousSlide()" type="button" class="btn btn-yellow">
+                        <button id="entityId-back"
+                          *ngIf="cartService.slideToShow!==0 && !cartService.singleCustomProductObj.isShowInfo"
+                          (click)="cartService.previousSlide()" type="button" class="btn btn-yellow">
                           <i class="fas fa-arrow-left"></i> Back
                         </button>
                         <div [class.apply-left-margin]="cartService.slideToShow===0" class="d-flex">
-                          <button data-bs-dismiss="modal" id="entityId-cancel" (click)="cancelModal()" type="button" class="btn btn-yellow">Cancel</button>
-                          <button id="entityId-next" *ngIf="cartService.slideToShow!==4" (click)="cartService.nextSlide()" type="button"
-                                  class="btn ml-2 btn-primary">Next
+                          <button data-bs-dismiss="modal" id="entityId-cancel" (click)="cancelModal()" type="button"
+                            class="btn btn-yellow">Cancel</button>
+                          <button id="entityId-next" *ngIf="cartService.slideToShow!==4"
+                            (click)="cartService.nextSlide()" type="button" class="btn ml-2 btn-primary">Next
                             <i class="fas fa-arrow-right"></i></button>
                           <div *ngIf="!cartService.singleCustomProductObj.isShowInfo">
-                            <button id="entityId-cart-item" *ngIf="cartService.slideToShow==4 && !cartService.singleCustomProductObj.isEditable" (click)="addToCart()" type="button"
-                                    data-bs-dismiss="modal" class="btn ml-2 btn-primary">Cart Item
+                            <button id="entityId-cart-item"
+                              *ngIf="cartService.slideToShow==4 && !cartService.singleCustomProductObj.isEditable"
+                              (click)="addToCart()" type="button" data-bs-dismiss="modal"
+                              class="btn ml-2 btn-primary">Cart Item
                               <i class="fas ml-2 fa-cart-plus"></i></button>
-                            <button id="entityId-cart-item" *ngIf="cartService.slideToShow==4 && cartService.singleCustomProductObj.isEditable" (click)="editToCart()" type="button"
-                                    data-bs-dismiss="modal" class="btn ml-2 btn-primary">Edit Cart Item
+                            <button id="entityId-cart-item"
+                              *ngIf="cartService.slideToShow==4 && cartService.singleCustomProductObj.isEditable"
+                              (click)="editToCart()" type="button" data-bs-dismiss="modal"
+                              class="btn ml-2 btn-primary">Edit Cart Item
                               <i class="fas ml-2 fa-cart-plus"></i></button>
                           </div>
                         </div>

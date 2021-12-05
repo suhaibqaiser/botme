@@ -56,6 +56,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {ReservationService} from "./services/reservation.service";
 import {DemoPageComponent} from './components/pages/demo-page/demo-page.component';
 import {HelperService} from "./services/helper.service";
+import { MicrophoneComponent } from './components/sections/microphone/microphone.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +102,8 @@ import {HelperService} from "./services/helper.service";
     CheckoutSectionComponent,
     SpinnerComponent,
     CustomizeProductModalComponent,
-    DemoPageComponent
+    DemoPageComponent,
+    MicrophoneComponent
   ],
   imports: [
     BrowserModule,
