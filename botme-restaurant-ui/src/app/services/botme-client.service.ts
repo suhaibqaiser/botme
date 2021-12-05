@@ -3,14 +3,17 @@ import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {CookieService} from 'ngx-cookie-service';
+import {DeviceDetectorService} from 'ngx-device-detector';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BotmeClientService {
   botMeClientBaseURL = environment.botMeClientAPI;
+  deviceInfo: any;
 
-  constructor(private cookieService: CookieService, private http: HttpClient) {
+  constructor(private deviceService: DeviceDetectorService, private cookieService: CookieService, private http: HttpClient) {
+
   }
 
   loginBotMeClientApi(obj: any): Observable<any> {
@@ -47,8 +50,6 @@ export class BotmeClientService {
   }
 
   isRobotAuth() {
-    let clientName = this.getCookie().clientName
-    return (clientName && clientName.length) ? this.getCookie().clientName.toLowerCase().includes('robot') : false
-
+    return (this.deviceService.isMobile() || this.deviceService.isTablet())
   }
 }
