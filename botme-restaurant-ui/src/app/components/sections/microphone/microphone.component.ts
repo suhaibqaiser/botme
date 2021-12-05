@@ -10,6 +10,7 @@ export class MicrophoneComponent implements OnInit {
 
 
   speechState: string = 'idle'
+  speechEnabled: boolean = false
 
   constructor(private speechService: SpeechService,) { }
 
@@ -18,6 +19,10 @@ export class MicrophoneComponent implements OnInit {
     this.speechService.speechState.subscribe(data => {
       this.speechState = data
     })
+    this.speechService.speechEnabled.subscribe(data => {
+      this.speechEnabled = data
+    })
+
   }
 
   toggleListen() {

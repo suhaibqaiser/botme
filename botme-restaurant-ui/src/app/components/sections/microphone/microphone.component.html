@@ -1,7 +1,6 @@
-<div class="speech-button  "
+<div class="speech-button"
     [ngClass]="{ 'listening': speechState==='listening', 'processing': (speechState==='processing'|| speechState==='speaking')}"
-    (click)="toggleListen()">
-    <!-- *ngIf="speechEnabled"> -->
+    (click)="toggleListen()" *ngIf="speechEnabled">
     <div class="fa fa-microphone-alt mic-button">
     </div>
 </div>
