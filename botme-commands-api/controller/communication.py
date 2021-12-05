@@ -28,6 +28,10 @@ def getResponse(intent,entity,text,pageId,sectionId,form):
             form[1]['entityStatus'] = False
             form[2]['entityStatus'] = False
             form[3]['entityStatus'] = False
+            form[0]['entityValue'] = ""
+            form[1]['entityValue'] = ""
+            form[2]['entityValue'] = ""
+            form[3]['entityValue'] = ""
             context = db['context']
             iD = getEntityClickAttribute(context['entities'])
             return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form} 
