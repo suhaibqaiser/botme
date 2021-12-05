@@ -12,7 +12,9 @@ def send_Response():
     sectionID = req_data['sectionId']
     form = req_data['entities']
     message = text.lower()
+    print(message)
     rasa_data = getIntent(message)
+    print(rasa_data)
     intent = rasa_data['intent']
     if(intent['name'] == "nlu_fallback"):
         response = {"Response":"I’m sorry,Could you say it again?","ctaCommandId":None,"pageId":pageId,"sectionId":sectionID,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent['name']}
