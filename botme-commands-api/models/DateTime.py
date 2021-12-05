@@ -71,7 +71,7 @@ class DateTime():
             if t is not None:
                 print("dateparser call")
                 time = t.strftime("%H:%M:%S")
-                if self.form[3]:
+                if self.form[3]['entityValue']:
                     self.form[3]['entityValue'] = time
                     self.form[3]['entityStatus'] = False
                     Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
@@ -88,7 +88,7 @@ class DateTime():
                 print(t)
                 if t:
                     time = t.strftime("%H:%M:%S")
-                    if self.form[3]:
+                    if self.form[3]['entityValue']:
                         self.form[3]['entityValue'] = time
                         self.form[3]['entityStatus'] = False
                         Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
