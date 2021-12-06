@@ -70,12 +70,8 @@ export class BookingSectionComponent implements OnInit {
     this.validations.reservationSeats = this._reservationService.isNumberRequired(this.reservationForm.get('reservationSeats')?.value)
     this.validations.reservationDate = this._reservationService.isDateRequired(this.reservationForm.get('reservationDate')?.value)
     this.validations.reservationTime = this._reservationService.isRequired(this.reservationForm.get('reservationTime')?.value)
+    if(!this.validations.reservationTime) this.validations.isValidTime =  !this._reservationService.checkIsValidTime(this.reservationForm.get('reservationTime')?.value)
 
-    this.validations.isValidTime = !this.validations.reservationTime && this._reservationService.checkIsValidTime(this.reservationForm.get('reservationTime')?.value)
-
-    console.log(this._reservationService.checkIsValidTime(this.reservationForm.get('reservationTime')?.value))
-
-    return
     if (Object.keys(this.validations).every(k => this.validations[k] === false)) {
       this.reservationLoader = true
       this._reservationService.addReservation(this.reservationForm.value).subscribe((res: any) => {
