@@ -56,11 +56,12 @@
                       <i class="flaticon-clock"></i>
                     </div>
                   </div>
-                  <input formControlName="reservationTime" id="entityId-time" type="text" name="startTime"
+                  <input formControlName="reservationTime" id="entityId-time" type="text"
                          class="form-control" placeholder="e.g 12:30 AM"/>
                 </div>
                 <span *ngIf="validations.reservationTime"
                       style="color: red;text-align: justify">Time is required!</span>
+                <span *ngIf="validations.isValidTime" style="color: red;text-align: justify">Please enter time in valid format!</span>
               </div>
             </div>
             <button id="entityId-book-now" (click)="addReservation()" class="btn full-width" type="button">Book Now

@@ -28,4 +28,9 @@ export class ReservationService {
   isDateRequired(value: any) {
     return !(value)
   }
+
+  checkIsValidTime(value: any) {
+    let pattern = new RegExp('^(0?[1-9]|1[0-2]):([0-5]\\d)\\s?((?:[Aa]|[Pp])\\.?[Mm]\\.?)$');
+    return pattern.test(value)
+  }
 }

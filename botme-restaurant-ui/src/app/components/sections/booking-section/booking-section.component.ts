@@ -28,9 +28,11 @@ export class BookingSectionComponent implements OnInit {
     customerName: false,
     reservationSeats: false,
     reservationDate: false,
-    reservationTime: false
+    reservationTime: false,
+    isValidTime: false,
   }
   reservationLoader: boolean = false
+
   /// Time regex ^(0?[1-9]|1[0-2]):([0-5]\d)\s?((?:A|P)\.?M\.?)$
   constructor(private _router: Router, private _reservationService: ReservationService, public _socketService: SocketService) {
 
@@ -69,6 +71,11 @@ export class BookingSectionComponent implements OnInit {
     this.validations.reservationDate = this._reservationService.isDateRequired(this.reservationForm.get('reservationDate')?.value)
     this.validations.reservationTime = this._reservationService.isRequired(this.reservationForm.get('reservationTime')?.value)
 
+    this.validations.isValidTime = !this.validations.reservationTime && this._reservationService.checkIsValidTime(this.reservationForm.get('reservationTime')?.value)
+
+    console.log(this._reservationService.checkIsValidTime(this.reservationForm.get('reservationTime')?.value))
+
+    return
     if (Object.keys(this.validations).every(k => this.validations[k] === false)) {
       this.reservationLoader = true
       this._reservationService.addReservation(this.reservationForm.value).subscribe((res: any) => {
