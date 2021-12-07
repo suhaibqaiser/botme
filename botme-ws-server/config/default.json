@@ -4,5 +4,5 @@
     "restaurantAPI": "http://localhost:3100",
     "rasaAPI": "http://localhost:5005",
     "bearerToken": "ea2d3aeaad77865f9769974a920892f5",
-    "commandAPI": "http://api.gofindmenu.com:5010"
+    "commandAPI": "http://localhost:5010"
 }
