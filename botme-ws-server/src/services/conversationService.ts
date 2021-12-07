@@ -1,23 +1,23 @@
 const fetch = require('node-fetch');
-import config from '../config.json'
+const config = require('config')
 
 export async function addConversationLog(sessionId: string, query: any, response: any) {
     try {
         let conversationId = await getConversatonId(sessionId)
-        
+
         if (!conversationId) return undefined
-        
+
         let body = {
             "conversationId": conversationId,
             "query": query,
             "response": response.text
         };
-        const res = await fetch(config.clientsAPI + "/conversation/addConversationLog", {
+        const res = await fetch(config.get('clientsAPI') + "/conversation/addConversationLog", {
             method: 'post',
             body: JSON.stringify(body),
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${config.bearerToken}`
+                'Authorization': `Bearer ${config.get('bearerToken')}`
             }
         });
         let data = await res.json()
@@ -33,10 +33,10 @@ export async function addConversationLog(sessionId: string, query: any, response
 
 async function getConversatonId(sessionId: string) {
     try {
-        const res = await fetch(config.clientsAPI + `/conversation/getConversationId?sessionId=${sessionId}`, {
+        const res = await fetch(config.get('clientsAPI') + `/conversation/getConversationId?sessionId=${sessionId}`, {
             method: 'get',
             headers: {
-                'Authorization': `Bearer ${config.bearerToken}`
+                'Authorization': `Bearer ${config.get('bearerToken')}`
             }
         });
         let data = await res.json()

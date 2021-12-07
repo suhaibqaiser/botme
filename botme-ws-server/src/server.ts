@@ -1,14 +1,14 @@
 // requires for libraries
-import {createServer} from "http"
-import {Server, Socket} from "socket.io"
-import {getSession} from './services/sessionService'
-import {getCommandResponse} from './services/commandService'
-import config from './config.json'
+import { createServer } from "http"
+import { Server, Socket } from "socket.io"
+import { getSession } from './services/sessionService'
+import { getCommandResponse } from './services/commandService'
+const config = require('config');
 import models = require("./models")
-import {getSpeechToText, getTextToSpeech} from "./services/speechService"
+import { getSpeechToText, getTextToSpeech } from "./services/speechService"
 
 // application config
-const port = process.env.WS_PORT || config.port
+const port = process.env.WS_PORT || config.get('port')
 
 // application initialization
 const httpServer = createServer();
@@ -83,7 +83,7 @@ io.on("connection", (socket: Socket) => {
     });
 
     function sendMessage(room: string, type: string, data: any) {
-        let payload: models.SocketMessage = {payload: data, type: type, timestamp: Date()}
+        let payload: models.SocketMessage = { payload: data, type: type, timestamp: Date() }
         io.to(room).emit("message", payload);
     }
 

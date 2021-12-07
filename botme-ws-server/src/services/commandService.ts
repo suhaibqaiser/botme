@@ -1,12 +1,12 @@
 const fetch = require('node-fetch');
-import {addConversationLog} from './conversationService'
-import config from '../config.json'
+import { addConversationLog } from './conversationService'
+const config = require('config');
 
 export async function getCommandResponse(sessionId: string, text: string, pageId: string, sectionId: string, entities: string[], uniqueConvId: number) {
 
     try {
-        let body = {"text": text, "pageId": pageId, "sectionId": sectionId, "entities": entities};
-        const res = await fetch(config.commandAPI + "/response", {
+        let body = { "text": text, "pageId": pageId, "sectionId": sectionId, "entities": entities };
+        const res = await fetch(config.get('commandAPI') + "/response", {
             method: 'post',
             body: JSON.stringify(body),
             headers: {
