@@ -10,7 +10,7 @@ export async function processIteration(data: Array<object>) {
             "text": obj.command,
             "pageId": obj.pageId,
             "sectionId": obj.sectionId,
-            "entities": obj.entities
+            "entities": JSON.parse(obj.entities)
         };
         await http(conf.get('commandsApi'), '/response', "POST", JSON.stringify(body))
             .then(response => {
