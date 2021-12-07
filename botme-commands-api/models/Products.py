@@ -1,6 +1,8 @@
 from conf.mongodb import getDbCta
 import requests
 
+from config import RESTAURANT_API
+
 
 class Product():
     def __init__(self,intent,value,senti,pageId,sectionId,text):
@@ -14,7 +16,7 @@ class Product():
 
     def checkingForProduct(self):
         try:
-            response = requests.get('http://localhost:3100/food/product/search?productName='+self.value)
+            response = requests.get(RESTAURANT_API + '/food/product/search?productName='+self.value)
             data = response.json()
             payload = data['payload']
             if(data['status']=="success"):

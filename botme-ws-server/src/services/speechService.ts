@@ -3,11 +3,8 @@ const speech = require('@google-cloud/speech')
 const textToSpeech = require('@google-cloud/text-to-speech');
 const client = new speech.SpeechClient()
 const ttsclient = new textToSpeech.TextToSpeechClient();
-const fs = require('fs');
-const util = require('util');
 
 process.env['GOOGLE_APPLICATION_CREDENTIALS'] = 'google-cloud-credentials.json'
-
 
 // This method is used for Google TTS service
 export async function getSpeechToText(payload: any) {

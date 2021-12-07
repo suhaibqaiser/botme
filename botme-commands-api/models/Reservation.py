@@ -1,6 +1,7 @@
 import requests
 import re
 from controller.reservationField import reservationField
+from config import RESTAURANT_API 
 
 
 class Reservation():
@@ -48,7 +49,7 @@ class Reservation():
 
     def searchingTable(value,senti,intent,text):
         try:
-            response = requests.get('http://localhost:3100/food/tables/search?seats='+value)
+            response = requests.get(RESTAURANT_API + 'food/tables/search?seats=' + value)
             data = response.json()
             if(data['status'] == "success"):
                 table_no = Reservation.getTableNo(data['payload'])

@@ -19,6 +19,7 @@
     "@types/mongoose": "^5.11.97",
     "@types/node": "^15.12.4",
     "compression": "^1.7.4",
+    "config": "^3.3.6",
     "cors": "^2.8.5",
     "csvjson": "^5.1.0",
     "csvtojson": "^2.0.10",
