@@ -13,6 +13,7 @@ export class BookingSectionComponent implements OnInit {
   reservation: any = {
     isReservationCompleted: false,
     name: null,
+    tableNumber: 0,
     reservationSeats: null,
     reservationDate: null,
     reservationTime: null
@@ -30,8 +31,9 @@ export class BookingSectionComponent implements OnInit {
     reservationTime: false
   }
   reservationLoader: boolean = false
-
+  /// Time regex ^(0?[1-9]|1[0-2]):([0-5]\d)\s?((?:A|P)\.?M\.?)$
   constructor(private _router: Router, private _reservationService: ReservationService, public _socketService: SocketService) {
+
   }
 
   ngOnInit(): void {
@@ -73,6 +75,7 @@ export class BookingSectionComponent implements OnInit {
           if (res.status === "success") {
             this.reservation = {
               isReservationCompleted: true,
+              tableNumber: this.generateTableNumber(),
               name: this.reservationForm.get('customerName')?.value,
               reservationSeats: this.reservationForm.get('reservationSeats')?.value,
               reservationDate: this.reservationForm.get('reservationDate')?.value,
@@ -82,7 +85,7 @@ export class BookingSectionComponent implements OnInit {
             setTimeout(() => {
               this._router.navigate(['home'])
               this.reservation.isReservationCompleted = false
-            }, 5000)
+            }, 50000)
           }
         }
       )
@@ -101,6 +104,7 @@ export class BookingSectionComponent implements OnInit {
   }
 
   generateTableNumber() {
-    return Math.floor(Math.random() * 15)
+    let number = Math.floor(Math.random() * 15)
+    return (number >= 1) ? number : 1
   }
 }

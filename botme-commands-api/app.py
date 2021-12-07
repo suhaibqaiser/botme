@@ -11,7 +11,8 @@ def send_Response():
     pageId = req_data['pageId']
     sectionID = req_data['sectionId']
     form = req_data['entities']
-    message = text.title()
+    message = text.lower()
+    print(message)
     rasa_data = getIntent(message)
     print(rasa_data)
     intent = rasa_data['intent']

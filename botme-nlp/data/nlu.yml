@@ -118,16 +118,16 @@ nlu:
     examples: |
       - Take me to [contact](pagefour) us page
       - i want to visit [contact](pagefour) us page
-      - open [contact](pagefour) please page
+      - open [contact](pagefour) screen please
       - i want to see the [contact](pagefour) us page
       - can you please redirect me to [contact](pagefour) us page
       - he want to redirect to [contact](pagefour) us page
       - i want to redirect to [contact](pagefour) us page
-      - show me the [contact](pagefour)
-      - show us your [contact](pagefour)
+      - show me the [contact](pagefour) screen
+      - show us your [contact](pagefour) screen
       - i want you to take me to the [contact](pagefour) us page
       - she want to see the [contact](pagefour)
-      - Take me to [contact](pagefour) us page
+      - Take me to [contact](pagefour) us screen
       - i want to visit [contact](pagefour) us page
       - open [contact](pagefour) us page please 
       - i want to see your [contact](pagefour)
@@ -224,6 +224,10 @@ nlu:
       - we want to add to [card](list)
       - add product to the [car](list)
       - add product to the [card](list)
+      - add item to [cart](list)
+      - add product to the [cart](list)
+      - i want to add item to [cart](list)
+      - we want to add product to the [cart](list)
     
   - synonym: cart
     examples: |
@@ -4063,6 +4067,11 @@ nlu:
 
   - intent: book_now
     examples: |
+      - [book]{"entity":"reserved","value":"book now"} my reservation
+      - please [Book]{"entity":"reserved","value":"book now"} my reservation
+      - i want to [book]{"entity":"reserved","value":"book now"} my reservation
+      - i want to [confirm]{"entity":"reserved","value":"book now"} my reservation
+      - please [Confirm]{"entity":"reserved","value":"book now"} my reservation
       - [book now](reserved)
       - i want to [book now](reserved)
       - [book]{"entity":"reserved","value":"book now"}
@@ -4296,6 +4305,116 @@ nlu:
       - american cheese slice	
       - kofta sandwich
       - craft a sandwich
+      - Cookies
+      - Chocolate
+      - Banana
+      - Red
+      - Diet
+      - Strawberry
+      - Apple
+      - Fresh
+      - Water
+      - Caesars
+      - Greek
+      - vegetable
+      - Tabouli
+      - Fattoush
+      - Shawarma
+      - Chicken
+      - Junior
+      - Grilled
+      - Crispy
+      - Crazy
+      - Whole
+      - BBQ
+      - Make
+      - Potatoes
+      - Falafel
+      - Shish
+      - Shawarma
+      - Soujouk
+      - Tahini
+      - Tannour
+      - Garlic
+      - American
+      - Taystee
+      - Taystee
+      - Mushroom
+      - Beiruti
+      - Shish
+      - Kafta
+      - Pickle
+      - Spicy
+      - Baba
+      - Hummus
+      - Poutine
+      - Curly
+      - Fried
+      - Beef
+      - Jalapeno
+      - Onion
+      - French
+      - Cole
+      - Cheese
+      - Nacho
+      - Pizza
+      - cookies
+      - chocolate
+      - banana
+      - red
+      - sprite
+      - diet
+      - strawberry
+      - apple
+      - fresh
+      - water
+      - baklawa
+      - caesars
+      - greek
+      - Vegetable
+      - tabouli
+      - fattoush
+      - shawarma
+      - junior
+      - grilled
+      - crispy
+      - crazy
+      - whole
+      - bbq
+      - make
+      - potatoes
+      - shish
+      - shawarma
+      - soujouk
+      - falafel
+      - tahini
+      - tannour
+      - chicken
+      - garlic
+      - american
+      - taystee
+      - mushroom
+      - beiruti
+      - shish
+      - kafta
+      - pickle
+      - spicy
+      - baba
+      - hummus
+      - poutine
+      - soup
+      - curly
+      - fried
+      - jalapeno
+      - onion
+      - beef
+      - french
+      - cole
+      - cheese
+      - nacho
+      - american
+      - kofta
+      - craft
 
   - lookup: number   
     examples: |

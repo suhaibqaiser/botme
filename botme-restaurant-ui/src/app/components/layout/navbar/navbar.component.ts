@@ -16,7 +16,7 @@ export class NavbarComponent implements OnInit {
   loginForm = new FormGroup({
     clientID: new FormControl('', Validators.required),
     clientSecret: new FormControl('', Validators.required),
-    voiceType: new FormControl('', Validators.required)
+    voiceType: new FormControl('cloud-voice', Validators.required)
   })
   _voiceType: string = this._botMeClientService.getVoiceType()
   userVoice: string = ''
@@ -53,12 +53,12 @@ export class NavbarComponent implements OnInit {
             window.location.reload();
           });
         } else {
-          alert('Invalid Record')
+          alert('Invalid credentials')
         }
       },
       (err: any) => {
         console.error(err)
-        alert('Invalid Record')
+        alert('Invalid credentials')
       }
     )
   }

@@ -5,7 +5,7 @@
   <!-- Main content -->
   <div class="content">
     <app-microphone></app-microphone>
-    <router-outlet></router-outlet>
+    <router-outlet (activate)="onActivate($event)"></router-outlet>
     <!-- <app-progress-loader></app-progress-loader> -->
   </div>
   <!-- /.content -->

@@ -28,6 +28,7 @@ class Reservation():
                         Response = reservationField(self.db,self.form,self.pageId,self.sectionId,number,self.text,self.intent)
                         return Response
                     else:
+                        self.form[0]['entityStatus'] = False
                         self.form[1]['entityValue'] = number
                         self.form[1]['entityStatus'] = False
                         if not self.form[2]['entityValue']:

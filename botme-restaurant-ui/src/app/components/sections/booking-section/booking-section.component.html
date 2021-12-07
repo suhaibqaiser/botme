@@ -7,7 +7,8 @@
           <form [formGroup]="reservationForm" id="sectionId-reservation-form">
             <div class="reservation-form reservation-form-two reservation-form-white">
               <div class="form-group">
-                <div [class.high-light-field]="_socketService.getFocusOnField('entityId-name')" class="input-group mb-2">
+                <div [class.high-light-field]="_socketService.getFocusOnField('entityId-name')"
+                     class="input-group mb-2">
                   <div class="input-group-append">
                     <div class="input-group-text">
                       <i class="flaticon-user-2"></i>
@@ -20,7 +21,8 @@
               </div>
 
               <div class="form-group">
-                <div [class.high-light-field]="_socketService.getFocusOnField('entityId-number-of-persons')" class="input-group mb-2">
+                <div [class.high-light-field]="_socketService.getFocusOnField('entityId-number-of-persons')"
+                     class="input-group mb-2">
                   <div class="input-group-append">
                     <div class="input-group-text">
                       <i class="flaticon-add-user"></i>
@@ -33,7 +35,8 @@
                       style="color: red;text-align: justify">Seats are required!</span>
               </div>
               <div class="form-group">
-                <div [class.high-light-field]="_socketService.getFocusOnField('entityId-date')" class="input-group mb-2">
+                <div [class.high-light-field]="_socketService.getFocusOnField('entityId-date')"
+                     class="input-group mb-2">
                   <div class="input-group-append">
                     <div class="input-group-text">
                       <i class="flaticon-calendar-1"></i>
@@ -46,14 +49,15 @@
                       style="color: red;text-align: justify">Date is required!</span>
               </div>
               <div class="form-group">
-                <div [class.high-light-field]="_socketService.getFocusOnField('entityId-time')" class="input-group mb-2">
+                <div [class.high-light-field]="_socketService.getFocusOnField('entityId-time')"
+                     class="input-group mb-2">
                   <div class="input-group-append">
                     <div class="input-group-text">
                       <i class="flaticon-clock"></i>
                     </div>
                   </div>
-                  <input formControlName="reservationTime" id="entityId-time" type="time" name="startTime"
-                         class="form-control" placeholder="Time"/>
+                  <input formControlName="reservationTime" id="entityId-time" type="text" name="startTime"
+                         class="form-control" placeholder="e.g 12:30 AM"/>
                 </div>
                 <span *ngIf="validations.reservationTime"
                       style="color: red;text-align: justify">Time is required!</span>
@@ -79,11 +83,12 @@
         <div class="contact-item">
           <div class="contact-item-title text-center">
             <h3 class="color-white">Reservation Completed</h3>
+            <h5 class="mt-2" style="color:#E7272D">Redirecting you to home page after 1 minute....</h5>
           </div>
           <div class="contact-item-info">
             <div class="contact-info-list">
               <h3>Table Number</h3>
-              <p>{{generateTableNumber()}}</p>
+              <p>{{reservation.tableNumber}}</p>
             </div>
             <div class="contact-info-list">
               <h3>Name</h3>
@@ -105,6 +110,6 @@
         </div>
       </div>
     </div>
-<!--    <button id="entityId-create-new-reservation" (click)="createNewReservation()" class="btn full-width" type="button">Create New Reservation</button>-->
+    <!--    <button id="entityId-create-new-reservation" (click)="createNewReservation()" class="btn full-width" type="button">Create New Reservation</button>-->
   </div>
 </div>

@@ -95,16 +95,6 @@
                       placeholder="Client Secret" />
                   </div>
                 </div>
-                <div class="form-group mb-20">
-                  <div class="input-group">
-                    <label class="text-white">Voice Engine:</label>
-                    <select class="w-100" formControlName="voiceType">
-                      <option value="no-voice">Disabled</option>
-                      <option value="local-voice">Browser</option>
-                      <option value="cloud-voice">Google Cloud</option>
-                    </select>
-                  </div>
-                </div>
 
                 <div class="authentication-btn">
                   <button (click)="login()" [disabled]="!loginForm.valid" class="btn full-width btn-border mb-20">Log
