@@ -1,0 +1,29 @@
+.speech-button {
+  position: fixed;
+  right: 40px;
+  bottom: 30%; //calc(50% - 80px);;
+  width: 80px;
+  height: 80px;
+  // line-height: 50px;
+  shape-outside: circle();
+  clip-path: circle();
+  background-color: lightblue;
+  z-index: 99999;
+  cursor: pointer;
+  text-align: center;
+}
+
+.mic-button {
+  font-size: 48px;
+  margin-top: 15px;
+  // margin-left: 20px;
+}
+
+.listening {
+  background-color: #b32a2a;
+  color: white;
+}
+
+.processing {
+  visibility: hidden;
+}

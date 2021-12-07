@@ -86,25 +86,26 @@ async function authorizeClient(req, res) {
     let response = new Response()
 
     if (!req.body.clientID || !req.body.clientSecret) {
-        response.payload = {message: 'clientID or clientSecret is required'};
+        response.payload = {message: 'clientID, clientDeviceId and clientSecret is required'};
+        response.status = "error"
         return res.status(400).send(response);
     }
 
-    let clientID = req.body.clientID
-    let client = await clientService.getClientDetail(clientID)
 
-    if (client && client.clientSecret === req.body.clientSecret && client.clientActive === true) {
+    let client = await clientService.getClientDetail(req.body.clientID, req.body.clientSecret)
+
+    if (client) {
         let hash = crypto.createHash('sha256');
-        let clientToken = hash.update(Date()).digest('base64');
+        let clientToken = hash.update(Date()).digest('hex');
 
         let session = {
-            clientID: clientID,
+            clientID: req.body.clientID,
             clientToken: clientToken
         }
 
         let newSession = await sessionController.createSession(session)
         if (newSession) {
-            response.payload = {"clientToken": newSession.clientToken}
+            response.payload = {...client._doc,"clientToken": newSession.clientToken,'isLoggedIn': true}
             response.status = "success"
             return res.status(200).send(response)
         } else {
@@ -113,7 +114,7 @@ async function authorizeClient(req, res) {
             return res.status(400).send(response)
         }
     } else {
-        response.payload = "clientID or clientSecret is incorrect or client is not active"
+        response.payload = "deviceID or clientID or clientSecret is incorrect or client is not active"
         response.status = "error"
         return res.status(400).send(response)
     }
@@ -215,4 +216,12 @@ async function heartbeatClient(req, res) {
 //     }
 // }
 
-module.exports = ({getClientList,  getClientDetail,  addClient, authorizeClient,  updateClient,  deleteClient, heartbeatClient})
+module.exports = ({
+    getClientList,
+    getClientDetail,
+    addClient,
+    authorizeClient,
+    updateClient,
+    deleteClient,
+    heartbeatClient
+})

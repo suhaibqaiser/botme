@@ -5,20 +5,28 @@ session_config:
 intents:
   - inform
   - affirm
-  - ar_reserve_table
-  - ar_greet
+  # - ar_reserve_table
+  # - ar_greet
   - reserve_table
   - greet
   - goodbye
   - deny
   - bot_challenge
   - select_lang
-  - trigger_actions
+  - thanks
+  - customer_info:
+      use_entities:
+        - phoneNumber
+        - customerName
+
 entities:
   - date
   - lang
   - person
   - phoneNumber
+  - customerName
+  - orderType
+  - orderId
 slots:
   lang:
     type: categorical
@@ -35,11 +43,89 @@ slots:
   phoneNumber:
     type: text
     influence_conversation: true
+  orderType:
+    type: categorical
+    influence_conversation: true
+    values:
+      - pickup
+      - dinein
+      - delivery
+  orderId:
+    type: text
+    influence_conversation: true
+  customerId:
+    type: text
+    influence_conversation: true
+  customerObjectId:
+    type: text
+    influence_conversation: true
+  customerName:
+    type: text
+    influence_conversation: true
+  newCustomer:
+    type: bool
+    influence_conversation: true
+  tableObjectId:
+    type: text
+  tableId:
+    type: text
+  areaName:
+    type: text
+  reservationId:
+    type: text
+
 responses:
+  utter_table_code:
+    - text: "All set! {customerName} please proceed to the table labeled {tableId} on {areaName}. Enter the following code to access your table: {reservationId}"
+  utter_customer_name:
+    - text: Thanks for the input {customerName}!
+  utter_customer_response:
+    - text: Looks like you have been here before. Welcome back {customerName}!
+    - condition:
+        - type: slot
+          name: customerName
+          value: ''
+      text: And what is your good name?
+  utter_ask_for_customer_phone:
+    - text: I need your phone number to confirm your table
+  utter_thanks_response:
+    - text: You are welcome!
+    - text: Welcome!
+    - text: You're welcome!
+  utter_orderTypeSet:
+    - text: You may want a table with us. For that, can you tell me how many people are you?
+    - condition:
+        - type: slot
+          name: orderType
+          value: pickup
+      text: Please provide Order ID to get the status of the order. Or if you want to place a new pickup order then proceed to the order counter.
+    - condition:
+        - type: slot
+          name: orderType
+          value: delivery
+      text: Please provide delivery code to get the status of the order.
+
+  utter_pickup_response:
+    - text: Your order {orderId} is ready. Please pick it from the pickup counter.
+
+  utter_delivery_response:
+    - text: Your order {orderId} is ready. Please pick it from the delivery counter.
+
+
   utter_askforPhoneNumber:
     - text: Please tell me your phone number
     - text: Provide your phone number
     - text: I need your number to call you
+
+  #  utter_askforCustomer:
+  #    - buttons:
+  #        - payload: true
+  #          title: Yes
+  #        - payload: false
+  #          title: No
+  #     text: Are you an existing customer?
+  #  #    - text: Do you have an account with us?
+  #  #    - text: Did you registered with us before?
 
   utter_select_lang:
     - buttons:
@@ -64,6 +150,15 @@ responses:
           name: lang
           value: ar
       text: مرحبا بكم في مطعمنا
+  utter_greet_buttons:
+    - buttons:
+        - payload: pickup
+          title: Pick-up
+        - payload: dinein
+          title: Dine-in
+        - payload: delivery
+          title: Delivery
+      text: Hey! How may I help you?
   utter_goodbye:
     - text: Thank you, have a nice day. Bye!
   utter_affirm:
@@ -71,7 +166,7 @@ responses:
   utter_deny:
     - text: No problem
   utter_try_again:
-    - text: Would you like to try again? 
+    - text: Would you like to try again?
   utter_iamabot:
     - text: I am a bot, powered by Rasa.
   utter_table_reserve:
@@ -100,26 +195,27 @@ responses:
           value: ar
       text: كم عدد الاشخاص؟
 
-  utter_ar_greet:
-    - text: مرحبا بكم في مطعمنا
-    - text: تحياتي ، كيف لي أن أساعدك
-    - text: مرحبا بكم في مطعمنا ، ماذا تريد أن تعرف
-  utter_ar_askforpersons:
-    - text: كم عدد الاشخاص؟
-    - text: كم شخص؟
-  utter_ar_askfordate:
-    - buttons:
-        - payload: اليوم
-          title: اليوم
-        - payload: غدا
-          title: غدا
-        - payload: عطلة نهاية الاسبوع
-          title: عطلة نهاية الاسبوع
-      text: متى تحتاج هذا الحجز؟
+  # utter_ar_greet:
+  #   - text: مرحبا بكم في مطعمنا
+  #   - text: تحياتي ، كيف لي أن أساعدك
+  #   - text: مرحبا بكم في مطعمنا ، ماذا تريد أن تعرف
+  # utter_ar_askforpersons:
+  #   - text: كم عدد الاشخاص؟
+  #   - text: كم شخص؟
+  # utter_ar_askfordate:
+  #   - buttons:
+  #       - payload: اليوم
+  #         title: اليوم
+  #       - payload: غدا
+  #         title: غدا
+  #       - payload: عطلة نهاية الاسبوع
+  #         title: عطلة نهاية الاسبوع
+  #     text: متى تحتاج هذا الحجز؟
+
 actions:
-  - utter_ar_askfordate
-  - utter_ar_askforpersons
-  - utter_ar_greet
+  # - utter_ar_askfordate
+  # - utter_ar_askforpersons
+  # - utter_ar_greet
   - utter_askfordate
   - utter_askforpersons
   - utter_goodbye
@@ -132,18 +228,34 @@ actions:
   - utter_deny
   - utter_try_again
   - utter_askforPhoneNumber
-  - action_fetch_status
-  - action_hello_world
+  - action_reset_slots
+  - action_fetch_tables
+  - utter_greet_buttons
+  - utter_delivery_response
+  - utter_pickup_response
+  - utter_thanks_response
+  - action_fetch_customer
+  - utter_customer_response
+  - utter_customer_name
+  - action_set_name
+  - utter_ask_for_customer_phone
+  - utter_table_code
+  - action_add_reservation
 
 forms:
   table_reserve_form:
+    date:
+      - entity: date
+        type: from_entity
+    person:
+      - entity: person
+        type: from_entity
+
+  customer_info_form:
     required_slots:
       phoneNumber:
         - entity: phoneNumber
           type: from_entity
-      date:
-        - entity: date
-          type: from_entity
-      person:
-        - entity: person
+      customerName:
+        - entity: customerName
           type: from_entity

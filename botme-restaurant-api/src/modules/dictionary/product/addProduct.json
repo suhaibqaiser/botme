@@ -1,0 +1,46 @@
+[
+    {
+        "restaurantId": "1",
+        "productId": "693642c0-7fea-49b2-8599-37da98f2b3ee",
+        "productName": "Arabian Gyro",
+        "productType": "Item",
+        "productCategory": "Sandwiches",
+        "productSerialNo": "1.1",
+        "productBarcode": "",
+        "productDesc": "",
+        "productIngredients": "",
+        "productRate": {
+            "standard": 5.99,
+            "meal": 4.99,
+            "addon": 5.99
+        },
+        "productFlavor": [
+            "Chicken",
+            "Lamb"
+        ],
+        "productProportion": [
+            "Small",
+            "Medium",
+            "Large"
+        ],
+        "productToppings": ["Onion", "Bell Pepper", "Tomato", "Olive", "Pickle", "Lettuce"],
+        "productAddons": [],
+        "productNutrition": {
+            "calories": "350"
+        },
+        "productHistory": "Last Updated: 25th July 2021",
+        "productImage": ["gyro-1.png"],
+        "productTags": ["arabian", "mediterian", "takeout"],
+        "productAttributes": {
+            "halal": true,
+            "vegan": false,
+            "vegetarian": false,
+            "glutenFree": false
+        },
+        "offeringTime": [
+            "Lunch, Dinner"
+        ],
+        "productVariant": [],
+        "productActive": true
+    }
+]

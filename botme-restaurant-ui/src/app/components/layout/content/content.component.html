@@ -1,9 +1,13 @@
-<app-preloader></app-preloader>
-<app-topbar></app-topbar>
-<app-header></app-header>
-<!-- Main content -->
-<div class="content">
-  <router-outlet></router-outlet>
+<div>
+  <!-- <app-preloader></app-preloader> -->
+  <!--<app-topbar></app-topbar>-->
+  <app-header></app-header>
+  <!-- Main content -->
+  <div class="content">
+    <app-microphone></app-microphone>
+    <router-outlet (activate)="onActivate($event)"></router-outlet>
+    <!-- <app-progress-loader></app-progress-loader> -->
+  </div>
+  <!-- /.content -->
+  <app-footer *ngIf="!botMeClientService.isRobotAuth()"></app-footer>
 </div>
-<!-- /.content -->
-<app-footer></app-footer>

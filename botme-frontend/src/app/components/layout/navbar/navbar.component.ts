@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "../../../services/authentication.service";
 import {Router} from "@angular/router";
+import {HeaderService} from "../../../services/header.service";
 
 @Component({
   selector: 'app-navbar',
@@ -9,8 +10,7 @@ import {Router} from "@angular/router";
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private authService: AuthenticationService,
-              private router: Router) {
+  constructor(public headerService: HeaderService, private authService: AuthenticationService, private router: Router) {
   }
 
   userFullName: string | null = ''
@@ -25,4 +25,10 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/login'])
   }
 
+  // After login sidebar toggle is not working for this will add class explicitly
+  // in wrapper.component.html
+  toggleSideBar() {
+    this.headerService.getToggleObject().check = !this.headerService.getToggleObject().check
+    this.headerService.getToggleObject().addClass = this.headerService.getToggleObject().check ? '' : 'is-folded'
+  }
 }

@@ -1,7 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {map} from "rxjs/operators";
-import {Observable} from "rxjs";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from "@angular/router";
+
 
 
 @Component({
@@ -13,12 +12,30 @@ export class ContentComponent implements OnInit {
 
   constructor(private router: Router, private actRouter: ActivatedRoute) {
   }
+  breadcrumbs: [string] = ['']
+
 
   ngOnInit(): void {
+
+    let url = this.router.routerState.snapshot.url.split('?')[0]
+    let titleSplit = url.split('/')
+    let title = ''
+    for (let t in titleSplit) {
+
+      if (Number(t) != 0) {
+        this.breadcrumbs.push(this.titleCase(titleSplit[t]))
+        if (Number(t) != titleSplit.length - 1) {
+          title = title + ' / '
+        }
+      }
+    }
   }
 
-  getPageHeader(): String {
-    let title = this.router.routerState.snapshot.url.split('/')[1]
-    return title.replace(title[0], title[0].toUpperCase());
+  titleCase(str: string) {
+    let string = str.toLowerCase().split(' ');
+    for (let i = 0; i < string.length; i++) {
+      string[i] = string[i].charAt(0).toUpperCase() + string[i].slice(1);
+    }
+    return string.join(' ');
   }
 }

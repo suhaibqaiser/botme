@@ -1,0 +1,27 @@
+.tap-view-place-order {
+  a {
+    width: 100%;
+
+    i {
+      margin-left: 10px;
+    }
+  }
+}
+
+#loginModal,
+#voiceTest {
+  .modal-dialog {
+    .modal-content {
+      background: #222222 !important;
+    }
+  }
+}
+
+#voiceTest {
+  .modal-dialog {
+    position: fixed;
+    top: 50px;
+    right: 30px;
+    z-index: 9999;
+  }
+}

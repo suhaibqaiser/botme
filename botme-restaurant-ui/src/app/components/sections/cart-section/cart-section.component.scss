@@ -1,0 +1,36 @@
+.cart-section {
+  .container {
+    .cart-table {
+      table {
+        tbody {
+          tr {
+            td {
+              .product-table-info {
+                .product-table-thumb {
+                  padding: 6px 7px !important;
+
+                  a {
+                    img {
+                      width: 62px;
+                      height: 63px;
+                      border-radius: 100%;
+                    }
+                  }
+                }
+              }
+
+              a {
+                cursor: pointer;
+
+                .fa-info-circle {
+                  color: #E7272D;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

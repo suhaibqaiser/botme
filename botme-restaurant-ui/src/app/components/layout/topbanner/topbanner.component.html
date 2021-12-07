@@ -7,7 +7,7 @@
         <!-- start slides -->
         <ul>
           <!-- slides item -->
-          <li data-index="rs-1" data-transition="fade" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="300"  data-rotate="0"  data-saveperformance="off"  data-title="Slide">
+          <li data-index="rs-1" id="4731852b-aabb-42b5-99cf-22447903f79e" data-transition="fade" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="300"  data-rotate="0"  data-saveperformance="off"  data-title="Slide">
             <!-- layer no. 1 -->
             <div class="tp-caption LandingPage-Title tp-resizeme"
                  id="slide-1-layer-1"
@@ -21,12 +21,12 @@
                  data-frames='[{"from":"x:-50px;opacity:0;","speed":1500,"to":"o:1;","delay":500,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
                  data-textAlign="['left','center','center','center']"
                  data-fontweight="400"
-                 style="z-index: 5; white-space: nowrap;">The Best Place To <br> Satisfy Your Tummy</div>
+                 style="z-index: 5; white-space: nowrap;">{{corusalProductList[0].productName}}</div>
             <!-- layer no. 2 -->
             <div class="tp-caption LandingPage-SubTitle   tp-resizeme"
                  id="slide-1-layer-2"
                  data-x="['left','center','center','center']" data-hoffset="none"
-                 data-y="['top','top','top','top']" data-voffset="['355','240','215','140']"
+                 data-y="['top','top','top','top']" data-voffset="['250','240','215','140']"
                  data-fontsize="['25','25','17','17']"
                  data-lineheight="['30','30','25','25']"
                  data-width="['450','450','450','450']"
@@ -35,13 +35,13 @@
                  data-responsive_offset="on"
                  data-frames='[{"from":"x:-50px;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
                  data-textAlign="['left','left','center','center']"
-                 style="z-index: 7;white-space: normal;font-style:normal;">Special Mashroom Fry Pizza Only At
+                 style="z-index: 7;white-space: normal;font-style:normal;">{{corusalProductList[0].productDescription}}
             </div>
             <!-- layer no. 3 -->
             <div class="tp-caption LandingPage-SubTitle tp-resizeme"
                  id="slide-1-layer-3"
                  data-x="['left','center','center','center']" data-hoffset="none"
-                 data-y="['top','top','top','top']" data-voffset="['415','300','270','185']"
+                 data-y="['top','top','top','top']" data-voffset="['350','300','270','185']"
                  data-fontsize="['20','20','17','17']"
                  data-lineheight="['30','30','25','25']"
                  data-width="['380','380','380','380']"
@@ -52,9 +52,9 @@
                  data-frames='[{"from":"x:-50px;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
                  data-textAlign="['left','center','center','center']"
                  style="z-index: 7;white-space: normal;font-style:normal; display: flex;align-items: center; max-width: 300px;">
-              <a href="shop-details.html" class="btn">Order Now <i class="flaticon-shopping-cart-black-shape"></i>
+              <a [routerLink]="['/product-detail',corusalProductList[0].productId]" id="ctaId-order-now" class="btn">Order Now <i class="flaticon-shopping-cart-black-shape"></i>
               </a>
-              <p class="header-product-price color-white">$10.99 <del>$18.99</del></p>
+              <p class="header-product-price color-white">${{corusalProductList[0].productPrice}}</p>
             </div>
             <!-- layer no. 4 -->
             <div class="tp-caption tp-resizeme"
@@ -64,73 +64,10 @@
                  data-type="image"
                  data-responsive_offset="on"
                  data-frames='[{"from":"x:0;y:0;z:0;rX:0;rY:0;rZ:0;sX:0.75;sY:0.75;skX:0;skY:0;opacity:0;","speed":1500,"to":"o:1;","delay":1000,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
-                 style="z-index: 8;border-width:0px;"><img src="assets/images/header-carousel-1.png" alt="" data-ww="['550px','550px','550px','550px']" data-hh="['520px','520px','520px','520px']" width="650" height="615" data-no-retina> </div>
-            <!-- layer no. 5 -->
-            <div class="tp-caption tp-resizeme"
-                 id="slide-1-layer-5"
-                 data-x="['left','left','left','left']"
-                 data-y="['top','top','top','top']" data-voffset="['30','30','30','30']"
-                 data-type="image"
-                 data-responsive_offset="on"
-                 data-frames='[{"from":"x:-50px;rZ: -120deg;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
-                 style="z-index: 8;border-width:0px;"><img src="assets/images/header-shape-1.png" alt="" data-ww="['42px','42px','42px','42px']" data-hh="['43px','43px','43px','43px']" width="42" height="43" data-no-retina> </div>
-            <!-- layer no. 6 -->
-            <div class="tp-caption tp-resizeme"
-                 id="slide-1-layer-6"
-                 data-x="['center','center','center','center']"
-                 data-y="['top','top','top','top']" data-voffset="['50','-10','10','-20']"
-                 data-type="image"
-                 data-responsive_offset="on"
-                 data-frames='[{"from":"y:-50px;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
-                 style="z-index: 8;border-width:0px;"><img src="assets/images/header-shape-2.png" alt="" data-ww="['90px','90px','90px','90px']" data-hh="['81px','81px','81px','81px']" width="90" height="81" data-no-retina> </div>
-            <!-- layer no. 7 -->
-            <div class="tp-caption tp-resizeme"
-                 id="slide-1-layer-7"
-                 data-x="['right','right','right','right']"
-                 data-y="['top','top','top','top']" data-voffset="['-45','-45','-45','-75']"
-                 data-type="image"
-                 data-responsive_offset="on"
-                 data-frames='[{"from":"x:50px;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
-                 style="z-index: 8;border-width:0px;"><img src="assets/images/header-shape-3.png" alt="" data-ww="['110px','110px','110px','110px']" data-hh="['143px','143px','143px','143px']" width="110" height="143" data-no-retina> </div>
-            <!-- layer no. 8 -->
-            <div class="tp-caption tp-resizeme"
-                 id="slide-1-layer-8"
-                 data-x="['right','right','right','right']"
-                 data-y="['top','top','top','top']" data-voffset="['150','150','150','150']"
-                 data-type="image"
-                 data-responsive_offset="on"
-                 data-frames='[{"from":"x:-50px;rZ: -120deg;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
-                 style="z-index: 8;border-width:0px;"><img src="assets/images/header-shape-1.png" alt="" data-ww="['42px','42px','42px','42px']" data-hh="['43px','43px','43px','43px']" width="42" height="43" data-no-retina> </div>
-            <!-- layer no. 9 -->
-            <div class="tp-caption tp-resizeme"
-                 id="slide-1-layer-9"
-                 data-x="['center','center','center','center']"
-                 data-y="['center','center','center','center']" data-voffset="['150','150','150','150']"
-                 data-type="image"
-                 data-responsive_offset="on"
-                 data-frames='[{"from":"x:50px;rZ: -120deg;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
-                 style="z-index: 8;border-width:0px;"><img src="assets/images/header-shape-1.png" alt="" data-ww="['42px','42px','42px','42px']" data-hh="['43px','43px','43px','43px']" width="42" height="43" data-no-retina> </div>
-            <!-- layer no. 10 -->
-            <div class="tp-caption tp-resizeme"
-                 id="slide-1-layer-10"
-                 data-x="['left','left','left','left']"
-                 data-y="['bottom','bottom','bottom','bottom']"
-                 data-type="image"
-                 data-responsive_offset="on"
-                 data-frames='[{"from":"y:50px;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
-                 style="z-index: 8;border-width:0px;"><img src="assets/images/header-shape-3.png" alt="" data-ww="['110px','110px','110px','110px']" data-hh="['143px','143px','143px','143px']" width="110" height="143" data-no-retina> </div>
-            <!-- layer no. 11 -->
-            <div class="tp-caption tp-resizeme"
-                 id="slide-1-layer-11"
-                 data-x="['right','right','right','right']"
-                 data-y="['bottom','bottom','bottom','bottom']"
-                 data-type="image"
-                 data-responsive_offset="on"
-                 data-frames='[{"from":"y:50px;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
-                 style="z-index: 8;border-width:0px;"><img src="assets/images/header-shape-4.png" alt="" data-ww="['318px','318px','318px','318px']" data-hh="['209px','209px','209px','209px']" width="318" height="209" data-no-retina> </div>
+                 style="z-index: 8;border-width:0px;border-radius: 10px"><img style="border-radius: 10px" [src]="_helperService.resolveProductImage(corusalProductList[0])" alt="" data-ww="['550px','550px','550px','550px']" data-hh="['520px','520px','520px','520px']" width="650" height="615" data-no-retina> </div>
           </li>
           <!-- slides item -->
-          <li data-index="rs-2" data-transition="fade" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="300"  data-rotate="0"  data-saveperformance="off"  data-title="Slide">
+          <li id="8a676882-6173-49b4-b123-866899b796eb" data-index="rs-2" data-transition="fade" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="300"  data-rotate="0"  data-saveperformance="off"  data-title="Slide">
             <!-- layer no. 1 -->
             <div class="tp-caption LandingPage-Title tp-resizeme"
                  id="slide-2-layer-1"
@@ -144,12 +81,12 @@
                  data-frames='[{"from":"x:-50px;opacity:0;","speed":1500,"to":"o:1;","delay":500,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
                  data-textAlign="['left','center','center','center']"
                  data-fontweight="400"
-                 style="z-index: 5; white-space: nowrap;">We Ensure That You <br> Will Be Satisfied</div>
+                 style="z-index: 5; white-space: nowrap;">{{corusalProductList[1].productName}}</div>
             <!-- layer no. 2 -->
             <div class="tp-caption LandingPage-SubTitle   tp-resizeme"
                  id="slide-2-layer-2"
                  data-x="['left','center','center','center']" data-hoffset="none"
-                 data-y="['top','top','top','top']" data-voffset="['355','240','215','140']"
+                 data-y="['top','top','top','top']" data-voffset="['250','240','215','140']"
                  data-fontsize="['25','25','17','17']"
                  data-lineheight="['30','30','25','25']"
                  data-width="['450','450','450','450']"
@@ -158,13 +95,13 @@
                  data-responsive_offset="on"
                  data-frames='[{"from":"x:-50px;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
                  data-textAlign="['left','left','center','center']"
-                 style="z-index: 7;white-space: normal;font-style:normal;">Double Layer Garlic Sauce Burger
+                 style="z-index: 7;white-space: normal;font-style:normal;">{{corusalProductList[1].productDescription}}
             </div>
             <!-- layer no. 3 -->
             <div class="tp-caption LandingPage-SubTitle tp-resizeme"
                  id="slide-2-layer-3"
                  data-x="['left','center','center','center']" data-hoffset="none"
-                 data-y="['top','top','top','top']" data-voffset="['415','300','270','185']"
+                 data-y="['top','top','top','top']" data-voffset="['350','300','270','185']"
                  data-fontsize="['20','20','17','17']"
                  data-lineheight="['30','30','25','25']"
                  data-width="['380','380','380','380']"
@@ -175,9 +112,9 @@
                  data-frames='[{"from":"x:-50px;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
                  data-textAlign="['left','center','center','center']"
                  style="z-index: 7;white-space: normal;font-style:normal; display: flex;align-items: center; max-width: 300px;">
-              <a href="shop-details.html" class="btn">Order Now <i class="flaticon-shopping-cart-black-shape"></i>
+              <a id="ctaId-order-now" [routerLink]="['/product-detail',corusalProductList[1].productId]" class="btn">Order Now <i class="flaticon-shopping-cart-black-shape"></i>
               </a>
-              <p class="header-product-price color-white">$9.99 <del>$15.99</del></p>
+              <p class="header-product-price color-white">${{corusalProductList[1].productPrice}}</p>
             </div>
             <!-- layer no. 4 -->
             <div class="tp-caption tp-resizeme"
@@ -187,73 +124,10 @@
                  data-type="image"
                  data-responsive_offset="on"
                  data-frames='[{"from":"x:0;y:0;z:0;rX:0;rY:0;rZ:0;sX:0.75;sY:0.75;skX:0;skY:0;opacity:0;","speed":1500,"to":"o:1;","delay":1000,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
-                 style="z-index: 8;border-width:0px;"><img src="assets/images/header-carousel-2.png" alt="" data-ww="['550px','550px','550px','550px']" data-hh="['520px','520px','520px','520px']" width="650" height="615" data-no-retina> </div>
-            <!-- layer no. 5 -->
-            <div class="tp-caption tp-resizeme"
-                 id="slide-2-layer-5"
-                 data-x="['left','left','left','left']"
-                 data-y="['top','top','top','top']" data-voffset="['30','30','30','30']"
-                 data-type="image"
-                 data-responsive_offset="on"
-                 data-frames='[{"from":"x:-50px;rZ: -120deg;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
-                 style="z-index: 8;border-width:0px;"><img src="assets/images/header-shape-1.png" alt="" data-ww="['42px','42px','42px','42px']" data-hh="['43px','43px','43px','43px']" width="42" height="43" data-no-retina> </div>
-            <!-- layer no. 6 -->
-            <div class="tp-caption tp-resizeme"
-                 id="slide-2-layer-6"
-                 data-x="['center','center','center','center']"
-                 data-y="['top','top','top','top']" data-voffset="['50','-10','10','-20']"
-                 data-type="image"
-                 data-responsive_offset="on"
-                 data-frames='[{"from":"y:-50px;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
-                 style="z-index: 8;border-width:0px;"><img src="assets/images/header-shape-2.png" alt="" data-ww="['90px','90px','90px','90px']" data-hh="['81px','81px','81px','81px']" width="90" height="81" data-no-retina> </div>
-            <!-- layer no. 7 -->
-            <div class="tp-caption tp-resizeme"
-                 id="slide-2-layer-7"
-                 data-x="['right','right','right','right']"
-                 data-y="['top','top','top','top']" data-voffset="['-45','-45','-45','-75']"
-                 data-type="image"
-                 data-responsive_offset="on"
-                 data-frames='[{"from":"x:50px;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
-                 style="z-index: 8;border-width:0px;"><img src="assets/images/header-shape-3.png" alt="" data-ww="['110px','110px','110px','110px']" data-hh="['143px','143px','143px','143px']" width="110" height="143" data-no-retina> </div>
-            <!-- layer no. 8 -->
-            <div class="tp-caption tp-resizeme"
-                 id="slide-2-layer-8"
-                 data-x="['right','right','right','right']"
-                 data-y="['top','top','top','top']" data-voffset="['150','150','150','150']"
-                 data-type="image"
-                 data-responsive_offset="on"
-                 data-frames='[{"from":"x:-50px;rZ: -120deg;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
-                 style="z-index: 8;border-width:0px;"><img src="assets/images/header-shape-1.png" alt="" data-ww="['42px','42px','42px','42px']" data-hh="['43px','43px','43px','43px']" width="42" height="43" data-no-retina> </div>
-            <!-- layer no. 9 -->
-            <div class="tp-caption tp-resizeme"
-                 id="slide-2-layer-9"
-                 data-x="['center','center','center','center']"
-                 data-y="['center','center','center','center']" data-voffset="['150','150','150','150']"
-                 data-type="image"
-                 data-responsive_offset="on"
-                 data-frames='[{"from":"x:50px;rZ: -120deg;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
-                 style="z-index: 8;border-width:0px;"><img src="assets/images/header-shape-1.png" alt="" data-ww="['42px','42px','42px','42px']" data-hh="['43px','43px','43px','43px']" width="42" height="43" data-no-retina> </div>
-            <!-- layer no. 10 -->
-            <div class="tp-caption tp-resizeme"
-                 id="slide-2-layer-10"
-                 data-x="['left','left','left','left']"
-                 data-y="['bottom','bottom','bottom','bottom']"
-                 data-type="image"
-                 data-responsive_offset="on"
-                 data-frames='[{"from":"y:50px;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
-                 style="z-index: 8;border-width:0px;"><img src="assets/images/header-shape-3.png" alt="" data-ww="['110px','110px','110px','110px']" data-hh="['143px','143px','143px','143px']" width="110" height="143" data-no-retina> </div>
-            <!-- layer no. 11 -->
-            <div class="tp-caption tp-resizeme"
-                 id="slide-2-layer-11"
-                 data-x="['right','right','right','right']"
-                 data-y="['bottom','bottom','bottom','bottom']"
-                 data-type="image"
-                 data-responsive_offset="on"
-                 data-frames='[{"from":"y:50px;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
-                 style="z-index: 8;border-width:0px;"><img src="assets/images/header-shape-4.png" alt="" data-ww="['318px','318px','318px','318px']" data-hh="['209px','209px','209px','209px']" width="318" height="209" data-no-retina> </div>
+                 style="z-index: 8;border-width:0px;"><img style="border-radius: 10px" [src]="_helperService.resolveProductImage(corusalProductList[1])" alt="" data-ww="['550px','550px','550px','550px']" data-hh="['520px','520px','520px','520px']" width="650" height="615" data-no-retina> </div>
           </li>
           <!-- slides item -->
-          <li data-index="rs-3" data-transition="fade" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="300"  data-rotate="0"  data-saveperformance="off"  data-title="Slide">
+          <li id="ba0b7491-3431-4884-bfae-b0f6faef7cda" data-index="rs-3" data-transition="fade" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="300"  data-rotate="0"  data-saveperformance="off"  data-title="Slide">
             <!-- layer no. 1 -->
             <div class="tp-caption LandingPage-Title tp-resizeme"
                  id="slide-3-layer-1"
@@ -267,12 +141,12 @@
                  data-frames='[{"from":"x:-50px;opacity:0;","speed":1500,"to":"o:1;","delay":500,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
                  data-textAlign="['left','center','center','center']"
                  data-fontweight="400"
-                 style="z-index: 5; white-space: nowrap;">Best Combo Offer <br> For Your Satisfiction</div>
+                 style="z-index: 5; white-space: nowrap;">{{corusalProductList[2].productName}}</div>
             <!-- layer no. 2 -->
             <div class="tp-caption LandingPage-SubTitle   tp-resizeme"
                  id="slide-3-layer-2"
                  data-x="['left','center','center','center']" data-hoffset="none"
-                 data-y="['top','top','top','top']" data-voffset="['355','240','215','140']"
+                 data-y="['top','top','top','top']" data-voffset="['250','240','215','140']"
                  data-fontsize="['25','25','17','17']"
                  data-lineheight="['30','30','25','25']"
                  data-width="['450','450','450','450']"
@@ -281,13 +155,13 @@
                  data-responsive_offset="on"
                  data-frames='[{"from":"x:-50px;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
                  data-textAlign="['left','left','center','center']"
-                 style="z-index: 7;white-space: normal;font-style:normal;">Burger + Chicken + Drinks
+                 style="z-index: 7;white-space: normal;font-style:normal;">{{corusalProductList[2].productDescription}}
             </div>
             <!-- layer no. 3 -->
             <div class="tp-caption LandingPage-SubTitle tp-resizeme"
                  id="slide-3-layer-3"
                  data-x="['left','center','center','center']" data-hoffset="none"
-                 data-y="['top','top','top','top']" data-voffset="['415','300','270','185']"
+                 data-y="['top','top','top','top']" data-voffset="['350','300','270','185']"
                  data-fontsize="['20','20','17','17']"
                  data-lineheight="['30','30','25','25']"
                  data-width="['380','380','380','380']"
@@ -298,9 +172,9 @@
                  data-frames='[{"from":"x:-50px;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
                  data-textAlign="['left','center','center','center']"
                  style="z-index: 7;white-space: normal;font-style:normal; display: flex;align-items: center; max-width: 300px;">
-              <a href="shop-details.html" class="btn">Order Now <i class="flaticon-shopping-cart-black-shape"></i>
+              <a id="ctaId-order-now" [routerLink]="['/product-detail',corusalProductList[2].productId]" class="btn">Order Now <i class="flaticon-shopping-cart-black-shape"></i>
               </a>
-              <p class="header-product-price color-white">$20.99 <del>$28.99</del></p>
+              <p class="header-product-price color-white">${{corusalProductList[2].productPrice}}</p>
             </div>
             <!-- layer no. 4 -->
             <div class="tp-caption tp-resizeme"
@@ -310,70 +184,7 @@
                  data-type="image"
                  data-responsive_offset="on"
                  data-frames='[{"from":"x:0;y:0;z:0;rX:0;rY:0;rZ:0;sX:0.75;sY:0.75;skX:0;skY:0;opacity:0;","speed":1500,"to":"o:1;","delay":1000,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
-                 style="z-index: 8;border-width:0px;"><img src="assets/images/header-carousel-3.png" alt="" data-ww="['550px','550px','550px','550px']" data-hh="['520px','520px','520px','520px']" width="650" height="615" data-no-retina> </div>
-            <!-- layer no. 5 -->
-            <div class="tp-caption tp-resizeme"
-                 id="slide-3-layer-5"
-                 data-x="['left','left','left','left']"
-                 data-y="['top','top','top','top']" data-voffset="['30','30','30','30']"
-                 data-type="image"
-                 data-responsive_offset="on"
-                 data-frames='[{"from":"x:-50px;rZ: -120deg;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
-                 style="z-index: 8;border-width:0px;"><img src="assets/images/header-shape-1.png" alt="" data-ww="['42px','42px','42px','42px']" data-hh="['43px','43px','43px','43px']" width="42" height="43" data-no-retina> </div>
-            <!-- layer no. 6 -->
-            <div class="tp-caption tp-resizeme"
-                 id="slide-3-layer-6"
-                 data-x="['center','center','center','center']"
-                 data-y="['top','top','top','top']" data-voffset="['50','-10','10','-20']"
-                 data-type="image"
-                 data-responsive_offset="on"
-                 data-frames='[{"from":"y:-50px;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
-                 style="z-index: 8;border-width:0px;"><img src="assets/images/header-shape-2.png" alt="" data-ww="['90px','90px','90px','90px']" data-hh="['81px','81px','81px','81px']" width="90" height="81" data-no-retina> </div>
-            <!-- layer no. 7 -->
-            <div class="tp-caption tp-resizeme"
-                 id="slide-3-layer-7"
-                 data-x="['right','right','right','right']"
-                 data-y="['top','top','top','top']" data-voffset="['-45','-45','-45','-75']"
-                 data-type="image"
-                 data-responsive_offset="on"
-                 data-frames='[{"from":"x:50px;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
-                 style="z-index: 8;border-width:0px;"><img src="assets/images/header-shape-3.png" alt="" data-ww="['110px','110px','110px','110px']" data-hh="['143px','143px','143px','143px']" width="110" height="143" data-no-retina> </div>
-            <!-- layer no. 8 -->
-            <div class="tp-caption tp-resizeme"
-                 id="slide-3-layer-8"
-                 data-x="['right','right','right','right']"
-                 data-y="['top','top','top','top']" data-voffset="['150','150','150','150']"
-                 data-type="image"
-                 data-responsive_offset="on"
-                 data-frames='[{"from":"x:-50px;rZ: -120deg;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
-                 style="z-index: 8;border-width:0px;"><img src="assets/images/header-shape-1.png" alt="" data-ww="['42px','42px','42px','42px']" data-hh="['43px','43px','43px','43px']" width="42" height="43" data-no-retina> </div>
-            <!-- layer no. 9 -->
-            <div class="tp-caption tp-resizeme"
-                 id="slide-3-layer-9"
-                 data-x="['center','center','center','center']"
-                 data-y="['center','center','center','center']" data-voffset="['150','150','150','150']"
-                 data-type="image"
-                 data-responsive_offset="on"
-                 data-frames='[{"from":"x:50px;rZ: -120deg;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
-                 style="z-index: 8;border-width:0px;"><img src="assets/images/header-shape-1.png" alt="" data-ww="['42px','42px','42px','42px']" data-hh="['43px','43px','43px','43px']" width="42" height="43" data-no-retina> </div>
-            <!-- layer no. 10 -->
-            <div class="tp-caption tp-resizeme"
-                 id="slide-3-layer-10"
-                 data-x="['left','left','left','left']"
-                 data-y="['bottom','bottom','bottom','bottom']"
-                 data-type="image"
-                 data-responsive_offset="on"
-                 data-frames='[{"from":"y:50px;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
-                 style="z-index: 8;border-width:0px;"><img src="assets/images/header-shape-3.png" alt="" data-ww="['110px','110px','110px','110px']" data-hh="['143px','143px','143px','143px']" width="110" height="143" data-no-retina> </div>
-            <!-- layer no. 11 -->
-            <div class="tp-caption tp-resizeme"
-                 id="slide-3-layer-11"
-                 data-x="['right','right','right','right']"
-                 data-y="['bottom','bottom','bottom','bottom']"
-                 data-type="image"
-                 data-responsive_offset="on"
-                 data-frames='[{"from":"y:50px;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power3.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'
-                 style="z-index: 8;border-width:0px;"><img src="assets/images/header-shape-4.png" alt="" data-ww="['318px','318px','318px','318px']" data-hh="['209px','209px','209px','209px']" width="318" height="209" data-no-retina> </div>
+                 style="z-index: 8;border-width:0px;"><img style="border-radius: 10px" [src]="_helperService.resolveProductImage(corusalProductList[2])" alt="" data-ww="['550px','550px','550px','550px']" data-hh="['520px','520px','520px','520px']" width="650" height="615" data-no-retina> </div>
           </li>
         </ul><!-- END SLIDES LIST -->
         <!-- .end slides -->

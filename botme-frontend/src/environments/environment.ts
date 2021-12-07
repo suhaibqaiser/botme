@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   apiBaseUrl: "http://localhost:3000",
+  apiRestaurantUrl: "http://localhost:3100",
   BearerToken: "ea2d3aeaad77865f9769974a920892f5"
 };
 
@@ -15,4 +16,4 @@ export const environment = {
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

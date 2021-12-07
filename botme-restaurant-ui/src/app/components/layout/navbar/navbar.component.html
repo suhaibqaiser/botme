@@ -4,260 +4,144 @@
     <!-- mobile menu -->
     <div class="mobile-nav">
       <a href="home" class="mobile-brand">
-        <img src="assets/images/logo.png" alt="logo" class="blue-logo">
+        <img src="assets/images/logo/web-logo.png" alt="logo" class="blue-logo">
       </a>
-      <!-- mobile navbar-option -->
-      <div class="navbar-option d-flex align-items-center">
-        <div class="navbar-option-item navbar-option-dots mobile-hide">
-          <button class="dropdown-toggle" type="button" id="mobileOptionDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="flaticon-menu-1"></i>
-          </button>
-          <div class="dropdown-menu" aria-labelledby="mobileOptionDropdown">
-            <div class="navbar-option-item navbar-option-cart">
-              <a href="#" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
-              <span class="option-badge">2</span>
-            </div>
-            <div class="navbar-option-item navbar-option-order">
-              <a href="shops-grid" class="btn">
-                <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="navbar-option-item navbar-option-authentication">
-          <button class="navbar-authentication-button" type="button" id="auth2" data-bs-toggle="dropdown" aria-haspopup="true" ><i class="flaticon-add-user"></i></button>
-          <div class="authentication-box dropdown-menu" aria-labelledby="auth2">
-            <div class="authentication-close"><i class="flaticon-cancel"></i></div>
-            <div class="authentication-body">
-              <ul class="authentication-tab">
-                <li class="authentication-tab-item active" data-authentication-tab="1">Log In</li>
-                <li class="authentication-tab-item" data-authentication-tab="2">Sign Up</li>
-              </ul>
-              <div class="authentication-details">
-                <div class="authentication-details-item active" data-authentication-details="1">
-                  <form>
-                    <div class="form-group mb-20">
-                      <div class="input-group">
-                        <input type="text" class="form-control" placeholder="User Name" />
-                      </div>
-                    </div>
-                    <div class="form-group mb-20">
-                      <div class="input-group">
-                        <input type="password" class="form-control" placeholder="Password" />
-                      </div>
-                    </div>
-                    <div class="authentication-action mb-20">
-                      <div class="authentication-action-item">
-                        <a href="forget-password">Forget Password?</a>
-                      </div>
-                      <div class="authentication-action-item">
-                        <div class="custom-control custom-checkbox">
-                          <input type="checkbox" class="custom-control-input" id="check3">
-                          <label class="custom-control-label" for="check3">Remember Me</label>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="authentication-btn">
-                      <button class="btn full-width btn-border mb-20">Log In</button>
-                      <button class="btn full-width"><i class="icofont-google-plus"></i>Log In With Google</button>
-                    </div>
-                  </form>
-                </div>
-                <div class="authentication-details-item" data-authentication-details="2">
-                  <form>
-                    <div class="form-group mb-20">
-                      <div class="input-group">
-                        <input type="text" class="form-control" placeholder="User Name" />
-                      </div>
-                    </div>
-                    <div class="form-group mb-20">
-                      <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Email" />
-                      </div>
-                    </div>
-                    <div class="form-group mb-20">
-                      <div class="input-group">
-                        <input type="password" class="form-control" placeholder="Password" />
-                      </div>
-                    </div>
-                    <div class="form-group mb-20">
-                      <div class="input-group">
-                        <input type="password" class="form-control" placeholder="Confirm Password" />
-                      </div>
-                    </div>
-                    <div class="authentication-action mb-20">
-                      <div class="authentication-action-item">
-                        <div class="custom-control custom-checkbox">
-                          <input type="checkbox" class="custom-control-input" id="check4">
-                          <label class="custom-control-label" for="check4">I agree that my submitted data is being collected and stored. For further details on handling user data, see our <a href="privacy-policy">Privacy Policy</a>.</label>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="authentication-btn">
-                      <button class="btn full-width btn-border mb-20">Log In</button>
-                      <button class="btn full-width"><i class="icofont-google-plus"></i>Log In With Google</button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="navbar-option-item navbar-option-search">
-          <button class="dropdown-toggle" type="button" id="search2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="flaticon-loupe"></i>
-          </button>
-          <div class="dropdown-menu" aria-labelledby="search2">
-            <form>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search">
-                <button><i class="flaticon-loupe"></i></button>
-              </div>
-            </form>
-          </div>
-        </div>
-        <div class="navbar-option-item navbar-option-cart mobile-block">
-          <a href="#" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
-          <span class="option-badge">2</span>
-        </div>
-        <div class="navbar-option-item navbar-option-order mobile-block">
-          <a href="shops-grid" class="btn">
-            <i class="flaticon-shopping-cart-black-shape"></i>
-          </a>
-        </div>
-      </div>
+      <app-sofia-bot *ngIf="_botMeClientService.getCookie().isLoggedIn" style="z-index: 999999 !important;">
+      </app-sofia-bot>
     </div>
+
     <!-- desktop menu -->
     <div class="main-nav">
       <div class="container">
         <nav class="navbar navbar-expand-md navbar-light">
           <a class="navbar-brand" href="home">
-            <img src="assets/images/logo.png" alt="logo" class="logo">
+            <img src="assets/images/logo/web-logo.png" alt="logo" class="logo">
           </a>
+          <li class="nav-item">
+            <app-sofia-bot *ngIf="_botMeClientService.getCookie().isLoggedIn"> </app-sofia-bot>
+          </li>
           <!-- nav-list -->
           <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav ms-auto align-items-center">
               <li class="nav-item">
-                <a href="#" class="nav-link dropdown-toggle active">HOME</a>
+                <a routerLink="home" id="entityId-home" class="nav-link" [class.active]="router.url=='/home'">HOME</a>
               </li>
               <li class="nav-item">
-                <a href="menu" class="nav-link">MENU</a>
+                <a routerLink="reservations" id="entityId-reservation" class="nav-link"
+                  [class.active]="router.url=='/reservations'">RESERVATION</a>
               </li>
               <li class="nav-item">
-                <a href="reservations" class="nav-link dropdown-toggle">RESERVATIONS</a>
+                <a routerLink="contact-us" id="entityId-contact-us" class="nav-link"
+                  [class.active]="router.url=='/contact-us'">CONTACT US</a>
               </li>
               <li class="nav-item">
-                <a href="contact-us" class="nav-link">CONTACT US</a>
+                <a *ngIf="_botMeClientService.getCookie().isLoggedIn" [class.active]="router.url=='/online-shop'"
+                  id="entityId-order-online" routerLink="online-shop" class="nav-link">PLACE ORDER</a>
+              </li>
+              <li class="nav-item">
+                <a data-bs-toggle="modal" data-bs-target="#loginModal"
+                  *ngIf="!_botMeClientService.getCookie().isLoggedIn" class="nav-link" type="button">LOGIN</a>
+                <a data-bs-toggle="modal" data-bs-target="#loginModal"
+                  *ngIf="_botMeClientService.getCookie().isLoggedIn" class="nav-link" type="button">LOGOUT
+                </a>
+              </li>
+              <li>
+                <a *ngIf="_botMeClientService.getCookie().clientDebug === 'yes'" data-bs-toggle="modal" data-bs-target="#voiceTest"
+                  class="nav-link" type="button">VOICE TEST</a>
+              </li>
+              <li class="nav-item">
+                <a *ngIf="_botMeClientService.getCookie().isLoggedIn" (click)="showCartModal()" id="entityId-show-cart"
+                  class="productCart"><i style="font-size: x-large" class="flaticon-supermarket-basket"></i>
+                  <span
+                    style="position: relative;background-color:#E7272D;border-radius: 10px;margin-top: -33px;margin-left: -8px;"
+                    class="badge">{{getCartProductCount()}}</span>
+                </a>
               </li>
             </ul>
           </div>
           <!-- navbar-option -->
-          <div class="navbar-option d-flex align-items-center">
-            <div class="navbar-option-item navbar-option-authentication">
-              <button class="navbar-authentication-button" type="button" id="auth1" data-bs-toggle="dropdown" aria-haspopup="true" ><i class="flaticon-add-user"></i></button>
-              <div class="authentication-box dropdown-menu" aria-labelledby="auth1">
-                <div class="authentication-close"><i class="flaticon-cancel"></i></div>
-                <div class="authentication-body">
-                  <ul class="authentication-tab">
-                    <li class="authentication-tab-item active" data-authentication-tab="1">Log In</li>
-                    <li class="authentication-tab-item" data-authentication-tab="2">Sign Up</li>
-                  </ul>
-                  <div class="authentication-details">
-                    <div class="authentication-details-item active" data-authentication-details="1">
-                      <form>
-                        <div class="form-group mb-20">
-                          <div class="input-group">
-                            <input type="text" class="form-control" placeholder="User Name" />
-                          </div>
-                        </div>
-                        <div class="form-group mb-20">
-                          <div class="input-group">
-                            <input type="password" class="form-control" placeholder="Password" />
-                          </div>
-                        </div>
-                        <div class="authentication-action mb-20">
-                          <div class="authentication-action-item">
-                            <a href="forget-password">Forget Password?</a>
-                          </div>
-                          <div class="authentication-action-item">
-                            <div class="custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input" id="check1">
-                              <label class="custom-control-label" for="check1">Remember Me</label>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="authentication-btn">
-                          <button class="btn full-width btn-border mb-20">Log In</button>
-                          <button class="btn full-width"><i class="icofont-google-plus"></i>Log In With Google</button>
-                        </div>
-                      </form>
-                    </div>
-                    <div class="authentication-details-item" data-authentication-details="2">
-                      <form>
-                        <div class="form-group mb-20">
-                          <div class="input-group">
-                            <input type="text" class="form-control" placeholder="User Name" />
-                          </div>
-                        </div>
-                        <div class="form-group mb-20">
-                          <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Email" />
-                          </div>
-                        </div>
-                        <div class="form-group mb-20">
-                          <div class="input-group">
-                            <input type="password" class="form-control" placeholder="Password" />
-                          </div>
-                        </div>
-                        <div class="form-group mb-20">
-                          <div class="input-group">
-                            <input type="password" class="form-control" placeholder="Confirm Password" />
-                          </div>
-                        </div>
-                        <div class="authentication-action mb-20">
-                          <div class="authentication-action-item">
-                            <div class="custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input" id="check2">
-                              <label class="custom-control-label" for="check2">I agree that my submitted data is being collected and stored. For further details on handling user data, see our <a href="privacy-policy">Privacy Policy</a>.</label>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="authentication-btn">
-                          <button class="btn full-width btn-border mb-20">Log In</button>
-                          <button class="btn full-width"><i class="icofont-google-plus"></i>Log In With Google</button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="navbar-option-item navbar-option-search">
-              <button class="dropdown-toggle" type="button" id="search1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="flaticon-loupe"></i>
-              </button>
-              <div class="dropdown-menu" aria-labelledby="search1">
-                <form>
-                  <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
-                    <button><i class="flaticon-loupe"></i></button>
-                  </div>
-                </form>
-              </div>
-            </div>
-            <div class="navbar-option-item navbar-option-cart">
-              <a href="#" class="productCart"><i class="flaticon-supermarket-basket"></i></a>
-              <span class="option-badge">2</span>
-            </div>
-            <div class="navbar-option-item navbar-option-order">
-              <a href="online-shop" class="btn text-nowrap">
-                Order Online <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-            </div>
-          </div>
         </nav>
       </div>
     </div>
   </div>
 </div>
 <!-- .end navbar -->
+
+
+<!--Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="authentication-body">
+          <h4 class="text-white text-center" *ngIf="!_botMeClientService.getCookie().isLoggedIn">Log In</h4>
+          <h4 class="text-white text-center" *ngIf="_botMeClientService.getCookie().isLoggedIn">Dashboard</h4>
+          <ul class="authentication-tab">
+
+          </ul>
+          <div class="authentication-details">
+            <div *ngIf="!_botMeClientService.getCookie().isLoggedIn" class="authentication-details-item active"
+              data-authentication-details="1">
+              <form [formGroup]="loginForm">
+                <div class="form-group mb-20">
+                  <div class="input-group">
+                    <input required type="text" formControlName="clientID" class="form-control"
+                      placeholder="Client Id" />
+                  </div>
+                </div>
+                <div class="form-group mb-20">
+                  <div class="input-group">
+                    <input required type="password" formControlName="clientSecret" class="form-control"
+                      placeholder="Client Secret" />
+                  </div>
+                </div>
+
+                <div class="authentication-btn">
+                  <button (click)="login()" [disabled]="!loginForm.valid" class="btn full-width btn-border mb-20">Log
+                    In
+                  </button>
+                </div>
+              </form>
+            </div>
+            <div *ngIf="_botMeClientService.getCookie().isLoggedIn" class="authentication-details-item active"
+              data-authentication-details="1">
+              <h6 class="mt-2 text-white">Client Id : {{_botMeClientService.getCookie().clientID}}</h6>
+              <div class="mt-4 authentication-btn">
+                <button (click)="logout()" class="btn full-width btn-border mb-20">Logout</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div  cdkDrag class="modal fade" id="voiceTest" tabindex="-1" aria-labelledby="bbb" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-white" id="bbb">Voice Test {{_botMeClientService.getCookieByKey('isDebug')}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <label class="text-white">User:</label>
+        <textarea class="w-100" type="text" readonly [(ngModel)]="userVoice"></textarea>
+        <label class="text-white">Bot:</label>
+        <textarea class="w-100" type="text" readonly [(ngModel)]="botVoice"></textarea>
+        <hr>
+        <label class="text-white">Voice Engine:</label>
+        <select class="w-100" [(ngModel)]="_voiceType" (change)="setVoiceType()" required>
+          <option value="no-voice">Disabled</option>
+          <option value="local-voice">Browser</option>
+          <option value="cloud-voice">Google Cloud</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="reload()">Apply</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

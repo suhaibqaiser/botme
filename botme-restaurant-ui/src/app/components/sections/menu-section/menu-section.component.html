@@ -1,400 +1,34 @@
 <!-- menu-section -->
-<section class="menu-section menu-section-bg pt-100 pb-70 bg-black">
+<section class="menu-section menu-section-bg pt-100 pb-70 bg-black" *ngIf="!loading">
   <div class="container position-relative">
     <div class="section-title">
       <small>Menu</small>
+      <input type="text" id="itemId"/>
       <h2 class="color-white">Just Choose From The Best</h2>
     </div>
     <div class="menu-main-carousel-area">
       <div class="menu-main-thumb-nav">
-        <div class="menu-main-thumb-item">
+
+        <div class="menu-main-thumb-item" *ngFor="let cat of categoryList; let i = index" id="CAT-{{cat.categoryId}}">
           <div class="menu-main-thumb-inner">
             <img src="assets/images/menu-1.png" alt="menu">
-            <p>Burger</p>
-          </div>
-        </div>
-        <div class="menu-main-thumb-item">
-          <div class="menu-main-thumb-inner">
-            <img src="assets/images/menu-2.png" alt="menu">
-            <p>Pizza</p>
-          </div>
-        </div>
-        <div class="menu-main-thumb-item">
-          <div class="menu-main-thumb-inner">
-            <img src="assets/images/menu-3.png" alt="menu">
-            <p>Sandwitch</p>
-          </div>
-        </div>
-        <div class="menu-main-thumb-item">
-          <div class="menu-main-thumb-inner">
-            <img src="assets/images/menu-4.png" alt="menu">
-            <p>Shake</p>
-          </div>
-        </div>
-        <div class="menu-main-thumb-item">
-          <div class="menu-main-thumb-inner">
-            <img src="assets/images/menu-5.png" alt="menu">
-            <p>Ice-Cream</p>
-          </div>
-        </div>
-        <div class="menu-main-thumb-item">
-          <div class="menu-main-thumb-inner">
-            <img src="assets/images/menu-6.png" alt="menu">
-            <p>Dessert</p>
+            <p>{{cat.categoryName}}</p>
           </div>
         </div>
       </div>
       <div class="menu-main-details-for">
-        <div class="menu-main-details-item">
+        <div class="menu-main-details-item" *ngFor="let cat of categoryList; let i = index">
           <div class="menu-details-carousel">
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>Chicken Burger</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$12.99</h4>
-              <a href="#" class="btn btn-yellow">
+            <div class="menu-details-carousel-item menu-details-carousel-black"
+              *ngFor="let product of getProductsByCategory(cat.categoryId); let i = index" id="p{{product.productId}}">
+              <h3>{{product.productName}}</h3>
+              <p>{{product.productDesc}}</p>
+              <h4 class="menu-price">${{product.productRate.standard}}</h4>
+              <a href="alert('product Added');" class="btn btn-yellow">
                 Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
               </a>
               <div class="menu-details-carousel-image">
                 <img src="assets/images/burger-slider-1.png" alt="menu">
-              </div>
-            </div>
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>Mexican Burger</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$10.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/burger-slider-2.png" alt="menu">
-              </div>
-            </div>
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>Double Dekar</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$20.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/burger-slider-3.png" alt="menu">
-              </div>
-            </div>
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>Beefka Burger</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$20.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/burger-slider-4.png" alt="menu">
-              </div>
-            </div>
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>Avocado Dekar</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$20.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/burger-slider-5.png" alt="menu">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="menu-main-details-item">
-          <div class="menu-details-carousel">
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>Cheese Pizza</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$12.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/pizza-slider-1.png" alt="menu">
-              </div>
-            </div>
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>Mexican Pizza</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$10.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/pizza-slider-2.png" alt="menu">
-              </div>
-            </div>
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>Italiano Pizza</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$20.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/pizza-slider-3.png" alt="menu">
-              </div>
-            </div>
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>Beefka Pizza</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$20.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/pizza-slider-4.png" alt="menu">
-              </div>
-            </div>
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>Chicken Pizza</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$20.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/pizza-slider-5.png" alt="menu">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="menu-main-details-item">
-          <div class="menu-details-carousel">
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>Italiano Sandwitch</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$12.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/sandwitch-slider-1.png" alt="menu">
-              </div>
-            </div>
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>American Sandwitch</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$10.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/sandwitch-slider-2.png" alt="menu">
-              </div>
-            </div>
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>Jam Sandwitch</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$20.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/sandwitch-slider-3.png" alt="menu">
-              </div>
-            </div>
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>Avocado Sandwitch</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$20.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/sandwitch-slider-4.png" alt="menu">
-              </div>
-            </div>
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>Egg Sandwitch</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$20.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/sandwitch-slider-5.png" alt="menu">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="menu-main-details-item">
-          <div class="menu-details-carousel">
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>Cherry Venilla</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$12.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/shake-slider-1.png" alt="menu">
-              </div>
-            </div>
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>Strawberry Shake</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$10.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/shake-slider-2.png" alt="menu">
-              </div>
-            </div>
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>Fruty Pebble</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$20.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/shake-slider-3.png" alt="menu">
-              </div>
-            </div>
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>Oreo Shake</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$20.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/shake-slider-4.png" alt="menu">
-              </div>
-            </div>
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>Banana Shake</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$20.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/shake-slider-5.png" alt="menu">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="menu-main-details-item">
-          <div class="menu-details-carousel">
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>Creamy Cream</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$12.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/icecream-slider-1.png" alt="menu">
-              </div>
-            </div>
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>Regular Chocolate</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$10.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/icecream-slider-2.png" alt="menu">
-              </div>
-            </div>
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>French Icecream</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$20.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/icecream-slider-3.png" alt="menu">
-              </div>
-            </div>
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>Perfect Pear</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$20.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/icecream-slider-4.png" alt="menu">
-              </div>
-            </div>
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>Light Icecream</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$20.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/icecream-slider-5.png" alt="menu">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="menu-main-details-item">
-          <div class="menu-details-carousel">
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>Decadent</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$12.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/dessert-slider-1.png" alt="menu">
-              </div>
-            </div>
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>Frozen</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$10.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/dessert-slider-2.png" alt="menu">
-              </div>
-            </div>
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>Luscious</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$20.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/dessert-slider-3.png" alt="menu">
-              </div>
-            </div>
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>Creamy</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$20.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/dessert-slider-4.png" alt="menu">
-              </div>
-            </div>
-            <div class="menu-details-carousel-item menu-details-carousel-black">
-              <h3>Zesty</h3>
-              <p>This Mexican Style Burger is pumped out with flavor from chilli powder, cilantro & jalapeno pepper.</p>
-              <h4 class="menu-price">$20.99</h4>
-              <a href="#" class="btn btn-yellow">
-                Add To Cart <i class="flaticon-shopping-cart-black-shape"></i>
-              </a>
-              <div class="menu-details-carousel-image">
-                <img src="assets/images/dessert-slider-5.png" alt="menu">
               </div>
             </div>
           </div>
@@ -404,3 +38,12 @@
   </div>
 </section>
 <!-- .end menu-section -->
+
+<script>
+ function actionItem() {
+    let itemId = document.getElementById('itemId').value;
+    let item;
+    if (itemId) { item = document.getElementById(itemId); }
+    item?.click();
+  };
+</script>

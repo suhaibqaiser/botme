@@ -1,12 +1,53 @@
 version: "2.0"
 
 rules:
+  - rule: customer flow
+    steps:
+      - action: action_fetch_tables
+      - action: utter_ask_for_customer_phone
+      - intent: inform
+        entities:
+          - phoneNumber: 0123456789
+      - slot_was_set:
+          - phoneNumber: 0123456789
+      - action: action_fetch_customer
+    wait_for_user_input: false
+
+
+  - rule: ask name from new customer
+    condition:
+    - slot_was_set:
+      - newCustomer: true
+    steps:
+      - action: utter_customer_response
+      - intent: inform
+        entities:
+        - customerName: John Snow
+      - slot_was_set:
+        - customerName: John Snow
+      - action: action_set_name
+      - action: utter_customer_name
+    wait_for_user_input: false
+
   - rule: Say `hello` when the user starts a conversation with intent `greet`
     #conversation_start: true
     steps:
       - intent: greet
-      - action: utter_greet
-  
+      - action: action_reset_slots
+      - action: utter_greet_buttons
+
+  - rule: show reservation code after adding reservation
+    steps:
+      - action: action_add_reservation
+      - slot_was_set:
+        - reservationId: '9309'
+      - action: utter_table_code
+
+  - rule: thanks
+    steps:
+      - intent: thanks
+      - action: utter_thanks_response
+
   - rule: Say goodbye anytime the user says goodbye
     steps:
       - intent: goodbye
@@ -16,23 +57,3 @@ rules:
     steps:
       - intent: bot_challenge
       - action: utter_iamabot
-# - rule: Activate table reserve form
-#   steps:
-#   - intent: reserve_table
-#   - action: utter_askforpersons
-#   - action: utter_askfordate
-#   - action: table_reserve_form
-#   - active_loop: table_reserve_form
-
-# - rule: Submit table reserve form
-#   condition:
-#   # Condition that form is active.
-#   - active_loop: table_reserve_form
-#   steps:
-#   # Form is deactivated
-#   - action: table_reserve_form
-#   - active_loop: null
-#   - slot_was_set:
-#     - requested_slot: null
-#   # The actions we want to run when the form is submitted.
-#   - action: utter_table_reserve

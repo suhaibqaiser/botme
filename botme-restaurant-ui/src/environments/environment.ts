@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiRestaurantUrl: "http://localhost:3100",
+  botMeClientAPI: "http://localhost:3000",
+  wsEndpoint: "ws://localhost:6380"
 };
 
 /*
@@ -14,3 +17,11 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
+
+
+// export const environment = {
+//   production: false,
+//   apiRestaurantUrl: "https://api.gofindmenu.com/restaurant",
+//   wsEndpoint: "ws://localhost:6380",
+//   botMeClientAPI: "https://api.gofindmenu.com/client",
+// };

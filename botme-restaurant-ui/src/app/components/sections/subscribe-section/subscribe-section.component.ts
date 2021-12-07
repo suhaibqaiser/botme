@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {BotmeClientService} from "../../../services/botme-client.service";
 
 @Component({
   selector: 'app-subscribe-section',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SubscribeSectionComponent implements OnInit {
 
-  constructor() { }
+  constructor(public botMeClientService:BotmeClientService) { }
 
   ngOnInit(): void {
   }

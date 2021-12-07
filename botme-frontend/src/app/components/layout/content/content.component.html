@@ -1,27 +1,14 @@
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">{{getPageHeader()}}</h1>
-                </div><!-- /.col -->
-<!--                <div class="col-sm-6">-->
-<!--                    <ol class="breadcrumb">-->
-<!--                        <li class="breadcrumb-item"><a href="#">Home</a></li>-->
-<!--                        <li class="breadcrumb-item active">{{pageTitle}}</li>-->
-<!--                    </ol>-->
-<!--                </div>&lt;!&ndash; /.col &ndash;&gt;-->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+<div class="main-content">
+    <div class="page-header">
+        <h2 class="header-title"></h2>
+        <div class="header-sub-title">
+            <nav class="breadcrumb breadcrumb-dash">
+                <a href="/home" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+                <span class="breadcrumb-item"  *ngFor="let breadcrumb of breadcrumbs">
+                    {{ breadcrumb }}
+                </span>
+            </nav>
+        </div>
     </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
-    <div class="content">
-        <router-outlet></router-outlet>
-    </div>
-    <!-- /.content -->
+    <router-outlet></router-outlet>
 </div>
-<!-- /.content-wrapper -->

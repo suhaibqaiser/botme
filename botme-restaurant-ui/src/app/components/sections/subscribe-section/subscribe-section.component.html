@@ -1,5 +1,5 @@
 <!-- subscribe-section -->
-<section class="subscribe-section mural-bg pt-100 pb-70 bg-main">
+<section *ngIf="!botMeClientService.isRobotAuth()" class="subscribe-section mural-bg pt-100 pb-70 bg-main">
   <div class="container">
     <div class="subscribe-grid">
       <div class="subscribe-item">

@@ -1,0 +1,98 @@
+<div class="card">
+    <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between m-b-15">
+            <h4 class="m-b-0">Orders</h4>
+            <div class="card-toolbar">
+                <ul>
+                    <!-- <li>
+              <a class="text-gray" href="javascript:void(0)">
+                <i class="anticon anticon-reload font-size-20"></i>
+              </a>
+                </li>-->
+                    <li>
+                        <a class="text-gray" href="javascript:void(0)">
+                            <i class="anticon anticon-delete font-size-20"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="text-gray" [routerLink]="['detail']">
+                            <i class="anticon anticon-plus font-size-20"></i>
+                            Add New
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <p-table #dt1 [value]="orders" [responsive]="true" [paginator]="true" [rows]="10" [loading]="loading"
+            [showCurrentPageReport]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [rowsPerPageOptions]="[10,25,50]"
+            [globalFilterFields]="['productName','productDesc', 'productTags','productType','productCategory']">
+            <ng-template pTemplate="caption">
+                <div class="p-d-flex">
+                    <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                        (click)="clear(dt1)"></button>
+                    <span class="p-input-icon-left p-ml-auto" style="float: right;">
+                        <i class="pi pi-search"></i>
+                        <input #search pInputText type="text" (input)="dt1.filterGlobal(search.value, 'contains')"
+                            placeholder="Search keyword" />
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 3rem">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th pSortableColumn="orderLabel">Label <p-sortIcon field="orderLabel"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="orderType">Type <p-sortIcon field="orderType"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="customer">Customer <p-sortIcon field="customer"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="orderPaymentMethod">Payment <p-sortIcon field="orderPaymentMethod"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="orderSubTotal">Sub Total <p-sortIcon field="orderSubTotal"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="orderTotal">Total <p-sortIcon field="orderTotal"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="updatedAt">Updated <p-sortIcon field="updatedAt"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="orderActive">Active <p-sortIcon field="orderActive"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-order>
+                <tr>
+                    <td>
+                        <p-tableCheckbox [value]="order"></p-tableCheckbox>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-tone m-r-5" [routerLink]="['detail']"
+                            [queryParams]="{ orderId: order.orderId }">O-{{order.orderLabel}}</button>
+                    </td>
+                    <td>{{order.orderType}}</td>
+                    <td>{{order.customer}}</td>
+                    <td>{{order.orderPaymentMethod}}</td>
+                    <td>{{order.orderSubTotal}}</td>
+                    <td>{{order.orderTotal}}</td>
+                    <td>{{order.updatedAt}}</td>
+                    <td><span *ngIf="order.orderActive === true"
+                            class="badge badge-success">Yes</span>
+                        <span *ngIf="order.orderActive === false"
+                            class="badge badge-danger">No</span>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorleft">
+                <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+            </ng-template>
+            <ng-template pTemplate="paginatorright">
+                <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+            </ng-template>
+        </p-table>
+
+    </div>
+</div>

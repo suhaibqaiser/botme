@@ -1,147 +1,74 @@
-<!-- shop-section -->
-<section class="shop-section pt-100 pb-70 bg-black">
+<!-- Product List Section -->
+<section class="shop-section pt-100 pb-70 bg-black" id="sectionId-search-grid">
+  <!-- Product customization modal -->
+  <app-customize-product-modal></app-customize-product-modal>
+
   <div class="container">
     <div class="row">
-      <div class="col-sm-12 col-md-9 col-lg-9 pb-30">
-        <div class="product-list-header">
-          <div class="product-list-header-item">
-            <div class="product-list-result">
-              <p>Showing 1-6 Of 35 Results</p>
-            </div>
+      <div class="col-sm-12 col-md-8 col-lg-9 col-xl-9 pb-30">
+        <div class="product-list-header" id="sectionId-search-tags">
+          <div *ngIf="!searchList.length" class="product-list-header-item"></div>
+          <div *ngIf="searchList && searchList.length" class="product-list-header-item">
+            <a (click)="removeFilter(item,i)" *ngFor="let item of searchList;let i = index"
+              class="badge badge-danger">{{item.name}} : ({{item.value}}) <span aria-hidden="true">&times;</span></a>
           </div>
           <div class="product-list-header-item">
             <div class="product-list-action">
               <div class="product-list-form">
                 <form>
-                  <select>
-                    <option value="popularity">Sort By Popular</option>
-                    <option value="lowtohigh">Sort By Price: Low To High</option>
-                    <option value="hightolow">Sort By Price: High To Low</option>
+                  <select (click)="sortByPrice()" [formControl]="sortControl">
+                    <option *ngFor="let item of sortList" [value]="item.value">{{item.name}}</option>
                   </select>
                 </form>
               </div>
             </div>
           </div>
         </div>
-        <div class="product-content">
-          <div class="row">
-            <div class="col-sm-12 col-md-6 col-lg-4 pb-30">
-              <div class="product-card product-card-dark">
+        <div class="product-content" id="sectionId-product-list">
+          <app-spinner *ngIf="isLoading"></app-spinner>
+          <div *ngIf="filteredProducts && filteredProducts.length" class="row">
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 pb-30" *ngFor="let product of filteredProducts">
+              <div class="product-card product-card-dark" id="{{product.productId}}">
                 <div class="product-card-thumb">
                   <div class="product-card-thumb-inner">
-                    <img src="assets/images/product-1.png" alt="product">
-                    <div class="product-card-button">
-                      <a href="#" class="btn btn-yellow">Add To Cart</a>
-                      <a href="#" class="btn">Add To Wishlist</a>
-                    </div>
+                    <a id="ctaId-product-detail-page" [routerLink]="['/product-detail',product.productId]"><img
+                        [src]="_helperService.resolveProductImage(product)" alt="product"></a>
+                  </div>
+                  <div class="review-star mt-3">
+                    <ul>
+                      <li *ngFor="let item of resolveRating(product)" class="full-star"><i [class]="item.star"></i></li>
+                    </ul>
+                    <p><small>({{product.productRating}} Reviews)</small></p>
                   </div>
                 </div>
                 <div class="product-card-content">
-                  <h3><a href="shop-details.html">Crispy Chicken Burger</a></h3>
-                  <h4 class="product-price">$ 4.50</h4>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-4 pb-30">
-              <div class="product-card product-card-dark">
-                <div class="product-card-thumb">
-                  <div class="product-card-thumb-inner">
-                    <img src="assets/images/product-2.png" alt="product">
-                    <div class="product-card-button">
-                      <a href="#" class="btn btn-yellow">Add To Cart</a>
-                      <a href="#" class="btn">Add To Wishlist</a>
-                    </div>
+                  <h3><a id="ctaId-product-detail-page"
+                      [routerLink]="['/product-detail',product.productId]">{{product.productName}}</a></h3>
+                  <h4 class="product-price">${{product.productRate.standard}}</h4>
+                  <div class="d-flex product-icons justify-content-around">
+                    <a id="ctaId-product-add-to-cart" (click)="cartService.setProductCustomization(product)"
+                      data-bs-toggle="modal" data-bs-target="#pageId-productCustomizeModal"><i
+                        class="fas fa-cart-plus"></i></a>
+                    <a><i class="fas fa-heart"></i></a>
                   </div>
-                </div>
-                <div class="product-card-content">
-                  <h3><a href="shop-details.html">Cheese Chicken Burger</a></h3>
-                  <h4 class="product-price">$ 3.50</h4>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-4 pb-30">
-              <div class="product-card product-card-dark">
-                <div class="product-card-thumb">
-                  <div class="product-card-thumb-inner">
-                    <img src="assets/images/product-3.png" alt="product">
-                    <div class="product-card-button">
-                      <a href="#" class="btn btn-yellow">Add To Cart</a>
-                      <a href="#" class="btn">Add To Wishlist</a>
-                    </div>
-                    <div class="product-status product-status-danger">New</div>
-                  </div>
-                </div>
-                <div class="product-card-content">
-                  <h3><a href="shop-details.html">Combo Steak Burger</a></h3>
-                  <h4 class="product-price">$ 5.45</h4>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-4 pb-30">
-              <div class="product-card product-card-dark">
-                <div class="product-card-thumb">
-                  <div class="product-card-thumb-inner">
-                    <img src="assets/images/product-4.png" alt="product">
-                    <div class="product-card-button">
-                      <a href="#" class="btn btn-yellow">Add To Cart</a>
-                      <a href="#" class="btn">Add To Wishlist</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="product-card-content">
-                  <h3><a href="shop-details.html">Reddish Pizza</a></h3>
-                  <h4 class="product-price">$ 7.45</h4>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-4 pb-30">
-              <div class="product-card product-card-dark">
-                <div class="product-card-thumb">
-                  <div class="product-card-thumb-inner">
-                    <img src="assets/images/product-5.png" alt="product">
-                    <div class="product-card-button">
-                      <a href="#" class="btn btn-yellow">Add To Cart</a>
-                      <a href="#" class="btn">Add To Wishlist</a>
-                    </div>
-                    <div class="product-status product-status-danger">New</div>
-                  </div>
-                </div>
-                <div class="product-card-content">
-                  <h3><a href="shop-details.html">Black Beef Pizza</a></h3>
-                  <h4 class="product-price">$ 8.12</h4>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-4 pb-30">
-              <div class="product-card product-card-dark">
-                <div class="product-card-thumb">
-                  <div class="product-card-thumb-inner">
-                    <img src="assets/images/product-6.png" alt="product">
-                    <div class="product-card-button">
-                      <a href="#" class="btn btn-yellow">Add To Cart</a>
-                      <a href="#" class="btn">Add To Wishlist</a>
-                    </div>
-                    <div class="product-status product-status-warning">Sold</div>
-                  </div>
-                </div>
-                <div class="product-card-content">
-                  <h3><a href="shop-details.html">Green Sauce Pizza</a></h3>
-                  <h4 class="product-price">$ 6.42</h4>
                 </div>
               </div>
             </div>
           </div>
-          <div class="page-pagination">
+          <div *ngIf="!isLoading && filteredProducts && !filteredProducts.length" class="error-product">Sorry product
+            not found!
+          </div>
+          <!-- <div class="page-pagination">
             <nav aria-label="pagination">
               <ul class="pagination justify-content-center">
                 <li class="page-item disabled">
                   <span class="page-link"><i class="flaticon-left-arrow-1"></i></span>
                 </li>
                 <li class="page-item active">
-                                        <span class="page-link">
-                                          1
-                                          <span class="sr-only">(current)</span>
-                                        </span>
+                  <span class="page-link">
+                    1
+                    <span class="sr-only">(current)</span>
+                  </span>
                 </li>
                 <li class="page-item"><a class="page-link" href="#">2</a></li>
                 <li class="page-item"><a class="page-link" href="#">3</a></li>
@@ -150,32 +77,52 @@
                 </li>
               </ul>
             </nav>
-          </div>
+          </div> -->
         </div>
       </div>
-      <div class="col-sm-12 col-md-3 col-lg-3 pb-30">
-        <div class="sidebar-item around-border sidebar-search">
+      <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3 pb-30">
+        <div id="sectionId-filters" class="sidebar-item around-border sidebar-search">
           <form>
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Search">
+              <input (change)="filterProductsByName($event)" class="form-control" id="productSearch" type="text"
+                placeholder="Search">
               <button><i class="flaticon-loupe"></i></button>
             </div>
           </form>
         </div>
         <div class="sidebar-item mb-30">
           <div class="sidebar-title">
-            <h3 class="color-white">Filter By Price</h3>
+            <h4 class="color-white">Filter By Price</h4>
           </div>
           <div class="sidebar-content">
             <form class="price-range-content">
               <div class="price-range-bar" id="range-slider"></div>
               <div class="price-range-filter">
                 <div class="price-range-filter-item price-range-filter-button order-2 order-xl-1">
-                  <button class="btn btn-small">Filter</button>
+                  <button (click)="filterProductByPriceRange()" class="btn btn-small">Filter</button>
                 </div>
                 <div class="price-range-filter-item d-flex align-items-center text-end order-1 order-xl-2">
                   <h4>Price:</h4>
-                  <input type="text" id="price-amount" readonly>
+                  <input type="text" class="price-amount" id="price-amount" readonly>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="sidebar-item mb-30">
+          <div class="sidebar-title">
+            <h4 class="color-white">Filter By Rating</h4>
+          </div>
+          <div class="sidebar-content">
+            <form class="price-range-content">
+              <div class="price-range-bar" id="rating-slider"></div>
+              <div class="price-range-filter">
+                <div class="price-range-filter-item price-range-filter-button order-2 order-xl-1">
+                  <button (click)="filterProductByRating()" class="btn btn-small">Filter</button>
+                </div>
+                <div class="price-range-filter-item d-flex align-items-center text-end order-1 order-xl-2">
+                  <h4>Rating:</h4>
+                  <input type="text" class="price-amount" id="rating-amount" readonly>
                 </div>
               </div>
             </form>
@@ -183,27 +130,16 @@
         </div>
         <div class="sidebar-item">
           <div class="sidebar-title">
-            <h3 class="color-white">Categories</h3>
+            <h4 class="color-white">Categories</h4>
           </div>
           <ul class="sidebar-list">
-            <li>
-              <a href="#">Commercial <span>(08)</span></a>
-            </li>
-            <li>
-              <a href="#">Food Review <span>(04)</span></a>
-            </li>
-            <li>
-              <a href="#">Burger Mania <span>(04)</span></a>
-            </li>
-            <li>
-              <a href="#">Fast Food <span>(14)</span></a>
-            </li>
-            <li>
-              <a href="#">Pizza <span>(10)</span></a>
+            <li *ngFor="let category of categoryList" id="{{category.categoryId}}">
+              <a [class.active-category]="category.selected" href="javascript:void(0)"
+                (click)="filterProductsByCategory(category)">{{category.categoryName}}</a>
             </li>
           </ul>
         </div>
-        <div class="sidebar-item">
+        <!-- <div class="sidebar-item">
           <div class="sidebar-title">
             <h3 class="color-white">Popular</h3>
           </div>
@@ -236,9 +172,11 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
 </section>
 <!-- .end shop-section -->
+
+<app-product-cart-modal></app-product-cart-modal>

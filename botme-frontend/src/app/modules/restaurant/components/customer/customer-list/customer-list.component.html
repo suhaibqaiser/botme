@@ -1,0 +1,93 @@
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex align-items-center justify-content-between m-b-15">
+      <h4 class="m-b-0">Customer List</h4>
+      <div class="card-toolbar">
+        <ul>
+          <!-- <li>
+            <a class="text-gray" href="javascript:void(0)">
+              <i class="anticon anticon-reload font-size-20"></i>
+            </a>
+          </li>-->
+          <li>
+            <a class="text-gray" href="javascript:void(0)">
+              <i class="anticon anticon-delete font-size-20"></i>
+            </a>
+          </li>
+          <li>
+            <a class="text-gray" [routerLink]="['detail']">
+              <i class="anticon anticon-plus font-size-20"></i>
+              Add New
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <p-table #dt1 [value]="customers" [responsive]="true" [paginator]="true" [rows]="10" [loading]="loading"
+      [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [rowsPerPageOptions]="[10,25,50]" [globalFilterFields]="['customerName','customerEmail','customerPhone']">
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+          <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+            (click)="clear(dt1)"></button>
+          <span class="p-input-icon-left p-ml-auto" style="float: right;">
+            <i class="pi pi-search"></i>
+            <input #search pInputText type="text" (input)="dt1.filterGlobal(search.value, 'contains')"
+              placeholder="Search keyword" />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <!-- <th style="width: 10px">#</th> -->
+          <th style="width: 3rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th pSortableColumn="customerLabel">Label <p-sortIcon field="customerLabel"></p-sortIcon>
+          </th>
+          <th pSortableColumn="customerName">Name <p-sortIcon field="customerName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="customerEmail">Email <p-sortIcon field="customerEmail"></p-sortIcon>
+          </th>
+          <th pSortableColumn="customerPhone">Phone <p-sortIcon field="customerPhone"></p-sortIcon>
+          </th>
+          <th pSortableColumn="createdAt">Created <p-sortIcon field="createdAt"></p-sortIcon>
+          </th>
+          <th pSortableColumn="updatedAt">Updated <p-sortIcon field="updatedAt"></p-sortIcon>
+          </th>
+          <th pSortableColumn="customerActive">Active <p-sortIcon field="customerActive"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-customer>
+        <tr>
+          <td>
+            <p-tableCheckbox [value]="customer"></p-tableCheckbox>
+          </td>
+          <td>
+            <button class="btn btn-primary btn-tone m-r-5" [routerLink]="['detail']"
+              [queryParams]="{ customerId: customer.customerId }">C-{{customer.customerLabel}}</button>
+          </td>
+          <td>{{customer.customerName}}</td>
+          <td>{{customer.customerEmail}}</td>
+          <td>{{customer.customerPhone}}</td>
+          <td>{{customer.createdAt}}</td>
+          <td>{{customer.updatedAt}}</td>
+          <td><span *ngIf="customer.customerActive === true"
+              class="badge badge-success">{{customer.customerActive}}</span>
+            <span *ngIf="customer.customerActive === false"
+              class="badge badge-danger">{{customer.customerActive}}</span>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="paginatorleft">
+        <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+      </ng-template>
+      <ng-template pTemplate="paginatorright">
+        <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+      </ng-template>
+    </p-table>
+
+  </div>
+</div>
