@@ -72,7 +72,7 @@ export class SpeechService {
 
     this.socketService.messages.subscribe((message: any) => {
       this.speak(message.text, message.audio)
-      console.log('You Said: ', message.inputText);
+      console.log('You Said: ', message);
     });
 
     if (this.SpeechE) {
@@ -194,11 +194,11 @@ export class SpeechService {
   stopCloudListen() {
     if (this.recorder && this.isListening) {
       this.updateState('p')
-      setTimeout(() => {
-        if (this.isProcessing) {
-          this.speak(this.voiceProcessingDelayed, null)
-        }
-      }, 5000);
+      // setTimeout(() => {
+      //   if (this.isProcessing) {
+      //     this.speak(this.voiceProcessingDelayed, null)
+      //   }
+      // }, 10000);
       this.recorder.stop((blob: any) => {
         if (!this.isSpeaking || !this.isProcessing || !this.isListening)
           this.socketService.sendMessage('voice', blob, this.cloudVoice)
@@ -220,7 +220,7 @@ export class SpeechService {
         }
       }
     }
-    // TODO: should update this before commiting 
+    // TODO: should update this before commiting
     this.speak(this.voiceEndingMessage, null)
   }
 

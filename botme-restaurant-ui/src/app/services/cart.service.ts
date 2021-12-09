@@ -39,7 +39,28 @@ export class CartService {
     status: false
   }
   productSizeList: any = []
-  tempProductSizeList = ['standard', 'medium', 'large', 'small']
+  tempProductSizeList = [
+    {
+      serving_size_name: 'standard',
+      selected: true,
+      serving_price: 0
+    },
+    {
+      serving_size_name: 'medium',
+      selected: false,
+      serving_price: 0
+    },
+    {
+      serving_size_name: 'large',
+      selected: false,
+      serving_price: 0
+    },
+    {
+      serving_size_name: 'small',
+      selected: false,
+      serving_price: 0
+    }
+  ]
   selectProductRatesField = new FormControl('')
 
   constructor(public _helperService: HelperService, private _socketService: SocketService) {
@@ -88,12 +109,16 @@ export class CartService {
   //////////////// cart customization //////////////////////
   setProductRateSize(product: any) {
     this.productSizeList = []
-    let i = 0
-    this.tempProductSizeList.forEach((item: any, index: any) => {
-      if (product.productRate[item] > 0) {
-        this.productSizeList[i++] = item
-      }
+    let keysList = Object.keys(product.productRate)
+    console.log('keysList =>', keysList)
+    keysList.forEach((item: any, index) => {
+      this.productSizeList.push({
+        serving_size_name: item,
+        selected: index == 0,
+        serving_price: product.productRate[item]
+      })
     })
+    console.log('productSizeList =>', this.productSizeList)
   }
 
   //
@@ -102,12 +127,21 @@ export class CartService {
     this._socketService.currentContextObj.sectionId = 'sectionId-servingSize-productOptions'
     this.slideToShow = 0
     this.reset()
-    this.setProductRateSize(product)
     let productOptionsList: any = []
     let productIngredientList: any = []
     let productFlavoursList: any = []
     let productAddonsList: any = []
     let productToppingsList: any = []
+    let productServingSizeList: any = []
+    let keysList = Object.keys(product.productRate)
+    keysList.forEach((item: any, index) => {
+      productServingSizeList.push({
+        serving_size_name: item,
+        selected: index == 0,
+        serving_price: product.productRate[item]
+      })
+    })
+
     if (product.productOptions && product.productOptions.length) {
       product.productOptions.forEach((array: any) => {
         array.forEach((item: any, i: any) => {
@@ -182,7 +216,7 @@ export class CartService {
       productId: product.productId,
       productImage: product.productImage,
       productRate: product.productRate,
-      productServingSize: this.productSizeList[0],
+      productServingSize: productServingSizeList,
       productOptions: productOptionsList,
       productIngredients: productIngredientList,
       productFlavors: productFlavoursList,
@@ -192,10 +226,9 @@ export class CartService {
       status: false,
       productAttributes: product.productAttributes,
       productNutrition: product.productNutrition,
-      productPrice: this.roundToTwo(product.productRate[this.productSizeList[0]]),
-      productTotalPrice: this.roundToTwo(product.productRate[this.productSizeList[0]])
+      productPrice: this.roundToTwo(productServingSizeList[0].serving_price),
+      productTotalPrice: this.roundToTwo(productServingSizeList[0].serving_price)
     }
-    this.selectProductRatesField.setValue(this.productSizeList[0])
     $('#pageId-productCustomizeModal').modal('show')
   }
 
@@ -229,8 +262,27 @@ export class CartService {
     option.selected = !option.selected
   }
 
+  selectServing(sizeObj: any) {
+    if (this._socketService.voiceServingSize) {
+      this.singleCustomProductObj.productServingSize.forEach((item: any) => {
+        item.selected = item.serving_size_name === this._socketService.voiceServingSize
+      })
+    } else {
+      this.singleCustomProductObj.productServingSize.forEach((item: any) => {
+        item.selected = item.serving_size_name === sizeObj.serving_size_name
+      })
+    }
+
+    let obj = this.singleCustomProductObj.productServingSize.find((f: any) => f.selected == true)
+    this.singleCustomProductObj.productPrice = this.roundToTwo(obj.serving_price)
+    this.customizeBillCalculation()
+    this._socketService.voiceServingSize = ''
+
+  }
+
   customizeBillCalculation() {
-    this.singleCustomProductObj.productTotalPrice = this.singleCustomProductObj.productPrice
+    this.singleCustomProductObj.productTotalPrice = this.roundToTwo(this.singleCustomProductObj.productPrice * this.singleCustomProductObj.productQuantity)
+    console.log(this.singleCustomProductObj.productTotalPrice)
     this.singleCustomProductObj.productToppings.forEach((item: any) => {
       this.singleCustomProductObj.productTotalPrice += item.productTotalPrice
     })
