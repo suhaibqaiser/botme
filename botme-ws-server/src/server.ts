@@ -6,6 +6,7 @@ import { getCommandResponse } from './services/commandService'
 const config = require('config');
 import models = require("./models")
 import { getSpeechToText, getTextToSpeech } from "./services/speechService"
+import { addConversation, addConversationLog, endConversation, updateConversationLog } from "./services/conversationService";
 
 // application config
 const port = process.env.WS_PORT || config.get('port')
@@ -36,31 +37,43 @@ io.use(async (socket: Socket, next) => {
 });
 
 
-io.on("connection", (socket: Socket) => {
+io.on("connection", async (socket: Socket) => {
     console.log(socket.data.clientId, "notification", `device:${socket.data.sessionId} attached on robot:${socket.data.clientId}`)
+    socket.data.conversationId = await addConversation(socket.data.sessionId)
 
     socket.on("message", async (data: models.SocketMessage) => {
-
         if (data.type === "communication") {
             let payload: any = data.payload
-            let response = await getCommandResponse(socket.data.sessionId, payload.message, payload.pageId, payload.sectionId, payload.entities, payload.uniqueConversationId)
+            let response = await getCommandResponse(payload.message, payload.pageId, payload.sectionId, payload.entities, payload.uniqueConversationId)
             sendMessage(socket.data.clientId, "communication", response)
 
         } else if (data.type === "notification") {
             sendMessage(socket.data.clientId, "notification", data.payload)
 
         } else if (data.type === "voice") {
+            let conversationLogId = await addConversationLog(socket.data.conversationId)
+
             let payload: any = data.payload
+            let socketInput = { ...payload }
+            delete socketInput.message
+
+            updateConversationLog(conversationLogId, 'socketInput', socketInput)
+
             let voiceResponse = await getSpeechToText(payload.message)
+
             if (voiceResponse) {
-                let response: any = await getCommandResponse(socket.data.sessionId, voiceResponse, payload.pageId, payload.sectionId, payload.entities, payload.uniqueConversationId)
-                console.log(payload, response);
+                updateConversationLog(conversationLogId, 'query', voiceResponse)
+
+                let response: any = await getCommandResponse(voiceResponse, payload.pageId, payload.sectionId, payload.entities, payload.uniqueConversationId)
+                updateConversationLog(conversationLogId, 'response', response.text)
 
                 if (response?.intentName) {
                     if (payload.voice) {
                         response.audio = await getTextToSpeech(response.text)
                     }
                     sendMessage(socket.data.clientId, "communication", response)
+                    delete response.audio
+                    updateConversationLog(conversationLogId, 'socketOutput', response)
                 }
             }
 
@@ -89,6 +102,7 @@ io.on("connection", (socket: Socket) => {
 
     socket.on("disconnect", (reason) => {
         console.log(`Socket ${socket.id} disconnected because ${reason}`);
+        endConversation(socket.data.conversationId)
     })
 
 });

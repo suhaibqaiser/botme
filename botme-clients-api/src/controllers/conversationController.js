@@ -5,7 +5,7 @@ async function getConversations(req, res) {
     let response = new Response()
 
     if (!req.query.sessionId) {
-        response.payload = {message: 'sessionId is required'};
+        response.payload = { message: 'sessionId is required' };
         return res.status(400).send(response);
     }
 
@@ -22,18 +22,18 @@ async function getConversations(req, res) {
     }
 }
 
-async function addConversations(req, res) {
+async function addConversation(req, res) {
     let response = new Response()
 
     if (!req.body.sessionId) {
-        response.payload = {message: 'sessionId is required'};
+        response.payload = { message: 'sessionId is required' };
         return res.status(400).send(response);
     }
 
-    let conversationId = await conversationService.addConversations(req.body.sessionId)
+    let conversationId = await conversationService.addConversation(req.body.sessionId)
 
     if (conversationId) {
-        response.payload = conversationId
+        response.payload = { "conversationId": conversationId }
         response.status = "success"
         return res.status(200).send(response)
     } else {
@@ -47,11 +47,33 @@ async function addConversationLog(req, res) {
     let response = new Response()
 
     if (!req.body.conversationId) {
-        response.payload = {message: 'conversationId is required'};
+        response.payload = { message: 'conversationId is required' };
         return res.status(400).send(response);
     }
 
-    let session = await conversationService.addConversationLog(req.body.conversationId, req.body.query, req.body.response)
+    let conversationLogId = await conversationService.addConversationLog(req.body.conversationId)
+
+    if (conversationLogId) {
+        response.payload = { "conversationLogId": conversationLogId }
+        response.status = "success"
+        return res.status(200).send(response)
+    } else {
+        response.payload = "Session or conversations not found"
+        response.status = "error"
+        return res.status(404).send(response)
+    }
+}
+
+
+async function updateConversationLog(req, res) {
+    let response = new Response()
+
+    if (!req.body.conversationLogId) {
+        response.payload = { message: 'conversationLogId is required' };
+        return res.status(400).send(response);
+    }
+
+    let session = await conversationService.updateConversationLog(req.body.conversationLogId, req.body.param, req.body.value)
 
     if (session) {
         response.payload = session
@@ -68,7 +90,7 @@ async function endConversation(req, res) {
     let response = new Response()
 
     if (!req.body.conversationId) {
-        response.payload = {message: 'conversationId is required'};
+        response.payload = { message: 'conversationId is required' };
         return res.status(400).send(response);
     }
 
@@ -90,14 +112,14 @@ async function getConversationId(req, res) {
     let response = new Response()
 
     if (!req.query.sessionId) {
-        response.payload = {message: 'sessionId is required'};
+        response.payload = { message: 'sessionId is required' };
         return res.status(400).send(response);
     }
 
     let conversationId = await conversationService.getConversationId(req.query.sessionId)
 
     if (conversationId) {
-        response.payload = conversationId
+        response.payload = { "conversationId": conversationId }
         response.status = "success"
         return res.status(200).send(response)
     } else {
@@ -107,4 +129,4 @@ async function getConversationId(req, res) {
     }
 }
 
-module.exports = ({getConversations, getConversationId, addConversations, addConversationLog, endConversation})
+module.exports = ({ getConversations, getConversationId, addConversation, addConversationLog, endConversation, updateConversationLog })
