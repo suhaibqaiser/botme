@@ -9,6 +9,7 @@ const sessionRouter = require('./routes/sessionRouter')
 const conversationRouter = require('./routes/conversationRouter')
 const authRouter = require('./routes/authRouter')
 const restaurantRouter = require('./routes/restaurantRouter')
+const speechRouter = require('./routes/speechRouter')
 
 const app = express()
 const port = process.env.API_PORT || 3000;
@@ -22,7 +23,8 @@ mongoose.connect(mongoDB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
-    useFindAndModify: false
+    useFindAndModify: false,
+    promoteBuffers: true
 });
 const db = mongoose.connection;
 db.once("open", function () {
@@ -37,7 +39,7 @@ let corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 app.use('/client', verifyToken, clientsRouter);
 app.use('/nlp', verifyToken, nlpRouter);
@@ -46,6 +48,7 @@ app.use('/corpus', verifyToken, corpusRouter);
 app.use('/session', verifyToken, sessionRouter);
 app.use('/conversation', verifyToken, conversationRouter);
 app.use('/restaurant', verifyToken, restaurantRouter)
+app.use('/speech', speechRouter);
 app.use('/auth', authRouter);
 
 
