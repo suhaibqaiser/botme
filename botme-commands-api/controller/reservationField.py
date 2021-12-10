@@ -70,13 +70,13 @@ def checkIfFieldValueExist(form,pageId,sectionId,value,text,intent):
                 return {"Response":"please fill the Time field first","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":form}
 
 def findNextFieldFocus(db,form,pageId,sectionId,value,text,intent):
+    context = db['context']
+    iD = getEntityClickAttribute(context['entities'])
     for x in form:
         print(x)
-        context = db['context']
-        iD = getEntityClickAttribute(context['entities'])
         if not x['entityValue']:
             x['entityStatus'] = True
-            return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form} 
+    return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form} 
 
 def getEntityClickAttribute(entity):
     for x in entity:
