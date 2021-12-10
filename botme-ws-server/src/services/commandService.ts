@@ -1,13 +1,10 @@
 const fetch = require('node-fetch');
-import { addConversationLog } from './conversationService'
 const config = require('config');
 
 export async function getCommandResponse(text: string, pageId: string, sectionId: string, entities: string[], uniqueConvId: number) {
 
     try {
         let body = { "text": text, "pageId": pageId, "sectionId": sectionId, "entities": entities };
-
-
         const res = await fetch(config.get('commandAPI') + "/response", {
             method: 'post',
             body: JSON.stringify(body),
@@ -16,6 +13,8 @@ export async function getCommandResponse(text: string, pageId: string, sectionId
             }
         });
         let data = await res.json()
+        console.log(data);
+
         if (data) {
             let answer = {
                 inputText: text,
@@ -32,10 +31,37 @@ export async function getCommandResponse(text: string, pageId: string, sectionId
             };
             return answer
         } else {
-            return undefined
+            return {
+                inputText: text,
+                // FIXME: Change response
+                text: 'There is an error in backend service',
+                ctaId: '',
+                entityId: '',
+                entityName: '',
+                pageId: '',
+                sectionId: '',
+                sentimentScore: '',
+                intentName: 'error_commands_api',
+                entities: '',
+                uniqueConversationId: uniqueConvId
+            };
         }
     } catch (err) {
         console.log(err);
+        return {
+            inputText: text,
+            // FIXME: Change response
+            text: 'There is an error in backend service',
+            ctaId: '',
+            entityId: '',
+            entityName: '',
+            pageId: '',
+            sectionId: '',
+            sentimentScore: '',
+            intentName: 'error_commands_api',
+            entities: '',
+            uniqueConversationId: uniqueConvId
+        };
     }
 }
 

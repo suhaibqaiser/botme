@@ -198,7 +198,7 @@ export class SpeechService {
         if (this.isProcessing) {
           this.speak(this.voiceProcessingDelayed, null)
         }
-      }, 5000);
+      }, 10000); // seconds
       this.recorder.stop((blob: any) => {
         if (!this.isSpeaking || !this.isProcessing || !this.isListening)
           this.socketService.sendMessage('voice', blob, this.cloudVoice)
