@@ -28,67 +28,55 @@ def reservationField(db,form,pageId,sectionId,value,text,intent):
                 return Response
             
             elif intent == "book_now":
-                Response = findRemainingFieldFocus(db,form,pageId,sectionId,value,text,intent)
+                Response = checkingIfFieldValueExist(db,form,pageId,sectionId,value,text,intent)
                 return Response
 
-def findRemainingFieldFocus(db,form,pageId,sectionId,value,text,intent):
+def checkingIfFieldValueExist(db,form,pageId,sectionId,value,text,intent):
     for x in form:
         context = db['context']
         iD = getEntityClickAttribute(context['entities'])
         if not x['entityValue']:
             if x['entityId'] == "entityId-name":
                 x['entityStatus'] = True
-                return {"Response":"please fill the name field","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
+                return {"Response":"please fill the name field first","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
             # lookupfield["keyEntityNoOfPers"]
             elif x['entityId'] == "entityId-number-of-persons":
                 x['entityStatus'] = True
-                return {"Response":"please fill the number of person field","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
+                return {"Response":"please fill the number of person field first","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
 
             elif x['entityId'] == "entityId-date":
                 x['entityStatus'] = True
-                return {"Response":"please fill the Date field","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
+                return {"Response":"please fill the Date field first","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
 
             elif x['entityId'] == "entityId-time":
                 x['entityStatus'] = True
-                return {"Response":"please fill the Time field","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
-
-        # else:
-        #     return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form} 
+                return {"Response":"please fill the Time field first","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
 
     return {"Response":"you can now book your reservation","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
        
-def checkIfFieldValueExist(db,form,pageId,sectionId,value,text,intent):
-    context = db['context']
-    iD = getEntityClickAttribute(context['entities'])
+def checkIfFieldValueExist(form,pageId,sectionId,value,text,intent):
     for x in form:
-        if not x['entityValue']:
+        if x['entityStatus'] == True:
             if x['entityId'] == "entityId-name":
-                x['entityStatus'] = True
-                return {"Response":"please tell me your name?","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
+                return {"Response":"please fill the name field first","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":form}
 
             elif x['entityId'] == "entityId-number-of-persons":
-                x['entityStatus'] = True
-                return {"Response":"For how many people you want to make reservation?","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
+                return {"Response":"please fill the number of person field first","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":form}
 
             elif x['entityId'] == "entityId-date":
-                x['entityStatus'] = True
-                return {"Response":"Do you want to make reservation for today or tomorrow or some other day","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
+                return {"Response":"please fill the Date field first","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":form}
 
             elif x['entityId'] == "entityId-time":
-                x['entityStatus'] = True
-                return {"Response":"what time you want to make reservation?","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
+                return {"Response":"please fill the Time field first","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":form}
 
-    Response = {"Response":"you can now book your reservation","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
-    return Response
-
-# def findNextFieldFocus(db,form,pageId,sectionId,value,text,intent):
-#     for x in form:
-#         print(x)
-#         context = db['context']
-#         iD = getEntityClickAttribute(context['entities'])
-#         if not x['entityValue']:
-#             x['entityStatus'] = True
-#             return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form} 
+def findNextFieldFocus(db,form,pageId,sectionId,value,text,intent):
+    for x in form:
+        print(x)
+        context = db['context']
+        iD = getEntityClickAttribute(context['entities'])
+        if not x['entityValue']:
+            x['entityStatus'] = True
+            return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form} 
 
 def getEntityClickAttribute(entity):
     for x in entity:
@@ -106,22 +94,13 @@ def formInitialization(form):
 
 def Field(db,form,pageId,sectionId,value,text,intent,entityId):
     for x in form:
-        if x['entityId'] == entityId:
-            if x['entityValue']:
+        if x['entityStatus'] == True:
+            if x['entityId'] == entityId:
                 x['entityValue'] = value
                 x['entityStatus'] = False
-                Response = findRemainingFieldFocus(db,form,pageId,sectionId,value,text,intent)
+                Response = findNextFieldFocus(db,form,pageId,sectionId,value,text,intent)
                 print("1 ==>", Response)
                 return Response
-            elif not x['entityValue']:
-                x['entityValue'] = value
-                x['entityStatus'] = False
-                Response = checkIfFieldValueExist(db,form,pageId,sectionId,value,text,intent)
+            else:
+                Response = checkIfFieldValueExist(form,pageId,sectionId,value,text,intent)
                 return Response
-                # else:
-                #     Response = findNextFieldFocus(db,form,pageId,sectionId,value,text,intent)
-                #     print("2 ==>", Response)
-                #     return Response
-
-    
-
