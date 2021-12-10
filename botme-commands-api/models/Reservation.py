@@ -21,13 +21,16 @@ class Reservation():
     def reservation(self):
         try:
             if self.db is not None:
-                V = re.findall(r'\d+', self.value) 
-                number = "".join(V)
-                if number.isdigit():
-                    Response = reservationField(self.db,self.form,self.pageId,self.sectionId,self.value,self.text,self.intent)
-                    return Response
-                else:
-                    return {"Response":"sorry,can you please tell me the number of people again?","ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}                 
+                if self.value:
+                    V = re.findall(r'\d+', self.value) 
+                    number = "".join(V)
+                    if number.isdigit():
+                        Response = reservationField(self.db,self.form,self.pageId,self.sectionId,self.value,self.text,self.intent)
+                        return Response
+                    else:
+                        return {"Response":"sorry,can you please tell me the number of people again?","ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}  
+                else:             
+                    return {"Response":"sorry,can you please tell me the number of people again?","ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}  
             else:
                 tableResponse = Reservation.searchingTable(self.value,self.senti,self.intent,self.text)
                 return tableResponse
