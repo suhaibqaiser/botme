@@ -21,7 +21,14 @@ def send_Response():
         return jsonify(response)
     else:
         response = getResponse(intent['name'],rasa_data['entities'],text,pageId,sectionID,form)
-        return jsonify(response)
+        if response:
+            print(response)
+            return jsonify(response)
+        else:
+            response = {"Response":"I’m sorry,Could you say it again?","ctaCommandId":None,"pageId":pageId,"sectionId":sectionID,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent['name']}
+            return response
+
+
 
 
 if __name__ == '__main__':
