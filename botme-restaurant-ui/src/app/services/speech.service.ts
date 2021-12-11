@@ -72,7 +72,7 @@ export class SpeechService {
 
     this.socketService.messages.subscribe((message: any) => {
       this.speak(message.text, message.audio)
-      console.log('You Said: ', message.inputText);
+      console.log('You Said: ', message);
     });
 
     if (this.SpeechE) {
@@ -220,7 +220,7 @@ export class SpeechService {
         }
       }
     }
-    // TODO: should update this before commiting 
+    // TODO: should update this before commiting
     this.speak(this.voiceEndingMessage, null)
   }
 

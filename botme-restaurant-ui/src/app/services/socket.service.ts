@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import { Router } from "@angular/router";
-import { environment } from 'src/environments/environment';
-import { io } from "socket.io-client";
-import { BotmeClientService } from './botme-client.service';
+import {Injectable} from '@angular/core';
+import {Subject} from 'rxjs';
+import {Router} from "@angular/router";
+import {environment} from 'src/environments/environment';
+import {io} from "socket.io-client";
+import {BotmeClientService} from './botme-client.service';
 
 
 @Injectable({
@@ -96,7 +96,7 @@ export class SocketService {
       });
 
       this.socket.on('message', (data: any) => {
-
+        console.log('message =>', data.type)
         let payload = data.payload
 
         switch (data.type) {
@@ -131,6 +131,7 @@ export class SocketService {
       type: string,
       timestamp: string
     }
+
     this.uniqueConversationId++
     console.log(`uniqueConversationId: ${this.uniqueConversationId}`);
 
@@ -173,7 +174,7 @@ export class SocketService {
       if (msg.entityId == 'entityId-select-serving-size') {
         this.voiceServingSize = msg.entityName.toLowerCase()
         // @ts-ignore
-        document.getElementById('ctaId-select-serving-size')?.click()
+        document.getElementById(msg.entityName.toLowerCase())?.click()
         return
       }
 

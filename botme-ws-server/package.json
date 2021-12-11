@@ -12,18 +12,18 @@
   },
   "author": "Aman Subhan <amansubhan929@gmail.com>",
   "license": "ISC",
+  "devDependencies": {},
   "dependencies": {
+    "tslint": "^5.20.1",
+    "typescript": "^4.4.0",
     "@google-cloud/speech": "^4.9.0",
     "@google-cloud/text-to-speech": "^3.3.1",
     "@types/node": "^16.11.6",
     "@types/node-fetch": "^3.0.3",
     "@types/socket.io": "^3.0.2",
     "config": "^3.3.6",
-    "md5": "^2.3.0",
     "node-fetch": "^2.6.6",
     "socket.io": "^4.3.1",
-    "tsc-watch": "^4.5.0",
-    "tslint": "^5.20.1",
-    "typescript": "^4.4.0"
+    "tsc-watch": "^4.5.0"
   }
 }
