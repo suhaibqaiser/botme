@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {environment} from 'src/environments/environment';
 import {io} from "socket.io-client";
 import {BotmeClientService} from './botme-client.service';
+import {HelperService} from "./helper.service";
 
 
 @Injectable({
@@ -85,7 +86,7 @@ export class SocketService {
   voiceServingSize = ''
 
 
-  constructor(private router: Router, private clients: BotmeClientService) {
+  constructor(private router: Router, private clients: BotmeClientService, private _helperService: HelperService) {
 
     this.authToken = clients.getCookieToken();
 
@@ -168,7 +169,7 @@ export class SocketService {
       if (msg.entities && msg.entities.length) this.reservationFormEntities = JSON.parse(JSON.stringify(msg.entities))
       //for reservation form
       // @ts-ignore
-      document.getElementById(msg.entityId)?.value = msg.entityName
+      document.getElementById(msg.entityId)?.value = (msg.entityId === 'entityId-time') ? this._helperService.timeConvert(msg.entityName) : msg.entityName
 
 
       if (msg.entityId == 'entityId-select-serving-size') {

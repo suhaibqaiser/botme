@@ -110,7 +110,6 @@ export class CartService {
   setProductRateSize(product: any) {
     this.productSizeList = []
     let keysList = Object.keys(product.productRate)
-    console.log('keysList =>', keysList)
     keysList.forEach((item: any, index) => {
       this.productSizeList.push({
         serving_size_name: item,
@@ -118,7 +117,6 @@ export class CartService {
         serving_price: product.productRate[item]
       })
     })
-    console.log('productSizeList =>', this.productSizeList)
   }
 
   //
@@ -263,21 +261,16 @@ export class CartService {
   }
 
   selectServing(sizeObj: any) {
-    if (this._socketService.voiceServingSize) {
-      this.singleCustomProductObj.productServingSize.forEach((item: any) => {
-        item.selected = item.serving_size_name === this._socketService.voiceServingSize
-      })
-    } else {
-      this.singleCustomProductObj.productServingSize.forEach((item: any) => {
-        item.selected = item.serving_size_name === sizeObj.serving_size_name
-      })
-    }
+    let name = (this._socketService.voiceServingSize && this._socketService.voiceServingSize.length) ? this._socketService.voiceServingSize : sizeObj.serving_size_name
+    this.singleCustomProductObj.productServingSize.forEach((item: any) => {
+      item.selected = item.serving_size_name.toLowerCase() === name.toLowerCase()
+    })
+
 
     let obj = this.singleCustomProductObj.productServingSize.find((f: any) => f.selected == true)
     this.singleCustomProductObj.productPrice = this.roundToTwo(obj.serving_price)
-    this.customizeBillCalculation()
     this._socketService.voiceServingSize = ''
-
+    this.customizeBillCalculation()
   }
 
   customizeBillCalculation() {
