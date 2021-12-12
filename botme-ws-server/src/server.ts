@@ -42,21 +42,26 @@ io.on("connection", async (socket: Socket) => {
     socket.data.conversationId = await addConversation(socket.data.sessionId)
 
     socket.on("message", async (data: models.SocketMessage) => {
+        let payload: any = data.payload
+
+        let conversationLogId = await addConversationLog(socket.data.conversationId)
+        let conversation = {
+            conversationId: socket.data.conversationId,
+            conversationLogId: conversationLogId,
+            conversationSequence: payload.conversationSequence
+        }
+
         if (data.type === "communication") {
-            let payload: any = data.payload
-            let response = await getCommandResponse(payload.message, payload.pageId, payload.sectionId, payload.entities, payload.uniqueConversationId)
+            let response = await getCommandResponse(payload.message, payload.pageId, payload.sectionId, payload.entities, conversation)
             sendMessage(socket.data.clientId, "communication", response)
 
         } else if (data.type === "notification") {
             sendMessage(socket.data.clientId, "notification", data.payload)
 
         } else if (data.type === "voice") {
-            let conversationLogId = await addConversationLog(socket.data.conversationId)
 
-            let payload: any = data.payload
             let socketInput = { ...payload }
             delete socketInput.message
-
             updateConversationLog(conversationLogId, 'socketInput', socketInput)
 
             let voiceResponse = await getSpeechToText(payload.message)
@@ -64,7 +69,7 @@ io.on("connection", async (socket: Socket) => {
             if (voiceResponse) {
                 updateConversationLog(conversationLogId, 'query', voiceResponse)
 
-                let response: any = await getCommandResponse(voiceResponse, payload.pageId, payload.sectionId, payload.entities, payload.uniqueConversationId)
+                let response: any = await getCommandResponse(voiceResponse, payload.pageId, payload.sectionId, payload.entities, conversation)
                 updateConversationLog(conversationLogId, 'response', response.text)
 
                 if (response?.intentName) {
@@ -85,9 +90,6 @@ io.on("connection", async (socket: Socket) => {
             response.uniqueConversationId = payload.uniqueConversationId
             if (payload.voice) { response.audio = await getTextToSpeech(payload.message) }
             sendMessage(socket.data.clientId, "communication", response)
-
-        } else if (data.type === "action callback") {
-
 
         } else {
             console.log(`Type "${data.type}" is not implemented`)

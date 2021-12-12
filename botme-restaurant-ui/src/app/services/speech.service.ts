@@ -41,24 +41,6 @@ export class SpeechService {
   startTime: any
   endTime: any
 
-  timerStart() {
-    this.startTime = new Date();
-  }
-
-  timerEnd() {
-    this.endTime = new Date();
-    var timeDiff = this.endTime - this.startTime; //in ms
-    // strip the ms
-    // timeDiff /= 1000;
-    console.log(timeDiff + " ms");
-    return timeDiff
-  }
-
-  timerClear() {
-    this.startTime = null
-    this.endTime = null
-  }
-
   constructor(private socketService: SocketService) {
 
     this.speechState.next('idle')

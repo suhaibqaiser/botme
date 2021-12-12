@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 const config = require('config');
 
-export async function getCommandResponse(text: string, pageId: string, sectionId: string, entities: string[], uniqueConvId: number) {
+export async function getCommandResponse(text: string, pageId: string, sectionId: string, entities: string[], conversation: any) {
 
     try {
         let body = { "text": text, "pageId": pageId, "sectionId": sectionId, "entities": entities };
@@ -27,7 +27,11 @@ export async function getCommandResponse(text: string, pageId: string, sectionId
                 sentimentScore: data.sentimentScore,
                 intentName: data.intentName,
                 entities: data.entities,
-                uniqueConversationId: uniqueConvId
+                conversation: {
+                    conversationId: conversation.conversationId,
+                    conversationLogId: conversation.conversationLogId,
+                    conversationSequence: conversation.conversationSequence
+                }
             };
             return answer
         } else {
@@ -43,7 +47,11 @@ export async function getCommandResponse(text: string, pageId: string, sectionId
                 sentimentScore: '',
                 intentName: 'error_commands_api',
                 entities: '',
-                uniqueConversationId: uniqueConvId
+                conversation: {
+                    conversationId: conversation.conversationId,
+                    conversationLogId: conversation.conversationLogId,
+                    conversationSequence: conversation.conversationSequence
+                }
             };
         }
     } catch (err) {
@@ -60,7 +68,11 @@ export async function getCommandResponse(text: string, pageId: string, sectionId
             sentimentScore: '',
             intentName: 'error_commands_api',
             entities: '',
-            uniqueConversationId: uniqueConvId
+            conversation: {
+                conversationId: conversation.conversationId,
+                conversationLogId: conversation.conversationLogId,
+                conversationSequence: conversation.conversationSequence
+            }
         };
     }
 }
