@@ -12,6 +12,7 @@
   },
   "author": "Aman Subhan <amansubhan929@gmail.com>",
   "license": "ISC",
+  "devDependencies": {},
   "dependencies": {
     "@google-cloud/speech": "^4.9.0",
     "@google-cloud/text-to-speech": "^3.3.1",

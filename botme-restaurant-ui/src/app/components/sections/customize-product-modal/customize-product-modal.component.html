@@ -21,22 +21,24 @@
                       <!-- <app-sofia-bot></app-sofia-bot> -->
                       <div class="main-selection-container">
                         <div class="list mb-2 d-flex justify-content-between">
-                          <div class="d-flex left">
-                            <h6>Serving Size</h6>
-                          </div>
-                          <div class="right">
-                            <select (click)="cartService.selectProductRate()"
-                              [formControl]="cartService.selectProductRatesField" class="drop-down"
-                              id="ctaId-select-serving-size">
-                              <option [value]="item" *ngFor="let item of cartService.productSizeList">{{item}}</option>
-                            </select>
+                          <div id="ctaId-select-serving-size" *ngIf="cartService.singleCustomProductObj.productServingSize && cartService.singleCustomProductObj.productServingSize.length" class="container multi-select-list row">
+                            <h6 class="mb-3">Serving Size</h6>
+                            <div id="{{size.serving_size_name}}"
+                                 *ngFor="let size of cartService.singleCustomProductObj.productServingSize"
+                                 (click)="cartService.selectServing(size)" class="mb-3 col-lg-4">
+                              <span *ngIf="size.selected"><i class="fas fa-check"></i></span>
+                              <div [class.multi-selection]="size.selected"
+                                   class="d-flex align-items-center justify-content-around ">
+                                <h6>{{size.serving_size_name}} {{size.serving_price}}$</h6>
+                              </div>
+                            </div>
                           </div>
                         </div>
                         <hr>
                         <div id="ctaId-select-product-options"
                           *ngIf="cartService.singleCustomProductObj.productOptions && cartService.singleCustomProductObj.productOptions.length"
                           class="container multi-select-list row">
-                          <h6 class="mb-4">Product Options</h6>
+                          <h6 class="mb-3">Product Options</h6>
                           <div id="{{options.productId}}"
                             *ngFor="let options of cartService.singleCustomProductObj.productOptions"
                             (click)="cartService.selectProductOptions(options)" class="mb-3 col-lg-4">

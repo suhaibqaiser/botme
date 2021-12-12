@@ -195,11 +195,11 @@ export class SpeechService {
   stopCloudListen() {
     if (this.recorder && this.isListening) {
       this.updateState('p')
-      setTimeout(() => {
-        if (this.isProcessing) {
-          this.speak(this.voiceProcessingDelayed, null)
-        }
-      }, 10000); // seconds
+      // setTimeout(() => {
+      //   if (this.isProcessing) {
+      //     this.speak(this.voiceProcessingDelayed, null)
+      //   }
+      // }, 10000); // milli seconds
       this.recorder.stop((blob: any) => {
         if (!this.isSpeaking || !this.isProcessing || !this.isListening)
           this.socketService.sendMessage('voice', blob, this.cloudVoice)
@@ -221,7 +221,7 @@ export class SpeechService {
         }
       }
     }
-    // TODO: should update this before commiting 
+    // TODO: should update this before commiting
     this.speak(this.voiceEndingMessage, null)
   }
 
