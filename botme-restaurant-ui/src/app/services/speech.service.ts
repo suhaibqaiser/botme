@@ -3,6 +3,7 @@ import * as RecordRTC from 'recordrtc';
 import { Subject } from 'rxjs';
 import { SocketService } from './socket.service';
 import * as hark from 'hark'
+import { HelperService } from './helper.service';
 
 declare var webkitSpeechRecognition: any;
 
@@ -59,7 +60,7 @@ export class SpeechService {
     this.endTime = null
   }
 
-  constructor(private socketService: SocketService) {
+  constructor(private socketService: SocketService, private helper: HelperService) {
 
     this.speechState.next('idle')
 
@@ -72,7 +73,7 @@ export class SpeechService {
 
     this.socketService.messages.subscribe((message: any) => {
       this.speak(message.text, message.audio)
-      console.log('You Said: ', message);
+      helper.log('info', 'You Said: ' + message.inputText);
     });
 
     if (this.SpeechE) {
@@ -247,7 +248,7 @@ export class SpeechService {
       }
     } else {
       if (!speechText) return;
-      console.log('Bot Replied: ', speechText);
+      this.helper.log('info', 'Bot Replied: ' + speechText);
       let utterance = new SpeechSynthesisUtterance(speechText);
       utterance.voice = this.selectedVoice;
       utterance.rate = this.selectedRate;

@@ -98,6 +98,9 @@
             "production": {
               "browserTarget": "botme-restaurant-ui:build:production"
             },
+            "staging": {
+              "browserTarget": "botme-restaurant-ui:build:staging"
+            },
             "development": {
               "browserTarget": "botme-restaurant-ui:build:development"
             }
