@@ -11,4 +11,7 @@ router.get('/detail', sessionController.getSessionDetails);
 // GET request for session by token.
 router.get('/sessionbytoken', sessionController.getSessionByToken);
 
+
+router.post('/logoutSession', sessionController.updateSessionActive);
+
 module.exports = router;

@@ -1,6 +1,6 @@
 const clientService = require("../services/clientService")
 const Response = require("../models/response")
-const {v4: uuidv4} = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 const crypto = require('crypto');
 const sessionController = require("./sessionController");
 
@@ -24,7 +24,7 @@ async function getClientDetail(req, res) {
     let response = new Response()
 
     if (!req.query.clientID) {
-        response.payload = {message: 'clientID is required'};
+        response.payload = { message: 'clientID is required' };
         return res.status(400).send(response);
     }
     let client = await clientService.getClientDetail(req.query.clientID)
@@ -44,12 +44,12 @@ async function addClient(req, res) {
     let response = new Response()
 
     if (!req.body.clientDeviceId) {
-        response.payload = {message: 'clientDeviceId is required'};
+        response.payload = { message: 'clientDeviceId is required' };
         return res.status(400).send(response);
     }
 
     if (await clientService.checkClientExists(req.body.clientDeviceId)) {
-        response.payload = {message: 'Client Device already exists'};
+        response.payload = { message: 'Client Device already exists' };
         return res.status(400).send(response);
     }
 
@@ -86,7 +86,7 @@ async function authorizeClient(req, res) {
     let response = new Response()
 
     if (!req.body.clientID || !req.body.clientSecret) {
-        response.payload = {message: 'clientID, clientDeviceId and clientSecret is required'};
+        response.payload = { message: 'clientID, clientDeviceId and clientSecret is required' };
         response.status = "error"
         return res.status(400).send(response);
     }
@@ -105,7 +105,7 @@ async function authorizeClient(req, res) {
 
         let newSession = await sessionController.createSession(session)
         if (newSession) {
-            response.payload = {...client._doc,"clientToken": newSession.clientToken,'isLoggedIn': true}
+            response.payload = { ...client._doc, "clientToken": newSession.clientToken, 'isLoggedIn': true, 'sessionId': newSession.sessionId }
             response.status = "success"
             return res.status(200).send(response)
         } else {
@@ -125,7 +125,7 @@ async function updateClient(req, res) {
     let response = new Response()
 
     if (!req.body.clientID) {
-        response.payload = {message: 'clientID is required'};
+        response.payload = { message: 'clientID is required' };
         return res.status(400).send(response);
     }
 
@@ -154,12 +154,12 @@ async function deleteClient(req, res) {
     let response = new Response()
 
     if (!req.query.clientID) {
-        response.payload = {message: 'clientID is required'};
+        response.payload = { message: 'clientID is required' };
         return res.status(400).send(response);
     }
 
     if (await clientService.deleteClient(req.query.clientID)) {
-        response.payload = {"message": "Client deleted successfully"}
+        response.payload = { "message": "Client deleted successfully" }
         response.status = "success"
         return res.status(200).send(response)
     } else {
@@ -174,7 +174,7 @@ async function heartbeatClient(req, res) {
     let response = new Response()
 
     if (!req.body.clientToken) {
-        response.payload = {message: 'clientToken is required'};
+        response.payload = { message: 'clientToken is required' };
         return res.status(400).send(response);
     }
     let session = await sessionController.getSessionByToken(req.body.clientToken)
@@ -184,7 +184,7 @@ async function heartbeatClient(req, res) {
         session.sessionActive = true;
         if (await sessionController.updateSession(session.clientToken, session)) {
 
-            response.payload = {"message": "Client updated successfully"}
+            response.payload = { "message": "Client updated successfully" }
             response.status = "success"
             return res.status(200).send(response)
         } else {

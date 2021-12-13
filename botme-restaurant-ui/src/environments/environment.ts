@@ -12,7 +12,7 @@ export const environment = {
     clientToken: 'pub1c31558c898012c4b17bb8165d3a63b8',
     site: 'datadoghq.com',
     service: 'restaurant-ui',
-    env: 'staging',
+    env: 'development',
   }
 };
 
