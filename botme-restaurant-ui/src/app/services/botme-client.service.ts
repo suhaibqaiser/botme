@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {environment} from "../../environments/environment";
-import {Observable} from "rxjs";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {CookieService} from 'ngx-cookie-service';
-import {DeviceDetectorService} from 'ngx-device-detector';
+import { Injectable } from '@angular/core';
+import { environment } from "../../environments/environment";
+import { Observable } from "rxjs";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { CookieService } from 'ngx-cookie-service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,17 @@ export class BotmeClientService {
       'Authorization': `Bearer ${'ea2d3aeaad77865f9769974a920892f5'}`
     })
     const url = `${this.botMeClientBaseURL}/client/auth`;
-    return this.http.post(url, obj, {headers: headers});
+    return this.http.post(url, obj, { headers: headers });
+  }
+
+  logutAPI(sessionId: any): Observable<any> {
+    let body = { sessionId: sessionId }
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${'ea2d3aeaad77865f9769974a920892f5'}`
+    })
+    const url = `${this.botMeClientBaseURL}/session/logoutSession`;
+    return this.http.post(url, body, { headers: headers });
   }
 
   getCookie() {
@@ -34,6 +44,7 @@ export class BotmeClientService {
   }
 
   reSetCookie() {
+
     this.cookieService.deleteAll()
   }
 
