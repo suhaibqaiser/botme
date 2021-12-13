@@ -86,9 +86,9 @@ export class BookingSectionComponent implements OnInit {
             }
             this.reservationLoader = false
             setTimeout(() => {
-              this._router.navigate(['home'])
+              if(this._socketService.getCurrentRoute() === 'reservations') this._router.navigate(['home'])
               this.reservation.isReservationCompleted = false
-            }, 50000)
+            }, 10000)
           }
         }
       )
