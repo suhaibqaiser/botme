@@ -6,7 +6,14 @@ export const environment = {
   production: false,
   apiRestaurantUrl: "http://localhost:3100",
   botMeClientAPI: "http://localhost:3000",
-  wsEndpoint: "ws://localhost:6380"
+  wsEndpoint: "ws://localhost:6380",
+  datadog: {
+    applicationId: '91a121d0-0deb-4fa7-aa88-8beef5945124',
+    clientToken: 'pub1c31558c898012c4b17bb8165d3a63b8',
+    site: 'datadoghq.com',
+    service: 'restaurant-ui',
+    env: 'staging',
+  }
 };
 
 /*

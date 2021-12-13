@@ -12,7 +12,7 @@ from controller.reservationField import reservationField
 def getResponse(intent,entity,text,pageId,sectionId,form):
     blob =TextBlob(text)
     senti = blob.sentiment.polarity
-    val = Entity(entity)
+    val = Entity(entity,intent)
     value = val.parseEntityValue()
     db = getDbCta(intent,value,pageId,sectionId)
     product = Product(intent,value,senti,pageId,sectionId,text)
