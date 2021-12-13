@@ -6,7 +6,7 @@
       <a href="home" class="mobile-brand">
         <img src="assets/images/logo/web-logo.png" alt="logo" class="blue-logo">
       </a>
-      <app-sofia-bot *ngIf="_botMeClientService.getCookie().isLoggedIn" style="z-index: 999999 !important;">
+      <app-sofia-bot *ngIf="!_deviceService.isMobile() && _botMeClientService.getCookie().isLoggedIn" style="z-index: 999999 !important;">
       </app-sofia-bot>
     </div>
 
