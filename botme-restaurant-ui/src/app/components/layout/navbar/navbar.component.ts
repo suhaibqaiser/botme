@@ -46,6 +46,7 @@ export class NavbarComponent implements OnInit {
           this._botMeClientService.setCookie('clientToken', res.payload.clientToken)
           this._botMeClientService.setCookie('clientName', res.payload.clientName)
           this._botMeClientService.setCookie('clientID', res.payload.clientID)
+          this._botMeClientService.setCookie('sessionId', res.payload.sessionId)
           this._botMeClientService.setCookie('isLoggedIn', res.payload.isLoggedIn)
           this._botMeClientService.setCookie('clientDebug', (res.payload.clientDebug) ? "yes" : "no")
           this._botMeClientService.setCookie('voiceType', this.loginForm.get('voiceType')?.value)
@@ -82,10 +83,17 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    this._botMeClientService.reSetCookie()
-    this.router.navigate(['/home']).then(() => {
-      window.location.reload();
-    });
+    this._botMeClientService.logutAPI(this._botMeClientService.getCookieByKey('sessionId')).subscribe(res => {
+      console.log(res);
+      if (res.status === 'success') {
+
+        this._botMeClientService.reSetCookie()
+        this.router.navigate(['/home']).then(() => {
+          window.location.reload();
+        });
+      }
+
+    })
   }
 
   setVoiceType() {

@@ -1,5 +1,5 @@
 const sessionService = require("../services/sessionService")
-const {v4: uuidv4} = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 const Response = require("../models/response")
 
 // Rest Controllers
@@ -33,7 +33,7 @@ async function getSessionList(req, res) {
 async function getSessionDetails(req, res) {
     let response = new Response()
     if (!req.query.sessionId) {
-        response.payload = {message: 'sessionId is required'};
+        response.payload = { message: 'sessionId is required' };
         return res.status(400).send(response);
     }
     let session = await sessionService.getSessionDetails(req.query.sessionId)
@@ -60,7 +60,7 @@ async function createSession(session) {
 async function getSessionByToken(req, res) {
     let response = new Response()
     if (!req.query.clientToken) {
-        response.payload = {message: 'clientToken is required'};
+        response.payload = { message: 'clientToken is required' };
         return res.status(400).send(response);
     }
     let session = await sessionService.getSessionByToken(req.query.clientToken)
@@ -75,8 +75,22 @@ async function getSessionByToken(req, res) {
     }
 }
 
-async function updateSession(clientToken, session) {
-    return sessionService.updateSession(clientToken, session)
+async function updateSessionActive(req, res) {
+    let response = new Response()
+    if (!req.body.sessionId) {
+        response.payload = { message: 'sessionId is required' };
+        return res.status(400).send(response);
+    }
+    let session = await sessionService.updateSessionActive(req.body.sessionId)
+    if (session) {
+        response.payload = session
+        response.status = "success"
+        return res.status(200).send(response)
+    } else {
+        response.payload = "Session not found"
+        response.status = "error"
+        return res.status(404).send(response)
+    }
 }
 
-module.exports = ({createSession, getSessionByToken, getSessionDetails, updateSession, getSessionList})
+module.exports = ({ createSession, getSessionByToken, getSessionDetails, updateSessionActive, getSessionList })
