@@ -15,25 +15,27 @@ export class HelperService {
 
   public log(type: string, message: any): void {
 
+    let devMode = isDevMode()
+    console.log("Development: " + devMode)
     if (type === 'info') {
-      if (!isDevMode()) {
+      if (!devMode) {
         this.logger.info(message);
       }
       console.info(message);
 
     } else if (type === 'warn') {
-      if (!isDevMode()) {
+      if (!devMode) {
         this.logger.warn(message);
       }
       console.warn(message);
 
     } else if (type === 'error') {
-      if (!isDevMode()) {
+      if (!devMode) {
         this.logger.error(message);
       }
       console.error(message);
     } else {
-      if (!isDevMode()) {
+      if (!devMode) {
         this.logger.info(message);
       }
       console.log(message);
@@ -55,5 +57,10 @@ export class HelperService {
     partOne = partOne[0] + ':' + partOne[1]
     partOne += ' ' + partTwo[2]
     return partOne
+  }
+
+
+  delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 }

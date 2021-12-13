@@ -43,6 +43,8 @@ io.on("connection", async (socket: Socket) => {
 
     socket.on("message", async (data: models.SocketMessage) => {
         let payload: any = data.payload
+        console.log(payload);
+
 
         let conversationLogId = await addConversationLog(socket.data.conversationId)
         let conversation = {
@@ -73,22 +75,39 @@ io.on("connection", async (socket: Socket) => {
                 updateConversationLog(conversationLogId, 'response', response.text)
 
                 if (response?.intentName) {
-                    if (payload.voice) {
-                        response.audio = await getTextToSpeech(response.text)
-                    }
+                    response.audio = await getTextToSpeech(response.text)
+
                     sendMessage(socket.data.clientId, "communication", response)
+
                     delete response.audio
                     updateConversationLog(conversationLogId, 'socketOutput', response)
                 }
+            } else {
+                let response = {
+                    inputText: '',
+                    text: 'I didnt understand, please say it again',
+                    ctaId: '',
+                    entityId: '',
+                    entityName: '',
+                    pageId: '',
+                    sectionId: '',
+                    sentimentScore: '',
+                    intentName: 'error_voice_input',
+                    entities: '',
+                    conversation: conversation
+                }
+                sendMessage(socket.data.clientId, "communication", response)
+
+                updateConversationLog(conversationLogId, 'socketOutput', response)
             }
 
 
         } else if (data.type === "tts") {
-            let payload: any = data.payload
             let response: any = {}
             response.text = payload.message
-            response.uniqueConversationId = payload.uniqueConversationId
-            if (payload.voice) { response.audio = await getTextToSpeech(payload.message) }
+            response.conversation = conversation
+            response.audio = await getTextToSpeech(payload.message)
+
             sendMessage(socket.data.clientId, "communication", response)
 
         } else {
