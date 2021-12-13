@@ -163,6 +163,7 @@ export class SocketService {
 
      sel.setAttribute('size', len);
      */
+    this._helperService.log('info', msg);
     if (msg.entityId) {
 
       if (msg.entities && msg.entities.length) this.reservationFormEntities = JSON.parse(JSON.stringify(msg.entities))
