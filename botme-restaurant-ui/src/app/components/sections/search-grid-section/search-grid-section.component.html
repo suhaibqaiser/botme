@@ -84,7 +84,7 @@
         <div id="sectionId-filters" class="sidebar-item around-border sidebar-search">
           <form>
             <div class="form-group">
-              <input (change)="filterProductsByName($event)" class="form-control" id="productSearch" type="text"
+              <input (change)="filterProductsByName($event)" class="form-control" id="entityId-search" type="text"
                 placeholder="Search">
               <button><i class="flaticon-loupe"></i></button>
             </div>
@@ -134,7 +134,7 @@
           </div>
           <ul class="sidebar-list">
             <li *ngFor="let category of categoryList" id="{{category.categoryId}}">
-              <a [class.active-category]="category.selected" href="javascript:void(0)"
+              <a [class.active-category]="category.selected" id="ctaId-category" href="javascript:void(0)"
                 (click)="filterProductsByCategory(category)">{{category.categoryName}}</a>
             </li>
           </ul>
