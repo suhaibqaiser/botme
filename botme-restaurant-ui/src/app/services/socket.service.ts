@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-import {Subject} from 'rxjs';
-import {Router} from "@angular/router";
-import {environment} from 'src/environments/environment';
-import {io} from "socket.io-client";
-import {BotmeClientService} from './botme-client.service';
-import {HelperService} from "./helper.service";
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+import { Router } from "@angular/router";
+import { environment } from 'src/environments/environment';
+import { io } from "socket.io-client";
+import { BotmeClientService } from './botme-client.service';
+import { HelperService } from "./helper.service";
 
 
 @Injectable({
@@ -20,7 +20,7 @@ export class SocketService {
   processing = false
   authToken: string
   socket: any
-  uniqueConversationId: number = 0
+  conversationSequence: number = 0
 
   currentContextList = [
     {
@@ -92,28 +92,28 @@ export class SocketService {
 
     if (this.authToken) {
       this.socket = io(environment.wsEndpoint, {
-        auth: {token: this.authToken},
+        auth: { token: this.authToken },
         path: (environment.production) ? "/ws/" : ""
       });
 
       this.socket.on('message', (data: any) => {
-        console.log('message =>', data.type)
+        console.log('message =>', data)
         let payload = data.payload
 
         switch (data.type) {
           case "communication":
-            if (payload.uniqueConversationId === this.uniqueConversationId) {
+            if (payload.conversation.conversationSequence === this.conversationSequence) {
               this.messagesSubject.next(payload)
               if (payload.intentName) this.fireInteractionEvent(payload)
             } else {
-              console.log(`Socket Message out of sync. This id: ${this.uniqueConversationId}, payload id: ${payload.uniqueConversationId}`);
+              console.log(`Socket Message out of sync. This id: ${this.conversationSequence}, payload id: ${payload.uniqueConversationId}`);
             }
             break;
           case "notification":
             this.notificationSubject.next(payload)
             if (payload.text === 'processing started') {
               this.processing = true
-              this.sendMessage('notification', 'context', false)
+              this.sendMessage('notification', 'context')
             } else if (payload.text === 'processing ended') {
               this.processing = true
             }
@@ -126,23 +126,22 @@ export class SocketService {
     }
   }
 
-  sendMessage(type: string, message: any, voice: boolean) {
+  sendMessage(type: string, message: any) {
     interface SocketMessage {
       payload: object,
       type: string,
       timestamp: string
     }
 
-    this.uniqueConversationId++
-    console.log(`uniqueConversationId: ${this.uniqueConversationId}`);
+    this.conversationSequence++
+    console.log(`conversationSequence: ${this.conversationSequence}`);
 
     let SocketPayload: SocketMessage = {
       payload: {
         "message": message,
-        "voice": voice,
         "pageId": this.currentContextObj.pageId,
         "sectionId": this.currentContextObj.sectionId,
-        "uniqueConversationId": this.uniqueConversationId,
+        "conversationSequence": this.conversationSequence,
         "entities": this.reservationFormEntities
       },
       type: type,

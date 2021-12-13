@@ -119,6 +119,7 @@ async function updateConversationLog(conversationLogId, param, value) {
         let uSession = await Session.updateOne({ "conversations.conversationLog._id": ObjectId(conversationLogId) },
             {
                 $set: {
+                    "sessionUpdated": Date(),
                     "conversations.$[outer].conversationLog.$[inner]": inner
                 }
             }, {
