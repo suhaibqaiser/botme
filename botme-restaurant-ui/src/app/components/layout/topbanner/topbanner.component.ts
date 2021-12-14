@@ -35,6 +35,7 @@ export class TopbannerComponent implements OnInit {
   ]
 
   constructor(public _helperService: HelperService) {
+    clearTimeout(this._helperService.timer)
   }
 
   async ngOnInit() {

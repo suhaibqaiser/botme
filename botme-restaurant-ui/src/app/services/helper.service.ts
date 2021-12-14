@@ -1,10 +1,12 @@
-import { Injectable, isDevMode } from '@angular/core';
-import { DataDogLoggingService } from './datadog.service';
+import {Injectable, isDevMode} from '@angular/core';
+import {DataDogLoggingService} from './datadog.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HelperService {
+
+  timer: any
 
   constructor(private logger: DataDogLoggingService) {
   }

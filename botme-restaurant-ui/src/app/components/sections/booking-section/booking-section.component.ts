@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {SocketService} from "../../../services/socket.service";
 import {ReservationService} from "../../../services/reservation.service";
 import {Router} from "@angular/router";
+import {HelperService} from "../../../services/helper.service";
 
 @Component({
   selector: 'app-booking-section',
@@ -34,8 +35,9 @@ export class BookingSectionComponent implements OnInit {
   reservationLoader: boolean = false
 
   /// Time regex ^(0?[1-9]|1[0-2]):([0-5]\d)\s?((?:A|P)\.?M\.?)$
-  constructor(private _router: Router, private _reservationService: ReservationService, public _socketService: SocketService) {
-
+  constructor(private _helper: HelperService, private _router: Router, private _reservationService: ReservationService, public _socketService: SocketService) {
+    this.resetReservation()
+    clearTimeout(this._helper.timer)
   }
 
   ngOnInit(): void {
@@ -70,7 +72,7 @@ export class BookingSectionComponent implements OnInit {
     this.validations.reservationSeats = this._reservationService.isNumberRequired(this.reservationForm.get('reservationSeats')?.value)
     this.validations.reservationDate = this._reservationService.isDateRequired(this.reservationForm.get('reservationDate')?.value)
     this.validations.reservationTime = this._reservationService.isRequired(this.reservationForm.get('reservationTime')?.value)
-    if(!this.validations.reservationTime) this.validations.isValidTime =  !this._reservationService.checkIsValidTime(this.reservationForm.get('reservationTime')?.value)
+    if (!this.validations.reservationTime) this.validations.isValidTime = !this._reservationService.checkIsValidTime(this.reservationForm.get('reservationTime')?.value)
 
     if (Object.keys(this.validations).every(k => this.validations[k] === false)) {
       this.reservationLoader = true
@@ -85,8 +87,8 @@ export class BookingSectionComponent implements OnInit {
               reservationTime: this.reservationForm.get('reservationTime')?.value,
             }
             this.reservationLoader = false
-            setTimeout(() => {
-              if(this._socketService.getCurrentRoute() === 'reservations') this._router.navigate(['home'])
+            this._helper.timer = setTimeout(() => {
+              if (this._socketService.getCurrentRoute() === 'reservations') this._router.navigate(['home'])
               this.reservation.isReservationCompleted = false
             }, 10000)
           }

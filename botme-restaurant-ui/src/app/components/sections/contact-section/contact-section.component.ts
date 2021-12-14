@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {HelperService} from "../../../services/helper.service";
 
 @Component({
   selector: 'app-contact-section',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactSectionComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _helper: HelperService) {
+    clearTimeout(this._helper.timer)
+  }
 
   ngOnInit(): void {
   }
