@@ -32,4 +32,16 @@ def getDbCta(intent,entity,pageId,sectionId):
                 return None
             else:
                 return x
-        
+
+def findResponse(number):
+    mydb = MongoClient(MONGO_URL)
+    db = mydb['food']
+    mycollection = db['Responses']
+    myQuery = {"ResponseId":number} 
+    Response = mycollection.find(myQuery).collation({"locale":"en"})
+    if Response:
+        print("Taha")
+        print(Response)
+        return Response['Response']
+    else:
+        return None

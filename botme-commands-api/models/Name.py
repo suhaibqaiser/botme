@@ -1,5 +1,5 @@
-from pymongo.common import validate
 from controller.reservationField import reservationField
+from conf.mongodb import findResponse
 
 class Name():
     def __init__(self,intent,value,senti,pageId,sectionId,text,db,form):
@@ -17,7 +17,8 @@ class Name():
         val = Name.validateName(self.value)
         if (val is not None):
             if Name.checkIfExist(self.value):
-                return {"Response":"sorry,can you please tell me your name again?","ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
+                number = "5"
+                return {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
             else:
                 Response = reservationField(self.db,self.form,self.pageId,self.sectionId,self.value,self.text,self.intent)
                 return Response                         
@@ -31,15 +32,17 @@ class Name():
                 print(val)
                 if val:
                     if Name.checkIfExist(val):
-                        return {"Response":"sorry,can you please tell me your name again?","ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
+                        number = "5"
+                        return {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
                     else:
                         Response = reservationField(self.db,self.form,self.pageId,self.sectionId,val,self.text,self.intent)
                         return Response
                 else:
-                    print("Ahmed")
-                    return {"Response":"sorry,can you please tell me your name again?","ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
+                    number = "5"
+                    return {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
             else:
-                return {"Response":"sorry,can you please tell me your name again?","ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
+                number = "5"
+                return {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
 
     def validateName(value):
         if value:

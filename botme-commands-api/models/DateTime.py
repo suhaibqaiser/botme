@@ -2,6 +2,7 @@ import dateparser
 from timefhuman import timefhuman
 from datetime import datetime
 from controller.reservationField import reservationField
+from conf.mongodb import findResponse
 
 class DateTime():
     def __init__(self,intent,value,senti,pageId,sectionId,text,db,form):
@@ -35,30 +36,34 @@ class DateTime():
                     Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
                     return Response
                 else:
-                    return {"Response":"sorry,can you please tell me the day again?","ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}                      
+                    number = "3"
+                    return {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}                      
         except:
             return "Error in parsing date"
 
     def parseTime(self):
         try:
-            t = dateparser.parse(self.text)
+            t = dateparser.parse(self.value)
             print("time =>" ,t)
             if t is not None:
                 print("dateparser call")
                 time = t.strftime("%H:%M:%S")
+                print(time)
                 Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
+                print(Response)
                 return Response
             else:
                 print("timefhuman call")
                 now = datetime.now()
-                t = timefhuman(self.text,now=now)
-                print(t)
+                t = timefhuman(self.value,now=now)
+                print("time =>",t)
                 if t:
                     time = t.strftime("%H:%M:%S")    
                     Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
                     return Response
                 else:
-                    return {"Response":"sorry,can you please tell me the time again?","ctaCommandId":None,"pageId":self.ageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
+                    number = "4"
+                    return {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.ageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
         except:
             return "Error in parsing date"
     

@@ -1,3 +1,4 @@
+from conf.mongodb import findResponse
 
 def reservationField(db,form,pageId,sectionId,value,text,intent):
     if db is not None:
@@ -6,23 +7,27 @@ def reservationField(db,form,pageId,sectionId,value,text,intent):
                 return form
 
             elif intent == "inform_name":
-                entityId = "entityId-name"
+                val = "name"
+                entityId = findResponse(val)
                 Response = Field(db,form,pageId,sectionId,value,text,intent,entityId)
                 return Response
             
             elif intent == "unreserved_table_person":
-                entityId = "entityId-number-of-persons"
+                val = "person"
+                entityId = findResponse(val)
                 Response = Field(db,form,pageId,sectionId,value,text,intent,entityId)
                 print(Response)
                 return Response
             
             elif intent == "inform_date":
-                entityId = "entityId-date"
+                val = "date"
+                entityId = findResponse(val)
                 Response = Field(db,form,pageId,sectionId,value,text,intent,entityId)
                 return Response
             
             elif intent == "inform_time":
-                entityId = "entityId-time"
+                val = "time"
+                entityId = findResponse(val)
                 Response = Field(db,form,pageId,sectionId,value,text,intent,entityId)
                 print(Response)
                 return Response
@@ -32,42 +37,58 @@ def reservationField(db,form,pageId,sectionId,value,text,intent):
                 return Response
 
 def checkingIfFieldValueExist(db,form,pageId,sectionId,value,text,intent):
+    name = "name"
+    person = "person"
+    date = "date"
+    time = "time"
     for x in form:
         context = db['context']
         iD = getEntityClickAttribute(context['entities'])
         if not x['entityValue']:
-            if x['entityId'] == "entityId-name":
+            if x['entityId'] == findResponse(name):
                 x['entityStatus'] = True
-                return {"Response":"please fill the name field first","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
+                number = "12"
+                return {"Response":findResponse(number),"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
             # lookupfield["keyEntityNoOfPers"]
-            elif x['entityId'] == "entityId-number-of-persons":
+            elif x['entityId'] == findResponse(person):
                 x['entityStatus'] = True
-                return {"Response":"please fill the number of person field first","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
+                number = "13"
+                return {"Response":findResponse(number),"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
 
-            elif x['entityId'] == "entityId-date":
+            elif x['entityId'] == findResponse(date):
                 x['entityStatus'] = True
-                return {"Response":"please fill the Date field first","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
+                number = "14"
+                return {"Response":findResponse(number),"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
 
-            elif x['entityId'] == "entityId-time":
+            elif x['entityId'] == findResponse(time):
                 x['entityStatus'] = True
-                return {"Response":"please fill the Time field first","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
+                number = "15"
+                return {"Response":findResponse(number),"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
 
-    return {"Response":"you can now book your reservation","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
+    return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
        
 def checkIfFieldValueExist(form,pageId,sectionId,value,text,intent):
+    name = "name"
+    person = "person"
+    date = "date"
+    time = "time"
     for x in form:
         if x['entityStatus'] == True:
-            if x['entityId'] == "entityId-name":
-                return {"Response":"please fill the name field first","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":form}
+            if x['entityId'] == findResponse(name):
+                number = "12"
+                return {"Response":findResponse(number),"ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":form}
 
-            elif x['entityId'] == "entityId-number-of-persons":
-                return {"Response":"please fill the number of person field first","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":form}
+            elif x['entityId'] == findResponse(person):
+                number = "13"
+                return {"Response":findResponse(number),"ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":form}
 
-            elif x['entityId'] == "entityId-date":
-                return {"Response":"please fill the Date field first","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":form}
+            elif x['entityId'] == findResponse(date):
+                number = "14"
+                return {"Response":findResponse(number),"ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":form}
 
-            elif x['entityId'] == "entityId-time":
-                return {"Response":"please fill the Time field first","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":form}
+            elif x['entityId'] == findResponse(time):
+                number = "15"
+                return {"Response":findResponse(number),"ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":form}
 
 def findNextFieldFocus(db,form,pageId,sectionId,value,text,intent):
     context = db['context']
@@ -83,8 +104,9 @@ def getEntityClickAttribute(entity):
         return {"entityId":x['entityId'],"actionType":x['clickAttribute']}
 
 def formInitialization(form):
+    name = "name"
     for x in form:
-        if x['entityId'] == "entityId-name":
+        if x['entityId'] == findResponse(name):
             x['entityValue'] = ""
             x['entityStatus'] = True
         else:
@@ -93,13 +115,14 @@ def formInitialization(form):
     return form
 
 def Field(db,form,pageId,sectionId,value,text,intent,entityId):
+    print(form)
     for x in form:
+        print(x)
         if x['entityStatus'] == True:
             if x['entityId'] == entityId:
                 x['entityValue'] = value
                 x['entityStatus'] = False
                 Response = findNextFieldFocus(db,form,pageId,sectionId,value,text,intent)
-                print("1 ==>", Response)
                 return Response
             else:
                 Response = checkIfFieldValueExist(form,pageId,sectionId,value,text,intent)
