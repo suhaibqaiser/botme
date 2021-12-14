@@ -1,6 +1,7 @@
 from flask import Flask,jsonify,request
 from controller.communication import getResponse
 from Service.servicerasa import getIntent
+from conf.mongodb import findResponse
 
 app = Flask(__name__)
 
@@ -12,12 +13,11 @@ def send_Response():
     sectionID = req_data['sectionId']
     form = req_data['entities']
     message = text.lower()
-    print(message)
     rasa_data = getIntent(message)
-    print(rasa_data)
     intent = rasa_data['intent']
     if(intent['name'] == "nlu_fallback"):
-        response = {"Response":"I’m sorry,Could you say it again?","ctaCommandId":None,"pageId":pageId,"sectionId":sectionID,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent['name']}
+        number = "1"
+        response = {"Response": findResponse(number),"ctaCommandId":None,"pageId":pageId,"sectionId":sectionID,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent['name']}
         return jsonify(response)
     else:
         response = getResponse(intent['name'],rasa_data['entities'],text,pageId,sectionID,form)
@@ -25,7 +25,8 @@ def send_Response():
             print(response)
             return jsonify(response)
         else:
-            response = {"Response":"I’m sorry,Could you say it again?","ctaCommandId":None,"pageId":pageId,"sectionId":sectionID,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent['name']}
+            number = "1"
+            response = {"Response":findResponse(number),"ctaCommandId":None,"pageId":pageId,"sectionId":sectionID,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent['name']}
             return response
 
 

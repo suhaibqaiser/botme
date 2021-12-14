@@ -1,9 +1,9 @@
 import requests
 import re
-
 from requests.models import Response
 from controller.reservationField import reservationField
 from config import RESTAURANT_API 
+from conf.mongodb import findResponse
 
 
 class Reservation():
@@ -28,9 +28,11 @@ class Reservation():
                         Response = reservationField(self.db,self.form,self.pageId,self.sectionId,self.value,self.text,self.intent)
                         return Response
                     else:
-                        return {"Response":"sorry,can you please tell me the number of people again?","ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}  
-                else:             
-                    return {"Response":"sorry,can you please tell me the number of people again?","ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}  
+                        number = "9"
+                        return {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}  
+                else:        
+                    number = "9"     
+                    return {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}  
             else:
                 tableResponse = Reservation.searchingTable(self.value,self.senti,self.intent,self.text)
                 return tableResponse
@@ -43,9 +45,11 @@ class Reservation():
             data = response.json()
             if(data['status'] == "success"):
                 table_no = Reservation.getTableNo(data['payload'])
-                return {"Response":"you can move to the table number " + table_no,"ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent}
+                number = "11"
+                return {"Response":findResponse(number) + table_no,"ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent}
             else:
-                return {"Response":"Sorry, All tables are occupied","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent}
+                number = "10"
+                return {"Response":findResponse(number),"ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent}
         except:
             return "error in searching for table"
 
