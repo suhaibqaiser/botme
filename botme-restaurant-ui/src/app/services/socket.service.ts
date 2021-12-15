@@ -193,8 +193,12 @@ export class SocketService {
     }
   }
 
+  getCurrentRoute() {
+    return this.router.url.replace(/\//g, "").replace("-", " ")
+  }
+
   getCurrentContext() {
-    let currentRoute = this.router.url.replace(/\//g, "").replace("-", " ");
+    let currentRoute = this.getCurrentRoute()
     if (currentRoute.indexOf('?') > 0) {
       currentRoute = currentRoute.substr(0, currentRoute.indexOf('?'))
     }

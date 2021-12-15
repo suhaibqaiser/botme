@@ -81,6 +81,7 @@ export class SearchGridSectionComponent implements OnInit {
     public _socketService: SocketService,
     public _helperService: HelperService
   ) {
+    clearTimeout(this._helperService.timer)
   }
 
   async ngOnInit() {
