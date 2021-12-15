@@ -39,9 +39,8 @@ def findResponse(number):
     mycollection = db['Responses']
     myQuery = {"ResponseId":number} 
     Response = mycollection.find(myQuery).collation({"locale":"en"})
-    if Response:
-        print("Taha")
-        print(Response)
-        return Response['Response']
-    else:
-        return None
+    for x in Response:
+        if x:
+            return x['Response']
+        else:
+            return None

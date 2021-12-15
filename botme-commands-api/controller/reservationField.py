@@ -105,8 +105,9 @@ def getEntityClickAttribute(entity):
 
 def formInitialization(form):
     name = "name"
+    entityId =  findResponse(name)
     for x in form:
-        if x['entityId'] == findResponse(name):
+        if x['entityId'] == entityId:
             x['entityValue'] = ""
             x['entityStatus'] = True
         else:

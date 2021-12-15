@@ -22,7 +22,6 @@ def send_Response():
     else:
         response = getResponse(intent['name'],rasa_data['entities'],text,pageId,sectionID,form)
         if response:
-            print(response)
             return jsonify(response)
         else:
             number = "1"
