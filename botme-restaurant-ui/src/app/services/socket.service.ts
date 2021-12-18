@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import { Router } from "@angular/router";
-import { environment } from 'src/environments/environment';
-import { io } from "socket.io-client";
-import { BotmeClientService } from './botme-client.service';
-import { HelperService } from "./helper.service";
+import {Injectable} from '@angular/core';
+import {Subject} from 'rxjs';
+import {Router} from "@angular/router";
+import {environment} from 'src/environments/environment';
+import {io} from "socket.io-client";
+import {BotmeClientService} from './botme-client.service';
+import {HelperService} from "./helper.service";
 
 
 @Injectable({
@@ -64,7 +64,7 @@ export class SocketService {
     {
       "entityId": "entityId-name",
       "entityValue": "",
-      "entityStatus": false
+      "entityStatus": this._botMeClientService.getCookie().isLoggedIn
     },
     {
       "entityId": "entityId-number-of-persons",
@@ -86,13 +86,13 @@ export class SocketService {
   voiceServingSize = ''
 
 
-  constructor(private router: Router, private clients: BotmeClientService, private _helperService: HelperService) {
+  constructor(private router: Router, private clients: BotmeClientService, private _helperService: HelperService, private _botMeClientService: BotmeClientService) {
 
     this.authToken = clients.getCookieToken();
 
     if (this.authToken) {
       this.socket = io(environment.wsEndpoint, {
-        auth: { token: this.authToken },
+        auth: {token: this.authToken},
         path: (environment.production) ? "/ws/" : ""
       });
 

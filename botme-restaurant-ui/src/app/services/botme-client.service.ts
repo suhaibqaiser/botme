@@ -65,6 +65,6 @@ export class BotmeClientService {
   }
 
   isRobotAuth() {
-    return (this.deviceService.isMobile() || this.deviceService.isTablet())
+    return (this.deviceService.isTablet())
   }
 }
