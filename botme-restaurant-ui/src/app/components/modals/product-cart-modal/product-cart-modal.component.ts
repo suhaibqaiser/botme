@@ -110,5 +110,6 @@ export class ProductCartModalComponent implements OnInit {
 
   closeCart() {
     document.getElementsByClassName('cart-modal-wrapper')[0]?.setAttribute('style', 'display:none')
+    this._socketService.getCurrentContext()
   }
 }
