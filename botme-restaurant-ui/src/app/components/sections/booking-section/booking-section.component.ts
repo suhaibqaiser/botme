@@ -4,7 +4,6 @@ import {SocketService} from "../../../services/socket.service";
 import {ReservationService} from "../../../services/reservation.service";
 import {Router} from "@angular/router";
 import {HelperService} from "../../../services/helper.service";
-import {BotmeClientService} from "../../../services/botme-client.service";
 
 @Component({
   selector: 'app-booking-section',
@@ -36,7 +35,7 @@ export class BookingSectionComponent implements OnInit {
   reservationLoader: boolean = false
 
   /// Time regex ^(0?[1-9]|1[0-2]):([0-5]\d)\s?((?:A|P)\.?M\.?)$
-  constructor(private _botMeClientService: BotmeClientService, private _helper: HelperService, private _router: Router, private _reservationService: ReservationService, public _socketService: SocketService) {
+  constructor(private _helper: HelperService, private _router: Router, private _reservationService: ReservationService, public _socketService: SocketService) {
     this.resetReservation()
     clearTimeout(this._helper.timer)
   }
@@ -112,12 +111,5 @@ export class BookingSectionComponent implements OnInit {
   generateTableNumber() {
     let number = Math.floor(Math.random() * 15)
     return (number >= 1) ? number : 1
-  }
-
-  setFocusOnField(entityId: any) {
-    if (!this._botMeClientService.getCookie().isLoggedIn) return
-    this._socketService.reservationFormEntities.forEach((item: any) => {
-      item.entityStatus = item.entityId === entityId
-    })
   }
 }
