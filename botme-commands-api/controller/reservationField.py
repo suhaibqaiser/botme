@@ -1,4 +1,6 @@
+from requests.models import Response
 from conf.mongodb import findResponse
+from controller.utility import Utility
 
 def reservationField(db,form,pageId,sectionId,value,text,intent):
     if db is not None:
@@ -41,67 +43,57 @@ def checkingIfFieldValueExist(db,form,pageId,sectionId,value,text,intent):
     person = "person"
     date = "date"
     time = "time"
+    call = None
+    utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
     for x in form:
-        context = db['context']
-        iD = getEntityClickAttribute(context['entities'])
         if not x['entityValue']:
             if x['entityId'] == findResponse(name):
                 x['entityStatus'] = True
-                number = "12"
-                return {"Response":findResponse(number),"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
-            # lookupfield["keyEntityNoOfPers"]
+                response = utility.nameField()
+                return response
+
             elif x['entityId'] == findResponse(person):
                 x['entityStatus'] = True
-                number = "13"
-                return {"Response":findResponse(number),"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
+                response = utility.personField()
+                return response
 
             elif x['entityId'] == findResponse(date):
                 x['entityStatus'] = True
-                number = "14"
-                return {"Response":findResponse(number),"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
+                response = utility.dateField()
+                return response
 
             elif x['entityId'] == findResponse(time):
                 x['entityStatus'] = True
-                number = "15"
-                return {"Response":findResponse(number),"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
+                response = utility.timeField()
+                return response
+    Response = utility.bookNowResponse() 
+    return Response
 
-    return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
-       
 def checkIfFieldValueExist(form,pageId,sectionId,value,text,intent):
     name = "name"
     person = "person"
     date = "date"
     time = "time"
+    db = None
+    call = None
+    utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
     for x in form:
         if x['entityStatus'] == True:
             if x['entityId'] == findResponse(name):
-                number = "12"
-                return {"Response":findResponse(number),"ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":form}
+                response = utility.nameField()
+                return response
 
             elif x['entityId'] == findResponse(person):
-                number = "13"
-                return {"Response":findResponse(number),"ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":form}
+                response = utility.personField()
+                return response
 
             elif x['entityId'] == findResponse(date):
-                number = "14"
-                return {"Response":findResponse(number),"ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":form}
+                response = utility.dateField()
+                return response
 
             elif x['entityId'] == findResponse(time):
-                number = "15"
-                return {"Response":findResponse(number),"ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":form}
-
-def findNextFieldFocus(db,form,pageId,sectionId,value,text,intent):
-    context = db['context']
-    iD = getEntityClickAttribute(context['entities'])
-    for x in form:
-        if not x['entityValue']:
-            x['entityStatus'] = True
-            return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
-    return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
-         
-def getEntityClickAttribute(entity):
-    for x in entity:
-        return {"entityId":x['entityId'],"actionType":x['clickAttribute']}
+                response = utility.timeField()
+                return response
 
 def formInitialization(form):
     name = "name"
@@ -116,14 +108,14 @@ def formInitialization(form):
     return form
 
 def Field(db,form,pageId,sectionId,value,text,intent,entityId):
-    print(form)
     for x in form:
-        print(x)
         if x['entityStatus'] == True:
             if x['entityId'] == entityId:
                 x['entityValue'] = value
                 x['entityStatus'] = False
-                Response = findNextFieldFocus(db,form,pageId,sectionId,value,text,intent)
+                call = None
+                utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
+                Response = utility.findNextFieldFocus()
                 return Response
             else:
                 Response = checkIfFieldValueExist(form,pageId,sectionId,value,text,intent)

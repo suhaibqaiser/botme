@@ -1,12 +1,12 @@
-from controller.reservationField import reservationField
+from controller.reservationField import reservationField,checkIfFieldValueExist
 from conf.mongodb import findResponse
+from controller.utility import Utility
 
 class Name():
-    def __init__(self,intent,value,senti,pageId,sectionId,text,db,form):
+    def __init__(self,intent,value,pageId,sectionId,text,db,form):
          
        self.intent = intent
        self.value = value
-       self.senti = senti
        self.pageId = pageId
        self.sectionId = sectionId
        self.text = text
@@ -14,35 +14,93 @@ class Name():
        self.form = form
     
     def name(self):
-        val = Name.validateName(self.value)
-        if (val is not None):
-            if Name.checkIfExist(self.value):
-                number = "5"
-                return {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
-            else:
-                Response = reservationField(self.db,self.form,self.pageId,self.sectionId,self.value,self.text,self.intent)
-                return Response                         
+        if self.value:
+            Response = Name.nameFromRasa(self.intent,self.value,self.pageId,self.sectionId,self.text,self.db,self.form)
+            return Response                 
         else:
-            print("going here")
-            txt = self.text.split()
-            if Name.checkIfExistInArray(txt):
-                x = len(txt)
-                name = txt[x-1]
-                val = Name.validateName(name)
-                print(val)
-                if val:
-                    if Name.checkIfExist(val):
-                        number = "5"
-                        return {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
+            Response = Name.nameNotFromRasa(self.intent,self.value,self.pageId,self.sectionId,self.text,self.db,self.form)
+            return Response
+            
+    def nameFromRasa(intent,value,pageId,sectionId,text,db,form):
+        val = Name.validateName(value)
+        if (val is not None):
+            if Name.checkIfExist(value):
+                if Name.checkingForNameFocus(form):
+                    call = None
+                    utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
+                    Response = utility.incorrectName()
+                    return Response
+                else:
+                    Response = checkIfFieldValueExist(form,pageId,sectionId,value,text,intent)
+                    return Response
+            else:
+                Response = reservationField(db,form,pageId,sectionId,value,text,intent)
+                return Response
+        else:
+            if Name.checkingForNameFocus(form):
+                call = None
+                utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
+                Response = utility.incorrectName()
+                return Response
+            else:
+                Response = checkIfFieldValueExist(form,pageId,sectionId,value,text,intent)
+                return Response
+
+    def nameNotFromRasa(intent,value,pageId,sectionId,text,db,form):
+        txt = text.split()
+        if Name.checkIfExistInArray(txt):
+            x = len(txt)
+            name = txt[x-1]
+            name2 = txt[x-2]
+            newName = name2 +" "+name
+            val = Name.validateName(newName)
+            value = val.split()
+            if val:
+                if Name.checkIfExistInArray(value):
+                    if Name.checkingForNameFocus(form):
+                        call = None
+                        utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
+                        Response = utility.incorrectName()
+                        return Response
                     else:
-                        Response = reservationField(self.db,self.form,self.pageId,self.sectionId,val,self.text,self.intent)
+                        Response = checkIfFieldValueExist(form,pageId,sectionId,value,text,intent)
                         return Response
                 else:
-                    number = "5"
-                    return {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
+                    Response = reservationField(db,form,pageId,sectionId,val,text,intent)
+                    return Response
             else:
-                number = "5"
-                return {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
+                val = Name.validateName(name)
+                if val:
+                    if Name.checkIfExist(val):
+                        if Name.checkingForNameFocus(form):
+                            call = None
+                            utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
+                            Response = utility.incorrectName()
+                            return Response
+                        else:
+                            Response = checkIfFieldValueExist(form,pageId,sectionId,value,text,intent)
+                            return Response
+                    else:
+                        Response = reservationField(db,form,pageId,sectionId,val,text,intent)
+                        return Response
+                else:
+                    if Name.checkingForNameFocus(form):
+                        call = None
+                        utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
+                        Response = utility.incorrectName()
+                        return Response
+                    else:
+                        Response = checkIfFieldValueExist(form,pageId,sectionId,value,text,intent)
+                        return Response
+        else:
+            if Name.checkingForNameFocus(form):
+                call = None
+                utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
+                Response = utility.incorrectName()
+                return Response
+            else:
+                Response = checkIfFieldValueExist(form,pageId,sectionId,value,text,intent)
+                return Response
 
     def validateName(value):
         if value:
@@ -74,3 +132,11 @@ class Name():
         else:
             return False 
 
+    def checkingForNameFocus(form):
+        name = "name"
+        for x in form:
+            if x['entityStatus'] == True:
+                if x['entityId'] == findResponse(name):
+                    return True
+                else:
+                    return False
