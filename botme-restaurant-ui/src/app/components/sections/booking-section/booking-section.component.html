@@ -14,7 +14,7 @@
                       <i class="flaticon-user-2"></i>
                     </div>
                   </div>
-                  <input formControlName="customerName" type="text" id="entityId-name" placeholder="Name"
+                  <input (click)="setFocusOnField('entityId-name')" formControlName="customerName" type="text" id="entityId-name" placeholder="Name"
                          class="form-control">
                 </div>
                 <span *ngIf="validations.customerName" style="color: red;text-align: justify">Name is required!</span>
@@ -28,7 +28,7 @@
                       <i class="flaticon-add-user"></i>
                     </div>
                   </div>
-                  <input formControlName="reservationSeats" id="entityId-number-of-persons" type="number"
+                  <input (click)="setFocusOnField('entityId-number-of-persons')" formControlName="reservationSeats" id="entityId-number-of-persons" type="number"
                          placeholder="Number of persons" class="form-control">
                 </div>
                 <span *ngIf="validations.reservationSeats"
@@ -42,7 +42,7 @@
                       <i class="flaticon-calendar-1"></i>
                     </div>
                   </div>
-                  <input formControlName="reservationDate" id="entityId-date" type="date" placeholder="Date"
+                  <input  (click)="setFocusOnField('entityId-date')" formControlName="reservationDate" id="entityId-date" type="date" placeholder="Date"
                          class="form-control">
                 </div>
                 <span *ngIf="validations.reservationDate"
@@ -56,7 +56,7 @@
                       <i class="flaticon-clock"></i>
                     </div>
                   </div>
-                  <input formControlName="reservationTime" id="entityId-time" type="text"
+                  <input (click)="setFocusOnField('entityId-time')" formControlName="reservationTime" id="entityId-time" type="text"
                          class="form-control" placeholder="e.g 12:30 AM"/>
                 </div>
                 <span *ngIf="validations.reservationTime"

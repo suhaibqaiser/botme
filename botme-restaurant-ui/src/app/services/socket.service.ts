@@ -64,7 +64,7 @@ export class SocketService {
     {
       "entityId": "entityId-name",
       "entityValue": "",
-      "entityStatus": this._botMeClientService.getCookie().isLoggedIn
+      "entityStatus": false
     },
     {
       "entityId": "entityId-number-of-persons",
@@ -86,7 +86,7 @@ export class SocketService {
   voiceServingSize = ''
 
 
-  constructor(private router: Router, private clients: BotmeClientService, private _helperService: HelperService, private _botMeClientService: BotmeClientService) {
+  constructor(private router: Router, private clients: BotmeClientService, private _helperService: HelperService) {
 
     this.authToken = clients.getCookieToken();
 
