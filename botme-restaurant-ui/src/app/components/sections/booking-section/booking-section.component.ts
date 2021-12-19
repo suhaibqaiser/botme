@@ -39,6 +39,28 @@ export class BookingSectionComponent implements OnInit {
   constructor(private _botMeClientService: BotmeClientService, private _helper: HelperService, private _router: Router, private _reservationService: ReservationService, public _socketService: SocketService) {
     this.resetReservation()
     clearTimeout(this._helper.timer)
+    this._socketService.reservationFormEntities = [
+      {
+        "entityId": "entityId-name",
+        "entityValue": "",
+        "entityStatus": true
+      },
+      {
+        "entityId": "entityId-number-of-persons",
+        "entityValue": "",
+        "entityStatus": false
+      },
+      {
+        "entityId": "entityId-date",
+        "entityValue": "",
+        "entityStatus": false
+      },
+      {
+        "entityId": "entityId-time",
+        "entityValue": "",
+        "entityStatus": false
+      }
+    ]
   }
 
   ngOnInit(): void {
@@ -115,7 +137,6 @@ export class BookingSectionComponent implements OnInit {
   }
 
   setFocusOnField(entityId: any) {
-    if (!this._botMeClientService.getCookie().isLoggedIn) return
     this._socketService.reservationFormEntities.forEach((item: any) => {
       item.entityStatus = item.entityId === entityId
     })
