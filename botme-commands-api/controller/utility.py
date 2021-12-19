@@ -62,6 +62,11 @@ class Utility:
             number = "2"
             return {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
     
+    def incorrectPersonResponse(self):
+        number = "9"
+        Response = {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
+        return Response
+
     def dateResponse(self):
         # datetime = DateTime(self.intent,self.value,self.pageId,self.sectionId,self.text,self.db,self.form)
         if self.db is not None:
@@ -71,6 +76,11 @@ class Utility:
             number = "2"
             return {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""}
 
+    def incorrectDate(self):
+        number = "3"
+        Response = {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
+        return Response
+
     def timeResponse(self):
         # datetime = DateTime(self.intent,self.value,self.pageId,self.sectionId,self.text,self.db,self.form)
         if self.db is not None:
@@ -79,6 +89,12 @@ class Utility:
         else:
             number = "2"
             return {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""}
+
+    def incorrectTime(self):
+        number = "3"
+        Response = {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form} 
+        return Response
+                    
 
     def findNextFieldFocus(self):
         context = self.db['context']
