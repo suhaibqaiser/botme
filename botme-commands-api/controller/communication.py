@@ -58,9 +58,9 @@ def getResponse(intent,entity,text,pageId,sectionId,form):
         return Response 
 
     else:
-        call = ""
+        call = None
         utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
-        response = Utility.dbResponse()
+        response = utility.dbResponse()
         return response
 
 

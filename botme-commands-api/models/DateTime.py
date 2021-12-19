@@ -3,6 +3,7 @@ from timefhuman import timefhuman
 from datetime import datetime
 from controller.reservationField import reservationField,checkIfFieldValueExist
 from conf.mongodb import findResponse
+from controller.utility import Utility
 
 class DateTime():
     def __init__(self,intent,value,pageId,sectionId,text,db,form):
@@ -35,16 +36,20 @@ class DateTime():
                 else:
                     date = "date"
                     if DateTime.checkForDateTimeFieldFocus(self.form,date):
-                        number = "3"
-                        return {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form} 
+                        call = None
+                        utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+                        Response = utility.incorrectDate()
+                        return Response 
                     else:
                         Response = checkIfFieldValueExist(self.form,self.pageId,self.sectionId,self.value,self.text,self.intent)
                         return Response                     
         except:
             date = "date"
             if DateTime.checkForDateTimeFieldFocus(self.form,date):
-                number = "3"
-                return {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form} 
+                call = None
+                utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+                Response = utility.incorrectDate()
+                return Response 
             else:
                 Response = checkIfFieldValueExist(self.form,self.pageId,self.sectionId,self.value,self.text,self.intent)
                 return Response
@@ -73,19 +78,23 @@ class DateTime():
                 else:
                     time = "time"
                     if DateTime.checkForDateTimeFieldFocus(self.form,time):
-                        number = "3"
-                        return {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form} 
+                        call = None
+                        utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+                        Response = utility.incorrectTime()
+                        return Response
                     else:
                         Response = checkIfFieldValueExist(self.form,self.pageId,self.sectionId,self.value,self.text,self.intent)
                         return Response
         except:
             time = "time"
             if DateTime.checkForDateTimeFieldFocus(self.form,time):
-                number = "3"
-                return {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form} 
+                call = None
+                utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+                Response = utility.incorrectTime()
+                return Response
             else:
                 Response = checkIfFieldValueExist(self.form,self.pageId,self.sectionId,self.value,self.text,self.intent)
-                return Response    
+                return Response   
 
     def checkForDateTimeFieldFocus(form,value):
         for x in form:
