@@ -19,29 +19,29 @@ class Product():
             response = requests.get(RESTAURANT_API + '/food/product/search?productName='+self.value)
             data = response.json()
             payload = data['payload']
-            if(data['status']=="success"):
+            if(data['status'] == "success"):
                 if(len(data['payload']) == 1):
-                    db = getDbCta(self.intent,self.value,self.pageId,self.sectionId)
-                    if(db != None):
-                        context = db['context']
-                        productID = Product.parseProductId(payload)
-                        iD = Product.getEntityClickAttribute(context['entities'])
-                        if(self.sectionId == "sectionId-cart-modal"):
-                            name = self.value.title()
-                            return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":productID+name,"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent,"entities":""}
-                        else:
-                            return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":productID,"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent,"entities":""}
+                    if(self.value.title() == self.text.title()):
+                        Response = {"Response":"please specify the command for "+self.value,"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""}
+                        return Response
                     else:
-                        if self.pageId == "pageId-order-online":
+                        db = getDbCta(self.intent,self.value,self.pageId,self.sectionId)
+                        if(db != None):
+                            context = db['context']
+                            productID = Product.parseProductId(payload)
+                            iD = Product.getEntityClickAttribute(context['entities'])
+                            if(self.sectionId == "sectionId-cart-modal"):
+                                name = self.value.title()
+                                return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":productID+name,"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent,"entities":""}
+                            else:
+                                return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":productID,"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent,"entities":""}
+                        else:
                             if(data['payload']):
                                 product = data['payload'][0]['productName']
                                 return {"Response":"Do you mean "+product,"ctaCommandId":"ctaId-search","pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":"entityId-search","actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""}
                             else:
                                 number = "6"
                                 return {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""} 
-                        else:
-                            number = "7"
-                            return {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""} 
                 else:
                     products = Product.getAllProducts(data['payload'])
                     print(products)
@@ -66,6 +66,4 @@ class Product():
             array.append(x['productName'])
         product =",".join(array)
         return product
-
-
  
