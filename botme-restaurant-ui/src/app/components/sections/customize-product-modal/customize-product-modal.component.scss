@@ -39,11 +39,10 @@
                   }
 
                   .main-selection-container {
-                    margin-top: 10px;
                     width: 100%;
                     padding: 10px;
                     overflow: auto;
-                    height: 398px;
+                    height: 408px;
 
                     .table-bordered {
                       thead {
@@ -109,7 +108,7 @@
                     }
 
                     .multi-select-list {
-                      .col-lg-4 {
+                      .col-lg-3 {
                         .fa-check {
                           font-size: large;
                           position: absolute;
