@@ -70,8 +70,13 @@ def getResponse(intent,entity,text,pageId,sectionId,form):
 
 
 def checkForEmptyField(form):
+    form = resetFieldFocus(form)
     for x in form:
-        x['entityStatus'] = False
         if not x['entityValue']:
             x['entityStatus'] = True
+            return form
+
+def resetFieldFocus(form):
+    for x in form:
+        x['entityStatus'] = False
     return form
