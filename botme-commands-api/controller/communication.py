@@ -16,6 +16,7 @@ def getResponse(intent,entity,text,pageId,sectionId,form):
     val = Entity(entity,intent)
     value = val.parseEntityValue()
     db = getDbCta(intent,value,pageId,sectionId)
+    form = checkForEmptyField(form)
 
     if (intent == "Order_meal"or intent == "product-detail" or intent == "remove_item" or intent == "edit_product" or intent == "reduce_product_quantity"):
         if pageId == "pageId-order-online" or pageId == "pageId-product-customize-modal" or pageId == "pageId-product-detial-page" or pageId == "pageId-home" or pageId == "pageId-cart" or pageId == "pageId-cart-modal":
@@ -68,3 +69,9 @@ def getResponse(intent,entity,text,pageId,sectionId,form):
         return response
 
 
+def checkForEmptyField(form):
+    for x in form:
+        x['entityStatus'] = False
+        if not x['entityValue']:
+            x['entityStatus'] = True
+    return form
