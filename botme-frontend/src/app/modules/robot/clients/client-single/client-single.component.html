@@ -1,54 +1,93 @@
-<div *ngIf="client" class="card card-primary" xmlns="http://www.w3.org/1999/html">
+<div class="card card-primary">
   <div class="card-header">
     <h3 class="card-title">Client Details</h3>
   </div>
   <!-- /.card-header -->
   <div class="card-body">
-    <h4>{{client.clientName }}</h4>
+
+    <h4 *ngIf="client">{{client.clientName }}</h4>
 
     <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="form-client-id">Client Name: </label>
         <input type="text" class="form-control form-control-border " id="form-client-name"
-               formControlName="formclientname">
+          formControlName="formclientname">
       </div>
-      <div *ngIf="formMode==='update'" class="form-group">
+      <div class="form-group">
         <label for="form-client-id">Client ID: </label>
-        <input type="text" class="form-control form-control-border " id="form-client-id"
-               value="{{client.clientID}}" readonly="readonly">
+        <input *ngIf="formMode==='new'" type="text" class="form-control form-control-border " id="form-client-id"
+          formControlName="formclientid">
+        <input *ngIf="formMode==='update'" type="text" class="form-control form-control-border " id="form-client-id"
+          formControlName="formclientid" readonly>
       </div>
       <div class="form-group">
         <label for="form-client-device-id">Client Device ID: </label>
         <input type="text" class="form-control form-control-border" id="form-client-device-id"
-               formControlName="formclientdeviceid">
+          formControlName="formclientdeviceid">
       </div>
-      <div *ngIf="formMode==='update'" class="form-group">
+      <div class="form-group">
         <label for="form-client-secret">Client Secret: </label>
-        <input type="text" class="form-control form-control-border" id="form-client-secret"
-               formControlName="formclientsecret">
+        <!-- <p-password class="form-control form-control-border" id="form-client-secret" formControlName="formclientsecret"
+          [feedback]="false" [toggleMask]="true"></p-password> -->
+        <input type="password" class="form-control form-control-border" id="form-client-secret" [feedback]="false"
+          formControlName="formclientsecret" pPassword>
       </div>
       <div *ngIf="formMode==='update'" class="form-group">
         <label for="form-client-created">Created: </label>
         <input type="text" class="form-control form-control-border" id="form-client-created"
-               value="{{client.clientCreated}}" readonly="readonly">
+          value="{{client.clientCreated}}" readonly="readonly">
       </div>
       <div *ngIf="formMode==='update'" class="form-group">
         <label for="form-client-updated">Updated: </label>
         <input type="text" class="form-control form-control-border" id="form-client-updated"
-               value="{{client.clientUpdated}}" readonly="readonly">
+          value="{{client.clientUpdated}}" readonly="readonly">
       </div>
 
       <div class="form-group">
         <label for="form-client-comment">Comment: </label>
         <input type="text" class="form-control form-control-border" id="form-client-comment"
-               formControlName="formclientcomment">
+          formControlName="formclientcomment">
       </div>
-      <div class="form-group">
-        <label for="form-client-active">Active: </label>
-        <div class="custom-control custom-switch">
-          <input type="checkbox" class="custom-control-input" id="form-client-active"
-                 formControlName="formclientactive">
-          <label class="custom-control-label" for="form-client-active">Toggle this to mark active or inactive</label>
+
+      <div class="p-col-12 p-md-10">
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label for="formclientactive" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 ">
+                Active
+              </label>
+              <div class="p-col-12 p-md-10">
+                <p-toggleButton id="form-client-active" formControlName="formclientactive" onLabel="Enabled"
+                  offLabel="Disabled" onIcon="pi pi-check" offIcon="pi pi-times" [style]="{'width': '10em'}">
+                </p-toggleButton>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label for="formclientdebug" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 ">
+                Debug
+              </label>
+              <div class="p-col-12 p-md-10">
+                <p-toggleButton id="form-client-active" formControlName="formclientdebug" onLabel="Enabled"
+                  offLabel="Disabled" onIcon="pi pi-check" offIcon="pi pi-times" [style]="{'width': '10em'}">
+                </p-toggleButton>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label for="formclientvoice" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 ">
+                Voice
+              </label>
+              <div class="p-col-12 p-md-10">
+                <p-toggleButton id="form-client-active" formControlName="formclientvoice" onLabel="Enabled"
+                  offLabel="Disabled" onIcon="pi pi-check" offIcon="pi pi-times" [style]="{'width': '10em'}">
+                </p-toggleButton>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
       <div class="card-footer">
