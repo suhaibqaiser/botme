@@ -137,10 +137,15 @@ export class BookingSectionComponent implements OnInit {
   }
 
   setFocusOnField(entityId: any) {
-    if (!this._botMeClientService.getCookie().isLoggedIn) {
-      this._socketService.reservationFormEntities.forEach((item: any) => {
-        item.entityStatus = item.entityId === entityId
-      })
+    this._socketService.reservationFormEntities.forEach((item: any) => {
+      item.entityStatus = item.entityId === entityId
+    })
+  }
+
+  setFieldValue($event: any, entityId: any) {
+    let obj = this._socketService.reservationFormEntities.find((item: any) => item.entityId === entityId)
+    if (obj) {
+      obj.entityValue = $event.target.value
     }
   }
 }
