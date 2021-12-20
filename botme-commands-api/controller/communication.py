@@ -18,9 +18,13 @@ def getResponse(intent,entity,text,pageId,sectionId,form):
     db = getDbCta(intent,value,pageId,sectionId)
 
     if (intent == "Order_meal"or intent == "product-detail" or intent == "remove_item" or intent == "edit_product" or intent == "reduce_product_quantity"):
-        product = Product(intent,value,senti,pageId,sectionId,text)
-        Response = product.checkingForProduct()
-        return Response
+        if pageId == "pageId-order-online" or pageId == "pageId-product-customize-modal" or pageId == "pageId-product-detial-page" or pageId == "pageId-home" or pageId == "pageId-cart" or pageId == "pageId-cart-modal":
+            product = Product(intent,value,senti,pageId,sectionId,text)
+            Response = product.checkingForProduct()
+            return Response
+        else:
+            number = "7"
+            return {"Response":findResponse(number),"ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":""} 
 
     elif (intent == "reservation_page"):
         form = reservationField(db,form,pageId,sectionId,value,text,intent)
