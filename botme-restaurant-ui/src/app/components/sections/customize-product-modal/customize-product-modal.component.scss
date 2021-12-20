@@ -144,11 +144,10 @@
                   }
 
                   .button-group {
-                    padding: 20px 38px;
-
+                    margin-top: 56px;
                     .btn {
                       padding: 4px 14px;
-
+                      margin-left: 4px;
                       .fa-arrow-right {
                         margin-left: 10px;
                       }
@@ -157,9 +156,8 @@
                         margin-right: 10px;
                       }
                     }
-
-                    .apply-left-margin {
-                      margin-left: 75%;
+                    .total{
+                      margin-left: 4px;
                     }
                   }
                 }
