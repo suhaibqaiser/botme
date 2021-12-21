@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthenticationService} from "../../../services/authentication.service";
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {Router} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from "../../../services/authentication.service";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
           this.loginToken = response.payload.loginToken
           localStorage.setItem('loginToken', this.loginToken)
           localStorage.setItem('userFullName', response.payload.userFullName)
+          localStorage.setItem('restaurantId', response.payload.restaurantId)
           this.router.navigate(["/home"])
         }
 

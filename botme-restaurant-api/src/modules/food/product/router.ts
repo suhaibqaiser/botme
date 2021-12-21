@@ -1,5 +1,5 @@
-import {Request, Response} from "express";
-import {addProduct, editProduct, findProduct} from "./controller";
+import { Request, Response } from "express";
+import { addProduct, editProduct, findProduct } from "./controller";
 
 
 export default [
@@ -7,7 +7,7 @@ export default [
         path: "/product/add",
         method: "put",
         handler: async (req: Request, res: Response) => {
-            let result = await addProduct(req.body)
+            let result = await addProduct(req.body.product, req.body.restaurantId)
             res.send(result);
         }
     },
@@ -23,7 +23,7 @@ export default [
         path: "/product/update",
         method: "post",
         handler: async (req: Request, res: Response) => {
-            let result = await editProduct(req.body.product)
+            let result = await editProduct(req.body.product, req.body.restaurantId)
             res.send(result);
         }
     }
