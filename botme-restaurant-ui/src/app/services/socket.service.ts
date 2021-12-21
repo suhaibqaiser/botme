@@ -5,6 +5,7 @@ import {environment} from 'src/environments/environment';
 import {io} from "socket.io-client";
 import {BotmeClientService} from './botme-client.service';
 import {HelperService} from "./helper.service";
+import {ReservationService} from "./reservation.service";
 
 
 @Injectable({
@@ -86,7 +87,7 @@ export class SocketService {
   voiceServingSize = ''
 
 
-  constructor(private router: Router, private clients: BotmeClientService, private _helperService: HelperService) {
+  constructor(private _reservationService: ReservationService, private router: Router, private clients: BotmeClientService, private _helperService: HelperService) {
 
     this.authToken = clients.getCookieToken();
 
@@ -104,7 +105,9 @@ export class SocketService {
           case "communication":
             if (payload.conversation.conversationSequence === this.conversationSequence) {
               this.messagesSubject.next(payload)
-              if (payload.intentName) this.fireInteractionEvent(payload)
+              if (payload.intentName) {
+                this.fireInteractionEvent(payload)
+              }
             } else {
               console.log(`Socket Message out of sync. This id: ${this.conversationSequence}, payload id: ${payload.uniqueConversationId}`);
             }
@@ -142,13 +145,21 @@ export class SocketService {
         "pageId": this.currentContextObj.pageId,
         "sectionId": this.currentContextObj.sectionId,
         "conversationSequence": this.conversationSequence,
-        "entities": this.reservationFormEntities
+        "entities": this.getEntities()
       },
       type: type,
       timestamp: Date()
 
     }
     this.socket.emit('message', SocketPayload);
+  }
+
+
+  getEntities() {
+    if (this.currentContextObj.pageId === 'pageId-reservation') {
+      return this._reservationService.getReservationFormJson()
+    }
+    return this.reservationFormEntities
   }
 
   /**
@@ -166,11 +177,10 @@ export class SocketService {
     this._helperService.log('info', msg);
     if (msg.entityId) {
 
-      if (msg.entities && msg.entities.length) this.reservationFormEntities = JSON.parse(JSON.stringify(msg.entities))
+
       //for reservation form
       // @ts-ignore
-      document.getElementById(msg.entityId)?.value = (msg.entityId === 'entityId-time') ? this._helperService.timeConvert(msg.entityName) : msg.entityName
-
+      this._reservationService.setReservationForm(msg.conversation.conversationId, msg.entities)
 
       if (msg.entityId == 'entityId-select-serving-size') {
         this.voiceServingSize = msg.entityName.toLowerCase()

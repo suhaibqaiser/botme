@@ -108,11 +108,11 @@ export class SpeechService {
     // Update state to processing
     this.updateState('p')
 
-    setTimeout(() => {
-      if (this.isProcessing) {
-        this.speak(this.voiceProcessingDelayed, null)
-      }
-    }, 5000); // milli seconds
+    // setTimeout(() => {
+    //   if (this.isProcessing) {
+    //     this.speak(this.voiceProcessingDelayed, null)
+    //   }
+    // }, 5000); // milli seconds
 
     this.recorder.stop((blob: any) => {
       // Guard checks before sending request to websocket

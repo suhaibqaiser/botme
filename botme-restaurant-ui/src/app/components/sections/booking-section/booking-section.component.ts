@@ -36,31 +36,8 @@ export class BookingSectionComponent implements OnInit {
   reservationLoader: boolean = false
 
   /// Time regex ^(0?[1-9]|1[0-2]):([0-5]\d)\s?((?:A|P)\.?M\.?)$
-  constructor(private _botMeClientService: BotmeClientService, private _helper: HelperService, private _router: Router, private _reservationService: ReservationService, public _socketService: SocketService) {
-    this.resetReservation()
+  constructor(private _botMeClientService: BotmeClientService, private _helper: HelperService, private _router: Router, public _reservationService: ReservationService, public _socketService: SocketService) {
     clearTimeout(this._helper.timer)
-    this._socketService.reservationFormEntities = [
-      {
-        "entityId": "entityId-name",
-        "entityValue": "",
-        "entityStatus": true
-      },
-      {
-        "entityId": "entityId-number-of-persons",
-        "entityValue": "",
-        "entityStatus": false
-      },
-      {
-        "entityId": "entityId-date",
-        "entityValue": "",
-        "entityStatus": false
-      },
-      {
-        "entityId": "entityId-time",
-        "entityValue": "",
-        "entityStatus": false
-      }
-    ]
   }
 
   ngOnInit(): void {
