@@ -23,7 +23,7 @@ export default [
         path: "/category/all",
         method: "get",
         handler: async (req: Request, res: Response) => {
-            let result = await getAllCategory(req.params.restaurantId)
+            let result = await getAllCategory(req.query.restaurantId)
             res.send(result);
         }
     },
@@ -31,7 +31,7 @@ export default [
         path: "/category/remove",
         method: "delete",
         handler: async (req: Request, res: Response) => {
-            let result = await removeCategory(req.params.categoryId, req.body.restaurantId)
+            let result = await removeCategory(req.query.categoryId, req.query.restaurantId)
             res.send(result);
         }
     }

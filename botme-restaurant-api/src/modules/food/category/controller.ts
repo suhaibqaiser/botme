@@ -3,9 +3,9 @@ import { createCategory, deleteCategory, getCategory, updateCategory } from "./s
 import { randomUUID } from "crypto";
 
 
-export async function addCategory(category: any, restaurantId: string) {
+export async function addCategory(category: any, restaurantId: any) {
     let response = new restResponse()
-    if (!category && !restaurantId) {
+    if (!category || !restaurantId) {
         response.payload = "category and restaurantId is required"
         response.status = "error"
         return response;
@@ -25,7 +25,7 @@ export async function addCategory(category: any, restaurantId: string) {
     }
 }
 
-export async function getAllCategory(restaurantId: string) {
+export async function getAllCategory(restaurantId: any) {
     let response = new restResponse()
 
     let result = await getCategory(restaurantId)
@@ -41,9 +41,9 @@ export async function getAllCategory(restaurantId: string) {
 }
 
 
-export async function editCategory(category: any, restaurantId: string) {
+export async function editCategory(category: any, restaurantId: any) {
     let response = new restResponse()
-    if (!category && !restaurantId) {
+    if (!category || !restaurantId) {
         response.payload = "category and restaurantId is required"
         response.status = "error"
         return response;
@@ -63,9 +63,9 @@ export async function editCategory(category: any, restaurantId: string) {
 }
 
 
-export async function removeCategory(categoryId: any, restaurantId: string) {
+export async function removeCategory(categoryId: any, restaurantId: any) {
     let response = new restResponse()
-    if (!categoryId && !restaurantId) {
+    if (!categoryId || !restaurantId) {
         response.payload = "categoryId and restaurantId is required"
         response.status = "error"
         return response;

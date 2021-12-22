@@ -3,10 +3,10 @@ import { createReservation, getReservation, updateReservation, getAllReservation
 import { getMaxLabelValue } from "../../food/reservation/service";
 import { randomUUID } from "crypto";
 
-export async function addReservation(reservation: any, restaurantId: string) {
+export async function addReservation(reservation: any, restaurantId: any) {
     let response = new restResponse()
 
-    if (!reservation && !restaurantId) {
+    if (!reservation || !restaurantId) {
         response.payload = "reservation and restaurantId is required"
         response.status = "error"
         return response;
@@ -29,9 +29,9 @@ export async function addReservation(reservation: any, restaurantId: string) {
 }
 
 
-export async function editReservation(reservation: any, restaurantId: string) {
+export async function editReservation(reservation: any, restaurantId: any) {
     let response = new restResponse()
-    if (!reservation && !restaurantId) {
+    if (!reservation || !restaurantId) {
         response.payload = "reservation is required"
         response.status = "error"
         return response;
@@ -50,9 +50,9 @@ export async function editReservation(reservation: any, restaurantId: string) {
 }
 
 
-export async function findReservation(reservationId: string, restaurantId: string) {
+export async function findReservation(reservationId: string, restaurantId: any) {
     let response = new restResponse()
-    if (!reservationId && !restaurantId) {
+    if (!reservationId || !restaurantId) {
         response.payload = "reservationId and restaurantId is required"
         response.status = "error"
         return response;
@@ -70,7 +70,7 @@ export async function findReservation(reservationId: string, restaurantId: strin
     }
 }
 
-export async function findReservations(restaurantId: string) {
+export async function findReservations(restaurantId: any) {
     let response = new restResponse()
     let result = await getAllReservation(restaurantId)
     if (result.length) {

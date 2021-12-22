@@ -15,7 +15,7 @@ export default [
         path: "/product/search",
         method: "get",
         handler: async (req: Request, res: Response) => {
-            let result = await findProduct(req.query)
+            let result = await findProduct(req.query, req.query.restaurantId)
             res.send(result);
         }
     },

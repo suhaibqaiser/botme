@@ -2,9 +2,9 @@ import { restResponse } from "../../../utils/response";
 import { createProduct, getProduct, updateProduct, getMaxLabelValue } from "./service";
 import { randomUUID } from "crypto";
 
-export async function addProduct(product: any, restaurantId: string) {
+export async function addProduct(product: any, restaurantId: any) {
     let response = new restResponse()
-    if (!product && !restaurantId) {
+    if (!product || !restaurantId) {
         response.payload = "product and restaurantId is required"
         response.status = "error"
         return response;
@@ -30,9 +30,14 @@ export async function addProduct(product: any, restaurantId: string) {
     }
 }
 
-export async function findProduct(filter: any) {
-    console.log('filter =>', filter)
+export async function findProduct(filter: any, restaurantId: any) {
     let response = new restResponse()
+    if (!filter || !restaurantId) {
+        response.payload = "product and restaurantId is required"
+        response.status = "error"
+        return response;
+    }
+
 
     let productId = (filter && filter.productId) ? filter.productId : ''
     let priceMin = (filter && filter.priceMin) ? filter.priceMin : ''
@@ -41,7 +46,6 @@ export async function findProduct(filter: any) {
     let ratingMax = (filter && filter.ratingMax) ? filter.ratingMax : ''
     let productCategory = (filter && filter.productCategory) ? filter.productCategory : ''
     let productName = (filter && filter.productName) ? filter.productName : ''
-    let restaurantId = (filter && filter.restaurantId) ? filter.restaurantId : ''
 
     let queryParam: any = {}
     if (restaurantId && restaurantId.length) {
@@ -81,9 +85,9 @@ export async function findProduct(filter: any) {
     }
 }
 
-export async function editProduct(product: any, restaurantId: string) {
+export async function editProduct(product: any, restaurantId: any) {
     let response = new restResponse()
-    if (!product && !restaurantId) {
+    if (!product || !restaurantId) {
         response.payload = "product and restaurantId is required"
         response.status = "error"
         return response;

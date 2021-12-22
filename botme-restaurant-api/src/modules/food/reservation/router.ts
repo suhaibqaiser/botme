@@ -22,7 +22,7 @@ export default [
         path: "/reservation/find",
         method: "get",
         handler: async (req: Request, res: Response) => {
-            let result = await findReservation(String(req.query.reservationId), String(req.query.restaurantId))
+            let result = await findReservation(req.params.reservationId, req.query.restaurantId)
             res.send(result);
         }
     },
@@ -30,7 +30,7 @@ export default [
         path: "/reservation/findAll",
         method: "get",
         handler: async (req: Request, res: Response) => {
-            let result = await findReservations(String(req.query.restaurantId))
+            let result = await findReservations(req.query.restaurantId)
             res.send(result);
         }
     }
