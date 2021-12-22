@@ -157,6 +157,7 @@ export class SocketService {
 
   getEntities() {
     if (this.currentContextObj.pageId === 'pageId-reservation') {
+      console.log('getEntities =>', this._reservationService.getReservationFormJson())
       return this._reservationService.getReservationFormJson()
     }
     return this.reservationFormEntities

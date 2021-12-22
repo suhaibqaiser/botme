@@ -47,7 +47,16 @@ export class HelperService {
 
   timeConvert(time: any) {
     // Check correct time format and split into components
-    if (!time && !time.length) return
+    console.log('time =>',time)
+    let reservationTimeCheck = new RegExp('^(0?[1-9]|1[0-2]):([0-5]\\d)\\s?((?:[Aa]|[Pp])\\.?[Mm]\\.?)$');
+    if (!time) {
+      return null
+    }
+
+    if (reservationTimeCheck.test(time)) {
+      return time
+    }
+
     time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
 
     if (time.length > 1) { // If time format correct
