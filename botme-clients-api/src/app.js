@@ -1,4 +1,5 @@
 const express = require('express')
+const config = require('config')
 const jwt = require('jsonwebtoken')
 const jwtKey = 'superSecretJWTKey'
 const clientsRouter = require('./routes/clientsRouter.js')
@@ -13,11 +14,14 @@ const speechRouter = require('./routes/speechRouter')
 
 const app = express()
 const port = process.env.API_PORT || 3000;
-let cors = require('cors')
+const cors = require('cors')
+
+console.log(process.env.NODE_ENV)
+console.log(config.get('clientsDB'))
 
 //Set up mongoose connection
 const mongoose = require('mongoose');
-const mongoDB = process.env.MONGODB_CONNECTION || 'mongodb+srv://mongoUser:1t3jWnpoC0imAM4d@cluster0.tipo5.mongodb.net/clients?retryWrites=true&w=majority';
+const mongoDB = process.env.MONGODB_CONNECTION || `mongodb+srv://mongoUser:1t3jWnpoC0imAM4d@cluster0.tipo5.mongodb.net/${config.get('clientsDB')}?retryWrites=true&w=majority`;
 
 mongoose.connect(mongoDB, {
     useNewUrlParser: true,
