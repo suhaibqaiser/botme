@@ -75,6 +75,7 @@ def checkForEmptyField(form):
         if not x['entityValue']:
             x['entityStatus'] = True
             return form
+    return form
 
 def resetFieldFocus(form):
     for x in form:
