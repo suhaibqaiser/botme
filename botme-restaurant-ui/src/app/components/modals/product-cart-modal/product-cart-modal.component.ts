@@ -61,7 +61,7 @@ export class ProductCartModalComponent implements OnInit {
         price += item.productTotalPrice
       })
     }
-    return price
+    return this.roundToTwo(price)
   }
 
   totalCartPrice() {
@@ -71,7 +71,7 @@ export class ProductCartModalComponent implements OnInit {
         price += item.productTotalPrice
       })
     }
-    return price
+    return this.roundToTwo(price)
   }
 
   removeFromCart(productId: string) {
@@ -111,5 +111,9 @@ export class ProductCartModalComponent implements OnInit {
   closeCart() {
     document.getElementsByClassName('cart-modal-wrapper')[0]?.setAttribute('style', 'display:none')
     this._socketService.getCurrentContext()
+  }
+
+  roundToTwo(num: number) {
+    return Math.round((num + Number.EPSILON) * 100) / 100;
   }
 }

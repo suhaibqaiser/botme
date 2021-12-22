@@ -105,7 +105,11 @@ export class CartSectionComponent implements OnInit {
         total += item.productTotalPrice
       })
     }
-    return total
+    return this.roundToTwo(total)
+  }
+
+  roundToTwo(num: number) {
+    return Math.round((num + Number.EPSILON) * 100) / 100;
   }
 
   editToCart() {
