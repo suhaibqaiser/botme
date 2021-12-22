@@ -27,7 +27,7 @@ async function getClientDetail(req, res) {
         response.payload = { message: 'clientID is required' };
         return res.status(400).send(response);
     }
-    let client = await clientService.getClientDetail(req.query.clientID)
+    let client = await clientService.getClientById(req.query.clientID)
     if (client) {
         response.payload = client
         response.status = "success"
@@ -43,6 +43,7 @@ async function getClientDetail(req, res) {
 async function addClient(req, res) {
     let response = new Response()
 
+
     if (!req.body.clientDeviceId) {
         response.payload = { message: 'clientDeviceId is required' };
         return res.status(400).send(response);
@@ -53,15 +54,16 @@ async function addClient(req, res) {
         return res.status(400).send(response);
     }
 
-    let clientID = uuidv4();
-    let hash = crypto.createHash('sha256');
-    let clientSecret = hash.update(req.body.clientDeviceId).digest('hex');
+    // let hash = crypto.createHash('sha256');
+    // let clientSecret = hash.update(req.body.clientSecret).digest('hex');
 
     let client = {
         clientDeviceId: req.body.clientDeviceId,
-        clientID: clientID,
-        clientSecret: clientSecret,
+        clientID: req.body.clientId,
+        clientSecret: req.body.clientSecret,
         clientName: req.body.clientName,
+        clientDebug: req.body.clientDebug,
+        clientVoiceEnabled: req.body.clientVoiceEnabled,
         clientCreated: Date(),
         clientUpdated: null,
         clientActive: req.body.clientActive,
@@ -91,10 +93,10 @@ async function authorizeClient(req, res) {
         return res.status(400).send(response);
     }
 
-
     let client = await clientService.getClientDetail(req.body.clientID, req.body.clientSecret)
 
     if (client) {
+
         let hash = crypto.createHash('sha256');
         let clientToken = hash.update(Date()).digest('hex');
 
@@ -124,15 +126,19 @@ async function authorizeClient(req, res) {
 async function updateClient(req, res) {
     let response = new Response()
 
+
     if (!req.body.clientID) {
         response.payload = { message: 'clientID is required' };
         return res.status(400).send(response);
     }
 
+
     let client = {
         clientDeviceId: req.body.clientDeviceId,
         clientSecret: req.body.clientSecret,
         clientName: req.body.clientName,
+        clientDebug: req.body.clientDebug,
+        clientVoiceEnabled: req.body.clientVoiceEnabled,
         clientUpdated: Date(),
         clientActive: req.body.clientActive,
         clientComment: req.body.clientComment
