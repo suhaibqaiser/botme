@@ -181,7 +181,8 @@ export class SocketService {
 
       //for reservation form
       // @ts-ignore
-      this._reservationService.setReservationForm(msg.conversation.conversationId, msg.entities)
+      let conversationId = (msg.conversation && msg.conversation.conversationId) ? msg.conversation.conversationId : ''
+      this._reservationService.setReservationForm(conversationId, msg.entities)
 
       if (msg.entityId == 'entityId-select-serving-size') {
         this.voiceServingSize = msg.entityName.toLowerCase()
