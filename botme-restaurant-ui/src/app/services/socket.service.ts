@@ -191,18 +191,24 @@ export class SocketService {
         return
       }
 
-      // @ts-ignore
-      let template = document.getElementById(msg.entityId)
-      // @ts-ignore
-      let list = template.getElementsByTagName('a')
-      for (let i = 0; i < list.length; i++) {
-        if (list[i].getAttribute('id') == msg.ctaId) {
-          list[i]?.click()
-        }
-      }
-      // @ts-ignore
-      document.getElementById(msg.entityId)?.click()
+      msg.entities.forEach((item:any)=>{
+        this.performClickAction(item.entityId,item.ctaId)
+      })
     }
+  }
+
+  performClickAction(entityId:any,ctaId:any){
+    // // @ts-ignore
+    // let template = document.getElementById(msg.entityId)
+    // // @ts-ignore
+    // let list = template.getElementsByTagName('a')
+    // for (let i = 0; i < list.length; i++) {
+    //   if (list[i].getAttribute('id') == msg.ctaId) {
+    //     list[i]?.click()
+    //   }
+    // }
+    // // @ts-ignore
+    // document.getElementById(msg.entityId)?.click()
   }
 
   getCurrentRoute() {
