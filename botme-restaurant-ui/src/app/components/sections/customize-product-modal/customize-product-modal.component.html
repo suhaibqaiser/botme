@@ -1,7 +1,6 @@
 <!-- Dynamic product cartModal -->
 
-<div class="modal product-customization-modal fade" id="pageId-productCustomizeModal" tabindex="-1"
-  data-backdrop="false" aria-labelledby="pageId-productCustomizeModal" aria-hidden="true">
+<div data-bs-backdrop="false" data-bs-keyboard="false" class="modal product-customization-modal fade" id="pageId-productCustomizeModal" tabindex="-1" aria-labelledby="pageId-productCustomizeModal" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-body">
@@ -25,7 +24,7 @@
                             <h6 class="mb-3">Serving Size</h6>
                             <div id="{{size.serving_size_name}}"
                                  *ngFor="let size of cartService.singleCustomProductObj.productServingSize"
-                                 (click)="cartService.selectServing(size)" class="mb-3 col-lg-4">
+                                 (click)="cartService.selectServing(size)" class="mb-2 col-lg-3">
                               <span *ngIf="size.selected"><i class="fas fa-check"></i></span>
                               <div [class.multi-selection]="size.selected"
                                    class="d-flex align-items-center justify-content-around ">
@@ -41,7 +40,7 @@
                           <h6 class="mb-3">Product Options</h6>
                           <div id="{{options.productId}}"
                             *ngFor="let options of cartService.singleCustomProductObj.productOptions"
-                            (click)="cartService.selectProductOptions(options)" class="mb-3 col-lg-4">
+                            (click)="cartService.selectProductOptions(options)" class="mb-2 col-lg-3">
                             <span *ngIf="options.selected"><i class="fas fa-check"></i></span>
                             <div [class.multi-selection]="options.selected"
                               class="d-flex align-items-center justify-content-around ">
@@ -51,10 +50,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="total">
-                        <h6 class="text-end">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
-                      </div>
-                      <div class="d-flex justify-content-between button-group">
+                      <div class="d-flex align-items-end button-group">
                         <button id="entityId-back"
                           *ngIf="cartService.slideToShow!==0 && !cartService.singleCustomProductObj.isShowInfo"
                           (click)="cartService.previousSlide()" type="button" class="btn btn-yellow">
@@ -79,6 +75,9 @@
                               <i class="fas ml-2 fa-cart-plus"></i></button>
                           </div>
                         </div>
+                        <div class="total">
+                          <h6 class="text-end">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
+                        </div>
                       </div>
                     </div>
                     <div id="sectionId-ingredients-flavour" class="section p-2" *ngIf="cartService.slideToShow===1">
@@ -92,7 +91,7 @@
                           class="container multi-select-list row">
                           <div id="{{ingredients.productId}}"
                             *ngFor="let ingredients of cartService.singleCustomProductObj.productIngredients"
-                            (click)="cartService.selectIngredients(ingredients)" class="mb-3 col-lg-4">
+                            (click)="cartService.selectIngredients(ingredients)" class="mb-2 col-lg-3">
                             <span *ngIf="ingredients.selected"><i class="fas fa-check"></i></span>
                             <div [class.multi-selection]="ingredients.selected"
                               class="d-flex align-items-center justify-content-around ">
@@ -111,7 +110,7 @@
                           class="container multi-select-list row">
                           <div id="{{flavor.flavorName}}"
                             *ngFor="let flavor of cartService.singleCustomProductObj.productFlavors"
-                            (click)="cartService.selectFlavor(flavor)" class="mb-3 col-lg-4">
+                            (click)="cartService.selectFlavor(flavor)" class="mb-2 col-lg-3">
                             <span *ngIf="flavor.selected"><i class="fas fa-check"></i></span>
                             <div [class.multi-selection]="flavor.selected"
                               class="d-flex align-items-center justify-content-around ">
@@ -120,10 +119,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="total">
-                        <h6 class="text-end">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
-                      </div>
-                      <div class="d-flex justify-content-between button-group">
+                      <div class="d-flex align-items-end button-group">
                         <button id="entityId-back"
                           *ngIf="cartService.slideToShow!==0 && !cartService.singleCustomProductObj.isShowInfo"
                           (click)="cartService.previousSlide()" type="button" class="btn btn-yellow">
@@ -147,6 +143,9 @@
                               class="btn ml-2 btn-primary">Edit Cart Item
                               <i class="fas ml-2 fa-cart-plus"></i></button>
                           </div>
+                        </div>
+                        <div class="total">
+                          <h6 class="text-end">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
                         </div>
                       </div>
                     </div>
@@ -181,10 +180,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="total">
-                        <h6 class="text-end">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
-                      </div>
-                      <div class="d-flex justify-content-between button-group">
+                      <div class="d-flex align-items-end button-group">
                         <button id="entityId-back"
                           *ngIf="cartService.slideToShow!==0 && !cartService.singleCustomProductObj.isShowInfo"
                           (click)="cartService.previousSlide()" type="button" class="btn btn-yellow">
@@ -208,6 +204,9 @@
                               class="btn ml-2 btn-primary">Edit Cart Item
                               <i class="fas ml-2 fa-cart-plus"></i></button>
                           </div>
+                        </div>
+                        <div class="total">
+                          <h6 class="text-end">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
                         </div>
                       </div>
                     </div>
@@ -243,10 +242,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="total">
-                        <h6 class="text-end">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
-                      </div>
-                      <div class="d-flex justify-content-between button-group">
+                      <div class="d-flex align-items-end button-group">
                         <button id="entityId-back"
                           *ngIf="cartService.slideToShow!==0 && !cartService.singleCustomProductObj.isShowInfo"
                           (click)="cartService.previousSlide()" type="button" class="btn btn-yellow">
@@ -271,6 +267,9 @@
                               <i class="fas ml-2 fa-cart-plus"></i></button>
                           </div>
                         </div>
+                        <div class="total">
+                          <h6 class="text-end">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
+                        </div>
                       </div>
                     </div>
                     <div id="entityId-quantity" class="section p-2" *ngIf="cartService.slideToShow===4">
@@ -290,7 +289,8 @@
                             class="btn btn-secondary"><strong>+</strong></a>
                         </div>
                       </div>
-                      <div style="height: 286px;" class="main-selection-container">
+                      <h6 class="text-center" *ngIf="cartService.singleCustomProductObj.isShowInfo">Quantiy: {{cartService.singleCustomProductObj.productQuantity}}</h6>
+                      <div style="height: 363px;" class="main-selection-container">
                         <table class="table table-bordered">
                           <thead>
                             <tr>
@@ -362,10 +362,7 @@
                           </tbody>
                         </table>
                       </div>
-                      <div class="total">
-                        <h6 class="text-end">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
-                      </div>
-                      <div class="d-flex justify-content-between button-group">
+                      <div class="d-flex align-items-end button-group">
                         <button id="entityId-back"
                           *ngIf="cartService.slideToShow!==0 && !cartService.singleCustomProductObj.isShowInfo"
                           (click)="cartService.previousSlide()" type="button" class="btn btn-yellow">
@@ -389,6 +386,9 @@
                               class="btn ml-2 btn-primary">Edit Cart Item
                               <i class="fas ml-2 fa-cart-plus"></i></button>
                           </div>
+                        </div>
+                        <div class="total">
+                          <h6 class="text-end">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
                         </div>
                       </div>
                     </div>

@@ -141,4 +141,11 @@ export class BookingSectionComponent implements OnInit {
       item.entityStatus = item.entityId === entityId
     })
   }
+
+  setFieldValue($event: any, entityId: any) {
+    let obj = this._socketService.reservationFormEntities.find((item: any) => item.entityId === entityId)
+    if (obj) {
+      obj.entityValue = $event.target.value
+    }
+  }
 }

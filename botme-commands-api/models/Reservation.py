@@ -5,6 +5,7 @@ from controller.reservationField import reservationField,checkIfFieldValueExist
 from config import RESTAURANT_API 
 from conf.mongodb import findResponse
 from models.Name import Name
+from controller.utility import Utility
 
 
 class Reservation():
@@ -35,8 +36,10 @@ class Reservation():
                         return Response  
             else:
                 if Reservation.checkForPersonFieldFocus(self.form):
-                    number = "9"
-                    return {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
+                    call = None
+                    utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+                    Response = utility.incorrectPersonResponse()
+                    return Response
                 else:
                     Response = checkIfFieldValueExist(self.form,self.pageId,self.sectionId,self.value,self.text,self.intent)
                     return Response        
@@ -44,7 +47,14 @@ class Reservation():
             #     tableResponse = Reservation.searchingTable(self.value,self.senti,self.intent,self.text)
             #     return tableResponse
         except:
-            print("error in parsing number of people")    
+            if Reservation.checkForPersonFieldFocus(self.form):
+                call = None
+                utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+                Response = utility.incorrectPersonResponse()
+                return Response
+            else:
+                Response = checkIfFieldValueExist(self.form,self.pageId,self.sectionId,self.value,self.text,self.intent)
+                return Response   
 
     # def searchingTable(value,senti,intent,text):
     #     try:

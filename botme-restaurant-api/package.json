@@ -16,7 +16,6 @@
     "@types/compression": "^1.7.0",
     "@types/cors": "^2.8.10",
     "@types/express": "^4.17.12",
-    "@types/mongoose": "^5.11.97",
     "@types/node": "^15.12.4",
     "compression": "^1.7.4",
     "config": "^3.3.6",

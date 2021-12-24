@@ -16,11 +16,16 @@ def getResponse(intent,entity,text,pageId,sectionId,form):
     val = Entity(entity,intent)
     value = val.parseEntityValue()
     db = getDbCta(intent,value,pageId,sectionId)
+    form = checkForEmptyField(form)
 
     if (intent == "Order_meal"or intent == "product-detail" or intent == "remove_item" or intent == "edit_product" or intent == "reduce_product_quantity"):
-        product = Product(intent,value,senti,pageId,sectionId,text)
-        Response = product.checkingForProduct()
-        return Response
+        if pageId == "pageId-order-online" or pageId == "pageId-product-customize-modal" or pageId == "pageId-product-detial-page" or pageId == "pageId-home" or pageId == "pageId-cart" or pageId == "pageId-cart-modal":
+            product = Product(intent,value,senti,pageId,sectionId,text)
+            Response = product.checkingForProduct()
+            return Response
+        else:
+            number = "7"
+            return {"Response":findResponse(number),"ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":""} 
 
     elif (intent == "reservation_page"):
         form = reservationField(db,form,pageId,sectionId,value,text,intent)
@@ -58,9 +63,21 @@ def getResponse(intent,entity,text,pageId,sectionId,form):
         return Response 
 
     else:
-        call = ""
+        call = None
         utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
-        response = Utility.dbResponse()
+        response = utility.dbResponse()
         return response
 
 
+def checkForEmptyField(form):
+    form = resetFieldFocus(form)
+    for x in form:
+        if not x['entityValue']:
+            x['entityStatus'] = True
+            return form
+    return form
+
+def resetFieldFocus(form):
+    for x in form:
+        x['entityStatus'] = False
+    return form

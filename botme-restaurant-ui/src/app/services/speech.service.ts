@@ -12,7 +12,7 @@ export class SpeechService {
   private stream: any
   private recorder: any
 
-  // TODO: These messages should be moved to database 
+  // TODO: These messages should be moved to database
   // to avoid hardcoding and for better management
   private voiceWelcomeMessage = "Welcome to the interactive online shop experience. Start by saying, I want to make a reservation!"
   private voiceEndingMessage = "Handing the controls over to you."
@@ -101,7 +101,7 @@ export class SpeechService {
     // Artificial delay before stopping recording
     await this.helper.delay(500);
 
-    // Guard checks 
+    // Guard checks
     if (!this.recorder) return
     if (!this.isListening) return
 
@@ -115,7 +115,7 @@ export class SpeechService {
     }, 5000); // milli seconds
 
     this.recorder.stop((blob: any) => {
-      // Guard checks before sending request to websocket 
+      // Guard checks before sending request to websocket
       if (this.isSpeaking) return
       if (this.isListening) return
       if (!this.isSpeechEnabled) return
