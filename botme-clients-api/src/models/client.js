@@ -13,7 +13,8 @@ var ClientsSchema = new Schema(
         clientCreated: { type: Date, required: true },
         clientUpdated: { type: Date },
         clientActive: { type: Boolean, required: true },
-        clientComment: { type: String }
+        clientComment: { type: String },
+        restaurantId: { type: String }
     }
 );
 
