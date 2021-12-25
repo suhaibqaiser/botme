@@ -17,7 +17,7 @@
                     <div id="sectionId-servingSize-productOptions" class="section"
                       *ngIf="cartService.slideToShow===0">
                       <h3 class="text-center">{{cartService.singleCustomProductObj.productName}}</h3>
-                      <h6 class="text-center">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
+                      <h6 class="text-center mt-2">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
                       <!-- <app-sofia-bot></app-sofia-bot> -->
                       <div class="main-selection-container">
                         <div class="list mb-2">
@@ -26,8 +26,7 @@
                             <div id="{{size.serving_size_name}}"
                                  *ngFor="let size of cartService.singleCustomProductObj.productServingSize"
                                  (click)="cartService.selectServing(size)" class="mb-2 col-lg-3">
-                              <span *ngIf="size.selected"><i class="fas fa-check"></i></span>
-                              <div [class.multi-selection]="size.selected"
+                              <div [class]="size.selected ? 'multi-selection border' : 'multi-selection'"
                                    class="d-flex align-items-center justify-content-around ">
                                 <h6>{{size.serving_size_name}}</h6>
                               </div>
@@ -42,8 +41,7 @@
                           <div id="{{options.productId}}"
                             *ngFor="let options of cartService.singleCustomProductObj.productOptions"
                             (click)="cartService.selectProductOptions(options)" class="mb-2 col-lg-3">
-                            <span *ngIf="options.selected"><i class="fas fa-check"></i></span>
-                            <div [class.multi-selection]="options.selected"
+                            <div [class]="options.selected ? 'multi-selection border' : 'multi-selection'"
                               class="d-flex align-items-center justify-content-around ">
                               <img [src]="options.productImage" />
                               <h6>{{options.productName}}</h6>
@@ -78,7 +76,7 @@
                       <h3
                         *ngIf="cartService.singleCustomProductObj.productIngredients && cartService.singleCustomProductObj.productIngredients.length"
                         class="text-center">Product Ingredients</h3>
-                      <h6 class="text-center">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
+                      <h6 class="text-center mt-2">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
                       <div class="main-selection-container">
                         <div
                           *ngIf="cartService.singleCustomProductObj.productIngredients && cartService.singleCustomProductObj.productIngredients.length"
@@ -86,8 +84,7 @@
                           <div id="{{ingredients.productId}}"
                             *ngFor="let ingredients of cartService.singleCustomProductObj.productIngredients"
                             (click)="cartService.selectIngredients(ingredients)" class="mb-2 col-lg-3">
-                            <span *ngIf="ingredients.selected"><i class="fas fa-check"></i></span>
-                            <div [class.multi-selection]="ingredients.selected"
+                            <div [class]="ingredients.selected ? 'multi-selection border' : 'multi-selection'"
                               class="d-flex align-items-center justify-content-around ">
                               <img [src]="ingredients.productImage" />
                               <h6>{{ingredients.productName}}</h6>
@@ -105,8 +102,7 @@
                           <div id="{{flavor.flavorName}}"
                             *ngFor="let flavor of cartService.singleCustomProductObj.productFlavors"
                             (click)="cartService.selectFlavor(flavor)" class="mb-2 col-lg-3">
-                            <span *ngIf="flavor.selected"><i class="fas fa-check"></i></span>
-                            <div [class.multi-selection]="flavor.selected"
+                            <div [class]="flavor.selected ? 'multi-selection border' : 'multi-selection'"
                               class="d-flex align-items-center justify-content-around ">
                               <h6>{{flavor.flavorName}}</h6>
                             </div>
@@ -142,7 +138,7 @@
                     </div>
                     <div id="sectionId-toppings" class="section" *ngIf="cartService.slideToShow===2">
                       <h3 class="text-center">Product Topping</h3>
-                      <h6 class="text-center">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
+                      <h6 class="text-center mt-2 ">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
                       <div
                         *ngIf="cartService.singleCustomProductObj.productToppings && cartService.singleCustomProductObj.productToppings.length"
                         class="main-selection-container">
@@ -157,7 +153,7 @@
                             </h6>
                           </div>
                           <div class="counter-section">
-                            <h6 class="text-center">${{toppings.productTotalPrice}}</h6>
+                            <h6 class="text-center mt-2">${{toppings.productTotalPrice}}</h6>
                             <div class="btn-group">
                               <a style="padding: 4px 28px;" type="button" id="ctaId-remove-topping"
                                 (click)="cartService.addToppingQuantity(toppings,'subtracting')"
@@ -201,7 +197,7 @@
                     </div>
                     <div id="sectionId-addons" class="section" *ngIf="cartService.slideToShow===3">
                       <h3 class="text-center">Addons</h3>
-                      <h6 class="text-center">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
+                      <h6 class="text-center mt-2">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
                       <div
                         *ngIf="cartService.singleCustomProductObj.productAddons && cartService.singleCustomProductObj.productAddons.length"
                         class="main-selection-container">
@@ -216,7 +212,7 @@
                             </h6>
                           </div>
                           <div class="counter-section">
-                            <h6 class="text-center">${{addons.productTotalPrice}}</h6>
+                            <h6 class="text-center mt-2">${{addons.productTotalPrice}}</h6>
                             <div class="btn-group">
                               <a style="padding: 4px 28px;" type="button" id="ctaId-remove-addons"
                                 (click)="cartService.addAddonQuantity(addons,'subtracting')"
@@ -261,7 +257,7 @@
                     </div>
                     <div id="entityId-quantity" class="section" *ngIf="cartService.slideToShow===4">
                       <h3 class="text-center">Product Summary</h3>
-                      <h6 class="text-center">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
+                      <h6 class="text-center mt-2">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
                       <div *ngIf="!cartService.singleCustomProductObj.isShowInfo"
                         class="d-flex mt-2 align-items-center justify-content-center">
                         <div class="btn-group">
