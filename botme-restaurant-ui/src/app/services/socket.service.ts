@@ -191,9 +191,17 @@ export class SocketService {
         return
       }
 
-      msg.entities.forEach((item:any)=>{
-        this.performClickAction(item.entityId,item.ctaId)
-      })
+      // @ts-ignore
+      let template = document.getElementById(msg.entityId)
+      // @ts-ignore
+      let list = template.getElementsByTagName('a')
+      for (let i = 0; i < list.length; i++) {
+        if (list[i].getAttribute('id') == msg.ctaId) {
+          list[i]?.click()
+        }
+      }
+      // @ts-ignore
+      document.getElementById(msg.entityId)?.click()
     }
   }
 
