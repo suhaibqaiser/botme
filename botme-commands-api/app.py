@@ -11,9 +11,9 @@ def send_Response():
     req_data = request.get_json()
     context = req_data['context']
     inputText = req_data['inputText']
-    text = req_data['text']
-    pageId = req_data['pageId']
-    sectionId = req_data['sectionId']
+    text = inputText['textValue']
+    pageId = context['pageId']
+    sectionId = context['sectionId']
     form = req_data['entities']
     message = text.lower()
     rasa_data = getIntent(message)

@@ -21,9 +21,16 @@ class Utility:
 
     def dbResponse(self):
         if self.db is not None:
-            context = self.db['context']
-            iD = Utility.getEntityClickAttribute(context['entities'])
-            return {"ctaId":self.db['ctaCommandId'],"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":self.db['response']},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"id":"","name":""},"entities" : [{"entityId" : iD['entityId'],"entityValue" : self.value,"clickAttribute" : "href, button","keywords" :""}]}}
+            if (self.intent == "Home_page" or self.intent == "reservation_page" or self.intent == "contactus_page" or self.intent == "see_cart" or self.intent == "place_order_page"):
+                context = self.db['context']
+                self.pageId = context['pageId']
+                self.sectionId = context['sectionId']
+                iD = Utility.getEntityClickAttribute(context['entities'])
+                return {"ctaId":self.db['ctaCommandId'],"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":self.db['response']},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"id":"","name":""},"entities" : [{"entityId" : iD['entityId'],"entityValue" : self.value,"clickAttribute" : "href, button","keywords" :""}]}}
+            else:
+                context = self.db['context']
+                iD = Utility.getEntityClickAttribute(context['entities'])
+                return {"ctaId":self.db['ctaCommandId'],"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":self.db['response']},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"id":"","name":""},"entities" : [{"entityId" : iD['entityId'],"entityValue" : self.value,"clickAttribute" : "href, button","keywords" :""}]}}
             # return {"":self.db['response'],"ctaCommandId":self.db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityValue":self.value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent} 
         else:
             number = "1"
@@ -43,6 +50,8 @@ class Utility:
     def reservationResponse(self):
         if self.db:
             context = self.db['context']
+            self.pageId = context['pageId']
+            self.sectionId = context['sectionId']
             iD = Utility.getEntityClickAttribute(context['entities'])
             # response = {"":self.db['response'],"ctaCommandId":self.db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityValue":self.value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
             # return response
