@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {CartService} from 'src/app/services/cart.service';
-import {SocketService} from "../../../services/socket.service";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {BotmeClientService} from "../../../services/botme-client.service";
-import {Router} from "@angular/router";
-import {DeviceDetectorService} from "ngx-device-detector";
+import { Component, OnInit } from '@angular/core';
+import { CartService } from 'src/app/services/cart.service';
+import { SocketService } from "../../../services/socket.service";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { BotmeClientService } from "../../../services/botme-client.service";
+import { Router } from "@angular/router";
+import { DeviceDetectorService } from "ngx-device-detector";
 
 @Component({
   selector: 'app-navbar',
@@ -24,11 +24,11 @@ export class NavbarComponent implements OnInit {
   botVoice: string = ''
 
   constructor(public router: Router,
-              public socketService: SocketService,
-              public _botMeClientService: BotmeClientService,
-              private cartService: CartService,
-              public _deviceService: DeviceDetectorService,
-              private _socketService: SocketService) {
+    public socketService: SocketService,
+    public _botMeClientService: BotmeClientService,
+    private cartService: CartService,
+    public _deviceService: DeviceDetectorService,
+    private _socketService: SocketService) {
     document.getElementsByClassName('cart-modal-wrapper')[0]?.setAttribute('style', 'display:none')
   }
 

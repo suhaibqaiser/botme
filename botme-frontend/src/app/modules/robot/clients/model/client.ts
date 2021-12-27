@@ -3,6 +3,8 @@ export interface IClient {
     clientID: string;
     clientName: string;
     clientSecret: string;
+    clientDebug: boolean,
+    clientVoiceEnabled: boolean,
     clientCreated: string;
     clientUpdated: string;
     clientActive: boolean;

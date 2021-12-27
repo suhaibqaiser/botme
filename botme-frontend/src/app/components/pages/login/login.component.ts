@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthenticationService} from "../../../services/authentication.service";
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {Router} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from "../../../services/authentication.service";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { Router } from "@angular/router";
+import { Md5 } from 'ts-md5/dist/md5';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +32,8 @@ export class LoginComponent implements OnInit {
     this.userLogin(this.form);
   }
 
-  userLogin(user: object) {
+  userLogin(user: any) {
+    user.password = Md5.hashStr(user.password);
     this.authenticationService.userLogin(user).subscribe(
       response => {
         if (response.status === 'error') {

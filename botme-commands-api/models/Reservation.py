@@ -82,7 +82,7 @@ class Reservation():
     def checkForPersonFieldFocus(form):
         person = "person"
         for x in form:
-            if x['entityStatus'] == True:
+            if x['entitySelected'] == True:
                 if x['entityId'] == findResponse(person):
                     return True
                 else:

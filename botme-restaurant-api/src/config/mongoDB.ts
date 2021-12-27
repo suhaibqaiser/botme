@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const mongoDBConnection = process.env.MONGODB_CONNECTION || 'mongodb+srv://mongoUser:1t3jWnpoC0imAM4d@cluster0.tipo5.mongodb.net?retryWrites=true&w=majority';
+const conf = require('config');
 
 const connectionOptions = {
     socketTimeoutMS: 30000,
@@ -22,11 +23,11 @@ function initDbConnection() {
     return db;
 }
 
-const foodDB = mongoose.connection.useDb('food');
-const dictionaryDB = mongoose.connection.useDb('dictionary');
+const foodDB = mongoose.connection.useDb(conf.get('foodDB'));
+const dictionaryDB = mongoose.connection.useDb(conf.get('dictionaryDB'));
 
 async function init() {
     await initDbConnection();
 }
 
-export {init, foodDB, dictionaryDB};
+export { init, foodDB, dictionaryDB };

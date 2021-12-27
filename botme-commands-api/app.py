@@ -9,6 +9,8 @@ app = Flask(__name__)
 @app.route('/response',methods=['POST'])
 def send_Response():
     req_data = request.get_json()
+    context = req_data['context']
+    inputText = req_data['inputText']
     text = req_data['text']
     pageId = req_data['pageId']
     sectionId = req_data['sectionId']
