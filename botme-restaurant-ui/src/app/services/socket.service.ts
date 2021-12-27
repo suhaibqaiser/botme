@@ -14,123 +14,6 @@ import {ContextService} from "./context.service";
 })
 export class SocketService {
 
-// products
-  temp = {
-    "text": {
-      "textValue": "Hello",
-      "language": "english",
-      "timestamp": ""
-    },
-    "context": {
-      "pageId": "menuPage",
-      "sectionId": "sliderSection",
-      "parentEntity": {
-        "id": "xxx", // product ID
-        "name": "zxxz" // product name
-      },
-      "entities": [
-        {
-          "entityId": "",
-          "entityValue": "",
-          "entitySelected": true,
-          "clickAttribute": "href, button",
-          "keywords": ""
-        }
-      ]
-    }
-  }
-//NAVIGATION AND BUTTONS
-  temp1 = {
-    "text": {
-      "textValue": "Hello",
-      "language": "english",
-      "timestamp": ""
-    },
-    "context": {
-      "pageId": "menuPage",
-      "sectionId": "sliderSection",
-      "parentEntity": {
-        "id": "xxx",
-        "name": "zxxz"
-      },
-      "entities": [
-        {
-          "entityId": "",
-          "entityValue": "",
-          "entitySelected": true,
-          "clickAttribute": "href, button",
-          "keywords": ""
-        }
-      ]
-    }
-  }
-//RESERVATION FORM
-  temp3 = {
-    "text": {
-      "textValue": "Hello",
-      "language": "english",
-      "timestamp": "",
-      "geoCode": {
-        "lat": -1.5555,
-        "long": 6.222
-      }
-    },
-    "context": {
-      "pageId": "menuPage",
-      "sectionId": "sliderSection",
-      "parentEntity": {
-        "id": "xxx",
-        "name": "zxxz"
-      },
-      "entities": [
-        {
-          "entityId": "entityId-name",
-          "entitySelected": true,
-          "entityValue": ""
-        },
-        {
-          "entityId": "entityId-number-of-persons",
-          "entitySelected": false,
-          "entityValue": ""
-        },
-        {
-          "entityId": "entityId-date",
-          "entitySelected": false,
-          "entityValue": ""
-        },
-        {
-          "entityId": "entityId-time",
-          "entitySelected": false,
-          "entityValue": ""
-        }
-      ]
-    }
-  }
-
-  a = {
-    "context": {
-      "entities": [
-        {
-          "clickAttribute": "href, button",
-          "entityId": "",
-          "entityValue": null,
-          "keywords": ""
-        }
-      ],
-      "pageId": "pageId-reservation",
-      "parentEntity": {
-        "entityId": "",
-        "entityValue": ""
-      },
-      "sectionId": "sectionId-reservation-form"
-    },
-    "inputText": {
-      "language": "english",
-      "textValue": "right now",
-      "timestamp": "Mon, 27 Dec 2021 23:19:48 GMT"
-    }
-  }
-
   private messagesSubject = new Subject();
   private notificationSubject = new Subject();
   messages = this.messagesSubject.asObservable();
@@ -186,29 +69,11 @@ export class SocketService {
   }
 
   sendMessage(type: string, message: any) {
-    interface SocketMessage {
-      inputText: {
-        language: string,
-        textValue: string,
-        timestamp: string
-      },
-      context: {
-        pageId: string,
-        conversationSequence: number,
-        sectionId: string,
-        parentEntity: {
-          entityId: string,
-          entityValue: string
-        },
-        type: any,
-        entities: any
-      }
-    }
 
     this.conversationSequence++
     console.log(`conversationSequence: ${this.conversationSequence}`);
 
-    let SocketPayload: SocketMessage = {
+    let SocketPayload = {
       inputText: {
         language: "english",
         textValue: message,
