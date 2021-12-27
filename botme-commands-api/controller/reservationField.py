@@ -48,22 +48,22 @@ def checkingIfFieldValueExist(db,form,pageId,sectionId,value,text,intent):
     for x in form:
         if not x['entityValue']:
             if x['entityId'] == findResponse(name):
-                x['entityStatus'] = True
+                x['entitySelected'] = True
                 response = utility.nameField()
                 return response
 
             elif x['entityId'] == findResponse(person):
-                x['entityStatus'] = True
+                x['entitySelected'] = True
                 response = utility.personField()
                 return response
 
             elif x['entityId'] == findResponse(date):
-                x['entityStatus'] = True
+                x['entitySelected'] = True
                 response = utility.dateField()
                 return response
 
             elif x['entityId'] == findResponse(time):
-                x['entityStatus'] = True
+                x['entitySelected'] = True
                 response = utility.timeField()
                 return response
     Response = utility.bookNowResponse() 
@@ -78,7 +78,7 @@ def checkIfFieldValueExist(form,pageId,sectionId,value,text,intent):
     call = None
     utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
     for x in form:
-        if x['entityStatus'] == True:
+        if x['entitySelected'] == True:
             if x['entityId'] == findResponse(name):
                 response = utility.nameField()
                 return response
@@ -101,18 +101,18 @@ def formInitialization(form):
     for x in form:
         if x['entityId'] == entityId:
             x['entityValue'] = ""
-            x['entityStatus'] = True
+            x['entitySelected'] = True
         else:
             x['entityValue'] = ""
-            x['entityStatus'] = False
+            x['entitySelected'] = False
     return form
 
 def Field(db,form,pageId,sectionId,value,text,intent,entityId):
     for x in form:
-        if x['entityStatus'] == True:
+        if x['entitySelected'] == True:
             if x['entityId'] == entityId:
                 x['entityValue'] = value
-                x['entityStatus'] = False
+                x['entitySelected'] = False
                 call = None
                 utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
                 Response = utility.findNextFieldFocus()

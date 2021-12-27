@@ -9,9 +9,11 @@ app = Flask(__name__)
 @app.route('/response',methods=['POST'])
 def send_Response():
     req_data = request.get_json()
-    text = req_data['text']
-    pageId = req_data['pageId']
-    sectionId = req_data['sectionId']
+    context = req_data['context']
+    inputText = req_data['inputText']
+    text = inputText['textValue']
+    pageId = context['pageId']
+    sectionId = context['sectionId']
     form = req_data['entities']
     message = text.lower()
     rasa_data = getIntent(message)

@@ -98,7 +98,7 @@ class DateTime():
 
     def checkForDateTimeFieldFocus(form,value):
         for x in form:
-            if x['entityStatus'] == True:
+            if x['entitySelected'] == True:
                if x['entityId'] == findResponse(value):
                    return True
                else:
