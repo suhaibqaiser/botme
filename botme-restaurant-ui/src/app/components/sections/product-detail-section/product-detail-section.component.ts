@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {CartService} from "../../../services/cart.service";
 import {SocketService} from "../../../services/socket.service";
 import {HelperService} from "../../../services/helper.service";
+import {ContextService} from "../../../services/context.service";
 
 declare var $: any;
 
@@ -19,8 +20,9 @@ export class ProductDetailSectionComponent implements OnInit {
   relatedProduct: any
   productsList: any
   queryProductId: any
+  loader: any = false
 
-  constructor(private _route: ActivatedRoute, public _helperService: HelperService, private router: Router, public _socketService: SocketService, public cartService: CartService, private route: ActivatedRoute, private menuservice: MenuService) {
+  constructor(private _contextService: ContextService, private _route: ActivatedRoute, public _helperService: HelperService, private router: Router, public _socketService: SocketService, public cartService: CartService, private route: ActivatedRoute, private menuservice: MenuService) {
   }
 
   async ngOnInit() {
@@ -34,16 +36,17 @@ export class ProductDetailSectionComponent implements OnInit {
       return
     }
 
-    await this.getProducts()
-    await this.getCategory()
     await this.getProductDetail(this.queryProductId)
+    await this.getCategory()
+    await this.getProducts()
     await this.getRelatedProducts()
 
-    this._socketService.getCurrentContext()
+    this._contextService.getCurrentContext()
   }
 
   async getProductDetail(productId: string) {
-    this.menuservice.getProductById(productId).subscribe(
+    this.loader = true
+    await this.menuservice.getProductById(productId).subscribe(
       async result => {
         if (result.status === 'success') {
           this.product = result.payload[0]
@@ -51,6 +54,7 @@ export class ProductDetailSectionComponent implements OnInit {
         }
       }
     );
+    return
   }
 
   async getProducts() {
@@ -64,6 +68,7 @@ export class ProductDetailSectionComponent implements OnInit {
     return this.menuservice.getCategory()
       .subscribe(result => {
         this.categories = result.payload
+        this.loader = false
         return result.payload
       });
   }

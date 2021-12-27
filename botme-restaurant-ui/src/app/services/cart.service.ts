@@ -3,6 +3,7 @@ import {Observable, Subject} from 'rxjs';
 import {FormControl} from "@angular/forms";
 import {SocketService} from "./socket.service";
 import {HelperService} from "./helper.service";
+import {ContextService} from "./context.service";
 
 declare var $: any;
 
@@ -63,7 +64,7 @@ export class CartService {
   ]
   selectProductRatesField = new FormControl('')
 
-  constructor(public _helperService: HelperService, private _socketService: SocketService) {
+  constructor(private _contextService: ContextService, public _helperService: HelperService, private _socketService: SocketService) {
     this.getFromLocalstorage();
   }
 
@@ -121,8 +122,8 @@ export class CartService {
 
   //
   setProductCustomization(product: any) {
-    this._socketService.currentContextObj.pageId = 'pageId-product-customize-modal'
-    this._socketService.currentContextObj.sectionId = 'sectionId-servingSize-productOptions'
+    this._contextService.currentContextObj.pageId = 'pageId-product-customize-modal'
+    this._contextService.currentContextObj.sectionId = 'sectionId-servingSize-productOptions'
     this.slideToShow = 0
     this.reset()
     let productOptionsList: any = []
@@ -418,11 +419,11 @@ export class CartService {
   }
 
   setCurrentContext() {
-    if (this.slideToShow == 0) this._socketService.currentContextObj.sectionId = 'sectionId-servingSize-productOptions'
-    if (this.slideToShow == 1) this._socketService.currentContextObj.sectionId = 'sectionId-ingredients-flavour'
-    if (this.slideToShow == 2) this._socketService.currentContextObj.sectionId = 'sectionId-toppings'
-    if (this.slideToShow == 3) this._socketService.currentContextObj.sectionId = 'sectionId-addons'
-    if (this.slideToShow == 4) this._socketService.currentContextObj.sectionId = 'sectionId-summary'
+    if (this.slideToShow == 0) this._contextService.currentContextObj.sectionId = 'sectionId-servingSize-productOptions'
+    if (this.slideToShow == 1) this._contextService.currentContextObj.sectionId = 'sectionId-ingredients-flavour'
+    if (this.slideToShow == 2) this._contextService.currentContextObj.sectionId = 'sectionId-toppings'
+    if (this.slideToShow == 3) this._contextService.currentContextObj.sectionId = 'sectionId-addons'
+    if (this.slideToShow == 4) this._contextService.currentContextObj.sectionId = 'sectionId-summary'
   }
 
   roundToTwo(num: number) {

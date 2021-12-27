@@ -1,5 +1,6 @@
 import {Injectable, isDevMode} from '@angular/core';
 import {DataDogLoggingService} from './datadog.service';
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ export class HelperService {
 
   timer: any
 
-  constructor(private logger: DataDogLoggingService) {
+  constructor(private _router: Router, private logger: DataDogLoggingService) {
   }
 
   resolveProductImage(productObj: any) {
@@ -47,7 +48,7 @@ export class HelperService {
 
   timeConvert(time: any) {
     // Check correct time format and split into components
-    console.log('time =>',time)
+    console.log('time =>', time)
     let reservationTimeCheck = new RegExp('^(0?[1-9]|1[0-2]):([0-5]\\d)\\s?((?:[Aa]|[Pp])\\.?[Mm]\\.?)$');
     if (!time) {
       return null
@@ -74,5 +75,12 @@ export class HelperService {
 
   delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  /**
+   * getting the name of current route. e.g '/place-order'
+   */
+  getCurrentRouteName() {
+    return this._router.url
   }
 }
