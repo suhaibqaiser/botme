@@ -31,7 +31,9 @@ import {ProductCartModalComponent} from './components/modals/product-cart-modal/
 import {MenuComponent} from './components/pages/menu/menu.component';
 import {BookingSectionComponent} from './components/sections/booking-section/booking-section.component';
 import {HeadingbannerComponent} from './components/layout/headingbanner/headingbanner.component';
-import {PrivacyPolicySectionComponent} from './components/sections/privacy-policy-section/privacy-policy-section.component';
+import {
+  PrivacyPolicySectionComponent
+} from './components/sections/privacy-policy-section/privacy-policy-section.component';
 import {PrivacyPolicyComponent} from './components/pages/privacy-policy/privacy-policy.component';
 import {SearchGridSectionComponent} from './components/sections/search-grid-section/search-grid-section.component';
 import {ContactSectionComponent} from './components/sections/contact-section/contact-section.component';
@@ -41,14 +43,18 @@ import {SpeechService} from "./services/speech.service";
 import {HttpClientModule} from '@angular/common/http';
 import {SofiaBotComponent} from './components/sections/sofia-bot/sofia-bot.component';
 import {ProductDetailComponent} from './components/pages/product-detail/product-detail.component';
-import {ProductDetailSectionComponent} from './components/sections/product-detail-section/product-detail-section.component';
+import {
+  ProductDetailSectionComponent
+} from './components/sections/product-detail-section/product-detail-section.component';
 import {CartComponent} from './components/pages/cart/cart.component';
 import {CartSectionComponent} from './components/sections/cart-section/cart-section.component';
 import {CheckoutSectionComponent} from './components/sections/checkout-section/checkout-section.component';
 import {SpinnerComponent} from './components/layout/spinner/spinner.component';
 import {ProgressLoaderComponent} from "./components/sections/progress-loader/progress-loader.component";
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
-import {CustomizeProductModalComponent} from './components/sections/customize-product-modal/customize-product-modal.component';
+import {
+  CustomizeProductModalComponent
+} from './components/sections/customize-product-modal/customize-product-modal.component';
 import {SocketService} from './services/socket.service';
 import {BotmeClientService} from "./services/botme-client.service";
 import {WindowService} from './services/window.service';
@@ -56,7 +62,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {ReservationService} from "./services/reservation.service";
 import {DemoPageComponent} from './components/pages/demo-page/demo-page.component';
 import {HelperService} from "./services/helper.service";
-import { MicrophoneComponent } from './components/sections/microphone/microphone.component';
+import {MicrophoneComponent} from './components/sections/microphone/microphone.component';
+import {ContextService} from "./services/context.service";
 
 @NgModule({
   declarations: [
@@ -115,7 +122,7 @@ import { MicrophoneComponent } from './components/sections/microphone/microphone
     NgMultiSelectDropDownModule.forRoot(),
     DragDropModule
   ],
-  providers: [HelperService, ReservationService, SpeechService, BotmeClientService, SocketService, WindowService],
+  providers: [ContextService, HelperService, ReservationService, SpeechService, BotmeClientService, SocketService, WindowService],
   bootstrap: [AppComponent],
   entryComponents: [CustomizeProductModalComponent]
 })

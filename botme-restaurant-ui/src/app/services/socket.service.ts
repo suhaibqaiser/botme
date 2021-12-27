@@ -13,6 +13,122 @@ import {ReservationService} from "./reservation.service";
 })
 export class SocketService {
 
+// products
+  temp = {
+    "text": {
+      "textValue": "Hello",
+      "language": "english",
+      "timestamp": ""
+    },
+    "context": {
+      "pageId": "menuPage",
+      "sectionId": "sliderSection",
+      "parentEntity": {
+        "id": "xxx", // product ID
+        "name": "zxxz" // product name
+      },
+      "entities": [
+        {
+          "entityId": "",
+          "entityValue": "",
+          "entitySelected": true,
+          "clickAttribute": "href, button",
+          "keywords": ""
+        }
+      ]
+    }
+  }
+//NAVIGATION AND BUTTONS
+  temp1 = {
+    "text": {
+      "textValue": "Hello",
+      "language": "english",
+      "timestamp": ""
+    },
+    "context": {
+      "pageId": "menuPage",
+      "sectionId": "sliderSection",
+      "parentEntity": {
+        "id": "xxx",
+        "name": "zxxz"
+      },
+      "entities": [
+        {
+          "entityId": "",
+          "entityValue": "",
+          "entitySelected": true,
+          "clickAttribute": "href, button",
+          "keywords": ""
+        }
+      ]
+    }
+  }
+//RESERVATION FORM
+  temp3 = {
+    "text": {
+      "textValue": "Hello",
+      "language": "english",
+      "timestamp": "",
+      "geoCode": {
+        "lat": -1.5555,
+        "long": 6.222
+      }
+    },
+    "context": {
+      "pageId": "menuPage",
+      "sectionId": "sliderSection",
+      "parentEntity": {
+        "id": "xxx",
+        "name": "zxxz"
+      },
+      "entities": [
+        {
+          "entityId": "entityId-name",
+          "entitySelected": true,
+          "entityValue": ""
+        },
+        {
+          "entityId": "entityId-number-of-persons",
+          "entitySelected": false,
+          "entityValue": ""
+        },
+        {
+          "entityId": "entityId-date",
+          "entitySelected": false,
+          "entityValue": ""
+        },
+        {
+          "entityId": "entityId-time",
+          "entitySelected": false,
+          "entityValue": ""
+        }
+      ]
+    }
+  }
+
+ a = {
+   "context": {
+     "entities": [
+       {
+         "clickAttribute": "href, button",
+         "entityId": "",
+         "entityValue": null,
+         "keywords": ""
+       }
+     ],
+     "pageId": "pageId-reservation",
+     "parentEntity": {
+       "entityId": "",
+       "entityValue": ""
+     },
+     "sectionId": "sectionId-reservation-form"
+   },
+   "inputText": {
+     "language": "english",
+     "textValue": "right now",
+     "timestamp": "Mon, 27 Dec 2021 23:19:48 GMT"
+   }
+ }
 
   private messagesSubject = new Subject();
   private notificationSubject = new Subject();
@@ -25,32 +141,32 @@ export class SocketService {
 
   currentContextList = [
     {
-      currentRoute: 'online shop',
+      currentRoute: '/online-shop',
       pageId: 'pageId-order-online',
       sectionId: 'sectionId-product-list'
     },
     {
-      currentRoute: 'product-detail',
+      currentRoute: '/product-detail',
       pageId: 'pageId-product-detial-page',
       sectionId: 'sectionId-product-detial-page'
     },
     {
-      currentRoute: 'home',
+      currentRoute: '/home',
       pageId: 'pageId-home',
       sectionId: 'sectionId-product-list'
     },
     {
-      currentRoute: 'cart',
+      currentRoute: '/cart',
       pageId: 'pageId-cart',
       sectionId: 'sectionId-product-list'
     },
     {
-      currentRoute: 'reservations',
+      currentRoute: '/reservations',
       pageId: 'pageId-reservation',
       sectionId: 'sectionId-reservation-form'
     },
     {
-      currentRoute: 'contact us',
+      currentRoute: '/contact-us',
       pageId: 'pageId-contact-us',
       sectionId: 'sectionId-message-form'
     }
@@ -220,7 +336,7 @@ export class SocketService {
   }
 
   getCurrentRoute() {
-    return this.router.url.replace(/\//g, "").replace("-", " ")
+    return this.router.url
   }
 
   getCurrentContext() {
@@ -228,10 +344,6 @@ export class SocketService {
     if (currentRoute.indexOf('?') > 0) {
       currentRoute = currentRoute.substr(0, currentRoute.indexOf('?'))
     }
-    if (this.router.url.split('/')[1] === 'product-detail') {
-      currentRoute = this.router.url.split('/')[1]
-    }
-
     this.currentContextList.filter((item: any) => {
       if (item.currentRoute === currentRoute) {
         this.currentContextObj = JSON.parse(JSON.stringify(item))

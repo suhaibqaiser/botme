@@ -18,14 +18,25 @@ export class ProductDetailSectionComponent implements OnInit {
   categories: any
   relatedProduct: any
   productsList: any
+  queryProductId: any
 
-  constructor(public _helperService: HelperService, private router: Router, public _socketService: SocketService, public cartService: CartService, private route: ActivatedRoute, private menuservice: MenuService) {
+  constructor(private _route: ActivatedRoute, public _helperService: HelperService, private router: Router, public _socketService: SocketService, public cartService: CartService, private route: ActivatedRoute, private menuservice: MenuService) {
   }
 
   async ngOnInit() {
+
+    this._route.queryParams.subscribe((param: any) => {
+      this.queryProductId = (param && param.productId) ? param.productId : ''
+    })
+
+    if (!this.queryProductId && !this.queryProductId) {
+      alert('Sorry product id not found!')
+      return
+    }
+
     await this.getProducts()
     await this.getCategory()
-    await this.getProductDetail(this.router.url.split('/')[2])
+    await this.getProductDetail(this.queryProductId)
     await this.getRelatedProducts()
 
     this._socketService.getCurrentContext()
