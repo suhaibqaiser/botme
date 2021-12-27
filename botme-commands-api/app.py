@@ -14,7 +14,7 @@ def send_Response():
     text = inputText['textValue']
     pageId = context['pageId']
     sectionId = context['sectionId']
-    form = req_data['entities']
+    form = context['entities']
     message = text.lower()
     rasa_data = getIntent(message)
     print(rasa_data)

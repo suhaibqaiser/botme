@@ -22,6 +22,7 @@ class Utility:
     def dbResponse(self):
         if self.db is not None:
             if (self.intent == "Home_page" or self.intent == "reservation_page" or self.intent == "contactus_page" or self.intent == "see_cart" or self.intent == "place_order_page"):
+                print("ahmed")
                 context = self.db['context']
                 self.pageId = context['pageId']
                 self.sectionId = context['sectionId']
