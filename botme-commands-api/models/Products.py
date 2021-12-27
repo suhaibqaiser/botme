@@ -1,6 +1,7 @@
+from requests.models import Response
 from conf.mongodb import findResponse, getDbCta
 import requests
-
+from controller.utility import Utility
 from config import RESTAURANT_API
 
 
@@ -17,40 +18,86 @@ class Product():
     def checkingForProduct(self):
         try:
             response = requests.get(RESTAURANT_API + '/food/product/search?productName='+self.value)
-            data = response.json()
-            payload = data['payload']
-            if(data['status'] == "success"):
-                if(len(data['payload']) == 1):
-                    if(self.value.title() == self.text.title()):
-                        Response = {"Response":"please specify the command for "+self.value,"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""}
-                        return Response
-                    else:
-                        db = getDbCta(self.intent,self.value,self.pageId,self.sectionId)
-                        if(db != None):
-                            context = db['context']
-                            productID = Product.parseProductId(payload)
-                            iD = Product.getEntityClickAttribute(context['entities'])
-                            if(self.sectionId == "sectionId-cart-modal"):
-                                name = self.value.title()
-                                return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":productID+name,"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent,"entities":""}
-                            else:
-                                return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":productID,"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent,"entities":""}
-                        else:
-                            if(data['payload']):
-                                product = data['payload'][0]['productName']
-                                return {"Response":"Do you mean "+product,"ctaCommandId":"ctaId-search","pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":"entityId-search","actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""}
-                            else:
-                                number = "6"
-                                return {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""} 
+            self.data = response.json()
+            self.payload = self.data['payload']
+            if(self.data['status'] == "success"):
+                if(len(self.data['payload']) == 1):
+                    Response = Product.ifProductArrayIsOne(self)
+                    return Response
+                    # if(self.value.title() == self.text.title()):
+                    #     Response = {"Response":"please specify the command for "+self.value,"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""}
+                    #     return Response
+                    # else:
+                    #     db = getDbCta(self.intent,self.value,self.pageId,self.sectionId)
+                    #     if(db != None):
+                    #         context = db['context']
+                    #         productID = Product.parseProductId(self.payload)
+                    #         iD = Product.getEntityClickAttribute(context['entities'])
+                    #         if(self.sectionId == "sectionId-cart-modal"):
+                    #             name = self.value.title()
+                    #             return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":productID+name,"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent,"entities":""}
+                    #         else:
+                    #             return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":productID,"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent,"entities":""}
+                    #     else:
+                    #         if(self.data['payload']):
+                    #             product = self.data['payload'][0]['productName']
+                    #             return {"Response":"Do you mean "+product,"ctaCommandId":"ctaId-search","pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":"entityId-search","actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""}
+                    #         else:
+                    #             number = "6"
+                    #             return {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""} 
                 else:
-                    products = Product.getAllProducts(data['payload'])
-                    print(products)
-                    return {"Response":"Found this product "+ products +" for name "+self.value+" .Which one you want to order?","ctaCommandId":"ctaId-search","pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":"entityId-search","actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""}
+                    self.db = None
+                    self.form = None
+                    call = Product.getAllProducts(self.data['payload'])
+                    utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+                    Response = utility.ifMoreThanOneProduct()
+                    # return {"Response":"Found this product "+ products +" for name "+self.value+" .Which one you want to order?","ctaCommandId":"ctaId-search","pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":"entityId-search","actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""}
+                    return Response
             else:
-                number = "8"
-                return {"Response":findResponse(number),"ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""}
+                call = None
+                utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+                Response = utility.ifNoProductFound()
+                return Response
+                # number = "8"
+                # return {"Response":findResponse(number),"ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""}
         except:
-            return "error in checking for product"
+            call = None
+            utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+            Response = utility.nluFallBack()
+
+
+    def ifProductArrayIsOne(self):
+        if(self.value.title() == self.text.title()):
+            call = None
+            utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+            Response = utility.nluFallBack()
+            # response = {"Response":"please specify the command for "+self.value,"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""}
+            return Response
+        else:
+            db = getDbCta(self.intent,self.value,self.pageId,self.sectionId)
+            if(db != None):
+                productID = Product.parseProductId(self.payload)
+                call = productID
+                utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+                Response = utility.ifSectionIdCartModel()
+                return Response
+                # if(self.sectionId == "sectionId-cart-modal"):
+                #     name = self.value.title()
+                #     return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":productID+name,"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent,"entities":""}
+                # else:
+                #     return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":productID,"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent,"entities":""}
+            else:
+                call = self.data['payload']
+                utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+                Response = utility.ifProductNotFoundInDb()
+                return Response
+
+                # if(self.data['payload']):
+                #     product = self.data['payload'][0]['productName']
+                #     return {"Response":"Do you mean "+product,"ctaCommandId":"ctaId-search","pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":"entityId-search","actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""}
+                # else:
+                #     number = "6"
+                #     return {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""}
 
     def parseProductId(payload):
         for x in payload:

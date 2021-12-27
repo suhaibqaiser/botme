@@ -24,8 +24,11 @@ def getResponse(intent,entity,text,pageId,sectionId,form):
             Response = product.checkingForProduct()
             return Response
         else:
-            number = "7"
-            return {"Response":findResponse(number),"ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":""} 
+            call = None
+            utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
+            Response = utility.ifNotProductPage()
+            # number = "7"
+            # return {"Response":findResponse(number),"ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":""} 
 
     elif (intent == "reservation_page"):
         form = reservationField(db,form,pageId,sectionId,value,text,intent)
@@ -73,11 +76,10 @@ def checkForEmptyField(form):
     form = resetFieldFocus(form)
     for x in form:
         if not x['entityValue']:
-            x['entityStatus'] = True
+            x['entitySelected'] = True
             return form
-    return form
 
 def resetFieldFocus(form):
     for x in form:
-        x['entityStatus'] = False
+        x['entitySelected'] = False
     return form

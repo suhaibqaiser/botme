@@ -146,7 +146,7 @@ class Name():
     def checkingForNameFocus(form):
         name = "name"
         for x in form:
-            if x['entityStatus'] == True:
+            if x['entitySelected'] == True:
                 if x['entityId'] == findResponse(name):
                     return True
                 else:
