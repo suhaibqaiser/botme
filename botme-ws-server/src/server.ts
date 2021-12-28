@@ -1,12 +1,19 @@
 // requires for libraries
-import { createServer } from "http"
-import { Server, Socket } from "socket.io"
-import { getSession } from './services/sessionService'
-import { getCommandResponse } from './services/commandService'
+import {createServer} from "http"
+import {Server, Socket} from "socket.io"
+import {getSession} from './services/sessionService'
+import {getCommandResponse} from './services/commandService'
+
 const config = require('config');
 import models = require("./models")
-import { getSpeechToText, getTextToSpeech } from "./services/speechService"
-import { addConversation, addConversationLog, endConversation, updateConversationLog } from "./services/conversationService";
+import {getSpeechToText, getTextToSpeech} from "./services/speechService"
+import {
+    addConversation,
+    addConversationLog,
+    endConversation,
+    updateConversationLog
+} from "./services/conversationService";
+import {responseJson} from "./models";
 
 // application config
 const port = process.env.WS_PORT || config.get('port')
@@ -41,83 +48,112 @@ io.on("connection", async (socket: Socket) => {
     console.log(socket.data.clientId, "notification", `device:${socket.data.sessionId} attached on robot:${socket.data.clientId}`)
     socket.data.conversationId = await addConversation(socket.data.sessionId)
 
-    socket.on("message", async (data: models.SocketMessage) => {
-        let payload: any = data.payload
-        console.log(payload);
+    socket.on("message", async (data) => {
+        let payload: any = data
+        console.log(payload)
 
 
         let conversationLogId = await addConversationLog(socket.data.conversationId)
         let conversation = {
             conversationId: socket.data.conversationId,
             conversationLogId: conversationLogId,
-            conversationSequence: payload.conversationSequence
+            conversationSequence: payload.context.conversationSequence
         }
 
-        if (data.type === "communication") {
-            let response = await getCommandResponse(payload.message, payload.pageId, payload.sectionId, payload.entities, conversation)
+        if (data.context.type === "communication") {
+            let response = await getCommandResponse(payload.inputText.textValue, payload.context.pageId, payload.context.sectionId, payload.context.entities, conversation)
             sendMessage(socket.data.clientId, "communication", response)
 
-        } else if (data.type === "notification") {
-            sendMessage(socket.data.clientId, "notification", data.payload)
+        } else if (data.context.type === "notification") {
+            sendMessage(socket.data.clientId, "notification", data)
 
-        } else if (data.type === "voice") {
+        } else if (data.context.type === "voice") {
 
-            let socketInput = { ...payload }
-            delete socketInput.message
+            let socketInput = JSON.parse(JSON.stringify(payload))
+            delete socketInput.inputText.textValue
             updateConversationLog(conversationLogId, 'socketInput', socketInput)
-
-            let voiceResponse = await getSpeechToText(payload.message)
+            console.log(payload)
+            let voiceResponse = await getSpeechToText(payload.inputText.textValue)
 
             if (voiceResponse) {
                 updateConversationLog(conversationLogId, 'query', voiceResponse)
 
-                let response: any = await getCommandResponse(voiceResponse, payload.pageId, payload.sectionId, payload.entities, conversation)
-                updateConversationLog(conversationLogId, 'response', response.text)
+                let response: any = await getCommandResponse(voiceResponse, payload.context.pageId, payload.context.sectionId, payload.context.entities, conversation)
+                updateConversationLog(conversationLogId, 'response', response.outputText.textValue)
 
-                if (response?.intentName) {
-                    response.audio = await getTextToSpeech(response.text)
 
-                    sendMessage(socket.data.clientId, "communication", response)
+                response.audio = await getTextToSpeech(response.outputText.textValue)
+                sendMessage(socket.data.clientId, "communication", response)
+                delete response.audio
+                updateConversationLog(conversationLogId, 'socketOutput', response)
 
-                    delete response.audio
-                    updateConversationLog(conversationLogId, 'socketOutput', response)
-                }
             } else {
-                let response = {
-                    inputText: '',
-                    text: 'I didnt understand, please say it again',
-                    ctaId: '',
-                    entityId: '',
-                    entityName: '',
-                    pageId: '',
-                    sectionId: '',
-                    sentimentScore: '',
-                    intentName: 'error_voice_input',
-                    entities: '',
-                    conversation: conversation
+
+                let response: responseJson = {
+                    ctaId: null,
+                    inputText: {
+                        language: "",
+                        textValue: "",
+                        timestamp: Date()
+                    },
+                    outputText: {
+                        language: "english",
+                        textValue: "I didnt understand, please say it again",
+                        timestamp: Date()
+                    },
+                    context: {
+                        pageId: "",
+                        sectionId: "",
+                        parentEntity: {
+                            entityId: null,
+                            entityValue: null
+                        },
+                        entities: [
+                            {
+                                clickAttribute: null,
+                                entityId: "",
+                                entityValue: "",
+                                keywords: null,
+                                entitySelected: false
+                            }
+                        ]
+                    },
+                    action: [
+                        {
+                            actionType: null,
+                            actionId: null,
+                            actionValue: null
+                        }
+                    ],
+                    conversation: {
+                        conversationId: conversation.conversationId,
+                        conversationLogId: conversation.conversationLogId,
+                        conversationSequence: conversation.conversationSequence,
+                    }
                 }
+
                 sendMessage(socket.data.clientId, "communication", response)
 
                 updateConversationLog(conversationLogId, 'socketOutput', response)
             }
 
 
-        } else if (data.type === "tts") {
+        } else if (data.context.type === "tts") {
             let response: any = {}
-            response.text = payload.message
+            response.text = payload.inputText.textValue
             response.conversation = conversation
-            response.audio = await getTextToSpeech(payload.message)
+            response.audio = await getTextToSpeech(payload.inputText.textValue)
 
             sendMessage(socket.data.clientId, "communication", response)
 
         } else {
-            console.log(`Type "${data.type}" is not implemented`)
+            console.log(`Type "${data.context.type}" is not implemented`)
         }
 
     });
 
     function sendMessage(room: string, type: string, data: any) {
-        let payload: models.SocketMessage = { payload: data, type: type, timestamp: Date() }
+        let payload: models.SocketMessage = {payload: data, type: type, timestamp: Date()}
         io.to(room).emit("message", payload);
     }
 

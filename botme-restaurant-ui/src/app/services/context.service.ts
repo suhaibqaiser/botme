@@ -65,4 +65,13 @@ export class ContextService {
       }
     })
   }
+
+  /**
+   * getting the route name from server page id
+   * @param serverPageId
+   */
+  getPageRoute(serverPageId = '') {
+    return this.currentContextList.find((item: any) =>
+       (item.pageId === serverPageId) ? item.currentRoute : null)
+  }
 }

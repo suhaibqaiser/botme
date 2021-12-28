@@ -44,9 +44,7 @@ export class SocketService {
           case "communication":
             if (payload.conversation.conversationSequence === this.conversationSequence) {
               this.messagesSubject.next(payload)
-              if (payload.intentName) {
-                this.fireInteractionEvent(payload)
-              }
+              this.fireInteractionEvent(payload)
             } else {
               console.log(`Socket Message out of sync. This id: ${this.conversationSequence}, payload id: ${payload.uniqueConversationId}`);
             }
@@ -123,13 +121,15 @@ export class SocketService {
     console.log('fireInteractionEvent =>', msg)
 
     this._helperService.log('info', msg);
-    if (msg.entityId) {
+    if (msg.context.pageId) {
 
 
       //for reservation form
       // @ts-ignore
-      let conversationId = (msg.conversation && msg.conversation.conversationId) ? msg.conversation.conversationId : ''
-      this._reservationService.setReservationForm(conversationId, msg.entities)
+      if (msg.context.pageId === 'pageId-reservation') {
+        let conversationId = (msg.conversation && msg.conversation.conversationId) ? msg.conversation.conversationId : ''
+        this._reservationService.setReservationForm(conversationId, msg.context.entities)
+      }
 
       if (msg.entityId == 'entityId-select-serving-size') {
         this.voiceServingSize = msg.entityName.toLowerCase()
@@ -138,32 +138,25 @@ export class SocketService {
         return
       }
 
-      // @ts-ignore
-      let template = document.getElementById(msg.entityId)
-      // @ts-ignore
-      let list = template.getElementsByTagName('a')
-      for (let i = 0; i < list.length; i++) {
-        if (list[i].getAttribute('id') == msg.ctaId) {
-          list[i]?.click()
-        }
-      }
-      // @ts-ignore
-      document.getElementById(msg.entityId)?.click()
+      this.performClickAction(msg.context.entities, msg.ctaId)
     }
   }
 
-  performClickAction(entityId: any, ctaId: any) {
-    // // @ts-ignore
-    // let template = document.getElementById(msg.entityId)
-    // // @ts-ignore
-    // let list = template.getElementsByTagName('a')
-    // for (let i = 0; i < list.length; i++) {
-    //   if (list[i].getAttribute('id') == msg.ctaId) {
-    //     list[i]?.click()
-    //   }
-    // }
-    // // @ts-ignore
-    // document.getElementById(msg.entityId)?.click()
+  performClickAction(entities: any, ctaId: any) {
+    if (entities && entities.length) {
+      entities.forEach((item: any) => {
+        // @ts-ignore
+        let template = document.getElementById(item.entityId)
+        // @ts-ignore
+        let list = template.getElementsByTagName('a')
+        for (let i = 0; i < list.length; i++) {
+          if (list[i].getAttribute('id') == ctaId) {
+            list[i]?.click()
+          }
+        }
+        document.getElementById(item.entityId)?.click()
+      })
+    }
   }
 
 }

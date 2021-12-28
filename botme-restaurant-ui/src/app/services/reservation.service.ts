@@ -84,22 +84,22 @@ export class ReservationService {
       {
         "entityId": "entityId-name",
         "entityValue": this.reservationForm.get('customerName')?.value,
-        "entityStatus": this.reservationFormFocus.customerNameFocus
+        "entitySelected": this.reservationFormFocus.customerNameFocus
       },
       {
         "entityId": "entityId-number-of-persons",
         "entityValue": this.reservationForm.get('reservationSeats')?.value,
-        "entityStatus": this.reservationFormFocus.reservationSeatsFocus
+        "entitySelected": this.reservationFormFocus.reservationSeatsFocus
       },
       {
         "entityId": "entityId-date",
         "entityValue": this.reservationForm.get('reservationDate')?.value,
-        "entityStatus": this.reservationFormFocus.reservationDateFocus
+        "entitySelected": this.reservationFormFocus.reservationDateFocus
       },
       {
         "entityId": "entityId-time",
         "entityValue": this.reservationForm.get('reservationTime')?.value,
-        "entityStatus": this.reservationFormFocus.reservationTimeFocus
+        "entitySelected": this.reservationFormFocus.reservationTimeFocus
       }
     ]
   }
@@ -112,19 +112,19 @@ export class ReservationService {
     reservationFormJson.forEach((item: any) => {
       if (item.entityId === 'entityId-name') {
         this.reservationForm.get('customerName')?.setValue(item.entityValue)
-        this.reservationFormFocus.customerNameFocus = item.entityStatus
+        this.reservationFormFocus.customerNameFocus = item.entitySelected
       }
       if (item.entityId === 'entityId-number-of-persons') {
         this.reservationForm.get('reservationSeats')?.setValue(item.entityValue)
-        this.reservationFormFocus.reservationSeatsFocus = item.entityStatus
+        this.reservationFormFocus.reservationSeatsFocus = item.entitySelected
       }
       if (item.entityId === 'entityId-date') {
         this.reservationForm.get('reservationDate')?.setValue(item.entityValue)
-        this.reservationFormFocus.reservationDateFocus = item.entityStatus
+        this.reservationFormFocus.reservationDateFocus = item.entitySelected
       }
       if (item.entityId === 'entityId-time') {
         this.reservationForm.get('reservationTime')?.setValue(this._helperService.timeConvert(item.entityValue))
-        this.reservationFormFocus.reservationTimeFocus = item.entityStatus
+        this.reservationFormFocus.reservationTimeFocus = item.entitySelected
       }
     })
   }
