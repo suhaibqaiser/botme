@@ -56,7 +56,7 @@ class Utility:
             iD = Utility.getEntityClickAttribute(context['entities'])
             # response = {"":self.db['response'],"ctaCommandId":self.db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityValue":self.value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
             # return response
-            response = {"ctaId":self.db['ctaCommandId'],"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"":self.db['response']},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"id":"","name":""},"entities" : [{"entityId" : iD['entityId'],"entityValue" : self.value,"clickAttribute" : "href, button","keywords" :""}]}}
+            response = {"ctaId":self.db['ctaCommandId'],"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":self.db['response']},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"id":"","name":""},"entities" : [{"entityId" : iD['entityId'],"entityValue" : self.value,"clickAttribute" : "href, button","keywords" :""}]}}
             return response
         else:
             number = "1"
