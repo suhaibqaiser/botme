@@ -71,7 +71,7 @@ export class SocketService {
     this.conversationSequence++
     console.log(`conversationSequence: ${this.conversationSequence}`);
 
-    let SocketPayload = {
+    let requestPayload = {
       inputText: {
         language: "english",
         textValue: message,
@@ -90,8 +90,8 @@ export class SocketService {
       }
     }
 
-
-    this.socket.emit('message', SocketPayload);
+    console.log('requestPayload =>', requestPayload)
+    this.socket.emit('message', requestPayload);
   }
 
 
@@ -129,6 +129,7 @@ export class SocketService {
       if (msg.context.pageId === 'pageId-reservation') {
         let conversationId = (msg.conversation && msg.conversation.conversationId) ? msg.conversation.conversationId : ''
         this._reservationService.setReservationForm(conversationId, msg.context.entities)
+        return;
       }
 
       if (msg.entityId == 'entityId-select-serving-size') {
