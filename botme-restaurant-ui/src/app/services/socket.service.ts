@@ -24,7 +24,10 @@ export class SocketService {
   conversationSequence: number = 0
 
   voiceServingSize = ''
-
+  parentEntity = {
+    entityId: "",
+    entityValue: ""
+  }
 
   constructor(private _contextService: ContextService, private _reservationService: ReservationService, private router: Router, private clients: BotmeClientService, private _helperService: HelperService) {
 
@@ -82,10 +85,7 @@ export class SocketService {
         conversationSequence: this.conversationSequence,
         sectionId: this._contextService.currentContextObj.sectionId,
         type: type,
-        parentEntity: {
-          entityId: "",
-          entityValue: ""
-        },
+        parentEntity: this.parentEntity,
         entities: this.getEntities()
       }
     }
@@ -112,6 +112,13 @@ export class SocketService {
     ]
   }
 
+  setParentEntity(parentEntityObj: any) {
+    this.parentEntity = {
+      entityId: parentEntityObj.entityId,
+      entityValue: parentEntityObj.entityValue
+    }
+  }
+
   /**
    * Here we are passing the response from web server and interacting with web ui
    * @param msg
@@ -129,14 +136,8 @@ export class SocketService {
       if (msg.context.pageId === 'pageId-reservation') {
         let conversationId = (msg.conversation && msg.conversation.conversationId) ? msg.conversation.conversationId : ''
         this._reservationService.setReservationForm(conversationId, msg.context.entities)
+        document.getElementById(msg.ctaId)?.click()
         return;
-      }
-
-      if (msg.entityId == 'entityId-select-serving-size') {
-        this.voiceServingSize = msg.entityName.toLowerCase()
-        // @ts-ignore
-        document.getElementById(msg.entityName.toLowerCase())?.click()
-        return
       }
 
       this.performClickAction(msg.context.entities, msg.ctaId)
@@ -144,8 +145,19 @@ export class SocketService {
   }
 
   performClickAction(entities: any, ctaId: any) {
+    document.getElementById(ctaId)?.click()
     if (entities && entities.length) {
       entities.forEach((item: any) => {
+
+        // selection serving size
+        if (item.entityId == 'entityId-select-serving-size') {
+          this.voiceServingSize = item.entityValue.toLowerCase()
+          // @ts-ignore
+          document.getElementById(item.entityValue.toLowerCase())?.click()
+          return
+        }
+
+
         // @ts-ignore
         let template = document.getElementById(item.entityId)
         // @ts-ignore

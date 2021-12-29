@@ -287,12 +287,12 @@ export class SearchGridSectionComponent implements OnInit {
 
   addToCart() {
     this.cartService.addToCart(this.cartService.singleCustomProductObj);
-    document.getElementById("entityId-show-cart")?.click()
+    document.getElementById("ctaId-show-cart")?.click()
   }
 
   editToCart() {
     this.cartService.addToCart(this.cartService.singleCustomProductObj, true);
-    document.getElementById("entityId-show-cart")?.click()
+    document.getElementById("ctaId-show-cart")?.click()
     document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:block')
   }
 

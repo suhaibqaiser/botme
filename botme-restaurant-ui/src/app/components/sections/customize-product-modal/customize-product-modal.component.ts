@@ -20,13 +20,13 @@ export class CustomizeProductModalComponent implements OnInit {
   addToCart() {
     this._contextService.getCurrentContext()
     this.cartService.addToCart(this.cartService.singleCustomProductObj);
-    document.getElementById("entityId-show-cart")?.click()
+    document.getElementById("ctaId-show-cart")?.click()
   }
 
   editToCart() {
     this._contextService.getCurrentContext()
     this.cartService.addToCart(this.cartService.singleCustomProductObj, true);
-    document.getElementById("entityId-show-cart")?.click()
+    document.getElementById("ctaId-show-cart")?.click()
     document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:block')
   }
 

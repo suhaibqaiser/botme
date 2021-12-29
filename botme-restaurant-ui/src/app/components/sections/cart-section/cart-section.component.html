@@ -73,7 +73,7 @@
       <!--      </div>-->
       <div class="col-sm-12 col-md-12 col-lg-12">
         <div class="cart-update text-center cart-info-item">
-          <a *ngIf="cartProducts && cartProducts.length" id="entityId-order-now" (click)="placeOrder()" class="btn">
+          <a *ngIf="cartProducts && cartProducts.length" id="ctaId-order-now" (click)="placeOrder()" class="btn">
             Order Now
           </a>
         </div>
@@ -117,7 +117,7 @@
               <p>$ {{getSubTotal()}}</p>
             </div>
           </div>
-          <a id="entityId-checkout" routerLink="/checkout" class="btn">Checkout</a>
+          <a id="ctaId-checkout" routerLink="/checkout" class="btn">Checkout</a>
         </div>
       </div>
     </div>

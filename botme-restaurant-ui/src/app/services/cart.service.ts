@@ -125,6 +125,10 @@ export class CartService {
     this._contextService.currentContextObj.pageId = 'pageId-product-customize-modal'
     this._contextService.currentContextObj.sectionId = 'sectionId-servingSize-productOptions'
     this.slideToShow = 0
+    this._socketService.parentEntity = {
+      entityId: product.productId,
+      entityValue: product.productName
+    }
     this.reset()
     let productOptionsList: any = []
     let productIngredientList: any = []
