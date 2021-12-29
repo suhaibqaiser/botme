@@ -20,7 +20,7 @@ def getResponse(intent,entity,text,pageId,sectionId,form):
 
     if (intent == "Order_meal"or intent == "product-detail" or intent == "remove_item" or intent == "edit_product" or intent == "reduce_product_quantity"):
         if pageId == "pageId-order-online" or pageId == "pageId-product-customize-modal" or pageId == "pageId-product-detial-page" or pageId == "pageId-home" or pageId == "pageId-cart" or pageId == "pageId-cart-modal":
-            product = Product(intent,value,senti,pageId,sectionId,text)
+            product = Product(intent,value,senti,pageId,sectionId,text,db)
             Response = product.checkingForProduct()
             return Response
         else:
@@ -62,6 +62,7 @@ def getResponse(intent,entity,text,pageId,sectionId,form):
         return response
         
     elif (intent == "book_now"):
+        print("form ==>",form)
         Response = reservationField(db,form,pageId,sectionId,value,text,intent)
         return Response 
 
@@ -79,6 +80,7 @@ def checkForEmptyField(form):
         if not x['entityValue']:
             x['entitySelected'] = True
             return form
+    return form
 
 def resetFieldFocus(form):
     for x in form:
