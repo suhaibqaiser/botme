@@ -142,7 +142,7 @@ class Utility:
         iD = Utility.getEntityClickAttribute(context['entities'])
         for x in self.form:
             if not x['entityValue']:
-                x['entityStatus'] = True
+                x['entitySelected'] = True
                 # return {"":self.db['response'],"ctaCommandId":self.db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityValue":self.value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
                 return {"ctaId":self.db['ctaCommandId'],"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":self.db['response']},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":""},"entities" : self.form}}
         # return {"":self.db['response'],"ctaCommandId":self.db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityValue":self.value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
