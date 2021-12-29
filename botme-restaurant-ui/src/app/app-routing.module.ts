@@ -45,7 +45,7 @@ const routes: Routes = [
     pathMatch: "full"
   },
   {
-    path: "product-detail/:prodcutId",
+    path: "product-detail",
     component: ProductDetailComponent,
     canActivate: [AuthenticationGuard]
   },

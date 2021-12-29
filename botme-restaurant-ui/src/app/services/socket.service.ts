@@ -5,13 +5,14 @@ import {environment} from 'src/environments/environment';
 import {io} from "socket.io-client";
 import {BotmeClientService} from './botme-client.service';
 import {HelperService} from "./helper.service";
+import {ReservationService} from "./reservation.service";
+import {ContextService} from "./context.service";
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class SocketService {
-
 
   private messagesSubject = new Subject();
   private notificationSubject = new Subject();
@@ -22,71 +23,13 @@ export class SocketService {
   socket: any
   conversationSequence: number = 0
 
-  currentContextList = [
-    {
-      currentRoute: 'online shop',
-      pageId: 'pageId-order-online',
-      sectionId: 'sectionId-product-list'
-    },
-    {
-      currentRoute: 'product-detail',
-      pageId: 'pageId-product-detial-page',
-      sectionId: 'sectionId-product-detial-page'
-    },
-    {
-      currentRoute: 'home',
-      pageId: 'pageId-home',
-      sectionId: 'sectionId-product-list'
-    },
-    {
-      currentRoute: 'cart',
-      pageId: 'pageId-cart',
-      sectionId: 'sectionId-product-list'
-    },
-    {
-      currentRoute: 'reservations',
-      pageId: 'pageId-reservation',
-      sectionId: 'sectionId-reservation-form'
-    },
-    {
-      currentRoute: 'contact us',
-      pageId: 'pageId-contact-us',
-      sectionId: 'sectionId-message-form'
-    }
-  ]
-  currentContextObj = {
-    currentRoute: '',
-    pageId: '',
-    sectionId: ''
+  voiceServingSize = ''
+  parentEntity = {
+    entityId: "",
+    entityValue: ""
   }
 
-  reservationFormEntities = [
-    {
-      "entityId": "entityId-name",
-      "entityValue": "",
-      "entityStatus": false
-    },
-    {
-      "entityId": "entityId-number-of-persons",
-      "entityValue": "",
-      "entityStatus": false
-    },
-    {
-      "entityId": "entityId-date",
-      "entityValue": "",
-      "entityStatus": false
-    },
-    {
-      "entityId": "entityId-time",
-      "entityValue": "",
-      "entityStatus": false
-    }
-  ]
-
-  voiceServingSize = ''
-
-
-  constructor(private router: Router, private clients: BotmeClientService, private _helperService: HelperService) {
+  constructor(private _contextService: ContextService, private _reservationService: ReservationService, private router: Router, private clients: BotmeClientService, private _helperService: HelperService) {
 
     this.authToken = clients.getCookieToken();
 
@@ -104,7 +47,7 @@ export class SocketService {
           case "communication":
             if (payload.conversation.conversationSequence === this.conversationSequence) {
               this.messagesSubject.next(payload)
-              if (payload.intentName) this.fireInteractionEvent(payload)
+              this.fireInteractionEvent(payload)
             } else {
               console.log(`Socket Message out of sync. This id: ${this.conversationSequence}, payload id: ${payload.uniqueConversationId}`);
             }
@@ -127,28 +70,53 @@ export class SocketService {
   }
 
   sendMessage(type: string, message: any) {
-    interface SocketMessage {
-      payload: object,
-      type: string,
-      timestamp: string
-    }
 
     this.conversationSequence++
     console.log(`conversationSequence: ${this.conversationSequence}`);
 
-    let SocketPayload: SocketMessage = {
-      payload: {
-        "message": message,
-        "pageId": this.currentContextObj.pageId,
-        "sectionId": this.currentContextObj.sectionId,
-        "conversationSequence": this.conversationSequence,
-        "entities": this.reservationFormEntities
+    let requestPayload = {
+      inputText: {
+        language: "english",
+        textValue: message,
+        timestamp: Date()
       },
-      type: type,
-      timestamp: Date()
-
+      context: {
+        pageId: this._contextService.currentContextObj.pageId,
+        conversationSequence: this.conversationSequence,
+        sectionId: this._contextService.currentContextObj.sectionId,
+        type: type,
+        parentEntity: this.parentEntity,
+        entities: this.getEntities()
+      }
     }
-    this.socket.emit('message', SocketPayload);
+
+    console.log('requestPayload =>', requestPayload)
+    this.socket.emit('message', requestPayload);
+  }
+
+
+  /**
+   * Getting the entities array on the basis of 'pageId'
+   */
+  getEntities() {
+    if (this._contextService.currentContextObj.pageId === 'pageId-reservation') {
+      return this._reservationService.getReservationFormJson()
+    }
+    return [
+      {
+        "clickAttribute": "href, button",
+        "entityId": "",
+        "entityValue": null,
+        "keywords": ""
+      }
+    ]
+  }
+
+  setParentEntity(parentEntityObj: any) {
+    this.parentEntity = {
+      entityId: parentEntityObj.entityId,
+      entityValue: parentEntityObj.entityValue
+    }
   }
 
   /**
@@ -157,72 +125,51 @@ export class SocketService {
    */
   fireInteractionEvent(msg: any) {
 
-    /**
-     * var sel = document.getElementById('ctaId-select-serving-size');
-     var len = sel.options.length;
+    console.log('fireInteractionEvent =>', msg)
 
-     sel.setAttribute('size', len);
-     */
     this._helperService.log('info', msg);
-    if (msg.entityId) {
+    if (msg.context.pageId) {
 
-      if (msg.entities && msg.entities.length) this.reservationFormEntities = JSON.parse(JSON.stringify(msg.entities))
+
       //for reservation form
       // @ts-ignore
-      document.getElementById(msg.entityId)?.value = (msg.entityId === 'entityId-time') ? this._helperService.timeConvert(msg.entityName) : msg.entityName
-
-
-      if (msg.entityId == 'entityId-select-serving-size') {
-        this.voiceServingSize = msg.entityName.toLowerCase()
-        // @ts-ignore
-        document.getElementById(msg.entityName.toLowerCase())?.click()
-        return
+      if (msg.context.pageId === 'pageId-reservation') {
+        let conversationId = (msg.conversation && msg.conversation.conversationId) ? msg.conversation.conversationId : ''
+        this._reservationService.setReservationForm(conversationId, msg.context.entities)
+        document.getElementById(msg.ctaId)?.click()
+        return;
       }
 
-      // @ts-ignore
-      let template = document.getElementById(msg.entityId)
-      // @ts-ignore
-      let list = template.getElementsByTagName('a')
-      for (let i = 0; i < list.length; i++) {
-        if (list[i].getAttribute('id') == msg.ctaId) {
-          list[i]?.click()
+      this.performClickAction(msg.context.entities, msg.ctaId)
+    }
+  }
+
+  performClickAction(entities: any, ctaId: any) {
+    document.getElementById(ctaId)?.click()
+    if (entities && entities.length) {
+      entities.forEach((item: any) => {
+
+        // selection serving size
+        if (item.entityId == 'entityId-select-serving-size') {
+          this.voiceServingSize = item.entityValue.toLowerCase()
+          // @ts-ignore
+          document.getElementById(item.entityValue.toLowerCase())?.click()
+          return
         }
-      }
-      // @ts-ignore
-      document.getElementById(msg.entityId)?.click()
+
+
+        // @ts-ignore
+        let template = document.getElementById(item.entityId)
+        // @ts-ignore
+        let list = template.getElementsByTagName('a')
+        for (let i = 0; i < list.length; i++) {
+          if (list[i].getAttribute('id') == ctaId) {
+            list[i]?.click()
+          }
+        }
+        document.getElementById(item.entityId)?.click()
+      })
     }
   }
 
-  getCurrentRoute() {
-    return this.router.url.replace(/\//g, "").replace("-", " ")
-  }
-
-  getCurrentContext() {
-    let currentRoute = this.getCurrentRoute()
-    if (currentRoute.indexOf('?') > 0) {
-      currentRoute = currentRoute.substr(0, currentRoute.indexOf('?'))
-    }
-    if (this.router.url.split('/')[1] === 'product-detail') {
-      currentRoute = this.router.url.split('/')[1]
-    }
-
-    this.currentContextList.filter((item: any) => {
-      if (item.currentRoute === currentRoute) {
-        this.currentContextObj = JSON.parse(JSON.stringify(item))
-      }
-    })
-  }
-
-  setEntities(value: any) {
-    this.reservationFormEntities.forEach((item: any) => {
-      if (item.entityStatus) {
-        item.entityValue = value
-      }
-    })
-  }
-
-  getFocusOnField(entityId: any) {
-    let obj = this.reservationFormEntities.find((item: any) => item.entityId == entityId && item.entityStatus)
-    return !!obj
-  }
 }

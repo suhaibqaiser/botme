@@ -1,91 +1,40 @@
 {
-    "websocket" : {
-        "clientID": "1024",
-        "current_time": "2021-04-07 00:49:00",
-        "message_format": "text",
-        "message_command": "find",
-        "language": "en-US",
-        "message_text": "where can i find gate number 14",
-        "authToken": "VY7oV9S4EsT+59Gf4suCvsDQ5B1KCl6AUJH7/jA9BaQ="
+  "websocket": {
+    "clientID": "1024",
+    "current_time": "2021-04-07 00:49:00",
+    "message_format": "text",
+    "message_command": "find",
+    "language": "en-US",
+    "message_text": "where can i find gate number 14",
+    "authToken": "VY7oV9S4EsT+59Gf4suCvsDQ5B1KCl6AUJH7/jA9BaQ="
+  },
+  "request": {
+    "text": {
+      "textValue": "Hello",
+      "language": "english",
+      "timestamp": "",
+      "geoCode": {
+        "lat": -1.5555,
+        "long": 6.222
+      }
     },
-    "cta" : {
-        "request": {
-            "text" : {
-                "textValue" : "Hello",
-                "language" : "english",
-                "timestamp" : "",
-                "geoCode" : {
-                    "lat" : -1.5555,
-                    "long" : 6.222
-                }
-            },
-            "context" : {
-                "pageId" : "menuPage",
-                "sectionId" : "sliderSection",
-                "entities" : [
-                    {
-                        "entityId" : "",
-                        "entityName" : "",
-                        "clickAttribute" : "href, button",
-                        "keywords" : ""
-
-                    }
-                ]
-            }
-        },
-        "response" : {
-            "text" : {
-                "textValue" : "Hello",
-                "language" : "english",
-                "timestamp" : "",
-                "geoCode" : {
-                    "lat" : -1.5555,
-                    "long" : 6.222
-                }
-            },
-            "context" : {
-                "pageId" : "menuPage",
-                "sectionId" : "sliderSection",
-                "entities" : [
-                    {
-                        "entityId" : "",
-                        "entityName" : "",
-                        "clickAttribute" : "href, button",
-                        "keywords" : ""
-
-                    }
-                ]
-            },
-            "action" : [
-                {
-                    "actionType" : "navigate",
-                    "entity" : {
-                        "entityKey": "Menu",
-                        "entityValue": "/menu",
-                        "entityType" : "Page Address",
-                        "customJavaScript": ""
-                    }
-                },
-                {
-                    "actionType" : "search",
-                    "entity" : {
-                        "entityKey" : "filterText",
-                        "entityValue" : "chicken",
-                        "entityType" : "OpenText",
-                        "customJavaScript" : ""
-                    }
-                },
-                {
-                    "actionType" : "add-to-cart",
-                    "entity" : {
-                        "entityKey" : "Nacho Burger",
-                        "entityValue" : "xxx-xxxx-xxxx-xxxx",
-                        "entityType" : "Product",
-                        "customJavaScript" : ""
-                    }
-                }
-            ]
+    "context": {
+      "pageId": "menuPage",
+      "sectionId": "sliderSection",
+      "parentEntity": {
+        "id": "xxx",
+        "name": "zxxz"
+      },
+      "entities": [
+        {
+          "entityId": "",
+          "entityName": "",
+          "clickAttribute": "href, button",
+          "keywords": ""
         }
+      ]
     }
+  }
 }
+
 

@@ -4,67 +4,63 @@
     <div class="row align-items-center">
       <div class="col-sm-12 col-md-12 col-lg-12 pb-30">
         <div class="reservation-form-area reservation-item">
-          <form [formGroup]="reservationForm" id="sectionId-reservation-form">
+          <form [formGroup]="_reservationService.reservationForm" id="sectionId-reservation-form">
             <div class="reservation-form reservation-form-two reservation-form-white">
               <div class="form-group">
-                <div [class.high-light-field]="_socketService.getFocusOnField('entityId-name')"
+                <div [class.high-light-field]="_reservationService.reservationFormFocus.customerNameFocus"
                      class="input-group mb-2">
                   <div class="input-group-append">
                     <div class="input-group-text">
                       <i class="flaticon-user-2"></i>
                     </div>
                   </div>
-                  <input (input)="setFieldValue($event,'entityId-name')" (click)="setFocusOnField('entityId-name')" formControlName="customerName" type="text" id="entityId-name" placeholder="Name"
+                  <input (click)="_reservationService.setFocusOnField('customerNameFocus')" formControlName="customerName" type="text" id="entityId-name" placeholder="Name"
                          class="form-control">
                 </div>
-                <span *ngIf="validations.customerName" style="color: red;text-align: justify">Name is required!</span>
+                <span style="color: red;text-align: justify" *ngIf="!_reservationService.reservationForm.controls['customerName'].valid && _reservationService.reservationForm.controls['customerName'].touched">{{_reservationService.getError('customerName')}}</span>
               </div>
 
               <div class="form-group">
-                <div [class.high-light-field]="_socketService.getFocusOnField('entityId-number-of-persons')"
+                <div [class.high-light-field]="_reservationService.reservationFormFocus.reservationSeatsFocus"
                      class="input-group mb-2">
                   <div class="input-group-append">
                     <div class="input-group-text">
                       <i class="flaticon-add-user"></i>
                     </div>
                   </div>
-                  <input (input)="setFieldValue($event,'entityId-number-of-persons')" (click)="setFocusOnField('entityId-number-of-persons')" formControlName="reservationSeats" id="entityId-number-of-persons" type="number"
+                  <input (click)="_reservationService.setFocusOnField('reservationSeatsFocus')" formControlName="reservationSeats" id="entityId-number-of-persons" type="number"
                          placeholder="Number of persons" class="form-control">
                 </div>
-                <span *ngIf="validations.reservationSeats"
-                      style="color: red;text-align: justify">Seats are required!</span>
+                <span style="color: red;text-align: justify" *ngIf="!_reservationService.reservationForm.controls['reservationSeats'].valid && _reservationService.reservationForm.controls['reservationSeats'].touched">{{_reservationService.getError('reservationSeats')}}</span>
               </div>
               <div class="form-group">
-                <div [class.high-light-field]="_socketService.getFocusOnField('entityId-date')"
+                <div [class.high-light-field]="_reservationService.reservationFormFocus.reservationDateFocus"
                      class="input-group mb-2">
                   <div class="input-group-append">
                     <div class="input-group-text">
                       <i class="flaticon-calendar-1"></i>
                     </div>
                   </div>
-                  <input (input)="setFieldValue($event,'entityId-date')"  (click)="setFocusOnField('entityId-date')" formControlName="reservationDate" id="entityId-date" type="date" placeholder="Date"
+                  <input  (click)="_reservationService.setFocusOnField('reservationDateFocus')" formControlName="reservationDate" id="entityId-date" type="date" placeholder="Date"
                          class="form-control">
                 </div>
-                <span *ngIf="validations.reservationDate"
-                      style="color: red;text-align: justify">Date is required!</span>
+                <span style="color: red;text-align: justify" *ngIf="!_reservationService.reservationForm.controls['reservationDate'].valid && _reservationService.reservationForm.controls['reservationDate'].touched">{{_reservationService.getError('reservationDate')}}</span>
               </div>
               <div class="form-group">
-                <div [class.high-light-field]="_socketService.getFocusOnField('entityId-time')"
+                <div [class.high-light-field]="_reservationService.reservationFormFocus.reservationTimeFocus"
                      class="input-group mb-2">
                   <div class="input-group-append">
                     <div class="input-group-text">
                       <i class="flaticon-clock"></i>
                     </div>
                   </div>
-                  <input (input)="setFieldValue($event,'entityId-time')" (click)="setFocusOnField('entityId-time')" formControlName="reservationTime" id="entityId-time" type="text"
+                  <input (click)="_reservationService.setFocusOnField('reservationTimeFocus')"  formControlName="reservationTime" id="entityId-time" type="text"
                          class="form-control" placeholder="e.g 12:30 AM"/>
                 </div>
-                <span *ngIf="validations.reservationTime"
-                      style="color: red;text-align: justify">Time is required!</span>
-                <span *ngIf="!validations.reservationTime && validations.isValidTime" style="color: red;text-align: justify">Please enter time in valid format!</span>
+                <span style="color: red;text-align: justify" *ngIf="!_reservationService.reservationForm.controls['reservationTime'].valid && _reservationService.reservationForm.controls['reservationTime'].touched">{{_reservationService.getError('reservationTime')}}</span>
               </div>
             </div>
-            <button id="entityId-book-now" (click)="addReservation()" class="btn full-width" type="button">Book Now
+            <button id="ctaId-book-now" [disabled]="!_reservationService.reservationForm.valid" (click)="addReservation()" class="btn full-width" type="button">Book Now
               <div *ngIf="reservationLoader" class="spinner-border" role="status">
                 <span class="sr-only">Loading...</span>
               </div>
