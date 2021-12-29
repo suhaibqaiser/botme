@@ -44,6 +44,7 @@ def checkingIfFieldValueExist(db,form,pageId,sectionId,value,text,intent):
     date = "date"
     time = "time"
     call = None
+    print("new form ==>",form)
     utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
     for x in form:
         if not x['entityValue']:

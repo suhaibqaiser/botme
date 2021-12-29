@@ -6,7 +6,7 @@ from config import RESTAURANT_API
 
 
 class Product():
-    def __init__(self,intent,value,senti,pageId,sectionId,text):
+    def __init__(self,intent,value,senti,pageId,sectionId,text,db):
           
         self.intent = intent
         self.value = value
@@ -14,6 +14,7 @@ class Product():
         self.pageId = pageId
         self.sectionId = sectionId
         self.text = text
+        self.db = db
 
     def checkingForProduct(self):
         try:
@@ -55,6 +56,7 @@ class Product():
                     return Response
             else:
                 call = None
+                self.form = None
                 utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
                 Response = utility.ifNoProductFound()
                 return Response
@@ -62,6 +64,8 @@ class Product():
                 # return {"Response":findResponse(number),"ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""}
         except:
             call = None
+            self.db = None
+            self.form = None
             utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
             Response = utility.nluFallBack()
 
@@ -78,6 +82,7 @@ class Product():
             if(db != None):
                 productID = Product.parseProductId(self.payload)
                 call = productID
+                self.form = None
                 utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
                 Response = utility.ifSectionIdCartModel()
                 return Response
@@ -88,6 +93,7 @@ class Product():
                 #     return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":productID,"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent,"entities":""}
             else:
                 call = self.data['payload']
+                self.form = None
                 utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
                 Response = utility.ifProductNotFoundInDb()
                 return Response
