@@ -114,7 +114,7 @@ export class SpeechService {
       if (this.isProcessing) {
         this.speak(this.voiceProcessingDelayed, null)
       }
-    }, 5000); // milli seconds
+    }, 9000); // milli seconds
 
     this.recorder.stop((blob: any) => {
       // Guard checks before sending request to websocket
