@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {SocketService} from "../../../services/socket.service";
+import {ContextService} from "../../../services/context.service";
 
 @Component({
   selector: 'app-contact-us',
@@ -8,11 +8,11 @@ import {SocketService} from "../../../services/socket.service";
 })
 export class ContactUsComponent implements OnInit {
 
-  constructor(private _socketService: SocketService) {
+  constructor(private _contextService: ContextService) {
   }
 
   ngOnInit(): void {
-    this._socketService.getCurrentContext()
+    this._contextService.getCurrentContext()
   }
 
 }

@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {CartService} from 'src/app/services/cart.service';
 import {MenuService} from 'src/app/services/menu.service';
-import {SocketService} from "../../../services/socket.service";
 import {Router} from "@angular/router";
 import {HelperService} from "../../../services/helper.service";
+import {ContextService} from "../../../services/context.service";
 
 declare var $: any;
 
@@ -22,8 +22,8 @@ export class ProductCartModalComponent implements OnInit {
   constructor(private cartService: CartService,
               private _router: Router,
               private MenuService: MenuService,
-              public _socketService: SocketService,
-              public _helperService: HelperService) {
+              public _helperService: HelperService,
+              private _contextService: ContextService) {
   }
 
   ngOnInit(): void {
@@ -61,7 +61,7 @@ export class ProductCartModalComponent implements OnInit {
         price += item.productTotalPrice
       })
     }
-    return price
+    return this.roundToTwo(price)
   }
 
   totalCartPrice() {
@@ -71,7 +71,7 @@ export class ProductCartModalComponent implements OnInit {
         price += item.productTotalPrice
       })
     }
-    return price
+    return this.roundToTwo(price)
   }
 
   removeFromCart(productId: string) {
@@ -80,8 +80,8 @@ export class ProductCartModalComponent implements OnInit {
 
   editFromCart(product: any) {
     this.cartService.slideToShow = 0
-    this._socketService.currentContextObj.sectionId = 'sectionId-servingSize-productOptions'
-    this._socketService.currentContextObj.pageId = 'pageId-product-customize-modal'
+    this._contextService.currentContextObj.sectionId = 'sectionId-servingSize-productOptions'
+    this._contextService.currentContextObj.pageId = 'pageId-product-customize-modal'
     this.cartService.setProductRateSize(product)
     document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:none')
     this.cartService.singleCustomProductObj = JSON.parse(JSON.stringify(product))
@@ -92,8 +92,8 @@ export class ProductCartModalComponent implements OnInit {
 
   showProductInfo(product: any) {
     this.cartService.setProductRateSize(product)
-    this._socketService.currentContextObj.sectionId = 'sectionId-summary'
-    this._socketService.currentContextObj.pageId = 'pageId-product-customize-modal'
+    this._contextService.currentContextObj.sectionId = 'sectionId-summary'
+    this._contextService.currentContextObj.pageId = 'pageId-product-customize-modal'
     document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:none')
     this.cartService.singleCustomProductObj = JSON.parse(JSON.stringify(product))
     this.cartService.singleCustomProductObj.isShowInfo = true
@@ -110,5 +110,10 @@ export class ProductCartModalComponent implements OnInit {
 
   closeCart() {
     document.getElementsByClassName('cart-modal-wrapper')[0]?.setAttribute('style', 'display:none')
+    this._contextService.getCurrentContext()
+  }
+
+  roundToTwo(num: number) {
+    return Math.round((num + Number.EPSILON) * 100) / 100;
   }
 }

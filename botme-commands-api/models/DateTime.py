@@ -1,113 +1,105 @@
 import dateparser
 from timefhuman import timefhuman
 from datetime import datetime
-from controller.reservationField import reservationField
+from controller.reservationField import reservationField,checkIfFieldValueExist
+from conf.mongodb import findResponse
+from controller.utility import Utility
 
 class DateTime():
-    def __init__(self,intent,value,senti,pageId,sectionId,text,db,form):
+    def __init__(self,intent,value,pageId,sectionId,text,db,form):
           
         self.intent = intent
         self.value = value
-        self.senti = senti
         self.pageId = pageId
         self.sectionId = sectionId
         self.text = text
         self.db = db
         self.form = form
 
-    def parseDate(self):
-        context = self.db['context']
-        iD = DateTime.getEntityClickAttribute(context['entities'])    
+    def parseDate(self): 
         try:                   
             t = dateparser.parse(self.text)
             print("time =>" ,t)
-            if t is not None:
+            if t:
                 print("dateparser call")
                 time = t.strftime("%Y-%m-%d")
-                if self.form[2]['entityValue']:
-                    self.form[2]['entityValue'] = time
-                    self.form[2]['entityStatus'] = False
-                    Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
-                    return Response
-                else:
-                    self.form[0]['entityStatus'] = False
-                    self.form[2]['entityValue'] = time
-                    self.form[2]['entityStatus'] = False
-                    if not self.form[3]['entityValue']:
-                        self.form[3]['entityStatus'] = True
-                        return {"Response":self.db['response'],"ctaCommandId":self.db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityName":time,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
-                    else:
-                        Resp = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
-                        return Resp
+                Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
+                return Response
             else:
-                print("Taha Hasan")
                 print("timefhuman call")
                 now = datetime.now()
                 t = timefhuman(self.text,now=now)
                 if t:
                     time = t.strftime("%Y-%m-%d")
-                    if self.form[2]['entityValue']:
-                        self.form[2]['entityValue'] = time
-                        self.form[2]['entityStatus'] = False
-                        Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
-                        return Response
-                    else:
-                        self.form[0]['entityStatus'] = False
-                        self.form[2]['entityValue'] = time
-                        self.form[2]['entityStatus'] = False
-                        if not self.form[3]['entityValue']:
-                            self.form[3]['entityStatus'] = True
-                            return {"Response":self.db['response'],"ctaCommandId":self.db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityName":time,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
-                        else:
-                            Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
-                            return Response
+                    Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
+                    return Response
                 else:
-                    return {"Response":"sorry,can you please tell me the day again?","ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}                      
+                    date = "date"
+                    if DateTime.checkForDateTimeFieldFocus(self.form,date):
+                        call = None
+                        utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+                        Response = utility.incorrectDate()
+                        return Response 
+                    else:
+                        Response = checkIfFieldValueExist(self.form,self.pageId,self.sectionId,self.value,self.text,self.intent)
+                        return Response                     
         except:
-            return "Error in parsing date"
+            date = "date"
+            if DateTime.checkForDateTimeFieldFocus(self.form,date):
+                call = None
+                utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+                Response = utility.incorrectDate()
+                return Response 
+            else:
+                Response = checkIfFieldValueExist(self.form,self.pageId,self.sectionId,self.value,self.text,self.intent)
+                return Response
 
     def parseTime(self):
         try:
-            t = dateparser.parse(self.text)
+            t = dateparser.parse(self.value)
             print("time =>" ,t)
             if t is not None:
                 print("dateparser call")
                 time = t.strftime("%H:%M:%S")
-                if self.form[3]['entityValue']:
-                    self.form[3]['entityValue'] = time
-                    self.form[3]['entityStatus'] = False
-                    Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
-                    return Response
-                else:
-                    self.form[0]['entityStatus'] = False
-                    self.form[3]['entityValue'] = time
-                    self.form[3]['entityStatus'] = False
-                    Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
-                    return Response
+                print(time)
+                Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
+                print(Response)
+                return Response
             else:
                 print("timefhuman call")
                 now = datetime.now()
-                t = timefhuman(self.text,now=now)
-                print(t)
+                print(self.value)
+                t = timefhuman(self.value,now=now)
+                print("time =>",t)
                 if t:
-                    time = t.strftime("%H:%M:%S")
-                    if self.form[3]['entityValue']:
-                        self.form[3]['entityValue'] = time
-                        self.form[3]['entityStatus'] = False
-                        Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
+                    time = t.strftime("%H:%M:%S")    
+                    Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
+                    return Response
+                else:
+                    time = "time"
+                    if DateTime.checkForDateTimeFieldFocus(self.form,time):
+                        call = None
+                        utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+                        Response = utility.incorrectTime()
                         return Response
                     else:
-                        self.form[0]['entityStatus'] = False
-                        self.form[3]['entityValue'] = time
-                        self.form[3]['entityStatus'] = False
-                        Response = reservationField(self.db,self.form,self.pageId,self.sectionId,time,self.text,self.intent)
+                        Response = checkIfFieldValueExist(self.form,self.pageId,self.sectionId,self.value,self.text,self.intent)
                         return Response
-                else:
-                    return {"Response":"sorry,can you please tell me the time again?","ctaCommandId":None,"pageId":self.ageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
         except:
-            return "Error in parsing date"
-    
-    def getEntityClickAttribute(entity):
-        for x in entity:
-            print(x)
-            return {"entityId":x['entityId'],"actionType":x['clickAttribute']}
+            time = "time"
+            if DateTime.checkForDateTimeFieldFocus(self.form,time):
+                call = None
+                utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+                Response = utility.incorrectTime()
+                return Response
+            else:
+                Response = checkIfFieldValueExist(self.form,self.pageId,self.sectionId,self.value,self.text,self.intent)
+                return Response   
+
+    def checkForDateTimeFieldFocus(form,value):
+        for x in form:
+            if x['entitySelected'] == True:
+               if x['entityId'] == findResponse(value):
+                   return True
+               else:
+                   return False

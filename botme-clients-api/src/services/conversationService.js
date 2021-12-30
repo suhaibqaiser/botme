@@ -1,5 +1,7 @@
 const Session = require("../models/session")
-const Conversation = require("../models/nlp/conversation")
+// const Conversation = require("../models/nlp/conversation")
+const { v4: uuidv4 } = require('uuid')
+var ObjectId = require('mongoose').Types.ObjectId;
 
 async function getConversation(sessionId) {
 
@@ -62,31 +64,81 @@ async function addConversation(sessionId) {
     }
 }
 
-async function addConversationLog(conversationId, query, response) {
+async function addConversationLog(convId) {
 
     try {
-        let session = await Session.updateOne(
-            { "conversations.conversationId": conversationId },
+        let session = await Session.findOneAndUpdate(
+            { "conversations.conversationId": convId },
             {
                 $push: {
                     "conversations.$.conversationLog": {
-                        query: query,
-                        response: response,
-                        timeStamp: Date()
+                        timeStamp: Date(),
                     }
                 }
-            }
+            }, { new: true }
         )
 
-        if (!session) {
+        let conversation = session.conversations[session.conversations.length - 1]
+        let conversationLogs = conversation.conversationLog
+        let conversationLogId = conversationLogs[conversationLogs.length - 1]._id
+        console.log(conversationLogId)
+
+        if (!conversationLogId) {
             return undefined
         }
-        return session
+        return conversationLogId
     } catch (err) {
         console.log(err);
         return undefined
     }
 }
+
+
+async function updateConversationLog(conversationLogId, param, value) {
+
+    try {
+        let session = await Session.findOne(
+            { "conversations.conversationLog._id": ObjectId(conversationLogId) }
+        )
+
+        let conversations = session.conversations
+        let inner, outer
+        conversations.forEach((conversation) => {
+            let conversationLog = conversation.conversationLog
+            outer = conversation.conversationId
+            conversationLog.forEach((cl) => {
+                if (cl._id == conversationLogId) {
+                    cl[param] = JSON.stringify(value)
+                    inner = cl
+                }
+            })
+        })
+
+        console.log(inner)
+
+        let uSession = await Session.updateOne({ "conversations.conversationLog._id": ObjectId(conversationLogId) },
+            {
+                $set: {
+                    "sessionUpdated": Date(),
+                    "conversations.$[outer].conversationLog.$[inner]": inner
+                }
+            }, {
+            arrayFilters: [
+                { "outer.conversationId": outer },
+                { "inner._id": inner._id }
+            ]
+        })
+
+        if (!uSession) {
+            return undefined
+        }
+        return uSession
+    } catch (err) {
+        console.log(err);
+        return undefined
+    }
+}
+
 
 async function endConversation(conversationId, rating) {
     try {
@@ -116,10 +168,10 @@ async function getConversationId(sessionId) {
         "conversations.conversationActive": true
     }, { "conversations.conversationId.$": 1 });
     if (conversation) {
-        return conversation.conversations[0].conversationId
+        return conversation.conversations[conversation.conversations - 1].conversationId
     } else {
-        return null
+        return await addConversation(sessionId)
     }
 }
 
-module.exports = ({ getConversation, addConversation, addConversationLog, endConversation, getConversationId })
+module.exports = ({ getConversation, addConversation, addConversationLog, endConversation, getConversationId, updateConversationLog })

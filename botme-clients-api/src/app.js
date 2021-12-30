@@ -1,4 +1,5 @@
 const express = require('express')
+const config = require('config')
 const jwt = require('jsonwebtoken')
 const jwtKey = 'superSecretJWTKey'
 const clientsRouter = require('./routes/clientsRouter.js')
@@ -9,20 +10,25 @@ const sessionRouter = require('./routes/sessionRouter')
 const conversationRouter = require('./routes/conversationRouter')
 const authRouter = require('./routes/authRouter')
 const restaurantRouter = require('./routes/restaurantRouter')
+const speechRouter = require('./routes/speechRouter')
 
 const app = express()
 const port = process.env.API_PORT || 3000;
-let cors = require('cors')
+const cors = require('cors')
+
+console.log(process.env.NODE_ENV)
+console.log(config.get('clientsDB'))
 
 //Set up mongoose connection
 const mongoose = require('mongoose');
-const mongoDB = process.env.MONGODB_CONNECTION || 'mongodb+srv://mongoUser:1t3jWnpoC0imAM4d@cluster0.tipo5.mongodb.net/clients?retryWrites=true&w=majority';
+const mongoDB = process.env.MONGODB_CONNECTION || `mongodb+srv://mongoUser:1t3jWnpoC0imAM4d@cluster0.tipo5.mongodb.net/${config.get('clientsDB')}?retryWrites=true&w=majority`;
 
 mongoose.connect(mongoDB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
-    useFindAndModify: false
+    useFindAndModify: false,
+    promoteBuffers: true
 });
 const db = mongoose.connection;
 db.once("open", function () {
@@ -37,7 +43,7 @@ let corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 app.use('/client', verifyToken, clientsRouter);
 app.use('/nlp', verifyToken, nlpRouter);
@@ -46,6 +52,7 @@ app.use('/corpus', verifyToken, corpusRouter);
 app.use('/session', verifyToken, sessionRouter);
 app.use('/conversation', verifyToken, conversationRouter);
 app.use('/restaurant', verifyToken, restaurantRouter)
+app.use('/speech', speechRouter);
 app.use('/auth', authRouter);
 
 

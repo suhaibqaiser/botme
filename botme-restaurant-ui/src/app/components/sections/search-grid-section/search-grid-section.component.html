@@ -43,7 +43,7 @@
                 </div>
                 <div class="product-card-content">
                   <h3><a id="ctaId-product-detail-page"
-                      [routerLink]="['/product-detail',product.productId]">{{product.productName}}</a></h3>
+                      [routerLink]="['/product-detail']" [queryParams]="{productId: product.productId}">{{product.productName}}</a></h3>
                   <h4 class="product-price">${{product.productRate.standard}}</h4>
                   <div class="d-flex product-icons justify-content-around">
                     <a id="ctaId-product-add-to-cart" (click)="cartService.setProductCustomization(product)"
@@ -84,7 +84,7 @@
         <div id="sectionId-filters" class="sidebar-item around-border sidebar-search">
           <form>
             <div class="form-group">
-              <input (change)="filterProductsByName($event)" class="form-control" id="productSearch" type="text"
+              <input (change)="filterProductsByName($event)" class="form-control" id="entityId-search" type="text"
                 placeholder="Search">
               <button><i class="flaticon-loupe"></i></button>
             </div>
@@ -134,7 +134,7 @@
           </div>
           <ul class="sidebar-list">
             <li *ngFor="let category of categoryList" id="{{category.categoryId}}">
-              <a [class.active-category]="category.selected" href="javascript:void(0)"
+              <a [class.active-category]="category.selected" id="ctaId-category" href="javascript:void(0)"
                 (click)="filterProductsByCategory(category)">{{category.categoryName}}</a>
             </li>
           </ul>

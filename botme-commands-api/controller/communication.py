@@ -1,118 +1,88 @@
-from conf.mongodb import getDbCta
+from conf.mongodb import getDbCta,findResponse
 from textblob import TextBlob
+from controller.utility import Utility
 from models.Entity import Entity
-from models.DateTime import DateTime
+from models.Name import Name
 from models.Products import Product
 from models.Reservation import Reservation
+from models.DateTime import DateTime
 from controller.reservationField import reservationField
 
 # reminder need to change text to senti in responses
 
-def getResponse(intent,entity,text,pageId,sectionId,form):
+def getResponse(intent,entity,text,pageId,sectionId,form,parentEntity):
     blob =TextBlob(text)
     senti = blob.sentiment.polarity
-    val = Entity(entity)
+    val = Entity(entity,intent)
     value = val.parseEntityValue()
     db = getDbCta(intent,value,pageId,sectionId)
-    product = Product(intent,value,senti,pageId,sectionId,text)
-    reservation = Reservation(intent,value,senti,pageId,sectionId,text,db,form)
-    datetime = DateTime(intent,value,senti,pageId,sectionId,text,db,form)
+    form = checkForEmptyField(form)
 
-    if (intent == "Order_meal"or intent == "product-detail" or intent == "remove_item" or intent == "edit_product" or intent == "reduce_product_quantity"):
-        Response = product.checkingForProduct()
-        return Response
-    
-    elif (intent == "reservation_page"):
-        if db is not None:
-            form[0]['entityStatus'] = True
-            form[1]['entityStatus'] = False
-            form[2]['entityStatus'] = False
-            form[3]['entityStatus'] = False
-            form[0]['entityValue'] = ""
-            form[1]['entityValue'] = ""
-            form[2]['entityValue'] = ""
-            form[3]['entityValue'] = ""
-            context = db['context']
-            iD = getEntityClickAttribute(context['entities'])
-            return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form} 
+    if (intent == "Order_meal"or intent == "product-detail" or intent == "remove_item" or intent == "edit_product" or intent == "reduce_product_quantity" or intent == "product_flavour"):
+        if pageId == "pageId-order-online" or pageId == "pageId-product-customize-modal" or pageId == "pageId-product-detial-page" or pageId == "pageId-home" or pageId == "pageId-cart" or pageId == "pageId-cart-modal":
+            product = Product(intent,value,senti,pageId,sectionId,text,db,parentEntity)
+            Response = product.checkingForProduct()
+            return Response
         else:
-            return {"Response":"I’m sorry,Could you say it again?","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":'nlu_fallback',"entities":form}
+            call = None
+            utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
+            Response = utility.ifNotProductPage()
+            # number = "7"
+            # return {"Response":findResponse(number),"ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":""} 
 
+    elif (intent == "reservation_page"):
+        form = reservationField(db,form,pageId,sectionId,value,text,intent)
+        call = None
+        utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
+        response = utility.reservationResponse()
+        return response
+    
     elif (intent == "inform_name"):
-        if db is not None:
-            if (value is not None):
-                if form[0]['entityValue']:
-                    form[0]['entityValue'] = value
-                    form[0]['entityStatus'] = False
-                    Response = reservationField(db,form,pageId,sectionId,value,text,intent)
-                    return Response
-                else:    
-                    form[0]['entityValue'] = value
-                    form[0]['entityStatus'] = False
-                    if not form[1]['entityValue']:
-                        form[1]['entityStatus'] = True
-                        context = db['context']
-                        iD = getEntityClickAttribute(context['entities'])
-                        return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
-                    else:
-                        Response = reservationField(db,form,pageId,sectionId,value,text,intent)
-                        return Response
-            else:
-                txt = text.split()
-                if "name" in txt:
-                    x = len(txt)
-                    name = txt[x-1]
-                    if form[0]['entityValue']:
-                        form[0]['entityValue'] = name
-                        form[0]['entityStatus'] = False
-                        Response = reservationField(db,form,pageId,sectionId,name,text,intent)
-                        return Response
-                    elif not form[0]['entityValue']:
-                        form[0]['entityValue'] = name
-                        form[0]['entityStatus'] = False
-                        if not form[1]['entityValue']:
-                            form[1]['entityStatus'] = True
-                            context = db['context']
-                            iD = getEntityClickAttribute(context['entities'])
-                            return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":name,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
-                        else:
-                            Response = reservationField(db,form,pageId,sectionId,name,text,intent)
-                            return Response       
-                else:
-                    return {"Response":"sorry,can you please tell me your name again?","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":form}
-        else:   
-            return {"Response":"Can't find the data in database","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":form}
+        name = Name(intent,value,pageId,sectionId,text,db,form)
+        utility = Utility(pageId,sectionId,value,text,intent,db,form,name)
+        response = utility.nameResponse()
+        return response
 
     elif (intent == "unreserved_table_person"):
-        Response = reservation.reservation()
-        return Response
+       reservation = Reservation(intent,value,pageId,sectionId,text,db,form)
+       utility = Utility(pageId,sectionId,value,text,intent,db,form,reservation)
+       Response = utility.personResponse()
+       return Response
 
     elif (intent == "inform_date"):
-        if db is not None:
-            Response = datetime.parseDate()
-            return Response
-        else:
-            return {"Response":"Can't find the data in database","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":""}
+        date = DateTime(intent,value,pageId,sectionId,text,db,form)
+        utility = Utility(pageId,sectionId,value,text,intent,db,form,date)
+        response = utility.dateResponse()
+        return response
 
     elif (intent == "inform_time"):
-        if db is not None:
-            Response = datetime.parseTime()
-            return Response
-        else:
-            return {"Response":"Can't find the data in database","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":""}
-
+        time = DateTime(intent,value,pageId,sectionId,text,db,form)
+        utility = Utility(pageId,sectionId,value,text,intent,db,form,time)
+        response = utility.timeResponse()
+        return response
+        
     elif (intent == "book_now"):
-        print(db)
+        print("form ==>",form)
         Response = reservationField(db,form,pageId,sectionId,value,text,intent)
         return Response 
-    else:
-        if db is not None:
-            context = db['context']
-            iD = getEntityClickAttribute(context['entities'])
-            return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":""} 
-        else:
-            return {"Response":"I’m sorry,Could you say it again?","ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":'nlu_fallback',"entities":""}
 
-def getEntityClickAttribute(entity):
-    for x in entity:
-        return {"entityId":x['entityId'],"actionType":x['clickAttribute']}
+    else:
+        print("taha")
+        call = None
+        utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
+        response = utility.dbResponse()
+        return response
+
+
+def checkForEmptyField(form):
+    form = resetFieldFocus(form)
+    for x in form:
+        if not x['entityValue']:
+            x['entitySelected'] = True
+            return form
+    return form
+
+def resetFieldFocus(form):
+    for x in form:
+        x['entitySelected'] = False
+    return form

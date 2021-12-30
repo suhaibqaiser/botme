@@ -1,25 +1,123 @@
+from requests.models import Response
+from conf.mongodb import findResponse
+from controller.utility import Utility
 
 def reservationField(db,form,pageId,sectionId,value,text,intent):
     if db is not None:
-            context = db['context']
-            iD = getEntityClickAttribute(context['entities'])
-            if not form[0]['entityValue']:
-                form[0]['entityStatus'] = True
-                return {"Response":"please fill the name field","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
-            elif not form[1]['entityValue']:
-                form[1]['entityStatus'] = True
-                return {"Response":"please fill the number of person field","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
-            elif not form[2]['entityValue']:
-                form[2]['entityStatus'] = True
-                return {"Response":"please fill the Date field","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
-            elif not form[3]['entityValue']:
-                form[3]['entityStatus'] = True
-                return {"Response":"please fill the Time field","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
-            elif form[0]['entityValue'] and form[1]['entityValue'] and form[2]['entityValue'] and form[3]['entityValue'] and intent != "book_now":
-                return {"Response":"you can now book your reservation","ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form}
-            else:
-                return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":text,"intentName":intent,"entities":form} 
+            if intent == "reservation_page":
+                form = formInitialization(form)
+                return form
 
-def getEntityClickAttribute(entity):
-    for x in entity:
-        return {"entityId":x['entityId'],"actionType":x['clickAttribute']}
+            elif intent == "inform_name":
+                val = "name"
+                entityId = findResponse(val)
+                Response = Field(db,form,pageId,sectionId,value,text,intent,entityId)
+                return Response
+            
+            elif intent == "unreserved_table_person":
+                val = "person"
+                entityId = findResponse(val)
+                Response = Field(db,form,pageId,sectionId,value,text,intent,entityId)
+                print(Response)
+                return Response
+            
+            elif intent == "inform_date":
+                val = "date"
+                entityId = findResponse(val)
+                Response = Field(db,form,pageId,sectionId,value,text,intent,entityId)
+                return Response
+            
+            elif intent == "inform_time":
+                val = "time"
+                entityId = findResponse(val)
+                Response = Field(db,form,pageId,sectionId,value,text,intent,entityId)
+                print(Response)
+                return Response
+            
+            elif intent == "book_now":
+                Response = checkingIfFieldValueExist(db,form,pageId,sectionId,value,text,intent)
+                return Response
+
+def checkingIfFieldValueExist(db,form,pageId,sectionId,value,text,intent):
+    name = "name"
+    person = "person"
+    date = "date"
+    time = "time"
+    call = None
+    print("new form ==>",form)
+    utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
+    for x in form:
+        if not x['entityValue']:
+            if x['entityId'] == findResponse(name):
+                x['entitySelected'] = True
+                response = utility.nameField()
+                return response
+
+            elif x['entityId'] == findResponse(person):
+                x['entitySelected'] = True
+                response = utility.personField()
+                return response
+
+            elif x['entityId'] == findResponse(date):
+                x['entitySelected'] = True
+                response = utility.dateField()
+                return response
+
+            elif x['entityId'] == findResponse(time):
+                x['entitySelected'] = True
+                response = utility.timeField()
+                return response
+    Response = utility.bookNowResponse() 
+    return Response
+
+def checkIfFieldValueExist(form,pageId,sectionId,value,text,intent):
+    name = "name"
+    person = "person"
+    date = "date"
+    time = "time"
+    db = None
+    call = None
+    utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
+    for x in form:
+        if x['entitySelected'] == True:
+            if x['entityId'] == findResponse(name):
+                response = utility.nameField()
+                return response
+
+            elif x['entityId'] == findResponse(person):
+                response = utility.personField()
+                return response
+
+            elif x['entityId'] == findResponse(date):
+                response = utility.dateField()
+                return response
+
+            elif x['entityId'] == findResponse(time):
+                response = utility.timeField()
+                return response
+
+def formInitialization(form):
+    name = "name"
+    entityId =  findResponse(name)
+    for x in form:
+        if x['entityId'] == entityId:
+            x['entityValue'] = ""
+            x['entitySelected'] = True
+        else:
+            x['entityValue'] = ""
+            x['entitySelected'] = False
+    return form
+
+def Field(db,form,pageId,sectionId,value,text,intent,entityId):
+    for x in form:
+        if x['entitySelected'] == True:
+            if x['entityId'] == entityId:
+                x['entityValue'] = value
+                x['entitySelected'] = False
+                call = None
+                utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
+                Response = utility.findNextFieldFocus()
+                return Response
+            else:
+                Response = checkIfFieldValueExist(form,pageId,sectionId,value,text,intent)
+                return Response

@@ -18,7 +18,6 @@ export class SofiaBotComponent implements OnInit {
 
 
   constructor(public speechService: SpeechService,
-    private socketService: SocketService,
     public clientService: BotmeClientService
   ) {
   }
@@ -29,8 +28,24 @@ export class SofiaBotComponent implements OnInit {
     } else if (this.clientService.getVoiceType() === "no-voice") {
       this.voiceEnabled = false
     }
-    this.speechService.speechText.subscribe(data => {
-      this.speechText = data
+    this.speechService.speechState.subscribe(data => {
+      switch (data) {
+        case 'idle':
+          this.speechText = ''
+          break;
+        case 'listening':
+          this.speechText = 'Listening...'
+          break;
+        case 'processing':
+          this.speechText = 'Processing...'
+          break;
+        case 'speaking':
+          this.speechText = 'Speaking...'
+          break;
+        default:
+          break;
+      }
+
     })
   }
 
@@ -38,7 +53,7 @@ export class SofiaBotComponent implements OnInit {
     this.speechEnabled = value
     this.speechService.speechEnabled.next(this.speechEnabled)
     if (this.speechEnabled) {
-      this.speechService.enableListening(this.socketService.currentContextObj.pageId, this.isBrowserSpeech)
+      this.speechService.enableListening()
     } else {
       this.speechService.disableListening();
     }

@@ -1,6 +1,6 @@
 <!-- product-cart -->
 <div id="sectionId-cart-modal" class="cart-modal-wrapper">
-  <div class="cart-modal modal-item">
+  <div id="ctaId-close-cart" class="cart-modal modal-item">
     <div style="align-items: baseline" class="cart-modal-header">
       <h3 class="color-white">Cart</h3>
       <!-- <app-sofia-bot></app-sofia-bot> -->
@@ -18,7 +18,8 @@
           </a>
         </div>
         <div class="cart-modal-content">
-          <h4><a href="javascript:void(0)">{{product.productName}}</a></h4>
+          <h4 class="mb-1"><a href="javascript:void(0)">{{product.productName}}</a></h4>
+          <h6 class="mb-1 text-white">Quantity: {{product.productQuantity}}</h6>
           <div class="cart-modal-action">
             <div class="cart-modal-action-item">
               <!--              <div class="cart-modal-quantity">-->
@@ -29,7 +30,7 @@
               <!--                <p class="cart-quantity-price">-->
               <!--                  <span *ngFor="let addon of product.productAddons"><span *ngIf="addon.productQuantity">{{addon.productName }}( ${{addon.productTotalPrice}})<br> </span></span></p>-->
               <!--              </div>-->
-              <div class="mt-2 cart-modal-quantity">
+              <div class="cart-modal-quantity">
                 <p class="cart-quantity-price"><strong>Sub Total</strong> : ${{product.productTotalPrice}}
               </div>
             </div>

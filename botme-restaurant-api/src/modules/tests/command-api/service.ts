@@ -9,9 +9,10 @@ export async function processIteration(data: Array<object>) {
         let body = {
             "text": obj.command,
             "pageId": obj.pageId,
-            "sectionId": obj.sectionId
+            "sectionId": obj.sectionId,
+            "entities": JSON.parse(obj.entities)
         };
-        await http(conf.get('clientsApi'), '/response', "POST", JSON.stringify(body))
+        await http(conf.get('commandsApi'), '/response', "POST", JSON.stringify(body))
             .then(response => {
                 let actualResult = (obj.response === response.Response)
                 let res = {

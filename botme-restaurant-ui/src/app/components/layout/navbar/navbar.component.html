@@ -6,7 +6,7 @@
       <a href="home" class="mobile-brand">
         <img src="assets/images/logo/web-logo.png" alt="logo" class="blue-logo">
       </a>
-      <app-sofia-bot *ngIf="_botMeClientService.getCookie().isLoggedIn" style="z-index: 999999 !important;">
+      <app-sofia-bot *ngIf="!_deviceService.isMobile() && _botMeClientService.getCookie().isLoggedIn" style="z-index: 999999 !important;">
       </app-sofia-bot>
     </div>
 
@@ -24,19 +24,19 @@
           <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto align-items-center">
               <li class="nav-item">
-                <a routerLink="home" id="entityId-home" class="nav-link" [class.active]="router.url=='/home'">HOME</a>
+                <a routerLink="home" id="ctaId-home" class="nav-link" [class.active]="router.url=='/home'">HOME</a>
               </li>
               <li class="nav-item">
-                <a routerLink="reservations" id="entityId-reservation" class="nav-link"
+                <a routerLink="reservations" id="ctaId-reservation" class="nav-link"
                   [class.active]="router.url=='/reservations'">RESERVATION</a>
               </li>
               <li class="nav-item">
-                <a routerLink="contact-us" id="entityId-contact-us" class="nav-link"
+                <a routerLink="contact-us" id="ctaId-contact-us" class="nav-link"
                   [class.active]="router.url=='/contact-us'">CONTACT US</a>
               </li>
               <li class="nav-item">
                 <a *ngIf="_botMeClientService.getCookie().isLoggedIn" [class.active]="router.url=='/online-shop'"
-                  id="entityId-order-online" routerLink="online-shop" class="nav-link">PLACE ORDER</a>
+                  id="ctaId-order-online" routerLink="online-shop" class="nav-link">PLACE ORDER</a>
               </li>
               <li class="nav-item">
                 <a data-bs-toggle="modal" data-bs-target="#loginModal"
@@ -50,7 +50,7 @@
                   class="nav-link" type="button">VOICE TEST</a>
               </li>
               <li class="nav-item">
-                <a *ngIf="_botMeClientService.getCookie().isLoggedIn" (click)="showCartModal()" id="entityId-show-cart"
+                <a *ngIf="_botMeClientService.getCookie().isLoggedIn" (click)="showCartModal()" id="ctaId-show-cart"
                   class="productCart"><i style="font-size: x-large" class="flaticon-supermarket-basket"></i>
                   <span
                     style="position: relative;background-color:#E7272D;border-radius: 10px;margin-top: -33px;margin-left: -8px;"

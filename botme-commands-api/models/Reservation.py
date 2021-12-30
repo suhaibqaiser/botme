@@ -1,15 +1,18 @@
-import requests
+# import requests
 import re
-from controller.reservationField import reservationField
+from requests.models import Response
+from controller.reservationField import reservationField,checkIfFieldValueExist
 from config import RESTAURANT_API 
+from conf.mongodb import findResponse
+from models.Name import Name
+from controller.utility import Utility
 
 
 class Reservation():
-    def __init__(self,intent,value,senti,pageId,sectionId,text,db,form):
+    def __init__(self,intent,value,pageId,sectionId,text,db,form):
           
         self.intent = intent
         self.value = value
-        self.senti = senti
         self.pageId = pageId
         self.sectionId = sectionId
         self.text = text
@@ -18,46 +21,54 @@ class Reservation():
 
     def reservation(self):
         try:
-            if self.db is not None:
+            if self.value:
                 V = re.findall(r'\d+', self.value) 
                 number = "".join(V)
                 if number.isdigit():
-                    if self.form[1]['entityValue']:
-                        self.form[1]['entityValue'] = number
-                        self.form[1]['entityStatus'] = False
-                        Response = reservationField(self.db,self.form,self.pageId,self.sectionId,number,self.text,self.intent)
-                        return Response
-                    else:
-                        self.form[0]['entityStatus'] = False
-                        self.form[1]['entityValue'] = number
-                        self.form[1]['entityStatus'] = False
-                        if not self.form[2]['entityValue']:
-                            self.form[2]['entityStatus'] = True
-                            context = self.db['context']
-                            iD = Reservation.getEntityClickAttribute(context['entities'])
-                            return {"Response":self.db['response'],"ctaCommandId":self.db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityName":number,"entityId":iD['entityId'],"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
-                        else:
-                            Response = reservationField(self.db,self.form,self.pageId,self.sectionId,number,self.text,self.intent)
-                            return Response
+                    Response = reservationField(self.db,self.form,self.pageId,self.sectionId,self.value,self.text,self.intent)
+                    return Response
                 else:
-                    return {"Response":"sorry,can you please tell me the number of people again?","ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}                 
+                    if Reservation.checkForPersonFieldFocus(self.form):
+                        number = "9"
+                        return {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":"","entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":self.form}
+                    else:
+                        Response = checkIfFieldValueExist(self.form,self.pageId,self.sectionId,self.value,self.text,self.intent)
+                        return Response  
             else:
-                tableResponse = Reservation.searchingTable(self.value,self.senti,self.intent,self.text)
-                return tableResponse
+                if Reservation.checkForPersonFieldFocus(self.form):
+                    call = None
+                    utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+                    Response = utility.incorrectPersonResponse()
+                    return Response
+                else:
+                    Response = checkIfFieldValueExist(self.form,self.pageId,self.sectionId,self.value,self.text,self.intent)
+                    return Response        
+            # else:
+            #     tableResponse = Reservation.searchingTable(self.value,self.senti,self.intent,self.text)
+            #     return tableResponse
         except:
-            print("error in parsing number of people")    
+            if Reservation.checkForPersonFieldFocus(self.form):
+                call = None
+                utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+                Response = utility.incorrectPersonResponse()
+                return Response
+            else:
+                Response = checkIfFieldValueExist(self.form,self.pageId,self.sectionId,self.value,self.text,self.intent)
+                return Response   
 
-    def searchingTable(value,senti,intent,text):
-        try:
-            response = requests.get(RESTAURANT_API + 'food/tables/search?seats=' + value)
-            data = response.json()
-            if(data['status'] == "success"):
-                table_no = Reservation.getTableNo(data['payload'])
-                return {"Response":"you can move to the table number " + table_no,"ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent}
-            else:
-                return {"Response":"Sorry, All tables are occupied","ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent}
-        except:
-            return "error in searching for table"
+    # def searchingTable(value,senti,intent,text):
+    #     try:
+    #         response = requests.get(RESTAURANT_API + 'food/tables/search?seats=' + value)
+    #         data = response.json()
+    #         if(data['status'] == "success"):
+    #             table_no = Reservation.getTableNo(data['payload'])
+    #             number = "11"
+    #             return {"Response":findResponse(number) + table_no,"ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent}
+    #         else:
+    #             number = "10"
+    #             return {"Response":findResponse(number),"ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent}
+    #     except:
+    #         return "error in searching for table"
 
     def getTableNo(payload):
         for x in payload:
@@ -67,6 +78,16 @@ class Reservation():
     def getEntityClickAttribute(entity):
         for x in entity:
             return {"entityId":x['entityId'],"actionType":x['clickAttribute']}
+    
+    def checkForPersonFieldFocus(form):
+        person = "person"
+        for x in form:
+            if x['entitySelected'] == True:
+                if x['entityId'] == findResponse(person):
+                    return True
+                else:
+                    return False
+
 
 
 

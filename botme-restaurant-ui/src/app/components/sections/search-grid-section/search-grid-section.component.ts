@@ -6,6 +6,7 @@ import {FormControl} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HelperService} from "../../../services/helper.service";
+import {ContextService} from "../../../services/context.service";
 
 declare var $: any;
 
@@ -73,7 +74,7 @@ export class SearchGridSectionComponent implements OnInit {
   productCustomizationSlider: any
   orderedProductsList: any
 
-  constructor(private _http: HttpClient, private menuservice: MenuService,
+  constructor(private _contextService: ContextService, private _http: HttpClient, private menuservice: MenuService,
               public cartService: CartService,
               private socketService: SocketService,
               private _router: Router,
@@ -81,10 +82,11 @@ export class SearchGridSectionComponent implements OnInit {
               public _socketService: SocketService,
               public _helperService: HelperService
   ) {
+    clearTimeout(this._helperService.timer)
   }
 
   async ngOnInit() {
-    this._socketService.getCurrentContext()
+    this._contextService.getCurrentContext()
     this.productCustomizationSlider = [0, 1, 2, 3]
     this.searchList = []
     this.isLoading = true
@@ -285,17 +287,17 @@ export class SearchGridSectionComponent implements OnInit {
 
   addToCart() {
     this.cartService.addToCart(this.cartService.singleCustomProductObj);
-    document.getElementById("entityId-show-cart")?.click()
+    document.getElementById("ctaId-show-cart")?.click()
   }
 
   editToCart() {
     this.cartService.addToCart(this.cartService.singleCustomProductObj, true);
-    document.getElementById("entityId-show-cart")?.click()
+    document.getElementById("ctaId-show-cart")?.click()
     document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:block')
   }
 
   sendWSMessage(text: string) {
-    this.socketService.sendMessage('communication', text, false);
+    this.socketService.sendMessage('communication', text);
   }
 
   getWSMessage() {

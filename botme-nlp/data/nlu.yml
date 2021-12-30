@@ -310,11 +310,11 @@ nlu:
       - i want to redirect to [place order page](pagesix)
       - Redirect me to [place order](pagesix)
       - Redirect me to [place order page](pagesix)
-      - i want to [place] an order please
-      - we want to [place] an order please
-      - i want to [place an order] please
-      - he want to [place an order] please
-      - she want to [place] an order please 
+      - i want to [place](pagesix) an order please
+      - we want to [place](pagesix) an order please
+      - i want to [place an order](pagesix) please
+      - he want to [place an order](pagesix) please
+      - she want to [place](pagesix) an order please 
 
   - synonym: place order page
     examples: |
@@ -3858,6 +3858,11 @@ nlu:
       - they will be [7](number)
       - we will be [8](number)
       - we will be [3](number)
+      - number of people will be [4](number)
+      - number of people will be [for](number)
+      - number of people are [13](number)
+      - number of people are [for](number)
+      - we will be [for](number)
       - we will be [9](number)
       - [4](number) person
       - [1](number) people
@@ -3901,6 +3906,7 @@ nlu:
   - synonym: '4'
     examples: |
       - four
+      - for
   - synonym: '5'
     examples: |
       - five

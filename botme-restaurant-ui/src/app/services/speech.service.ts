@@ -1,11 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import * as RecordRTC from 'recordrtc';
-import { Subject } from 'rxjs';
-import { SocketService } from './socket.service';
+import {Subject} from 'rxjs';
+import {SocketService} from './socket.service';
 import * as hark from 'hark'
-
-declare var webkitSpeechRecognition: any;
-
+import {HelperService} from './helper.service';
+import {ContextService} from "./context.service";
 
 @Injectable({
   providedIn: 'root'
@@ -14,122 +13,61 @@ export class SpeechService {
 
   private stream: any
   private recorder: any
-  private speechEvents: any
-  private selectedRate: number = 1;
-  private selectedVoice: any;
-  private voice: any
-  private voices: SpeechSynthesisVoice[] = [];
-  private voiceWelcomeMessage = "Welcome to the interactive online shop experience. Start your order by saying, I want to make a reservation!"
+
+  // TODO: These messages should be moved to database
+  // to avoid hardcoding and for better management
+  private voiceWelcomeMessage = "Welcome to the interactive online shop experience. Start by saying, I want to make a reservation!"
   private voiceEndingMessage = "Handing the controls over to you."
   private voiceProcessingDelayed = "Something went wrong, please say again!"
-  audio = new Audio();
-  speechText = new Subject<string>()
-  speechState = new Subject<string>()  // State for monitoring speech service eg. listening, processing, speaking, idle
-  speechEnabled = new Subject<boolean>();
-  SpeechE: boolean = false
-  cloudVoice: boolean = true;
+
+  private isSpeechEnabled: boolean = false
   isSpeaking: boolean = false
   isListening: boolean = false
   isProcessing: boolean = false
   isIdle: boolean = true
-  //browser speech section
-  recognition: any
-  isStoppedSpeechRecog = false;
-  public text = '';
-  tempWords: any;
-  isBrowserSpeech: boolean = false
-  startTime: any
-  endTime: any
+  audio = new Audio();
+  speechState = new Subject<string>()  // State for monitoring speech service eg. listening, processing, speaking, idle
+  speechEnabled = new Subject<boolean>();
 
-  timerStart() {
-    this.startTime = new Date();
-  }
 
-  timerEnd() {
-    this.endTime = new Date();
-    var timeDiff = this.endTime - this.startTime; //in ms
-    // strip the ms
-    // timeDiff /= 1000;
-    console.log(timeDiff + " ms");
-    return timeDiff
-  }
-
-  timerClear() {
-    this.startTime = null
-    this.endTime = null
-  }
-
-  constructor(private socketService: SocketService) {
+  constructor(private _contextService: ContextService, private socketService: SocketService, private helper: HelperService) {
 
     this.speechState.next('idle')
 
+    // Subscribe speech enable state changed from browser
     this.speechEnabled.subscribe(data => {
-      this.SpeechE = data
-      if (!this.SpeechE) {
+      this.isSpeechEnabled = data
+      if (!this.isSpeechEnabled) {
         this.stopSpeak()
       }
     })
 
+    // Subscribe to messages comming from WS server
     this.socketService.messages.subscribe((message: any) => {
       this.speak(message.text, message.audio)
-      console.log('You Said: ', message.inputText);
+      helper.log('info', 'You Said: ' + message.inputText);
+      helper.log('info', `ConversationId : ${message.conversation.conversationId}, ConversationLogId : ${message.conversation.conversationLogId}`)
     });
 
-    if (this.SpeechE) {
-      this.init()
-    }
-
-    // this.socketService.processing = true
-
   }
 
-  init() {
-
-
-    // Initalize Google Chrome voices for Text-to-speech
-    if (!this.voices.length) {
-      speechSynthesis.addEventListener(
-        "voiceschanged",
-        () => {
-          this.voices = speechSynthesis.getVoices();
-          let selectVoice: number = 2
-          this.voices.forEach(function (voice, index) {
-            if (voice.lang === 'en-UK' && voice.name.includes('Female')) {
-              selectVoice = index
-            }
-          });
-          this.selectedVoice = this.voices[selectVoice]
-          console.log(this.selectedVoice);
-
-        });
-    }
-    this.updateState('i')
-  }
-
-  enableListening(pageId: string, isBrowserSpeech: boolean) {
-    this.isBrowserSpeech = isBrowserSpeech
-    if (isBrowserSpeech) this.cloudVoice = false
-    if (pageId === "pageId-home") {
+  enableListening() {
+    if (this._contextService.currentContextObj.pageId === "pageId-home") {
       this.speak(this.voiceWelcomeMessage, null);
     }
-
-    if (isBrowserSpeech) {
-      console.log('Voice Engine: Browser');
-      this.enableBrowserListening()
-    } else {
-      console.log('Voice Engine: Google Cloud');
-      this.enableCloudListenig()
-    }
-    this.updateState('i')
   }
 
-  async enableCloudListenig() {
-    if (this.recorder) {
-      return
-    }
+  async startListening() {
+    // Guard checks before starting the listening process
+    if (this.isSpeaking) return
+    if (this.isListening) return
+    if (this.isProcessing) return
+    if (!this.isSpeechEnabled) return
+
+    this.helper.log('info', `Listening, Speaking: ${this.isSpeaking}, Listening: ${this.isListening}, Processing: ${this.isProcessing}`);
 
     // Get/Ask browser to provide MIC input
-    navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true } }).then(stream => {
+    navigator.mediaDevices.getUserMedia({audio: {echoCancellation: true}}).then(stream => {
       this.stream = stream;
     }).catch(error => {
       console.error(error);
@@ -137,43 +75,11 @@ export class SpeechService {
 
     // wait until the audio stream is available
     while (!this.stream) {
-      await this.delay(100)
+      await this.helper.delay(100)
     }
-
-    // initialize speech speaking and silence events
-    this.speechEvents = hark(this.stream, {})
-    this.speechEvents.on('speaking', () => {
-      // if ((this.speechEvents && this.SpeechE) && (!this.isSpeaking && !this.isListening && !this.isProcessing)) {
-      //   console.log(`Listening, Speaking: ${this.isSpeaking}, Listening: ${this.isListening}, Processing: ${this.isProcessing}`);
-      //   // this.timerStart()
-      //   this.cloudlisten()
-      // }
-
-    });
-    this.speechEvents.on('stopped_speaking', () => {
-      // if (this.isListening && (this.timerEnd() >= 1000)) {
-      //   this.stopCloudListen()
-      //   this.timerClear()
-      // }
-      // this.stopCloudListen()
-    });
-  }
-
-  stopListening() {
-    this.delay(500);
-    this.stopCloudListen()
-  }
-
-  startListening() {
-    if ((this.SpeechE) && (!this.isSpeaking && !this.isListening && !this.isProcessing)) {
-      console.log(`Listening, Speaking: ${this.isSpeaking}, Listening: ${this.isListening}, Processing: ${this.isProcessing}`);
-      // this.timerStart()
-      this.cloudlisten()
-    }
-  }
-
-  cloudlisten() {
+    // Update state to listening
     this.updateState('l')
+
     try {
       this.recorder = new RecordRTC.StereoAudioRecorder(this.stream, {
         type: 'audio',
@@ -191,182 +97,110 @@ export class SpeechService {
     }
   }
 
-  stopCloudListen() {
-    if (this.recorder && this.isListening) {
-      this.updateState('p')
-      setTimeout(() => {
-        if (this.isProcessing) {
-          this.speak(this.voiceProcessingDelayed, null)
-        }
-      }, 5000);
-      this.recorder.stop((blob: any) => {
-        if (!this.isSpeaking || !this.isProcessing || !this.isListening)
-          this.socketService.sendMessage('voice', blob, this.cloudVoice)
-      }, () => {
-        this.disableListening();
-      });
-    }
+
+  async stopListening() {
+
+    // Artificial delay before stopping recording
+    await this.helper.delay(500);
+
+    // Guard checks
+    if (!this.recorder) return
+    if (!this.isListening) return
+
+    // Update state to processing
+    this.updateState('p')
+
+    setTimeout(() => {
+      if (this.isProcessing) {
+        this.speak(this.voiceProcessingDelayed, null)
+      }
+    }, 9000); // milli seconds
+
+    this.recorder.stop((blob: any) => {
+      // Guard checks before sending request to websocket
+      if (this.isSpeaking) return
+      if (this.isListening) return
+      if (!this.isSpeechEnabled) return
+
+      // Send request to websocket
+      this.socketService.sendMessage('voice', blob)
+    }, () => {
+      this.disableListening();
+    });
+
   }
 
   disableListening() {
-    if (this.isBrowserSpeech) {
-      this.disableBrowserListening()
-    } else {
-      if (this.recorder) {
-        this.recorder = null;
-        if (this.stream) {
-          this.stream = null;
-          if (this.speechEvents) this.speechEvents = null
-        }
+    if (this.recorder) {
+      this.recorder = null;
+      if (this.stream) {
+        this.stream = null;
       }
     }
-    // TODO: should update this before commiting 
     this.speak(this.voiceEndingMessage, null)
   }
 
+  convertTextToSpeech(speechText: string) {
+    // Send speech text to websocket to be converted into audio
+    // Audio response will be received through 'communication' channel
+    this.socketService.sendMessage('tts', speechText);
+  }
 
-  public async speak(speechText: string, voice: any) {
+  public async speak(speechText: string, speechAudioBuffer: any) {
     if (this.isSpeaking) return
 
-    this.isSpeaking = true
+    if (!speechAudioBuffer) {
+      // Send speech text to websocket to be converted into audio
+      this.convertTextToSpeech(speechText)
+      return
+    }
 
-    if (this.cloudVoice) {
-      if (!voice) {
-        this.socketService.sendMessage('tts', speechText, true);
-        this.isSpeaking = false;
-        this.stopSpeak();
-        return
-      }
-      const blob = new Blob([voice], { type: "audio/ogg" });
-      this.audio.src = URL.createObjectURL(blob)
-      this.audio.load();
-      this.updateState('s')
-      this.audio.play();
-      while (!this.audio.paused) {
-        await this.delay(100)
-      }
-    } else {
-      if (!speechText) return;
-      console.log('Bot Replied: ', speechText);
-      let utterance = new SpeechSynthesisUtterance(speechText);
-      utterance.voice = this.selectedVoice;
-      utterance.rate = this.selectedRate;
-      // utterance.lang = this.selectedVoice.lang
-      this.updateState('s')
-      speechSynthesis.speak(utterance);
-      while (speechSynthesis.speaking) {
-        await this.delay(100)
-      }
+    // Prepare audio to be played on browser
+    const blob = new Blob([speechAudioBuffer], {type: "audio/ogg"});
+    this.audio.src = URL.createObjectURL(blob)
+    this.audio.load();
+
+    // Update state to processing
+    this.updateState('s')
+
+    this.audio.play();
+
+    // Wait until the whole audio is played then stop the player
+    while (!this.audio.paused) {
+      await this.helper.delay(100)
     }
     this.stopSpeak()
   }
 
   public async stopSpeak() {
-    if (!this.cloudVoice && speechSynthesis.speaking) {
-      speechSynthesis.cancel();
-    }
-    if (this.cloudVoice && !this.audio.paused) {
-      console.log('Speaking Stopped');
+    if (!this.audio.paused) {
       this.audio.pause();
     }
     this.updateState('i')
   }
 
-  delay(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-
-  // browser speech section
-  enableBrowserListening() {
-    this.recognition = new webkitSpeechRecognition();
-    this.recognition.interimResults = true;
-    this.recognition.lang = 'en-US';
-    this.recognition.maxAlternatives = 1;
-    this.recognition.continuous = true;
-
-    this.recognition.start()
-    console.log('Speech recognition Started');
-
-    this.recognition.addEventListener('result', (e: any) => {
-      let final: boolean = false
-      const transcript: any = Array.from(e.results)
-        .map((result: any) => { final = result.isFinal; return result[0]; })
-        .map((result) => result.transcript)
-      // .join('');
-      this.tempWords = transcript;
-      this.browserListen()
-      if (final && !this.isSpeaking) {
-        this.text = this.tempWords[this.tempWords.length - 1]
-        console.log(this.text);
-        this.stopBrowserListen()
-      }
-    });
-
-    this.recognition.addEventListener('speechstart', () => {
-      console.log('Speech Start');
-      //this.browserListen()
-    })
-
-    this.recognition.addEventListener('speechend', () => {
-      // this.stopBrowserListen()
-      console.log('Speech Ended');
-    })
-  }
-
-  browserListen() {
-    if ((this.SpeechE) && (!this.isSpeaking && !this.isListening && !this.isProcessing)) {
-      this.updateState('l')
-    };
-  }
-
-  stopBrowserListen() {
-    this.updateState('p')
-    if (!this.text.length) return
-    this.socketService.sendMessage('communication', this.text, false)
-    this.text = ''
-    // this.recognition.start()
-  }
-
-  disableBrowserListening() {
-    this.recognition.stop();
-    console.log("End speech recognition")
-  }
-
-  wordConcat() {
-    this.text = this.text + ' ' + this.tempWords;
-    this.tempWords = ''
-  }
-
 
   updateState(state: string) {
     if (state === 'l') {
-      // show speech bubble
-      // this.socketService.processing = true
       this.isListening = true;
       this.isIdle = false
       this.speechState.next('listening')
-      this.speechText.next('Listening...')
     } else if (state === 'p') {
       this.isListening = false;
       this.isProcessing = true;
       this.isIdle = false
-      this.speechText.next('Processing...')
       this.speechState.next('processing')
     } else if (state === 's') {
       this.isIdle = false
       this.isProcessing = false;
       this.isSpeaking = true;
       this.speechState.next('speaking')
-      this.speechText.next('Speaking...')
     } else if (state === 'i') {
       this.isListening = false;
       this.isSpeaking = false;
       this.isProcessing = false;
       this.isIdle = true
-      // this.socketService.processing = false
       this.speechState.next('idle')
-      this.speechText.next('')
     }
   }
 }
