@@ -36,7 +36,7 @@ class Utility:
         else:
             number = "1"
             # return {"":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityValue":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":'nlu_fallback'}
-            return {"ctaId":self.db['ctaCommandId'],"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":findResponse(number)},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":""},"entities" : [{"entityId" : "","entityValue" : self.value,"clickAttribute" : "href, button","keywords" :""}]}}
+            return {"ctaId":None,"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":findResponse(number)},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":""},"entities" : [{"entityId" : "","entityValue" : self.value,"clickAttribute" : "href, button","keywords" :""}]}}
 
     # RESPONSE WHEN NO INTENT DETECTED FROM RASA
 
@@ -264,7 +264,7 @@ class Utility:
             return Response
             # return {"":self.db['response'],"ctaCommandId":self.db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityValue":self.value,"entityId":self.call+name,"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent}
         else:
-            Response = {"ctaId":self.db['ctaCommandId'],"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":self.db['response']},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":""},"entities" : [{"entityId" : self.call,"entityValue" : self.value,"entitySelected":True,"clickAttribute" : "href, button","keywords" :""}]}}
+            Response = {"ctaId":self.db['ctaCommandId'],"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":self.db['response']},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":self.value},"entities" : [{"entityId" : self.call,"entityValue" : self.value,"entitySelected":True,"clickAttribute" : "href, button","keywords" :""}]}}
             return Response
             # return {"":self.db['response'],"ctaCommandId":self.db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityValue":self.value,"entityId":self.call,"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent}
 
@@ -285,6 +285,28 @@ class Utility:
         Response = {"ctaId":None,"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":findResponse(number)},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":""},"entities" : [{"entityId" : "","entityValue" : self.value,"entitySelected":False,"clickAttribute" : "href, button","keywords" :""}]}}
         return Response
         # return {"":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityValue":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent} 
+
+    def validationProductResponse(self):
+        if self.db:
+            context = self.db['context']
+            iD = Utility.getEntityClickAttribute(context['entities'])
+            if self.intent == "product_flavour":
+                Response = {"ctaId":self.db['ctaCommandId'],"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":self.db['response']},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":""},"entities" : [{"entityId" : iD['entityId'],"entityValue" : self.value,"entitySelected":None,"clickAttribute" : "href, button","keywords" :""}]}}
+                return Response            
+            else:
+                Response = {"ctaId":self.db['ctaCommandId'],"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":self.db['response']},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":""},"entities" : [{"entityId" : self.call,"entityValue" : self.value,"entitySelected":None,"clickAttribute" : "href, button","keywords" :""}]}}
+                return Response
+        else:
+            Response = {"ctaId":self.db['ctaCommandId'],"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":"can not find the data in database"},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":""},"entities" : [{"entityId" : None,"entityValue" : self.value,"entitySelected":None,"clickAttribute" : "href, button","keywords" :""}]}}
+
+    def ifValidationForProductFalse(self):
+        print("saman")
+        Response = {"ctaId":None,"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":"There is no such item here for me to perform action"},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":""},"entities" : [{"entityId" : None,"entityValue" : self.value,"entitySelected":None,"clickAttribute" : "href, button","keywords" :""}]}}
+        return Response
+    
+    def ifParentEntityValueWrong(self):
+        Response = {"ctaId":self.db['ctaCommandId'],"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":"Parent entity value is wrong"},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":""},"entities" : [{"entityId" : None,"entityValue" : self.value,"entitySelected":None,"clickAttribute" : "href, button","keywords" :""}]}}
+        return Response
 
 
     # GETTING ENTITYID AND CLICK ATTRIBUTE

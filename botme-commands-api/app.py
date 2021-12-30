@@ -15,6 +15,7 @@ def send_Response():
     pageId = context['pageId']
     sectionId = context['sectionId']
     form = context['entities']
+    parentEntity = context['parentEntity']
     message = text.lower()
     rasa_data = getIntent(message)
     print(rasa_data)
@@ -27,7 +28,7 @@ def send_Response():
         response = utility.nluFallBack()
         return jsonify(response)
     else:
-        response = getResponse(intent['name'],rasa_data['entities'],text,pageId,sectionId,form)
+        response = getResponse(intent['name'],rasa_data['entities'],text,pageId,sectionId,form,parentEntity)
         if response:
             return jsonify(response)
         else:

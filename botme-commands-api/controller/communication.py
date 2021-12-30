@@ -10,7 +10,7 @@ from controller.reservationField import reservationField
 
 # reminder need to change text to senti in responses
 
-def getResponse(intent,entity,text,pageId,sectionId,form):
+def getResponse(intent,entity,text,pageId,sectionId,form,parentEntity):
     blob =TextBlob(text)
     senti = blob.sentiment.polarity
     val = Entity(entity,intent)
@@ -18,9 +18,9 @@ def getResponse(intent,entity,text,pageId,sectionId,form):
     db = getDbCta(intent,value,pageId,sectionId)
     form = checkForEmptyField(form)
 
-    if (intent == "Order_meal"or intent == "product-detail" or intent == "remove_item" or intent == "edit_product" or intent == "reduce_product_quantity"):
+    if (intent == "Order_meal"or intent == "product-detail" or intent == "remove_item" or intent == "edit_product" or intent == "reduce_product_quantity" or intent == "product_flavour"):
         if pageId == "pageId-order-online" or pageId == "pageId-product-customize-modal" or pageId == "pageId-product-detial-page" or pageId == "pageId-home" or pageId == "pageId-cart" or pageId == "pageId-cart-modal":
-            product = Product(intent,value,senti,pageId,sectionId,text,db)
+            product = Product(intent,value,senti,pageId,sectionId,text,db,parentEntity)
             Response = product.checkingForProduct()
             return Response
         else:

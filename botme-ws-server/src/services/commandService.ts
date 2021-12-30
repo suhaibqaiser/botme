@@ -3,7 +3,7 @@ import {responseJson} from "../models";
 const fetch = require('node-fetch');
 const config = require('config');
 
-export async function getCommandResponse(text: string, pageId: string, sectionId: string, entities: any, conversation: any) {
+export async function getCommandResponse(text: string, pageId: string, sectionId: string, entities: any, conversation: any, parentEntity: any) {
 
     // reponse from command api
     let answer: responseJson = {
@@ -60,10 +60,7 @@ export async function getCommandResponse(text: string, pageId: string, sectionId
             context: {
                 pageId: pageId,
                 sectionId: sectionId,
-                parentEntity: {
-                    entityId: "",
-                    entityValue: ""
-                },
+                parentEntity: parentEntity,
                 entities: entities
             }
         }
