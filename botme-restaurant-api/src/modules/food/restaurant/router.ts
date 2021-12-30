@@ -1,12 +1,13 @@
-import {Request, Response} from "express";
-import {areaTable, getAreaList} from "./controller"
+import { Request, Response } from "express";
+import { areaTable, getAllRestaurants, getAreaList } from "./controller"
 
 export default [
     {
         path: "/restaurant",
         method: "get",
         handler: async (req: Request, res: Response) => {
-            res.send("Restaurant");
+            let result = await getAllRestaurants()
+            res.send(result);
         }
     },
     {

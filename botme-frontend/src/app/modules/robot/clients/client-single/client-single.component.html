@@ -27,10 +27,13 @@
       </div>
       <div class="form-group">
         <label for="form-client-secret">Client Secret: </label>
-        <!-- <p-password class="form-control form-control-border" id="form-client-secret" formControlName="formclientsecret"
-          [feedback]="false" [toggleMask]="true"></p-password> -->
         <input type="password" class="form-control form-control-border" id="form-client-secret" [feedback]="false"
           formControlName="formclientsecret" pPassword>
+      </div>
+      <div class="form-group">
+        <label for="form-restaurant-id">Restaurant ID: </label>
+        <input type="text" class="form-control form-control-border" id="form-restaurant-id"
+          formControlName="formrestaurantid">
       </div>
       <div *ngIf="formMode==='update'" class="form-group">
         <label for="form-client-created">Created: </label>

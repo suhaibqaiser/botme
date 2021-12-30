@@ -9,4 +9,5 @@ export interface IClient {
     clientUpdated: string;
     clientActive: boolean;
     clientComment: string;
+    restaurantId: string;
 }

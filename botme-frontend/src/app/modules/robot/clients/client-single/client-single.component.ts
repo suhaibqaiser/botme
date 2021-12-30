@@ -23,7 +23,8 @@ export class ClientSingleComponent implements OnInit {
     formclientname: ['', Validators.required],
     formclientactive: true,
     formclientdebug: false,
-    formclientvoice: true
+    formclientvoice: true,
+    formrestaurantid: ['']
   });
 
   formMode = 'update';
@@ -38,7 +39,8 @@ export class ClientSingleComponent implements OnInit {
     clientCreated: '',
     clientUpdated: '',
     clientActive: true,
-    clientComment: ''
+    clientComment: '',
+    restaurantId: ''
   }
 
   ngOnInit(): void {
@@ -80,7 +82,8 @@ export class ClientSingleComponent implements OnInit {
           formclientname: this.client.clientName,
           formclientactive: this.client.clientActive,
           formclientdebug: this.client.clientDebug,
-          formclientvoice: this.client.clientVoiceEnabled
+          formclientvoice: this.client.clientVoiceEnabled,
+          formrestaurantid: this.client.restaurantId
         })
       }
     );
@@ -95,6 +98,7 @@ export class ClientSingleComponent implements OnInit {
     this.client.clientActive = this.clientForm.getRawValue().formclientactive
     this.client.clientDebug = this.clientForm.getRawValue().formclientdebug
     this.client.clientVoiceEnabled = this.clientForm.getRawValue().formclientvoice
+    this.client.restaurantId = this.clientForm.getRawValue().formrestaurantid
 
     let clientSecret = Md5.hashStr(this.client.clientSecret)
     this.client.clientSecret = clientSecret
@@ -112,6 +116,7 @@ export class ClientSingleComponent implements OnInit {
     this.client.clientActive = this.clientForm.getRawValue().formclientactive
     this.client.clientDebug = this.clientForm.getRawValue().formclientdebug
     this.client.clientVoiceEnabled = this.clientForm.getRawValue().formclientvoice
+    this.client.restaurantId = this.clientForm.getRawValue().formrestaurantid
 
     let clientSecret = Md5.hashStr(this.client.clientSecret)
     this.client.clientSecret = clientSecret
