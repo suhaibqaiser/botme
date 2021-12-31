@@ -5,6 +5,7 @@ export interface IClient {
     clientSecret: string;
     clientDebug: boolean,
     clientVoiceEnabled: boolean,
+    clientVoiceTimeout: number,
     clientCreated: string;
     clientUpdated: string;
     clientActive: boolean;

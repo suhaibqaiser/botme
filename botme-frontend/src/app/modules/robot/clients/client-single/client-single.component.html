@@ -32,6 +32,11 @@
         <input type="password" class="form-control form-control-border" id="form-client-secret" [feedback]="false"
           formControlName="formclientsecret" pPassword>
       </div>
+      <div class="form-group">
+        <label for="form-client-voice-timeout">Client Voice Timeout (ms): </label>
+        <input type="number" mode="decimal" class="form-control form-control-border" id="form-client-voice-timeout"
+          formControlName="formclientvoicetimeout">
+      </div>
       <div *ngIf="formMode==='update'" class="form-group">
         <label for="form-client-created">Created: </label>
         <input type="text" class="form-control form-control-border" id="form-client-created"
