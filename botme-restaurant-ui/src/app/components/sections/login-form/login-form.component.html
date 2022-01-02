@@ -1,0 +1,39 @@
+<div class="authentication-body container w-50 p-5">
+  <h4 class="text-white text-center" *ngIf="!_botMeClientService.getCookie().isLoggedIn">Log In</h4>
+  <h4 class="text-white text-center" *ngIf="_botMeClientService.getCookie().isLoggedIn">Dashboard</h4>
+  <ul class="authentication-tab">
+
+  </ul>
+  <div class="authentication-details">
+    <div *ngIf="!_botMeClientService.getCookie().isLoggedIn" class="authentication-details-item active"
+         data-authentication-details="1">
+      <form [formGroup]="loginForm">
+        <div class="form-group mb-20">
+          <div class="input-group">
+            <input required type="text" formControlName="clientID" class="form-control"
+                   placeholder="Client Id" />
+          </div>
+        </div>
+        <div class="form-group mb-20">
+          <div class="input-group">
+            <input required type="password" formControlName="clientSecret" class="form-control"
+                   placeholder="Client Secret" />
+          </div>
+        </div>
+
+        <div class="authentication-btn">
+          <button (click)="login()" [disabled]="!loginForm.valid" class="btn full-width btn-border mb-20">Log
+            In
+          </button>
+        </div>
+      </form>
+    </div>
+    <div *ngIf="_botMeClientService.getCookie().isLoggedIn" class="authentication-details-item active"
+         data-authentication-details="1">
+      <h6 class="mt-2 text-white">Client Id : {{_botMeClientService.getCookie().clientID}}</h6>
+      <div class="mt-4 authentication-btn">
+        <button (click)="logout()" class="btn full-width btn-border mb-20">Logout</button>
+      </div>
+    </div>
+  </div>
+</div>
