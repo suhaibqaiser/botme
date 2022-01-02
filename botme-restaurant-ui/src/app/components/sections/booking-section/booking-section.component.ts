@@ -33,6 +33,7 @@ export class BookingSectionComponent implements OnInit {
 
   addReservation() {
     this.reservationLoader = true
+    this.disableFormOnSubmit()
     this._reservationService.addReservation(this._reservationService.reservationForm.value).subscribe((res: any) => {
         if (res.status === "success") {
           this.reservation = {
@@ -52,6 +53,13 @@ export class BookingSectionComponent implements OnInit {
         }
       }
     )
+  }
+
+  disableFormOnSubmit(){
+      this._reservationService.reservationForm.get('customerName')?.disable()
+      this._reservationService.reservationForm.get('reservationSeats')?.disable()
+      this._reservationService.reservationForm.get('reservationDate')?.disable()
+      this._reservationService.reservationForm.get('reservationTime')?.disable()
   }
 
   resetReservation() {
