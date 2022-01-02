@@ -29,6 +29,8 @@ export class SocketService {
     entityValue: ""
   }
 
+  isClickFound: any = false
+
   constructor(private _contextService: ContextService, private _reservationService: ReservationService, private router: Router, private clients: BotmeClientService, private _helperService: HelperService) {
 
     this.authToken = clients.getCookieToken();
@@ -145,7 +147,7 @@ export class SocketService {
   }
 
   performClickAction(entities: any, ctaId: any) {
-    document.getElementById(ctaId)?.click()
+    this.isClickFound = false
     if (entities && entities.length) {
       entities.forEach((item: any) => {
 
@@ -161,15 +163,30 @@ export class SocketService {
         // @ts-ignore
         let template = document.getElementById(item.entityId)
         // @ts-ignore
-        let list = template.getElementsByTagName('a')
-        for (let i = 0; i < list.length; i++) {
-          if (list[i].getAttribute('id') == ctaId) {
-            list[i]?.click()
+        let list = (template && template.getElementsByTagName('a')) ? template.getElementsByTagName('a') : []
+        if (list && list.length) {
+          for (let i = 0; i < list.length; i++) {
+            if (list[i].getAttribute('id') == ctaId) {
+              list[i]?.click()
+              this.isClickFound = true
+            }
           }
         }
         document.getElementById(item.entityId)?.click()
       })
     }
+    console.log('isClickFound in entity list =>', this.isClickFound)
+    if (!this.isClickFound) {
+      this.performActionOnCTAId(ctaId)
+      this.isClickFound = false
+    }
   }
 
+  /**
+   * if click action is not performed in entities list then we go to ctaId
+   * @param ctaId
+   */
+  performActionOnCTAId(ctaId: any) {
+    document.getElementById(ctaId)?.click()
+  }
 }

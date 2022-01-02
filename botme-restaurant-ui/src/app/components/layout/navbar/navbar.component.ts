@@ -15,11 +15,6 @@ import {ContextService} from "../../../services/context.service";
 export class NavbarComponent implements OnInit {
 
   products: [] = []
-  loginForm = new FormGroup({
-    clientID: new FormControl('', Validators.required),
-    clientSecret: new FormControl('', Validators.required),
-    voiceType: new FormControl('cloud-voice', Validators.required)
-  })
   _voiceType: string = this._botMeClientService.getVoiceType()
   userVoice: string = ''
   botVoice: string = ''
@@ -43,30 +38,6 @@ export class NavbarComponent implements OnInit {
 
   }
 
-  login() {
-    this._botMeClientService.loginBotMeClientApi(this.loginForm.value).subscribe(
-      (res: any) => {
-        if (res.status) {
-          this._botMeClientService.setCookie('clientToken', res.payload.clientToken)
-          this._botMeClientService.setCookie('clientName', res.payload.clientName)
-          this._botMeClientService.setCookie('clientID', res.payload.clientID)
-          this._botMeClientService.setCookie('sessionId', res.payload.sessionId)
-          this._botMeClientService.setCookie('isLoggedIn', res.payload.isLoggedIn)
-          this._botMeClientService.setCookie('clientDebug', (res.payload.clientDebug) ? "yes" : "no")
-          this._botMeClientService.setCookie('voiceType', this.loginForm.get('voiceType')?.value)
-          this.router.navigate(['/home']).then(() => {
-            window.location.reload();
-          });
-        } else {
-          alert('Invalid credentials')
-        }
-      },
-      (err: any) => {
-        console.error(err)
-        alert('Invalid credentials')
-      }
-    )
-  }
 
   getCartProducts() {
     this.cartService.getCartProducts().subscribe(
@@ -84,20 +55,6 @@ export class NavbarComponent implements OnInit {
     this._contextService.currentContextObj.pageId = 'pageId-cart-modal'
     this._contextService.currentContextObj.sectionId = 'sectionId-cart-modal'
     document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:block')
-  }
-
-  logout() {
-    this._botMeClientService.logutAPI(this._botMeClientService.getCookieByKey('sessionId')).subscribe(res => {
-      console.log(res);
-      if (res.status === 'success') {
-
-        this._botMeClientService.reSetCookie()
-        this.router.navigate(['/home']).then(() => {
-          window.location.reload();
-        });
-      }
-
-    })
   }
 
   setVoiceType() {
