@@ -64,6 +64,10 @@ import {DemoPageComponent} from './components/pages/demo-page/demo-page.componen
 import {HelperService} from "./services/helper.service";
 import {MicrophoneComponent} from './components/sections/microphone/microphone.component';
 import {ContextService} from "./services/context.service";
+import { LoginComponent } from './components/pages/login/login.component';
+import { ProfileComponent } from './components/pages/profile/profile.component';
+import { LoginFormComponent } from './components/sections/login-form/login-form.component';
+import { ProfileSectionComponent } from './components/sections/profile-section/profile-section.component';
 
 @NgModule({
   declarations: [
@@ -110,7 +114,11 @@ import {ContextService} from "./services/context.service";
     SpinnerComponent,
     CustomizeProductModalComponent,
     DemoPageComponent,
-    MicrophoneComponent
+    MicrophoneComponent,
+    LoginComponent,
+    ProfileComponent,
+    LoginFormComponent,
+    ProfileSectionComponent
   ],
   imports: [
     BrowserModule,
