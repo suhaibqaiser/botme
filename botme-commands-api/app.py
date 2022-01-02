@@ -1,7 +1,7 @@
 from flask import Flask,jsonify,request
-from controller.communication import getResponse
+from controller.communication import getResponseUsingContext
 from Service.servicerasa import getIntent
-from conf.mongodb import findResponse
+from conf.mongodb import insertingWrongResponseInDb
 from controller.utility import Utility
 
 app = Flask(__name__)
@@ -11,6 +11,7 @@ def send_Response():
     req_data = request.get_json()
     context = req_data['context']
     inputText = req_data['inputText']
+    converstion = req_data['conversation']
     text = inputText['textValue']
     pageId = context['pageId']
     sectionId = context['sectionId']
@@ -26,9 +27,10 @@ def send_Response():
     utility = Utility(pageId,sectionId,value,text,intent['name'],db,form,call)
     if(intent['name'] == "nlu_fallback"):
         response = utility.nluFallBack()
+        wrongCommand = insertingWrongResponseInDb(converstion['conversationId'],converstion['conversationLogId'],context['clientId'],context['sessionId'],response,text)
         return jsonify(response)
     else:
-        response = getResponse(intent['name'],rasa_data['entities'],text,pageId,sectionId,form,parentEntity)
+        response = getResponseUsingContext(intent['name'],rasa_data['entities'],text,pageId,sectionId,form,parentEntity)
         if response:
             return jsonify(response)
         else:

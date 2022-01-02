@@ -4,6 +4,7 @@ from conf.mongodb import findResponse, getDbCta
 import requests
 from controller.utility import Utility
 from config import RESTAURANT_API
+from Service.restaurantApi import getProductUsingProductName , getProductUsingProductId
 
 
 class Product():
@@ -17,37 +18,30 @@ class Product():
         self.text = text
         self.db = db
         self.parentEntity = parentEntity
+        self.form = None
 
-    def checkingForProduct(self):
-        try:
-            if self.intent == "product_flavour":
-                response = Product.ValidationProductCode(self)
-                return response
-            else:    
-                response = requests.get(RESTAURANT_API + '/food/product/search?productName='+self.value)
-                self.data = response.json()
-                self.payload = self.data['payload']
-                if(self.data['status'] == "success"):
-                    if self.pageId == "pageId-order-online" or self.pageId == "pageId-home" or self.pageId == "pageId-product-detial-page" or self.pageId == "pageId-cart" or self.pageId == "pageId-cart-modal":
-                        if(len(self.data['payload']) == 1):
-                            Response = Product.ifProductArrayIsOne(self)
-                            return Response 
-                        else:
-                            self.db = None
-                            self.form = None
-                            call = Product.getAllProducts(self.data['payload'])
-                            utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
-                            Response = utility.ifMoreThanOneProduct()
-                            return Response
-                    elif(self.pageId == "pageId-product-customize-modal"):
-                        response = Product.ValidationProductCode(self)
-                        return response
+    # PRODUCT RESPONSE IF NO PARENT ENTITY
+    def ProductResponseIfNoParentEntity(self):
+        try:   
+            self.data = getProductUsingProductName(self.value)
+            self.payload = self.data['payload']
+            if(self.data['status'] == "success"):
+                if(len(self.data['payload']) == 1):
+                    Response = Product.ifProductArrayIsOne(self)
+                    return Response 
                 else:
-                    call = None
+                    self.db = None
                     self.form = None
+                    call = Product.getAllProducts(self.data['payload'])
                     utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
-                    Response = utility.ifNoProductFound()
+                    Response = utility.ifMoreThanOneProduct()
                     return Response
+            else:
+                call = None
+                self.form = None
+                utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+                Response = utility.ifNoProductFound()
+                return Response
         except:
             call = None
             self.db = None
@@ -69,7 +63,7 @@ class Product():
                 call = productID
                 self.form = None
                 utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
-                Response = utility.ifSectionIdCartModel()
+                Response = utility.getProductResponse()
                 return Response
             else:
                 call = self.data['payload']
@@ -81,11 +75,7 @@ class Product():
     def parseProductId(payload):
         for x in payload:
             return x['productId']
-
-    def getEntityClickAttribute(entity):
-        for x in entity:
-            return {"entityId":x['entityId'],"actionType":x['clickAttribute']}
-    
+  
     def getAllProducts(payload):
         array = []
         for x in payload:
@@ -93,45 +83,34 @@ class Product():
         product =",".join(array)
         return product
     
-    def ValidationProductCode(self):
+    # PRODUCT RESPONSE IF PARENTENTITY
+    def productResponseIfParentEntity(self):
         try:
-            self.form = None
-            parentProductName = self.parentEntity['entityValue']
-            parentResponse = requests.get(RESTAURANT_API + '/food/product/search?productName='+parentProductName)
-            parentdata = parentResponse.json()
+            print("2")
+            parentProductId = self.parentEntity['entityId']
+            data = getProductUsingProductName(self.value)
+            print("1 ==>",data)
+            payload = data['payload']
+            parentdata = getProductUsingProductId(parentProductId)
             parentPayload = parentdata['payload']
-            print(parentPayload)
+            print("3 ==>",parentPayload)
             if parentdata['status'] == "success":
-                if self.intent == "product_flavour":
-                    iD = self.value.title()
-                    Result = Product.ValidationForProduct(parentPayload,self.sectionId,self.intent,self.value,iD)
-                    print(Result)
-                    if Result:
-                        call = None
-                        utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
-                        Response = utility.validationProductResponse()
-                        return Response
-                    else:
-                        call = None
-                        self.form = None
-                        utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
-                        Response = utility.ifValidationForProductFalse()
-                        return Response
+                id = Product.checkForIntent(self.intent,self.value,payload)
+                print(id)
+                Result = Product.ValidationForProduct(parentPayload,self.sectionId,self.intent,self.value,id)
+                print(Result)
+                if Result:
+                    call = None
+                    utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+                    Response = utility.validationProductResponse()
+                    return Response
                 else:
-                    iD = Product.parseProductId(self.payload)
-                    Result = Product.ValidationForProduct(parentPayload,self.sectionId,self.intent,self.value,iD)
-                    print(Result)
-                    if Result:
-                        call = iD
-                        utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
-                        Response = utility.validationProductResponse()
-                        return Response
-                    else:
-                        call = None
-                        self.form = None
-                        utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
-                        Response = utility.ifValidationForProductFalse()
-                        return Response
+                    call = None
+                    self.form = None
+                    utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+                    Response = utility.ifValidationForProductFalse()
+                    return Response
+               
         except:
             call = None
             self.db = None
@@ -182,3 +161,12 @@ class Product():
             if iD in x:
                 return True
         return False
+    
+    def checkForIntent(intent,value,payload):
+        if intent == "product_flavour":
+            iD = value.title()
+            return iD
+        else:
+            iD = Product.parseProductId(payload)
+            return iD
+

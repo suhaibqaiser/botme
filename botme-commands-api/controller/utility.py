@@ -257,15 +257,9 @@ class Utility:
         Response = {"ctaId":None,"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":"please specify the command for "+self.value},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":""},"entities" : [{"entityId" : "","entityValue" : "","entitySelected":False,"clickAttribute" : "href, button","keywords" :""}]}}
         return Response
 
-    def ifSectionIdCartModel(self):
-        if self.sectionId == "sectionId-cart-modal":
-            name = self.value.title()
-            Response = {"ctaId":self.db['ctaCommandId'],"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":self.db['response']},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":""},"entities" : [{"entityId" : self.call+name,"entityValue" : self.value,"entitySelected":True,"clickAttribute" : "href, button","keywords" :""}]}}
-            return Response
-            # return {"":self.db['response'],"ctaCommandId":self.db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityValue":self.value,"entityId":self.call+name,"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent}
-        else:
-            Response = {"ctaId":self.db['ctaCommandId'],"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":self.db['response']},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":self.value},"entities" : [{"entityId" : self.call,"entityValue" : self.value,"entitySelected":True,"clickAttribute" : "href, button","keywords" :""}]}}
-            return Response
+    def getProductResponse(self):
+        Response = {"ctaId":self.db['ctaCommandId'],"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":self.db['response']},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":self.value},"entities" : [{"entityId" : self.call,"entityValue" : self.value,"entitySelected":True,"clickAttribute" : "href, button","keywords" :""}]}}
+        return Response
             # return {"":self.db['response'],"ctaCommandId":self.db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityValue":self.value,"entityId":self.call,"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent}
 
     def ifProductNotFoundInDb(self):
@@ -288,9 +282,9 @@ class Utility:
 
     def validationProductResponse(self):
         if self.db:
-            context = self.db['context']
-            iD = Utility.getEntityClickAttribute(context['entities'])
             if self.intent == "product_flavour":
+                context = self.db['context']
+                iD = Utility.getEntityClickAttribute(context['entities'])
                 Response = {"ctaId":self.db['ctaCommandId'],"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":self.db['response']},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":""},"entities" : [{"entityId" : iD['entityId'],"entityValue" : self.value,"entitySelected":None,"clickAttribute" : "href, button","keywords" :""}]}}
                 return Response            
             else:
@@ -300,7 +294,6 @@ class Utility:
             Response = {"ctaId":self.db['ctaCommandId'],"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":"can not find the data in database"},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":""},"entities" : [{"entityId" : None,"entityValue" : self.value,"entitySelected":None,"clickAttribute" : "href, button","keywords" :""}]}}
 
     def ifValidationForProductFalse(self):
-        print("saman")
         Response = {"ctaId":None,"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":"There is no such item here for me to perform action"},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":""},"entities" : [{"entityId" : None,"entityValue" : self.value,"entitySelected":None,"clickAttribute" : "href, button","keywords" :""}]}}
         return Response
     

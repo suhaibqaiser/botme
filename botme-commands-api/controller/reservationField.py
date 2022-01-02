@@ -121,3 +121,16 @@ def Field(db,form,pageId,sectionId,value,text,intent,entityId):
             else:
                 Response = checkIfFieldValueExist(form,pageId,sectionId,value,text,intent)
                 return Response
+
+def checkForEmptyField(form):
+    form = resetFieldFocus(form)
+    for x in form:
+        if not x['entityValue']:
+            x['entitySelected'] = True
+            return form
+    return form
+
+def resetFieldFocus(form):
+    for x in form:
+        x['entitySelected'] = False
+    return form
