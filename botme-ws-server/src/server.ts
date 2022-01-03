@@ -61,7 +61,7 @@ io.on("connection", async (socket: Socket) => {
         }
 
         if (data.context.type === "communication") {
-            let response = await getCommandResponse(payload.inputText.textValue, payload.context.pageId, payload.context.sectionId, payload.context.entities, conversation, payload.context.parentEntity)
+            let response = await getCommandResponse(payload.inputText.textValue, payload.context.pageId, payload.context.sectionId, payload.context.entities, conversation, payload.context.parentEntity,socket.data.clientId,socket.data.sessionId)
             sendMessage(socket.data.clientId, "communication", response)
 
         } else if (data.context.type === "notification") {
@@ -78,7 +78,7 @@ io.on("connection", async (socket: Socket) => {
             if (voiceResponse) {
                 updateConversationLog(conversationLogId, 'query', voiceResponse)
 
-                let response: any = await getCommandResponse(voiceResponse, payload.context.pageId, payload.context.sectionId, payload.context.entities, conversation, payload.context.parentEntity)
+                let response: any = await getCommandResponse(voiceResponse, payload.context.pageId, payload.context.sectionId, payload.context.entities, conversation, payload.context.parentEntity,socket.data.clientId,socket.data.sessionId)
                 updateConversationLog(conversationLogId, 'response', response.outputText.textValue)
 
 

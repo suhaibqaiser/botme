@@ -53,3 +53,11 @@ def findResponse(number):
             return x['Response']
         else:
             return None
+
+def insertingWrongResponseInDb(conversationId,conversationLogId,clientId,sessionId,response,text):
+    mydb = MongoClient(MONGO_URL)
+    db = mydb['clients']
+    mycollection = db['audit']
+    mydict = {"clientId":clientId,"sessionId":sessionId,"conversation": {"conversationId":conversationId,"conversationAudit":[{"_id":conversationLogId,"inputText":text,"outputResult":response}]}}
+    x = mycollection.insert_one(mydict)
+    print(x.inserted_id) 
