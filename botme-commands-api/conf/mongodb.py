@@ -44,8 +44,8 @@ def getDbCta(intent,entity,pageId,sectionId):
 
 def findResponse(number):
     mydb = MongoClient(MONGO_URL)
-    db = mydb['food']
-    mycollection = db['Responses']
+    db = mydb['clients']
+    mycollection = db['responses']
     myQuery = {"ResponseId":number} 
     Response = mycollection.find(myQuery).collation({"locale":"en"})
     for x in Response:

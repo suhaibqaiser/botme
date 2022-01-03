@@ -1,6 +1,6 @@
 from pymongo import response
 from requests.models import Response
-from conf.mongodb import findResponse, getDbCta
+from conf.mongodb import getDbCta, insertingWrongResponseInDb
 import requests
 from controller.utility import Utility
 from config import RESTAURANT_API
@@ -8,7 +8,7 @@ from Service.restaurantApi import getProductUsingProductName , getProductUsingPr
 
 
 class Product():
-    def __init__(self,intent,value,senti,pageId,sectionId,text,db,parentEntity):
+    def __init__(self,intent,value,senti,pageId,sectionId,text,db,parentEntity,converstion,context):
           
         self.intent = intent
         self.value = value
@@ -19,6 +19,8 @@ class Product():
         self.db = db
         self.parentEntity = parentEntity
         self.form = None
+        self.converstion = converstion
+        self.context = context
 
     # PRODUCT RESPONSE IF NO PARENT ENTITY
     def ProductResponseIfNoParentEntity(self):
@@ -48,6 +50,8 @@ class Product():
             self.form = None
             utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
             Response = utility.nluFallBack()
+            wrongCommand = insertingWrongResponseInDb(self.converstion['conversationId'],self.converstion['conversationLogId'],self.context['clientId'],self.context['sessionId'],Response,self.text)
+            return Response
 
 
     def ifProductArrayIsOne(self):
@@ -55,6 +59,7 @@ class Product():
             call = None
             utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
             Response = utility.nluFallBack()
+            wrongCommand = insertingWrongResponseInDb(self.converstion['conversationId'],self.converstion['conversationLogId'],self.context['clientId'],self.context['sessionId'],Response,self.text)
             return Response
         else:
             db = getDbCta(self.intent,self.value,self.pageId,self.sectionId)
@@ -117,6 +122,9 @@ class Product():
             self.form = None
             utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
             Response = utility.nluFallBack()
+            wrongCommand = insertingWrongResponseInDb(self.converstion['conversationId'],self.converstion['conversationLogId'],self.context['clientId'],self.context['sessionId'],Response,self.text)
+            return Response
+
 
     def ValidationForProduct(payload,sectionId,intent,value,iD):
         for x in payload:

@@ -9,18 +9,25 @@ app = Flask(__name__)
 @app.route('/response',methods=['POST'])
 def send_Response():
     req_data = request.get_json()
+    # REQUEST JSON
     context = req_data['context']
     inputText = req_data['inputText']
     converstion = req_data['conversation']
+
+    # INITIALIZATION
     text = inputText['textValue']
     pageId = context['pageId']
     sectionId = context['sectionId']
     form = context['entities']
     parentEntity = context['parentEntity']
     message = text.lower()
+
+    # RASA API CALL
     rasa_data = getIntent(message)
     print(rasa_data)
     intent = rasa_data['intent']
+
+    # RESPONSE RETURN
     value = None
     db = None
     call = None
@@ -30,10 +37,11 @@ def send_Response():
         wrongCommand = insertingWrongResponseInDb(converstion['conversationId'],converstion['conversationLogId'],context['clientId'],context['sessionId'],response,text)
         return jsonify(response)
     else:
-        response = getResponseUsingContext(intent['name'],rasa_data['entities'],text,pageId,sectionId,form,parentEntity)
+        response = getResponseUsingContext(intent['name'],rasa_data['entities'],text,pageId,sectionId,form,parentEntity,converstion,context)
         if response:
             return jsonify(response)
         else:
+            print("taha")
             response = utility.nluFallBack()
             wrongCommand = insertingWrongResponseInDb(converstion['conversationId'],converstion['conversationLogId'],context['clientId'],context['sessionId'],response,text)
             return jsonify(response)
