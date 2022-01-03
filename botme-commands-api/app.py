@@ -35,6 +35,7 @@ def send_Response():
             return jsonify(response)
         else:
             response = utility.nluFallBack()
+            wrongCommand = insertingWrongResponseInDb(converstion['conversationId'],converstion['conversationLogId'],context['clientId'],context['sessionId'],response,text)
             return jsonify(response)
 
 if __name__ == '__main__':
