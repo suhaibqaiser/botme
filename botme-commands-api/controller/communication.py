@@ -10,7 +10,7 @@ from controller.reservationField import reservationField , checkForEmptyField
 
 # reminder need to change text to senti in responses
 
-def getResponseUsingContext(intent,entity,text,pageId,sectionId,form,parentEntity):
+def getResponseUsingContext(intent,entity,text,pageId,sectionId,form,parentEntity,converstion,context):
     blob =TextBlob(text)
     senti = blob.sentiment.polarity
     val = Entity(entity,intent)
@@ -18,19 +18,29 @@ def getResponseUsingContext(intent,entity,text,pageId,sectionId,form,parentEntit
     db = getDbCta(intent,value,pageId,sectionId)
     form = checkForEmptyField(form)
 
-    if pageId == "pageId-order-online":
-        if (intent == "Order_meal"or intent == "product-detail"):
-                product = Product(intent,value,senti,pageId,sectionId,text,db,parentEntity)
-                Response = product.ProductResponseIfNoParentEntity()
-                return Response
-           
-    elif pageId == "pageId-product-customize-modal" or pageId == "pageId-cart-modal" or pageId == "pageId-cart":
+    if (pageId == "pageId-order-online"):
+        if (intent == "Order_meal" or intent == "product-detail"):
+            product = Product(intent,value,senti,pageId,sectionId,text,db,parentEntity,converstion,context)
+            Response = product.ProductResponseIfNoParentEntity()
+            return Response
+        else:
+            call = None
+            utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
+            response = utility.dbResponse()
+            return response
+
+    elif (pageId == "pageId-product-customize-modal" or pageId == "pageId-cart-modal" or pageId == "pageId-cart"):
         if intent == "Order_meal" or intent == "remove_item" or intent == "reduce_product_quantity" or intent == "product_flavour" or intent == "product-detail" or intent == "remove_item" or intent == "edit_product":
-            product = Product(intent,value,senti,pageId,sectionId,text,db,parentEntity)
+            product = Product(intent,value,senti,pageId,sectionId,text,db,parentEntity,converstion,context)
             Response = product.productResponseIfParentEntity()
             return Response
+        else:
+            call = None
+            utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
+            response = utility.dbResponse()
+            return response
 
-    elif pageId == "pageId-reservation":
+    elif (pageId == "pageId-reservation"):
         if (intent == "reservation_page"):
             form = reservationField(db,form,pageId,sectionId,value,text,intent)
             call = None
@@ -65,12 +75,10 @@ def getResponseUsingContext(intent,entity,text,pageId,sectionId,form,parentEntit
         elif (intent == "book_now"):
             print("form ==>",form)
             Response = reservationField(db,form,pageId,sectionId,value,text,intent)
-            return Response 
-
-    else:
-        call = None
-        utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
-        response = utility.dbResponse()
-        return response
-
+            return Response
+        else:
+            call = None
+            utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
+            response = utility.dbResponse()
+            return response 
 
