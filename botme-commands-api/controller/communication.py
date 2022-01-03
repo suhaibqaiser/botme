@@ -81,4 +81,9 @@ def getResponseUsingContext(intent,entity,text,pageId,sectionId,form,parentEntit
             utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
             response = utility.dbResponse()
             return response 
-
+            
+    else:
+        call = None
+        utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
+        response = utility.dbResponse()
+        return response
