@@ -241,7 +241,7 @@ class Utility:
     # PRODUCT RESPONSES
 
     def ifMoreThanOneProduct(self):
-        Response = {"ctaId":None,"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":"Found this product "+ self.call +" for name "+self.value+" .Which one you want to order?"},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":""},"entities" : [{"entityId" : "","entityValue" : "","entitySelected":False,"clickAttribute" : "href, button","keywords" :""}]}}
+        Response = {"ctaId":"ctaId-search","inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":"Found this product "+ self.call +" for name "+self.value+" .Which one you want to order?"},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":""},"entities" : [{"entityId" : "entityId-search","entityValue" : self.value,"entitySelected":"","clickAttribute" : "href, button","keywords" :""}]}}
         return Response
         # return {"":"Found this product "+ self.call +" for name "+self.value+" .Which one you want to order?","ctaCommandId":"ctaId-search","pageId":self.pageId,"sectionId":self.sectionId,"entityValue":self.value,"entityId":"entityId-search","actionType":None,"sentimentScore":self.text,"intentName":self.intent}
 
