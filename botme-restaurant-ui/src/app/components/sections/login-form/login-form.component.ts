@@ -35,6 +35,7 @@ export class LoginFormComponent implements OnInit {
           this._botMeClientService.setCookie('isLoggedIn', res.payload.isLoggedIn)
           this._botMeClientService.setCookie('clientDebug', (res.payload.clientDebug) ? "yes" : "no")
           this._botMeClientService.setCookie('voiceType', this.loginForm.get('voiceType')?.value)
+          this._botMeClientService.setCookie('voiceTimeout', res.payload.clientVoiceTimeout)
           this.router.navigate(['/home']).then(() => {
             window.location.reload();
           });
