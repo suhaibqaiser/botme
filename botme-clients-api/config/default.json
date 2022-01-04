@@ -1,3 +1,5 @@
 {
-    "clientsDB": "clients"
+    "clientsDB": "clients",
+    "foodDB": "food",
+    "nluDB": "nluDB"
 }

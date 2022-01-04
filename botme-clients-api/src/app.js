@@ -1,40 +1,18 @@
 const express = require('express')
-const config = require('config')
+
 const jwt = require('jsonwebtoken')
 const jwtKey = 'superSecretJWTKey'
 const clientsRouter = require('./routes/clientsRouter.js')
-// const nlpRouter = require('./routes/nlpRouter.js')
-// const entityRouter = require('./routes/entityRouter')
-// const corpusRouter = require('./routes/corpusRouter')
+const nlpRouter = require('./routes/nlpRouter.js')
 const sessionRouter = require('./routes/sessionRouter')
 const conversationRouter = require('./routes/conversationRouter')
 const authRouter = require('./routes/authRouter')
-// const restaurantRouter = require('./routes/restaurantRouter')
 const speechRouter = require('./routes/speechRouter')
+const db = require('./utils/mongodb');
 
 const app = express()
 const port = process.env.API_PORT || 3000;
 const cors = require('cors')
-
-console.log(process.env.NODE_ENV)
-console.log(config.get('clientsDB'))
-
-//Set up mongoose connection
-const mongoose = require('mongoose');
-const mongoDB = process.env.MONGODB_CONNECTION || `mongodb+srv://mongoUser:1t3jWnpoC0imAM4d@cluster0.tipo5.mongodb.net/${config.get('clientsDB')}?retryWrites=true&w=majority`;
-
-mongoose.connect(mongoDB, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-    promoteBuffers: true
-});
-const db = mongoose.connection;
-db.once("open", function () {
-    console.log("Connected to MongoDB Server");
-});
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 let corsOptions = {
     origin: '*',
@@ -46,12 +24,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/client', verifyToken, clientsRouter);
-// app.use('/nlp', verifyToken, nlpRouter);
-// app.use('/entity', verifyToken, entityRouter);
-// app.use('/corpus', verifyToken, corpusRouter);
+app.use('/nlp', verifyToken, nlpRouter);
 app.use('/session', verifyToken, sessionRouter);
 app.use('/conversation', verifyToken, conversationRouter);
-// app.use('/restaurant', verifyToken, restaurantRouter)
 app.use('/speech', speechRouter);
 app.use('/auth', authRouter);
 
@@ -75,6 +50,7 @@ function verifyToken(req, res, next) {
     }
 }
 
-app.listen(port, () => {
+app.listen(port, async () => {
     console.log(`API listening at http://localhost:${port}`)
+    await db.init();
 })
