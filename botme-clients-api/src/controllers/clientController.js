@@ -64,6 +64,7 @@ async function addClient(req, res) {
         clientName: req.body.clientName,
         clientDebug: req.body.clientDebug,
         clientVoiceEnabled: req.body.clientVoiceEnabled,
+        clientVoiceTimeout: req.body.clientVoiceTimeout,
         clientCreated: Date(),
         clientUpdated: null,
         clientActive: req.body.clientActive,
@@ -139,6 +140,7 @@ async function updateClient(req, res) {
         clientName: req.body.clientName,
         clientDebug: req.body.clientDebug,
         clientVoiceEnabled: req.body.clientVoiceEnabled,
+        clientVoiceTimeout: req.body.clientVoiceTimeout,
         clientUpdated: Date(),
         clientActive: req.body.clientActive,
         clientComment: req.body.clientComment

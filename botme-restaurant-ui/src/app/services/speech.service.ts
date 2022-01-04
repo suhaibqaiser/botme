@@ -1,10 +1,11 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import * as RecordRTC from 'recordrtc';
-import {Subject} from 'rxjs';
-import {SocketService} from './socket.service';
+import { Subject } from 'rxjs';
+import { SocketService } from './socket.service';
 import * as hark from 'hark'
-import {HelperService} from './helper.service';
-import {ContextService} from "./context.service";
+import { HelperService } from './helper.service';
+import { ContextService } from "./context.service";
+import { BotmeClientService } from './botme-client.service';
 
 @Injectable({
   providedIn: 'root'
@@ -28,9 +29,10 @@ export class SpeechService {
   audio = new Audio();
   speechState = new Subject<string>()  // State for monitoring speech service eg. listening, processing, speaking, idle
   speechEnabled = new Subject<boolean>();
+  voiceTimeout = 3000; // default timeout
 
 
-  constructor(private _contextService: ContextService, private socketService: SocketService, private helper: HelperService) {
+  constructor(private _contextService: ContextService, private socketService: SocketService, private helper: HelperService, private clientService: BotmeClientService) {
 
     this.speechState.next('idle')
 
@@ -48,6 +50,10 @@ export class SpeechService {
       helper.log('info', 'You Said: ' + message.inputText);
       helper.log('info', `ConversationId : ${message.conversation.conversationId}, ConversationLogId : ${message.conversation.conversationLogId}`)
     });
+
+    if (this.clientService.getVoiceType()) {
+      this.voiceTimeout = Number(this.clientService.getVoiceType())
+    }
 
   }
 
@@ -67,7 +73,7 @@ export class SpeechService {
     this.helper.log('info', `Listening, Speaking: ${this.isSpeaking}, Listening: ${this.isListening}, Processing: ${this.isProcessing}`);
 
     // Get/Ask browser to provide MIC input
-    navigator.mediaDevices.getUserMedia({audio: {echoCancellation: true}}).then(stream => {
+    navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true } }).then(stream => {
       this.stream = stream;
     }).catch(error => {
       console.error(error);
@@ -114,7 +120,7 @@ export class SpeechService {
       if (this.isProcessing) {
         this.speak(this.voiceProcessingDelayed, null)
       }
-    }, 9000); // milli seconds
+    }, this.voiceTimeout); // milli seconds
 
     this.recorder.stop((blob: any) => {
       // Guard checks before sending request to websocket
@@ -156,7 +162,7 @@ export class SpeechService {
     }
 
     // Prepare audio to be played on browser
-    const blob = new Blob([speechAudioBuffer], {type: "audio/ogg"});
+    const blob = new Blob([speechAudioBuffer], { type: "audio/ogg" });
     this.audio.src = URL.createObjectURL(blob)
     this.audio.load();
 

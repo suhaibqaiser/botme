@@ -23,7 +23,8 @@ export class ClientSingleComponent implements OnInit {
     formclientname: ['', Validators.required],
     formclientactive: true,
     formclientdebug: false,
-    formclientvoice: true
+    formclientvoice: true,
+    formclientvoicetimeout: [3000, Validators.required]
   });
 
   formMode = 'update';
@@ -35,6 +36,7 @@ export class ClientSingleComponent implements OnInit {
     clientSecret: '',
     clientDebug: false,
     clientVoiceEnabled: true,
+    clientVoiceTimeout: 3000,
     clientCreated: '',
     clientUpdated: '',
     clientActive: true,
@@ -80,21 +82,15 @@ export class ClientSingleComponent implements OnInit {
           formclientname: this.client.clientName,
           formclientactive: this.client.clientActive,
           formclientdebug: this.client.clientDebug,
-          formclientvoice: this.client.clientVoiceEnabled
+          formclientvoice: this.client.clientVoiceEnabled,
+          formclientvoicetimeout: this.client.clientVoiceTimeout
         })
       }
     );
   }
 
   updateClient(client: object): void {
-    this.client.clientID = this.clientForm.getRawValue().formclientid
-    this.client.clientDeviceId = this.clientForm.getRawValue().formclientdeviceid
-    this.client.clientSecret = this.clientForm.getRawValue().formclientsecret
-    this.client.clientComment = this.clientForm.getRawValue().formclientcomment
-    this.client.clientName = this.clientForm.getRawValue().formclientname
-    this.client.clientActive = this.clientForm.getRawValue().formclientactive
-    this.client.clientDebug = this.clientForm.getRawValue().formclientdebug
-    this.client.clientVoiceEnabled = this.clientForm.getRawValue().formclientvoice
+    this.patchFormValues();
 
     let clientSecret = Md5.hashStr(this.client.clientSecret)
     this.client.clientSecret = clientSecret
@@ -104,14 +100,7 @@ export class ClientSingleComponent implements OnInit {
   }
 
   registerClient(): void {
-    this.client.clientID = this.clientForm.getRawValue().formclientid
-    this.client.clientDeviceId = this.clientForm.getRawValue().formclientdeviceid
-    this.client.clientSecret = this.clientForm.getRawValue().formclientsecret
-    this.client.clientComment = this.clientForm.getRawValue().formclientcomment
-    this.client.clientName = this.clientForm.getRawValue().formclientname
-    this.client.clientActive = this.clientForm.getRawValue().formclientactive
-    this.client.clientDebug = this.clientForm.getRawValue().formclientdebug
-    this.client.clientVoiceEnabled = this.clientForm.getRawValue().formclientvoice
+    this.patchFormValues();
 
     let clientSecret = Md5.hashStr(this.client.clientSecret)
     this.client.clientSecret = clientSecret
@@ -121,6 +110,18 @@ export class ClientSingleComponent implements OnInit {
         this.client = result.payload
       })
 
+  }
+
+  patchFormValues() {
+    this.client.clientID = this.clientForm.getRawValue().formclientid
+    this.client.clientDeviceId = this.clientForm.getRawValue().formclientdeviceid
+    this.client.clientSecret = this.clientForm.getRawValue().formclientsecret
+    this.client.clientComment = this.clientForm.getRawValue().formclientcomment
+    this.client.clientName = this.clientForm.getRawValue().formclientname
+    this.client.clientActive = this.clientForm.getRawValue().formclientactive
+    this.client.clientDebug = this.clientForm.getRawValue().formclientdebug
+    this.client.clientVoiceEnabled = this.clientForm.getRawValue().formclientvoice
+    this.client.clientVoiceTimeout = this.clientForm.getRawValue().formclientvoicetimeout
   }
 }
 
