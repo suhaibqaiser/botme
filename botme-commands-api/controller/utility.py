@@ -233,14 +233,19 @@ class Utility:
 
     def validationProductResponse(self):
         if self.db:
-            if self.intent == "product_flavour":
-                context = self.db['context']
-                iD = Utility.getEntityClickAttribute(context['entities'])
-                Response = {"ctaId":self.db['ctaCommandId'],"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":self.db['response']},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":""},"entities" : [{"entityId" : iD['entityId'],"entityValue" : self.value,"entitySelected":None,"clickAttribute" : "href, button","keywords" :""}]}}
-                return Response            
-            else:
-                Response = {"ctaId":self.db['ctaCommandId'],"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":self.db['response']},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":""},"entities" : [{"entityId" : self.call,"entityValue" : self.value,"entitySelected":None,"clickAttribute" : "href, button","keywords" :""}]}}
+            if self.sectionId == "sectionId-cart-modal":
+                name = self.value.title()
+                Response = {"ctaId":self.db['ctaCommandId'],"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":self.db['response']},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":""},"entities" : [{"entityId" : self.call+name,"entityValue" : self.value,"entitySelected":True,"clickAttribute" : "href, button","keywords" :""}]}}
                 return Response
+            else:
+                if self.intent == "product_flavour":
+                    context = self.db['context']
+                    iD = Utility.getEntityClickAttribute(context['entities'])
+                    Response = {"ctaId":self.db['ctaCommandId'],"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":self.db['response']},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":""},"entities" : [{"entityId" : iD['entityId'],"entityValue" : self.value,"entitySelected":None,"clickAttribute" : "href, button","keywords" :""}]}}
+                    return Response            
+                else:
+                    Response = {"ctaId":self.db['ctaCommandId'],"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":self.db['response']},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":""},"entities" : [{"entityId" : self.call,"entityValue" : self.value,"entitySelected":None,"clickAttribute" : "href, button","keywords" :""}]}}
+                    return Response
         else:
             Response = {"ctaId":self.db['ctaCommandId'],"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":"can not find the data in database"},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":""},"entities" : [{"entityId" : None,"entityValue" : self.value,"entitySelected":None,"clickAttribute" : "href, button","keywords" :""}]}}
 
