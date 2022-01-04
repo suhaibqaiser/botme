@@ -3,13 +3,13 @@ const config = require('config')
 const jwt = require('jsonwebtoken')
 const jwtKey = 'superSecretJWTKey'
 const clientsRouter = require('./routes/clientsRouter.js')
-const nlpRouter = require('./routes/nlpRouter.js')
-const entityRouter = require('./routes/entityRouter')
-const corpusRouter = require('./routes/corpusRouter')
+// const nlpRouter = require('./routes/nlpRouter.js')
+// const entityRouter = require('./routes/entityRouter')
+// const corpusRouter = require('./routes/corpusRouter')
 const sessionRouter = require('./routes/sessionRouter')
 const conversationRouter = require('./routes/conversationRouter')
 const authRouter = require('./routes/authRouter')
-const restaurantRouter = require('./routes/restaurantRouter')
+// const restaurantRouter = require('./routes/restaurantRouter')
 const speechRouter = require('./routes/speechRouter')
 
 const app = express()
@@ -46,12 +46,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/client', verifyToken, clientsRouter);
-app.use('/nlp', verifyToken, nlpRouter);
-app.use('/entity', verifyToken, entityRouter);
-app.use('/corpus', verifyToken, corpusRouter);
+// app.use('/nlp', verifyToken, nlpRouter);
+// app.use('/entity', verifyToken, entityRouter);
+// app.use('/corpus', verifyToken, corpusRouter);
 app.use('/session', verifyToken, sessionRouter);
 app.use('/conversation', verifyToken, conversationRouter);
-app.use('/restaurant', verifyToken, restaurantRouter)
+// app.use('/restaurant', verifyToken, restaurantRouter)
 app.use('/speech', speechRouter);
 app.use('/auth', authRouter);
 
