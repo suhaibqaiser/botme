@@ -42,7 +42,7 @@ def getResponseUsingContext(intent,entity,text,pageId,sectionId,form,parentEntit
 
 
     elif pageId == "pageId-cart-modal" or pageId == "pageId-cart":
-        if intent == "Order_meal" or intent == "remove_item" or intent == "reduce_product_quantity" or intent == "product_flavour" or intent == "product-detail" or intent == "remove_item" or intent == "edit_product":
+        if intent == "edit_product":
             product = Product(intent,value,senti,pageId,sectionId,text,db,parentEntity,converstion,context)
             Response = product.productResponseIfParentEntity()
             return Response
