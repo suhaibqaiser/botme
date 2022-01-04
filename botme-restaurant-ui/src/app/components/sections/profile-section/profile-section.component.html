@@ -1,0 +1,28 @@
+<div class="row m-auto w-50 container p-5">
+  <div class="col-sm-12 col-md-12 col-lg-12 pb-30">
+    <div class="contact-item">
+      <div class="contact-item-title text-center">
+        <h3 class="color-white">Profile</h3>
+      </div>
+      <div class="contact-item-info">
+        <div class="text-capitalize contact-info-list">
+          <h3>Client Id</h3>
+          <p>{{_botMeClientService.getCookie().clientID}}</p>
+        </div>
+        <div class="text-capitalize contact-info-list">
+          <h3>Voice Type</h3>
+          <p>{{_botMeClientService.getCookie().voiceType}}</p>
+        </div>
+        <div class="text-capitalize contact-info-list">
+          <h3>Device Type</h3>
+          <p>{{_deviceService.deviceType}}</p>
+        </div>
+        <div class="contact-info-list">
+          <div class="mt-4 authentication-btn">
+            <button (click)="logout()" class="btn full-width btn-border mb-20">Logout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

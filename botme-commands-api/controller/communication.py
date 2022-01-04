@@ -6,11 +6,11 @@ from models.Name import Name
 from models.Products import Product
 from models.Reservation import Reservation
 from models.DateTime import DateTime
-from controller.reservationField import reservationField
+from controller.reservationField import reservationField , checkForEmptyField
 
 # reminder need to change text to senti in responses
 
-def getResponse(intent,entity,text,pageId,sectionId,form):
+def getResponseUsingContext(intent,entity,text,pageId,sectionId,form,parentEntity,converstion,context):
     blob =TextBlob(text)
     senti = blob.sentiment.polarity
     val = Entity(entity,intent)
@@ -18,66 +18,72 @@ def getResponse(intent,entity,text,pageId,sectionId,form):
     db = getDbCta(intent,value,pageId,sectionId)
     form = checkForEmptyField(form)
 
-    if (intent == "Order_meal"or intent == "product-detail" or intent == "remove_item" or intent == "edit_product" or intent == "reduce_product_quantity"):
-        if pageId == "pageId-order-online" or pageId == "pageId-product-customize-modal" or pageId == "pageId-product-detial-page" or pageId == "pageId-home" or pageId == "pageId-cart" or pageId == "pageId-cart-modal":
-            product = Product(intent,value,senti,pageId,sectionId,text)
-            Response = product.checkingForProduct()
+    if (pageId == "pageId-order-online" or pageId == "pageId-cart-modal" or pageId == "pageId-cart"):
+        if intent == "Order_meal" or intent == "remove_item" or intent == "reduce_product_quantity" or intent == "product_flavour" or intent == "product-detail" or intent == "remove_item" or intent == "edit_product":
+            product = Product(intent,value,senti,pageId,sectionId,text,db,parentEntity,converstion,context)
+            Response = product.ProductResponseIfNoParentEntity()
             return Response
         else:
-            number = "7"
-            return {"Response":findResponse(number),"ctaCommandId":None,"pageId":pageId,"sectionId":sectionId,"entityName":value,"entityId":None,"actionType":None,"sentimentScore":text,"intentName":intent,"entities":""} 
+            call = None
+            utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
+            response = utility.dbResponse()
+            return response
 
-    elif (intent == "reservation_page"):
-        form = reservationField(db,form,pageId,sectionId,value,text,intent)
-        call = None
-        utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
-        response = utility.reservationResponse()
-        return response
-    
-    elif (intent == "inform_name"):
-        name = Name(intent,value,pageId,sectionId,text,db,form)
-        utility = Utility(pageId,sectionId,value,text,intent,db,form,name)
-        response = utility.nameResponse()
-        return response
+    elif (pageId == "pageId-product-customize-modal"):
+        if intent == "Order_meal" or intent == "remove_item" or intent == "reduce_product_quantity" or intent == "product_flavour" or intent == "product-detail" or intent == "remove_item":
+            product = Product(intent,value,senti,pageId,sectionId,text,db,parentEntity,converstion,context)
+            Response = product.productResponseIfParentEntity()
+            return Response
+        else:
+            call = None
+            utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
+            response = utility.dbResponse()
+            return response
 
-    elif (intent == "unreserved_table_person"):
-       reservation = Reservation(intent,value,pageId,sectionId,text,db,form)
-       utility = Utility(pageId,sectionId,value,text,intent,db,form,reservation)
-       Response = utility.personResponse()
-       return Response
+    elif (pageId == "pageId-reservation"):
+        if (intent == "reservation_page"):
+            form = reservationField(db,form,pageId,sectionId,value,text,intent)
+            call = None
+            utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
+            response = utility.reservationResponse()
+            return response
 
-    elif (intent == "inform_date"):
-        date = DateTime(intent,value,pageId,sectionId,text,db,form)
-        utility = Utility(pageId,sectionId,value,text,intent,db,form,date)
-        response = utility.dateResponse()
-        return response
+        elif (intent == "inform_name"):
+            name = Name(intent,value,pageId,sectionId,text,db,form)
+            utility = Utility(pageId,sectionId,value,text,intent,db,form,name)
+            response = utility.nameResponse()
+            return response
 
-    elif (intent == "inform_time"):
-        time = DateTime(intent,value,pageId,sectionId,text,db,form)
-        utility = Utility(pageId,sectionId,value,text,intent,db,form,time)
-        response = utility.timeResponse()
-        return response
-        
-    elif (intent == "book_now"):
-        Response = reservationField(db,form,pageId,sectionId,value,text,intent)
-        return Response 
+        elif (intent == "unreserved_table_person"):
+           reservation = Reservation(intent,value,pageId,sectionId,text,db,form)
+           utility = Utility(pageId,sectionId,value,text,intent,db,form,reservation)
+           Response = utility.personResponse()
+           return Response
 
+        elif (intent == "inform_date"):
+            date = DateTime(intent,value,pageId,sectionId,text,db,form)
+            utility = Utility(pageId,sectionId,value,text,intent,db,form,date)
+            response = utility.dateResponse()
+            return response
+
+        elif (intent == "inform_time"):
+            time = DateTime(intent,value,pageId,sectionId,text,db,form)
+            utility = Utility(pageId,sectionId,value,text,intent,db,form,time)
+            response = utility.timeResponse()
+            return response
+
+        elif (intent == "book_now"):
+            print("form ==>",form)
+            Response = reservationField(db,form,pageId,sectionId,value,text,intent)
+            return Response
+        else:
+            call = None
+            utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
+            response = utility.dbResponse()
+            return response 
+            
     else:
         call = None
         utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
         response = utility.dbResponse()
         return response
-
-
-def checkForEmptyField(form):
-    form = resetFieldFocus(form)
-    for x in form:
-        if not x['entityValue']:
-            x['entityStatus'] = True
-            return form
-    return form
-
-def resetFieldFocus(form):
-    for x in form:
-        x['entityStatus'] = False
-    return form

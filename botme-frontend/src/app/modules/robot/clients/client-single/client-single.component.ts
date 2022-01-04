@@ -24,6 +24,7 @@ export class ClientSingleComponent implements OnInit {
     formclientactive: true,
     formclientdebug: false,
     formclientvoice: true,
+    formclientvoicetimeout: [3000, Validators.required]
     formrestaurantid: ['']
   });
 
@@ -36,6 +37,7 @@ export class ClientSingleComponent implements OnInit {
     clientSecret: '',
     clientDebug: false,
     clientVoiceEnabled: true,
+    clientVoiceTimeout: 3000,
     clientCreated: '',
     clientUpdated: '',
     clientActive: true,
@@ -83,6 +85,7 @@ export class ClientSingleComponent implements OnInit {
           formclientactive: this.client.clientActive,
           formclientdebug: this.client.clientDebug,
           formclientvoice: this.client.clientVoiceEnabled,
+          formclientvoicetimeout: this.client.clientVoiceTimeout
           formrestaurantid: this.client.restaurantId
         })
       }
@@ -90,6 +93,7 @@ export class ClientSingleComponent implements OnInit {
   }
 
   updateClient(client: object): void {
+    this.patchFormValues();
     this.client.clientID = this.clientForm.getRawValue().formclientid
     this.client.clientDeviceId = this.clientForm.getRawValue().formclientdeviceid
     this.client.clientSecret = this.clientForm.getRawValue().formclientsecret
@@ -108,6 +112,19 @@ export class ClientSingleComponent implements OnInit {
   }
 
   registerClient(): void {
+    this.patchFormValues();
+
+    let clientSecret = Md5.hashStr(this.client.clientSecret)
+    this.client.clientSecret = clientSecret
+
+    this.clientService.registerClient(this.client)
+      .subscribe(result => {
+        this.client = result.payload
+      })
+
+  }
+
+  patchFormValues() {
     this.client.clientID = this.clientForm.getRawValue().formclientid
     this.client.clientDeviceId = this.clientForm.getRawValue().formclientdeviceid
     this.client.clientSecret = this.clientForm.getRawValue().formclientsecret
@@ -126,6 +143,7 @@ export class ClientSingleComponent implements OnInit {
         this.client = result.payload
       })
 
+    this.client.clientVoiceTimeout = this.clientForm.getRawValue().formclientvoicetimeout
   }
 }
 

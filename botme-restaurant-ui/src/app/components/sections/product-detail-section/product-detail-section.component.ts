@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {CartService} from "../../../services/cart.service";
 import {SocketService} from "../../../services/socket.service";
 import {HelperService} from "../../../services/helper.service";
+import {ContextService} from "../../../services/context.service";
 
 declare var $: any;
 
@@ -18,21 +19,34 @@ export class ProductDetailSectionComponent implements OnInit {
   categories: any
   relatedProduct: any
   productsList: any
+  queryProductId: any
+  loader: any = false
 
-  constructor(public _helperService: HelperService, private router: Router, public _socketService: SocketService, public cartService: CartService, private route: ActivatedRoute, private menuservice: MenuService) {
+  constructor(private _contextService: ContextService, private _route: ActivatedRoute, public _helperService: HelperService, private router: Router, public _socketService: SocketService, public cartService: CartService, private route: ActivatedRoute, private menuservice: MenuService) {
   }
 
   async ngOnInit() {
-    await this.getProducts()
+
+    this._route.queryParams.subscribe((param: any) => {
+      this.queryProductId = (param && param.productId) ? param.productId : ''
+    })
+
+    if (!this.queryProductId && !this.queryProductId) {
+      alert('Sorry product id not found!')
+      return
+    }
+
+    await this.getProductDetail(this.queryProductId)
     await this.getCategory()
-    await this.getProductDetail(this.router.url.split('/')[2])
+    await this.getProducts()
     await this.getRelatedProducts()
 
-    this._socketService.getCurrentContext()
+    this._contextService.getCurrentContext()
   }
 
   async getProductDetail(productId: string) {
-    this.menuservice.getProductById(productId).subscribe(
+    this.loader = true
+    await this.menuservice.getProductById(productId).subscribe(
       async result => {
         if (result.status === 'success') {
           this.product = result.payload[0]
@@ -40,6 +54,7 @@ export class ProductDetailSectionComponent implements OnInit {
         }
       }
     );
+    return
   }
 
   async getProducts() {
@@ -53,6 +68,7 @@ export class ProductDetailSectionComponent implements OnInit {
     return this.menuservice.getCategory()
       .subscribe(result => {
         this.categories = result.payload
+        this.loader = false
         return result.payload
       });
   }

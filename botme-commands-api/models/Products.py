@@ -1,11 +1,14 @@
-from conf.mongodb import findResponse, getDbCta
+from pymongo import response
+from requests.models import Response
+from conf.mongodb import getDbCta, insertingWrongResponseInDb
 import requests
-
+from controller.utility import Utility
 from config import RESTAURANT_API
+from Service.restaurantApi import getProductUsingProductName , getProductUsingProductId
 
 
 class Product():
-    def __init__(self,intent,value,senti,pageId,sectionId,text):
+    def __init__(self,intent,value,senti,pageId,sectionId,text,db,parentEntity,converstion,context):
           
         self.intent = intent
         self.value = value
@@ -13,57 +16,165 @@ class Product():
         self.pageId = pageId
         self.sectionId = sectionId
         self.text = text
+        self.db = db
+        self.parentEntity = parentEntity
+        self.form = None
+        self.converstion = converstion
+        self.context = context
 
-    def checkingForProduct(self):
-        try:
-            response = requests.get(RESTAURANT_API + '/food/product/search?productName='+self.value)
-            data = response.json()
-            payload = data['payload']
-            if(data['status'] == "success"):
-                if(len(data['payload']) == 1):
-                    if(self.value.title() == self.text.title()):
-                        Response = {"Response":"please specify the command for "+self.value,"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""}
-                        return Response
-                    else:
-                        db = getDbCta(self.intent,self.value,self.pageId,self.sectionId)
-                        if(db != None):
-                            context = db['context']
-                            productID = Product.parseProductId(payload)
-                            iD = Product.getEntityClickAttribute(context['entities'])
-                            if(self.sectionId == "sectionId-cart-modal"):
-                                name = self.value.title()
-                                return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":productID+name,"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent,"entities":""}
-                            else:
-                                return {"Response":db['response'],"ctaCommandId":db['ctaCommandId'],"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":productID,"actionType":iD['actionType'],"sentimentScore":self.text,"intentName":self.intent,"entities":""}
-                        else:
-                            if(data['payload']):
-                                product = data['payload'][0]['productName']
-                                return {"Response":"Do you mean "+product,"ctaCommandId":"ctaId-search","pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":"entityId-search","actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""}
-                            else:
-                                number = "6"
-                                return {"Response":findResponse(number),"ctaCommandId":None,"pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""} 
+    # PRODUCT RESPONSE IF NO PARENT ENTITY
+    def ProductResponseIfNoParentEntity(self):
+        try:   
+            self.data = getProductUsingProductName(self.value)
+            self.payload = self.data['payload']
+            if(self.data['status'] == "success"):
+                if(len(self.data['payload']) == 1):
+                    Response = Product.ifProductArrayIsOne(self)
+                    return Response 
                 else:
-                    products = Product.getAllProducts(data['payload'])
-                    print(products)
-                    return {"Response":"Found this product "+ products +" for name "+self.value+" .Which one you want to order?","ctaCommandId":"ctaId-search","pageId":self.pageId,"sectionId":self.sectionId,"entityName":self.value,"entityId":"entityId-search","actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""}
+                    self.db = None
+                    self.form = None
+                    call = Product.getAllProducts(self.data['payload'])
+                    utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+                    Response = utility.ifMoreThanOneProduct()
+                    return Response
             else:
-                number = "8"
-                return {"Response":findResponse(number),"ctaCommandId":None,"pageId":None,"sectionId":None,"entityName":None,"entityId":None,"actionType":None,"sentimentScore":self.text,"intentName":self.intent,"entities":""}
+                call = None
+                self.form = None
+                utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+                Response = utility.ifNoProductFound()
+                return Response
         except:
-            return "error in checking for product"
+            call = None
+            self.db = None
+            self.form = None
+            utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+            Response = utility.nluFallBack()
+            wrongCommand = insertingWrongResponseInDb(self.converstion['conversationId'],self.converstion['conversationLogId'],self.context['clientId'],self.context['sessionId'],Response,self.text)
+            return Response
+
+
+    def ifProductArrayIsOne(self):
+        if(self.value.title() == self.text.title()):
+            call = None
+            utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+            Response = utility.nluFallBack()
+            wrongCommand = insertingWrongResponseInDb(self.converstion['conversationId'],self.converstion['conversationLogId'],self.context['clientId'],self.context['sessionId'],Response,self.text)
+            return Response
+        else:
+            db = getDbCta(self.intent,self.value,self.pageId,self.sectionId)
+            if(db != None):
+                productID = Product.parseProductId(self.payload)
+                call = productID
+                self.form = None
+                utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+                Response = utility.getProductResponse()
+                return Response
+            else:
+                call = self.data['payload']
+                self.form = None
+                utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+                Response = utility.ifProductNotFoundInDb()
+                return Response
 
     def parseProductId(payload):
         for x in payload:
             return x['productId']
-
-    def getEntityClickAttribute(entity):
-        for x in entity:
-            return {"entityId":x['entityId'],"actionType":x['clickAttribute']}
-    
+  
     def getAllProducts(payload):
         array = []
         for x in payload:
             array.append(x['productName'])
         product =",".join(array)
         return product
- 
+    
+    # PRODUCT RESPONSE IF PARENTENTITY
+    def productResponseIfParentEntity(self):
+        try:
+            print("2")
+            parentProductId = self.parentEntity['entityId']
+            data = getProductUsingProductName(self.value)
+            print("1 ==>",data)
+            payload = data['payload']
+            parentdata = getProductUsingProductId(parentProductId)
+            parentPayload = parentdata['payload']
+            print("3 ==>",parentPayload)
+            if parentdata['status'] == "success":
+                id = Product.checkForIntent(self.intent,self.value,payload)
+                print(id)
+                Result = Product.ValidationForProduct(parentPayload,self.sectionId,self.intent,self.value,id)
+                print(Result)
+                if Result:
+                    call = id
+                    utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+                    Response = utility.validationProductResponse()
+                    return Response
+                else:
+                    call = None
+                    self.form = None
+                    utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+                    Response = utility.ifValidationForProductFalse()
+                    return Response
+               
+        except:
+            call = None
+            self.db = None
+            self.form = None
+            utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+            Response = utility.nluFallBack()
+            wrongCommand = insertingWrongResponseInDb(self.converstion['conversationId'],self.converstion['conversationLogId'],self.context['clientId'],self.context['sessionId'],Response,self.text)
+            return Response
+
+
+    def ValidationForProduct(payload,sectionId,intent,value,iD):
+        for x in payload:
+            if sectionId == "sectionId-servingSize-productOptions":
+                if intent == "food_size":
+                    if x['productRate'] == value:
+                        return True
+                    else:
+                        return False
+                elif intent == "Order_meal" or intent == "remove_item":
+                    if Product.checkingForProductOptions(x['productOptions'],iD):
+                        return True
+                    else:
+                        return False
+
+            elif sectionId == "sectionId-ingredients-flavour":
+                if intent == "Order_meal" or intent == "remove_item":
+                    if iD in x['productIngredients']:
+                        return True
+                    else:
+                        return False
+                elif intent == "product_flavour":
+                    if iD in x['productFlavor']:
+                        return True
+                    else:
+                        return False
+
+            elif sectionId == "sectionId-toppings":
+                if intent == "Order_meal" or intent == "reduce_product_quantity":
+                    if iD in x['productToppings']:
+                        return True
+                    else:
+                        return False
+            
+            elif sectionId == "sectionId-addons":
+                return True
+            else:
+                return False
+
+    def checkingForProductOptions(productOptions,iD):
+        for x in productOptions:
+            if iD in x:
+                return True
+        return False
+    
+    def checkForIntent(intent,value,payload):
+        if intent == "product_flavour":
+            iD = value.title()
+            return iD
+        else:
+            iD = Product.parseProductId(payload)
+            return iD
+

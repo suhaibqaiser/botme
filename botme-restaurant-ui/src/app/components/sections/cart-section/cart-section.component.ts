@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {CartService} from "../../../services/cart.service";
 import {MenuService} from 'src/app/services/menu.service';
-import {SocketService} from "../../../services/socket.service";
 import {HelperService} from "../../../services/helper.service";
+import {ContextService} from "../../../services/context.service";
+import {SocketService} from "../../../services/socket.service";
 
 declare var $: any;
 
@@ -19,13 +20,14 @@ export class CartSectionComponent implements OnInit {
 
   constructor(private cartService: CartService,
               private MenuService: MenuService,
-              public _socketService: SocketService,
-              public _helperService: HelperService
+              public _helperService: HelperService,
+              private _contextService: ContextService,
+              private _socketService: SocketService
   ) {
   }
 
   ngOnInit(): void {
-    this._socketService.getCurrentContext()
+    this._contextService.getCurrentContext()
     this.getProducts();
     this.getCartProducts();
   }
@@ -105,29 +107,37 @@ export class CartSectionComponent implements OnInit {
         total += item.productTotalPrice
       })
     }
-    return total
+    return this.roundToTwo(total)
+  }
+
+  roundToTwo(num: number) {
+    return Math.round((num + Number.EPSILON) * 100) / 100;
   }
 
   editToCart() {
     this.cartService.addToCart(this.cartService.singleCustomProductObj, true);
-    document.getElementById("entityId-show-cart")?.click()
+    document.getElementById("ctaId-show-cart")?.click()
   }
 
   editFromCart(product: any) {
     this.cartService.slideToShow = 0
     // document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:none')
-    this._socketService.currentContextObj.sectionId = 'sectionId-servingSize-productOptions'
-    this._socketService.currentContextObj.pageId = 'pageId-product-customize-modal'
+    this._contextService.currentContextObj.sectionId = 'sectionId-servingSize-productOptions'
+    this._contextService.currentContextObj.pageId = 'pageId-product-customize-modal'
     this.cartService.setProductRateSize(product)
     this.cartService.singleCustomProductObj = JSON.parse(JSON.stringify(product))
     this.cartService.singleCustomProductObj.isEditable = true
     this.cartService.selectProductRatesField.setValue(product.productServingSize)
+    this._socketService.parentEntity = {
+      entityId: product.productId,
+      entityValue: product.productName
+    }
     $('#pageId-productCustomizeModal').modal('show')
   }
 
   showProductInfo(product: any) {
-    this._socketService.currentContextObj.sectionId = 'sectionId-summary'
-    this._socketService.currentContextObj.pageId = 'pageId-product-customize-modal'
+    this._contextService.currentContextObj.sectionId = 'sectionId-summary'
+    this._contextService.currentContextObj.pageId = 'pageId-product-customize-modal'
     this.cartService.setProductRateSize(product)
     // document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:none')
     this.cartService.singleCustomProductObj = JSON.parse(JSON.stringify(product))

@@ -4,6 +4,9 @@ import { Subject } from 'rxjs';
 import { SocketService } from './socket.service';
 import * as hark from 'hark'
 import { HelperService } from './helper.service';
+import { ContextService } from "./context.service";
+import { BotmeClientService } from './botme-client.service';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -26,9 +29,10 @@ export class SpeechService {
   audio = new Audio();
   speechState = new Subject<string>()  // State for monitoring speech service eg. listening, processing, speaking, idle
   speechEnabled = new Subject<boolean>();
+  voiceTimeout = 3000; // default timeout
 
 
-  constructor(private socketService: SocketService, private helper: HelperService) {
+  constructor(private _contextService: ContextService, private socketService: SocketService, private helper: HelperService, private clientService: BotmeClientService) {
 
     this.speechState.next('idle')
 
@@ -47,10 +51,14 @@ export class SpeechService {
       helper.log('info', `ConversationId : ${message.conversation.conversationId}, ConversationLogId : ${message.conversation.conversationLogId}`)
     });
 
+    if (this.clientService.getVoiceType()) {
+      this.voiceTimeout = Number(this.clientService.getVoiceType())
+    }
+
   }
 
   enableListening() {
-    if (this.socketService.currentContextObj.pageId === "pageId-home") {
+    if (this._contextService.currentContextObj.pageId === "pageId-home") {
       this.speak(this.voiceWelcomeMessage, null);
     }
   }
@@ -112,7 +120,7 @@ export class SpeechService {
       if (this.isProcessing) {
         this.speak(this.voiceProcessingDelayed, null)
       }
-    }, 5000); // milli seconds
+    }, this.voiceTimeout); // milli seconds
 
     this.recorder.stop((blob: any) => {
       // Guard checks before sending request to websocket
@@ -176,8 +184,6 @@ export class SpeechService {
     }
     this.updateState('i')
   }
-
-
 
 
   updateState(state: string) {
