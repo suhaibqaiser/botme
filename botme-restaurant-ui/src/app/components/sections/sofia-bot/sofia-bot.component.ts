@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { BotmeClientService } from 'src/app/services/botme-client.service';
-import { SocketService } from 'src/app/services/socket.service';
-import { SpeechService } from "../../../services/speech.service";
+import {Component, OnInit} from '@angular/core';
+import {BotmeClientService} from 'src/app/services/botme-client.service';
+import {SocketService} from 'src/app/services/socket.service';
+import {SpeechService} from "../../../services/speech.service";
 
 
 @Component({
@@ -18,8 +18,9 @@ export class SofiaBotComponent implements OnInit {
 
 
   constructor(public speechService: SpeechService,
-    public clientService: BotmeClientService
+              public clientService: BotmeClientService
   ) {
+    this.updateInteractionState(this.clientService.getCookie().isVoiceModeOn === 'true' ? true : false)
   }
 
   ngOnInit() {
@@ -51,6 +52,7 @@ export class SofiaBotComponent implements OnInit {
 
   updateInteractionState(value: boolean) {
     this.speechEnabled = value
+    this.clientService.setCookie('isVoiceModeOn', value)
     this.speechService.speechEnabled.next(this.speechEnabled)
     if (this.speechEnabled) {
       this.speechService.enableListening()
@@ -58,7 +60,6 @@ export class SofiaBotComponent implements OnInit {
       this.speechService.disableListening();
     }
   }
-
 
 
   ngOnDestroy() {

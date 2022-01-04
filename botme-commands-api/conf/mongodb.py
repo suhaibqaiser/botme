@@ -44,8 +44,8 @@ def getDbCta(intent,entity,pageId,sectionId):
 
 def findResponse(number):
     mydb = MongoClient(MONGO_URL)
-    db = mydb['food']
-    mycollection = db['Responses']
+    db = mydb['clients']
+    mycollection = db['responses']
     myQuery = {"ResponseId":number} 
     Response = mycollection.find(myQuery).collation({"locale":"en"})
     for x in Response:
@@ -53,3 +53,11 @@ def findResponse(number):
             return x['Response']
         else:
             return None
+
+def insertingWrongResponseInDb(conversationId,conversationLogId,clientId,sessionId,response,text):
+    mydb = MongoClient(MONGO_URL)
+    db = mydb['clients']
+    mycollection = db['audit']
+    mydict = {"clientId":clientId,"sessionId":sessionId,"conversation": {"conversationId":conversationId,"conversationAudit":[{"_id":conversationLogId,"inputText":text,"outputResult":response}]}}
+    x = mycollection.insert_one(mydict)
+    print(x.inserted_id) 
