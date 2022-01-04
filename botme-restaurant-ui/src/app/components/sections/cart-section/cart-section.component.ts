@@ -3,6 +3,7 @@ import {CartService} from "../../../services/cart.service";
 import {MenuService} from 'src/app/services/menu.service';
 import {HelperService} from "../../../services/helper.service";
 import {ContextService} from "../../../services/context.service";
+import {SocketService} from "../../../services/socket.service";
 
 declare var $: any;
 
@@ -21,6 +22,7 @@ export class CartSectionComponent implements OnInit {
               private MenuService: MenuService,
               public _helperService: HelperService,
               private _contextService: ContextService,
+              private _socketService: SocketService
   ) {
   }
 
@@ -126,6 +128,10 @@ export class CartSectionComponent implements OnInit {
     this.cartService.singleCustomProductObj = JSON.parse(JSON.stringify(product))
     this.cartService.singleCustomProductObj.isEditable = true
     this.cartService.selectProductRatesField.setValue(product.productServingSize)
+    this._socketService.parentEntity = {
+      entityId: product.productId,
+      entityValue: product.productName
+    }
     $('#pageId-productCustomizeModal').modal('show')
   }
 
