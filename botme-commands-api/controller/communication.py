@@ -18,7 +18,7 @@ def getResponseUsingContext(intent,entity,text,pageId,sectionId,form,parentEntit
     db = getDbCta(intent,value,pageId,sectionId)
     form = checkForEmptyField(form)
 
-    if (pageId == "pageId-order-online"):
+    if (pageId == "pageId-order-online" or pageId == "pageId-cart-modal" or pageId == "pageId-cart"):
         if (intent == "Order_meal" or intent == "product-detail"):
             product = Product(intent,value,senti,pageId,sectionId,text,db,parentEntity,converstion,context)
             Response = product.ProductResponseIfNoParentEntity()
@@ -39,17 +39,6 @@ def getResponseUsingContext(intent,entity,text,pageId,sectionId,form,parentEntit
             utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
             response = utility.dbResponse()
             return response
-
-
-    elif pageId == "pageId-cart-modal" or pageId == "pageId-cart":
-        if intent == "edit_product":
-            product = Product(intent,value,senti,pageId,sectionId,text,db,parentEntity,converstion,context)
-            Response = product.productResponseIfParentEntity()
-            return Response
-        else:
-            product = Product(intent,value,senti,pageId,sectionId,text,db,parentEntity,converstion,context)
-            Response = product.ProductResponseIfNoParentEntity()
-            return Response
 
     elif (pageId == "pageId-reservation"):
         if (intent == "reservation_page"):
