@@ -29,8 +29,8 @@ def getResponseUsingContext(intent,entity,text,pageId,sectionId,form,parentEntit
             response = utility.dbResponse()
             return response
 
-    elif (pageId == "pageId-product-customize-modal" or pageId == "pageId-cart-modal" or pageId == "pageId-cart"):
-        if intent == "Order_meal" or intent == "remove_item" or intent == "reduce_product_quantity" or intent == "product_flavour" or intent == "product-detail" or intent == "remove_item" or intent == "edit_product":
+    elif (pageId == "pageId-product-customize-modal"):
+        if intent == "Order_meal" or intent == "remove_item" or intent == "reduce_product_quantity" or intent == "product_flavour" or intent == "product-detail" or intent == "remove_item":
             product = Product(intent,value,senti,pageId,sectionId,text,db,parentEntity,converstion,context)
             Response = product.productResponseIfParentEntity()
             return Response
@@ -39,6 +39,17 @@ def getResponseUsingContext(intent,entity,text,pageId,sectionId,form,parentEntit
             utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
             response = utility.dbResponse()
             return response
+
+
+    elif pageId == "pageId-cart-modal" or pageId == "pageId-cart":
+        if intent == "Order_meal" or intent == "remove_item" or intent == "reduce_product_quantity" or intent == "product_flavour" or intent == "product-detail" or intent == "remove_item" or intent == "edit_product":
+            product = Product(intent,value,senti,pageId,sectionId,text,db,parentEntity,converstion,context)
+            Response = product.productResponseIfParentEntity()
+            return Response
+        else:
+            product = Product(intent,value,senti,pageId,sectionId,text,db,parentEntity,converstion,context)
+            Response = product.ProductResponseIfNoParentEntity()
+            return Response
 
     elif (pageId == "pageId-reservation"):
         if (intent == "reservation_page"):

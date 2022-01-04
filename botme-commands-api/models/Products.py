@@ -105,7 +105,7 @@ class Product():
                 Result = Product.ValidationForProduct(parentPayload,self.sectionId,self.intent,self.value,id)
                 print(Result)
                 if Result:
-                    call = None
+                    call = id
                     utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
                     Response = utility.validationProductResponse()
                     return Response
