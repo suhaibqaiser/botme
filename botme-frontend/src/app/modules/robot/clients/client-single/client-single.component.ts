@@ -24,7 +24,7 @@ export class ClientSingleComponent implements OnInit {
     formclientactive: true,
     formclientdebug: false,
     formclientvoice: true,
-    formclientvoicetimeout: [3000, Validators.required]
+    formclientvoicetimeout: [3000, Validators.required],
     formrestaurantid: ['']
   });
 
@@ -85,7 +85,7 @@ export class ClientSingleComponent implements OnInit {
           formclientactive: this.client.clientActive,
           formclientdebug: this.client.clientDebug,
           formclientvoice: this.client.clientVoiceEnabled,
-          formclientvoicetimeout: this.client.clientVoiceTimeout
+          formclientvoicetimeout: this.client.clientVoiceTimeout,
           formrestaurantid: this.client.restaurantId
         })
       }
@@ -94,15 +94,6 @@ export class ClientSingleComponent implements OnInit {
 
   updateClient(client: object): void {
     this.patchFormValues();
-    this.client.clientID = this.clientForm.getRawValue().formclientid
-    this.client.clientDeviceId = this.clientForm.getRawValue().formclientdeviceid
-    this.client.clientSecret = this.clientForm.getRawValue().formclientsecret
-    this.client.clientComment = this.clientForm.getRawValue().formclientcomment
-    this.client.clientName = this.clientForm.getRawValue().formclientname
-    this.client.clientActive = this.clientForm.getRawValue().formclientactive
-    this.client.clientDebug = this.clientForm.getRawValue().formclientdebug
-    this.client.clientVoiceEnabled = this.clientForm.getRawValue().formclientvoice
-    this.client.restaurantId = this.clientForm.getRawValue().formrestaurantid
 
     let clientSecret = Md5.hashStr(this.client.clientSecret)
     this.client.clientSecret = clientSecret
@@ -134,15 +125,6 @@ export class ClientSingleComponent implements OnInit {
     this.client.clientDebug = this.clientForm.getRawValue().formclientdebug
     this.client.clientVoiceEnabled = this.clientForm.getRawValue().formclientvoice
     this.client.restaurantId = this.clientForm.getRawValue().formrestaurantid
-
-    let clientSecret = Md5.hashStr(this.client.clientSecret)
-    this.client.clientSecret = clientSecret
-
-    this.clientService.registerClient(this.client)
-      .subscribe(result => {
-        this.client = result.payload
-      })
-
     this.client.clientVoiceTimeout = this.clientForm.getRawValue().formclientvoicetimeout
   }
 }
