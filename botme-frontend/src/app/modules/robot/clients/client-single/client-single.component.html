@@ -32,8 +32,9 @@
       </div>
       <div class="form-group">
         <label for="form-restaurant-id">Restaurant ID: </label>
-        <input type="text" class="form-control form-control-border" id="form-restaurant-id"
-          formControlName="formrestaurantid">
+        <select class="form-control" formControlName="formrestaurantid">
+          <option [value]="obj.restaurantId" *ngFor="let obj of restaurantList">{{obj.restaurantName}}</option>
+        </select>
       </div>
       <div class="form-group">
         <label for="form-client-voice-timeout">Client Voice Timeout (ms): </label>

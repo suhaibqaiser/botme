@@ -59,7 +59,7 @@ async function addClient(req, res) {
 
     let client = {
         clientDeviceId: req.body.clientDeviceId,
-        clientID: req.body.clientId,
+        clientID: req.body.clientID,
         clientSecret: req.body.clientSecret,
         clientName: req.body.clientName,
         clientDebug: req.body.clientDebug,

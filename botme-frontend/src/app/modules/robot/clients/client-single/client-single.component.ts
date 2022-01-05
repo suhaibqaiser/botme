@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { IClient } from '../model/client';
-import { ClientService } from '../service/client.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { Md5 } from 'ts-md5/dist/md5';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {IClient} from '../model/client';
+import {ClientService} from '../service/client.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {Md5} from 'ts-md5/dist/md5';
 
 @Component({
   selector: 'app-client-single',
@@ -44,8 +44,16 @@ export class ClientSingleComponent implements OnInit {
     clientComment: '',
     restaurantId: ''
   }
+  restaurantList: any = []
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    await this.clientService.getActiveRestaurant().subscribe((res: any) => {
+      if (res.status === 'success') {
+        this.restaurantList = res.payload
+        console.log(this.restaurantList)
+      }
+    })
+    console.log(this.restaurantList)
     this.route.queryParams
       .subscribe(params => {
         this.clientId = params.clientId;

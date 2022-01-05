@@ -52,7 +52,7 @@ export class SpeechService {
     });
 
     if (this.clientService.getVoiceType()) {
-      this.voiceTimeout = Number(this.clientService.getVoiceType())
+      this.voiceTimeout = Number(this.clientService.getVoiceTimeout())
     }
 
   }
