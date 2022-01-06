@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {environment} from "../../../../../environments/environment";
-import {Observable} from "rxjs";
+import { Injectable } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import { environment } from "../../../../../environments/environment";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -14,17 +14,22 @@ export class CorpusService {
   apiBaseUrl = environment.apiBaseUrl;
 
   getCorpus(): Observable<any> {
-    const url = `${this.apiBaseUrl}/corpus/list`;
+    const url = `${this.apiBaseUrl}/nlp/corpus`;
     return this.http.get(url);
   }
 
   getCorpusDetail(corpusId: string): Observable<any> {
-    const url = `${this.apiBaseUrl}/corpus/detail?corpusId=${corpusId}`
+    const url = `${this.apiBaseUrl}/nlp/corpusbyid?corpusId=${corpusId}`
     return this.http.get(url);
   }
 
+  addCorpus(corpus: any): Observable<any> {
+    const url = `${this.apiBaseUrl}/nlp/addcorpus`
+    return this.http.post(url, corpus);
+  }
+
   updateCorpus(corpus: any): Observable<any> {
-    const url = `${this.apiBaseUrl}/corpus/update`
+    const url = `${this.apiBaseUrl}/nlp/updatecorpus`
     return this.http.post(url, corpus);
   }
 }

@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {CorpusService} from "../service/corpus.service";
-import {Corpus} from "../model/corpus";
-import {ConfirmationService, ConfirmEventType, MessageService} from "primeng/api";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
+import { CorpusService } from "../service/corpus.service";
+import { Corpus } from "../model/corpus";
+import { ConfirmationService, ConfirmEventType, MessageService } from "primeng/api";
 
 
 
@@ -13,46 +13,44 @@ import {ConfirmationService, ConfirmEventType, MessageService} from "primeng/api
 })
 export class CorpusDetailComponent implements OnInit {
 
-  stateOptions: any[];
+  stateOptions = [{ label: 'No', value: false }, { label: 'Yes', value: true }];
 
   constructor(private corpusService: CorpusService,
-              private route: ActivatedRoute,
-              private messageService: MessageService,
-              private confirmationService: ConfirmationService
-  ) {
-    this.stateOptions = [{label: 'No', value: false}, {label: 'Yes', value: true}];
+    private route: ActivatedRoute,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
+  ) { }
 
-  }
-
-  selectedIntent: any
-  selectedUtterance: any
-  selectedAnswer: any
   submitted: boolean = false;
 
   corpusId = ''
   formMode = 'update'
   formEdited = false
+
   intent = 0
+  examples: any[] = []
+  intents: any[] = []
+  lookups: any[] = []
+  regexes: any[] = []
+  synonyms: any[] = []
+
   corpus: Corpus = {
     corpusId: '',
     active: true,
+    created: new Date(),
+    updated: new Date(),
     comment: '',
     name: '',
     locale: '',
-    data: [{
-      intent: '',
-      utterances: [],
-      answers: [{
-        answer: '',
-        opts: ''
-      }]
-    }],
-    contextData: {}
+    nlu: {
+      intents: [{ name: '', examples: [''] }],
+      lookups: [{ name: '', examples: [''] }],
+      synonyms: [{ name: '', examples: [''] }],
+      regexes: [{ name: '', examples: [''] }]
+    },
+
   }
 
-  intents: any = []
-  utterances: any = []
-  answers: any = []
 
   ngOnInit(): void {
     this.route.queryParams
@@ -70,39 +68,27 @@ export class CorpusDetailComponent implements OnInit {
   getCorpusDetails(corpusId: string): void {
     this.corpusService.getCorpusDetail(corpusId)
       .subscribe(result => {
-        this.corpus = result.payload.corpus
+        this.corpus = result.payload
         console.log(this.corpus)
-
-        for (const [i0, d] of this.corpus.data.entries()) {
-          for (const [i1, u] of this.corpus.data[i0].utterances.entries()) {
-            this.utterances.push({id: i1, phrase: u.phrase})
-          }
-          for (const [i2, a] of this.corpus.data[i0].answers.entries()) {
-            this.answers.push({id: i2, answer: a.answer, opts: a.opts})
-          }
-          this.intents.push({id: i0, intent: d.intent, utterances: this.utterances, answers: this.answers})
-          this.utterances = []
-          this.answers = []
-        }
       })
     console.log(this.corpus)
   }
 
-  setIntent(intent: any) {
-    this.intent = intent.data.id
-    console.log(this.intents)
+  setIntent(event: any) {
+    this.examples = []
+    this.intent = event.data
+    this.corpus.nlu.intents[this.intent].examples.forEach(example => {
+      this.examples.push({ id: Math.random() * 100, example: example })
+    })
+
   }
 
-  addNewIntent(val: string) {
-    let nextId = this.intents.length
-    this.intents.push({
-      id: nextId,
-      intent: val,
-      utterances: [],
-      answers: []
+  addNewIntent(value: string) {
+    this.corpus.nlu.intents.push({
+      name: value,
+      examples: ['']
     })
-    this.setIntent(nextId)
-    this.messageService.add({severity: 'info', summary: 'Success', detail: 'Record added'});
+    this.messageService.add({ severity: 'info', summary: 'Success', detail: 'Record added' });
   }
 
   deleteIntent() {
@@ -111,16 +97,16 @@ export class CorpusDetailComponent implements OnInit {
       header: 'Delete Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
-        this.intents.splice(this.intent, 1)
-        this.messageService.add({severity: 'info', summary: 'Confirmed', detail: 'Record deleted'});
+        this.corpus.nlu.intents.splice(this.intent, 1)
+        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
       },
       reject: (type: any) => {
         switch (type) {
           case ConfirmEventType.REJECT:
-            this.messageService.add({severity: 'error', summary: 'Rejected', detail: 'You have rejected'});
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
             break;
           case ConfirmEventType.CANCEL:
-            this.messageService.add({severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled'});
+            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
             break;
         }
       }
@@ -128,65 +114,45 @@ export class CorpusDetailComponent implements OnInit {
 
   }
 
-  addNewUtterance() {
-    let nextId = this.intents[this.intent].utterances.length
-    this.intents[this.intent].utterances.push({id: nextId, phrase: ''})
-    this.messageService.add({severity: 'info', summary: 'Success', detail: 'Record added'});
+  addNewExample() {
+    this.examples.push({ id: Math.random() * 100, example: '' })
+    this.updateExample()
+    this.messageService.add({ severity: 'info', summary: 'Success', detail: 'Record added' });
   }
 
-  deleteUtterance(utterance: any) {
-    this.confirmationService.confirm({
-      message: 'Do you want to delete this record?',
-      header: 'Delete Confirmation',
-      icon: 'pi pi-info-circle',
-      accept: () => {
-        this.intents[this.intent].utterances.splice(utterance.id, 1)
-        this.messageService.add({severity: 'info', summary: 'Confirmed', detail: 'Record deleted'});
-      },
-      reject: (type: any) => {
-        switch (type) {
-          case ConfirmEventType.REJECT:
-            this.messageService.add({severity: 'error', summary: 'Rejected', detail: 'You have rejected'});
-            break;
-          case ConfirmEventType.CANCEL:
-            this.messageService.add({severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled'});
-            break;
-        }
-      }
-    });
-  }
-
-  addNewAnswer() {
-    let nextId = this.intents[this.intent].answers.length
-    this.intents[this.intent].answers.push({
-      id: nextId,
-      answer: '',
-      opts: ''
+  updateExample() {
+    this.corpus.nlu.intents[this.intent].examples = ['']
+    this.corpus.nlu.intents[this.intent].examples.pop()
+    this.examples.forEach(example => {
+      this.corpus.nlu.intents[this.intent].examples.push(example.example)
     })
-    this.messageService.add({severity: 'info', summary: 'Success', detail: 'Record added'});
+    console.log(this.corpus);
+
   }
 
-  deleteAnswer(answer: any) {
+  deleteExample(example: any) {
     this.confirmationService.confirm({
       message: 'Do you want to delete this record?',
       header: 'Delete Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
-        this.intents[this.intent].answers.splice(answer.id, 1)
-        this.messageService.add({severity: 'info', summary: 'Confirmed', detail: 'Record deleted'});
+        this.examples.filter(example.id, 1)
+        this.updateExample();
+        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
       },
       reject: (type: any) => {
         switch (type) {
           case ConfirmEventType.REJECT:
-            this.messageService.add({severity: 'error', summary: 'Rejected', detail: 'You have rejected'});
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
             break;
           case ConfirmEventType.CANCEL:
-            this.messageService.add({severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled'});
+            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
             break;
         }
       }
     });
   }
+
 
   setformEdited(status: boolean) {
     this.formEdited = status
@@ -198,10 +164,10 @@ export class CorpusDetailComponent implements OnInit {
   }
 
   saveChanges() {
-    this.corpus.data = this.intents
-    this.corpusService.updateCorpus(this.corpus).subscribe(
-      r => this.messageService.add({severity: 'info', summary: 'Changes Saved', detail: r.status})
-    )
+    // this.corpus.data = this.intents
+    // this.corpusService.updateCorpus(this.corpus).subscribe(
+    //   r => this.messageService.add({ severity: 'info', summary: 'Changes Saved', detail: r.status })
+    // )
 
   }
 }

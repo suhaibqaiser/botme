@@ -1,16 +1,15 @@
 export interface Corpus {
   corpusId: String,
-  active: Boolean,
-  comment: String,
   name: String,
+  comment: String,
   locale: String,
-  data: [{
-    intent: String,
-    utterances: Array<any>,
-    answers: [{
-      answer: string,
-      opts: String
-    }]
-  }],
-  contextData: {}
+  created: Date,
+  updated: Date,
+  active: Boolean,
+  nlu: {
+    intents: [{ name: String, examples: [String] }],
+    lookups: [{ name: String, examples: [String] }],
+    synonyms: [{ name: String, examples: [String] }],
+    regexes: [{ name: String, examples: [String] }]
+  }
 }
