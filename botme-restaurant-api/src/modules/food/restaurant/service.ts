@@ -5,6 +5,14 @@ export async function getRestaurant(restaurantId: string) {
     return Restaurant.findOne({restaurantId: restaurantId}, {_id: 0, __v: 0});
 }
 
+export async function getRestaurants() {
+    return Restaurant.find({}, {_id: 0, __v: 0});
+}
+
+export async function getActiveRestaurants() {
+    return Restaurant.find({restaurantActive: true}, {_id: 0, __v: 0});
+}
+
 export function updateRestaurant(restaurant: any) {
     Restaurant.findOneAndUpdate({restaurantId: restaurant.restaurantId}, restaurant)
 }

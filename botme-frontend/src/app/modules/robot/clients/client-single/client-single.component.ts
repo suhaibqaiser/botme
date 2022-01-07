@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { IClient } from '../model/client';
-import { ClientService } from '../service/client.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { Md5 } from 'ts-md5/dist/md5';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {IClient} from '../model/client';
+import {ClientService} from '../service/client.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {Md5} from 'ts-md5/dist/md5';
 
 @Component({
   selector: 'app-client-single',
@@ -24,7 +24,8 @@ export class ClientSingleComponent implements OnInit {
     formclientactive: true,
     formclientdebug: false,
     formclientvoice: true,
-    formclientvoicetimeout: [3000, Validators.required]
+    formclientvoicetimeout: [3000, Validators.required],
+    formrestaurantid: ['']
   });
 
   formMode = 'update';
@@ -40,10 +41,19 @@ export class ClientSingleComponent implements OnInit {
     clientCreated: '',
     clientUpdated: '',
     clientActive: true,
-    clientComment: ''
+    clientComment: '',
+    restaurantId: ''
   }
+  restaurantList: any = []
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    await this.clientService.getActiveRestaurant().subscribe((res: any) => {
+      if (res.status === 'success') {
+        this.restaurantList = res.payload
+        console.log(this.restaurantList)
+      }
+    })
+    console.log(this.restaurantList)
     this.route.queryParams
       .subscribe(params => {
         this.clientId = params.clientId;
@@ -83,7 +93,8 @@ export class ClientSingleComponent implements OnInit {
           formclientactive: this.client.clientActive,
           formclientdebug: this.client.clientDebug,
           formclientvoice: this.client.clientVoiceEnabled,
-          formclientvoicetimeout: this.client.clientVoiceTimeout
+          formclientvoicetimeout: this.client.clientVoiceTimeout,
+          formrestaurantid: this.client.restaurantId
         })
       }
     );
@@ -121,6 +132,7 @@ export class ClientSingleComponent implements OnInit {
     this.client.clientActive = this.clientForm.getRawValue().formclientactive
     this.client.clientDebug = this.clientForm.getRawValue().formclientdebug
     this.client.clientVoiceEnabled = this.clientForm.getRawValue().formclientvoice
+    this.client.restaurantId = this.clientForm.getRawValue().formrestaurantid
     this.client.clientVoiceTimeout = this.clientForm.getRawValue().formclientvoicetimeout
   }
 }

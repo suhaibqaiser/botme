@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Customer} from '../../../model/customer';
-import {CustomerService} from '../../../service/customer.service';
-import {FormBuilder, FormControl, Validators} from '@angular/forms';
-import {ConfirmationService, ConfirmEventType, MessageService} from "primeng/api";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Customer } from '../../../model/customer';
+import { CustomerService } from '../../../service/customer.service';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { ConfirmationService, ConfirmEventType, MessageService } from "primeng/api";
 
 @Component({
   selector: 'app-customer-detail',
@@ -30,6 +30,7 @@ export class CustomerDetailComponent implements OnInit {
   formMode = 'update';
   customerId = '';
   customer: Customer = {
+    restaurantId: '',
     customerId: '',
     customerLabel: 0,
     customerName: '',
@@ -104,7 +105,7 @@ export class CustomerDetailComponent implements OnInit {
           .subscribe(result => {
             if (result.status === 'success') {
               this.customer = result.payload
-              this.messageService.add({severity: 'info', summary: 'Update Success', detail: 'Customer updated!'})
+              this.messageService.add({ severity: 'info', summary: 'Update Success', detail: 'Customer updated!' })
             } else {
               this.messageService.add({
                 severity: 'error',
@@ -118,10 +119,10 @@ export class CustomerDetailComponent implements OnInit {
       reject: (type: any) => {
         switch (type) {
           case ConfirmEventType.REJECT:
-            this.messageService.add({severity: 'error', summary: 'Rejected', detail: 'You have rejected'});
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
             break;
           case ConfirmEventType.CANCEL:
-            this.messageService.add({severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled'});
+            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
             break;
         }
         this.disableEdit()
@@ -142,7 +143,7 @@ export class CustomerDetailComponent implements OnInit {
           .subscribe(result => {
             if (result.status === 'success') {
               this.customer = result.payload
-              this.messageService.add({severity: 'info', summary: 'Update Success', detail: 'Customer added!'})
+              this.messageService.add({ severity: 'info', summary: 'Update Success', detail: 'Customer added!' })
             } else {
               this.messageService.add({
                 severity: 'error',
@@ -156,10 +157,10 @@ export class CustomerDetailComponent implements OnInit {
       reject: (type: any) => {
         switch (type) {
           case ConfirmEventType.REJECT:
-            this.messageService.add({severity: 'error', summary: 'Rejected', detail: 'You have rejected'});
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
             break;
           case ConfirmEventType.CANCEL:
-            this.messageService.add({severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled'});
+            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
             break;
         }
         this.disableEdit()

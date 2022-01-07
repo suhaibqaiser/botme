@@ -1,19 +1,20 @@
-import {createSchema, Type, typedModel} from 'ts-mongoose';
-import {foodDB} from "../../../config/mongoDB";
+import { createSchema, Type, typedModel } from 'ts-mongoose';
+import { foodDB } from "../../../config/mongoDB";
 
 
 const MenuSchema = createSchema(
     {
-        menuId: Type.string({maxlength: 256, required: true, unique: true}),
-        menuName: Type.string({maxlength: 256, required: true, unique: true}),
-        menuDesc: Type.string({maxlength: 4000}),
+        restaurantId: Type.string({ maxlength: 256, required: true }),
+        menuId: Type.string({ maxlength: 256, required: true, unique: true }),
+        menuName: Type.string({ maxlength: 256, required: true, unique: true }),
+        menuDesc: Type.string({ maxlength: 4000 }),
         menuItems: [{
             category: Type.string(),
             products: [Type.string()]
         }],
-        menuActive: Type.boolean({required: true})
+        menuActive: Type.boolean({ required: true })
     },
-    {timestamps: {createdAt: true}}
+    { timestamps: { createdAt: true } }
 );
 
 export const Menu = foodDB.model('Menu', MenuSchema);

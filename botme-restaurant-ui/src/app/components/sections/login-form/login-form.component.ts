@@ -36,6 +36,8 @@ export class LoginFormComponent implements OnInit {
           this._botMeClientService.setCookie('clientDebug', (res.payload.clientDebug) ? "yes" : "no")
           this._botMeClientService.setCookie('voiceType', this.loginForm.get('voiceType')?.value)
           this._botMeClientService.setCookie('voiceTimeout', res.payload.clientVoiceTimeout)
+          this._botMeClientService.setCookie('restaurantId', res.payload.restaurantId)
+          this._botMeClientService.setCookie('clientVoiceEnabled', (res.payload.clientVoiceEnabled) ? "yes" : "no")
           this.router.navigate(['/home']).then(() => {
             window.location.reload();
           });
@@ -49,6 +51,7 @@ export class LoginFormComponent implements OnInit {
       }
     )
   }
+
   logout() {
     this._botMeClientService.logutAPI(this._botMeClientService.getCookieByKey('sessionId')).subscribe(res => {
       console.log(res);

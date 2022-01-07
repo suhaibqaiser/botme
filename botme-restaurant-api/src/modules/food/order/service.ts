@@ -4,8 +4,8 @@ export async function createOrder(order: any) {
     return Order.create(order)
 }
 
-export async function updateOrder(order: any) {
-    return Order.findOneAndUpdate({ orderId: order.orderId }, order)
+export async function updateOrder(order: any, restaurantId: string) {
+    return Order.findOneAndUpdate({ orderId: order.orderId, restaurantId: restaurantId }, order)
 }
 
 export async function getOrder(queryParams: any) {
@@ -32,6 +32,6 @@ export async function createCart(cart: any) {
     return Cart.create(cart)
 }
 
-export async function updateCart(cart: any) {
-    return Cart.findOneAndUpdate({ cartId: cart.cartId }, cart)
+export async function updateCart(cart: any, restaurantId: string) {
+    return Cart.findOneAndUpdate({ cartId: cart.cartId, restaurantId: restaurantId }, cart)
 }
