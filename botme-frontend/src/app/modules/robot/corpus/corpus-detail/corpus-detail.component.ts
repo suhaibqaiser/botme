@@ -23,11 +23,17 @@ export class CorpusDetailComponent implements OnInit {
 
   submitted: boolean = false;
 
+  type: string = '';
+  InputNewType: string = '';
   corpusId = ''
   formMode = 'update'
   formEdited = false
 
   intent = 0
+  lookup = 0
+  regex = 0
+  synonym = 0
+
   examples: any[] = []
   intents: any[] = []
   lookups: any[] = []
@@ -69,35 +75,53 @@ export class CorpusDetailComponent implements OnInit {
     this.corpusService.getCorpusDetail(corpusId)
       .subscribe(result => {
         this.corpus = result.payload
-        console.log(this.corpus)
+
       })
-    console.log(this.corpus)
   }
 
-  setIntent(event: any) {
-    this.examples = []
-    this.intent = event.data
-    this.corpus.nlu.intents[this.intent].examples.forEach(example => {
-      this.examples.push({ id: Math.random() * 100, example: example })
-    })
 
-  }
-
-  addNewIntent(value: string) {
-    this.corpus.nlu.intents.push({
-      name: value,
-      examples: ['']
-    })
+  addNewType(type: string, value: string) {
+    if (type === 'intent') {
+      this.corpus.nlu.intents.push({
+        name: value,
+        examples: ['']
+      })
+    } else if (type === 'lookup') {
+      this.corpus.nlu.lookups.push({
+        name: value,
+        examples: ['']
+      })
+    } else if (type === 'regex') {
+      this.corpus.nlu.regexes.push({
+        name: value,
+        examples: ['']
+      })
+    }
+    else if (type === 'synonym') {
+      this.corpus.nlu.synonyms.push({
+        name: value,
+        examples: ['']
+      })
+    }
     this.messageService.add({ severity: 'info', summary: 'Success', detail: 'Record added' });
+    this.InputNewType = '';
   }
 
-  deleteIntent() {
+  deleteType(type: string) {
     this.confirmationService.confirm({
       message: 'Do you want to delete this record?',
       header: 'Delete Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
-        this.corpus.nlu.intents.splice(this.intent, 1)
+        if (type === 'intent') {
+          this.corpus.nlu.intents.splice(this.intent, 1)
+        } else if (type === 'lookup') {
+          this.corpus.nlu.lookups.splice(this.intent, 1)
+        } else if (type === 'regex') {
+          this.corpus.nlu.regexes.splice(this.intent, 1)
+        } else if (type === 'synonym') {
+          this.corpus.nlu.synonyms.splice(this.intent, 1)
+        }
         this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
       },
       reject: (type: any) => {
@@ -114,20 +138,71 @@ export class CorpusDetailComponent implements OnInit {
 
   }
 
+  setType(type: string) {
+    this.type = type;
+  }
+
+  setExamples(event: any, source: string) {
+    this.setType(source)
+    this.examples = []
+
+    if (source === 'intent') {
+      this.intent = event.data
+      this.corpus.nlu.intents[this.intent].examples.forEach(example => {
+        this.examples.push({ id: Math.round(Math.random() * 100), example: example })
+      })
+    } else if (source === 'lookup') {
+      this.lookup = event.data
+      this.corpus.nlu.lookups[this.lookup].examples.forEach(example => {
+        this.examples.push({ id: Math.round(Math.random() * 100), example: example })
+      })
+    } else if (source === 'regex') {
+      this.lookup = event.data
+      this.corpus.nlu.regexes[this.regex].examples.forEach(example => {
+        this.examples.push({ id: Math.round(Math.random() * 100), example: example })
+      })
+    } else if (source === 'synonym') {
+      this.lookup = event.data
+      this.corpus.nlu.synonyms[this.synonym].examples.forEach(example => {
+        this.examples.push({ id: Math.round(Math.random() * 100), example: example })
+      })
+    }
+  }
+
   addNewExample() {
-    this.examples.push({ id: Math.random() * 100, example: '' })
-    this.updateExample()
+    this.examples.push({ id: Math.round(Math.random() * 100), example: '' })
+    this.updateExample(this.type)
+    console.log(Math.round(Math.random() * 100));
+
     this.messageService.add({ severity: 'info', summary: 'Success', detail: 'Record added' });
   }
 
-  updateExample() {
-    this.corpus.nlu.intents[this.intent].examples = ['']
-    this.corpus.nlu.intents[this.intent].examples.pop()
-    this.examples.forEach(example => {
-      this.corpus.nlu.intents[this.intent].examples.push(example.example)
-    })
-    console.log(this.corpus);
-
+  updateExample(type: string) {
+    if (type === 'intent') {
+      this.corpus.nlu.intents[this.intent].examples = ['']
+      this.corpus.nlu.intents[this.intent].examples.pop()
+      this.examples.forEach(example => {
+        this.corpus.nlu.intents[this.intent].examples.push(example.example)
+      })
+    } else if (type === 'lookup') {
+      this.corpus.nlu.lookups[this.lookup].examples = ['']
+      this.corpus.nlu.lookups[this.lookup].examples.pop()
+      this.examples.forEach(example => {
+        this.corpus.nlu.lookups[this.lookup].examples.push(example.example)
+      })
+    } else if (type === 'regex') {
+      this.corpus.nlu.regexes[this.regex].examples = ['']
+      this.corpus.nlu.regexes[this.regex].examples.pop()
+      this.examples.forEach(example => {
+        this.corpus.nlu.regexes[this.regex].examples.push(example.example)
+      })
+    } else if (type === 'synonym') {
+      this.corpus.nlu.synonyms[this.synonym].examples = ['']
+      this.corpus.nlu.synonyms[this.synonym].examples.pop()
+      this.examples.forEach(example => {
+        this.corpus.nlu.synonyms[this.synonym].examples.push(example.example)
+      })
+    }
   }
 
   deleteExample(example: any) {
@@ -136,8 +211,13 @@ export class CorpusDetailComponent implements OnInit {
       header: 'Delete Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
-        this.examples.filter(example.id, 1)
-        this.updateExample();
+        const index = this.examples.indexOf(example);
+
+        if (index > -1) {
+          this.examples.splice(index, 1);
+        }
+
+        this.updateExample(this.type);
         this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
       },
       reject: (type: any) => {
@@ -164,10 +244,12 @@ export class CorpusDetailComponent implements OnInit {
   }
 
   saveChanges() {
-    // this.corpus.data = this.intents
-    // this.corpusService.updateCorpus(this.corpus).subscribe(
-    //   r => this.messageService.add({ severity: 'info', summary: 'Changes Saved', detail: r.status })
-    // )
+
+
+    this.corpusService.updateCorpus(this.corpus).subscribe(
+      r => this.messageService.add({ severity: 'info', summary: 'Changes Saved', detail: r.status }),
+      err => this.messageService.add({ severity: 'error', summary: 'Failed', detail: err.message }),
+    )
 
   }
 }

@@ -30,6 +30,8 @@ export class CorpusService {
 
   updateCorpus(corpus: any): Observable<any> {
     const url = `${this.apiBaseUrl}/nlp/updatecorpus`
-    return this.http.post(url, corpus);
+    let body = { corpus: corpus };
+    console.log(body);
+    return this.http.post(url, body);
   }
 }

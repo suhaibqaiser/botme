@@ -1,0 +1,11 @@
+.capitalize {
+  text-transform: capitalize;
+}
+
+.card-header {
+  display: flex;
+}
+
+.card-tools {
+  margin: auto;
+}
