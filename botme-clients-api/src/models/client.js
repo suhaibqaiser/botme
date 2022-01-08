@@ -10,10 +10,12 @@ var ClientsSchema = new Schema(
         clientSecret: { type: String, maxlength: 256, required: true },
         clientDebug: { type: Boolean },
         clientVoiceEnabled: { type: Boolean },
+        clientVoiceTimeout: { type: Number, required: true },
         clientCreated: { type: Date, required: true },
         clientUpdated: { type: Date },
         clientActive: { type: Boolean, required: true },
-        clientComment: { type: String }
+        clientComment: { type: String },
+        restaurantId: { type: String }
     }
 );
 

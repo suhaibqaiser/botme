@@ -3,7 +3,7 @@ import { foodDB } from "../../../config/mongoDB";
 
 const ProductSchema = createSchema(
     {
-        restaurantId: Type.string(),
+        restaurantId: Type.string({ maxlength: 256, required: true }),
         productId: Type.string({ maxlength: 256, required: true, unique: true }),
         productLabel: Type.number({ unique: true }),
         productName: Type.string({ maxlength: 256, required: true }),
@@ -12,7 +12,7 @@ const ProductSchema = createSchema(
         productCategory: Type.string(),
         productSerialNo: Type.string(),
         productBarcode: Type.string(),
-        productRating:Type.number(),
+        productRating: Type.number(),
         productDesc: Type.string({ maxlength: 4000 }),
         productIngredients: [Type.string()],
         productRate: {

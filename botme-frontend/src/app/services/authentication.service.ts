@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {environment} from '../../environments/environment';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {Router} from "@angular/router";
+import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +23,7 @@ export class AuthenticationService {
   }
 
   userLogin(user: object): Observable<any> {
-    return this.http.post(this.loginUrl, user, {headers: this.headers});
+    return this.http.post(this.loginUrl, user, { headers: this.headers });
   }
 
   userLoggedIn(): boolean {
@@ -31,7 +31,7 @@ export class AuthenticationService {
     if (!token) return false
     if (token === '') return false
 
-    this.http.get(this.verifyTokenUrl, {headers: this.headers}).subscribe(
+    this.http.get(this.verifyTokenUrl, { headers: this.headers }).subscribe(
       res => {
         return true
       },
@@ -57,4 +57,9 @@ export class AuthenticationService {
   getToken(): string | null {
     return localStorage.getItem('loginToken');
   }
+
+  getRestaurantId(): string | null {
+    return localStorage.getItem('restaurantId');
+  }
+
 }
