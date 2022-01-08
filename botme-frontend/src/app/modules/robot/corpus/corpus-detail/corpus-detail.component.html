@@ -2,7 +2,14 @@
   <div class="card-header">
     <h3 class="card-title">
       <i class="fas fa-brain mr-2"></i>
-      {{corpus.name}}
+      <p-inplace [closable]="closable" [style]="{'display': 'inline-block'}">
+        <ng-template pTemplate="display">
+          <i class="pi pi-pencil"></i> {{corpus.name}}
+        </ng-template>
+        <ng-template pTemplate="content">
+          <input type="text" value="Corpus Name" [(ngModel)]="corpus.name" pInputText>
+        </ng-template>
+      </p-inplace>
     </h3>
     <div class="card-tools">
       <button type="button" class="p-button p-button-outlined" (click)="saveChanges()">Save Changes</button>
@@ -15,13 +22,31 @@
         <dt>Corpus ID</dt>
         <dd>{{corpus.corpusId}}</dd>
         <dt>Locale</dt>
-        <dd>{{corpus.locale}}</dd>
+        <dd>
+          <p-inplace [closable]="closable" [style]="{'min-height':'33px'}">
+            <ng-template pTemplate="display">
+              <i class="pi pi-pencil"></i> {{corpus.locale}}
+            </ng-template>
+            <ng-template pTemplate="content">
+              <input type="text" value="Corpus Name" [(ngModel)]="corpus.locale" pInputText>
+            </ng-template>
+          </p-inplace>
+        </dd>
       </dl>
     </div>
     <div class="col-md-6">
       <dl>
         <dt>Comments</dt>
-        <dd>{{corpus.comment}}</dd>
+        <dd>
+          <p-inplace [closable]="closable" [style]="{'min-height':'33px'}">
+            <ng-template pTemplate="display">
+              <i class="pi pi-pencil"></i> {{corpus.comment}}
+            </ng-template>
+            <ng-template pTemplate="content">
+              <input type="text" value="Corpus Name" [(ngModel)]="corpus.comment" pInputText>
+            </ng-template>
+          </p-inplace>
+        </dd>
         <dt>Active</dt>
         <dd>
           <p-selectButton [options]="stateOptions" [(ngModel)]="corpus.active" optionLabel="label" optionValue="value">
@@ -42,7 +67,7 @@
 
       </div>
       <div class="card-body p-0">
-        <p-tabView>
+        <p-tabView (onChange)="tabChange($event)">
           <p-tabPanel header="Intents">
             <div class="card-tools">
               <button type="button" class="p-button p-button-sm" data-toggle="modal" data-target="#intentModal"

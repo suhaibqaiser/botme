@@ -14,6 +14,7 @@ import { RippleModule } from "primeng/ripple";
 import { InputTextModule } from "primeng/inputtext";
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { TabViewModule } from 'primeng/tabview';
+import { InplaceModule } from 'primeng/inplace';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { TabViewModule } from 'primeng/tabview';
     RippleModule,
     InputTextModule,
     SelectButtonModule,
-    TabViewModule
+    TabViewModule,
+    InplaceModule
   ]
 })
 export class CorpusModule { }

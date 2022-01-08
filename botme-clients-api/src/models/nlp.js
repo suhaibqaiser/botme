@@ -5,6 +5,9 @@ let Schema = mongoose.Schema;
 let CorpusSchema = new Schema(
     {
         corpusId: { type: String, unique: true, index: true },
+        name: { type: String, required: true },
+        comment: String,
+        locale: String,
         created: { type: Date, required: true },
         updated: { type: Date },
         active: { type: Boolean, required: true },

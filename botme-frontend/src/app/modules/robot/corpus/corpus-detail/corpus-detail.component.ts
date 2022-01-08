@@ -28,6 +28,7 @@ export class CorpusDetailComponent implements OnInit {
   corpusId = ''
   formMode = 'update'
   formEdited = false
+  closable = true;
 
   intent = 0
   lookup = 0
@@ -79,6 +80,24 @@ export class CorpusDetailComponent implements OnInit {
       })
   }
 
+  tabChange(event: any): void {
+    switch (event.index) {
+      case 0:
+        this.setType('intent')
+        break;
+      case 1:
+        this.setType('lookup')
+        break;
+      case 2:
+        this.setType('regex')
+        break;
+      case 3:
+        this.setType('synonym')
+        break;
+      default:
+        break;
+    }
+  }
 
   addNewType(type: string, value: string) {
     if (type === 'intent') {
@@ -140,6 +159,7 @@ export class CorpusDetailComponent implements OnInit {
 
   setType(type: string) {
     this.type = type;
+    this.examples = []
   }
 
   setExamples(event: any, source: string) {
@@ -244,7 +264,6 @@ export class CorpusDetailComponent implements OnInit {
   }
 
   saveChanges() {
-
 
     this.corpusService.updateCorpus(this.corpus).subscribe(
       r => this.messageService.add({ severity: 'info', summary: 'Changes Saved', detail: r.status }),
