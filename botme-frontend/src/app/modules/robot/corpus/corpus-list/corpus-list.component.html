@@ -5,49 +5,79 @@
         <div class="card">
           <div class="card-header">
             <h2 class="card-title">Corpus List</h2>
-            <button type="button" class="btn btn-primary float-right"
-                    [routerLink]="['/corpus/detail']">Add New
+            <button type="button" class="btn btn-primary float-right" [routerLink]="['/corpus/detail']">Add New
             </button>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <table class="table table-bordered">
-              <thead>
-              <tr>
-                <th style="width: 10px">#</th>
-                <th>Corpus Name</th>
-                <th>Locale</th>
-                <th>Comment</th>
-                <th style="width: 40px">Active</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr *ngFor="let corp of corpus; let i = index" (click)="onSelect(corp)"
-                  [class.selected]="corp === selectedCorpus">
-                <button type="button" class="btn btn-default"
-                        [routerLink]="['/corpus/detail']" [queryParams]="{ corpusId: corp.corpusId}">View
-                </button>
-                <td>{{corp.name}}</td>
-                <td>{{corp.locale}}</td>
-                <td>{{corp.comment}}</td>
-                <td><span *ngIf="corp.active === true"
-                          class="badge bg-success">Yes</span>
-                  <span *ngIf="corp.active === false"
-                        class="badge bg-danger">No</span>
-                </td>
-              </tr>
-              </tbody>
-            </table>
+            <p-table #dt1 [value]="corpus" [responsive]="true" [paginator]="true" [rows]="10" [loading]="loading"
+              [showCurrentPageReport]="true"
+              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+              [rowsPerPageOptions]="[10,25,50]"
+              [globalFilterFields]="['corpusName','corpusDesc', 'corpusType','corpusActive']">
+              <ng-template pTemplate="caption">
+                <div class="p-d-flex">
+                  <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                    (click)="clear(dt1)"></button>
+                  <span class="p-input-icon-left p-ml-auto" style="float: right;">
+                    <i class="pi pi-search"></i>
+                    <input #search pInputText type="text" (input)="dt1.filterGlobal(search.value, 'contains')"
+                      placeholder="Search keyword" />
+                  </span>
+                </div>
+              </ng-template>
+              <ng-template pTemplate="header">
+                <tr>
+                  <th style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                  </th>
+                  <th pSortableColumn="Id">Id <p-sortIcon field="Id"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="corpusName">Name <p-sortIcon field="corpusName"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="corpusDesc">Locale <p-sortIcon field="corpusDesc"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="corpusType">Comment <p-sortIcon field="corpusType"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="corpusCreated">Created <p-sortIcon field="corpusCreated"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="updatedAt">Updated <p-sortIcon field="updatedAt"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="corpusActive">Active <p-sortIcon field="corpusActive"></p-sortIcon>
+                  </th>
+                </tr>
+              </ng-template>
+
+              <ng-template pTemplate="body" let-corpus>
+                <tr>
+                  <td>
+                    <p-tableCheckbox [value]="corpus"></p-tableCheckbox>
+                  </td>
+                  <td>
+                    <button class="btn btn-primary btn-tone m-r-5" [routerLink]="['detail']"
+                      [queryParams]="{ corpusId: corpus.corpusId }">C-{{corpus.corpusId}}</button>
+                  </td>
+                  <td>{{corpus.name}}</td>
+                  <td>{{corpus.locale}}</td>
+                  <td>{{corpus.comment}}</td>
+                  <td>{{corpus.created}}</td>
+                  <td>{{corpus.updated}}</td>
+                  <td><span *ngIf="corpus.active === true" class="badge badge-success">Yes</span>
+                    <span *ngIf="corpus.active === false" class="badge badge-danger">No</span>
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="paginatorleft">
+                <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+              </ng-template>
+              <ng-template pTemplate="paginatorright">
+                <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+              </ng-template>
+            </p-table>
+
           </div>
           <!-- /.card-body -->
           <div class="card-footer clearfix">
-            <ul class="pagination pagination-sm m-0 float-right">
-              <li class="page-item"><a class="page-link" href="#">«</a></li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">»</a></li>
-            </ul>
           </div>
         </div>
         <!-- /.card -->

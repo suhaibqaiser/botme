@@ -2,8 +2,9 @@ var express = require('express');
 var router = express.Router();
 var nlpController = require('../controllers/nlpController');
 
-router.post('/communicate', nlpController.communicate);
-
-router.get('/train', nlpController.train);
+router.get('/corpus', nlpController.getCorpusList);
+router.get('/corpusbyid', nlpController.getCorpusById);
+router.put('/addCorpus', nlpController.addCorpus);
+router.post('/updateCorpus', nlpController.updateCorpus);
 
 module.exports = router;
