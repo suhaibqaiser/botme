@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
           this.errorMessage = response.payload
         } else {
           this.isLoginFailed = false
-          this.loginToken = response.payload.loginToken
+          this.loginToken = response.payload.userToken
           localStorage.setItem('loginToken', this.loginToken)
           localStorage.setItem('userFullName', response.payload.userFullName)
           localStorage.setItem('restaurantId', response.payload.restaurantId)
