@@ -174,8 +174,6 @@ export class CartService {
       cartTotal: 0,
     }
 
-    productOptionsList = this.getSelectedProductOptions(product.productOptions, [])
-    console.log(productOptionsList)
 
     this.singleCustomProductObj = {
       productName: product.productName,
@@ -185,7 +183,7 @@ export class CartService {
       productServingSize: productServingSizeList,
       productOptions: this.getSelectedProductOptions(product.productOptions, []),
       productIngredients: this.getSelectedProductIngredient(product.productIngredients, []),
-      productFlavors: this.getSelectedProductFlavor(product.productFlavors, ''),
+      productFlavors: this.getSelectedProductFlavor(product.productFlavor, ''),
       productAddons: this.getSelectedProductProportion([]),
       productToppings: this.getSelectedProductToppings(product.productToppings, []),
       productQuantity: 1,
@@ -213,6 +211,7 @@ export class CartService {
    * @param productFlavorName
    */
   getSelectedProductFlavor(productFlavorList: any = [], productFlavorName: any = '') {
+    console.log(productFlavorList)
     if (productFlavorList && productFlavorList.length) {
       return productFlavorList.map((item: any) => {
         return {
@@ -234,7 +233,7 @@ export class CartService {
       return item.productId
     })
     if (productList && productList.length) {
-      productList.map((item: any) => {
+     return  productList.map((item: any) => {
         return {
           productId: item.productId,
           productName: item.productName,
@@ -258,7 +257,7 @@ export class CartService {
       return item.productId
     })
     if (productToppingsList && productToppingsList.length) {
-      productToppingsList.map((item: any) => {
+     return  productToppingsList.map((item: any) => {
         let obj = this.getProductById(item)
         return {
           productId: obj.productId,
@@ -282,9 +281,8 @@ export class CartService {
     let productOptionList = productOptionsList.reduce((prev: any, next: any) => {
       return [...prev, ...next]
     })
-    console.log(productOptionList)
     if (productOptionList && productOptionList.length) {
-      productOptionList.map((item: any) => {
+      return productOptionList.map((item: any) => {
           let obj = this.getProductById(item)
           return {
             productId: obj.productId,
@@ -304,7 +302,7 @@ export class CartService {
    */
   getSelectedProductIngredient(productIngredientList: any = [], productIngredient: any = []) {
     if (productIngredientList && productIngredientList.length) {
-      productIngredientList.map((item: any) => {
+     return  productIngredientList.map((item: any) => {
         let obj = this.getProductById(item)
         return {
           productId: obj.productId,
