@@ -4,24 +4,24 @@ export async function addCustomer(customer: any) {
     return Customer.create(customer)
 }
 
-export async function updateOneCustomer(customer: any) {
-    return Customer.findOneAndUpdate({ customerId: customer.customerId }, customer)
+export async function updateOneCustomer(customer: any, restaurantId: string) {
+    return Customer.findOneAndUpdate({ customerId: customer.customerId, restaurantId: restaurantId }, customer)
 }
 
 export async function getCustomer(queryParams: any) {
     return Customer.findOne(queryParams)
 }
 
-export async function getCustomerByPhone(customerPhone: string) {
-    return Customer.findOne({ customerPhone: customerPhone })
+export async function getCustomerByPhone(customerPhone: string, restaurantId: string) {
+    return Customer.findOne({ customerPhone: customerPhone, restaurantId: restaurantId })
 }
 
-export async function getAllCustomers() {
-    return Customer.find({})
+export async function getAllCustomers(restaurantId: string) {
+    return Customer.find({ restaurantId: restaurantId })
 }
 
-export async function getAddressByCustomer(customerId: string) {
-    return Address.find({ customerId: customerId })
+export async function getAddressByCustomer(customerId: string, restaurantId: string) {
+    return Address.find({ customerId: customerId, restaurantId: restaurantId })
 }
 
 export async function createAddress(address: any) {

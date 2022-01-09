@@ -2,8 +2,9 @@ import { restResponse } from "../../../utils/response";
 import { createCart, createOrder, getCart, getCartById, getOrder, updateCart, updateOrder } from "./service";
 import { randomUUID } from "crypto";
 
-export async function findOrder(filter: any) {
+export async function findOrder(filter: any, restaurantId: any) {
     let response = new restResponse()
+    filter.restaurantId = restaurantId
 
     let result = await getOrder(filter)
     if (result.length != 0) {
@@ -17,15 +18,16 @@ export async function findOrder(filter: any) {
     }
 }
 
-export async function addOrder(order: any) {
+export async function addOrder(order: any, restaurantId: any) {
     let response = new restResponse()
-    if (!order) {
-        response.payload = "order is required"
+    if (!order || !restaurantId) {
+        response.payload = "order and restaurantId is required"
         response.status = "error"
         return response;
     }
 
     order.orderId = randomUUID()
+    order.restaurantId = restaurantId
 
     let result = await createOrder(order)
     if (result) {
@@ -39,15 +41,15 @@ export async function addOrder(order: any) {
     }
 }
 
-export async function editOrder(order: any) {
+export async function editOrder(order: any, restaurantId: any) {
     let response = new restResponse()
-    if (!order) {
-        response.payload = "order is required"
+    if (!order || !restaurantId) {
+        response.payload = "order and restaurantId is required"
         response.status = "error"
         return response;
     }
 
-    let result = await updateOrder(order)
+    let result = await updateOrder(order, restaurantId)
     if (result) {
         response.payload = result
         response.status = "success"
@@ -61,8 +63,10 @@ export async function editOrder(order: any) {
 
 // CART //
 
-export async function findCart(filter: any) {
+export async function findCart(filter: any, restaurantId: any) {
     let response = new restResponse()
+
+    filter.restaurantId = restaurantId
 
     let result = await getCart(filter)
     if (result.length != 0) {
@@ -76,9 +80,9 @@ export async function findCart(filter: any) {
     }
 }
 
-export async function findCartById(filter: any) {
+export async function findCartById(filter: any, restaurantId: any) {
     let response = new restResponse()
-
+    filter.restaurantId = restaurantId
     let result = await getCartById(filter)
     if (result) {
         response.payload = result
@@ -91,15 +95,16 @@ export async function findCartById(filter: any) {
     }
 }
 
-export async function addCart(cart: any) {
+export async function addCart(cart: any, restaurantId: any) {
     let response = new restResponse()
-    if (!cart) {
-        response.payload = "cart is required"
+    if (!cart || !restaurantId) {
+        response.payload = "cart and restaurantId is required"
         response.status = "error"
         return response;
     }
 
     cart.cartId = randomUUID()
+    cart.restaurantId = restaurantId
 
     let result = await createCart(cart)
     if (result) {
@@ -113,15 +118,15 @@ export async function addCart(cart: any) {
     }
 }
 
-export async function editCart(cart: any) {
+export async function editCart(cart: any, restaurantId: any) {
     let response = new restResponse()
-    if (!cart) {
-        response.payload = "cart is required"
+    if (!cart || !restaurantId) {
+        response.payload = "cart and restaurantId is required"
         response.status = "error"
         return response;
     }
 
-    let result = await updateCart(cart)
+    let result = await updateCart(cart, restaurantId)
     if (result) {
         response.payload = result
         response.status = "success"

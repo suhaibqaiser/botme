@@ -1,6 +1,8 @@
 import {
     getAreas,
-    getAreaTables
+    getAreaTables,
+    getRestaurants,
+    getActiveRestaurants
 } from "./service"
 import {restResponse} from "../../../utils/response"
 
@@ -36,6 +38,36 @@ export async function getAreaList() {
         return response
     } else {
         response.payload = "Area not found"
+        response.status = "error"
+        return response
+    }
+}
+
+export async function getAllRestaurants() {
+    let response = new restResponse()
+
+    let result = await getRestaurants()
+    if (result.length != 0) {
+        response.payload = result
+        response.status = "success"
+        return response
+    } else {
+        response.payload = "Restaurants not found"
+        response.status = "error"
+        return response
+    }
+}
+
+export async function getActivedRestaurants() {
+    let response = new restResponse()
+    console.log('yo bro')
+    let result = await getActiveRestaurants()
+    if (result.length != 0) {
+        response.payload = result
+        response.status = "success"
+        return response
+    } else {
+        response.payload = "Restaurants not found"
         response.status = "error"
         return response
     }

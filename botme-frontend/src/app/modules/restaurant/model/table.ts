@@ -1,4 +1,5 @@
 export interface Table {
+  restaurantId: string;
   tableId: String,
   tableLabel: Number;
   tableSeats: Number,

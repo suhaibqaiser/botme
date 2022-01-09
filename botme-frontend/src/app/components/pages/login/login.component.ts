@@ -44,6 +44,7 @@ export class LoginComponent implements OnInit {
           this.loginToken = response.payload.loginToken
           localStorage.setItem('loginToken', this.loginToken)
           localStorage.setItem('userFullName', response.payload.userFullName)
+          localStorage.setItem('restaurantId', response.payload.restaurantId)
           this.router.navigate(["/home"])
         }
 

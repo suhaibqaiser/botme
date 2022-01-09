@@ -1,6 +1,6 @@
 const userService = require('../services/userService')
 const Response = require("../models/response")
-const {v4: uuidv4} = require('uuid')
+const { v4: uuidv4 } = require('uuid')
 const jwt = require('jsonwebtoken')
 const jwtKey = 'superSecretJWTKey'
 const minutesToAdd = 300;
@@ -14,7 +14,7 @@ async function userLogin(req, res) {
     console.log(currentDate, futureDate)
 
     if (!req.body.username || !req.body.password) {
-        response.payload = {message: 'Both username and password are required'};
+        response.payload = { message: 'Both username and password are required' };
         return res.status(400).send(response);
     }
     let userObject = {
@@ -32,13 +32,9 @@ async function userLogin(req, res) {
             let token = jwt.sign(payload, jwtKey)
             user.userToken = token
             userService.updateUser(user)
-            response.payload = {
-                loginToken: token,
-                userId: user.userId,
-                userFullName: user.userFullName
-            }
+            response.payload = user
             response.status = "success"
-            return res.status(200).send(response)
+            return res.status(200).send(user)
         } else {
             response.payload = "Username or password incorrect"
             response.status = "error"
@@ -65,4 +61,4 @@ function verifyToken(req, res, next) {
     return res.status(200).send()
 }
 
-module.exports = ({userLogin, verifyToken})
+module.exports = ({ userLogin, verifyToken })

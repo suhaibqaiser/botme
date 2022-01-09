@@ -1,13 +1,14 @@
-import {restResponse} from "../../../utils/response";
-import {createMenu, getMenu} from "./service";
+import { restResponse } from "../../../utils/response";
+import { createMenu, getMenu } from "./service";
 
-export async function addMenu(menu: any) {
+export async function addMenu(menu: any, restaurantId: any) {
     let response = new restResponse()
-    if (!menu) {
-        response.payload = "menu is required"
+    if (!menu || !restaurantId) {
+        response.payload = "menu and restaurantId is required"
         response.status = "error"
         return response;
     }
+    menu.restaurantId = restaurantId
 
     let result = await createMenu(menu)
     if (result) {
@@ -15,22 +16,22 @@ export async function addMenu(menu: any) {
         response.status = "success"
         return response
     } else {
-        response.payload = "category not found"
+        response.payload = "Error in creating menu"
         response.status = "error"
         return response
     }
 }
 
 
-export async function findMenu(menuId: any) {
+export async function findMenu(menuId: any, restaurantId: any) {
     let response = new restResponse()
-    if (!menuId) {
-        response.payload = "menuId is required"
+    if (!menuId || !restaurantId) {
+        response.payload = "menuId and restaurantId is required"
         response.status = "error"
         return response;
     }
 
-    let result = await getMenu(menuId)
+    let result = await getMenu(menuId, restaurantId)
     if (result) {
         response.payload = result
         response.status = "success"
