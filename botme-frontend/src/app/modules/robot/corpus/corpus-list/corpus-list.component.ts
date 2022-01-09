@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {CorpusService} from "../service/corpus.service";
+import { Table } from 'primeng/table';
+import { Corpus } from '../model/corpus';
+import { CorpusService } from "../service/corpus.service";
 
 @Component({
   selector: 'app-corpus-list',
@@ -14,17 +16,18 @@ export class CorpusListComponent implements OnInit {
     this.getCorpus()
   }
 
-  corpus: Array<any> = []
-  selectedCorpus?: string
-
-  onSelect(corpus: any): void {
-    this.selectedCorpus = corpus.corpusId
-  }
+  corpus: Array<Corpus> = []
+  loading = true;
 
   getCorpus(): void {
     this.corpusService.getCorpus()
-      .subscribe(result => this.corpus = result.payload)
+      .subscribe(result => {
+        this.corpus = result.payload
+        this.loading = false;
+      })
   }
 
-
+  clear(table: Table) {
+    table.clear();
+  }
 }

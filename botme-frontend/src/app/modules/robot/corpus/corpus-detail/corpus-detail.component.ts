@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {CorpusService} from "../service/corpus.service";
-import {Corpus} from "../model/corpus";
-import {ConfirmationService, ConfirmEventType, MessageService} from "primeng/api";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
+import { CorpusService } from "../service/corpus.service";
+import { Corpus } from "../model/corpus";
+import { ConfirmationService, ConfirmEventType, MessageService } from "primeng/api";
 
 
 
@@ -13,46 +13,51 @@ import {ConfirmationService, ConfirmEventType, MessageService} from "primeng/api
 })
 export class CorpusDetailComponent implements OnInit {
 
-  stateOptions: any[];
+  stateOptions = [{ label: 'No', value: false }, { label: 'Yes', value: true }];
 
   constructor(private corpusService: CorpusService,
-              private route: ActivatedRoute,
-              private messageService: MessageService,
-              private confirmationService: ConfirmationService
-  ) {
-    this.stateOptions = [{label: 'No', value: false}, {label: 'Yes', value: true}];
+    private route: ActivatedRoute,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
+  ) { }
 
-  }
-
-  selectedIntent: any
-  selectedUtterance: any
-  selectedAnswer: any
   submitted: boolean = false;
 
+  type: string = '';
+  InputNewType: string = '';
   corpusId = ''
   formMode = 'update'
   formEdited = false
+  closable = true;
+
   intent = 0
+  lookup = 0
+  regex = 0
+  synonym = 0
+
+  examples: any[] = []
+  intents: any[] = []
+  lookups: any[] = []
+  regexes: any[] = []
+  synonyms: any[] = []
+
   corpus: Corpus = {
     corpusId: '',
     active: true,
+    created: new Date(),
+    updated: new Date(),
     comment: '',
     name: '',
     locale: '',
-    data: [{
-      intent: '',
-      utterances: [],
-      answers: [{
-        answer: '',
-        opts: ''
-      }]
-    }],
-    contextData: {}
+    nlu: {
+      intents: [{ name: '', examples: [''] }],
+      lookups: [{ name: '', examples: [''] }],
+      synonyms: [{ name: '', examples: [''] }],
+      regexes: [{ name: '', examples: [''] }]
+    },
+
   }
 
-  intents: any = []
-  utterances: any = []
-  answers: any = []
 
   ngOnInit(): void {
     this.route.queryParams
@@ -70,57 +75,81 @@ export class CorpusDetailComponent implements OnInit {
   getCorpusDetails(corpusId: string): void {
     this.corpusService.getCorpusDetail(corpusId)
       .subscribe(result => {
-        this.corpus = result.payload.corpus
-        console.log(this.corpus)
+        this.corpus = result.payload
 
-        for (const [i0, d] of this.corpus.data.entries()) {
-          for (const [i1, u] of this.corpus.data[i0].utterances.entries()) {
-            this.utterances.push({id: i1, phrase: u.phrase})
-          }
-          for (const [i2, a] of this.corpus.data[i0].answers.entries()) {
-            this.answers.push({id: i2, answer: a.answer, opts: a.opts})
-          }
-          this.intents.push({id: i0, intent: d.intent, utterances: this.utterances, answers: this.answers})
-          this.utterances = []
-          this.answers = []
-        }
       })
-    console.log(this.corpus)
   }
 
-  setIntent(intent: any) {
-    this.intent = intent.data.id
-    console.log(this.intents)
+  tabChange(event: any): void {
+    switch (event.index) {
+      case 0:
+        this.setType('intent')
+        break;
+      case 1:
+        this.setType('lookup')
+        break;
+      case 2:
+        this.setType('regex')
+        break;
+      case 3:
+        this.setType('synonym')
+        break;
+      default:
+        break;
+    }
   }
 
-  addNewIntent(val: string) {
-    let nextId = this.intents.length
-    this.intents.push({
-      id: nextId,
-      intent: val,
-      utterances: [],
-      answers: []
-    })
-    this.setIntent(nextId)
-    this.messageService.add({severity: 'info', summary: 'Success', detail: 'Record added'});
+  addNewType(type: string, value: string) {
+    if (type === 'intent') {
+      this.corpus.nlu.intents.push({
+        name: value,
+        examples: ['']
+      })
+    } else if (type === 'lookup') {
+      this.corpus.nlu.lookups.push({
+        name: value,
+        examples: ['']
+      })
+    } else if (type === 'regex') {
+      this.corpus.nlu.regexes.push({
+        name: value,
+        examples: ['']
+      })
+    }
+    else if (type === 'synonym') {
+      this.corpus.nlu.synonyms.push({
+        name: value,
+        examples: ['']
+      })
+    }
+    this.messageService.add({ severity: 'info', summary: 'Success', detail: 'Record added' });
+    this.InputNewType = '';
   }
 
-  deleteIntent() {
+  deleteType(type: string) {
     this.confirmationService.confirm({
       message: 'Do you want to delete this record?',
       header: 'Delete Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
-        this.intents.splice(this.intent, 1)
-        this.messageService.add({severity: 'info', summary: 'Confirmed', detail: 'Record deleted'});
+        if (type === 'intent') {
+          this.corpus.nlu.intents.splice(this.intent, 1)
+        } else if (type === 'lookup') {
+          this.corpus.nlu.lookups.splice(this.intent, 1)
+        } else if (type === 'regex') {
+          this.corpus.nlu.regexes.splice(this.intent, 1)
+        } else if (type === 'synonym') {
+          this.corpus.nlu.synonyms.splice(this.intent, 1)
+        }
+        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
       },
       reject: (type: any) => {
         switch (type) {
           case ConfirmEventType.REJECT:
-            this.messageService.add({severity: 'error', summary: 'Rejected', detail: 'You have rejected'});
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
             break;
           case ConfirmEventType.CANCEL:
-            this.messageService.add({severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled'});
+            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
             break;
         }
       }
@@ -128,65 +157,102 @@ export class CorpusDetailComponent implements OnInit {
 
   }
 
-  addNewUtterance() {
-    let nextId = this.intents[this.intent].utterances.length
-    this.intents[this.intent].utterances.push({id: nextId, phrase: ''})
-    this.messageService.add({severity: 'info', summary: 'Success', detail: 'Record added'});
+  setType(type: string) {
+    this.type = type;
+    this.examples = []
   }
 
-  deleteUtterance(utterance: any) {
+  setExamples(event: any, source: string) {
+    this.setType(source)
+    this.examples = []
+
+    if (source === 'intent') {
+      this.intent = event.data
+      this.corpus.nlu.intents[this.intent].examples.forEach(example => {
+        this.examples.push({ id: Math.round(Math.random() * 100), example: example })
+      })
+    } else if (source === 'lookup') {
+      this.lookup = event.data
+      this.corpus.nlu.lookups[this.lookup].examples.forEach(example => {
+        this.examples.push({ id: Math.round(Math.random() * 100), example: example })
+      })
+    } else if (source === 'regex') {
+      this.lookup = event.data
+      this.corpus.nlu.regexes[this.regex].examples.forEach(example => {
+        this.examples.push({ id: Math.round(Math.random() * 100), example: example })
+      })
+    } else if (source === 'synonym') {
+      this.lookup = event.data
+      this.corpus.nlu.synonyms[this.synonym].examples.forEach(example => {
+        this.examples.push({ id: Math.round(Math.random() * 100), example: example })
+      })
+    }
+  }
+
+  addNewExample() {
+    this.examples.push({ id: Math.round(Math.random() * 100), example: '' })
+    this.updateExample(this.type)
+    console.log(Math.round(Math.random() * 100));
+
+    this.messageService.add({ severity: 'info', summary: 'Success', detail: 'Record added' });
+  }
+
+  updateExample(type: string) {
+    if (type === 'intent') {
+      this.corpus.nlu.intents[this.intent].examples = ['']
+      this.corpus.nlu.intents[this.intent].examples.pop()
+      this.examples.forEach(example => {
+        this.corpus.nlu.intents[this.intent].examples.push(example.example)
+      })
+    } else if (type === 'lookup') {
+      this.corpus.nlu.lookups[this.lookup].examples = ['']
+      this.corpus.nlu.lookups[this.lookup].examples.pop()
+      this.examples.forEach(example => {
+        this.corpus.nlu.lookups[this.lookup].examples.push(example.example)
+      })
+    } else if (type === 'regex') {
+      this.corpus.nlu.regexes[this.regex].examples = ['']
+      this.corpus.nlu.regexes[this.regex].examples.pop()
+      this.examples.forEach(example => {
+        this.corpus.nlu.regexes[this.regex].examples.push(example.example)
+      })
+    } else if (type === 'synonym') {
+      this.corpus.nlu.synonyms[this.synonym].examples = ['']
+      this.corpus.nlu.synonyms[this.synonym].examples.pop()
+      this.examples.forEach(example => {
+        this.corpus.nlu.synonyms[this.synonym].examples.push(example.example)
+      })
+    }
+  }
+
+  deleteExample(example: any) {
     this.confirmationService.confirm({
       message: 'Do you want to delete this record?',
       header: 'Delete Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
-        this.intents[this.intent].utterances.splice(utterance.id, 1)
-        this.messageService.add({severity: 'info', summary: 'Confirmed', detail: 'Record deleted'});
+        const index = this.examples.indexOf(example);
+
+        if (index > -1) {
+          this.examples.splice(index, 1);
+        }
+
+        this.updateExample(this.type);
+        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
       },
       reject: (type: any) => {
         switch (type) {
           case ConfirmEventType.REJECT:
-            this.messageService.add({severity: 'error', summary: 'Rejected', detail: 'You have rejected'});
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
             break;
           case ConfirmEventType.CANCEL:
-            this.messageService.add({severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled'});
+            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
             break;
         }
       }
     });
   }
 
-  addNewAnswer() {
-    let nextId = this.intents[this.intent].answers.length
-    this.intents[this.intent].answers.push({
-      id: nextId,
-      answer: '',
-      opts: ''
-    })
-    this.messageService.add({severity: 'info', summary: 'Success', detail: 'Record added'});
-  }
-
-  deleteAnswer(answer: any) {
-    this.confirmationService.confirm({
-      message: 'Do you want to delete this record?',
-      header: 'Delete Confirmation',
-      icon: 'pi pi-info-circle',
-      accept: () => {
-        this.intents[this.intent].answers.splice(answer.id, 1)
-        this.messageService.add({severity: 'info', summary: 'Confirmed', detail: 'Record deleted'});
-      },
-      reject: (type: any) => {
-        switch (type) {
-          case ConfirmEventType.REJECT:
-            this.messageService.add({severity: 'error', summary: 'Rejected', detail: 'You have rejected'});
-            break;
-          case ConfirmEventType.CANCEL:
-            this.messageService.add({severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled'});
-            break;
-        }
-      }
-    });
-  }
 
   setformEdited(status: boolean) {
     this.formEdited = status
@@ -198,9 +264,10 @@ export class CorpusDetailComponent implements OnInit {
   }
 
   saveChanges() {
-    this.corpus.data = this.intents
+
     this.corpusService.updateCorpus(this.corpus).subscribe(
-      r => this.messageService.add({severity: 'info', summary: 'Changes Saved', detail: r.status})
+      r => this.messageService.add({ severity: 'info', summary: 'Changes Saved', detail: r.status }),
+      err => this.messageService.add({ severity: 'error', summary: 'Failed', detail: err.message }),
     )
 
   }

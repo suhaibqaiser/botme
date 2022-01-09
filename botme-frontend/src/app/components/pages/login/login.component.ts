@@ -41,10 +41,10 @@ export class LoginComponent implements OnInit {
           this.errorMessage = response.payload
         } else {
           this.isLoginFailed = false
-          this.loginToken = response.payload.loginToken
-          localStorage.setItem('loginToken', this.loginToken)
-          localStorage.setItem('userFullName', response.payload.userFullName)
-          localStorage.setItem('restaurantId', response.payload.restaurantId)
+          localStorage.setItem('loginToken', response.userToken)
+          localStorage.setItem('userFullName', response.userFullName)
+          localStorage.setItem('restaurantId', response.restaurantId)
+
           this.router.navigate(["/home"])
         }
 
