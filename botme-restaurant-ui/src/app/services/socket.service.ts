@@ -83,7 +83,7 @@ export class SocketService {
         timestamp: Date()
       },
       context: {
-        reservationId: this._clientService.getCookie().restaurantId,
+        restaurantId: this._clientService.getCookie().restaurantId,
         pageId: this._contextService.currentContextObj.pageId,
         conversationSequence: this.conversationSequence,
         sectionId: this._contextService.currentContextObj.sectionId,
