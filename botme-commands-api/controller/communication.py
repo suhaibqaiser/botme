@@ -6,6 +6,7 @@ from models.Name import Name
 from models.Products import Product
 from models.Reservation import Reservation
 from models.DateTime import DateTime
+from models.categories import Category
 from controller.reservationField import reservationField , checkForEmptyField
 
 # reminder need to change text to senti in responses
@@ -22,6 +23,10 @@ def getResponseUsingContext(intent,entity,text,pageId,sectionId,form,parentEntit
         if intent == "Order_meal" or intent == "remove_item" or intent == "reduce_product_quantity" or intent == "product_flavour" or intent == "product-detail" or intent == "remove_item" or intent == "edit_product":
             product = Product(intent,value,senti,pageId,sectionId,text,db,parentEntity,converstion,context)
             Response = product.ProductResponseIfNoParentEntity()
+            return Response
+        elif intent == "menu_category":
+            category = Category(intent,value,senti,pageId,sectionId,text,db,converstion,context)
+            Response = category.getCategoryResponse()
             return Response
         else:
             call = None
