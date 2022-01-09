@@ -191,14 +191,7 @@ export class CartService {
       })
     }
 
-    if (product.productFlavor && product.productFlavor.length) {
-      product.productFlavor.forEach((item: any, index: any) => {
-        productFlavoursList.push({
-          flavorName: item,
-          selected: (index == 0)
-        })
-      })
-    }
+
     let productlist = this.getProductByType('Addon')
     if (productlist && productlist.length) {
       productlist.forEach((item: any) => {
@@ -212,6 +205,34 @@ export class CartService {
           productTotalPrice: 0
         })
       })
+    }
+
+    let DB = {
+      restaurantId: '',
+      cartId: '',
+      cartProduct: [{
+        productId: '',
+        productSerialNo: '',
+        productCategory: '',
+        productFlavor: '',
+        productProportion: [{
+          productId: '',
+          productQuantity: 0
+        }],
+        productToppings: [{
+          productId: '',
+          productQuantity: 0
+        }],
+        productOptions: [{
+          productId: '',
+          productQuantity: 0
+        }],
+        productRate: 0,
+        productQuantity: 0,
+        productNotes: '', // customization Instructions
+      }],
+      cartDiscount: 0,
+      cartTotal: 0,
     }
 
     this.singleCustomProductObj = {
@@ -243,12 +264,15 @@ export class CartService {
     return this.products.filter((item: any) => item.productType == productType)
   }
 
-  selectProductRate() {
-    if (this._socketService.voiceServingSize) this.selectProductRatesField.setValue(this._socketService.voiceServingSize)
-    this.singleCustomProductObj.productPrice = this.roundToTwo(this.singleCustomProductObj.productRate[this.selectProductRatesField.value])
-    this.singleCustomProductObj.productServingSize = this.selectProductRatesField.value
-    this.customizeBillCalculation()
-    this._socketService.voiceServingSize = ''
+  getSelectedProductFlavor(productFlavorList: any = [], productFlavorId: any = '') {
+    if (productFlavorList && productFlavorList.length) {
+      productFlavorList.forEach((item: any, index: any) => {
+        productFlavoursList.push({
+          flavorName: item,
+          selected: (index == 0)
+        })
+      })
+    }
   }
 
   selectFlavor(flavor: any) {
