@@ -145,67 +145,6 @@ export class CartService {
       })
     })
 
-    if (product.productOptions && product.productOptions.length) {
-      product.productOptions.forEach((array: any) => {
-        array.forEach((item: any, i: any) => {
-          let obj = this.getProductById(item)
-          if (obj) {
-            productOptionsList.push({
-              productId: obj.productId,
-              productName: obj.productName,
-              productImage: this._helperService.resolveProductImage(obj),
-              selected: false
-            })
-          }
-        })
-      })
-    }
-
-    if (product.productIngredients && product.productIngredients.length) {
-      product.productIngredients.forEach((item: any, index: any) => {
-        let obj = this.getProductById(item)
-        if (obj) {
-          productIngredientList.push({
-            productId: obj.productId,
-            productName: obj.productName,
-            productImage: this._helperService.resolveProductImage(obj),
-            selected: true
-          })
-        }
-      })
-    }
-
-    if (product.productToppings && product.productToppings.length) {
-      product.productToppings.forEach((item: any, index: any) => {
-        let obj = this.getProductById(item)
-        if (obj) {
-          productToppingsList.push({
-            productId: obj.productId,
-            productName: obj.productName,
-            productImage: this._helperService.resolveProductImage(obj),
-            productQuantity: 0,
-            productPrice: this.roundToTwo(obj.productRate.standard),
-            productTotalPrice: 0
-          })
-        }
-      })
-    }
-
-
-    let productlist = this.getProductByType('Addon')
-    if (productlist && productlist.length) {
-      productlist.forEach((item: any) => {
-        productAddonsList.push({
-          productId: item.productId,
-          productName: item.productName,
-          productImage: this._helperService.resolveProductImage(item),
-          selected: false,
-          productQuantity: 0,
-          productPrice: this.roundToTwo(item.productRate.standard),
-          productTotalPrice: 0
-        })
-      })
-    }
 
     let DB = {
       restaurantId: '',
@@ -235,17 +174,20 @@ export class CartService {
       cartTotal: 0,
     }
 
+    productOptionsList = this.getSelectedProductOptions(product.productOptions, [])
+    console.log(productOptionsList)
+
     this.singleCustomProductObj = {
       productName: product.productName,
       productId: product.productId,
       productImage: product.productImage,
       productRate: product.productRate,
       productServingSize: productServingSizeList,
-      productOptions: productOptionsList,
-      productIngredients: productIngredientList,
-      productFlavors: productFlavoursList,
-      productAddons: productAddonsList,
-      productToppings: productToppingsList,
+      productOptions: this.getSelectedProductOptions(product.productOptions, []),
+      productIngredients: this.getSelectedProductIngredient(product.productIngredients, []),
+      productFlavors: this.getSelectedProductFlavor(product.productFlavors, ''),
+      productAddons: this.getSelectedProductProportion([]),
+      productToppings: this.getSelectedProductToppings(product.productToppings, []),
       productQuantity: 1,
       status: false,
       productAttributes: product.productAttributes,
@@ -257,20 +199,119 @@ export class CartService {
   }
 
   getProductById(productId: any) {
-    return this.products.find((item: any) => item.productId == productId)
+    let obj = this.products.find((item: any) => item.productId == productId)
+    return obj ? obj : {}
   }
 
   getProductByType(productType: any) {
     return this.products.filter((item: any) => item.productType == productType)
   }
 
-  getSelectedProductFlavor(productFlavorList: any = [], productFlavorId: any = '') {
+  /**
+   * getting the modified list of user selected flavor
+   * @param productFlavorList
+   * @param productFlavorName
+   */
+  getSelectedProductFlavor(productFlavorList: any = [], productFlavorName: any = '') {
     if (productFlavorList && productFlavorList.length) {
-      productFlavorList.forEach((item: any, index: any) => {
-        productFlavoursList.push({
+      return productFlavorList.map((item: any) => {
+        return {
           flavorName: item,
-          selected: (index == 0)
-        })
+          selected: (productFlavorName) ? (item === productFlavorName) : false
+        }
+      })
+    }
+  }
+
+
+  /**
+   * get user selected addons list
+   * @param productProportion
+   */
+  getSelectedProductProportion(productProportion: any = []) {
+    let productList = this.getProductByType('Addon')
+    let productProportionIdList = productProportion.map((item: any) => {
+      return item.productId
+    })
+    if (productList && productList.length) {
+      productList.map((item: any) => {
+        return {
+          productId: item.productId,
+          productName: item.productName,
+          productImage: this._helperService.resolveProductImage(item),
+          selected: (productProportionIdList) ? productProportionIdList.includes(item.productId) : false,
+          productQuantity: (productProportion && productProportion.length) ? productProportion.find((product: any) => product.productId === item.productId).productQuantity : 0,
+          productPrice: this.roundToTwo(item.productRate.standard),
+          productTotalPrice: 0
+        }
+      })
+    }
+  }
+
+  /**
+   * get user selected product topping
+   * @param productToppingsList
+   * @param productToppings
+   */
+  getSelectedProductToppings(productToppingsList: any = [], productToppings: any = []) {
+    let productToppingsIdList = productToppings.map((item: any) => {
+      return item.productId
+    })
+    if (productToppingsList && productToppingsList.length) {
+      productToppingsList.map((item: any) => {
+        let obj = this.getProductById(item)
+        return {
+          productId: obj.productId,
+          productName: obj.productName,
+          productImage: this._helperService.resolveProductImage(obj),
+          selected: (productToppingsIdList) ? productToppingsIdList.includes(obj.productId) : false,
+          productQuantity: (productToppings && productToppings.length) ? productToppings.find((product: any) => product.productId === obj.productId).productQuantity : 0,
+          productPrice: this.roundToTwo(obj.productRate.standard),
+          productTotalPrice: 0
+        }
+      })
+    }
+  }
+
+  /**
+   * get the user selected product options
+   * @param productOptionsList
+   * @param productOptions
+   */
+  getSelectedProductOptions(productOptionsList: any = [], productOptions: any = []) {
+    let productOptionList = productOptionsList.reduce((prev: any, next: any) => {
+      return [...prev, ...next]
+    })
+    console.log(productOptionList)
+    if (productOptionList && productOptionList.length) {
+      productOptionList.map((item: any) => {
+          let obj = this.getProductById(item)
+          return {
+            productId: obj.productId,
+            productName: obj.productName,
+            productImage: this._helperService.resolveProductImage(obj),
+            selected: (productOptions && productOptions.length) ? productOptions.includes(obj.productId) : false,
+          }
+        }
+      )
+    }
+  }
+
+  /**
+   * get user selected product ingredients
+   * @param productIngredientList
+   * @param productIngredient
+   */
+  getSelectedProductIngredient(productIngredientList: any = [], productIngredient: any = []) {
+    if (productIngredientList && productIngredientList.length) {
+      productIngredientList.map((item: any) => {
+        let obj = this.getProductById(item)
+        return {
+          productId: obj.productId,
+          productName: obj.productName,
+          productImage: this._helperService.resolveProductImage(obj),
+          selected: (productIngredient) ? productIngredient.includes(obj.productId) : true,
+        }
       })
     }
   }
