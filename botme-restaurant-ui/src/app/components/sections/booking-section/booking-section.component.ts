@@ -44,6 +44,7 @@ export class BookingSectionComponent implements OnInit {
             reservationDate: this._reservationService.reservationForm.get('reservationDate')?.value,
             reservationTime: this._reservationService.reservationForm.get('reservationTime')?.value,
           }
+          this.enableForm()
           this._reservationService.reservationForm.reset()
           this.reservationLoader = false
           this._helper.timer = setTimeout(() => {
@@ -60,6 +61,12 @@ export class BookingSectionComponent implements OnInit {
       this._reservationService.reservationForm.get('reservationSeats')?.disable()
       this._reservationService.reservationForm.get('reservationDate')?.disable()
       this._reservationService.reservationForm.get('reservationTime')?.disable()
+  }
+  enableForm(){
+    this._reservationService.reservationForm.get('customerName')?.enable()
+    this._reservationService.reservationForm.get('reservationSeats')?.enable()
+    this._reservationService.reservationForm.get('reservationDate')?.enable()
+    this._reservationService.reservationForm.get('reservationTime')?.enable()
   }
 
   resetReservation() {

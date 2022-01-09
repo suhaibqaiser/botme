@@ -17,6 +17,6 @@ export async function getAllReservation(restaurantId: string) {
     return Reservation.find({ restaurantId: restaurantId }).populate("customer").populate("table")
 }
 
-export async function getMaxLabelValue(restaurantId: string) {
-    return Reservation.findOne({ restaurantId: restaurantId }).sort({ reservationLabel: -1 })
+export async function getMaxLabelValue() {
+    return Reservation.findOne({}).sort({ reservationLabel: -1 })
 }

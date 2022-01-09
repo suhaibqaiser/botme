@@ -6,14 +6,14 @@ import { randomUUID } from "crypto";
 export async function addReservation(reservation: any, restaurantId: any) {
     let response = new restResponse()
 
-    if (!reservation || !restaurantId) {
+    if (!restaurantId) {
         response.payload = "reservation and restaurantId is required"
         response.status = "error"
         return response;
     }
     reservation.reservationId = randomUUID();
     reservation.restaurantId = restaurantId
-    let val = await getMaxLabelValue(restaurantId)
+    let val = await getMaxLabelValue()
     reservation.reservationLabel = val ? (val.reservationLabel + 1) : 1
 
     let result = await createReservation(reservation)
