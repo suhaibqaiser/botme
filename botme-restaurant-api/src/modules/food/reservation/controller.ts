@@ -1,7 +1,7 @@
-import {restResponse} from "../../../utils/response";
-import {createReservation, getReservation, updateReservation, getAllReservation} from "./service";
-import {getMaxLabelValue} from "../../food/reservation/service";
-import {randomUUID} from "crypto";
+import { restResponse } from "../../../utils/response";
+import { createReservation, getReservation, updateReservation, getAllReservation } from "./service";
+import { getMaxLabelValue } from "../../food/reservation/service";
+import { randomBytes } from "crypto";
 
 export async function addReservation(reservation: any) {
     let response = new restResponse()
@@ -11,9 +11,9 @@ export async function addReservation(reservation: any) {
         response.status = "error"
         return response;
     }
-    reservation.reservationId = randomUUID();
+    reservation.reservationId = randomBytes(3).toString('hex');
     let val = await getMaxLabelValue()
-    reservation.reservationLabel = val ? ( val.reservationLabel + 1) : 1
+    reservation.reservationLabel = val ? (val.reservationLabel + 1) : 1
 
     let result = await createReservation(reservation)
     if (result) {
