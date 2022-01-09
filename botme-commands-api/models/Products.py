@@ -1,7 +1,6 @@
 from pymongo import response
 from requests.models import Response
 from conf.mongodb import getDbCta, insertingWrongResponseInDb
-import requests
 from controller.utility import Utility
 from config import RESTAURANT_API
 from Service.restaurantApi import getProductUsingProductName , getProductUsingProductId

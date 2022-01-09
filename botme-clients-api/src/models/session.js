@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongodb = require('../utils/mongodb');
 const Schema = mongoose.Schema;
 
 let SessionSchema = new Schema(
@@ -26,4 +27,4 @@ let SessionSchema = new Schema(
     }
 );
 
-module.exports = mongoose.model('Session', SessionSchema);
+module.exports = mongodb.clientsDB.model('Session', SessionSchema);
