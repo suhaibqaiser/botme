@@ -12,7 +12,10 @@
       </p-inplace>
     </h3>
     <div class="card-tools">
-      <button type="button" class="p-button p-button-outlined" (click)="saveChanges()">Save Changes</button>
+      <button *ngIf="editMode" type="button" class="p-button p-button-outlined" (click)="saveChanges()">Save
+        Changes</button>
+      <button *ngIf="!editMode" type="button" class="p-button p-button-outlined" (click)="addCorups()">Add
+        Corpus</button>
     </div>
   </div>
   <!-- /.card-header -->
@@ -20,7 +23,16 @@
     <div class="col-md-6">
       <dl>
         <dt>Corpus ID</dt>
-        <dd>{{corpus.corpusId}}</dd>
+        <dd>
+          <p-inplace [closable]="closable" [style]="{'min-height':'33px'}">
+            <ng-template pTemplate="display">
+              <i class="pi pi-pencil"></i> {{corpus.corpusId}}
+            </ng-template>
+            <ng-template pTemplate="content">
+              <input type="text" value="Corpus Id" [(ngModel)]="corpus.corpusId" pInputText>
+            </ng-template>
+          </p-inplace>
+        </dd>
         <dt>Locale</dt>
         <dd>
           <p-inplace [closable]="closable" [style]="{'min-height':'33px'}">

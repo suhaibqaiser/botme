@@ -27,7 +27,7 @@ export class CorpusDetailComponent implements OnInit {
   InputNewType: string = '';
   InputNewExample: string = '';
   corpusId = ''
-  formMode = 'update'
+  editMode = true;
   formEdited = false
   closable = true;
 
@@ -68,7 +68,7 @@ export class CorpusDetailComponent implements OnInit {
       });
 
     if (!this.corpusId) {
-      this.formMode = 'new'
+      this.editMode = false
     } else {
       this.getCorpusDetails(this.corpusId)
     }
@@ -291,7 +291,7 @@ export class CorpusDetailComponent implements OnInit {
     }
   }
 
-  saveChanges() {
+  updateCorpus() {
     this.corpus.nlu.intents = [{ name: '', examples: [''] }]
     this.corpus.nlu.intents.pop()
     this.intents.forEach(intents => {
@@ -316,12 +316,27 @@ export class CorpusDetailComponent implements OnInit {
       this.corpus.nlu.synonyms.push({ name: synonyms.name, examples: synonyms.examples })
     });
 
+  }
+
+  saveChanges() {
+    this.updateCorpus()
 
     this.corpusService.updateCorpus(this.corpus).subscribe(
       r => this.messageService.add({ severity: 'success', summary: 'Changes Saved', detail: r.status }),
       err => this.messageService.add({ severity: 'error', summary: 'Failed', detail: err.message }),
     )
 
+  }
+  addCorups() {
+    this.updateCorpus()
+
+    this.corpusService.addCorpus(this.corpus).subscribe(
+      r => {
+        this.messageService.add({ severity: 'success', summary: 'Corpus Added', detail: r.status })
+        this.editMode = true
+      },
+      err => this.messageService.add({ severity: 'error', summary: 'Failed', detail: err.message }),
+    )
   }
 
   getRandomId() {
