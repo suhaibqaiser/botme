@@ -25,7 +25,9 @@ export class CorpusService {
 
   addCorpus(corpus: any): Observable<any> {
     const url = `${this.apiBaseUrl}/nlp/addcorpus`
-    return this.http.post(url, corpus);
+    let body = { corpus: corpus };
+    console.log(body);
+    return this.http.put(url, body);
   }
 
   updateCorpus(corpus: any): Observable<any> {

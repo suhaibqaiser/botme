@@ -12,7 +12,10 @@
       </p-inplace>
     </h3>
     <div class="card-tools">
-      <button type="button" class="p-button p-button-outlined" (click)="saveChanges()">Save Changes</button>
+      <button *ngIf="editMode" type="button" class="p-button p-button-outlined" (click)="saveChanges()">Save
+        Changes</button>
+      <button *ngIf="!editMode" type="button" class="p-button p-button-outlined" (click)="addCorups()">Add
+        Corpus</button>
     </div>
   </div>
   <!-- /.card-header -->
@@ -20,7 +23,16 @@
     <div class="col-md-6">
       <dl>
         <dt>Corpus ID</dt>
-        <dd>{{corpus.corpusId}}</dd>
+        <dd>
+          <p-inplace [closable]="closable" [style]="{'min-height':'33px'}">
+            <ng-template pTemplate="display">
+              <i class="pi pi-pencil"></i> {{corpus.corpusId}}
+            </ng-template>
+            <ng-template pTemplate="content">
+              <input type="text" value="Corpus Id" [(ngModel)]="corpus.corpusId" pInputText>
+            </ng-template>
+          </p-inplace>
+        </dd>
         <dt>Locale</dt>
         <dd>
           <p-inplace [closable]="closable" [style]="{'min-height':'33px'}">
@@ -67,16 +79,15 @@
 
       </div>
       <div class="card-body p-0">
-        <p-tabView (onChange)="tabChange($event)">
+        <p-tabView (onChange)="setTypeOnTabChange($event)">
           <p-tabPanel header="Intents">
             <div class="card-tools">
-              <button type="button" class="p-button p-button-sm" data-toggle="modal" data-target="#intentModal"
-                (click)="setType('intent')">
+              <button type="button" class="p-button p-button-sm" data-toggle="modal" data-target="#typeModal">
                 <i class="pi pi-plus"></i> Add New
               </button>
             </div>
-            <p-table [value]="corpus.nlu.intents" editMode="row" dataKey="_id" selectionMode="single"
-              (onRowSelect)="setExamples($event, 'intent')">
+            <p-table [value]="intents" editMode="row" dataKey="id" selectionMode="single"
+              (onRowSelect)="setExamples($event)">
               <ng-template pTemplate="header">
                 <tr>
                   <th>Intent</th>
@@ -84,7 +95,7 @@
                 </tr>
               </ng-template>
               <ng-template pTemplate="body" let-intent let-editing="editing" let-ri="rowIndex">
-                <tr [pEditableRow]="intent" [pSelectableRow]="ri">
+                <tr [pEditableRow]="intent" [pSelectableRow]="intent">
                   <td>
                     <p-cellEditor>
                       <ng-template pTemplate="input">
@@ -100,7 +111,7 @@
                       class="p-button-rounded p-button-text"></button>
 
                     <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"
-                      (click)="deleteType('intent')" class="p-button-rounded p-button-text p-button-danger"></button>
+                      (click)="deleteType(intent)" class="p-button-rounded p-button-text p-button-danger"></button>
 
                     <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
                       class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
@@ -112,12 +123,11 @@
             </p-table>
           </p-tabPanel>
           <p-tabPanel header="Lookups">
-            <button type="button" class="p-button p-button-sm" data-toggle="modal" data-target="#intentModal"
-              (click)="setType('lookup')">
+            <button type="button" class="p-button p-button-sm" data-toggle="modal" data-target="#typeModal">
               <i class="pi pi-plus"></i> Add New
             </button>
-            <p-table [value]="corpus.nlu.lookups" editMode="row" dataKey="_id" selectionMode="single"
-              (onRowSelect)="setExamples($event, 'lookup')">
+            <p-table [value]="lookups" editMode="row" dataKey="_id" selectionMode="single"
+              (onRowSelect)="setExamples($event)">
               <ng-template pTemplate="header">
                 <tr>
                   <th>Lookups</th>
@@ -125,7 +135,7 @@
                 </tr>
               </ng-template>
               <ng-template pTemplate="body" let-lookup let-editing="editing" let-ri="rowIndex">
-                <tr [pEditableRow]="lookup" [pSelectableRow]="ri">
+                <tr [pEditableRow]="lookup" [pSelectableRow]="lookup">
                   <td>
                     <p-cellEditor>
                       <ng-template pTemplate="input">
@@ -141,7 +151,7 @@
                       class="p-button-rounded p-button-text"></button>
 
                     <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"
-                      (click)="deleteType('lookup')" class="p-button-rounded p-button-text p-button-danger"></button>
+                      (click)="deleteType(lookup)" class="p-button-rounded p-button-text p-button-danger"></button>
 
                     <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
                       class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
@@ -153,12 +163,11 @@
             </p-table>
           </p-tabPanel>
           <p-tabPanel header="Regexes">
-            <button type="button" class="p-button p-button-sm" data-toggle="modal" data-target="#intentModal"
-              (click)="setType('regex')">
+            <button type="button" class="p-button p-button-sm" data-toggle="modal" data-target="#typeModal">
               <i class="pi pi-plus"></i> Add New
             </button>
-            <p-table [value]="corpus.nlu.regexes" editMode="row" dataKey="_id" selectionMode="single"
-              (onRowSelect)="setExamples($event, 'regex')">
+            <p-table [value]="regexes" editMode="row" dataKey="_id" selectionMode="single"
+              (onRowSelect)="setExamples($event)">
               <ng-template pTemplate="header">
                 <tr>
                   <th>Regexes</th>
@@ -166,7 +175,7 @@
                 </tr>
               </ng-template>
               <ng-template pTemplate="body" let-regex let-editing="editing" let-ri="rowIndex">
-                <tr [pEditableRow]="regex" [pSelectableRow]="ri">
+                <tr [pEditableRow]="regex" [pSelectableRow]="regex">
                   <td>
                     <p-cellEditor>
                       <ng-template pTemplate="input">
@@ -182,7 +191,7 @@
                       class="p-button-rounded p-button-text"></button>
 
                     <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"
-                      (click)="deleteType('regex')" class="p-button-rounded p-button-text p-button-danger"></button>
+                      (click)="deleteType(regex)" class="p-button-rounded p-button-text p-button-danger"></button>
 
                     <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
                       class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
@@ -194,12 +203,11 @@
             </p-table>
           </p-tabPanel>
           <p-tabPanel header="Synonyms">
-            <button type="button" class="p-button p-button-sm" data-toggle="modal" data-target="#intentModal"
-              (click)="setType('synonym')">
+            <button type="button" class="p-button p-button-sm" data-toggle="modal" data-target="#typeModal">
               <i class="pi pi-plus"></i> Add New
             </button>
-            <p-table [value]="corpus.nlu.synonyms" editMode="row" dataKey="_id" selectionMode="single"
-              (onRowSelect)="setExamples($event, 'synonym')">
+            <p-table [value]="synonyms" editMode="row" dataKey="_id" selectionMode="single"
+              (onRowSelect)="setExamples($event)">
               <ng-template pTemplate="header">
                 <tr>
                   <th>Synonyms</th>
@@ -207,7 +215,7 @@
                 </tr>
               </ng-template>
               <ng-template pTemplate="body" let-synonym let-editing="editing" let-ri="rowIndex">
-                <tr [pEditableRow]="synonym" [pSelectableRow]="ri">
+                <tr [pEditableRow]="synonym" [pSelectableRow]="synonym">
                   <td>
                     <p-cellEditor>
                       <ng-template pTemplate="input">
@@ -223,7 +231,7 @@
                       class="p-button-rounded p-button-text"></button>
 
                     <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"
-                      (click)="deleteType('synonym')" class="p-button-rounded p-button-text p-button-danger"></button>
+                      (click)="deleteType(synonym)" class="p-button-rounded p-button-text p-button-danger"></button>
 
                     <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
                       class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
@@ -250,7 +258,8 @@
         </h3>
         <div class="card-tools">
 
-          <button type="button" class="p-button p-button-sm" (click)="addNewExample()"><i class="pi pi-plus"></i> Add
+          <button type="button" class="p-button p-button-sm" data-toggle="modal" data-target="#exampleModal"><i
+              class="pi pi-plus"></i> Add
             New
           </button>
         </div>
@@ -285,7 +294,7 @@
                   (click)="deleteExample(example)" class="p-button-rounded p-button-text p-button-danger"></button>
 
                 <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
-                  (click)="updateExample(type)" class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
+                  (click)="updateExamples()" class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
               </td>
             </tr>
           </ng-template>
@@ -298,11 +307,11 @@
 </div>
 
 <!-- Add new type Modal -->
-<div class="modal" id="intentModal" tabindex="-1" role="dialog" aria-labelledby="intentModalTitle" aria-hidden="true">
+<div class="modal" id="typeModal" tabindex="-1" role="dialog" aria-labelledby="typeModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="intentModalTitle">New {{type}}</h5>
+        <h5 class="modal-title" id="typeModalTitle">New {{type}}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -315,6 +324,29 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal"
           (click)="addNewType(type ,newType.value)">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Add new example Modal -->
+<div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalTitle">New Example</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="capitalize">Example Identifier</p>
+        <input [(ngModel)]="InputNewExample" type="text" #newExample />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addNewExample()">Add</button>
       </div>
     </div>
   </div>
