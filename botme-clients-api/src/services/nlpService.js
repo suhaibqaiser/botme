@@ -14,6 +14,13 @@ async function getCorpusById(corpusId) {
     });
 }
 
+async function getActiveCorpus() {
+    return nlp.Corpus.findOne({ active: true }, {
+        "_id": 0,
+        "__v": 0
+    });
+}
+
 async function addCorpus(corpus) {
     let resp
     try {
@@ -35,4 +42,4 @@ function updateCorpus(corpus) {
 
 
 
-module.exports = ({ getCorpusById, getCorpusList, addCorpus, updateCorpus })
+module.exports = ({ getCorpusById, getCorpusList, addCorpus, updateCorpus, getActiveCorpus })
