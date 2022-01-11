@@ -1,7 +1,6 @@
 const Response = require("../models/response")
 const nlpService = require('../services/nlpService')
 const YAML = require('yaml');
-const uuid = require('uuid')
 
 
 async function getCorpusList(req, res) {
@@ -156,7 +155,6 @@ async function getMaxCorpusId(res, res) {
             if (Number(corpus.corpusId) > max) {
                 max = Number(corpus.corpusId);
             }
-            console.log(max);
         })
     }
 
