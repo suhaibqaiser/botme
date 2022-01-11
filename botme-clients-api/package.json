@@ -14,7 +14,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.13",
     "node-fetch": "^2.6.1",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "yaml": "2.0.0-10"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.5",

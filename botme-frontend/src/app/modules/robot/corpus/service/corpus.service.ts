@@ -25,7 +25,9 @@ export class CorpusService {
 
   addCorpus(corpus: any): Observable<any> {
     const url = `${this.apiBaseUrl}/nlp/addcorpus`
-    return this.http.post(url, corpus);
+    let body = { corpus: corpus };
+    console.log(body);
+    return this.http.put(url, body);
   }
 
   updateCorpus(corpus: any): Observable<any> {
@@ -33,5 +35,10 @@ export class CorpusService {
     let body = { corpus: corpus };
     console.log(body);
     return this.http.post(url, body);
+  }
+
+  getMaxCorpusId(): Observable<any> {
+    const url = `${this.apiBaseUrl}/nlp/corpusmaxId`;
+    return this.http.get(url);
   }
 }
