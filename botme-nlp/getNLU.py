@@ -4,9 +4,11 @@ import sys
 
 
 def main():
-    corpusId = sys.argv[1]
-    print(corpusId)
-    url = "http://localhost:3000/nlp/export?corpusId=" + corpusId
+    corpusId = sys.argv[1:]
+    if not corpusId:
+        print("[Error] Exiting...: No corpusId specified")
+        return
+    url = "http://localhost:3000/nlp/export?corpusId=" + corpusId[0]
     headers = CaseInsensitiveDict()
     headers["Accept"] = "application/json"
     headers["Authorization"] = "Bearer ea2d3aeaad77865f9769974a920892f5"
