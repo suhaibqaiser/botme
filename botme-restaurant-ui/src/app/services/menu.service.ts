@@ -38,4 +38,13 @@ export class MenuService {
     const url = this.apiBaseUrl + "/food/product/search?productCategory=" + urlString.productCategory + '&productName=' + urlString.productName + '&priceMin=' + urlString.priceMin + '&priceMax=' + urlString.priceMax + '&sortByPrice=' + urlString.sortByPrice + '&ratingMin=' + urlString.ratingMin + '&ratingMax=' + urlString.ratingMax + '&restaurantId=' + this.clientService.getCookie().restaurantId
     return this.http.get(url);
   }
+
+  // Cart Cruds///
+  /**
+   * Api to get cart against restaurantId and cartId
+   */
+  addToCartApi(cart: any) {
+    const url = this.apiBaseUrl + "/food/cart/add"
+    return this.http.put(url,cart);
+  }
 }

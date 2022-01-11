@@ -4,6 +4,8 @@ import {FormControl} from "@angular/forms";
 import {SocketService} from "./socket.service";
 import {HelperService} from "./helper.service";
 import {ContextService} from "./context.service";
+import {BotmeClientService} from "./botme-client.service";
+import {MenuService} from "./menu.service";
 
 declare var $: any;
 
@@ -39,32 +41,10 @@ export class CartService {
     isShowInfo: false,
     status: false
   }
-  productSizeList: any = []
-  tempProductSizeList = [
-    {
-      serving_size_name: 'standard',
-      selected: true,
-      serving_price: 0
-    },
-    {
-      serving_size_name: 'medium',
-      selected: false,
-      serving_price: 0
-    },
-    {
-      serving_size_name: 'large',
-      selected: false,
-      serving_price: 0
-    },
-    {
-      serving_size_name: 'small',
-      selected: false,
-      serving_price: 0
-    }
-  ]
+
   selectProductRatesField = new FormControl('')
 
-  constructor(private _contextService: ContextService, public _helperService: HelperService, private _socketService: SocketService) {
+  constructor(private _menuService: MenuService, private _clientService: BotmeClientService, private _contextService: ContextService, public _helperService: HelperService, private _socketService: SocketService) {
     this.getFromLocalstorage();
   }
 
@@ -82,11 +62,13 @@ export class CartService {
   addToCart(singleCustomProductObj: any, isEdit: any = false, type: any = '') {
     if (!isEdit) {
       this.cartProduct.push(singleCustomProductObj)
+      this.addCartToDb(singleCustomProductObj, isEdit, type)
     } else if (isEdit && type == 'place-order') {
       this.cartProduct = singleCustomProductObj
     } else if (isEdit) {
       this.cartProduct.splice(this.cartProduct.indexOf(singleCustomProductObj.productId), 1)
       this.cartProduct.push(singleCustomProductObj)
+
     }
 
     this.setToLocalStorage("cart-products", this.cartProduct);
@@ -107,19 +89,6 @@ export class CartService {
     return this.cartProducts.asObservable();
   }
 
-  //////////////// cart customization //////////////////////
-  setProductRateSize(product: any) {
-    this.productSizeList = []
-    let keysList = Object.keys(product.productRate)
-    keysList.forEach((item: any, index) => {
-      this.productSizeList.push({
-        serving_size_name: item,
-        selected: index == 0,
-        serving_price: product.productRate[item]
-      })
-    })
-  }
-
   //
   setProductCustomization(product: any) {
     this._contextService.currentContextObj.pageId = 'pageId-product-customize-modal'
@@ -130,68 +99,33 @@ export class CartService {
       entityValue: product.productName
     }
     this.reset()
-    let productOptionsList: any = []
-    let productIngredientList: any = []
-    let productFlavoursList: any = []
-    let productAddonsList: any = []
-    let productToppingsList: any = []
+    this.singleCustomProductObj = this.setSingleCustomizeProduct(product)
+    $('#pageId-productCustomizeModal').modal('show')
+  }
+
+  setSingleCustomizeProduct(product: any, cartProduct: any = {}) {
     let productServingSizeList: any = []
 
+    productServingSizeList = this.getSelectedServingSize(product.productRate, cartProduct.productRate)
 
-    let DB = {
-      restaurantId: '',
-      cartId: '',
-      cartProduct: [{
-        productId: '',
-        productSerialNo: '',
-        productCategory: '',
-        productFlavor: '',
-        productProportion: [{
-          productId: '',
-          productQuantity: 0
-        }],
-        productToppings: [{
-          productId: '',
-          productQuantity: 0
-        }],
-        productOptions: [{
-          productId: '',
-          productQuantity: 0
-        }],
-        productRate: {
-          standard: 0,
-          small: 0,
-          medium: 0,
-          large: 0
-        },
-        productQuantity: 0,
-        productNotes: '', // customization Instructions
-      }],
-      cartDiscount: 0,
-      cartTotal: 0,
-    }
-
-    productServingSizeList = this.getSelectedServingSize(product.productRate, {})
-
-    this.singleCustomProductObj = {
+    return {
       productName: product.productName,
       productId: product.productId,
       productImage: product.productImage,
       productRate: product.productRate,
       productServingSize: productServingSizeList,
-      productOptions: this.getSelectedProductOptions(product.productOptions, []),
-      productIngredients: this.getSelectedProductIngredient(product.productIngredients, []),
-      productFlavors: this.getSelectedProductFlavor(product.productFlavor, ''),
-      productAddons: this.getSelectedProductProportion([]),
-      productToppings: this.getSelectedProductToppings(product.productToppings, []),
-      productQuantity: 1,
+      productOptions: this.getSelectedProductOptions(product.productOptions, cartProduct.productOptions),
+      productIngredients: this.getSelectedProductIngredient(product.productIngredients, cartProduct.productIngredients),
+      productFlavors: this.getSelectedProductFlavor(product.productFlavor, cartProduct.productFlavor),
+      productAddons: this.getSelectedProductProportion(cartProduct.productProportion),
+      productToppings: this.getSelectedProductToppings(product.productToppings, cartProduct.productToppings),
+      productQuantity: (cartProduct && cartProduct.productQuantity) ? cartProduct.productQuantity : 1,
       status: false,
       productAttributes: product.productAttributes,
       productNutrition: product.productNutrition,
       productPrice: this.roundToTwo(productServingSizeList[0].serving_price),
       productTotalPrice: this.roundToTwo(productServingSizeList[0].serving_price)
     }
-    $('#pageId-productCustomizeModal').modal('show')
   }
 
   getProductById(productId: any) {
@@ -230,14 +164,16 @@ export class CartService {
     let productProportionIdList = productProportion.map((item: any) => {
       return item.productId
     })
+    console.log('getSelectedProductProportion =>', productList, productProportionIdList, productProportion)
     if (productList && productList.length) {
       return productList.map((item: any) => {
+        const selectedProduct = productProportion.find((product: any) => product.productId === item.productId)
         return {
           productId: item.productId,
           productName: item.productName,
           productImage: this._helperService.resolveProductImage(item),
           selected: (productProportionIdList) ? productProportionIdList.includes(item.productId) : false,
-          productQuantity: (productProportion && productProportion.length) ? productProportion.find((product: any) => product.productId === item.productId).productQuantity : 0,
+          productQuantity: (selectedProduct && selectedProduct.productQuantity) ? selectedProduct.productQuantity : 0,
           productPrice: this.roundToTwo(item.productRate.standard),
           productTotalPrice: 0
         }
@@ -257,12 +193,13 @@ export class CartService {
     if (productToppingsList && productToppingsList.length) {
       return productToppingsList.map((item: any) => {
         let obj = this.getProductById(item)
+        const selectedProduct = productToppings.find((product: any) => product.productId === obj.productId)
         return {
           productId: obj.productId,
           productName: obj.productName,
           productImage: this._helperService.resolveProductImage(obj),
           selected: (productToppingsIdList) ? productToppingsIdList.includes(obj.productId) : false,
-          productQuantity: (productToppings && productToppings.length) ? productToppings.find((product: any) => product.productId === obj.productId).productQuantity : 0,
+          productQuantity: (selectedProduct && selectedProduct.productQuantity) ? selectedProduct.productQuantity : 0,
           productPrice: this.roundToTwo(obj.productRate.standard),
           productTotalPrice: 0
         }
@@ -317,6 +254,7 @@ export class CartService {
    * @param productRateList
    */
   getSelectedServingSize(productRateList: any = [], productRate: any = {}) {
+    console.log('getSelectedServingSize =>', productRateList, productRate)
     let keysList = Object.keys(productRateList)
     let priceList = keysList.map((item: any, index) => {
       return {
@@ -331,6 +269,109 @@ export class CartService {
       priceList[0].selected = true
     }
     return priceList
+  }
+
+  addCartToDb(singleCustomProductObj: any, isEdit: any = false, type: any = '') {
+    // add product cart
+    if (!isEdit) {
+      let obj = {
+        cart: {
+          restaurantId: this._clientService.getCookie().restaurantId,
+          cartId: '',
+          cartProduct: {
+            productId: singleCustomProductObj.productId,
+            productSerialNo: '',
+            productCategory: '',
+            productFlavor: this.modifyCartObj(singleCustomProductObj).productFlavor,
+            productProportion: this.modifyCartObj(singleCustomProductObj).productProportion,
+            productToppings: this.modifyCartObj(singleCustomProductObj).productToppings,
+            productOptions: this.modifyCartObj(singleCustomProductObj).productOptions,
+            productRate: this.modifyCartObj(singleCustomProductObj).productRate,
+            productQuantity: singleCustomProductObj.productQuantity,
+            productNotes: '', // customization Instructions
+            status: singleCustomProductObj.status, // pending, in-progress
+          },
+          cartDiscount: 0,
+          cartTotal: singleCustomProductObj.productTotalPrice,
+        }
+      }
+      console.log('obj +.', obj)
+      this._menuService.addToCartApi(obj).subscribe((res: any) => {
+        if (res.status === 'success') {
+          const product = this.getProductById(res.payload.cartProduct[0].productId)
+          console.log(product, res.payload.cartProduct[0])
+          console.log(this.setSingleCustomizeProduct(product, res.payload.cartProduct[0]))
+        }
+      })
+    }
+  }
+
+  modifyCartObj(singleCustomProductObj: any) {
+    let {productFlavors, productAddons, productToppings, productOptions, productServingSize} = singleCustomProductObj
+    let modifiedProductFlavor: any = ''
+    let modifiedProductProportion: any = []
+    let modifiedProductTopping: any = []
+    let modifiedProductOptions: any = []
+    let modifiedProductRate: any = {}
+
+    // product flavor modified
+    if (productFlavors && productFlavors.length) {
+      modifiedProductFlavor = productFlavors.find((item: any) => item.selected === true)
+      console.log('modifiedProductFlavor =>', modifiedProductFlavor)
+      modifiedProductFlavor = (modifiedProductFlavor && modifiedProductFlavor.flavorName) ? modifiedProductFlavor.flavorName : ''
+    }
+
+    // product proportion modified
+    if (productAddons && productAddons.length) {
+      modifiedProductProportion = productAddons.filter((item: any) => item.productQuantity > 0)
+      console.log('modifiedProductProportion =>', modifiedProductProportion)
+      modifiedProductProportion = modifiedProductProportion.map((item: any) => {
+        return {
+          productId: item.productId,
+          productQuantity: item.productQuantity
+        }
+      })
+    }
+
+    // product Topping modified
+    if (productToppings && productToppings.length) {
+      modifiedProductTopping = productToppings.filter((item: any) => item.productQuantity > 0)
+      console.log('modifiedProductTopping =>', modifiedProductTopping)
+      modifiedProductTopping = modifiedProductTopping.map((item: any) => {
+        return {
+          productId: item.productId,
+          productQuantity: item.productQuantity
+        }
+      })
+    }
+
+    // productOptions modified
+    if (productOptions && productOptions.length) {
+      modifiedProductOptions = productOptions.filter((item: any) => item.selected === true)
+      console.log('modifiedProductOptions =>', modifiedProductOptions)
+      modifiedProductOptions = modifiedProductOptions.map((item: any) => {
+          return {
+            productId: item.productId,
+            productQuantity: 0
+          }
+        }
+      )
+    }
+
+    // productRate modified
+    if (productServingSize && productServingSize.length) {
+      const obj = productServingSize.find((item: any) => item.selected === true)
+      console.log('modifiedProductRate =>', obj)
+      modifiedProductRate[obj.serving_size_name] = obj.serving_price
+    }
+
+    return {
+      productFlavor: modifiedProductFlavor,
+      productProportion: modifiedProductProportion,
+      productToppings: modifiedProductTopping,
+      productOptions: modifiedProductOptions,
+      productRate: modifiedProductRate
+    }
   }
 
   selectFlavor(flavor: any) {

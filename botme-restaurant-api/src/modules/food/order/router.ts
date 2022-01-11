@@ -30,7 +30,7 @@ export default [
         path: "/cart/search",
         method: "get",
         handler: async (req: Request, res: Response) => {
-            let result = await findCart(req.query, req.query.restaurantId)
+            let result = await findCart(req.query, req.query)
             res.send(result);
         }
     },
@@ -54,7 +54,7 @@ export default [
         path: "/cart/add",
         method: "put",
         handler: async (req: Request, res: Response) => {
-            let result = await addCart(req.body.cart, req.body.restaurantId)
+            let result = await addCart(req.body.cart, req.body.cart.restaurantId)
             res.send(result);
         }
     }

@@ -63,10 +63,11 @@ export async function editOrder(order: any, restaurantId: any) {
 
 // CART //
 
-export async function findCart(filter: any, restaurantId: any) {
+export async function findCart(filter: any, query: any) {
     let response = new restResponse()
 
-    filter.restaurantId = restaurantId
+    filter.restaurantId = query.restaurantId
+    filter.cartId = query.cartId
 
     let result = await getCart(filter)
     if (result.length != 0) {

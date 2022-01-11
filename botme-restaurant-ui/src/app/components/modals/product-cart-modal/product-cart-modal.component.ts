@@ -84,7 +84,6 @@ export class ProductCartModalComponent implements OnInit {
     this.cartService.slideToShow = 0
     this._contextService.currentContextObj.sectionId = 'sectionId-servingSize-productOptions'
     this._contextService.currentContextObj.pageId = 'pageId-product-customize-modal'
-    this.cartService.setProductRateSize(product)
     document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:none')
     this.cartService.singleCustomProductObj = JSON.parse(JSON.stringify(product))
     this.cartService.singleCustomProductObj.isEditable = true
@@ -98,7 +97,6 @@ export class ProductCartModalComponent implements OnInit {
   }
 
   showProductInfo(product: any) {
-    this.cartService.setProductRateSize(product)
     this._contextService.currentContextObj.sectionId = 'sectionId-summary'
     this._contextService.currentContextObj.pageId = 'pageId-product-customize-modal'
     document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:none')

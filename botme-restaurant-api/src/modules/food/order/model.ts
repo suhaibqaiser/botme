@@ -40,16 +40,20 @@ const CartSchema = createSchema(
             productCategory: Type.string(),
             productFlavor: Type.string(),
             productProportion: [{
-                productId:Type.string(),
-                productQuantity:Type.number()
+                productId: Type.string(),
+                productQuantity: Type.number()
             }],
             productToppings: [{
-                productId:Type.string(),
-                productQuantity:Type.number()
+                productId: Type.string(),
+                productQuantity: Type.number()
             }],
             productOptions: [{
-                productId:Type.string(),
-                productQuantity:Type.number()
+                productId: Type.string(),
+                productQuantity: Type.number()
+            }],
+            productIngredients:[{
+                productId: Type.string(),
+                productQuantity: Type.number()
             }],
             productRate: {
                 standard: Type.number(),
@@ -59,6 +63,7 @@ const CartSchema = createSchema(
             },
             productQuantity: Type.number(),
             productNotes: Type.string(), // customization Instructions
+            status: Type.boolean(),
         }],
         cartDiscount: Type.number(),
         cartTotal: Type.number(),
