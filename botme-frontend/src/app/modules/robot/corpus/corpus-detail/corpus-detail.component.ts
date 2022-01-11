@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { CorpusService } from "../service/corpus.service";
 import { Corpus } from "../model/corpus";
 import { ConfirmationService, ConfirmEventType, MessageService } from "primeng/api";
@@ -17,6 +17,7 @@ export class CorpusDetailComponent implements OnInit {
 
   constructor(private corpusService: CorpusService,
     private route: ActivatedRoute,
+    private router: Router,
     private messageService: MessageService,
     private confirmationService: ConfirmationService
   ) { }
@@ -69,6 +70,11 @@ export class CorpusDetailComponent implements OnInit {
 
     if (!this.corpusId) {
       this.editMode = false
+      console.log(this.corpusService.getMaxCorpusId())
+      this.corpusService.getMaxCorpusId().subscribe(res => {
+        this.corpusId = res.payload + 1
+        this.corpus.corpusId = this.corpusId
+      })
     } else {
       this.getCorpusDetails(this.corpusId)
     }
@@ -329,10 +335,15 @@ export class CorpusDetailComponent implements OnInit {
   }
   addCorups() {
     this.updateCorpus()
+    if (!this.corpus.corpusId || !this.corpus.name) {
+      this.messageService.add({ severity: 'error', summary: 'Validation Failed', detail: 'Required fields not provided: ID, Name' })
+      return
+    }
 
     this.corpusService.addCorpus(this.corpus).subscribe(
       r => {
         this.messageService.add({ severity: 'success', summary: 'Corpus Added', detail: r.status })
+        this.router.navigateByUrl(`corpus/detail?corpusId=${this.corpusId}`)
         this.editMode = true
       },
       err => this.messageService.add({ severity: 'error', summary: 'Failed', detail: err.message }),
@@ -340,7 +351,7 @@ export class CorpusDetailComponent implements OnInit {
   }
 
   getRandomId() {
-    return Math.round(Math.random() * (Math.random() * 100))
+    return Math.round(Math.random() * Math.random() * new Date().getTime() / 100000)
   }
 
   @HostListener("window:beforeunload", ["$event"]) unloadHandler(event: Event) {

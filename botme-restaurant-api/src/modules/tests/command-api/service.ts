@@ -7,18 +7,33 @@ export async function processIteration(data: Array<object>) {
     await asyncForEach(data, async (obj: any, index: number, array: any) => {
         console.log(index, array.length);
         let body = {
-            "text": obj.command,
-            "pageId": obj.pageId,
-            "sectionId": obj.sectionId,
-            "entities": JSON.parse(obj.entities)
-        };
+            "text": {
+                "textValue": obj.command,
+                "language": "english",
+                "timestamp": Date.now(),
+                "geoCode": {
+                    "lat": -1.5555,
+                    "long": 6.222
+                }
+            },
+            "context": {
+                "pageId": obj.pageId,
+                "sectionId": obj.sectionId,
+                "parentEntity": {
+                    "id": "xxx",
+                    "name": "zxxz"
+                },
+                "entities": JSON.parse(obj.entities)
+            }
+        }
+
         await http(conf.get('commandsApi'), '/response', "POST", JSON.stringify(body))
             .then(response => {
                 let actualResult = (obj.response === response.Response)
                 let res = {
                     command: body.text,
-                    pageId: body.pageId,
-                    sectionId: body.sectionId,
+                    pageId: body.context.pageId,
+                    sectionId: body.context.sectionId,
                     expectedResponse: obj.response,
                     actualResponse: response.Response,
                     passed: actualResult
