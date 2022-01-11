@@ -1,6 +1,7 @@
 const Response = require("../models/response")
 const nlpService = require('../services/nlpService')
 const YAML = require('yaml');
+const uuid = require('uuid')
 
 
 async function getCorpusList(req, res) {
@@ -49,6 +50,7 @@ async function addCorpus(req, res) {
     }
 
     let corpus = req.body.corpus
+    // corpus.corpusId = uuid.v4().toString()
     corpus.created = Date()
     corpus.active = true
 
@@ -86,7 +88,7 @@ async function updateCorpus(req, res) {
     }
 }
 
-async function exportActiveCorpus(req, res) {
+async function exportCorpus(req, res) {
     let response = new Response()
     // if (!req.query.corpusId) {
     //     response.payload = "corpusId is required"
@@ -94,7 +96,7 @@ async function exportActiveCorpus(req, res) {
     //     return res.status(400).send(response)
     // }
 
-    let resp = await nlpService.getActiveCorpus(req.query.corpusId);
+    let resp = await nlpService.getCorpusById(req.query.corpusId);
     if (resp) {
 
         let ymlDoc = {
@@ -144,4 +146,30 @@ async function exportActiveCorpus(req, res) {
 }
 
 
-module.exports = ({ getCorpusList, getCorpusById, addCorpus, updateCorpus, exportActiveCorpus })
+async function getMaxCorpusId(res, res) {
+    let response = new Response()
+
+    result = await nlpService.getCorpusList();
+    let max = 0
+    if (result.length > 0) {
+        result.forEach(corpus => {
+            if (Number(corpus.corpusId) > max) {
+                max = Number(corpus.corpusId);
+            }
+            console.log(max);
+        })
+    }
+
+    if (max > 0) {
+        response.payload = max
+        response.status = "success"
+        return res.status(200).send(response)
+    } else {
+        response.payload = "Corpus not found"
+        response.status = "error"
+        return res.status(404).send(response)
+    }
+}
+
+
+module.exports = ({ getCorpusList, getCorpusById, addCorpus, updateCorpus, exportCorpus, getMaxCorpusId })

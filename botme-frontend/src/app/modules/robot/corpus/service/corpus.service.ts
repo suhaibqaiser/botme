@@ -36,4 +36,9 @@ export class CorpusService {
     console.log(body);
     return this.http.post(url, body);
   }
+
+  getMaxCorpusId(): Observable<any> {
+    const url = `${this.apiBaseUrl}/nlp/corpusmaxId`;
+    return this.http.get(url);
+  }
 }

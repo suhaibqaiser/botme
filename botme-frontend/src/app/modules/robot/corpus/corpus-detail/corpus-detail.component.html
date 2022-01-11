@@ -24,14 +24,7 @@
       <dl>
         <dt>Corpus ID</dt>
         <dd>
-          <p-inplace [closable]="closable" [style]="{'min-height':'33px'}">
-            <ng-template pTemplate="display">
-              <i class="pi pi-pencil"></i> {{corpus.corpusId}}
-            </ng-template>
-            <ng-template pTemplate="content">
-              <input type="text" value="Corpus Id" [(ngModel)]="corpus.corpusId" pInputText>
-            </ng-template>
-          </p-inplace>
+          {{corpus.corpusId}}
         </dd>
         <dt>Locale</dt>
         <dd>
@@ -126,7 +119,7 @@
             <button type="button" class="p-button p-button-sm" data-toggle="modal" data-target="#typeModal">
               <i class="pi pi-plus"></i> Add New
             </button>
-            <p-table [value]="lookups" editMode="row" dataKey="_id" selectionMode="single"
+            <p-table [value]="lookups" editMode="row" dataKey="id" selectionMode="single"
               (onRowSelect)="setExamples($event)">
               <ng-template pTemplate="header">
                 <tr>
@@ -166,7 +159,7 @@
             <button type="button" class="p-button p-button-sm" data-toggle="modal" data-target="#typeModal">
               <i class="pi pi-plus"></i> Add New
             </button>
-            <p-table [value]="regexes" editMode="row" dataKey="_id" selectionMode="single"
+            <p-table [value]="regexes" editMode="row" dataKey="id" selectionMode="single"
               (onRowSelect)="setExamples($event)">
               <ng-template pTemplate="header">
                 <tr>
@@ -206,7 +199,7 @@
             <button type="button" class="p-button p-button-sm" data-toggle="modal" data-target="#typeModal">
               <i class="pi pi-plus"></i> Add New
             </button>
-            <p-table [value]="synonyms" editMode="row" dataKey="_id" selectionMode="single"
+            <p-table [value]="synonyms" editMode="row" dataKey="id" selectionMode="single"
               (onRowSelect)="setExamples($event)">
               <ng-template pTemplate="header">
                 <tr>
