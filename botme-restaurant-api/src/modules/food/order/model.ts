@@ -39,9 +39,18 @@ const CartSchema = createSchema(
             productSerialNo: Type.string(),
             productCategory: Type.string(),
             productFlavor: Type.string(),
-            productProportion: Type.string(),
-            productToppings: [Type.string()],
-            productOptions: [[Type.string()]],
+            productProportion: [{
+                productId:Type.string(),
+                productQuantity:Type.number()
+            }],
+            productToppings: [{
+                productId:Type.string(),
+                productQuantity:Type.number()
+            }],
+            productOptions: [{
+                productId:Type.string(),
+                productQuantity:Type.number()
+            }],
             productRate: {
                 standard: Type.number(),
                 small: Type.number(),

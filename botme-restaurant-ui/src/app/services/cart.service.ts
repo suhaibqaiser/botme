@@ -136,14 +136,6 @@ export class CartService {
     let productAddonsList: any = []
     let productToppingsList: any = []
     let productServingSizeList: any = []
-    let keysList = Object.keys(product.productRate)
-    keysList.forEach((item: any, index) => {
-      productServingSizeList.push({
-        serving_size_name: item,
-        selected: index == 0,
-        serving_price: product.productRate[item]
-      })
-    })
 
 
     let DB = {
@@ -166,7 +158,12 @@ export class CartService {
           productId: '',
           productQuantity: 0
         }],
-        productRate: 0,
+        productRate: {
+          standard: 0,
+          small: 0,
+          medium: 0,
+          large: 0
+        },
         productQuantity: 0,
         productNotes: '', // customization Instructions
       }],
@@ -174,6 +171,7 @@ export class CartService {
       cartTotal: 0,
     }
 
+    productServingSizeList = this.getSelectedServingSize(product.productRate, {})
 
     this.singleCustomProductObj = {
       productName: product.productName,
@@ -233,7 +231,7 @@ export class CartService {
       return item.productId
     })
     if (productList && productList.length) {
-     return  productList.map((item: any) => {
+      return productList.map((item: any) => {
         return {
           productId: item.productId,
           productName: item.productName,
@@ -257,7 +255,7 @@ export class CartService {
       return item.productId
     })
     if (productToppingsList && productToppingsList.length) {
-     return  productToppingsList.map((item: any) => {
+      return productToppingsList.map((item: any) => {
         let obj = this.getProductById(item)
         return {
           productId: obj.productId,
@@ -302,7 +300,7 @@ export class CartService {
    */
   getSelectedProductIngredient(productIngredientList: any = [], productIngredient: any = []) {
     if (productIngredientList && productIngredientList.length) {
-     return  productIngredientList.map((item: any) => {
+      return productIngredientList.map((item: any) => {
         let obj = this.getProductById(item)
         return {
           productId: obj.productId,
@@ -312,6 +310,27 @@ export class CartService {
         }
       })
     }
+  }
+
+  /**
+   * get user selected select serving size
+   * @param productRateList
+   */
+  getSelectedServingSize(productRateList: any = [], productRate: any = {}) {
+    let keysList = Object.keys(productRateList)
+    let priceList = keysList.map((item: any, index) => {
+      return {
+        serving_size_name: item,
+        selected: productRate[item] ? true : false,
+        serving_price: productRateList[item]
+      }
+    })
+
+    let check = priceList.filter((item: any) => item.selected === true).length
+    if (!check) {
+      priceList[0].selected = true
+    }
+    return priceList
   }
 
   selectFlavor(flavor: any) {
