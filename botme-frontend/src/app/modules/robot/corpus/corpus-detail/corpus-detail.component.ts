@@ -336,7 +336,7 @@ export class CorpusDetailComponent implements OnInit {
   addCorups() {
     this.updateCorpus()
     if (!this.corpus.corpusId || !this.corpus.name) {
-      this.messageService.add({ severity: 'error', summary: 'Validation Failed', detail: 'Required fields not provided: ID, Name' })
+      this.messageService.add({ severity: 'error', summary: 'Validation Failed', detail: 'Please enter corpus name' })
       return
     }
 
