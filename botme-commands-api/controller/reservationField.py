@@ -145,18 +145,30 @@ def validationOfFields(form):
         if x['entityValue']:
             if x['entityId'] == findResponse(name):
                 resultName = validateName(x['entityValue'])
-
+                
             elif x['entityId'] == findResponse(person):
                 resultNoPeople = validateNoOfPerson(x['entityValue'])
-
+    
             elif x['entityId'] == findResponse(date):
                 resultDate = validateDate(x['entityValue'])
-
+                
             elif x['entityId'] == findResponse(time):
-                resultTime = validateTime(x['entityValue'])
-
+                resultTime = validateTime(x['entityValue'])  
+        else:
+            if x['entityId'] == findResponse(name):
+                resultName = True
+                
+            elif x['entityId'] == findResponse(person):
+                resultNoPeople = True
+    
+            elif x['entityId'] == findResponse(date):
+                resultDate = True
+                
+            elif x['entityId'] == findResponse(time):
+                resultTime = True
     result = validationOfFieldValue(resultName,resultNoPeople,resultDate,resultTime)
     return result
+    
 
 def validateName(value):
         if value:
