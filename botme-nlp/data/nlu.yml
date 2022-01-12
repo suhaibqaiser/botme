@@ -328,65 +328,67 @@ nlu:
   - intent: menu_category
     examples: |
       - I want to order from [burger](categoryName)
-      - We want to order from [burgers]{"entity":"categoryName","value":"burger"}
+      - i want to order [burger](categoryName)
+      - We want to order from [burgers](categoryName)
       - show me the [burger](categoryName) category
-      - i want to see the [burgers]{"entity":"categoryName","value":"burger"} category
+      - i want to see the [burgers](categoryName) category
       - can you pop up the [Burger](categoryName) category
       - I want to eat [Burger](categoryName)
       - We want to eat [burger](categoryName)
       - I request you to bring [burger](categoryName)
-      - We request you to bring [burgers]{"entity":"categoryName","value":"burger"}
-      - I want to make a request you to bring [Burgers]{"entity":"categoryName","value":"burger"}
-      - We want to make a request you to bring [Burgers]{"entity":"categoryName","value":"burger"}
-      - I demand you to bring [burger](categoryName)
+      - We request you to bring [Burgers](categoryName)
+      - I want to make a request you to bring [Burgers](categoryName)
+      - We want to make a request you to bring [Burgers](categoryName)
+      - I demand you to bring [Burgers](categoryName)
       - We demand you to bring [burger](categoryName)
       - I want ask for [burger](categoryName)
-      - We want ask for [burger](categoryName)
+      - We want ask for [Burgers](categoryName)
       - [burger](categoryName)
-      - [Burgers]{"entity":"categoryName","value":"burger"}
-      - [burgers]{"entity":"categoryName","value":"burger"}
+      - [Burgers](categoryName)
+      - [burgers](categoryName)
       - I want to order from [plates](categoryName)
-      - We want to order from [plate]{"entity":"categoryName","value":"plates"}
-      - show me the [Plates]{"entity":"categoryName","value":"plates"} category
-      - i want to see the [Plates]{"entity":"categoryName","value":"plates"} category
-      - can you pop up the [plate]{"entity":"categoryName","value":"plates"} category
+      - i want to order [plates](categoryName)
+      - We want to order from [plate](categoryName)
+      - show me the [Plates](categoryName) category
+      - i want to see the [Plates](categoryName) category
+      - can you pop up the [plate](categoryName) category
       - I want to have [plates](categoryName)
       - We want to have [plates](categoryName)
-      - I want to eat [plate]{"entity":"categoryName","value":"plates"}
+      - I want to eat [plate](categoryName)
       - We want to eat plates
-      - We request you to bring [Plate]{"entity":"categoryName","value":"plates"}
+      - We request you to bring [Plate](categoryName)
       - I demand you to bring [plates](categoryName)
       - We demand you to bring plates
       - I want to make a request you to bring plates
       - We want to make a request you to bring [plates](categoryName)
       - [plates](categoryName)
-      - [Plate]{"entity":"categoryName","value":"plates"}
-      - [plate]{"entity":"categoryName","value":"plates"}
-      - I want to order from [Make Your Own Bowl](categoryName)
+      - [Plate](categoryName)
+      - [plate](categoryName)
+      - I want to order from [make your own bowl](categoryName)
       - We want to order from [Make Your Own Bowl](categoryName)
       - show me the [make your own bowl](categoryName) category
       - i want to see the [Make Your Own Bowl](categoryName) category
       - can you pop up the [Make Your Own Bowl](categoryName) category
-      - I want to eat [Make Your Own Bowl](categoryName)
+      - I want to eat [make your own bowl](categoryName)
       - We want to eat [Make Your Own Bowl](categoryName)
       - I request you to bring [Make Your Own Bowl](categoryName)
-      - We request you to bring [Make Your Own Bowl](categoryName)
+      - We request you to bring [make your own bowl](categoryName)
       - I want to make a request you to bring [Make Your Own Bowl](categoryName)
-      - We want to make a request you to bring [Make Your Own Bowl](categoryName)
+      - We want to make a request you to bring [make your own bowl](categoryName)
       - I demand you to bring [Make Your Own Bowl](categoryName)
-      - We demand you to bring [Make Your Own Bowl](categoryName)
+      - We demand you to bring [make your own bowl](categoryName)
       - I want ask for [Make Your Own Bowl](categoryName)
-      - We want ask for [Make Your Own Bowl](categoryName)
+      - We want ask for [make your own bowl](categoryName)
       - [Make Your Own Bowl](categoryName)
       - I want to order from [Family Platters](categoryName)
-      - We want to order from [Family Platter]{"entity":"categoryName","value":"Family Platters"}
+      - We want to order from [Family Platter](categoryName)
       - show me the [family platters](categoryName) category
-      - i want to see the [family platter]{"entity":"categoryName","value":"Family Platters"} category
-      - can you pop up the [Family Platter]{"entity":"categoryName","value":"Family Platters"} category
-      - I want to eat [family platter]{"entity":"categoryName","value":"Family Platters"}
+      - i want to see the [family platter](categoryName) category
+      - can you pop up the [Family Platter](categoryName) category
+      - I want to eat [family platter](categoryName)
       - We want to eat [family platters](categoryName)
-      - I request you to bring [Family Platter]{"entity":"categoryName","value":"Family Platters"}
-      - We request you to bring [family platter]{"entity":"categoryName","value":"Family Platters"}
+      - I request you to bring [Family Platter](categoryName)
+      - We request you to bring [family platter](categoryName)
       - I want to make a request you to bring [Family Platters](categoryName)
       - We want to make a request you to bring [Family Platters](categoryName)
       - I demand you to bring [Family Platters](categoryName)
@@ -394,8 +396,8 @@ nlu:
       - I want ask for [Family Platters](categoryName)
       - We want ask for [Family Platters](categoryName)
       - [Family Platters](categoryName)
-      - [famile platter]{"entity":"categoryName","value":"Family Platters"}
-      - [Family Platter]{"entity":"categoryName","value":"Family Platters"}
+      - [famile platter](categoryName)
+      - [Family Platter](categoryName)
       - I want to order from [todays special](categoryName)
       - We want to order from [Today special](categoryName)
       - show me the [todays special](categoryName) category
@@ -421,6 +423,7 @@ nlu:
       - can you pop up the [wraps](categoryName) category
       - I want to have [wraps](categoryName)
       - We want to have [Wrap](categoryName)
+      - i want to order [Wraps](categoryName)
       - I want to eat [wraps](categoryName)
       - We want to eat wraps
       - I request you to bring [wrap](categoryName)
@@ -440,6 +443,7 @@ nlu:
       - I want to have [kid meal](categoryName)
       - We want to have [kids meal](categoryName)
       - I want to eat [Kid Meal](categoryName)
+      - i want to order [Kids Meal](categoryName)
       - We want to eat [kids meals](categoryName)
       - I demand you to bring kids meal
       - We demand you to bring [kids meal](categoryName)
@@ -477,6 +481,7 @@ nlu:
       - We want to have [salads](categoryName)
       - I want to have [salads](categoryName)
       - We want to have [salad](categoryName)
+      - i want to order [Salad](categoryName)
       - I want to eat [salad](categoryName)
       - We want to eat [salads](categoryName)
       - I request you to bring [salads](categoryName)
@@ -540,22 +545,22 @@ nlu:
       - I want ask for [sandwich](categoryName)
       - We want ask for [sandwich](categoryName)
       - [sandwich](categoryName)
-      - I want to order from [sandwiches]{"entity":"categoryName","value":"sandwich"}
-      - We want to order from [sandwiches]{"entity":"categoryName","value":"sandwich"}
-      - can you pop up the [sandwiches]{"entity":"categoryName","value":"sandwich"} category
-      - I want to have [sandwiches]{"entity":"categoryName","value":"sandwich"}
-      - We want to have [sandwiches]{"entity":"categoryName","value":"sandwich"}
-      - show me the [sandwiches]{"entity":"categoryName","value":"sandwich"} category
-      - i want to see the [sandwiches]{"entity":"categoryName","value":"sandwich"} category
-      - I want to eat [sandwiches]{"entity":"categoryName","value":"sandwich"}
-      - We want to eat [sandwiches]{"entity":"categoryName","value":"sandwich"}
-      - I want to make a request you to bring [sandwiches]{"entity":"categoryName","value":"sandwich"}
-      - We want to make a request you to bring [sandwiches]{"entity":"categoryName","value":"sandwich"}
-      - I demand you to bring [sandwiches]{"entity":"categoryName","value":"sandwich"}
-      - We demand you to bring [sandwiches]{"entity":"categoryName","value":"sandwich"}
-      - I want ask for [sandwiches]{"entity":"categoryName","value":"sandwich"}
-      - We want ask for [sandwiches]{"entity":"categoryName","value":"sandwich"}
-      - [sandwiches]{"entity":"categoryName","value":"sandwich"}
+      - I want to order from [sandwiches](categoryName)
+      - We want to order from [sandwiches](categoryName)
+      - can you pop up the [sandwiches](categoryName) category
+      - I want to have [sandwiches](categoryName)
+      - We want to have [sandwiches](categoryName)
+      - show me the [sandwiches](categoryName) category
+      - i want to see the [sandwiches](categoryName) category
+      - I want to eat [sandwiches](categoryName)
+      - We want to eat [sandwiches](categoryName)
+      - I want to make a request you to bring [sandwiches](categoryName)
+      - We want to make a request you to bring [sandwiches](categoryName)
+      - I demand you to bring [sandwiches](categoryName)
+      - We demand you to bring [sandwiches](categoryName)
+      - I want ask for [sandwiches](categoryName)
+      - We want ask for [sandwiches](categoryName)
+      - [sandwiches](categoryName)
       - I want to order from [Ingredients](categoryName)
       - We want to order from [Ingredient](categoryName)
       - show me the [Ingredients](categoryName) category
@@ -579,6 +584,7 @@ nlu:
       - can you pop up the [Pizzas](categoryName) category
       - I want to eat [Pizzas](categoryName)
       - We want to eat [pizzas](categoryName)
+      - i want to order [Pizza](categoryName)
       - I request you to bring [Pizza](categoryName)
       - We request you to bring [pizza](categoryName)
       - I want to make a request you to bring [Pizzas](categoryName)
@@ -589,52 +595,90 @@ nlu:
       - We want ask for [pizzas](categoryName)
       - [Pizza](categoryName)
 
+
+  - synonym: Sandwich
+    examples: |
+      - Sandwichs
+      - sandwichs
+      - sandwich
+
+  - synonym: Burgers
+    examples: |
+      - burger
+      - Burger
+      - burgers
+  
+  - synonym: Plates
+    examples: |
+      - plate
+      - plates
+      - Plate
+  
+  - synonym: Make Your Own Bowl
+    examples: |
+      - Make Your Own Bowl
+  
+  - synonym: Family Platters
+    examples: |
+      - Family Platter
+      - family platters
+      - family platter
+      - Family platters
+      - family Platters
+
   - synonym: todays special
     examples: |
       - Today Special
       - todays specials
       - today special
   
-  - synonym: wraps
+  - synonym: Wraps
     examples: |
       - Wrap
       - wrap
+      - wraps
 
-  - synonym: kids meal
+  - synonym: Kids Meal
     examples: |
       - kid meal
       - Kid Meal
       - kids meals
   
-  - synonym: drinks
+  - synonym: Drinks
     examples: |
       - Drink
       - drink
+      - drinks
   
-  - synonym: salads
+  - synonym: Salads
     examples: |
       - Salad
       - salad
+      - salads
 
-  - synonym: sides
+  - synonym: Sides
     examples: |
       - Side
       - side
+      - sides
 
-  - synonym: desserts
+  - synonym: Desserts
     examples: |
       - dessert
       - Dessert
+      - desserts
 
   - synonym: Ingredients
     examples: |
       - Ingredient
+      - ingredient
       - ingredient
   
   - synonym: Pizza 
     examples: |
       - Pizzas
       - pizzas
+      - pizza
 
   # - intent: Navigation_left
   #   examples: |
@@ -2540,7 +2584,10 @@ nlu:
     examples: |
       - [Chicken](flavour)
       - [chicken]{"entity":"flavour","value":"Chicken"}
+      - select [Chicken](flavour)
       - select [Chicken](flavour) flavour
+      - select [Chicken](flavour) flavour
+      - add [Chicken](flavour) flavour
       - select [chicken]{"entity":"flavour","value":"Chicken"} flavour
       - add [Chicken](flavour) flavour
       - add [chicken]{"entity":"flavour","value":"Chicken"} flavour
@@ -2739,6 +2786,7 @@ nlu:
 
   - intent: remove_item
     examples: |
+      - dont select [Cheese Slice](productName)
       - I want to take out [Cheese Slice](productName)
       - I like to take off [Cheese Slice](productName)
       - i want to remove Cheese Slice to my cart
@@ -2754,6 +2802,7 @@ nlu:
       - i want to delete [cheese slice](productName) from cart
       - delete [cheese slice](productName)
       - I want to take out [Nacho Burger](productName)
+      - dont select [Nacho Burger](productName)
       - I like to take out off [Nacho Burger](productName)
       - i want to remove Nacho Burger to my cart
       - we want to remove nacho burger to my cart
@@ -2782,6 +2831,7 @@ nlu:
       - i want to delete [cole slaw](productName) from cart
       - delete [cole slaw](productName)
       - I want to take out out [French Fries](productName)
+      - dont select [French Fries](productName)
       - I like to take out off [French Fries](productName)
       - remove [french fries](productName) to cart
       - i want to remove [French Fries](productName) to cart
@@ -2789,6 +2839,7 @@ nlu:
       - I want to place an take out out for [french fries](productName)
       - I want to take out out [Beef Bacon](productName)
       - I like to take out off [Beef Bacon](productName)
+      - dont select [Beef Bacon](productName)
       - I would like to take out out a [beef bacon](productName)
       - I want to place an take out out for [beef bacon](productName)
       - I want to take out out [Onion Rings](productName)
@@ -2797,18 +2848,21 @@ nlu:
       - I want to place an take out out for [onion rings](productName)
       - I want to take out out [Cheese Sticks](productName)
       - I like to take out off [Cheese Sticks](productName)
+      - dont select [Cheese Sticks](productName)
       - I want to place an take out out for [cheese sticks](productName)
       - I would like to take out out a [cheese sticks](productName)
       - I want to take out out [Jalapeno Poppers](productName)
       - I like to take out off [Jalapeno Poppers](productName)
       - I would like to take out out a [jalapeno poppers](productName)
       - I want to place an take out out for [jalapeno poppers](productName)
+      - dont select [jalapeno poppers](productName)
       - I want to take out out [Beef Patty](productName)
       - I like to take out off [Beef Patty](productName)
       - I want to place an take out out for [beef patty](productName)
       - I would like to take out out a [beef patty](productName)
       - I want to take out out [Chicken Patty](productName)
       - I like to take out off [Chicken Patty](productName)
+      - dont select [Chicken Patty](productName)
       - I would like to take out out a [chicken patty](productName)
       - I want to place an take out out for [chicken patty](productName)
       - I want to take out out [Fried Kibbeh](productName)
@@ -2829,6 +2883,7 @@ nlu:
       - I would like to take out out a [curly fries](productName)
       - I want to take out out [Soup](productName)
       - I like to take out off [Soup](productName)
+      - dont select [Soup](productName)
       - I would like to take out out a [soup](productName)
       - I want to place an take out out for [soup](productName)
       - I want to take out out [Poutine](productName)
@@ -2849,6 +2904,7 @@ nlu:
       - I want to place an take out out for [spicy deluxe](productName)
       - I want to take out out [Lettuce](productName)
       - I like to take out off [Lettuce](productName)
+      - dont select [Lettuce](productName)
       - I would like to take out out a lettuce(productName)
       - I want to place an take out out for [lettuce](productName)
       - I want to take out out [Tomato](productName)
@@ -3097,6 +3153,7 @@ nlu:
       - unselect [Lettuce](productName)
       - i want to unselect [Lettuce](productName)
       - i want to unpick [Lettuce](productName)
+      - dont select [Lettuce](productName)
       - can you please unselect [Lettuce](productName)
       - remove [Lettuce](productName)
       - i want to remove [Lettuce](productName) quantity
@@ -3156,6 +3213,7 @@ nlu:
       - take out [Cole Slaw](productName)
       - unpick [Cole Slaw](productName)
       - unselect [Cole Slaw](productName)
+      - dont select [Cole Slaw](productName)
       - unselect [Cole Slaw](productName)
       - remove [Cole Slaw](productName) quantity
       - i want to unselect [Garlic Sauce](productName)
@@ -3234,6 +3292,7 @@ nlu:
       - take out [Water Bottle](productName)
       - unpick [Water Bottle](productName)
       - unselect [Water Bottle](productName)
+      - dont select [Water Bottle](productName)
       - unselect [Water Bottle](productName)
       - remove [Water Bottle](productName) quantity
       - i want to unselect [Pepsi](productName)
@@ -3259,6 +3318,7 @@ nlu:
       - i want to take out [Sprite](productName) 
       - take out [Sprite](productName)
       - unpick [Sprite](productName)
+      - dont select [Sprite](productName)
       - unselect [Sprite](productName)
       - remove [Sprite](productName) quantity
       - i want to remove [kofta sandwich]{"entity":"productName","value":"kafta sandwich"}
