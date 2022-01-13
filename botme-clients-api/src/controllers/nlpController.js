@@ -145,7 +145,7 @@ async function exportCorpus(req, res) {
 }
 
 
-async function getMaxCorpusId(res, res) {
+async function getMaxCorpusId(req, res) {
     let response = new Response()
 
     result = await nlpService.getCorpusList();
