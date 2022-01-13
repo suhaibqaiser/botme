@@ -31,7 +31,9 @@ import { MenuListComponent } from './components/menu/menu-list/menu-list.compone
 import { MenuDetailComponent } from './components/menu/menu-detail/menu-detail.component';
 import { OrderDetailComponent } from './components/order/order-detail/order-detail.component';
 import { TableDetailComponent } from './components/table/table-detail/table-detail.component';
-import {CalendarModule} from 'primeng/calendar';
+import { CalendarModule } from 'primeng/calendar';
+import { RestaurantListComponent } from './components/restaurant/restaurant-list/restaurant-list.component';
+import { RestaurantDetailComponent } from './components/restaurant/restaurant-detail/restaurant-detail.component';
 
 
 @NgModule({
@@ -47,7 +49,9 @@ import {CalendarModule} from 'primeng/calendar';
     MenuDetailComponent,
     OrderDetailComponent,
     TableDetailComponent,
-    CategoryListComponent
+    CategoryListComponent,
+    RestaurantListComponent,
+    RestaurantDetailComponent
   ],
   imports: [
     CommonModule,

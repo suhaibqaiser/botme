@@ -1,5 +1,5 @@
-import {Request, Response} from "express";
-import {areaTable, getAllRestaurants, getAreaList, getActivedRestaurants} from "./controller"
+import { Request, Response } from "express";
+import { areaTable, getAllRestaurants, getAreaList, getActivedRestaurants, addRestaurants, updateRestaurants, getRestaurantsById } from "./controller"
 
 export default [
     {
@@ -15,6 +15,31 @@ export default [
         method: "get",
         handler: async (req: Request, res: Response) => {
             let result = await getActivedRestaurants()
+            res.send(result);
+        }
+    },
+    {
+        path: "/restaurant/getbyid",
+        method: "get",
+        handler: async (req: Request, res: Response) => {
+            let result = await getRestaurantsById(req.query.restaurantId)
+            res.send(result);
+        }
+    },
+    {
+        path: "/restaurant/add",
+        method: "put",
+        handler: async (req: Request, res: Response) => {
+            let result = await addRestaurants(req.body.restaurant)
+            res.send(result);
+
+        }
+    },
+    {
+        path: "/restaurant/update",
+        method: "post",
+        handler: async (req: Request, res: Response) => {
+            let result = await updateRestaurants(req.body.restaurant)
             res.send(result);
         }
     },
