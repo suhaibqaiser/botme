@@ -326,6 +326,10 @@ export class CorpusDetailComponent implements OnInit {
 
   saveChanges() {
     this.updateCorpus()
+    if (!this.corpus.corpusId || !this.corpus.name) {
+      this.messageService.add({ severity: 'error', summary: 'Validation Failed', detail: 'Please enter corpus name' })
+      return
+    }
 
     this.corpusService.updateCorpus(this.corpus).subscribe(
       r => this.messageService.add({ severity: 'success', summary: 'Changes Saved', detail: r.status }),
