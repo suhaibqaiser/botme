@@ -8,13 +8,14 @@ import { ClientService } from '../service/client.service';
 })
 export class ClientListComponent implements OnInit {
 
-  constructor(private clientService: ClientService) { }
+  constructor(private clientService: ClientService,) { }
 
   ngOnInit(): void {
     this.getClients();
   }
 
   clients: Array<any> = [];
+  restaurantId = localStorage.getItem('restaurantId')
 
   selectedClient?: string;
 
@@ -23,7 +24,14 @@ export class ClientListComponent implements OnInit {
   }
 
   getClients(): void {
+
     this.clientService.getClients()
-      .subscribe(result => this.clients = result.payload);
+      .subscribe(result => {
+        result.payload.forEach((client: any) => {
+          if (client.restaurantId === this.restaurantId) {
+            this.clients.push(client)
+          }
+        });
+      });
   }
 }
