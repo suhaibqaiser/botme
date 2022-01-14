@@ -13,6 +13,8 @@ import { OrderDetailComponent } from './components/order/order-detail/order-deta
 import { TableListComponent } from './components/table/table-list/table-list.component';
 import { TableDetailComponent } from './components/table/table-detail/table-detail.component';
 import { CategoryListComponent } from './components/category/category-list/category-list.component';
+import { RestaurantDetailComponent } from './components/restaurant/restaurant-detail/restaurant-detail.component';
+import { RestaurantListComponent } from './components/restaurant/restaurant-list/restaurant-list.component';
 
 const routes: Routes = [
   {
@@ -71,6 +73,14 @@ const routes: Routes = [
   {
     path: 'table/detail',
     component: TableDetailComponent
+  },
+  {
+    path: 'restaurant',
+    component: RestaurantListComponent
+  },
+  {
+    path: 'restaurant/detail',
+    component: RestaurantDetailComponent
   },
 ];
 

@@ -1,8 +1,14 @@
 import {
     getAreas,
-    getAreaTables
+    getAreaTables,
+    getRestaurants,
+    getActiveRestaurants,
+    addRestaurant,
+    updateRestaurant,
+    getRestaurantById
 } from "./service"
-import {restResponse} from "../../../utils/response"
+import { restResponse } from "../../../utils/response"
+import { randomUUID } from "crypto";
 
 
 export async function areaTable(areaId: string) {
@@ -36,6 +42,82 @@ export async function getAreaList() {
         return response
     } else {
         response.payload = "Area not found"
+        response.status = "error"
+        return response
+    }
+}
+
+export async function getAllRestaurants() {
+    let response = new restResponse()
+
+    let result = await getRestaurants()
+    if (result.length != 0) {
+        response.payload = result
+        response.status = "success"
+        return response
+    } else {
+        response.payload = "Restaurants not found"
+        response.status = "error"
+        return response
+    }
+}
+
+export async function getRestaurantsById(restaurantId: any) {
+    let response = new restResponse()
+
+    let result = await getRestaurantById(restaurantId)
+    if (result) {
+        response.payload = result
+        response.status = "success"
+        return response
+    } else {
+        response.payload = "Restaurant not found"
+        response.status = "error"
+        return response
+    }
+}
+
+export async function getActivedRestaurants() {
+    let response = new restResponse()
+    console.log('yo bro')
+    let result = await getActiveRestaurants()
+    if (result.length != 0) {
+        response.payload = result
+        response.status = "success"
+        return response
+    } else {
+        response.payload = "Restaurants not found"
+        response.status = "error"
+        return response
+    }
+}
+
+export async function addRestaurants(restaurant: any) {
+    let response = new restResponse()
+    restaurant.restaurantId = randomUUID()
+    let result = await addRestaurant(restaurant)
+    if (result) {
+        response.payload = result
+        response.status = "success"
+        return response
+    } else {
+        response.payload = "Cannot add new restaurant"
+        response.status = "error"
+        return response
+    }
+}
+
+
+export async function updateRestaurants(restaurant: any) {
+    let response = new restResponse()
+
+    let result = await updateRestaurant(restaurant)
+    if (result) {
+        response.payload = result
+        response.status = "success"
+        return response
+    } else {
+        response.payload = "Update failed"
         response.status = "error"
         return response
     }

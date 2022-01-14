@@ -32,13 +32,9 @@ async function userLogin(req, res) {
             let token = jwt.sign(payload, jwtKey)
             user.userToken = token
             userService.updateUser(user)
-            response.payload = {
-                loginToken: token,
-                userId: user.userId,
-                userFullName: user.userFullName
-            }
+            response.payload = user
             response.status = "success"
-            return res.status(200).send(response)
+            return res.status(200).send(user)
         } else {
             response.payload = "Username or password incorrect"
             response.status = "error"

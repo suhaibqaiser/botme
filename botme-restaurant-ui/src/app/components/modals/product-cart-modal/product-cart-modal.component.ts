@@ -4,6 +4,7 @@ import {MenuService} from 'src/app/services/menu.service';
 import {Router} from "@angular/router";
 import {HelperService} from "../../../services/helper.service";
 import {ContextService} from "../../../services/context.service";
+import {SocketService} from "../../../services/socket.service";
 
 declare var $: any;
 
@@ -23,7 +24,8 @@ export class ProductCartModalComponent implements OnInit {
               private _router: Router,
               private MenuService: MenuService,
               public _helperService: HelperService,
-              private _contextService: ContextService) {
+              private _contextService: ContextService,
+              private _socketService: SocketService) {
   }
 
   ngOnInit(): void {
@@ -87,6 +89,11 @@ export class ProductCartModalComponent implements OnInit {
     this.cartService.singleCustomProductObj = JSON.parse(JSON.stringify(product))
     this.cartService.singleCustomProductObj.isEditable = true
     this.cartService.selectProductRatesField.setValue(product.productServingSize)
+    this._socketService.parentEntity = {
+      entityId: product.productId,
+      entityValue: product.productName
+    }
+
     $('#pageId-productCustomizeModal').modal('show')
   }
 

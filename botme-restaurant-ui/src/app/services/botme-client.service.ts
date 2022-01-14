@@ -64,6 +64,10 @@ export class BotmeClientService {
     return this.cookieService.get('voiceType')
   }
 
+  getVoiceTimeout() {
+    return this.cookieService.get('voiceTimeout')
+  }
+
   getCookieByKey(key: any) {
     return this.cookieService.get(key)
   }

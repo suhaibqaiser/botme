@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-
+const mongodb = require('../utils/mongodb');
 var Schema = mongoose.Schema;
 
 var ClientsSchema = new Schema(
@@ -10,20 +10,14 @@ var ClientsSchema = new Schema(
         clientSecret: { type: String, maxlength: 256, required: true },
         clientDebug: { type: Boolean },
         clientVoiceEnabled: { type: Boolean },
+        clientVoiceTimeout: { type: Number, required: true },
         clientCreated: { type: Date, required: true },
         clientUpdated: { type: Date },
         clientActive: { type: Boolean, required: true },
-        clientComment: { type: String }
+        clientComment: { type: String },
+        restaurantId: { type: String }
     }
 );
 
-// Virtual for client's URL
-ClientsSchema
-    .virtual('url')
-    .get(function () {
-        return '/client/' + this._id;
-    });
-
 //Export model
-module.exports = mongoose.model('Clients', ClientsSchema);
-
+module.exports = mongodb.clientsDB.model('Clients', ClientsSchema);

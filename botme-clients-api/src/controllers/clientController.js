@@ -59,15 +59,17 @@ async function addClient(req, res) {
 
     let client = {
         clientDeviceId: req.body.clientDeviceId,
-        clientID: req.body.clientId,
+        clientID: req.body.clientID,
         clientSecret: req.body.clientSecret,
         clientName: req.body.clientName,
         clientDebug: req.body.clientDebug,
         clientVoiceEnabled: req.body.clientVoiceEnabled,
+        clientVoiceTimeout: req.body.clientVoiceTimeout,
         clientCreated: Date(),
         clientUpdated: null,
         clientActive: req.body.clientActive,
-        clientComment: req.body.clientComment
+        clientComment: req.body.clientComment,
+        restaurantId: req.body.restaurantId
     }
 
     let newClient = await clientService.addClient(client)
@@ -107,7 +109,12 @@ async function authorizeClient(req, res) {
 
         let newSession = await sessionController.createSession(session)
         if (newSession) {
-            response.payload = { ...client._doc, "clientToken": newSession.clientToken, 'isLoggedIn': true, 'sessionId': newSession.sessionId }
+            response.payload = {
+                ...client._doc,
+                "clientToken": newSession.clientToken,
+                'isLoggedIn': true,
+                'sessionId': newSession.sessionId
+            }
             response.status = "success"
             return res.status(200).send(response)
         } else {
@@ -116,7 +123,7 @@ async function authorizeClient(req, res) {
             return res.status(400).send(response)
         }
     } else {
-        response.payload = "deviceID or clientID or clientSecret is incorrect or client is not active"
+        response.payload = "clientID or clientSecret is incorrect or client is not active"
         response.status = "error"
         return res.status(400).send(response)
     }
@@ -139,9 +146,11 @@ async function updateClient(req, res) {
         clientName: req.body.clientName,
         clientDebug: req.body.clientDebug,
         clientVoiceEnabled: req.body.clientVoiceEnabled,
+        clientVoiceTimeout: req.body.clientVoiceTimeout,
         clientUpdated: Date(),
         clientActive: req.body.clientActive,
-        clientComment: req.body.clientComment
+        clientComment: req.body.clientComment,
+        restaurantId: req.body.restaurantId
     }
 
     let updatedClient = await clientService.updateClient(req.body.clientID, client)

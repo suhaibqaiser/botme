@@ -20,7 +20,7 @@ export class SofiaBotComponent implements OnInit {
   constructor(public speechService: SpeechService,
               public clientService: BotmeClientService
   ) {
-    this.updateInteractionState(this.clientService.getCookie().isVoiceModeOn === 'true' ? true : false)
+    this.updateInteractionState(this.clientService.getCookie().isVoiceToggleOn === 'true' ? true : false)
   }
 
   ngOnInit() {
@@ -52,7 +52,7 @@ export class SofiaBotComponent implements OnInit {
 
   updateInteractionState(value: boolean) {
     this.speechEnabled = value
-    this.clientService.setCookie('isVoiceModeOn', value)
+    this.clientService.setCookie('isVoiceToggleOn', value)
     this.speechService.speechEnabled.next(this.speechEnabled)
     if (this.speechEnabled) {
       this.speechService.enableListening()

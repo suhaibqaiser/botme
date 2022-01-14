@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongodb = require('../utils/mongodb');
 const Schema = mongoose.Schema;
 const TextToSpeech = new Schema(
     {
@@ -8,4 +9,4 @@ const TextToSpeech = new Schema(
     }
 );
 
-module.exports = mongoose.model('TextToSpeech', TextToSpeech);
+module.exports = mongodb.clientsDB.model('TextToSpeech', TextToSpeech);

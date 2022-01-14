@@ -1,7 +1,6 @@
 from pymongo import response
 from requests.models import Response
 from conf.mongodb import getDbCta, insertingWrongResponseInDb
-import requests
 from controller.utility import Utility
 from config import RESTAURANT_API
 from Service.restaurantApi import getProductUsingProductName , getProductUsingProductId
@@ -24,8 +23,8 @@ class Product():
 
     # PRODUCT RESPONSE IF NO PARENT ENTITY
     def ProductResponseIfNoParentEntity(self):
-        try:   
-            self.data = getProductUsingProductName(self.value)
+        try:
+            self.data = getProductUsingProductName(self.value,self.context['restaurantId'])
             self.payload = self.data['payload']
             if(self.data['status'] == "success"):
                 if(len(self.data['payload']) == 1):
@@ -93,10 +92,10 @@ class Product():
         try:
             print("2")
             parentProductId = self.parentEntity['entityId']
-            data = getProductUsingProductName(self.value)
+            data = getProductUsingProductName(self.value,self.context['restaurantId'])
             print("1 ==>",data)
             payload = data['payload']
-            parentdata = getProductUsingProductId(parentProductId)
+            parentdata = getProductUsingProductId(parentProductId,self.context['restaurantId'])
             parentPayload = parentdata['payload']
             print("3 ==>",parentPayload)
             if parentdata['status'] == "success":

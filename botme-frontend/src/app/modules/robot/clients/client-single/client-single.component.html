@@ -27,10 +27,19 @@
       </div>
       <div class="form-group">
         <label for="form-client-secret">Client Secret: </label>
-        <!-- <p-password class="form-control form-control-border" id="form-client-secret" formControlName="formclientsecret"
-          [feedback]="false" [toggleMask]="true"></p-password> -->
         <input type="password" class="form-control form-control-border" id="form-client-secret" [feedback]="false"
           formControlName="formclientsecret" pPassword>
+      </div>
+      <div class="form-group">
+        <label for="form-restaurant-id">Restaurant: </label>
+        <select class="form-control" formControlName="formrestaurantid">
+          <option [value]="obj.restaurantId" *ngFor="let obj of restaurantList">{{obj.restaurantName}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="form-client-voice-timeout">Client Voice Timeout (ms): </label>
+        <input type="number" mode="decimal" class="form-control form-control-border" id="form-client-voice-timeout"
+          formControlName="formclientvoicetimeout">
       </div>
       <div *ngIf="formMode==='update'" class="form-group">
         <label for="form-client-created">Created: </label>

@@ -13,7 +13,7 @@ export class ClientService {
   }
 
   apiBaseUrl = environment.apiBaseUrl;
-
+  apiRestaurantUrl = environment.apiRestaurantUrl
 
   getClients(): Observable<any> {
     const url = `${this.apiBaseUrl}/client/list`;
@@ -35,5 +35,10 @@ export class ClientService {
     const url = `${this.apiBaseUrl}/client/update`;
     const body = client;
     return this.http.post(url, body);
+  }
+
+  getActiveRestaurant(){
+    const url = `${this.apiRestaurantUrl}/food/restaurant/active-restaurant`;
+    return this.http.get(url);
   }
 }

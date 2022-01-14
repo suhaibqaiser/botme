@@ -1,0 +1,79 @@
+<div class="card">
+    <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between m-b-15">
+            <h4 class="m-b-0">Restaurant List</h4>
+            <div class="card-toolbar">
+                <ul>
+                    <li>
+                        <a class="p-button p-button-icon-left" [routerLink]="['detail']">
+                            <i class="anticon anticon-plus font-size-20"></i>
+                            Add New
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <p-table #dt1 [value]="restaurants" [responsive]="true" [paginator]="true" [rows]="10" [loading]="loading"
+            [showCurrentPageReport]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [rowsPerPageOptions]="[10,25,50]"
+            [globalFilterFields]="['restaurantName','restaurantId','restaurantActive']">
+            <ng-template pTemplate="caption">
+                <div class="p-d-flex">
+                    <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                        (click)="clear(dt1)"></button>
+                    <span class="p-input-icon-left p-ml-auto" style="float: right;">
+                        <i class="pi pi-search"></i>
+                        <input #search pInputText type="text" (input)="dt1.filterGlobal(search.value, 'contains')"
+                            placeholder="Search keyword" />
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <!-- <th style="width: 10px">#</th> -->
+                    <th style="width: 3rem">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th pSortableColumn="restaurantId">Id <p-sortIcon field="restaurantId"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="restaurantName">Name <p-sortIcon field="restaurantName"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="createdAt">Created <p-sortIcon field="createdAt"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="updatedAt">Updated <p-sortIcon field="updatedAt"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="restaurantActive">Active <p-sortIcon field="restaurantActive"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-restaurant>
+                <tr>
+                    <td>
+                        <p-tableCheckbox [value]="restaurant"></p-tableCheckbox>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-tone m-r-5" [routerLink]="['detail']"
+                            [queryParams]="{ restaurantId: restaurant.restaurantId }">{{restaurant.restaurantId}}</button>
+                    </td>
+                    <td>{{restaurant.restaurantName}}</td>
+                    <td>{{restaurant.createdAt}}</td>
+                    <td>{{restaurant.updatedAt}}</td>
+                    <td><span *ngIf="restaurant.restaurantActive === true"
+                            class="badge badge-success">{{restaurant.restaurantActive}}</span>
+                        <span *ngIf="restaurant.restaurantActive === false"
+                            class="badge badge-danger">{{restaurant.restaurantActive}}</span>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorleft">
+                <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+            </ng-template>
+            <ng-template pTemplate="paginatorright">
+                <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+            </ng-template>
+        </p-table>
+
+    </div>
+</div>

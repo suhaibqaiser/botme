@@ -1,4 +1,4 @@
-import {Request, Response} from "express";
+import { Request, Response } from "express";
 import {
     getAllTable,
     updateOneTable,
@@ -10,7 +10,7 @@ export default [
         path: "/tables",
         method: "get",
         handler: async (req: Request, res: Response) => {
-            let result = await getAllTable()
+            let result = await getAllTable(req.query.restaurantId)
             res.send(result);
         }
     },
@@ -18,7 +18,7 @@ export default [
         path: "/tables/search",
         method: "get",
         handler: async (req: Request, res: Response) => {
-            let result = await findTable(req.query)
+            let result = await findTable(req.query, req.query.restaurantId)
             res.send(result);
         }
     },
@@ -26,7 +26,7 @@ export default [
         path: "/tables/update",
         method: "post",
         handler: async (req: Request, res: Response) => {
-            let result = await updateOneTable(req.body.table)
+            let result = await updateOneTable(req.body.table, req.body.restaurantId)
             res.send(result);
         }
     },
@@ -34,7 +34,7 @@ export default [
         path: "/tables/add",
         method: "put",
         handler: async (req: Request, res: Response) => {
-            let result = await addTable(req.body.table)
+            let result = await addTable(req.body.table, req.body.restaurantId)
             res.send(result);
         }
     }

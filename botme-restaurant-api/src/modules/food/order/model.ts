@@ -1,10 +1,11 @@
-import {createSchema, Type, typedModel} from 'ts-mongoose';
-import {foodDB} from "../../../config/mongoDB";
+import { createSchema, Type, typedModel } from 'ts-mongoose';
+import { foodDB } from "../../../config/mongoDB";
 
 const OrderSchema = createSchema(
     {
-        restaurantId: Type.string({maxlength: 256, required: true}),
-        orderId: Type.string({maxlength: 256, required: true, unique: true}),
+        restaurantId: Type.string({ maxlength: 256, required: true }),
+        orderId: Type.string({ maxlength: 256, required: true, unique: true }),
+        reservationId: Type.string(),
         orderTimestamp: Type.date(), // datetime
         orderType: Type.string(),
         customerId: Type.string(),
@@ -25,17 +26,17 @@ const OrderSchema = createSchema(
         orderTotal: Type.number(),
     },
     {
-        timestamps: {createdAt: true}
+        timestamps: { createdAt: true }
     }
 )
 
 
 const CartSchema = createSchema(
     {
-        restaurantId: Type.string({maxlength: 256, required: true}),
-        cartId: Type.string({maxlength: 256, required: true, unique: true}),
+        restaurantId: Type.string({ maxlength: 256, required: true }),
+        cartId: Type.string({ maxlength: 256, required: true, unique: true }),
         cartProduct: [{
-            productId: Type.string({maxlength: 256, required: true}),
+            productId: Type.string({ maxlength: 256, required: true }),
             productSerialNo: Type.string(),
             productCategory: Type.string(),
             productFlavor: Type.string(),
@@ -55,7 +56,7 @@ const CartSchema = createSchema(
         cartTotal: Type.number(),
     },
     {
-        timestamps: {createdAt: true}
+        timestamps: { createdAt: true }
     }
 );
 
