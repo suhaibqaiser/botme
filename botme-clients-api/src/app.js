@@ -3,10 +3,11 @@ const express = require('express')
 const jwt = require('jsonwebtoken')
 const jwtKey = 'superSecretJWTKey'
 const clientsRouter = require('./routes/clientsRouter.js')
-const nlpRouter = require('./routes/nlpRouter.js')
 const sessionRouter = require('./routes/sessionRouter')
 const conversationRouter = require('./routes/conversationRouter')
 const authRouter = require('./routes/authRouter')
+const userRouter = require('./routes/userRouter')
+const nlpRouter = require('./routes/nlpRouter.js')
 const speechRouter = require('./routes/speechRouter')
 const db = require('./utils/mongodb');
 
@@ -24,9 +25,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/client', verifyToken, clientsRouter);
-app.use('/nlp', verifyToken, nlpRouter);
 app.use('/session', verifyToken, sessionRouter);
 app.use('/conversation', verifyToken, conversationRouter);
+app.use('/user', verifyToken, userRouter);
+app.use('/nlp', verifyToken, nlpRouter);
 app.use('/speech', speechRouter);
 app.use('/auth', authRouter);
 

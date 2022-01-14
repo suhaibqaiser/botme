@@ -21,7 +21,7 @@ async function userLogin(req, res) {
         username: req.body.username,
         password: req.body.password,
     }
-    let user = await userService.getUser(userObject)
+    let user = await userService.getUserByUsername(userObject.username)
 
     if (user) {
         if (user.userSecret === userObject.password && user.userActive === true) {

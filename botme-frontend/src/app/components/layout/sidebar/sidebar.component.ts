@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -8,6 +8,7 @@ import {Component, OnInit} from '@angular/core';
 export class SidebarComponent implements OnInit {
 
   robotsToggleObj: any
+  adminToggleObj: any
   restaurantToggleObj: any
   dictionaryToggleObj: any
 
@@ -17,6 +18,11 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
     this.robotsToggleObj = {
       key: 'robots',
+      check: false,
+      addClass: ''
+    }
+    this.adminToggleObj = {
+      key: 'admin',
       check: false,
       addClass: ''
     }
@@ -37,6 +43,11 @@ export class SidebarComponent implements OnInit {
     this.robotsToggleObj.addClass = this.robotsToggleObj.check ? 'open' : ''
     this.closeOtherDropdowns(this.robotsToggleObj)
   }
+  adminDropdownToggle() {
+    this.adminToggleObj.check = !this.adminToggleObj.check
+    this.adminToggleObj.addClass = this.adminToggleObj.check ? 'open' : ''
+    this.closeOtherDropdowns(this.adminToggleObj)
+  }
 
   restaurantDropdownToggle() {
     this.restaurantToggleObj.check = !this.restaurantToggleObj.check
@@ -52,16 +63,21 @@ export class SidebarComponent implements OnInit {
 
   closeOtherDropdowns(obj: any) {
     if (obj.key == 'robots') {
-      this.restaurantToggleObj = {key: 'restaurant',check: false, addClass: ''}
-      this.dictionaryToggleObj = {key: 'dictionary',check: false, addClass: ''}
-    } else
-    if (obj.key == 'restaurant') {
-      this.robotsToggleObj = {key: 'robots',check: false, addClass: ''}
-      this.dictionaryToggleObj = {key: 'dictionary',check: false, addClass: ''}
-    } else
-    if (obj.key == 'dictionary') {
-      this.robotsToggleObj = {key: 'robots',check: false, addClass: ''}
-      this.restaurantToggleObj = {key: 'restaurant',check: false, addClass: ''}
+      this.restaurantToggleObj = { key: 'restaurant', check: false, addClass: '' }
+      this.dictionaryToggleObj = { key: 'dictionary', check: false, addClass: '' }
+      this.dictionaryToggleObj = { key: 'admin', check: false, addClass: '' }
+    } else if (obj.key == 'restaurant') {
+      this.robotsToggleObj = { key: 'robots', check: false, addClass: '' }
+      this.dictionaryToggleObj = { key: 'dictionary', check: false, addClass: '' }
+      this.dictionaryToggleObj = { key: 'admin', check: false, addClass: '' }
+    } else if (obj.key == 'dictionary') {
+      this.robotsToggleObj = { key: 'robots', check: false, addClass: '' }
+      this.restaurantToggleObj = { key: 'restaurant', check: false, addClass: '' }
+      this.dictionaryToggleObj = { key: 'admin', check: false, addClass: '' }
+    } else if (obj.key == 'admin') {
+      this.robotsToggleObj = { key: 'robots', check: false, addClass: '' }
+      this.dictionaryToggleObj = { key: 'dictionary', check: false, addClass: '' }
+      this.restaurantToggleObj = { key: 'restaurant', check: false, addClass: '' }
     }
   }
 }
