@@ -68,6 +68,7 @@ import { LoginComponent } from './components/pages/login/login.component';
 import { ProfileComponent } from './components/pages/profile/profile.component';
 import { LoginFormComponent } from './components/sections/login-form/login-form.component';
 import { ProfileSectionComponent } from './components/sections/profile-section/profile-section.component';
+import { OrderSectionComponent } from './components/sections/order-section/order-section.component';
 
 @NgModule({
   declarations: [
@@ -118,7 +119,8 @@ import { ProfileSectionComponent } from './components/sections/profile-section/p
     LoginComponent,
     ProfileComponent,
     LoginFormComponent,
-    ProfileSectionComponent
+    ProfileSectionComponent,
+    OrderSectionComponent
   ],
   imports: [
     BrowserModule,

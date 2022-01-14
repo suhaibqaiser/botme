@@ -1,0 +1,28 @@
+.order-types-main {
+  color: white;
+
+  .row {
+    div {
+      .card {
+        background: #222222;
+        border-radius: 10px;
+        border: 1px dashed #7a7a7a;
+        cursor: pointer;
+        .card-body {
+          .fa-utensils, .fa-truck-pickup, .fa-truck {
+            font-size: x-large;
+            color: #E7272D;
+          }
+          h5{
+            margin-top: 5px;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+}
+
+.active-order-type{
+  box-shadow: 0px 5px 20px 8px #e7272d;
+}
