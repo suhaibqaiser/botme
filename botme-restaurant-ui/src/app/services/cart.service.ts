@@ -274,6 +274,7 @@ export class CartService {
   addCartToDb(singleCustomProductObj: any, isEdit: any = false, type: any = '') {
     // add product cart
     if (!isEdit) {
+      const modifiedObj = this.modifyCartObj(singleCustomProductObj)
       let obj = {
         cart: {
           restaurantId: this._clientService.getCookie().restaurantId,
@@ -282,11 +283,11 @@ export class CartService {
             productId: singleCustomProductObj.productId,
             productSerialNo: '',
             productCategory: '',
-            productFlavor: this.modifyCartObj(singleCustomProductObj).productFlavor,
-            productProportion: this.modifyCartObj(singleCustomProductObj).productProportion,
-            productToppings: this.modifyCartObj(singleCustomProductObj).productToppings,
-            productOptions: this.modifyCartObj(singleCustomProductObj).productOptions,
-            productRate: this.modifyCartObj(singleCustomProductObj).productRate,
+            productFlavor: modifiedObj.productFlavor,
+            productProportion: modifiedObj.productProportion,
+            productToppings: modifiedObj.productToppings,
+            productOptions: modifiedObj.productOptions,
+            productRate: modifiedObj.productRate,
             productQuantity: singleCustomProductObj.productQuantity,
             productNotes: '', // customization Instructions
             status: singleCustomProductObj.status, // pending, in-progress
