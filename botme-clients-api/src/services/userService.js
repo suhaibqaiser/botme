@@ -1,11 +1,27 @@
 const User = require('../models/user')
 
-async function getUser(user) {
-    return User.findOne({userName: user.username}, {_id: 0, __v: 0});
+async function getUserByUsername(username) {
+    return User.findOne({ userName: username }, { _id: 0, __v: 0 });
 }
 
-function updateUser(user) {
-    User.findOneAndUpdate({userId: user.userId}, user)
+async function getUserByUserId(userId) {
+    return User.findOne({ userId: userId }, { _id: 0, __v: 0 });
 }
 
-module.exports = ({getUser, updateUser})
+async function getUsers() {
+    return User.find({}, { _id: 0, __v: 0 });
+}
+
+async function getUsersByRestaurantId(restaurantId) {
+    return User.find({ restaurantId: restaurantId }, { _id: 0, __v: 0 });
+}
+
+async function addUser(user) {
+    return User.create(user);
+}
+
+async function updateUser(user) {
+    return User.findOneAndUpdate({ userId: user.userId }, user, { new: true })
+}
+
+module.exports = ({ getUserByUsername, getUsers, getUsersByRestaurantId, updateUser, addUser, getUserByUserId })
