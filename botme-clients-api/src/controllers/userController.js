@@ -78,6 +78,7 @@ async function addUser(req, res) {
 
     let user = req.body.user
     user.userId = uuidv4()
+    user.userCreated = new Date()
 
     let users = await userService.addUser(user)
 

@@ -56,8 +56,8 @@
                 <div class="form-group">
                     <label for="form-userName" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">User
                         Name</label>
-                    <input type="text" pInputText formControlName="userName" id="form-userName"
-                        placeholder="Enter Name">
+                    <input type="username" pInputText formControlName="userName" id="form-userName"
+                        [ngClass]="{ 'is-invalid': f.userName.errors }" placeholder="Enter Name">
                 </div>
                 <div class="form-group">
                     <label for="form-userEmail" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">User
@@ -69,7 +69,7 @@
                     <label for="form-userSecret" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">User
                         Password</label>
                     <input pInputText type="password" formControlName="userSecret" id="form-userSecret"
-                        placeholder="Enter Password">
+                        [ngClass]="{ 'is-invalid': f.userSecret.errors }" placeholder="Enter Password">
                 </div>
                 <div class="form-group">
                     <label for="form-userToken" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">User
@@ -89,7 +89,8 @@
                     </label>
                     <!-- <input pInputText type="text" formControlName="restaurantId" id="form-restaurantId"
                         placeholder="Select Restaurant"> -->
-                    <p-dropdown [options]="restaurantList" placeholder="Select Restaurant"
+                    <p-dropdown [options]="restaurantList" placeholder="Select Restaurant" optionLabel="restaurantName"
+                        optionValue="restaurantId" [ngClass]="{ 'ng-invalid ng-dirty': f.restaurantId.errors }"
                         formControlName="restaurantId" id="form-restaurantId">
                     </p-dropdown>
                 </div>
@@ -103,25 +104,5 @@
                 </div>
             </div>
         </form>
-    </div>
-</div>
-
-<div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered " role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Action Processed</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Changes saved!
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                    [routerLink]="['../']">Close</button>
-            </div>
-        </div>
     </div>
 </div>

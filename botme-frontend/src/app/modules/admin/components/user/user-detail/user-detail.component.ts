@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
 import { Md5 } from 'ts-md5';
@@ -24,7 +24,7 @@ export class UserDetailComponent implements OnInit {
   }
 
   userForm = this.fb.group({
-    userId: new FormControl('', [Validators.required, Validators.maxLength(30)]),
+    userId: new FormControl(''),
     userName: new FormControl('', [Validators.required, Validators.maxLength(60)]),
     userSecret: new FormControl('', [Validators.required, Validators.maxLength(120)]),
     userFullName: new FormControl(''),
@@ -34,7 +34,7 @@ export class UserDetailComponent implements OnInit {
     userUpdated: new FormControl(''),
     userActive: new FormControl(true),
     userComment: new FormControl(''),
-    restaurantId: new FormControl([Validators.required, Validators.maxLength(120)]),
+    restaurantId: new FormControl('', [Validators.required, Validators.maxLength(120)]),
   });
 
   userId = '';
@@ -68,9 +68,12 @@ export class UserDetailComponent implements OnInit {
     this.disableEdit()
 
     this.userService.getRestaurants().subscribe(res => {
+      console.log(res.payload);
+
       this.restaurantList = res.payload
     })
   }
+  get f() { return this.userForm.controls; }
 
   disableEdit() {
     this.editMode = false
@@ -84,7 +87,9 @@ export class UserDetailComponent implements OnInit {
 
   onSubmit(): void {
     if (this.userForm.invalid) {
+      this.validateAllFormFields(this.userForm); //{7}
       this.messageService.add({ severity: 'error', summary: 'Validation Error', detail: 'Please fill all the required fields' })
+      return
     }
     if (this.formMode === 'update') {
       this.updateUser();
@@ -116,6 +121,7 @@ export class UserDetailComponent implements OnInit {
           .subscribe(result => {
             if (result.status === 'success') {
               this.user = result.payload
+              this.userForm.patchValue(this.user)
               this.messageService.add({ severity: 'info', summary: 'Update Success', detail: 'User updated!' })
             } else {
               this.messageService.add({
@@ -144,6 +150,7 @@ export class UserDetailComponent implements OnInit {
   adduser(): void {
 
     this.user = this.userForm.getRawValue()
+    this.user.userSecret = Md5.hashStr(this.user.userSecret);
     this.confirmationService.confirm({
       message: 'Do you want to add this record?',
       header: 'Update Confirmation',
@@ -154,6 +161,7 @@ export class UserDetailComponent implements OnInit {
             if (result.status === 'success') {
               this.user = result.payload
               this.userId = result.payload.userId
+              this.userForm.patchValue(this.user)
               this.messageService.add({ severity: 'info', summary: 'Update Success', detail: 'User added!' })
               this.formMode = 'update'
             } else {
@@ -178,6 +186,17 @@ export class UserDetailComponent implements OnInit {
         this.disableEdit()
       }
     })
+  }
+
+  validateAllFormFields(formGroup: FormGroup) {         //{1}
+    Object.keys(formGroup.controls).forEach(field => {  //{2}
+      const control = formGroup.get(field);             //{3}
+      if (control instanceof FormControl) {             //{4}
+        control.markAsDirty({ onlySelf: true });
+      } else if (control instanceof FormGroup) {        //{5}
+        this.validateAllFormFields(control);            //{6}
+      }
+    });
   }
 
 }
