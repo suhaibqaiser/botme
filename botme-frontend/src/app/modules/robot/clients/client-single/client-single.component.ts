@@ -4,6 +4,7 @@ import {IClient} from '../model/client';
 import {ClientService} from '../service/client.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {Md5} from 'ts-md5/dist/md5';
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-client-single',
@@ -12,7 +13,7 @@ import {Md5} from 'ts-md5/dist/md5';
 })
 export class ClientSingleComponent implements OnInit {
 
-  constructor(private clientService: ClientService, private route: ActivatedRoute, private fb: FormBuilder) {
+  constructor(private _messageService: MessageService, private clientService: ClientService, private route: ActivatedRoute, private fb: FormBuilder) {
   }
 
   clientForm = this.fb.group({
@@ -71,7 +72,13 @@ export class ClientSingleComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.resturantId = localStorage.getItem('restaurantId') ? localStorage.getItem('restaurantId') : ''
     if (this.clientForm.invalid) {
+      this._messageService.add({
+        severity: 'error',
+        summary: 'Validation Failed',
+        detail: `Kindly fill in the required fields`
+      });
       return;
     }
     if (this.formMode === 'update') {
