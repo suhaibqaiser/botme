@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "../../../services/authentication.service";
 import {Router} from "@angular/router";
 import {HeaderService} from "../../../services/header.service";
+import {UserService} from "../../../modules/admin/service/user.service";
 
 @Component({
   selector: 'app-navbar',
@@ -9,14 +10,16 @@ import {HeaderService} from "../../../services/header.service";
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
-  constructor(public headerService: HeaderService, private authService: AuthenticationService, private router: Router) {
+  restaurantList: any = []
+  restaurantObj:any = {}
+  constructor(private userService: UserService, public headerService: HeaderService, private authService: AuthenticationService, private router: Router) {
   }
 
   userFullName: string | null = ''
 
-  ngOnInit(): void {
+  async ngOnInit()  {
     this.userFullName = localStorage.getItem('userFullName')
+    await this.getRestaurants()
   }
 
 
@@ -32,8 +35,13 @@ export class NavbarComponent implements OnInit {
     this.headerService.getToggleObject().addClass = this.headerService.getToggleObject().check ? '' : 'is-folded'
   }
 
-  getLocalStorageRestaurantId(){
-    const id = localStorage.getItem('restaurantId')
-    return id ? id.replace(/-/g, " ") : ''
+  async getRestaurants() {
+    await this.userService.getRestaurants().subscribe(res => {
+      const restaurantList = res.payload
+      if(restaurantList && restaurantList.length) {
+        this.restaurantObj = restaurantList.find((item:any) => item.restaurantId === this.authService.getRestaurantId())
+      }
+      return true
+    })
   }
 }

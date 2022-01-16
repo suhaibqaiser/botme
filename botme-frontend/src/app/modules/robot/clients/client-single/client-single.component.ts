@@ -5,6 +5,7 @@ import {ClientService} from '../service/client.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {Md5} from 'ts-md5/dist/md5';
 import {MessageService} from "primeng/api";
+import {AuthenticationService} from "../../../../services/authentication.service";
 
 @Component({
   selector: 'app-client-single',
@@ -13,7 +14,7 @@ import {MessageService} from "primeng/api";
 })
 export class ClientSingleComponent implements OnInit {
 
-  constructor(private _messageService: MessageService, private clientService: ClientService, private route: ActivatedRoute, private fb: FormBuilder) {
+  constructor(private authService:AuthenticationService,private _messageService: MessageService, private clientService: ClientService, private route: ActivatedRoute, private fb: FormBuilder) {
   }
 
   clientForm = this.fb.group({
@@ -45,17 +46,19 @@ export class ClientSingleComponent implements OnInit {
     clientComment: '',
     restaurantId: ''
   }
-  restaurantList: any = []
+  restaurantObj: any = []
   resturantId: any = ''
 
   async ngOnInit() {
-    // await this.clientService.getActiveRestaurant().subscribe((res: any) => {
-    //   if (res.status === 'success') {
-    //     this.restaurantList = res.payload
-    //     console.log(this.restaurantList)
-    //   }
-    // })
-    // console.log(this.restaurantList)
+    await this.clientService.getActiveRestaurant().subscribe((res: any) => {
+      if (res.status === 'success') {
+        const restaurantList = res.payload
+        if(restaurantList && restaurantList.length) {
+          this.restaurantObj = restaurantList.find((item:any) => item.restaurantId === this.authService.getRestaurantId())
+        }
+      }
+      return true
+    })
     this.route.queryParams
       .subscribe(params => {
         this.clientId = params.clientId;
