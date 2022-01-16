@@ -31,4 +31,9 @@ export class NavbarComponent implements OnInit {
     this.headerService.getToggleObject().check = !this.headerService.getToggleObject().check
     this.headerService.getToggleObject().addClass = this.headerService.getToggleObject().check ? '' : 'is-folded'
   }
+
+  getLocalStorageRestaurantId(){
+    const id = localStorage.getItem('restaurantId')
+    return id ? id.replace(/-/g, " ") : ''
+  }
 }

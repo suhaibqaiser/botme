@@ -45,15 +45,16 @@ export class ClientSingleComponent implements OnInit {
     restaurantId: ''
   }
   restaurantList: any = []
+  resturantId: any = ''
 
   async ngOnInit() {
-    await this.clientService.getActiveRestaurant().subscribe((res: any) => {
-      if (res.status === 'success') {
-        this.restaurantList = res.payload
-        console.log(this.restaurantList)
-      }
-    })
-    console.log(this.restaurantList)
+    // await this.clientService.getActiveRestaurant().subscribe((res: any) => {
+    //   if (res.status === 'success') {
+    //     this.restaurantList = res.payload
+    //     console.log(this.restaurantList)
+    //   }
+    // })
+    // console.log(this.restaurantList)
     this.route.queryParams
       .subscribe(params => {
         this.clientId = params.clientId;
@@ -66,6 +67,7 @@ export class ClientSingleComponent implements OnInit {
     } else {
       this.getClientDetail(this.clientId);
     }
+    this.resturantId = localStorage.getItem('restaurantId') ? localStorage.getItem('restaurantId') : ''
   }
 
   onSubmit(): void {
@@ -84,6 +86,7 @@ export class ClientSingleComponent implements OnInit {
     this.clientService.getClientDetail(clientId).subscribe(
       result => {
         this.client = result.payload
+        this.resturantId = localStorage.getItem('restaurantId') ? localStorage.getItem('restaurantId') : ''
         this.clientForm.patchValue({
           formclientid: this.client.clientID,
           formclientdeviceid: this.client?.clientDeviceId,
@@ -124,6 +127,7 @@ export class ClientSingleComponent implements OnInit {
   }
 
   patchFormValues() {
+    this.resturantId = localStorage.getItem('restaurantId') ? localStorage.getItem('restaurantId') : ''
     this.client.clientID = this.clientForm.getRawValue().formclientid
     this.client.clientDeviceId = this.clientForm.getRawValue().formclientdeviceid
     this.client.clientSecret = this.clientForm.getRawValue().formclientsecret
@@ -132,7 +136,7 @@ export class ClientSingleComponent implements OnInit {
     this.client.clientActive = this.clientForm.getRawValue().formclientactive
     this.client.clientDebug = this.clientForm.getRawValue().formclientdebug
     this.client.clientVoiceEnabled = this.clientForm.getRawValue().formclientvoice
-    this.client.restaurantId = this.clientForm.getRawValue().formrestaurantid
+    this.client.restaurantId = this.resturantId
     this.client.clientVoiceTimeout = this.clientForm.getRawValue().formclientvoicetimeout
   }
 }
