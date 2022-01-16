@@ -1,6 +1,8 @@
+import re
 from requests.models import Response
 from conf.mongodb import findResponse
 from controller.utility import Utility
+from datetime import datetime
 
 def reservationField(db,form,pageId,sectionId,value,text,intent):
     if db is not None:
@@ -44,7 +46,6 @@ def checkingIfFieldValueExist(db,form,pageId,sectionId,value,text,intent):
     date = "date"
     time = "time"
     call = None
-    print("new form ==>",form)
     utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
     for x in form:
         if not x['entityValue']:
@@ -134,3 +135,87 @@ def resetFieldFocus(form):
     for x in form:
         x['entitySelected'] = False
     return form
+
+def validationOfFields(form):
+    name = "name"
+    person = "person"
+    date = "date"
+    time = "time"
+    for x in form:
+        if x['entityValue']:
+            if x['entityId'] == findResponse(name):
+                resultName = validateName(x['entityValue'])
+                
+            elif x['entityId'] == findResponse(person):
+                resultNoPeople = validateNoOfPerson(x['entityValue'])
+    
+            elif x['entityId'] == findResponse(date):
+                resultDate = validateDate(x['entityValue'])
+                
+            elif x['entityId'] == findResponse(time):
+                resultTime = validateTime(x['entityValue'])  
+        else:
+            if x['entityId'] == findResponse(name):
+                resultName = True
+                
+            elif x['entityId'] == findResponse(person):
+                resultNoPeople = True
+    
+            elif x['entityId'] == findResponse(date):
+                resultDate = True
+                
+            elif x['entityId'] == findResponse(time):
+                resultTime = True
+    result = validationOfFieldValue(resultName,resultNoPeople,resultDate,resultTime)
+    return result
+    
+
+def validateName(value):
+        if value:
+            val = value.replace(" ","").isalpha()
+            if val:
+                return True
+            else:
+                 return False
+        else:
+            return False
+
+def validateNoOfPerson(value):
+    try:
+        if not value:
+            return False
+        else:
+            value = str(value)
+            V = re.findall(r'\d+', value) 
+            number = "".join(V)
+            if number.isdigit():
+                return True
+            else:
+                return False
+    except:
+         return False
+
+def validateDate(value):
+    format = "%Y-%m-%d"
+    try:
+        date = datetime.strptime(value,format)
+        if date:
+            return True
+    except:
+        return False
+
+def validateTime(value):
+    format = "%I:%M %p"
+    try:
+        date = datetime.strptime(value,format)
+        if date:
+            return True
+    except:
+        return False
+
+
+def validationOfFieldValue(name,person,date,time):
+    if name == True and person == True and date == True and time == True:
+        return True
+    else:
+        return False

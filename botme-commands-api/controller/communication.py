@@ -7,7 +7,7 @@ from models.Products import Product
 from models.Reservation import Reservation
 from models.DateTime import DateTime
 from models.categories import Category
-from controller.reservationField import reservationField , checkForEmptyField
+from controller.reservationField import reservationField , checkForEmptyField , validationOfFields
 
 # reminder need to change text to senti in responses
 
@@ -78,9 +78,16 @@ def getResponseUsingContext(intent,entity,text,pageId,sectionId,form,parentEntit
             return response
 
         elif (intent == "book_now"):
-            print("form ==>",form)
-            Response = reservationField(db,form,pageId,sectionId,value,text,intent)
-            return Response
+            Form = validationOfFields(form)
+            print(Form)
+            if Form:
+                Response = reservationField(db,form,pageId,sectionId,value,text,intent)
+                return Response
+            else:
+                call = None
+                utility = Utility(pageId,sectionId,value,text,intent,db,form,call)
+                response = utility.formValidationResponse()
+                return response
         else:
             call = None
             utility = Utility(pageId,sectionId,value,text,intent,db,form,call)

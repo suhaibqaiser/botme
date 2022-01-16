@@ -6,7 +6,7 @@ export default [
         path: "/reservation/add",
         method: "put",
         handler: async (req: Request, res: Response) => {
-            let result = await addReservation(req.body.reservation, req.body.restaurantId)
+            let result = await addReservation(req.body.reservation, req.query.restaurantId)
             res.send(result);
         }
     },

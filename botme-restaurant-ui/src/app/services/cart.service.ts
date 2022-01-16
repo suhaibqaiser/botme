@@ -528,22 +528,22 @@ export class CartService {
 
   previousSlide() {
     this.slideToShow--
-    this.setCurrentContext()
     if (this.slideToShow === 3 && !this.singleCustomProductObj.productIngredients.length && !this.singleCustomProductObj.productFlavors.length) {
       this.slideToShow = 0
     } else if (this.slideToShow === 2 && !this.singleCustomProductObj.productToppings.length) {
       this.slideToShow--
     }
+    this.setCurrentContext()
   }
 
   nextSlide() {
     this.slideToShow++
-    this.setCurrentContext()
     if (this.slideToShow === 1 && !this.singleCustomProductObj.productIngredients.length && !this.singleCustomProductObj.productFlavors.length) {
       this.slideToShow = 4
     } else if (this.slideToShow === 2 && !this.singleCustomProductObj.productToppings.length) {
       this.slideToShow++
     }
+    this.setCurrentContext()
   }
 
   setCurrentContext() {

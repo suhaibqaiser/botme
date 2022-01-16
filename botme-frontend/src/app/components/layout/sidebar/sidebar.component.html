@@ -83,6 +83,11 @@
                             <p>Products</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/restaurant/restaurant" routerLinkActive="activebutton">
+                            <p>Restaurants</p>
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li [class]="dictionaryToggleObj.addClass" class="nav-item dropdown pointer">
@@ -106,6 +111,25 @@
                             <p>Products</p>
                         </a>
                     </li>
+                </ul>
+            </li>
+            <li [class]="adminToggleObj.addClass" class="nav-item dropdown pointer">
+                <a (click)="adminDropdownToggle()" class="dropdown-toggle pointer">
+                    <span class="icon-holder">
+                        <i class="anticon anticon-robot"></i>
+                    </span>
+                    <span class="title">Administration</span>
+                    <span class="arrow">
+                        <i class="arrow-icon"></i>
+                    </span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/admin/user" routerLinkActive="activebutton">
+                            <p>Users</p>
+                        </a>
+                    </li>
+
                 </ul>
             </li>
             <!-- <li class="nav-item dropdown">

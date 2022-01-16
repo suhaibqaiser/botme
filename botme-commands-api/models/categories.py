@@ -17,9 +17,9 @@ class Category:
         self.context = context
     
     def getCategoryResponse(self):
-        data = getAllCategory()
+        data = getAllCategory(self.context['restaurantId'])
         payload = data['payload']
-        category = Category.checkForCategory(self.value,payload)
+        category = Category.checkForCategory(self.value,payload,self.context['restaurantId'])
         print("category ==>",category)
         if category :
             if Category.checkIfCategoryActive(category):
@@ -38,9 +38,10 @@ class Category:
             response = utility.ifNoCategory()
             return response    
 
-    def checkForCategory(value,payload):
+    def checkForCategory(value,payload,restaurantId):
         for x in payload:
-            if x['categoryName'] == value.title():
+            print(x)
+            if x['categoryName'] == value.title() and x['restaurantId'] == restaurantId:
                 return x
         return None
 

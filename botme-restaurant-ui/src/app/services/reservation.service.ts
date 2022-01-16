@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {HelperService} from "./helper.service";
+import {BotmeClientService} from "./botme-client.service";
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,7 @@ export class ReservationService {
   }
   conversationId: any = ''
 
-  constructor(private http: HttpClient, private _helperService: HelperService) {
+  constructor(private _clientService: BotmeClientService, private http: HttpClient, private _helperService: HelperService) {
   }
 
 
@@ -108,7 +109,7 @@ export class ReservationService {
 
   setReservationForm(conversationId: any, reservationFormJson: any) {
     this.conversationId = conversationId
-    if(!reservationFormJson.length) return
+    if (!reservationFormJson.length) return
     reservationFormJson.forEach((item: any) => {
       if (item.entityId === 'entityId-name') {
         this.reservationForm.get('customerName')?.setValue(item.entityValue)
@@ -142,7 +143,7 @@ export class ReservationService {
   }
 
   addReservation(payload: any): Observable<any> {
-    const url = `${this.apiBaseUrl}/food/reservation/add`;
+    const url = `${this.apiBaseUrl}/food/reservation/add?restaurantId=` + this._clientService.getCookie().restaurantId;
     return this.http.put(url, {reservation: payload});
   }
 

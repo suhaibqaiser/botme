@@ -16,6 +16,7 @@ export async function addProduct(product: any, restaurantId: any) {
 
     product.productId = randomUUID()
     product.productActive = true
+    product.restaurantId = restaurantId
 
     result = await createProduct(product)
 
