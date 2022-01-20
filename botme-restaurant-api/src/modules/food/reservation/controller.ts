@@ -18,9 +18,7 @@ export async function addReservation(reservation: any, restaurantId: any) {
 
     let result = await createReservation(reservation)
     if (result) {
-        const payload = JSON.parse(JSON.stringify(result))
-        payload.orderId = randomUUID()
-        response.payload = payload
+        response.payload = JSON.parse(JSON.stringify(result))
         response.status = "success"
         return response
     } else {

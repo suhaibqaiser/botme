@@ -274,39 +274,22 @@ export class CartService {
   addCartToDb(singleCustomProductObj: any, isEdit: any = false, type: any = '') {
     // add product cart
     if (!isEdit) {
-      const modifiedObj = this.modifyCartObj(singleCustomProductObj)
-      let obj = {
-        cart: {
-          restaurantId: this._clientService.getCookie().restaurantId,
-          cartId: '',
-          cartProduct: {
-            productId: singleCustomProductObj.productId,
-            productSerialNo: '',
-            productCategory: '',
-            productFlavor: modifiedObj.productFlavor,
-            productProportion: modifiedObj.productProportion,
-            productToppings: modifiedObj.productToppings,
-            productOptions: modifiedObj.productOptions,
-            productRate: modifiedObj.productRate,
-            productQuantity: singleCustomProductObj.productQuantity,
-            productNotes: '', // customization Instructions
-            status: singleCustomProductObj.status, // pending, in-progress
-          },
-          cartDiscount: 0,
-          cartTotal: singleCustomProductObj.productTotalPrice,
-        }
-      }
-      console.log('obj +.', obj)
-      this._menuService.addToCartApi(obj).subscribe((res: any) => {
+      const orderObj = this.orderObjGenerator(singleCustomProductObj)
+      console.log('obj +.', orderObj)
+      this._menuService.addToCartApi(orderObj).subscribe((res: any) => {
         if (res.status === 'success') {
-          const product = this.getProductById(res.payload.cartProduct[0].productId)
-          console.log(product, res.payload.cartProduct[0])
-          console.log(this.setSingleCustomizeProduct(product, res.payload.cartProduct[0]))
+          const product = this.getProductById(res.payload.cart.cartProduct[0].productId)
+          console.log(product, res.payload.cart.cartProduct[0])
+          console.log(this.setSingleCustomizeProduct(product, res.payload.cart.cartProduct[0]))
         }
       })
     }
   }
 
+  /**
+   * this will set or reset the cart items
+   * @param singleCustomProductObj
+   */
   modifyCartObj(singleCustomProductObj: any) {
     let {productFlavors, productAddons, productToppings, productOptions, productServingSize} = singleCustomProductObj
     let modifiedProductFlavor: any = ''
@@ -372,6 +355,49 @@ export class CartService {
       productToppings: modifiedProductTopping,
       productOptions: modifiedProductOptions,
       productRate: modifiedProductRate
+    }
+  }
+
+  orderObjGenerator(singleCustomProductObj: any, isEdit = false, cartId = '', orderId = '') {
+    const modifiedObj = this.modifyCartObj(singleCustomProductObj)
+    return {
+      order: {
+        restaurantId: this._clientService.getCookie().restaurantId,
+        orderId: (orderId && orderId.length) ? orderId : '',
+        reservationId: this._clientService.getCookie().reservationId,
+        orderTimestamp: new Date(),
+        orderType: this._clientService.getCookie().orderType,
+        customerId: '',
+        addressId: '',
+        tableId: '',
+        cartId: (cartId && cartId.length) ? cartId : '',
+        orderPaymentMethod: '',
+        orderSubTotal: singleCustomProductObj.productTotalPrice,
+        orderTip: 0,
+        orderDiscount: 0,
+        orderServiceTax: 0,
+        orderSalesTax: 0,
+        orderTotal: singleCustomProductObj.productTotalPrice
+      },
+      cart: {
+        restaurantId: this._clientService.getCookie().restaurantId,
+        cartId: '',
+        cartProduct: {
+          productId: singleCustomProductObj.productId,
+          productSerialNo: '',
+          productCategory: '',
+          productFlavor: modifiedObj.productFlavor,
+          productProportion: modifiedObj.productProportion,
+          productToppings: modifiedObj.productToppings,
+          productOptions: modifiedObj.productOptions,
+          productRate: modifiedObj.productRate,
+          productQuantity: singleCustomProductObj.productQuantity,
+          productNotes: '', // customization Instructions
+          status: singleCustomProductObj.status, // pending, in-progress
+        },
+        cartDiscount: 0,
+        cartTotal: singleCustomProductObj.productTotalPrice,
+      }
     }
   }
 

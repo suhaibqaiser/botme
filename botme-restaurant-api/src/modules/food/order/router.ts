@@ -54,7 +54,7 @@ export default [
         path: "/cart/add",
         method: "put",
         handler: async (req: Request, res: Response) => {
-            let result = await addCart(req.body.cart, req.body.cart.restaurantId)
+            let result = await addCart(req.body, req.body.cart.restaurantId)
             res.send(result);
         }
     }

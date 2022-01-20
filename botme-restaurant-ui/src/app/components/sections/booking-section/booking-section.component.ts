@@ -46,7 +46,6 @@ export class BookingSectionComponent implements OnInit {
             reservationTime: this._reservationService.reservationForm.get('reservationTime')?.value,
           }
           this._botMeService.setCookie('reservationId',res.payload.reservationId)
-          this._botMeService.setCookie('orderId',res.payload.orderId)
           this.enableForm()
           this._reservationService.reservationForm.reset()
           this.reservationLoader = false
