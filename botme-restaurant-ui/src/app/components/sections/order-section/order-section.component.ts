@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
+import {OrderService} from "../../../services/order.service";
 
 @Component({
   selector: 'app-order-section',
@@ -8,13 +9,7 @@ import {Router} from "@angular/router";
 })
 export class OrderSectionComponent implements OnInit {
 
-  constructor(private _route: Router) {
-  }
-
-  selectedOrder = {
-    'dine-in': false,
-    'pick-in': false,
-    'delivery': false
+  constructor(public _orderService: OrderService, private _route: Router) {
   }
 
 
@@ -22,11 +17,11 @@ export class OrderSectionComponent implements OnInit {
   }
 
   selectOrderType(type: any) {
-    if (type === 'dine-in') {
-
+    if (type === 'dine_in') {
+      this._orderService.selectedOrderButtons['dine_in'] = true
       return this._route.navigate(['reservations'])
     }
-    if (type === 'pick-in') return this._route.navigate(['online-shop'])
+    if (type === 'pick_up') return this._route.navigate(['online-shop'])
     if (type === 'delivery') return this._route.navigate(['online-shop'])
     return ''
   }
