@@ -4,6 +4,8 @@ import {IClient} from '../model/client';
 import {ClientService} from '../service/client.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {Md5} from 'ts-md5/dist/md5';
+import {MessageService} from "primeng/api";
+import {AuthenticationService} from "../../../../services/authentication.service";
 
 @Component({
   selector: 'app-client-single',
@@ -12,7 +14,7 @@ import {Md5} from 'ts-md5/dist/md5';
 })
 export class ClientSingleComponent implements OnInit {
 
-  constructor(private clientService: ClientService, private route: ActivatedRoute, private fb: FormBuilder) {
+  constructor(private authService:AuthenticationService,private _messageService: MessageService, private clientService: ClientService, private route: ActivatedRoute, private fb: FormBuilder) {
   }
 
   clientForm = this.fb.group({
@@ -44,16 +46,19 @@ export class ClientSingleComponent implements OnInit {
     clientComment: '',
     restaurantId: ''
   }
-  restaurantList: any = []
+  restaurantObj: any = []
+  resturantId: any = ''
 
   async ngOnInit() {
     await this.clientService.getActiveRestaurant().subscribe((res: any) => {
       if (res.status === 'success') {
-        this.restaurantList = res.payload
-        console.log(this.restaurantList)
+        const restaurantList = res.payload
+        if(restaurantList && restaurantList.length) {
+          this.restaurantObj = restaurantList.find((item:any) => item.restaurantId === this.authService.getRestaurantId())
+        }
       }
+      return true
     })
-    console.log(this.restaurantList)
     this.route.queryParams
       .subscribe(params => {
         this.clientId = params.clientId;
@@ -66,10 +71,17 @@ export class ClientSingleComponent implements OnInit {
     } else {
       this.getClientDetail(this.clientId);
     }
+    this.resturantId = localStorage.getItem('restaurantId') ? localStorage.getItem('restaurantId') : ''
   }
 
   onSubmit(): void {
+    this.resturantId = localStorage.getItem('restaurantId') ? localStorage.getItem('restaurantId') : ''
     if (this.clientForm.invalid) {
+      this._messageService.add({
+        severity: 'error',
+        summary: 'Validation Failed',
+        detail: `Kindly fill in the required fields`
+      });
       return;
     }
     if (this.formMode === 'update') {
@@ -84,6 +96,7 @@ export class ClientSingleComponent implements OnInit {
     this.clientService.getClientDetail(clientId).subscribe(
       result => {
         this.client = result.payload
+        this.resturantId = localStorage.getItem('restaurantId') ? localStorage.getItem('restaurantId') : ''
         this.clientForm.patchValue({
           formclientid: this.client.clientID,
           formclientdeviceid: this.client?.clientDeviceId,
@@ -124,6 +137,7 @@ export class ClientSingleComponent implements OnInit {
   }
 
   patchFormValues() {
+    this.resturantId = localStorage.getItem('restaurantId') ? localStorage.getItem('restaurantId') : ''
     this.client.clientID = this.clientForm.getRawValue().formclientid
     this.client.clientDeviceId = this.clientForm.getRawValue().formclientdeviceid
     this.client.clientSecret = this.clientForm.getRawValue().formclientsecret
@@ -132,7 +146,7 @@ export class ClientSingleComponent implements OnInit {
     this.client.clientActive = this.clientForm.getRawValue().formclientactive
     this.client.clientDebug = this.clientForm.getRawValue().formclientdebug
     this.client.clientVoiceEnabled = this.clientForm.getRawValue().formclientvoice
-    this.client.restaurantId = this.clientForm.getRawValue().formrestaurantid
+    this.client.restaurantId = this.resturantId
     this.client.clientVoiceTimeout = this.clientForm.getRawValue().formclientvoicetimeout
   }
 }
