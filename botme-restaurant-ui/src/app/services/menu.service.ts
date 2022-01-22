@@ -41,10 +41,17 @@ export class MenuService {
 
   // Cart Cruds///
   /**
-   * Api to get cart against restaurantId and cartId
+   * Api to add cart against restaurantId and cartId
    */
   addToCartApi(cart: any) {
     const url = this.apiBaseUrl + "/food/cart/add"
-    return this.http.put(url,cart);
+    return this.http.put(url, cart);
+  }
+  /**
+   * Api to get cart against restaurantId and cartId
+   */
+  findCartById() {
+    const url = this.apiBaseUrl + "/food/cart/findCartById?restaurantId=" + this.clientService.getCookie().restaurantId + '&cartId=' + this.clientService.getCookie().cartId + '&customerId=' + this.clientService.getCookie().clientID
+    return this.http.get(url);
   }
 }

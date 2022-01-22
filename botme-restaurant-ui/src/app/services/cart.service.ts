@@ -15,9 +15,7 @@ declare var $: any;
 export class CartService {
 
   cartProducts = new Subject();
-
-  cartProduct: string[] = []
-
+  cartProduct: any = []
 
   products: any
   slideToShow: any = 0
@@ -45,47 +43,25 @@ export class CartService {
   selectProductRatesField = new FormControl('')
 
   constructor(private _menuService: MenuService, private _clientService: BotmeClientService, private _contextService: ContextService, public _helperService: HelperService, private _socketService: SocketService) {
-    this.getFromLocalstorage();
   }
 
-  getFromLocalstorage() {
-    let _cartProducts = localStorage.getItem('cart-products');
-    (_cartProducts) ? this.cartProduct = JSON.parse(_cartProducts) : null;
-    this.cartProducts.next(JSON.stringify(this.cartProduct));
-  }
-
-  setToLocalStorage(key: string, value: any) {
-    localStorage.setItem(key, JSON.stringify(value));
-    this.cartProducts.next(JSON.stringify(this.cartProduct));
-  }
 
   addToCart(singleCustomProductObj: any, isEdit: any = false, type: any = '') {
     if (!isEdit) {
-      this.cartProduct.push(singleCustomProductObj)
       this.addCartToDb(singleCustomProductObj, isEdit, type)
     } else if (isEdit && type == 'place-order') {
-      this.cartProduct = singleCustomProductObj
+
     } else if (isEdit) {
-      this.cartProduct.splice(this.cartProduct.indexOf(singleCustomProductObj.productId), 1)
-      this.cartProduct.push(singleCustomProductObj)
 
     }
-
-    this.setToLocalStorage("cart-products", this.cartProduct);
   }
 
   removeFromCart(productId: string) {
-    this.cartProduct.forEach((item: any, index) => {
-      if (item.productId == productId) {
-        this.cartProduct.splice(index, 1);
-      }
-    })
-    // this.cartProduct.splice(this.cartProduct.indexOf(productId), 1);
-    this.setToLocalStorage("cart-products", this.cartProduct);
+
+
   }
 
   getCartProducts(): Observable<any> {
-    this.getFromLocalstorage();
     return this.cartProducts.asObservable();
   }
 
@@ -275,12 +251,16 @@ export class CartService {
     // add product cart
     if (!isEdit) {
       const orderObj = this.orderObjGenerator(singleCustomProductObj)
-      console.log('obj +.', orderObj)
       this._menuService.addToCartApi(orderObj).subscribe((res: any) => {
         if (res.status === 'success') {
+          this._clientService.setCookie('cartId', res.payload.cart.cartId)
+          this._clientService.setCookie('orderId', res.payload.order.orderId)
+
+          document.getElementById("ctaId-show-cart")?.click()
+
           const product = this.getProductById(res.payload.cart.cartProduct[0].productId)
-          console.log(product, res.payload.cart.cartProduct[0])
-          console.log(this.setSingleCustomizeProduct(product, res.payload.cart.cartProduct[0]))
+          console.log('product =>', product)
+          this.cartProduct.push(JSON.stringify(this.setSingleCustomizeProduct(product, res.payload.cart.cartProduct[0])))
         }
       })
     }
@@ -367,7 +347,7 @@ export class CartService {
         reservationId: this._clientService.getCookie().reservationId,
         orderTimestamp: new Date(),
         orderType: this._clientService.getCookie().orderType,
-        customerId: '',
+        customerId: this._clientService.getCookie().clientID,
         addressId: '',
         tableId: '',
         cartId: (cartId && cartId.length) ? cartId : '',

@@ -20,7 +20,6 @@ export class CustomizeProductModalComponent implements OnInit {
   addToCart() {
     this._contextService.getCurrentContext()
     this.cartService.addToCart(this.cartService.singleCustomProductObj);
-    document.getElementById("ctaId-show-cart")?.click()
   }
 
   editToCart() {

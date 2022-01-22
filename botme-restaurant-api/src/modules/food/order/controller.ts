@@ -1,6 +1,15 @@
-import { restResponse } from "../../../utils/response";
-import { createCart, createOrder, getCart, getCartById, getOrder, updateCart, updateOrder } from "./service";
-import { randomUUID } from "crypto";
+import {restResponse} from "../../../utils/response";
+import {
+    createCart,
+    createOrder,
+    getCart,
+    getCartById,
+    getOrder,
+    getOrderById,
+    updateCart,
+    updateOrder
+} from "./service";
+import {randomUUID} from "crypto";
 
 export async function findOrder(filter: any, restaurantId: any) {
     let response = new restResponse()
@@ -84,6 +93,15 @@ export async function findCart(filter: any, query: any) {
 export async function findCartById(filter: any, restaurantId: any) {
     let response = new restResponse()
     filter.restaurantId = restaurantId
+
+    delete filter.cartId
+    console.log('order filter =>', filter)
+    let orderResult: any = await getOrderById(filter)
+    orderResult = JSON.parse(JSON.stringify(orderResult))
+    console.log('orderResult =>', orderResult)
+    delete filter.customerId
+    filter.cartId = orderResult.cartId
+    console.log('cart filter =>',filter)
     let result = await getCartById(filter)
     if (result) {
         response.payload = result
@@ -97,38 +115,40 @@ export async function findCartById(filter: any, restaurantId: any) {
 }
 
 export async function addCart(obj: any, restaurantId: any) {
-    let response = new restResponse()
-    if (!obj || !restaurantId) {
-        response.payload = "cart and restaurantId is required"
-        response.status = "error"
-        return response;
-    }
+    try {
+        let response = new restResponse()
+        if (!obj || !restaurantId) {
+            response.payload = "cart and restaurantId is required"
+            response.status = "error"
+            return response;
+        }
 
-    console.log(obj)
-    let cartObj = obj.cart
-    let orderObj =  obj.order
-    cartObj.cartId = randomUUID()
-    console.log('cartObj => ',cartObj)
-    let cartResult = await createCart(obj)
-    if (cartResult) {
+        let cartObj = obj.cart
+        let orderObj = obj.order
+        cartObj.cartId = randomUUID()
 
-        cartResult = JSON.parse(JSON.stringify(cartResult))
-        console.log('cartResult => ',cartResult)
-        orderObj.orderId =  randomUUID()
-        orderObj.cartId =  cartResult.cartId
-
-        let orderResult = await createOrder(orderObj)
-        if(orderResult) {
-            orderResult = JSON.parse(JSON.stringify(orderResult))
-            response.payload.order = orderResult
-            response.payload.cart = cartResult
-            response.status = "success"
+        let cartResult = await createCart(cartObj)
+        if (cartResult) {
+            cartResult = JSON.parse(JSON.stringify(cartResult))
+            console.log('cartResult')
+            orderObj.orderId = randomUUID()
+            orderObj.cartId = cartResult.cartId
+            console.log('orderObj =>', cartResult.cartId)
+            let orderResult = await createOrder(orderObj)
+            if (orderResult) {
+                orderResult = JSON.parse(JSON.stringify(orderResult))
+                console.log('orderResult =>', orderResult)
+                response.payload = {order: orderResult, cart: cartResult}
+                response.status = "success"
+                return response
+            }
+        } else {
+            response.payload = "cart not found"
+            response.status = "error"
             return response
         }
-    } else {
-        response.payload = "cart not found"
-        response.status = "error"
-        return response
+    } catch (e) {
+        console.log('exception =>', e)
     }
 }
 

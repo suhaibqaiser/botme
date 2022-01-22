@@ -20,7 +20,7 @@ export class ProductCartModalComponent implements OnInit {
   cartProducts: any[] = []
   cartTotal = 0
 
-  constructor(private cartService: CartService,
+  constructor(public cartService: CartService,
               private _router: Router,
               private MenuService: MenuService,
               public _helperService: HelperService,
@@ -30,28 +30,24 @@ export class ProductCartModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProducts();
-    this.getCartProducts();
   }
 
   getCartProducts() {
-    this.cartService.getCartProducts().subscribe(
-      res => {
-        // this.productIds = JSON.parse(res)
-        this.cartProducts = JSON.parse(res)
-
-        this.cartTotal = 0
-        // for (let id in this.productIds) {
-        //   this.cartProducts.push(this.products.find((product: { productId: string }) => product.productId === this.productIds[id]));
-        //   this.cartTotal += this.cartProducts[id].productRate.standard
-        // }
+    this.MenuService.findCartById().subscribe((res: any) => {
+      if(res.status === 'success'){
+        const product = this.products.find((item:any) => item.productId === res.payload.cartProduct[0].productId)
+        console.log('product =>', product)
+        this.cartService.cartProduct.push(JSON.parse(JSON.stringify(this.cartService.setSingleCustomizeProduct(product, res.payload.cartProduct[0]))))
+        console.log(this.cartService.cartProduct)
       }
-    )
+    })
   }
 
   getProducts(): void {
     this.MenuService.getProducts()
       .subscribe(result => {
         this.products = result.payload
+        this.cartService.products = result.payload
         this.getCartProducts();
       });
   }

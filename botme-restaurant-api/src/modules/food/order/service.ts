@@ -18,6 +18,10 @@ export async function getOrder(queryParams: any) {
     return order
 }
 
+export async function getOrderById(filter: string) {
+    return Order.findOne(filter)
+}
+
 // CART //
 
 export async function getCart(filter: string) {
