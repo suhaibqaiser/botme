@@ -28,11 +28,11 @@ export class ProductCartModalComponent implements OnInit {
   }
 
   getCartProducts() {
-    this.MenuService.findCartById().subscribe((res: any) => {
-      if(res.status === 'success'){
-        const product = this.cartService.products.find((item:any) => item.productId === res.payload.cartProduct[0].productId)
+    this.MenuService.findAllCartById().subscribe((res: any) => {
+      if (res.status === 'success') {
+        const product = this.cartService.products.find((item: any) => item.productId === res.payload[0].productId)
         console.log('product =>', product)
-        this.cartService.cartProduct.push(JSON.parse(JSON.stringify(this.cartService.setSingleCustomizeProduct(product, res.payload.cartProduct[0]))))
+        this.cartService.cartProduct.push(JSON.parse(JSON.stringify(this.cartService.setSingleCustomizeProduct(product, res.payload[0]))))
         console.log(this.cartService.cartProduct)
       }
     })
@@ -75,9 +75,9 @@ export class ProductCartModalComponent implements OnInit {
     this._contextService.currentContextObj.sectionId = 'sectionId-servingSize-productOptions'
     this._contextService.currentContextObj.pageId = 'pageId-product-customize-modal'
     document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:none')
+    console.log('product =>', product)
     this.cartService.singleCustomProductObj = JSON.parse(JSON.stringify(product))
     this.cartService.singleCustomProductObj.isEditable = true
-    this.cartService.selectProductRatesField.setValue(product.productServingSize)
     this._socketService.parentEntity = {
       entityId: product.productId,
       entityValue: product.productName

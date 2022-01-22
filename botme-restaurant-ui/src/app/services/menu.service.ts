@@ -50,8 +50,16 @@ export class MenuService {
   /**
    * Api to get cart against restaurantId and cartId
    */
-  findCartById() {
-    const url = this.apiBaseUrl + "/food/cart/findCartById?restaurantId=" + this.clientService.getCookie().restaurantId + '&cartId=' + this.clientService.getCookie().cartId + '&customerId=' + this.clientService.getCookie().clientID
+  findAllCartById() {
+    const url = this.apiBaseUrl + "/food/cart/search?restaurantId=" + this.clientService.getCookie().restaurantId + '&cartId=' + this.clientService.getCookie().cartId + '&customerId=' + this.clientService.getCookie().clientID
     return this.http.get(url);
+  }
+
+  /**
+   * Api to edit cart against restaurantId and cartId
+   */
+  editToCartApi(cart: any) {
+    const url = this.apiBaseUrl + "/food/cart/edit?restaurantId="  + this.clientService.getCookie().restaurantId + '&cartId=' + this.clientService.getCookie().cartId
+    return this.http.post(url, cart);
   }
 }

@@ -36,6 +36,6 @@ export async function createCart(cart: any) {
     return Cart.create(cart)
 }
 
-export async function updateCart(cart: any, restaurantId: string) {
-    return Cart.findOneAndUpdate({ cartId: cart.cartId, restaurantId: restaurantId }, cart)
+export async function updateCart(cart: any, filter: string) {
+    return Cart.findOneAndUpdate(filter, cart)
 }

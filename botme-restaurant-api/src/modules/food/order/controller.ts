@@ -75,16 +75,28 @@ export async function editOrder(order: any, restaurantId: any) {
 export async function findCart(filter: any, query: any) {
     let response = new restResponse()
 
-    filter.restaurantId = query.restaurantId
-    filter.cartId = query.cartId
+    // finding order on the basis of clientID and resturantId
+    delete filter.cartId
+    let orderResult: any = await getOrderById(filter)
+    orderResult = JSON.parse(JSON.stringify(orderResult))
+
+    if (!orderResult) {
+        response.payload.message = 'Order not found against restaurantId=' + filter.restaurantId + ' --- clientID=' + filter.clientID
+        response.status = "error"
+        return response
+    }
+
+    // finding cart on the basis of cartId and resturantId
+    delete filter.customerId
+    filter.cartId = orderResult.cartId
 
     let result = await getCart(filter)
-    if (result.length != 0) {
+    if (result) {
         response.payload = result
         response.status = "success"
         return response
     } else {
-        response.payload = "Cart not found"
+        response.payload = "Cart not found against restaurantId=" + filter.cartId + ' --- =' + filter.cartId
         response.status = "error"
         return response
     }
@@ -99,8 +111,8 @@ export async function findCartById(filter: any, restaurantId: any) {
     let orderResult: any = await getOrderById(filter)
     orderResult = JSON.parse(JSON.stringify(orderResult))
 
-    if(!orderResult){
-        response.payload.message = 'Order not found against restaurantId=' +  filter.restaurantId + ' --- clientID=' + filter.clientID
+    if (!orderResult) {
+        response.payload.message = 'Order not found against restaurantId=' + filter.restaurantId + ' --- clientID=' + filter.clientID
         response.status = "error"
         return response
     }
@@ -115,7 +127,7 @@ export async function findCartById(filter: any, restaurantId: any) {
         response.status = "success"
         return response
     } else {
-        response.payload = "Cart not found against restaurantId=" +  filter.cartId + ' --- =' + filter.cartId
+        response.payload = "Cart not found against restaurantId=" + filter.cartId + ' --- =' + filter.cartId
         response.status = "error"
         return response
     }
@@ -159,17 +171,17 @@ export async function addCart(obj: any, restaurantId: any) {
     }
 }
 
-export async function editCart(cart: any, restaurantId: any) {
+export async function editCart(cart: any, filter: any) {
     let response = new restResponse()
-    if (!cart || !restaurantId) {
+    if (!cart || !filter.restaurantId) {
         response.payload = "cart and restaurantId is required"
         response.status = "error"
         return response;
     }
 
-    let result = await updateCart(cart, restaurantId)
+    let result = await updateCart(cart, filter)
     if (result) {
-        response.payload = result
+        response.payload = {cart: JSON.parse(JSON.stringify(result))}
         response.status = "success"
         return response
     } else {

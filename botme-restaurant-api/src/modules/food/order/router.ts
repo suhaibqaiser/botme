@@ -46,7 +46,7 @@ export default [
         path: "/cart/edit",
         method: "post",
         handler: async (req: Request, res: Response) => {
-            let result = await editCart(req.body.cart, req.body.restaurantId)
+            let result = await editCart(req.body.cart, req.query)
             res.send(result);
         }
     },

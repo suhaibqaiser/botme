@@ -1,10 +1,10 @@
-import { createSchema, Type, typedModel } from 'ts-mongoose';
-import { foodDB } from "../../../config/mongoDB";
+import {createSchema, Type, typedModel} from 'ts-mongoose';
+import {foodDB} from "../../../config/mongoDB";
 
 const OrderSchema = createSchema(
     {
-        restaurantId: Type.string({ maxlength: 256, required: true }),
-        orderId: Type.string({ maxlength: 256, required: true, unique: true }),
+        restaurantId: Type.string({maxlength: 256, required: true}),
+        orderId: Type.string({maxlength: 256, required: true, unique: true}),
         reservationId: Type.string(),
         orderTimestamp: Type.date(), // datetime
         orderType: Type.string(),
@@ -26,51 +26,50 @@ const OrderSchema = createSchema(
         orderTotal: Type.number(),
     },
     {
-        timestamps: { createdAt: true }
+        timestamps: {createdAt: true}
     }
 )
 
 
 const CartSchema = createSchema(
     {
-        restaurantId: Type.string({ maxlength: 256, required: true }),
-        cartId: Type.string({ maxlength: 256, required: true, unique: true }),
-        cartProduct: [{
-            productId: Type.string({ maxlength: 256, required: true }),
-            productSerialNo: Type.string(),
-            productCategory: Type.string(),
-            productFlavor: Type.string(),
-            productProportion: [{
-                productId: Type.string(),
-                productQuantity: Type.number()
-            }],
-            productToppings: [{
-                productId: Type.string(),
-                productQuantity: Type.number()
-            }],
-            productOptions: [{
-                productId: Type.string(),
-                productQuantity: Type.number()
-            }],
-            productIngredients:[{
-                productId: Type.string(),
-                productQuantity: Type.number()
-            }],
-            productRate: {
-                standard: Type.number(),
-                small: Type.number(),
-                medium: Type.number(),
-                large: Type.number(),
-            },
-            productQuantity: Type.number(),
-            productNotes: Type.string(), // customization Instructions
-            status: Type.boolean(),
+        restaurantId: Type.string({maxlength: 256, required: true}),
+        cartId: Type.string({maxlength: 256, required: true, unique: true}),
+        productId: Type.string({maxlength: 256, required: true}),
+        productSerialNo: Type.string(),
+        productCategory: Type.string(),
+        productFlavor: Type.string(),
+        productProportion: [{
+            productId: Type.string(),
+            productQuantity: Type.number()
         }],
+        productToppings: [{
+            productId: Type.string(),
+            productQuantity: Type.number()
+        }],
+        productOptions: [{
+            productId: Type.string(),
+            productQuantity: Type.number()
+        }],
+        productIngredients: [{
+            productId: Type.string(),
+            productQuantity: Type.number()
+        }],
+        productRate: {
+            standard: Type.number(),
+            small: Type.number(),
+            medium: Type.number(),
+            large: Type.number(),
+        },
+        productQuantity: Type.number(),
+        productNotes: Type.string(), // customization Instructions
+        status: Type.boolean(),
+        productTotalPrice: Type.number(),
         cartDiscount: Type.number(),
         cartTotal: Type.number(),
     },
     {
-        timestamps: { createdAt: true }
+        timestamps: {createdAt: true}
     }
 );
 

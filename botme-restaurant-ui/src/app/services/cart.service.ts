@@ -52,7 +52,7 @@ export class CartService {
     } else if (isEdit && type == 'place-order') {
 
     } else if (isEdit) {
-
+      this.addCartToDb(singleCustomProductObj, isEdit, type)
     }
   }
 
@@ -85,6 +85,9 @@ export class CartService {
     productServingSizeList = this.getSelectedServingSize(product.productRate, cartProduct.productRate)
 
     return {
+      _id: cartProduct._id,
+      restaurantId: cartProduct.restaurantId,
+      cartId: cartProduct.cartId,
       productName: product.productName,
       productId: product.productId,
       productImage: product.productImage,
@@ -100,7 +103,7 @@ export class CartService {
       productAttributes: product.productAttributes,
       productNutrition: product.productNutrition,
       productPrice: this.roundToTwo(productServingSizeList[0].serving_price),
-      productTotalPrice: this.roundToTwo(productServingSizeList[0].serving_price)
+      productTotalPrice: (cartProduct.productTotalPrice) ? cartProduct.productTotalPrice : this.roundToTwo(productServingSizeList[0].serving_price)
     }
   }
 
@@ -119,14 +122,19 @@ export class CartService {
    * @param productFlavorName
    */
   getSelectedProductFlavor(productFlavorList: any = [], productFlavorName: any = '') {
-    console.log(productFlavorList)
     if (productFlavorList && productFlavorList.length) {
-      return productFlavorList.map((item: any) => {
+      let list = productFlavorList.map((item: any) => {
         return {
           flavorName: item,
           selected: (productFlavorName) ? (item === productFlavorName) : false
         }
       })
+
+      if (list && !(!!list.filter((item: any) => item.selected == true).length)) {
+        list[0].selected = true
+      }
+
+      return list
     }
   }
 
@@ -151,7 +159,7 @@ export class CartService {
           selected: (productProportionIdList) ? productProportionIdList.includes(item.productId) : false,
           productQuantity: (selectedProduct && selectedProduct.productQuantity) ? selectedProduct.productQuantity : 0,
           productPrice: this.roundToTwo(item.productRate.standard),
-          productTotalPrice: 0
+          productTotalPrice: (selectedProduct && selectedProduct.productQuantity) ? (selectedProduct.productQuantity * this.roundToTwo(item.productRate.standard)) : 0,
         }
       })
     }
@@ -177,7 +185,7 @@ export class CartService {
           selected: (productToppingsIdList) ? productToppingsIdList.includes(obj.productId) : false,
           productQuantity: (selectedProduct && selectedProduct.productQuantity) ? selectedProduct.productQuantity : 0,
           productPrice: this.roundToTwo(obj.productRate.standard),
-          productTotalPrice: 0
+          productTotalPrice: (selectedProduct && selectedProduct.productQuantity) ? (selectedProduct.productQuantity * this.roundToTwo(obj.productRate.standard)) : 0
         }
       })
     }
@@ -199,7 +207,7 @@ export class CartService {
             productId: obj.productId,
             productName: obj.productName,
             productImage: this._helperService.resolveProductImage(obj),
-            selected: (productOptions && productOptions.length) ? productOptions.includes(obj.productId) : false,
+            selected: (productOptions && productOptions.length) ? !!productOptions.find((dbItem: any) => obj.productId === dbItem.productId) : false,
           }
         }
       )
@@ -219,7 +227,7 @@ export class CartService {
           productId: obj.productId,
           productName: obj.productName,
           productImage: this._helperService.resolveProductImage(obj),
-          selected: (productIngredient) ? productIngredient.includes(obj.productId) : true,
+          selected: (productIngredient && productIngredient.length) ? !!productIngredient.find((dbItem: any) => obj.productId === dbItem.productId) : true,
         }
       })
     }
@@ -256,11 +264,26 @@ export class CartService {
           this._clientService.setCookie('cartId', res.payload.cart.cartId)
           this._clientService.setCookie('orderId', res.payload.order.orderId)
 
+          this.cartProduct.push(JSON.parse(JSON.stringify(this.singleCustomProductObj)))
           document.getElementById("ctaId-show-cart")?.click()
+        }
+      })
+      return
+    }
 
-          const product = this.getProductById(res.payload.cart.cartProduct[0].productId)
-          console.log('product =>', product)
-          this.cartProduct.push(JSON.stringify(this.setSingleCustomizeProduct(product, res.payload.cart.cartProduct[0])))
+    if (isEdit) {
+      const orderObj = this.orderObjGenerator(singleCustomProductObj, true)
+      this._menuService.editToCartApi(orderObj).subscribe((res: any) => {
+        if (res.status === 'success') {
+
+          let cart = JSON.parse(JSON.stringify(this.singleCustomProductObj))
+
+          let cartListIndex = this.cartProduct.findIndex((item: any) => item._id === cart._id)
+          this.cartProduct.splice(cartListIndex, 1, cart)
+
+
+          document.getElementById("ctaId-show-cart")?.click()
+          document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:block')
         }
       })
     }
@@ -271,12 +294,33 @@ export class CartService {
    * @param singleCustomProductObj
    */
   modifyCartObj(singleCustomProductObj: any) {
-    let {productFlavors, productAddons, productToppings, productOptions, productServingSize} = singleCustomProductObj
+    let {
+      productIngredients,
+      productFlavors,
+      productAddons,
+      productToppings,
+      productOptions,
+      productServingSize
+    } = singleCustomProductObj
     let modifiedProductFlavor: any = ''
     let modifiedProductProportion: any = []
     let modifiedProductTopping: any = []
     let modifiedProductOptions: any = []
     let modifiedProductRate: any = {}
+    let modifiedProductIngredients: any = []
+
+    // productIngriedients modified
+    if (productIngredients && productIngredients.length) {
+      modifiedProductIngredients = productIngredients.filter((item: any) => item.selected == true)
+      console.log('modifiedProductIngredients =>', modifiedProductIngredients)
+      modifiedProductIngredients = modifiedProductIngredients.map((item: any) => {
+          return {
+            productId: item.productId,
+            productQuantity: 0
+          }
+        }
+      )
+    }
 
     // product flavor modified
     if (productFlavors && productFlavors.length) {
@@ -334,51 +378,62 @@ export class CartService {
       productProportion: modifiedProductProportion,
       productToppings: modifiedProductTopping,
       productOptions: modifiedProductOptions,
-      productRate: modifiedProductRate
+      productRate: modifiedProductRate,
+      productIngredients: modifiedProductIngredients
     }
   }
 
-  orderObjGenerator(singleCustomProductObj: any, isEdit = false, cartId = '', orderId = '') {
+  orderObjGenerator(singleCustomProductObj: any, isEdit = false) {
     const modifiedObj = this.modifyCartObj(singleCustomProductObj)
-    return {
-      order: {
-        restaurantId: this._clientService.getCookie().restaurantId,
-        orderId: (orderId && orderId.length) ? orderId : '',
-        reservationId: this._clientService.getCookie().reservationId,
-        orderTimestamp: new Date(),
-        orderType: this._clientService.getCookie().orderType,
-        customerId: this._clientService.getCookie().clientID,
-        addressId: '',
-        tableId: '',
-        cartId: (cartId && cartId.length) ? cartId : '',
-        orderPaymentMethod: '',
-        orderSubTotal: singleCustomProductObj.productTotalPrice,
-        orderTip: 0,
-        orderDiscount: 0,
-        orderServiceTax: 0,
-        orderSalesTax: 0,
-        orderTotal: singleCustomProductObj.productTotalPrice
-      },
-      cart: {
-        restaurantId: this._clientService.getCookie().restaurantId,
-        cartId: '',
-        cartProduct: {
-          productId: singleCustomProductObj.productId,
-          productSerialNo: '',
-          productCategory: '',
-          productFlavor: modifiedObj.productFlavor,
-          productProportion: modifiedObj.productProportion,
-          productToppings: modifiedObj.productToppings,
-          productOptions: modifiedObj.productOptions,
-          productRate: modifiedObj.productRate,
-          productQuantity: singleCustomProductObj.productQuantity,
-          productNotes: '', // customization Instructions
-          status: singleCustomProductObj.status, // pending, in-progress
-        },
-        cartDiscount: 0,
-        cartTotal: singleCustomProductObj.productTotalPrice,
+    const order = {
+      restaurantId: this._clientService.getCookie().restaurantId,
+      orderId: (this._clientService.getCookie().orderId) ? this._clientService.getCookie().orderId : '',
+      reservationId: this._clientService.getCookie().reservationId,
+      orderTimestamp: new Date(),
+      orderType: this._clientService.getCookie().orderType,
+      customerId: this._clientService.getCookie().clientID,
+      addressId: '',
+      tableId: '',
+      cartId: (this._clientService.getCookie().cartId) ? this._clientService.getCookie().cartId : '',
+      orderPaymentMethod: '',
+      orderSubTotal: singleCustomProductObj.productTotalPrice,
+      orderTip: 0,
+      orderDiscount: 0,
+      orderServiceTax: 0,
+      orderSalesTax: 0,
+      orderTotal: singleCustomProductObj.productTotalPrice
+    }
+    const cart = {
+      restaurantId: this._clientService.getCookie().restaurantId,
+      cartId: (this._clientService.getCookie().cartId) ? this._clientService.getCookie().cartId : '',
+      productId: singleCustomProductObj.productId,
+      productSerialNo: '',
+      productCategory: '',
+      productFlavor: modifiedObj.productFlavor,
+      productProportion: modifiedObj.productProportion,
+      productToppings: modifiedObj.productToppings,
+      productOptions: modifiedObj.productOptions,
+      productRate: modifiedObj.productRate,
+      productQuantity: singleCustomProductObj.productQuantity,
+      productIngredients: modifiedObj.productIngredients,
+      productNotes: '', // customization Instructions
+      status: singleCustomProductObj.status, // pending, in-progress
+      productTotalPrice: singleCustomProductObj.productTotalPrice,
+      cartDiscount: 0,
+      cartTotal: singleCustomProductObj.productTotalPrice,
+    }
+    if (isEdit) {
+      return {
+        cart: cart
       }
     }
+    if (!isEdit) {
+      return {
+        cart: cart,
+        order: order
+      }
+    }
+    return {}
   }
 
   selectFlavor(flavor: any) {
