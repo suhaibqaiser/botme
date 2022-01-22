@@ -13,12 +13,8 @@ declare var $: any;
   styleUrls: ['./cart-section.component.scss']
 })
 export class CartSectionComponent implements OnInit {
-  productIds: string[] = []
-  products: any[] = []
-  cartProducts: any[] = []
-  cartTotal = 0
 
-  constructor(private cartService: CartService,
+  constructor(public cartService: CartService,
               private MenuService: MenuService,
               public _helperService: HelperService,
               private _contextService: ContextService,
@@ -28,50 +24,6 @@ export class CartSectionComponent implements OnInit {
 
   ngOnInit(): void {
     this._contextService.getCurrentContext()
-    this.getProducts();
-    this.getCartProducts();
-  }
-
-  getCartProducts() {
-    this.cartService.getCartProducts().subscribe(
-      res => {
-        // this.productIds = JSON.parse(res)
-        this.cartProducts = JSON.parse(res)
-        this.cartTotal = 0
-        // for (let id in this.productIds) {
-        //   this.cartProducts.push(this.products.find((product: { productId: string }) => product.productId === this.productIds[id]));
-        //   this.cartTotal += this.cartProducts[id].productRate.standard
-        // }
-      }
-    )
-  }
-
-  getProducts(): void {
-    this.MenuService.getProducts()
-      .subscribe(result => {
-        this.products = result.payload
-        this.getCartProducts();
-      });
-  }
-
-  calculateTotalPrice(productToppings: any) {
-    let price = 0
-    if (productToppings && productToppings.length) {
-      productToppings.forEach((item: any) => {
-        price += item.productTotalPrice
-      })
-    }
-    return price
-  }
-
-  totalCartPrice() {
-    let price = 0
-    if (this.cartProducts && this.cartProducts.length) {
-      this.cartProducts.forEach((item: any) => {
-        price += item.productTotalPrice
-      })
-    }
-    return price
   }
 
   removeFromCart(productId: string) {
@@ -102,8 +54,8 @@ export class CartSectionComponent implements OnInit {
 
   getSubTotal() {
     let total = 0
-    if (this.cartProducts && this.cartProducts.length) {
-      this.cartProducts.forEach((item: any) => {
+    if (this.cartService.cartProduct && this.cartService.cartProduct.length) {
+      this.cartService.cartProduct.forEach((item: any) => {
         total += item.productTotalPrice
       })
     }
@@ -148,10 +100,10 @@ export class CartSectionComponent implements OnInit {
   }
 
   placeOrder() {
-    this.cartProducts.forEach((item: any) => {
+    this.cartService.cartProduct.forEach((item: any) => {
         item.status = true
       }
     )
-    this.cartService.addToCart(this.cartProducts, true, 'place-order')
+    this.cartService.addToCart(this.cartService.cartProduct, true, 'place-order')
   }
 }

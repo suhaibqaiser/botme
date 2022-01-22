@@ -38,7 +38,7 @@ export class NavbarComponent implements OnInit {
   }
 
   getCartProductCount() {
-    return this.products.length
+    return this.cartService.cartProduct.length
   }
 
   showCartModal() {

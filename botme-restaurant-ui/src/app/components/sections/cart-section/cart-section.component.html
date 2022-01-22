@@ -14,7 +14,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr id="{{product.productId}}" *ngFor="let product of cartProducts">
+          <tr id="{{product.productId}}" *ngFor="let product of cartService.cartProduct">
             <td class="cancel">
               <a id="ctaId-remove" (click)="removeFromCart(product.productId)"><i class='flaticon-cancel'></i></a>
               <a id="ctaId-edit" *ngIf="!product.status" style="font-size: medium;margin-left: 16px"
@@ -73,7 +73,7 @@
       <!--      </div>-->
       <div class="col-sm-12 col-md-12 col-lg-12">
         <div class="cart-update text-center cart-info-item">
-          <a *ngIf="cartProducts && cartProducts.length" id="ctaId-order-now" (click)="placeOrder()" class="btn">
+          <a *ngIf="cartService.cartProduct && cartService.cartProduct.length" id="ctaId-order-now" (click)="placeOrder()" class="btn">
             Order Now
           </a>
         </div>

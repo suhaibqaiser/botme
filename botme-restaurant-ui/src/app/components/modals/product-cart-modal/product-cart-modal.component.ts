@@ -15,11 +15,6 @@ declare var $: any;
 })
 export class ProductCartModalComponent implements OnInit {
 
-  productIds: string[] = []
-  products: any[] = []
-  cartProducts: any[] = []
-  cartTotal = 0
-
   constructor(public cartService: CartService,
               private _router: Router,
               private MenuService: MenuService,
@@ -35,7 +30,7 @@ export class ProductCartModalComponent implements OnInit {
   getCartProducts() {
     this.MenuService.findCartById().subscribe((res: any) => {
       if(res.status === 'success'){
-        const product = this.products.find((item:any) => item.productId === res.payload.cartProduct[0].productId)
+        const product = this.cartService.products.find((item:any) => item.productId === res.payload.cartProduct[0].productId)
         console.log('product =>', product)
         this.cartService.cartProduct.push(JSON.parse(JSON.stringify(this.cartService.setSingleCustomizeProduct(product, res.payload.cartProduct[0]))))
         console.log(this.cartService.cartProduct)
@@ -46,7 +41,6 @@ export class ProductCartModalComponent implements OnInit {
   getProducts(): void {
     this.MenuService.getProducts()
       .subscribe(result => {
-        this.products = result.payload
         this.cartService.products = result.payload
         this.getCartProducts();
       });
@@ -64,8 +58,8 @@ export class ProductCartModalComponent implements OnInit {
 
   totalCartPrice() {
     let price = 0
-    if (this.cartProducts && this.cartProducts.length) {
-      this.cartProducts.forEach((item: any) => {
+    if (this.cartService.cartProducts && this.cartService.cartProduct.length) {
+      this.cartService.cartProduct.forEach((item: any) => {
         price += item.productTotalPrice
       })
     }
@@ -105,7 +99,7 @@ export class ProductCartModalComponent implements OnInit {
   }
 
   navigateToCart() {
-    if (!this.cartProducts.length) return
+    if (!this.cartService.cartProduct.length) return
     this._router.navigate(['/cart'])
   }
 

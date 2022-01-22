@@ -94,21 +94,28 @@ export async function findCartById(filter: any, restaurantId: any) {
     let response = new restResponse()
     filter.restaurantId = restaurantId
 
+    // finding order on the basis of clientID and resturantId
     delete filter.cartId
-    console.log('order filter =>', filter)
     let orderResult: any = await getOrderById(filter)
     orderResult = JSON.parse(JSON.stringify(orderResult))
-    console.log('orderResult =>', orderResult)
+
+    if(!orderResult){
+        response.payload.message = 'Order not found against restaurantId=' +  filter.restaurantId + ' --- clientID=' + filter.clientID
+        response.status = "error"
+        return response
+    }
+
+    // finding cart on the basis of cartId and resturantId
     delete filter.customerId
     filter.cartId = orderResult.cartId
-    console.log('cart filter =>',filter)
+
     let result = await getCartById(filter)
     if (result) {
         response.payload = result
         response.status = "success"
         return response
     } else {
-        response.payload = "Cart not found"
+        response.payload = "Cart not found against restaurantId=" +  filter.cartId + ' --- =' + filter.cartId
         response.status = "error"
         return response
     }
