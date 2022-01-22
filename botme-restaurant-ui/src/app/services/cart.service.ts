@@ -56,8 +56,16 @@ export class CartService {
     }
   }
 
-  removeFromCart(productId: string) {
+  removeFromCart(product: any) {
+    this._menuService.deleteCartById(product.cartLabel).subscribe((res: any) => {
+      if (res.status === 'success') {
 
+        let cartListIndex = this.cartProduct.findIndex((item: any) => item._id === this.singleCustomProductObj._id)
+        this.cartProduct.splice(cartListIndex, 1)
+
+        document.getElementById("ctaId-show-cart")?.click()
+      }
+    })
 
   }
 
@@ -87,7 +95,8 @@ export class CartService {
     return {
       _id: cartProduct._id,
       restaurantId: cartProduct.restaurantId,
-      cartId: cartProduct.cartId,
+      cartLabel: cartProduct.cartLabel,
+      cartID: '',
       productName: product.productName,
       productId: product.productId,
       productImage: product.productImage,
@@ -103,7 +112,9 @@ export class CartService {
       productAttributes: product.productAttributes,
       productNutrition: product.productNutrition,
       productPrice: this.roundToTwo(productServingSizeList[0].serving_price),
-      productTotalPrice: (cartProduct.productTotalPrice) ? cartProduct.productTotalPrice : this.roundToTwo(productServingSizeList[0].serving_price)
+      productTotalPrice: (cartProduct.productTotalPrice) ? cartProduct.productTotalPrice : this.roundToTwo(productServingSizeList[0].serving_price),
+      cartDiscount: cartProduct.cartDiscount,
+      cartTotal: cartProduct.cartTotal
     }
   }
 
@@ -260,8 +271,9 @@ export class CartService {
     if (!isEdit) {
       const orderObj = this.orderObjGenerator(singleCustomProductObj)
       this._menuService.addToCartApi(orderObj).subscribe((res: any) => {
+        console.log(res)
         if (res.status === 'success') {
-          this._clientService.setCookie('cartId', res.payload.cart.cartId)
+          this._clientService.setCookie('cartLabel', res.payload.cart.cartLabel)
           this._clientService.setCookie('orderId', res.payload.order.orderId)
 
           this.cartProduct.push(JSON.parse(JSON.stringify(this.singleCustomProductObj)))
@@ -394,7 +406,7 @@ export class CartService {
       customerId: this._clientService.getCookie().clientID,
       addressId: '',
       tableId: '',
-      cartId: (this._clientService.getCookie().cartId) ? this._clientService.getCookie().cartId : '',
+      cartLabel: (this._clientService.getCookie().cartLabel) ? this._clientService.getCookie().cartLabel : '',
       orderPaymentMethod: '',
       orderSubTotal: singleCustomProductObj.productTotalPrice,
       orderTip: 0,
@@ -405,7 +417,8 @@ export class CartService {
     }
     const cart = {
       restaurantId: this._clientService.getCookie().restaurantId,
-      cartId: (this._clientService.getCookie().cartId) ? this._clientService.getCookie().cartId : '',
+      cartID: '',
+      cartLabel: (this._clientService.getCookie().cartLabel) ? this._clientService.getCookie().cartLabel : '',
       productId: singleCustomProductObj.productId,
       productSerialNo: '',
       productCategory: '',
@@ -427,6 +440,7 @@ export class CartService {
         cart: cart
       }
     }
+
     if (!isEdit) {
       return {
         cart: cart,

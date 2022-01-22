@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {HelperService} from "../../../services/helper.service";
 import {ContextService} from "../../../services/context.service";
 import {SocketService} from "../../../services/socket.service";
+import {BotmeClientService} from "../../../services/botme-client.service";
 
 declare var $: any;
 
@@ -16,6 +17,7 @@ declare var $: any;
 export class ProductCartModalComponent implements OnInit {
 
   constructor(public cartService: CartService,
+              public clientService: BotmeClientService,
               private _router: Router,
               private MenuService: MenuService,
               public _helperService: HelperService,
@@ -30,9 +32,14 @@ export class ProductCartModalComponent implements OnInit {
   getCartProducts() {
     this.MenuService.findAllCartById().subscribe((res: any) => {
       if (res.status === 'success') {
-        const product = this.cartService.products.find((item: any) => item.productId === res.payload[0].productId)
-        console.log('product =>', product)
-        this.cartService.cartProduct.push(JSON.parse(JSON.stringify(this.cartService.setSingleCustomizeProduct(product, res.payload[0]))))
+        const cartList = res.payload
+        if (cartList && cartList.length) {
+          this.clientService.setCookie('cartLabel', cartList[0].cartLabel)
+          cartList.forEach((cartItem: any) => {
+            const product = this.cartService.products.find((item: any) => item.productId === cartItem.productId)
+            this.cartService.cartProduct.push(JSON.parse(JSON.stringify(this.cartService.setSingleCustomizeProduct(product, cartItem))))
+          })
+        }
         console.log(this.cartService.cartProduct)
       }
     })
@@ -66,8 +73,8 @@ export class ProductCartModalComponent implements OnInit {
     return this.roundToTwo(price)
   }
 
-  removeFromCart(productId: string) {
-    this.cartService.removeFromCart(productId);
+  removeFromCart(product: any) {
+    this.cartService.removeFromCart(product);
   }
 
   editFromCart(product: any) {
