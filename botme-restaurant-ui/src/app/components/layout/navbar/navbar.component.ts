@@ -6,6 +6,8 @@ import {BotmeClientService} from "../../../services/botme-client.service";
 import {Router} from "@angular/router";
 import {DeviceDetectorService} from "ngx-device-detector";
 import {ContextService} from "../../../services/context.service";
+import {MenuService} from "../../../services/menu.service";
+import {HelperService} from "../../../services/helper.service";
 
 @Component({
   selector: 'app-navbar',
@@ -23,32 +25,22 @@ export class NavbarComponent implements OnInit {
               public socketService: SocketService,
               public _botMeClientService: BotmeClientService,
               private cartService: CartService,
-              public _deviceService: DeviceDetectorService,
-              private _contextService: ContextService
+              private _menuService: MenuService,
+              private _contextService: ContextService,
+              public _helperService: HelperService
   ) {
     document.getElementsByClassName('cart-modal-wrapper')[0]?.setAttribute('style', 'display:none')
   }
 
   ngOnInit(): void {
-    this.getCartProducts()
     this.socketService.messages.subscribe((message: any) => {
       this.botVoice = message.text
       this.userVoice = message.inputText;
     });
-
-  }
-
-
-  getCartProducts() {
-    this.cartService.getCartProducts().subscribe(
-      res => {
-        this.products = JSON.parse(res)
-      }
-    )
   }
 
   getCartProductCount() {
-    return this.products.length
+    return this.cartService.cartProduct.length
   }
 
   showCartModal() {

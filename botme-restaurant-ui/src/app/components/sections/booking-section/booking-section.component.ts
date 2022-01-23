@@ -4,6 +4,7 @@ import {ReservationService} from "../../../services/reservation.service";
 import {Router} from "@angular/router";
 import {HelperService} from "../../../services/helper.service";
 import {ContextService} from "../../../services/context.service";
+import {BotmeClientService} from "../../../services/botme-client.service";
 
 @Component({
   selector: 'app-booking-section',
@@ -21,7 +22,7 @@ export class BookingSectionComponent implements OnInit {
   }
   reservationLoader: boolean = false
 
-  constructor(private _contextService: ContextService, private _helper: HelperService, private _router: Router, public _reservationService: ReservationService, public _socketService: SocketService) {
+  constructor(private _botMeService: BotmeClientService, private _contextService: ContextService, private _helper: HelperService, private _router: Router, public _reservationService: ReservationService) {
     clearTimeout(this._helper.timer)
     this._reservationService.reservationForm.reset()
     this._reservationService.resetFocus()
@@ -44,6 +45,7 @@ export class BookingSectionComponent implements OnInit {
             reservationDate: this._reservationService.reservationForm.get('reservationDate')?.value,
             reservationTime: this._reservationService.reservationForm.get('reservationTime')?.value,
           }
+          this._botMeService.setCookie('reservationId',res.payload.reservationId)
           this.enableForm()
           this._reservationService.reservationForm.reset()
           this.reservationLoader = false
@@ -56,13 +58,14 @@ export class BookingSectionComponent implements OnInit {
     )
   }
 
-  disableFormOnSubmit(){
-      this._reservationService.reservationForm.get('customerName')?.disable()
-      this._reservationService.reservationForm.get('reservationSeats')?.disable()
-      this._reservationService.reservationForm.get('reservationDate')?.disable()
-      this._reservationService.reservationForm.get('reservationTime')?.disable()
+  disableFormOnSubmit() {
+    this._reservationService.reservationForm.get('customerName')?.disable()
+    this._reservationService.reservationForm.get('reservationSeats')?.disable()
+    this._reservationService.reservationForm.get('reservationDate')?.disable()
+    this._reservationService.reservationForm.get('reservationTime')?.disable()
   }
-  enableForm(){
+
+  enableForm() {
     this._reservationService.reservationForm.get('customerName')?.enable()
     this._reservationService.reservationForm.get('reservationSeats')?.enable()
     this._reservationService.reservationForm.get('reservationDate')?.enable()

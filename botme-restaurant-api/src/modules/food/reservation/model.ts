@@ -28,7 +28,8 @@ const tempReservationSchema = createSchema(
         reservationLabel: Type.number({ unique: true }),
         reservationSeats: Type.number({ required: true }),
         reservationDate: Type.string({ required: true }),
-        reservationTime: Type.string({ required: true })
+        reservationTime: Type.string({ required: true }),
+        reservationId: Type.string({ required: true })
     },
     { timestamps: { createdAt: true } }
 );

@@ -25,7 +25,7 @@
                 <a routerLink="home" id="ctaId-home" class="nav-link" [class.active]="router.url=='/home'">HOME</a>
               </li>
               <li class="nav-item">
-                <a routerLink="reservations" id="ctaId-reservation" class="nav-link"
+                <a *ngIf="_botMeClientService.getCookie().isLoggedIn && !_botMeClientService.getCookie().orderId" routerLink="reservations" id="ctaId-reservation" class="nav-link"
                   [class.active]="router.url=='/reservations'">RESERVATION</a>
               </li>
               <li class="nav-item">
@@ -46,7 +46,7 @@
                   class="nav-link" type="button">VOICE TEST</a>
               </li>
               <li class="nav-item">
-                <a *ngIf="_botMeClientService.getCookie().isLoggedIn" (click)="showCartModal()" id="ctaId-show-cart"
+                <a *ngIf="_botMeClientService.getCookie().isLoggedIn && _helperService.getCurrentRouteName() !=='/cart'" (click)="showCartModal()" id="ctaId-show-cart"
                   class="productCart"><i style="font-size: x-large" class="flaticon-supermarket-basket"></i>
                   <span
                     style="position: relative;background-color:#E7272D;border-radius: 10px;margin-top: -33px;margin-left: -8px;"

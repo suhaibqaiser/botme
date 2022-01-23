@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {HelperService} from "../../../services/helper.service";
 import {ContextService} from "../../../services/context.service";
 import {SocketService} from "../../../services/socket.service";
+import {BotmeClientService} from "../../../services/botme-client.service";
 
 declare var $: any;
 
@@ -15,12 +16,8 @@ declare var $: any;
 })
 export class ProductCartModalComponent implements OnInit {
 
-  productIds: string[] = []
-  products: any[] = []
-  cartProducts: any[] = []
-  cartTotal = 0
-
-  constructor(private cartService: CartService,
+  constructor(public cartService: CartService,
+              public clientService: BotmeClientService,
               private _router: Router,
               private MenuService: MenuService,
               public _helperService: HelperService,
@@ -29,29 +26,34 @@ export class ProductCartModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.cartService.cartLoader = true
     this.getProducts();
-    this.getCartProducts();
   }
 
   getCartProducts() {
-    this.cartService.getCartProducts().subscribe(
-      res => {
-        // this.productIds = JSON.parse(res)
-        this.cartProducts = JSON.parse(res)
-
-        this.cartTotal = 0
-        // for (let id in this.productIds) {
-        //   this.cartProducts.push(this.products.find((product: { productId: string }) => product.productId === this.productIds[id]));
-        //   this.cartTotal += this.cartProducts[id].productRate.standard
-        // }
+    this.MenuService.findAllCartById().subscribe((res: any) => {
+      if (res.status === 'success') {
+        const cartList = res.payload.cart
+        this.clientService.setCookie('orderId',res.payload.order)
+        if (cartList && cartList.length) {
+          cartList.forEach((cartItem: any) => {
+            const product = this.cartService.products.find((item: any) => item.productId === cartItem.productId)
+            this.cartService.cartProduct.push(JSON.parse(JSON.stringify(this.cartService.setSingleCustomizeProduct(product, cartItem))))
+          })
+        }
+        this.cartService.cartLoader = false
+        console.log(this.cartService.cartProduct)
+        return
       }
-    )
+      this.clientService.setCookie('orderId','')
+
+    })
   }
 
   getProducts(): void {
     this.MenuService.getProducts()
       .subscribe(result => {
-        this.products = result.payload
+        this.cartService.products = result.payload
         this.getCartProducts();
       });
   }
@@ -68,27 +70,26 @@ export class ProductCartModalComponent implements OnInit {
 
   totalCartPrice() {
     let price = 0
-    if (this.cartProducts && this.cartProducts.length) {
-      this.cartProducts.forEach((item: any) => {
+    if (this.cartService.cartProducts && this.cartService.cartProduct.length) {
+      this.cartService.cartProduct.forEach((item: any) => {
         price += item.productTotalPrice
       })
     }
     return this.roundToTwo(price)
   }
 
-  removeFromCart(productId: string) {
-    this.cartService.removeFromCart(productId);
+  removeFromCart(product: any) {
+    this.cartService.removeFromCart(product);
   }
 
   editFromCart(product: any) {
     this.cartService.slideToShow = 0
     this._contextService.currentContextObj.sectionId = 'sectionId-servingSize-productOptions'
     this._contextService.currentContextObj.pageId = 'pageId-product-customize-modal'
-    this.cartService.setProductRateSize(product)
     document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:none')
+    console.log('product =>', product)
     this.cartService.singleCustomProductObj = JSON.parse(JSON.stringify(product))
     this.cartService.singleCustomProductObj.isEditable = true
-    this.cartService.selectProductRatesField.setValue(product.productServingSize)
     this._socketService.parentEntity = {
       entityId: product.productId,
       entityValue: product.productName
@@ -98,7 +99,6 @@ export class ProductCartModalComponent implements OnInit {
   }
 
   showProductInfo(product: any) {
-    this.cartService.setProductRateSize(product)
     this._contextService.currentContextObj.sectionId = 'sectionId-summary'
     this._contextService.currentContextObj.pageId = 'pageId-product-customize-modal'
     document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:none')
@@ -111,7 +111,7 @@ export class ProductCartModalComponent implements OnInit {
   }
 
   navigateToCart() {
-    if (!this.cartProducts.length) return
+    if (!this.cartService.cartProduct.length) return
     this._router.navigate(['/cart'])
   }
 

@@ -68,6 +68,8 @@ import { LoginComponent } from './components/pages/login/login.component';
 import { ProfileComponent } from './components/pages/profile/profile.component';
 import { LoginFormComponent } from './components/sections/login-form/login-form.component';
 import { ProfileSectionComponent } from './components/sections/profile-section/profile-section.component';
+import { OrderSectionComponent } from './components/sections/order-section/order-section.component';
+import {OrderService} from "./services/order.service";
 
 @NgModule({
   declarations: [
@@ -118,7 +120,8 @@ import { ProfileSectionComponent } from './components/sections/profile-section/p
     LoginComponent,
     ProfileComponent,
     LoginFormComponent,
-    ProfileSectionComponent
+    ProfileSectionComponent,
+    OrderSectionComponent
   ],
   imports: [
     BrowserModule,
@@ -130,7 +133,7 @@ import { ProfileSectionComponent } from './components/sections/profile-section/p
     NgMultiSelectDropDownModule.forRoot(),
     DragDropModule
   ],
-  providers: [ContextService, HelperService, ReservationService, SpeechService, BotmeClientService, SocketService, WindowService],
+  providers: [OrderService,ContextService, HelperService, ReservationService, SpeechService, BotmeClientService, SocketService, WindowService],
   bootstrap: [AppComponent],
   entryComponents: [CustomizeProductModalComponent]
 })

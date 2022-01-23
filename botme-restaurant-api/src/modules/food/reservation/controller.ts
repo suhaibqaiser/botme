@@ -1,7 +1,7 @@
-import { restResponse } from "../../../utils/response";
-import { createReservation, getReservation, updateReservation, getAllReservation } from "./service";
-import { getMaxLabelValue } from "../../food/reservation/service";
-import { randomUUID } from "crypto";
+import {restResponse} from "../../../utils/response";
+import {createReservation, getReservation, updateReservation, getAllReservation} from "./service";
+import {getMaxLabelValue} from "../../food/reservation/service";
+import {randomUUID} from "crypto";
 
 export async function addReservation(reservation: any, restaurantId: any) {
     let response = new restResponse()
@@ -18,7 +18,7 @@ export async function addReservation(reservation: any, restaurantId: any) {
 
     let result = await createReservation(reservation)
     if (result) {
-        response.payload = result
+        response.payload = JSON.parse(JSON.stringify(result))
         response.status = "success"
         return response
     } else {

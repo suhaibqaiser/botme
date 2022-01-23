@@ -1,11 +1,11 @@
-import { Order, Cart } from "./model";
+import {Order, Cart} from "./model";
 
 export async function createOrder(order: any) {
     return Order.create(order)
 }
 
 export async function updateOrder(order: any, restaurantId: string) {
-    return Order.findOneAndUpdate({ orderId: order.orderId, restaurantId: restaurantId }, order)
+    return Order.findOneAndUpdate({orderId: order.orderId, restaurantId: restaurantId}, order)
 }
 
 export async function getOrder(queryParams: any) {
@@ -16,6 +16,10 @@ export async function getOrder(queryParams: any) {
         console.log(e)
     }
     return order
+}
+
+export async function getOrderById(filter: string) {
+    return Order.findOne(filter)
 }
 
 // CART //
@@ -32,6 +36,10 @@ export async function createCart(cart: any) {
     return Cart.create(cart)
 }
 
-export async function updateCart(cart: any, restaurantId: string) {
-    return Cart.findOneAndUpdate({ cartId: cart.cartId, restaurantId: restaurantId }, cart)
+export async function updateCart(cart: any, filter: string) {
+    return Cart.findOneAndUpdate(filter, cart)
+}
+
+export async function deleteCart(filter: string) {
+    return Cart.findOneAndDelete(filter)
 }

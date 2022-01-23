@@ -43,7 +43,8 @@ const routes: Routes = [
   },
   {
     path: "reservations",
-    component: ReservationsComponent
+    component: ReservationsComponent,
+    canActivate: [AuthenticationGuard]
   },
   {
     path: "privacy-policy",
