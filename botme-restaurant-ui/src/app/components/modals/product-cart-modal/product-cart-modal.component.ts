@@ -26,6 +26,7 @@ export class ProductCartModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.cartService.cartLoader = true
     this.getProducts();
   }
 
@@ -40,6 +41,7 @@ export class ProductCartModalComponent implements OnInit {
             this.cartService.cartProduct.push(JSON.parse(JSON.stringify(this.cartService.setSingleCustomizeProduct(product, cartItem))))
           })
         }
+        this.cartService.cartLoader = false
         console.log(this.cartService.cartProduct)
       }
     })

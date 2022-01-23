@@ -46,6 +46,8 @@ export class CartService {
 
   selectProductRatesField = new FormControl('')
 
+  cartLoader:boolean = false
+
   constructor(private _menuService: MenuService, private _clientService: BotmeClientService, private _contextService: ContextService, public _helperService: HelperService, private _socketService: SocketService) {
   }
 
@@ -61,9 +63,10 @@ export class CartService {
   }
 
   removeFromCart(product: any) {
+    this.cartLoader = true
     this._menuService.deleteCartById(product.cartId).subscribe((res: any) => {
       if (res.status === 'success') {
-
+        this.cartLoader = false
         let cartListIndex = this.cartProduct.findIndex((item: any) => item._id === this.singleCustomProductObj._id)
         this.cartProduct.splice(cartListIndex, 1)
 
@@ -272,33 +275,33 @@ export class CartService {
 
   addCartToDb(singleCustomProductObj: any, isEdit: any = false, type: any = '') {
     // add product cart
+    this.cartLoader = true
     if (!isEdit) {
       const orderObj = this.orderObjGenerator(singleCustomProductObj)
-      console.log('Adding item')
+      document.getElementById("ctaId-show-cart")?.click()
       this._menuService.addToCartApi(orderObj).subscribe((res: any) => {
         console.log(res)
         if (res.status === 'success') {
           this._clientService.setCookie('orderId', res.payload.order)
-
+          this.cartLoader = false
           this.cartProduct.push(JSON.parse(JSON.stringify(this.singleCustomProductObj)))
-          document.getElementById("ctaId-show-cart")?.click()
         }
       })
     }
 
     if (isEdit) {
       const orderObj = this.orderObjGenerator(singleCustomProductObj, true)
+
+      document.getElementById("ctaId-show-cart")?.click()
+      document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:block')
+
       this._menuService.editToCartApi(orderObj).subscribe((res: any) => {
         if (res.status === 'success') {
-
+          this.cartLoader = false
           let cart = JSON.parse(JSON.stringify(this.singleCustomProductObj))
 
           let cartListIndex = this.cartProduct.findIndex((item: any) => item._id === cart._id)
           this.cartProduct.splice(cartListIndex, 1, cart)
-
-
-          document.getElementById("ctaId-show-cart")?.click()
-          document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:block')
         }
       })
     }
