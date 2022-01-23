@@ -63,6 +63,7 @@ export class CartService {
   }
 
   removeFromCart(product: any) {
+    console.log(product)
     this.cartLoader = true
     this._menuService.deleteCartById(product.cartId).subscribe((res: any) => {
       if (res.status === 'success') {
@@ -286,6 +287,7 @@ export class CartService {
         if (res.status === 'success') {
           this._clientService.setCookie('orderId', res.payload.order)
           this.cartLoader = false
+          this.singleCustomProductObj.cartId = res.payload.cart.cartId
           this.cartProduct.push(JSON.parse(JSON.stringify(this.singleCustomProductObj)))
         }
       })

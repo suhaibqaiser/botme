@@ -202,15 +202,18 @@ export async function deleteCartById(filter: any) {
     let response = new restResponse()
 
     // filter restaurantId & cartId & orderId
-
-    let result = await deleteCart(filter)
-    if (result.length != 0) {
-        response.payload = result
-        response.status = "success"
-        return response
-    } else {
-        response.payload = "cart not found"
-        response.status = "error"
-        return response
+    try {
+        let result = await deleteCart(filter)
+        if (result) {
+            response.payload = result
+            response.status = "success"
+            return response
+        } else {
+            response.payload = "cart not found"
+            response.status = "error"
+            return response
+        }
+    }catch (e) {
+        console.log(e)
     }
 }
