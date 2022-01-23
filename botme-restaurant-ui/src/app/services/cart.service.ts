@@ -20,24 +20,28 @@ export class CartService {
   products: any
   slideToShow: any = 0
   singleCustomProductObj: any = {
+    _id: '',
+    restaurantId: '',
+    orderId: '',
+    cartId: '',
     productName: '',
     productId: '',
     productImage: '',
-    productRate: {},
-    productServingSize: '',
+    productRate: 0,
+    productServingSize: [],
     productOptions: [],
     productIngredients: [],
     productFlavors: [],
     productAddons: [],
     productToppings: [],
+    productQuantity: 1,
+    status: false,
     productAttributes: {},
     productNutrition: {},
-    productQuantity: 1,
     productPrice: 0,
     productTotalPrice: 0,
-    isEditable: false,
-    isShowInfo: false,
-    status: false
+    cartDiscount: 0,
+    cartTotal: 0
   }
 
   selectProductRatesField = new FormControl('')
@@ -57,7 +61,7 @@ export class CartService {
   }
 
   removeFromCart(product: any) {
-    this._menuService.deleteCartById(product.cartLabel).subscribe((res: any) => {
+    this._menuService.deleteCartById(product.cartId).subscribe((res: any) => {
       if (res.status === 'success') {
 
         let cartListIndex = this.cartProduct.findIndex((item: any) => item._id === this.singleCustomProductObj._id)
@@ -95,8 +99,8 @@ export class CartService {
     return {
       _id: cartProduct._id,
       restaurantId: cartProduct.restaurantId,
-      cartLabel: cartProduct.cartLabel,
-      cartID: '',
+      orderId: cartProduct.orderId,
+      cartId: cartProduct.cartId,
       productName: product.productName,
       productId: product.productId,
       productImage: product.productImage,
@@ -270,17 +274,16 @@ export class CartService {
     // add product cart
     if (!isEdit) {
       const orderObj = this.orderObjGenerator(singleCustomProductObj)
+      console.log('Adding item')
       this._menuService.addToCartApi(orderObj).subscribe((res: any) => {
         console.log(res)
         if (res.status === 'success') {
-          this._clientService.setCookie('cartLabel', res.payload.cart.cartLabel)
-          this._clientService.setCookie('orderId', res.payload.order.orderId)
+          this._clientService.setCookie('orderId', res.payload.order)
 
           this.cartProduct.push(JSON.parse(JSON.stringify(this.singleCustomProductObj)))
           document.getElementById("ctaId-show-cart")?.click()
         }
       })
-      return
     }
 
     if (isEdit) {
@@ -402,11 +405,10 @@ export class CartService {
       orderId: (this._clientService.getCookie().orderId) ? this._clientService.getCookie().orderId : '',
       reservationId: this._clientService.getCookie().reservationId,
       orderTimestamp: new Date(),
-      orderType: this._clientService.getCookie().orderType,
-      customerId: this._clientService.getCookie().clientID,
+      orderType: ['dine_in'].includes(this._clientService.getCookie().orderType) ? this._clientService.getCookie().orderType : '',
+      customerId: this._clientService.getCookie().clientID ? this._clientService.getCookie().clientID : '',
       addressId: '',
       tableId: '',
-      cartLabel: (this._clientService.getCookie().cartLabel) ? this._clientService.getCookie().cartLabel : '',
       orderPaymentMethod: '',
       orderSubTotal: singleCustomProductObj.productTotalPrice,
       orderTip: 0,
@@ -417,8 +419,8 @@ export class CartService {
     }
     const cart = {
       restaurantId: this._clientService.getCookie().restaurantId,
-      cartID: '',
-      cartLabel: (this._clientService.getCookie().cartLabel) ? this._clientService.getCookie().cartLabel : '',
+      cartId: singleCustomProductObj.cartId ? singleCustomProductObj.cartId : '',
+      orderId: (this._clientService.getCookie().orderId) ? this._clientService.getCookie().orderId : '',
       productId: singleCustomProductObj.productId,
       productSerialNo: '',
       productCategory: '',

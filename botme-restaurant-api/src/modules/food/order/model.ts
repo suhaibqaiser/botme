@@ -11,7 +11,6 @@ const OrderSchema = createSchema(
         customerId: Type.string(),
         addressId: Type.string(),
         tableId: Type.string(),
-        cartLabel: Type.string(),
         delivery: {
             deliveryDate: Type.date(), // datetime
             deliverFee: Type.number(),
@@ -34,8 +33,8 @@ const OrderSchema = createSchema(
 const CartSchema = createSchema(
     {
         restaurantId: Type.string({maxlength: 256, required: true}),
-        cartID: Type.string({maxlength: 256, required: true, unique: true}),
-        cartLabel: Type.string({maxlength: 256, required: true}),
+        cartId: Type.string({maxlength: 256, required: true, unique: true}),
+        orderId: Type.string({maxlength: 256, required: true}),
         productId: Type.string({maxlength: 256, required: true}),
         productSerialNo: Type.string(),
         productCategory: Type.string(),

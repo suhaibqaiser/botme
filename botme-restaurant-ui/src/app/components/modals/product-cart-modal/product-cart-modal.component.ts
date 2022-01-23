@@ -32,9 +32,9 @@ export class ProductCartModalComponent implements OnInit {
   getCartProducts() {
     this.MenuService.findAllCartById().subscribe((res: any) => {
       if (res.status === 'success') {
-        const cartList = res.payload
+        const cartList = res.payload.cart
+        this.clientService.setCookie('orderId',res.payload.order)
         if (cartList && cartList.length) {
-          this.clientService.setCookie('cartLabel', cartList[0].cartLabel)
           cartList.forEach((cartItem: any) => {
             const product = this.cartService.products.find((item: any) => item.productId === cartItem.productId)
             this.cartService.cartProduct.push(JSON.parse(JSON.stringify(this.cartService.setSingleCustomizeProduct(product, cartItem))))
