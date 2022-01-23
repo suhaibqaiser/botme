@@ -16,6 +16,7 @@ export class OrderSectionComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this._orderService.selectedOrderButtons[this._botMeService.getCookie().orderType] = true
   }
 
   selectOrderType(type: any) {
@@ -31,7 +32,7 @@ export class OrderSectionComponent implements OnInit {
       this._orderService.selectedOrderButtons['dine_in'] = false
       this._orderService.selectedOrderButtons['pick_up'] = true
       this._orderService.selectedOrderButtons['delivery'] = false
-      this._botMeService.setCookie('orderType','dine_in')
+      this._botMeService.setCookie('orderType','pick_up')
       return
     }
     if (type === 'delivery') {
