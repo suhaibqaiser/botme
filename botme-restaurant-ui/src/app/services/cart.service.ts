@@ -46,7 +46,7 @@ export class CartService {
 
   selectProductRatesField = new FormControl('')
 
-  cartLoader:boolean = false
+  cartLoader: boolean = false
 
   constructor(private _menuService: MenuService, private _clientService: BotmeClientService, private _contextService: ContextService, public _helperService: HelperService, private _socketService: SocketService) {
   }
@@ -70,7 +70,9 @@ export class CartService {
         let cartListIndex = this.cartProduct.findIndex((item: any) => item._id === this.singleCustomProductObj._id)
         this.cartProduct.splice(cartListIndex, 1)
 
-        document.getElementById("ctaId-show-cart")?.click()
+        if (this._helperService.getCurrentRouteName() !== '/cart') {
+          document.getElementById("ctaId-show-cart")?.click()
+        }
       }
     })
 
@@ -292,9 +294,10 @@ export class CartService {
     if (isEdit) {
       const orderObj = this.orderObjGenerator(singleCustomProductObj, true)
 
-      document.getElementById("ctaId-show-cart")?.click()
-      document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:block')
-
+      if (this._helperService.getCurrentRouteName() !== '/cart') {
+        document.getElementById("ctaId-show-cart")?.click()
+        document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:block')
+      }
       this._menuService.editToCartApi(orderObj).subscribe((res: any) => {
         if (res.status === 'success') {
           this.cartLoader = false
@@ -418,7 +421,8 @@ export class CartService {
       orderDiscount: 0,
       orderServiceTax: 0,
       orderSalesTax: 0,
-      orderTotal: singleCustomProductObj.productTotalPrice
+      orderTotal: singleCustomProductObj.productTotalPrice,
+      orderStatus: false
     }
     const cart = {
       restaurantId: this._clientService.getCookie().restaurantId,

@@ -43,7 +43,10 @@ export class ProductCartModalComponent implements OnInit {
         }
         this.cartService.cartLoader = false
         console.log(this.cartService.cartProduct)
+        return
       }
+      this.clientService.setCookie('orderId','')
+
     })
   }
 

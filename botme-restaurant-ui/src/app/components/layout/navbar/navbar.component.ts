@@ -7,6 +7,7 @@ import {Router} from "@angular/router";
 import {DeviceDetectorService} from "ngx-device-detector";
 import {ContextService} from "../../../services/context.service";
 import {MenuService} from "../../../services/menu.service";
+import {HelperService} from "../../../services/helper.service";
 
 @Component({
   selector: 'app-navbar',
@@ -25,7 +26,8 @@ export class NavbarComponent implements OnInit {
               public _botMeClientService: BotmeClientService,
               private cartService: CartService,
               private _menuService: MenuService,
-              private _contextService: ContextService
+              private _contextService: ContextService,
+              public _helperService: HelperService
   ) {
     document.getElementsByClassName('cart-modal-wrapper')[0]?.setAttribute('style', 'display:none')
   }
