@@ -9,14 +9,13 @@
             <th></th>
             <th>Product</th>
             <th>Status</th>
-            <th>Quantity</th>
             <th>Sub Total</th>
           </tr>
         </thead>
         <tbody>
           <tr id="{{product.productId}}" *ngFor="let product of cartService.cartProduct">
             <td class="cancel">
-              <a id="ctaId-remove" (click)="removeFromCart(product.productId)"><i class='flaticon-cancel'></i></a>
+              <a id="ctaId-remove" (click)="removeFromCart(product)"><i class='flaticon-cancel'></i></a>
               <a id="ctaId-edit" *ngIf="!product.status" style="font-size: medium;margin-left: 16px"
                 (click)="editFromCart(product)"><i class="fas fa-edit"></i></a>
             </td>
@@ -47,14 +46,14 @@
             </td>
             <td *ngIf="!product.status">In Waiting</td>
             <td *ngIf="product.status">In Progress</td>
-            <td>
-              <div class="cart-quantity">
-                <a id="ctaId-remove-quantity" (click)="addProductQuantity(product,'subtracting')"
-                  class="qu-btn dec">-</a>
-                <input type="text" class="qu-input" [value]="product.productQuantity">
-                <a id="ctaId-add-quantity" (click)="addProductQuantity(product,'adding')" class="qu-btn inc">+</a>
-              </div>
-            </td>
+<!--            <td>-->
+<!--              <div class="cart-quantity">-->
+<!--                <a id="ctaId-remove-quantity" (click)="addProductQuantity(product,'subtracting')"-->
+<!--                  class="qu-btn dec">-</a>-->
+<!--                <input type="text" class="qu-input" [value]="product.productQuantity">-->
+<!--                <a id="ctaId-add-quantity" (click)="addProductQuantity(product,'adding')" class="qu-btn inc">+</a>-->
+<!--              </div>-->
+<!--            </td>-->
             <td class="td-total-price">${{product.productTotalPrice}}</td>
           </tr>
         </tbody>
