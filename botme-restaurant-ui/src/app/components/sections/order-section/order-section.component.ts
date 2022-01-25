@@ -3,7 +3,7 @@ import {Router} from "@angular/router";
 import {OrderService} from "../../../services/order.service";
 import {BotmeClientService} from "../../../services/botme-client.service";
 import {FormControl} from "@angular/forms";
-
+declare var $: any;
 @Component({
   selector: 'app-order-section',
   templateUrl: './order-section.component.html',
@@ -21,16 +21,16 @@ export class OrderSectionComponent implements OnInit {
     this._orderService.selectedOrderButtons[this._botMeService.getCookie().orderType] = true
   }
 
-  getOrderType(){
+  getOrderType() {
     return this._botMeService.getCookie().orderType.replace(/_/g, " ")
   }
 
-  getStatement(){
-    return 'Do you have  ' +(['pick_up','delivery'].includes(this._botMeService.getCookie().orderType) ? 'Order' : 'Reservation') + ' Id ?'
+  getStatement() {
+    return 'Do you have  ' + (['pick_up', 'delivery'].includes(this._botMeService.getCookie().orderType) ? 'Order' : 'Reservation') + ' Id ?'
   }
 
-  getButtonName(){
-    return 'Apply ' +(['pick_up','delivery'].includes(this._botMeService.getCookie().orderType) ? 'Order' : 'Reservation') + ' Id'
+  getButtonName() {
+    return 'Apply ' + (['pick_up', 'delivery'].includes(this._botMeService.getCookie().orderType) ? 'Order' : 'Reservation') + ' Id'
   }
 
   selectOrderType(type: any) {
@@ -38,20 +38,24 @@ export class OrderSectionComponent implements OnInit {
       this._orderService.selectedOrderButtons['dine_in'] = true
       this._orderService.selectedOrderButtons['pick_up'] = false
       this._orderService.selectedOrderButtons['delivery'] = false
-      this._botMeService.setCookie('orderType','dine_in')
+      this._botMeService.setCookie('orderType', 'dine_in')
     }
     if (type === 'pick_up') {
       this._orderService.selectedOrderButtons['dine_in'] = false
       this._orderService.selectedOrderButtons['pick_up'] = true
       this._orderService.selectedOrderButtons['delivery'] = false
-      this._botMeService.setCookie('orderType','pick_up')
+      this._botMeService.setCookie('orderType', 'pick_up')
     }
     if (type === 'delivery') {
       this._orderService.selectedOrderButtons['dine_in'] = false
       this._orderService.selectedOrderButtons['pick_up'] = false
       this._orderService.selectedOrderButtons['delivery'] = true
-      this._botMeService.setCookie('orderType','delivery')
+      this._botMeService.setCookie('orderType', 'delivery')
     }
     return ''
+  }
+
+  applyId() {
+    $('#liveToast').toast('show')
   }
 }

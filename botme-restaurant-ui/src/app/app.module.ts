@@ -64,12 +64,14 @@ import {DemoPageComponent} from './components/pages/demo-page/demo-page.componen
 import {HelperService} from "./services/helper.service";
 import {MicrophoneComponent} from './components/sections/microphone/microphone.component';
 import {ContextService} from "./services/context.service";
-import { LoginComponent } from './components/pages/login/login.component';
-import { ProfileComponent } from './components/pages/profile/profile.component';
-import { LoginFormComponent } from './components/sections/login-form/login-form.component';
-import { ProfileSectionComponent } from './components/sections/profile-section/profile-section.component';
-import { OrderSectionComponent } from './components/sections/order-section/order-section.component';
+import {LoginComponent} from './components/pages/login/login.component';
+import {ProfileComponent} from './components/pages/profile/profile.component';
+import {LoginFormComponent} from './components/sections/login-form/login-form.component';
+import {ProfileSectionComponent} from './components/sections/profile-section/profile-section.component';
+import {OrderSectionComponent} from './components/sections/order-section/order-section.component';
 import {OrderService} from "./services/order.service";
+import {ToastComponent} from './components/toast/toast.component';
+import {ToastService} from "./services/toast.service";
 
 @NgModule({
   declarations: [
@@ -121,7 +123,8 @@ import {OrderService} from "./services/order.service";
     ProfileComponent,
     LoginFormComponent,
     ProfileSectionComponent,
-    OrderSectionComponent
+    OrderSectionComponent,
+    ToastComponent
   ],
   imports: [
     BrowserModule,
@@ -133,7 +136,7 @@ import {OrderService} from "./services/order.service";
     NgMultiSelectDropDownModule.forRoot(),
     DragDropModule
   ],
-  providers: [OrderService,ContextService, HelperService, ReservationService, SpeechService, BotmeClientService, SocketService, WindowService],
+  providers: [ToastService, OrderService, ContextService, HelperService, ReservationService, SpeechService, BotmeClientService, SocketService, WindowService],
   bootstrap: [AppComponent],
   entryComponents: [CustomizeProductModalComponent]
 })

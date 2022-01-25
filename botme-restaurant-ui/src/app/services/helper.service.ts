@@ -83,4 +83,12 @@ export class HelperService {
   getCurrentRouteName() {
     return this._router.url
   }
+
+  /**
+   * checking is data exists
+   * @param value
+   */
+  requiredCheck(value: any) {
+    return value && value.trim().length
+  }
 }
