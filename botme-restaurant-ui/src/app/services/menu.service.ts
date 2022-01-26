@@ -59,13 +59,29 @@ export class MenuService {
    * Api to get cart against filter customerId & reservationLabel & restaurantId
    */
   findAllCartById() {
-
     let obj = {
       restaurantId: this.clientService.getCookie().restaurantId ? this.clientService.getCookie().restaurantId : '',
       reservationLabel: this.clientService.getCookie().reservationLabel ? this.clientService.getCookie().reservationLabel : ''
     }
-
     const url = this.apiBaseUrl + "/food/cart/search?restaurantId=" + obj.restaurantId + '&reservationLabel=' + obj.reservationLabel
+    return this.http.get(url);
+  }
+
+  findOrderByOrderLabel(id: any = '', orderType: any = '') {
+    let url = ''
+    let obj: any = {}
+    if (orderType === 'dine_in') {
+      obj = {
+        restaurantId: this.clientService.getCookie().restaurantId ? this.clientService.getCookie().restaurantId : ''
+      }
+      url = this.apiBaseUrl + "/food/cart/search?restaurantId=" + obj.restaurantId + '&reservationLabel=' + id
+      return this.http.get(url);
+    }
+
+    obj = {
+      restaurantId: this.clientService.getCookie().restaurantId ? this.clientService.getCookie().restaurantId : '',
+    }
+    url = this.apiBaseUrl + "/food/cart/search?restaurantId=" + obj.restaurantId + '&orderLabel=' + id
     return this.http.get(url);
   }
 

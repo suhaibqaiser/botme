@@ -40,7 +40,8 @@ export class ProductCartModalComponent implements OnInit {
       })
       if (res.status === 'success') {
         const cartList = res.payload.cart
-        this.clientService.setCookie('orderLabel', res.payload.order)
+        this.clientService.setCookie('orderLabel', res.payload.order.orderLabel)
+        this.clientService.setCookie('reservationLabel', res.payload.order.reservationLabel)
         if (cartList && cartList.length) {
           cartList.forEach((cartItem: any) => {
             const product = this.cartService.products.find((item: any) => item.productId === cartItem.productId)
@@ -52,6 +53,7 @@ export class ProductCartModalComponent implements OnInit {
         return
       }
       this.clientService.setCookie('orderLabel', '')
+      this.clientService.setCookie('reservationLabel', '')
 
     })
   }

@@ -92,7 +92,7 @@ export async function findCart(filter: any, query: any) {
     let result = await getCart(filter)
     if (result && result.length) {
         response.payload = {
-            order: orderResult.orderLabel,
+            order: {orderLabel: orderResult.orderLabel, reservationLabel: orderResult.reservationLabel},
             cart: result
         }
         response.status = "success"
