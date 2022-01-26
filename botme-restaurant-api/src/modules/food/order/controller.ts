@@ -35,7 +35,7 @@ export async function addOrder(order: any, restaurantId: any) {
         return response;
     }
 
-    order.orderId = randomUUID()
+    order.orderLabel = Math.random().toString(36).slice(2)
     order.restaurantId = restaurantId
 
     let result = await createOrder(order)
@@ -80,26 +80,27 @@ export async function findCart(filter: any, query: any) {
     orderResult = JSON.parse(JSON.stringify(orderResult))
 
     if (!orderResult) {
-        response.payload = {message: 'Order not found against restaurantId=' + filter.restaurantId + ' --- customerId=' + filter.customerId}
-        response.status = "error"
+        response.message = 'Order not found.'
+        response.status = "danger"
         return response
     }
 
-    // filter orderId &  restaurantId
+    // filter orderLabel &  restaurantId
     delete filter.customerId
-    filter.orderId = orderResult.orderId
-
+    filter.orderLabel = orderResult.orderLabel
+    console.log('filter =>', filter)
     let result = await getCart(filter)
-    if (result) {
+    if (result && result.length) {
         response.payload = {
-            order: orderResult.orderId,
+            order: orderResult.orderLabel,
             cart: result
         }
         response.status = "success"
+        response.message = "Order found."
         return response
     } else {
-        response.payload = "Cart not found against restaurantId=" + filter.cartLabel + ' --- =' + filter.cartID
-        response.status = "error"
+        response.message = "Cart not found."
+        response.status = "danger"
         return response
     }
 }
@@ -108,7 +109,7 @@ export async function findCartById(filter: any, restaurantId: any) {
     let response = new restResponse()
     filter.restaurantId = restaurantId
 
-    // filter orderId & restaurantId & cartId
+    // filter orderLabel & restaurantId & cartId
 
     let result = await getCartById(filter)
     if (result) {
@@ -126,8 +127,8 @@ export async function addCart(obj: any, filter: any) {
     try {
         let response = new restResponse()
         if (!obj || !filter.restaurantId) {
-            response.payload = "cart and restaurantId is required"
-            response.status = "error"
+            response.message = "cart and restaurantId is required"
+            response.status = "danger"
             return response;
         }
 
@@ -137,38 +138,40 @@ export async function addCart(obj: any, filter: any) {
         cartObj.cartId = randomUUID()
         // checking is order exists
 
-        // filter customerId & restaurantId & orderId
+        // filter customerId & restaurantId & orderLabel
         let isOrderExists: any = await getOrderById(tempFilter)
         if (isOrderExists) {
             // once order created just save cart only
-            cartObj.orderId = isOrderExists.orderId
+            cartObj.orderLabel = isOrderExists.orderLabel
             let cartResult = await createCart(cartObj)
-            response.payload = {cart: cartResult, order: isOrderExists.orderId}
+            response.payload = {cart: cartResult, order: isOrderExists.orderLabel}
             response.status = "success"
+            response.message = "Item added to cart."
             return response
         }
 
 
         // when creating first time order and cart
-        orderObj.orderId = randomUUID()
+        orderObj.orderLabel = Math.random().toString(36).slice(2)
         let orderResult = await createOrder(orderObj)
         if (orderResult) {
             orderResult = JSON.parse(JSON.stringify(orderResult))
-            cartObj.orderId = orderResult.orderId
+            cartObj.orderLabel = orderResult.orderLabel
             let cartResult = await createCart(cartObj)
             if (cartResult) {
                 cartResult = JSON.parse(JSON.stringify(cartResult))
                 response.payload = {order: orderResult, cart: cartResult}
                 response.status = "success"
+                response.message = 'Your order successfully placed.'
                 return response
             } else {
-                response.payload = "Failed to save cart!"
-                response.status = "error"
+                response.message = "Failed add to cart."
+                response.status = "danger"
                 return response
             }
         } else {
-            response.payload = "Failed to save order!"
-            response.status = "error"
+            response.message = "Failed to place order."
+            response.status = "danger"
             return response
         }
     } catch (e) {
@@ -179,41 +182,43 @@ export async function addCart(obj: any, filter: any) {
 export async function editCart(cart: any, filter: any) {
     let response = new restResponse()
     if (!cart || !filter.restaurantId) {
-        response.payload = "cart and restaurantId is required"
-        response.status = "error"
+        response.message = "cart and restaurantId is required"
+        response.status = "danger"
         return response;
     }
 
-    // filter restaurantId & cartId & orderId
+    // filter restaurantId & cartId & orderLabel
 
     let result = await updateCart(cart, filter)
     if (result) {
         response.payload = {cart: JSON.parse(JSON.stringify(result))}
+        response.message = "Cart updated."
         response.status = "success"
         return response
-    } else {
-        response.payload = "cart not found"
-        response.status = "error"
-        return response
     }
+    response.message = "Cart not found."
+    response.status = "danger"
+    return response
+
 }
 
 export async function deleteCartById(filter: any) {
     let response = new restResponse()
 
-    // filter restaurantId & cartId & orderId
+    // filter restaurantId & cartId & orderLabel
     try {
         let result = await deleteCart(filter)
         if (result) {
             response.payload = result
+            response.message = "Cart item deleted."
             response.status = "success"
             return response
-        } else {
-            response.payload = "cart not found"
-            response.status = "error"
-            return response
         }
-    }catch (e) {
+        response.message = "Cart not found."
+        response.status = "error"
+        return response
+
+    } catch (e) {
         console.log(e)
     }
 }

@@ -6,6 +6,7 @@ import {HelperService} from "./helper.service";
 import {ContextService} from "./context.service";
 import {BotmeClientService} from "./botme-client.service";
 import {MenuService} from "./menu.service";
+import {ToastService} from "./toast.service";
 
 declare var $: any;
 
@@ -22,7 +23,8 @@ export class CartService {
   singleCustomProductObj: any = {
     _id: '',
     restaurantId: '',
-    orderId: '',
+    orderLabel: '',
+    reservationLabel: '',
     cartId: '',
     productName: '',
     productId: '',
@@ -48,7 +50,7 @@ export class CartService {
 
   cartLoader: boolean = false
 
-  constructor(private _menuService: MenuService, private _clientService: BotmeClientService, private _contextService: ContextService, public _helperService: HelperService, private _socketService: SocketService) {
+  constructor(private _toastService: ToastService, private _menuService: MenuService, private _clientService: BotmeClientService, private _contextService: ContextService, public _helperService: HelperService, private _socketService: SocketService) {
   }
 
 
@@ -66,6 +68,10 @@ export class CartService {
     console.log(product)
     this.cartLoader = true
     this._menuService.deleteCartById(product.cartId).subscribe((res: any) => {
+      this._toastService.setToast({
+        description: res.message,
+        type: res.status
+      })
       if (res.status === 'success') {
         this.cartLoader = false
         let cartListIndex = this.cartProduct.findIndex((item: any) => item._id === this.singleCustomProductObj._id)
@@ -105,8 +111,9 @@ export class CartService {
     return {
       _id: cartProduct._id,
       restaurantId: cartProduct.restaurantId,
-      orderId: cartProduct.orderId,
+      orderLabel: cartProduct.orderLabel,
       cartId: cartProduct.cartId,
+      reservationLabel: cartProduct.reservationLabel,
       productName: product.productName,
       productId: product.productId,
       productImage: product.productImage,
@@ -283,9 +290,12 @@ export class CartService {
       const orderObj = this.orderObjGenerator(singleCustomProductObj)
       document.getElementById("ctaId-show-cart")?.click()
       this._menuService.addToCartApi(orderObj).subscribe((res: any) => {
-        console.log(res)
+        this._toastService.setToast({
+          description: res.message,
+          type: res.status
+        })
         if (res.status === 'success') {
-          this._clientService.setCookie('orderId', res.payload.order)
+          this._clientService.setCookie('orderLabel', res.payload.order)
           this.cartLoader = false
           this.singleCustomProductObj.cartId = res.payload.cart.cartId
           this.cartProduct.push(JSON.parse(JSON.stringify(this.singleCustomProductObj)))
@@ -301,6 +311,10 @@ export class CartService {
         document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:block')
       }
       this._menuService.editToCartApi(orderObj).subscribe((res: any) => {
+        this._toastService.setToast({
+          description: res.message,
+          type: res.status
+        })
         if (res.status === 'success') {
           this.cartLoader = false
           let cart = JSON.parse(JSON.stringify(this.singleCustomProductObj))
@@ -410,8 +424,8 @@ export class CartService {
     const modifiedObj = this.modifyCartObj(singleCustomProductObj)
     const order = {
       restaurantId: this._clientService.getCookie().restaurantId,
-      orderId: (this._clientService.getCookie().orderId) ? this._clientService.getCookie().orderId : '',
-      reservationId: this._clientService.getCookie().reservationId,
+      orderLabel: (this._clientService.getCookie().orderLabel) ? this._clientService.getCookie().orderLabel : '',
+      reservationLabel: this._clientService.getCookie().reservationLabel,
       orderTimestamp: new Date(),
       orderType: ['dine_in'].includes(this._clientService.getCookie().orderType) ? this._clientService.getCookie().orderType : '',
       customerId: this._clientService.getCookie().clientID ? this._clientService.getCookie().clientID : '',
@@ -429,7 +443,8 @@ export class CartService {
     const cart = {
       restaurantId: this._clientService.getCookie().restaurantId,
       cartId: singleCustomProductObj.cartId ? singleCustomProductObj.cartId : '',
-      orderId: (this._clientService.getCookie().orderId) ? this._clientService.getCookie().orderId : '',
+      orderLabel: (this._clientService.getCookie().orderLabel) ? this._clientService.getCookie().orderLabel : '',
+      reservationLabel: (this._clientService.getCookie().reservationLabel) ? this._clientService.getCookie().reservationLabel : '',
       productId: singleCustomProductObj.productId,
       productSerialNo: '',
       productCategory: '',

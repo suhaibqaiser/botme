@@ -6,6 +6,7 @@ import {HelperService} from "../../../services/helper.service";
 import {ContextService} from "../../../services/context.service";
 import {SocketService} from "../../../services/socket.service";
 import {BotmeClientService} from "../../../services/botme-client.service";
+import {ToastService} from "../../../services/toast.service";
 
 declare var $: any;
 
@@ -22,7 +23,8 @@ export class ProductCartModalComponent implements OnInit {
               private MenuService: MenuService,
               public _helperService: HelperService,
               private _contextService: ContextService,
-              private _socketService: SocketService) {
+              private _socketService: SocketService,
+              private _toastService: ToastService) {
   }
 
   ngOnInit(): void {
@@ -32,9 +34,13 @@ export class ProductCartModalComponent implements OnInit {
 
   getCartProducts() {
     this.MenuService.findAllCartById().subscribe((res: any) => {
+      this._toastService.setToast({
+        description: res.message,
+        type: res.status
+      })
       if (res.status === 'success') {
         const cartList = res.payload.cart
-        this.clientService.setCookie('orderId',res.payload.order)
+        this.clientService.setCookie('orderLabel', res.payload.order)
         if (cartList && cartList.length) {
           cartList.forEach((cartItem: any) => {
             const product = this.cartService.products.find((item: any) => item.productId === cartItem.productId)
@@ -45,7 +51,7 @@ export class ProductCartModalComponent implements OnInit {
         console.log(this.cartService.cartProduct)
         return
       }
-      this.clientService.setCookie('orderId','')
+      this.clientService.setCookie('orderLabel', '')
 
     })
   }
