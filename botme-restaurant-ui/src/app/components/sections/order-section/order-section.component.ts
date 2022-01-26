@@ -64,7 +64,7 @@ export class OrderSectionComponent implements OnInit {
 
   applyId() {
     if (!this._helperService.requiredCheck(this.orderId.value)) {
-      this._toastService.setToast({description: 'sdsd', type: 'danger'})
+      this._toastService.setToast({description: this._botMeService.getCookie().orderType === 'dine_in' ? 'Reservation Id is required.' : 'Order Id is required.', type: 'danger'})
       return
     }
     $('#order_modal').modal('hide')

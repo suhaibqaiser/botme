@@ -45,7 +45,7 @@ export class ToastService {
       type: (obj && obj.type && this.type[obj.type].length) ? this.type[obj.type] : this.type['info'],
       description: (obj && obj.description) ? obj.description : 'No description',
       bgColor: this.toastBGColor[(this.type[obj.type] && this.type[obj.type].length) ? this.type[obj.type] : 'info'],
-      textColor: this.toastTextColor[(this.type[obj.type] && this.type[obj.type].length) ? this.type[obj.type] : 'black']
+      textColor: this.toastTextColor[(this.type[obj.type] && this.type[obj.type].length) ? this.type[obj.type] : 'info']
     }
     $('#liveToast').toast('show')
   }
