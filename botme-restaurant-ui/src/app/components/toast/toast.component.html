@@ -1,5 +1,5 @@
 <div class="position-fixed  top-0 end-0 p-3" style="z-index: 3000">
-  <div id="liveToast" [ngClass]="[_toast.getToast().bgColor]" class="toast " role="alert" aria-live="assertive" aria-atomic="true">
+  <div data-bs-delay="1500"  id="liveToast" [ngClass]="[_toast.getToast().bgColor]" class="toast " role="alert" aria-live="assertive" aria-atomic="true">
     <div  [ngClass]="[_toast.getToast().bgColor,_toast.getToast().textColor]" class="toast-header">
       <strong class="me-auto text-capitalize">{{_toast.getToast().type}}</strong>
       <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>

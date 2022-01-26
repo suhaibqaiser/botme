@@ -46,7 +46,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="order_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -65,7 +65,12 @@
       </div>
       <div class="modal-footer justify-content-between">
         <a type="button" style="padding: 10px" class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
-        <a (click)="applyId()" data-bs-dismiss="modal" aria-label="Close" type="button" style="padding: 10px" class="btn btn-primary">{{ getButtonName() }}</a>
+        <a (click)="applyId()" type="button" style="padding: 10px" class="btn btn-primary">
+          {{ getButtonName() }}
+          <div *ngIf="loader" class="spinner-border spinner-border-sm ml-3 text-warning" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </a>
       </div>
     </div>
   </div>

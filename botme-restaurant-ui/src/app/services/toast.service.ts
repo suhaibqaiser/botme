@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-
+declare var $: any;
 @Injectable({
   providedIn: 'root'
 })
@@ -34,7 +34,7 @@ export class ToastService {
   }
 
   constructor() {
-    this.setToast()
+
   }
 
   /**
@@ -47,6 +47,7 @@ export class ToastService {
       bgColor: this.toastBGColor[(this.type[obj.type] && this.type[obj.type].length) ? this.type[obj.type] : 'info'],
       textColor: this.toastTextColor[(this.type[obj.type] && this.type[obj.type].length) ? this.type[obj.type] : 'black']
     }
+    $('#liveToast').toast('show')
   }
 
   getToast() {

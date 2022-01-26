@@ -3,7 +3,11 @@ import {Router} from "@angular/router";
 import {OrderService} from "../../../services/order.service";
 import {BotmeClientService} from "../../../services/botme-client.service";
 import {FormControl} from "@angular/forms";
+import {ToastService} from "../../../services/toast.service";
+import {HelperService} from "../../../services/helper.service";
+
 declare var $: any;
+
 @Component({
   selector: 'app-order-section',
   templateUrl: './order-section.component.html',
@@ -11,11 +15,12 @@ declare var $: any;
 })
 export class OrderSectionComponent implements OnInit {
 
-  constructor(public _orderService: OrderService, private _route: Router, public _botMeService: BotmeClientService) {
+  constructor(private _helperService: HelperService, private _toastService: ToastService, public _orderService: OrderService, private _route: Router, public _botMeService: BotmeClientService) {
 
   }
 
   orderId = new FormControl('')
+  loader = false
 
   ngOnInit(): void {
     this._orderService.selectedOrderButtons[this._botMeService.getCookie().orderType] = true
@@ -34,6 +39,8 @@ export class OrderSectionComponent implements OnInit {
   }
 
   selectOrderType(type: any) {
+    this.orderId.reset()
+    $('#order_modal').modal('show')
     if (type === 'dine_in') {
       this._orderService.selectedOrderButtons['dine_in'] = true
       this._orderService.selectedOrderButtons['pick_up'] = false
@@ -56,6 +63,10 @@ export class OrderSectionComponent implements OnInit {
   }
 
   applyId() {
-    $('#liveToast').toast('show')
+    if (!this._helperService.requiredCheck(this.orderId.value)) {
+      this._toastService.setToast({description: 'sdsd', type: 'danger'})
+      return
+    }
+    $('#order_modal').modal('hide')
   }
 }
