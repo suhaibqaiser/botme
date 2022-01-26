@@ -23,7 +23,9 @@
 
         <div class="authentication-btn">
           <button (click)="login()" [disabled]="!loginForm.valid" class="btn full-width btn-border mb-20">Log
-            In
+            In <div *ngIf="loader" class="spinner-border spinner-border-sm ml-3 text-warning" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
           </button>
         </div>
       </form>

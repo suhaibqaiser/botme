@@ -10,6 +10,7 @@ import {DeviceDetectorService} from "ngx-device-detector";
 })
 export class ProfileSectionComponent implements OnInit {
 
+  loader = false
   constructor(public _deviceService: DeviceDetectorService, public _botMeClientService: BotmeClientService, private _router: Router) {
   }
 
@@ -17,6 +18,7 @@ export class ProfileSectionComponent implements OnInit {
   }
 
   logout() {
+    this.loader = true
     this._botMeClientService.logutAPI(this._botMeClientService.getCookieByKey('sessionId')).subscribe(res => {
       console.log(res);
       if (res.status === 'success') {
@@ -26,7 +28,7 @@ export class ProfileSectionComponent implements OnInit {
           window.location.reload();
         });
       }
-
+      this.loader = false
     })
   }
 }

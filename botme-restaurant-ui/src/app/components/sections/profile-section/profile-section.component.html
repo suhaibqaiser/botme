@@ -19,7 +19,9 @@
         </div>
         <div class="contact-info-list">
           <div class="mt-4 authentication-btn">
-            <button (click)="logout()" class="btn full-width btn-border mb-20">Logout</button>
+            <button (click)="logout()" class="btn full-width btn-border mb-20">Logout <div *ngIf="loader" class="spinner-border spinner-border-sm ml-3 text-warning" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div></button>
           </div>
         </div>
       </div>

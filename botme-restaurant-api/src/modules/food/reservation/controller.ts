@@ -7,23 +7,24 @@ export async function addReservation(reservation: any, restaurantId: any) {
     let response = new restResponse()
 
     if (!restaurantId) {
-        response.payload = "reservation and restaurantId is required"
-        response.status = "error"
+        response.message = "reservationId and restaurantId is required"
+        response.status = "danger"
         return response;
     }
     reservation.reservationId = randomUUID();
     reservation.restaurantId = restaurantId
-    let val = await getMaxLabelValue()
-    reservation.reservationLabel = val ? (val.reservationLabel + 1) : 1
+    // let val = await getMaxLabelValue()
+    reservation.reservationLabel = Math.random().toString(36).slice(2)
 
     let result = await createReservation(reservation)
     if (result) {
         response.payload = JSON.parse(JSON.stringify(result))
         response.status = "success"
+        response.message = "Your reservation has been placed."
         return response
     } else {
-        response.payload = "Reservation not found"
-        response.status = "error"
+        response.message = "Failed to add your reservation."
+        response.status = "danger"
         return response
     }
 }
