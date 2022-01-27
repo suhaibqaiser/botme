@@ -47,11 +47,10 @@ export class MenuService {
 
     let obj = {
       restaurantId: this.clientService.getCookie().restaurantId ? this.clientService.getCookie().restaurantId : '',
-      reservationLabel: this.clientService.getCookie().reservationLabel ? this.clientService.getCookie().reservationLabel : '',
       orderLabel: this.clientService.getCookie().orderLabel ? this.clientService.getCookie().orderLabel : '',
     }
 
-    const url = this.apiBaseUrl + "/food/cart/add?restaurantId=" + obj.restaurantId + '&reservationLabel=' + obj.reservationLabel + '&orderLabel=' + obj.orderLabel
+    const url = this.apiBaseUrl + "/food/cart/add?restaurantId=" + obj.restaurantId + '&orderLabel=' + obj.orderLabel
     return this.http.post(url, cart);
   }
 
@@ -61,9 +60,10 @@ export class MenuService {
   findAllCartById() {
     let obj = {
       restaurantId: this.clientService.getCookie().restaurantId ? this.clientService.getCookie().restaurantId : '',
-      reservationLabel: this.clientService.getCookie().reservationLabel ? this.clientService.getCookie().reservationLabel : ''
+      orderLabel: this.clientService.getCookie().orderLabel ? this.clientService.getCookie().orderLabel : '',
+      orderType: this.clientService.getCookie().orderType ? this.clientService.getCookie().orderType : '',
     }
-    const url = this.apiBaseUrl + "/food/cart/search?restaurantId=" + obj.restaurantId + '&reservationLabel=' + obj.reservationLabel
+    const url = this.apiBaseUrl + "/food/cart/search?restaurantId=" + obj.restaurantId + '&orderLabel=' + obj.orderLabel  + '&orderType=' + obj.orderType
     return this.http.get(url);
   }
 
@@ -80,8 +80,9 @@ export class MenuService {
 
     obj = {
       restaurantId: this.clientService.getCookie().restaurantId ? this.clientService.getCookie().restaurantId : '',
+      orderType: this.clientService.getCookie().orderType ? this.clientService.getCookie().orderType : '',
     }
-    url = this.apiBaseUrl + "/food/cart/search?restaurantId=" + obj.restaurantId + '&orderLabel=' + id
+    url = this.apiBaseUrl + "/food/cart/search?restaurantId=" + obj.restaurantId + '&orderLabel=' + id + '&orderType=' + obj.orderType
     return this.http.get(url);
   }
 

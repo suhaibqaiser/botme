@@ -72,10 +72,10 @@ export async function editOrder(order: any, restaurantId: any) {
 
 // CART //
 
-export async function findCart(filter: any, query: any) {
+export async function findCart(filter: any) {
     let response = new restResponse()
 
-    // filter customerId & restaurantId
+    // filter if order_type => dine_in (reservationLabel) otherwise orderLabel
     let orderResult: any = await getOrderById(filter)
     orderResult = JSON.parse(JSON.stringify(orderResult))
 
@@ -86,13 +86,13 @@ export async function findCart(filter: any, query: any) {
     }
 
     // filter orderLabel &  restaurantId
-    delete filter.customerId
+    delete filter.reservationLabel
+    delete filter.orderType
     filter.orderLabel = orderResult.orderLabel
-    console.log('filter =>', filter)
     let result = await getCart(filter)
     if (result && result.length) {
         response.payload = {
-            order: {orderLabel: orderResult.orderLabel, reservationLabel: orderResult.reservationLabel},
+            order: orderResult,
             cart: result
         }
         response.status = "success"
@@ -136,15 +136,15 @@ export async function addCart(obj: any, filter: any) {
         let orderObj = obj.order
         let tempFilter = JSON.parse(JSON.stringify(filter))
         cartObj.cartId = randomUUID()
-        // checking is order exists
 
-        // filter customerId & restaurantId & orderLabel
+        // checking is order exists
+        // filter restaurantId & orderLabel
         let isOrderExists: any = await getOrderById(tempFilter)
         if (isOrderExists) {
             // once order created just save cart only
             cartObj.orderLabel = isOrderExists.orderLabel
             let cartResult = await createCart(cartObj)
-            response.payload = {cart: cartResult, order: isOrderExists.orderLabel}
+            response.payload = {cart: cartResult, order: isOrderExists}
             response.status = "success"
             response.message = "Item added to cart."
             return response

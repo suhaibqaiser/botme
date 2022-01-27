@@ -30,7 +30,7 @@ export default [
         path: "/cart/search",
         method: "get",
         handler: async (req: Request, res: Response) => {
-            let result = await findCart(req.query, req.query)
+            let result = await findCart(req.query)
             res.send(result);
         }
     },

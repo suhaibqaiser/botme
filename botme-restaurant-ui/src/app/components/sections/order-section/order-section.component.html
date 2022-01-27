@@ -60,8 +60,8 @@
                        autocomplete="off" required [placeholder]="this._botMeService.getCookie().orderType === 'dine_in' ? 'Your reservation Id' : 'Your order Id'"/>
               </div>
             </div>
-        <h5 *ngIf="this._botMeService.getCookie().orderType === 'dine_in'" class="mt-4"> Let me help you to generate it <br><br><a data-bs-dismiss="modal" aria-label="Close" style="padding: 10px" class="btn btn-yellow" routerLink="/reservations">Go to Reservation</a></h5>
-        <h5 *ngIf="['pick_up','delivery'].includes(this._botMeService.getCookie().orderType)" class="mt-4"> Let me help you to generate it <br><br> <a data-bs-dismiss="modal" aria-label="Close" style="padding: 10px" class="btn btn-yellow" routerLink="/online-shop">Go to Place Order Page</a></h5>
+        <h5 *ngIf="this._botMeService.getCookie().orderType === 'dine_in'" class="mt-4"> Let me help you to generate it <br><br><a data-bs-dismiss="modal" aria-label="Close" style="padding: 10px" class="btn btn-yellow" (click)="goToRoute('/reservations')" routerLink="/reservations">Go to Reservation</a></h5>
+        <h5 *ngIf="['pick_up','delivery'].includes(this._botMeService.getCookie().orderType)" class="mt-4"> Let me help you to generate it <br><br> <a data-bs-dismiss="modal" aria-label="Close" style="padding: 10px" (click)="goToRoute('/online-shop')" class="btn btn-yellow" routerLink="/online-shop">Go to Place Order Page</a></h5>
       </div>
       <div class="modal-footer justify-content-between">
         <a type="button" style="padding: 10px" class="btn btn-secondary" data-bs-dismiss="modal">Close</a>

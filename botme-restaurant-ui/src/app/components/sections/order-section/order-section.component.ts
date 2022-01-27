@@ -42,6 +42,9 @@ export class OrderSectionComponent implements OnInit {
 
   selectOrderType(type: any) {
     this.orderId.reset()
+    this._cartService.cartProduct = []
+    this._botMeService.setCookie('orderLabel', '')
+    this._botMeService.setCookie('reservationLabel', '')
     $('#order_modal').modal('show')
     if (type === 'dine_in') {
       this._orderService.selectedOrderButtons['dine_in'] = true
@@ -74,7 +77,7 @@ export class OrderSectionComponent implements OnInit {
     }
     this.loader = true
     this._cartService.cartProduct = []
-    this._menuService.findOrderByOrderLabel(this.orderId.value, 'dine_in').subscribe((res: any) => {
+    this._menuService.findOrderByOrderLabel(this.orderId.value, this._botMeService.getCookie().orderType).subscribe((res: any) => {
       this._toastService.setToast({
         description: res.message,
         type: res.status
@@ -100,5 +103,11 @@ export class OrderSectionComponent implements OnInit {
       this._botMeService.setCookie('reservationLabel', '')
 
     })
+  }
+
+  goToRoute(route: any = '') {
+    this._route.navigate([route])
+    this._botMeService.setCookie('orderLabel', '')
+    this._botMeService.setCookie('reservationLabel', '')
   }
 }

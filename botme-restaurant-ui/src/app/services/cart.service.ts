@@ -24,7 +24,6 @@ export class CartService {
     _id: '',
     restaurantId: '',
     orderLabel: '',
-    reservationLabel: '',
     cartId: '',
     productName: '',
     productId: '',
@@ -113,7 +112,6 @@ export class CartService {
       restaurantId: cartProduct.restaurantId,
       orderLabel: cartProduct.orderLabel,
       cartId: cartProduct.cartId,
-      reservationLabel: cartProduct.reservationLabel,
       productName: product.productName,
       productId: product.productId,
       productImage: product.productImage,
@@ -295,7 +293,8 @@ export class CartService {
           type: res.status
         })
         if (res.status === 'success') {
-          this._clientService.setCookie('orderLabel', res.payload.order)
+          this._clientService.setCookie('orderLabel', res.payload.order.orderLabel)
+          this._clientService.setCookie('reservationLabel', res.payload.order.orderLabel)
           this.cartLoader = false
           this.singleCustomProductObj.cartId = res.payload.cart.cartId
           this.cartProduct.push(JSON.parse(JSON.stringify(this.singleCustomProductObj)))
@@ -427,7 +426,7 @@ export class CartService {
       orderLabel: (this._clientService.getCookie().orderLabel) ? this._clientService.getCookie().orderLabel : '',
       reservationLabel: this._clientService.getCookie().reservationLabel,
       orderTimestamp: new Date(),
-      orderType: ['dine_in'].includes(this._clientService.getCookie().orderType) ? this._clientService.getCookie().orderType : '',
+      orderType: this._clientService.getCookie().orderType,
       customerId: this._clientService.getCookie().clientID ? this._clientService.getCookie().clientID : '',
       addressId: '',
       tableId: '',
@@ -444,7 +443,6 @@ export class CartService {
       restaurantId: this._clientService.getCookie().restaurantId,
       cartId: singleCustomProductObj.cartId ? singleCustomProductObj.cartId : '',
       orderLabel: (this._clientService.getCookie().orderLabel) ? this._clientService.getCookie().orderLabel : '',
-      reservationLabel: (this._clientService.getCookie().reservationLabel) ? this._clientService.getCookie().reservationLabel : '',
       productId: singleCustomProductObj.productId,
       productSerialNo: '',
       productCategory: '',

@@ -38,22 +38,24 @@ export class ProductCartModalComponent implements OnInit {
         description: res.message,
         type: res.status
       })
+      this.cartService.cartLoader = false
       if (res.status === 'success') {
         const cartList = res.payload.cart
         this.clientService.setCookie('orderLabel', res.payload.order.orderLabel)
         this.clientService.setCookie('reservationLabel', res.payload.order.reservationLabel)
+        this.clientService.setCookie('orderType', res.payload.order.orderType)
         if (cartList && cartList.length) {
           cartList.forEach((cartItem: any) => {
             const product = this.cartService.products.find((item: any) => item.productId === cartItem.productId)
             this.cartService.cartProduct.push(JSON.parse(JSON.stringify(this.cartService.setSingleCustomizeProduct(product, cartItem))))
           })
         }
-        this.cartService.cartLoader = false
         console.log(this.cartService.cartProduct)
         return
       }
       this.clientService.setCookie('orderLabel', '')
       this.clientService.setCookie('reservationLabel', '')
+      this.clientService.setCookie('orderType', '')
 
     })
   }
