@@ -4,8 +4,8 @@ import {foodDB} from "../../../config/mongoDB";
 const OrderSchema = createSchema(
     {
         restaurantId: Type.string({maxlength: 256, required: true}),
-        orderId: Type.string({maxlength: 256, required: true, unique: true}),
-        reservationId: Type.string(),
+        orderLabel: Type.string({maxlength: 256, required: true, unique: true}),
+        reservationLabel: Type.string(),
         orderTimestamp: Type.date(), // datetime
         orderType: Type.string(),
         customerId: Type.string(),
@@ -35,7 +35,7 @@ const CartSchema = createSchema(
     {
         restaurantId: Type.string({maxlength: 256, required: true}),
         cartId: Type.string({maxlength: 256, required: true, unique: true}),
-        orderId: Type.string({maxlength: 256, required: true}),
+        orderLabel: Type.string({maxlength: 256, required: true}),
         productId: Type.string({maxlength: 256, required: true}),
         productSerialNo: Type.string(),
         productCategory: Type.string(),

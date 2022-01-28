@@ -41,59 +41,89 @@ export class MenuService {
 
   // Cart Cruds///
   /**
-   * Api to add cart against filter customerId & restaurantId & orderId
+   * Api to add cart against filter customerId & restaurantId & orderLabel
    */
   addToCartApi(cart: any) {
 
     let obj = {
-      restaurantId:this.clientService.getCookie().restaurantId ? this.clientService.getCookie().restaurantId : '',
-      customerId:this.clientService.getCookie().clientID ? this.clientService.getCookie().clientID : '',
-      orderId:this.clientService.getCookie().orderId ? this.clientService.getCookie().orderId : '',
+      restaurantId: this.clientService.getCookie().restaurantId ? this.clientService.getCookie().restaurantId : '',
+      orderLabel: this.clientService.getCookie().orderLabel ? this.clientService.getCookie().orderLabel : '',
     }
 
-    const url = this.apiBaseUrl + "/food/cart/add?restaurantId=" + obj.restaurantId  + '&customerId=' + obj.customerId + '&orderId=' + obj.orderId
+    const url = this.apiBaseUrl + "/food/cart/add?restaurantId=" + obj.restaurantId + '&orderLabel=' + obj.orderLabel
     return this.http.post(url, cart);
   }
 
   /**
-   * Api to get cart against filter customerId & reservationId & restaurantId
+   * Api to get cart against filter customerId & reservationLabel & restaurantId
    */
   findAllCartById() {
-
     let obj = {
-      restaurantId:this.clientService.getCookie().restaurantId ? this.clientService.getCookie().restaurantId : '',
-      customerId:this.clientService.getCookie().clientID ? this.clientService.getCookie().clientID : ''
+      restaurantId: this.clientService.getCookie().restaurantId ? this.clientService.getCookie().restaurantId : '',
+      orderLabel: this.clientService.getCookie().orderLabel ? this.clientService.getCookie().orderLabel : '',
+      orderType: this.clientService.getCookie().orderType ? this.clientService.getCookie().orderType : '',
+    }
+    const url = this.apiBaseUrl + "/food/cart/search?restaurantId=" + obj.restaurantId + '&orderLabel=' + obj.orderLabel + '&orderType=' + obj.orderType
+    return this.http.get(url);
+  }
+
+  findOrderByOrderLabel(id: any = '', orderType: any = '') {
+    let url = ''
+    let obj: any = {}
+    if (orderType === 'dine_in') {
+      obj = {
+        restaurantId: this.clientService.getCookie().restaurantId ? this.clientService.getCookie().restaurantId : ''
+      }
+      url = this.apiBaseUrl + "/food/cart/search?restaurantId=" + obj.restaurantId + '&reservationLabel=' + id
+      return this.http.get(url);
     }
 
-    const url = this.apiBaseUrl + "/food/cart/search?restaurantId=" + obj.restaurantId + '&customerId=' + obj.customerId
+    obj = {
+      restaurantId: this.clientService.getCookie().restaurantId ? this.clientService.getCookie().restaurantId : '',
+      orderType: this.clientService.getCookie().orderType ? this.clientService.getCookie().orderType : '',
+    }
+    url = this.apiBaseUrl + "/food/cart/search?restaurantId=" + obj.restaurantId + '&orderLabel=' + id + '&orderType=' + obj.orderType
     return this.http.get(url);
   }
 
   /**
-   * Api to edit cart against filter restaurantId & cartId & orderId
+   * Api to edit cart against filter restaurantId & cartId & orderLabel
    */
   editToCartApi(cart: any) {
 
     let obj = {
-      restaurantId:this.clientService.getCookie().restaurantId ? this.clientService.getCookie().restaurantId : '',
-      orderId:this.clientService.getCookie().orderId ? this.clientService.getCookie().orderId : '',
+      restaurantId: this.clientService.getCookie().restaurantId ? this.clientService.getCookie().restaurantId : '',
+      orderLabel: this.clientService.getCookie().orderLabel ? this.clientService.getCookie().orderLabel : '',
     }
 
-    const url = this.apiBaseUrl + "/food/cart/edit?restaurantId=" + obj.restaurantId + "&cartId=" + cart.cart.cartId + '&orderId=' + obj.orderId
+    const url = this.apiBaseUrl + "/food/cart/edit?restaurantId=" + obj.restaurantId + "&cartId=" + cart.cart.cartId + '&orderLabel=' + obj.orderLabel
     return this.http.post(url, cart);
   }
 
   /**
-   * Api to get cart against filter restaurantId & cartId & orderId
+   * Api to get cart against filter restaurantId & cartId & orderLabel
    */
   deleteCartById(cartId: any) {
 
     let obj = {
-      restaurantId:this.clientService.getCookie().restaurantId ? this.clientService.getCookie().restaurantId : '',
-      orderId:this.clientService.getCookie().orderId ? this.clientService.getCookie().orderId : '',
+      restaurantId: this.clientService.getCookie().restaurantId ? this.clientService.getCookie().restaurantId : '',
+      orderLabel: this.clientService.getCookie().orderLabel ? this.clientService.getCookie().orderLabel : '',
     }
 
-    const url = this.apiBaseUrl + "/food/cart/deleteById?restaurantId=" + obj.restaurantId + "&cartId=" + cartId + '&orderId=' + obj.orderId
+    const url = this.apiBaseUrl + "/food/cart/deleteById?restaurantId=" + obj.restaurantId + "&cartId=" + cartId + '&orderLabel=' + obj.orderLabel
+    return this.http.get(url);
+  }
+
+  /**
+   * update the order status from cart
+   */
+  updateOrderStatus() {
+    const obj = {
+      restaurantId: this.clientService.getCookie().restaurantId ? this.clientService.getCookie().restaurantId : '',
+      orderLabel: this.clientService.getCookie().orderLabel ? this.clientService.getCookie().orderLabel : '',
+      orderType: this.clientService.getCookie().orderType ? this.clientService.getCookie().orderType : '',
+    }
+    const url = this.apiBaseUrl + "/food/cart/updateOrderStatus?restaurantId=" + obj.restaurantId + '&orderLabel=' + obj.orderLabel + '&orderType=' + obj.orderType
     return this.http.get(url);
   }
 }

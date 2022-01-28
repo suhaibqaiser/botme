@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {HelperService} from "../../../services/helper.service";
 import {ContextService} from "../../../services/context.service";
 import {BotmeClientService} from "../../../services/botme-client.service";
+import {ToastService} from "../../../services/toast.service";
 
 @Component({
   selector: 'app-booking-section',
@@ -18,11 +19,12 @@ export class BookingSectionComponent implements OnInit {
     tableNumber: 0,
     reservationSeats: null,
     reservationDate: null,
-    reservationTime: null
+    reservationTime: null,
+    reservationLabel: null
   }
   reservationLoader: boolean = false
 
-  constructor(private _botMeService: BotmeClientService, private _contextService: ContextService, private _helper: HelperService, private _router: Router, public _reservationService: ReservationService) {
+  constructor(private _toastService: ToastService, private _botMeService: BotmeClientService, private _contextService: ContextService, private _helper: HelperService, private _router: Router, public _reservationService: ReservationService) {
     clearTimeout(this._helper.timer)
     this._reservationService.reservationForm.reset()
     this._reservationService.resetFocus()
@@ -36,7 +38,12 @@ export class BookingSectionComponent implements OnInit {
     this.reservationLoader = true
     this.disableFormOnSubmit()
     this._reservationService.addReservation(this._reservationService.reservationForm.value).subscribe((res: any) => {
-        if (res.status === "success") {
+      this._toastService.setToast({
+        description: res.message,
+        type: res.status
+      })
+      if (res.status === "success") {
+          this._botMeService.setCookie('reservationLabel', res.payload.reservationLabel)
           this.reservation = {
             isReservationCompleted: true,
             tableNumber: this._reservationService.generateTableNumber(),
@@ -44,8 +51,9 @@ export class BookingSectionComponent implements OnInit {
             reservationSeats: this._reservationService.reservationForm.get('reservationSeats')?.value,
             reservationDate: this._reservationService.reservationForm.get('reservationDate')?.value,
             reservationTime: this._reservationService.reservationForm.get('reservationTime')?.value,
+            reservationLabel: res.payload.reservationLabel
           }
-          this._botMeService.setCookie('reservationId',res.payload.reservationId)
+          this._botMeService.setCookie('reservationId', res.payload.reservationId)
           this.enableForm()
           this._reservationService.reservationForm.reset()
           this.reservationLoader = false
@@ -78,7 +86,8 @@ export class BookingSectionComponent implements OnInit {
       name: null,
       reservationSeats: null,
       reservationDate: null,
-      reservationTime: null
+      reservationTime: null,
+      reservationLabel: null
     }
   }
 }

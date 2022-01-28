@@ -25,7 +25,7 @@
                 <a routerLink="home" id="ctaId-home" class="nav-link" [class.active]="router.url=='/home'">HOME</a>
               </li>
               <li class="nav-item">
-                <a *ngIf="_botMeClientService.getCookie().isLoggedIn && !_botMeClientService.getCookie().orderId" routerLink="reservations" id="ctaId-reservation" class="nav-link"
+                <a *ngIf="_botMeClientService.getCookie().isLoggedIn && !['delivery','pick_up'].includes(_botMeClientService.getCookie().orderType)" routerLink="reservations" id="ctaId-reservation" class="nav-link"
                   [class.active]="router.url=='/reservations'">RESERVATION</a>
               </li>
               <li class="nav-item">
@@ -34,7 +34,7 @@
               </li>
               <li class="nav-item">
                 <a *ngIf="_botMeClientService.getCookie().isLoggedIn" [class.active]="router.url=='/online-shop'"
-                  id="ctaId-order-online" routerLink="online-shop" class="nav-link">PLACE ORDER</a>
+                  id="ctaId-order-online" routerLink="online-shop" class="nav-link">MENU</a>
               </li>
               <li class="nav-item">
                 <a routerLink="/login" *ngIf="!_botMeClientService.getCookie().isLoggedIn" class="nav-link" type="button">LOGIN</a>

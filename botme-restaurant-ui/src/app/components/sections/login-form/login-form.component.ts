@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {BotmeClientService} from "../../../services/botme-client.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import {ToastService} from "../../../services/toast.service";
 
 @Component({
   selector: 'app-login-form',
@@ -17,17 +18,24 @@ export class LoginFormComponent implements OnInit {
   _voiceType: string = this._botMeClientService.getVoiceType()
   userVoice: string = ''
   botVoice: string = ''
+  loader = false
 
-  constructor(public _botMeClientService: BotmeClientService, public router: Router,) {
+  constructor(private _toastService: ToastService, public _botMeClientService: BotmeClientService, public router: Router,) {
   }
 
   ngOnInit(): void {
   }
 
   login() {
+    this.loader = true
     this._botMeClientService.loginBotMeClientApi(this.loginForm.value).subscribe(
       (res: any) => {
         if (res.status) {
+          this._toastService.setToast({
+            description: 'Successfully Login.',
+            type: 'success'
+          })
+
           this._botMeClientService.setCookie('clientToken', res.payload.clientToken)
           this._botMeClientService.setCookie('clientName', res.payload.clientName)
           this._botMeClientService.setCookie('clientID', res.payload.clientID)
@@ -42,25 +50,33 @@ export class LoginFormComponent implements OnInit {
             window.location.reload();
           });
         } else {
-          alert('Invalid credentials')
+          this._toastService.setToast({
+            description: 'Invalid credentials.',
+            type: 'danger'
+          })
         }
+        this.loader = false
       },
       (err: any) => {
         console.error(err)
-        alert('Invalid credentials')
+        this.loader = false
+        this._toastService.setToast({
+          description: 'Bad Request.',
+          type: 'danger'
+        })
       }
     )
   }
 
   logout() {
+    this.loader = true
     this._botMeClientService.logutAPI(this._botMeClientService.getCookieByKey('sessionId')).subscribe(res => {
-      console.log(res);
       if (res.status === 'success') {
-
         this._botMeClientService.reSetCookie()
         this.router.navigate(['/home']).then(() => {
           window.location.reload();
         });
+        this.loader = false
       }
 
     })

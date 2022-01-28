@@ -4,8 +4,8 @@ export async function addCustomer(customer: any) {
     return Customer.create(customer)
 }
 
-export async function updateOneCustomer(customer: any, restaurantId: string) {
-    return Customer.findOneAndUpdate({ customerId: customer.customerId, restaurantId: restaurantId }, customer)
+export async function updateOneCustomer(customer: any) {
+    return Customer.findOneAndUpdate({ customerId: customer.customerId, restaurantId: customer.restaurantId }, customer)
 }
 
 export async function getCustomer(queryParams: any) {

@@ -6,6 +6,8 @@ import {HelperService} from "./helper.service";
 import {ContextService} from "./context.service";
 import {BotmeClientService} from "./botme-client.service";
 import {MenuService} from "./menu.service";
+import {ToastService} from "./toast.service";
+import {Router} from "@angular/router";
 
 declare var $: any;
 
@@ -22,7 +24,7 @@ export class CartService {
   singleCustomProductObj: any = {
     _id: '',
     restaurantId: '',
-    orderId: '',
+    orderLabel: '',
     cartId: '',
     productName: '',
     productId: '',
@@ -48,7 +50,7 @@ export class CartService {
 
   cartLoader: boolean = false
 
-  constructor(private _menuService: MenuService, private _clientService: BotmeClientService, private _contextService: ContextService, public _helperService: HelperService, private _socketService: SocketService) {
+  constructor(private _router:Router,private _toastService: ToastService, private _menuService: MenuService, private _clientService: BotmeClientService, private _contextService: ContextService, public _helperService: HelperService, private _socketService: SocketService) {
   }
 
 
@@ -56,7 +58,7 @@ export class CartService {
     if (!isEdit) {
       this.addCartToDb(singleCustomProductObj, isEdit, type)
     } else if (isEdit && type == 'place-order') {
-
+      this.addCartToDb(singleCustomProductObj, isEdit, type)
     } else if (isEdit) {
       this.addCartToDb(singleCustomProductObj, isEdit, type)
     }
@@ -66,6 +68,10 @@ export class CartService {
     console.log(product)
     this.cartLoader = true
     this._menuService.deleteCartById(product.cartId).subscribe((res: any) => {
+      this._toastService.setToast({
+        description: res.message,
+        type: res.status
+      })
       if (res.status === 'success') {
         this.cartLoader = false
         let cartListIndex = this.cartProduct.findIndex((item: any) => item._id === this.singleCustomProductObj._id)
@@ -105,7 +111,7 @@ export class CartService {
     return {
       _id: cartProduct._id,
       restaurantId: cartProduct.restaurantId,
-      orderId: cartProduct.orderId,
+      orderLabel: cartProduct.orderLabel,
       cartId: cartProduct.cartId,
       productName: product.productName,
       productId: product.productId,
@@ -118,7 +124,7 @@ export class CartService {
       productAddons: this.getSelectedProductProportion(cartProduct.productProportion),
       productToppings: this.getSelectedProductToppings(product.productToppings, cartProduct.productToppings),
       productQuantity: (cartProduct && cartProduct.productQuantity) ? cartProduct.productQuantity : 1,
-      status: false,
+      status: cartProduct.status,
       productAttributes: product.productAttributes,
       productNutrition: product.productNutrition,
       productPrice: this.roundToTwo(productServingSizeList[0].serving_price),
@@ -283,15 +289,49 @@ export class CartService {
       const orderObj = this.orderObjGenerator(singleCustomProductObj)
       document.getElementById("ctaId-show-cart")?.click()
       this._menuService.addToCartApi(orderObj).subscribe((res: any) => {
-        console.log(res)
+        this._toastService.setToast({
+          description: res.message,
+          type: res.status
+        })
+        this.cartLoader = false
         if (res.status === 'success') {
-          this._clientService.setCookie('orderId', res.payload.order)
-          this.cartLoader = false
+          this._clientService.setCookie('orderLabel', res.payload.order.orderLabel)
+          this._clientService.setCookie('reservationLabel', res.payload.order.orderLabel)
           this.singleCustomProductObj.cartId = res.payload.cart.cartId
           this.cartProduct.push(JSON.parse(JSON.stringify(this.singleCustomProductObj)))
         }
       })
+      return
     }
+
+    // when calling from cart section and updating order & its cart item status
+    if ((isEdit && type == 'place-order')) {
+      if (!this.cartProduct && !this.cartProduct.length) {
+        this._toastService.setToast({
+          description: 'Sorry you have not added food items in cart yet.',
+          type: 'error'
+        })
+        return;
+      }
+
+      this._menuService.updateOrderStatus().subscribe((res: any) => {
+        this._toastService.setToast({
+          description: res.message,
+          type: res.status
+        })
+        this.cartLoader = false
+        if (res.status === 'success') {
+          this.cartProduct.forEach((item: any) => {
+              item.status = true
+            }
+          )
+          this._router.navigate(['/checkout'])
+        }
+      })
+
+      return;
+    }
+
 
     if (isEdit) {
       const orderObj = this.orderObjGenerator(singleCustomProductObj, true)
@@ -301,6 +341,11 @@ export class CartService {
         document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:block')
       }
       this._menuService.editToCartApi(orderObj).subscribe((res: any) => {
+        this._toastService.setToast({
+          description: res.message,
+          type: res.status
+        })
+        this.cartLoader = false
         if (res.status === 'success') {
           this.cartLoader = false
           let cart = JSON.parse(JSON.stringify(this.singleCustomProductObj))
@@ -408,28 +453,39 @@ export class CartService {
 
   orderObjGenerator(singleCustomProductObj: any, isEdit = false) {
     const modifiedObj = this.modifyCartObj(singleCustomProductObj)
-    const order = {
-      restaurantId: this._clientService.getCookie().restaurantId,
-      orderId: (this._clientService.getCookie().orderId) ? this._clientService.getCookie().orderId : '',
-      reservationId: this._clientService.getCookie().reservationId,
-      orderTimestamp: new Date(),
-      orderType: ['dine_in'].includes(this._clientService.getCookie().orderType) ? this._clientService.getCookie().orderType : '',
-      customerId: this._clientService.getCookie().clientID ? this._clientService.getCookie().clientID : '',
-      addressId: '',
-      tableId: '',
-      orderPaymentMethod: '',
-      orderSubTotal: singleCustomProductObj.productTotalPrice,
-      orderTip: 0,
-      orderDiscount: 0,
-      orderServiceTax: 0,
-      orderSalesTax: 0,
-      orderTotal: singleCustomProductObj.productTotalPrice,
-      orderStatus: false
+    let cart: any = {}
+    let order: any = {}
+
+    if (isEdit) {
+      cart = {
+        restaurantId: this._clientService.getCookie().restaurantId,
+        cartId: singleCustomProductObj.cartId ? singleCustomProductObj.cartId : '',
+        orderLabel: (this._clientService.getCookie().orderLabel) ? this._clientService.getCookie().orderLabel : '',
+        productId: singleCustomProductObj.productId,
+        productSerialNo: '',
+        productCategory: '',
+        productFlavor: modifiedObj.productFlavor,
+        productProportion: modifiedObj.productProportion,
+        productToppings: modifiedObj.productToppings,
+        productOptions: modifiedObj.productOptions,
+        productRate: modifiedObj.productRate,
+        productQuantity: singleCustomProductObj.productQuantity,
+        productIngredients: modifiedObj.productIngredients,
+        productNotes: '', // customization Instructions
+        status: singleCustomProductObj.status, // pending, in-progress
+        productTotalPrice: singleCustomProductObj.productTotalPrice,
+        cartDiscount: 0,
+        cartTotal: singleCustomProductObj.productTotalPrice,
+      }
+      return {
+        cart: cart
+      }
     }
-    const cart = {
+
+    cart = {
       restaurantId: this._clientService.getCookie().restaurantId,
       cartId: singleCustomProductObj.cartId ? singleCustomProductObj.cartId : '',
-      orderId: (this._clientService.getCookie().orderId) ? this._clientService.getCookie().orderId : '',
+      orderLabel: (this._clientService.getCookie().orderLabel) ? this._clientService.getCookie().orderLabel : '',
       productId: singleCustomProductObj.productId,
       productSerialNo: '',
       productCategory: '',
@@ -446,19 +502,30 @@ export class CartService {
       cartDiscount: 0,
       cartTotal: singleCustomProductObj.productTotalPrice,
     }
-    if (isEdit) {
-      return {
-        cart: cart
-      }
+
+    order = {
+      restaurantId: this._clientService.getCookie().restaurantId,
+      orderLabel: (this._clientService.getCookie().orderLabel) ? this._clientService.getCookie().orderLabel : '',
+      reservationLabel: this._clientService.getCookie().reservationLabel,
+      orderTimestamp: new Date(),
+      orderType: this._clientService.getCookie().orderType,
+      customerId: this._clientService.getCookie().customerId ? this._clientService.getCookie().customerId : '',
+      addressId: '',
+      tableId: '',
+      orderPaymentMethod: '',
+      orderSubTotal: singleCustomProductObj.productTotalPrice,
+      orderTip: 0,
+      orderDiscount: 0,
+      orderServiceTax: 0,
+      orderSalesTax: 0,
+      orderTotal: singleCustomProductObj.productTotalPrice,
+      orderStatus: false
+    }
+    return {
+      cart: cart,
+      order: order
     }
 
-    if (!isEdit) {
-      return {
-        cart: cart,
-        order: order
-      }
-    }
-    return {}
   }
 
   selectFlavor(flavor: any) {
@@ -643,4 +710,15 @@ export class CartService {
   roundToTwo(num: number) {
     return Math.round((num + Number.EPSILON) * 100) / 100;
   }
+
+  getSubTotal() {
+    let total = 0
+    if (this.cartProduct && this.cartProduct.length) {
+      this.cartProduct.forEach((item: any) => {
+        total += item.productTotalPrice
+      })
+    }
+    return this.roundToTwo(total)
+  }
+
 }
