@@ -710,4 +710,15 @@ export class CartService {
   roundToTwo(num: number) {
     return Math.round((num + Number.EPSILON) * 100) / 100;
   }
+
+  getSubTotal() {
+    let total = 0
+    if (this.cartProduct && this.cartProduct.length) {
+      this.cartProduct.forEach((item: any) => {
+        total += item.productTotalPrice
+      })
+    }
+    return this.roundToTwo(total)
+  }
+
 }

@@ -54,19 +54,6 @@ export class CartSectionComponent implements OnInit {
     product.productTotalPrice = product.productTotalPrice * product.productQuantity
   }
 
-  getSubTotal() {
-    let total = 0
-    if (this.cartService.cartProduct && this.cartService.cartProduct.length) {
-      this.cartService.cartProduct.forEach((item: any) => {
-        total += item.productTotalPrice
-      })
-    }
-    return this.roundToTwo(total)
-  }
-
-  roundToTwo(num: number) {
-    return Math.round((num + Number.EPSILON) * 100) / 100;
-  }
 
   editToCart() {
     this.cartService.addToCart(this.cartService.singleCustomProductObj, true);

@@ -91,7 +91,7 @@
           <div class="cart-total-box">
             <div class="cart-total-item">
               <h4>Sub Total</h4>
-              <p>$ {{getSubTotal()}}</p>
+              <p>$ {{cartService.getSubTotal()}}</p>
             </div>
             <!--            <div class="cart-total-item">-->
             <!--              <h4>Shipping</h4>-->
@@ -119,7 +119,7 @@
             <!--            </div>-->
             <div class="cart-total-item cart-total-bold">
               <h4 class="color-white">Total</h4>
-              <p>$ {{getSubTotal()}}</p>
+              <p>$ {{cartService.getSubTotal()}}</p>
             </div>
           </div>
           <a id="ctaId-checkout" routerLink="/checkout" class="btn">Checkout</a>

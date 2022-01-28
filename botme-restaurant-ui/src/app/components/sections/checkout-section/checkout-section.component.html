@@ -12,14 +12,14 @@
                 <div class="col-sm-12 col-md-6">
                   <div class="form-group mb-20">
                     <div class="input-group">
-                      <input type="text" name="name" class="form-control" required placeholder="First Name*" />
+                      <input type="text" name="name" class="form-control" required placeholder="First Name*"/>
                     </div>
                   </div>
                 </div>
                 <div class="col-sm-12 col-md-6">
                   <div class="form-group mb-20">
                     <div class="input-group">
-                      <input type="text" name="name" class="form-control" required placeholder="Last Name*" />
+                      <input type="text" name="name" class="form-control" required placeholder="Last Name*"/>
                     </div>
                   </div>
                 </div>
@@ -38,7 +38,7 @@
                 <div class="col-sm-12">
                   <div class="form-group mb-20">
                     <div class="input-group">
-                      <input type="email" name="street" class="form-control" placeholder="Street" />
+                      <input type="email" name="street" class="form-control" placeholder="Street"/>
                     </div>
                   </div>
                 </div>
@@ -67,21 +67,22 @@
                 <div class="col-sm-12">
                   <div class="form-group mb-20">
                     <div class="input-group">
-                      <input type="email" name="address" class="form-control" required placeholder="Address With Zip Code*" />
+                      <input type="email" name="address" class="form-control" required
+                             placeholder="Address With Zip Code*"/>
                     </div>
                   </div>
                 </div>
                 <div class="col-sm-12">
                   <div class="form-group mb-20">
                     <div class="input-group">
-                      <input type="email" name="phone" class="form-control" required placeholder="Phone No*" />
+                      <input type="email" name="phone" class="form-control" required placeholder="Phone No*"/>
                     </div>
                   </div>
                 </div>
                 <div class="col-sm-12">
                   <div class="form-group mb-20">
                     <div class="input-group">
-                      <input type="email" name="email" class="form-control" required placeholder="Email*" />
+                      <input type="email" name="email" class="form-control" required placeholder="Email*"/>
                     </div>
                   </div>
                 </div>
@@ -103,21 +104,20 @@
           <div class="checkout-details cart-details mb-30">
             <h3 class="cart-details-title color-white">Cart Totals</h3>
             <div class="cart-total-box">
-              <div class="cart-total-item pt-0">
-                <h4 class="color-main">Crispy Chicken Burger</h4>
-                <p>$ 9.00</p>
+              <div *ngIf="_cartService.cartLoader">
+                <app-spinner></app-spinner>
               </div>
-              <div class="cart-total-item">
-                <h4 class="color-main">Red Sauce Pizza</h4>
-                <p>$ 8.00</p>
+              <div *ngFor="let product of _cartService.cartProduct" class="cart-total-item ">
+                <h4 class="color-main">{{product.productName}}</h4>
+                <p>$ {{product.productTotalPrice}}</p>
               </div>
               <div class="cart-total-item">
                 <h4>Sub Total</h4>
-                <p>$ 45</p>
+                <p>$ {{_cartService.getSubTotal()}}</p>
               </div>
               <div class="cart-total-item cart-total-bold">
                 <h4 class="color-white">Total</h4>
-                <p>$ 45</p>
+                <p>$ {{_cartService.getSubTotal()}}</p>
               </div>
             </div>
           </div>
@@ -130,7 +130,8 @@
                     <div class="cart-check-box">
                       <input type="radio" name="ship" id="checkout1">
                       <label for="checkout1">Direct Bank Transfer</label>
-                      <p>Make your payment directly into our bank  account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>
+                      <p>Make your payment directly into our bank account. Please use your Order ID as the payment
+                        reference. Your order will not be shipped until the funds have cleared in our account.</p>
                     </div>
                   </div>
                   <div class="col-sm-12">
@@ -148,7 +149,8 @@
                   <div class="col-sm-12">
                     <div class="custom-control custom-checkbox">
                       <input type="checkbox" class="custom-control-input" id="checkout4">
-                      <label class="custom-control-label" for="checkout4">I’ve read and accept the <a href="terms-conditions.html">Terms & Conditions</a> <span class="color-main">*</span></label>
+                      <label class="custom-control-label" for="checkout4">I’ve read and accept the <a
+                        href="terms-conditions.html">Terms & Conditions</a> <span class="color-main">*</span></label>
                     </div>
                   </div>
                 </div>
