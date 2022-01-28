@@ -7,7 +7,9 @@ import {
     getOrder,
     getOrderById,
     updateCart,
-    updateOrder
+    updateOrder,
+    updateCartStatus,
+    modifyOrderStatus
 } from "./service";
 import {randomUUID} from "crypto";
 
@@ -74,33 +76,38 @@ export async function editOrder(order: any, restaurantId: any) {
 
 export async function findCart(filter: any) {
     let response = new restResponse()
+    try {
+        // filter if order_type => dine_in (reservationLabel) otherwise orderLabel
+        let orderResult: any = await getOrderById(filter)
+        orderResult = JSON.parse(JSON.stringify(orderResult))
 
-    // filter if order_type => dine_in (reservationLabel) otherwise orderLabel
-    let orderResult: any = await getOrderById(filter)
-    orderResult = JSON.parse(JSON.stringify(orderResult))
-
-    if (!orderResult) {
-        response.message = 'Order not found.'
-        response.status = "danger"
-        return response
-    }
-
-    // filter orderLabel &  restaurantId
-    delete filter.reservationLabel
-    delete filter.orderType
-    filter.orderLabel = orderResult.orderLabel
-    let result = await getCart(filter)
-    if (result && result.length) {
-        response.payload = {
-            order: orderResult,
-            cart: result
+        if (!orderResult) {
+            response.message = 'Order not found.'
+            response.status = "danger"
+            return response
         }
-        response.status = "success"
-        response.message = "Order found."
-        return response
-    } else {
-        response.message = "Cart not found."
-        response.status = "danger"
+
+        // filter orderLabel &  restaurantId
+        delete filter.reservationLabel
+        delete filter.orderType
+        filter.orderLabel = orderResult.orderLabel
+        let result = await getCart(filter)
+        if (result && result.length) {
+            response.payload = {
+                order: orderResult,
+                cart: result
+            }
+            response.status = "success"
+            response.message = "Order found."
+            return response
+        } else {
+            response.message = "Cart not found."
+            response.status = "danger"
+            return response
+        }
+    } catch (e: any) {
+        response.message = e.message
+        response.status = "error"
         return response
     }
 }
@@ -124,8 +131,8 @@ export async function findCartById(filter: any, restaurantId: any) {
 }
 
 export async function addCart(obj: any, filter: any) {
+    let response = new restResponse()
     try {
-        let response = new restResponse()
         if (!obj || !filter.restaurantId) {
             response.message = "cart and restaurantId is required"
             response.status = "danger"
@@ -174,31 +181,39 @@ export async function addCart(obj: any, filter: any) {
             response.status = "danger"
             return response
         }
-    } catch (e) {
-        console.log('exception =>', e)
+    } catch (e: any) {
+        response.message = e.message
+        response.status = "error"
+        return response
     }
 }
 
 export async function editCart(cart: any, filter: any) {
     let response = new restResponse()
-    if (!cart || !filter.restaurantId) {
-        response.message = "cart and restaurantId is required"
+    try {
+        if (!cart || !filter.restaurantId) {
+            response.message = "cart and restaurantId is required"
+            response.status = "danger"
+            return response;
+        }
+
+        // filter restaurantId & cartId & orderLabel
+
+        let result = await updateCart(cart, filter)
+        if (result) {
+            response.payload = {cart: JSON.parse(JSON.stringify(result))}
+            response.message = "Cart updated."
+            response.status = "success"
+            return response
+        }
+        response.message = "Cart not found."
         response.status = "danger"
-        return response;
-    }
-
-    // filter restaurantId & cartId & orderLabel
-
-    let result = await updateCart(cart, filter)
-    if (result) {
-        response.payload = {cart: JSON.parse(JSON.stringify(result))}
-        response.message = "Cart updated."
-        response.status = "success"
+        return response
+    } catch (e: any) {
+        response.message = e.message
+        response.status = "error"
         return response
     }
-    response.message = "Cart not found."
-    response.status = "danger"
-    return response
 
 }
 
@@ -218,7 +233,52 @@ export async function deleteCartById(filter: any) {
         response.status = "error"
         return response
 
-    } catch (e) {
-        console.log(e)
+    } catch (e: any) {
+        response.message = e.message
+        response.status = "error"
+        return response
+    }
+}
+
+export async function updateOrderStatus(filter: any) {
+    let response = new restResponse()
+    try {
+
+        // let cartResult = await JSON.parse(JSON.stringify(getCart(filter)))
+        //
+        // if (!cartResult && !cartResult.length) {
+        //     response.message = 'Cart not found to update.'
+        //     response.status = "error"
+        //     return response
+        // }
+        delete filter.restaurantId
+        delete filter.orderType
+        // let updatedList = await cartResult.forEach((item: any) => {
+        //     filter.cartId = item.cartId
+        //     return JSON.parse(JSON.stringify(updateCartStatus(filter)))
+        // })
+
+        let orderResult = await modifyOrderStatus(filter)
+
+        if(!orderResult) {
+            response.message = 'Failed to update order status.'
+            response.status = "error"
+            return response
+        }
+
+        let result = await updateCartStatus(filter)
+        if (result) {
+            response.message = 'Order and Cart Status updated.'
+            response.status = "success"
+            response.payload = JSON.parse(JSON.stringify(result))
+            return response
+        }
+        response.message = 'Failed to update cart status.'
+        response.status = "error"
+        return response
+    } catch (e: any) {
+        response.message = e.message
+        response.status = "error"
+        return response
     }
 }

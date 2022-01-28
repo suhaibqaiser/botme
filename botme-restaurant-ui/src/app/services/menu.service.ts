@@ -63,7 +63,7 @@ export class MenuService {
       orderLabel: this.clientService.getCookie().orderLabel ? this.clientService.getCookie().orderLabel : '',
       orderType: this.clientService.getCookie().orderType ? this.clientService.getCookie().orderType : '',
     }
-    const url = this.apiBaseUrl + "/food/cart/search?restaurantId=" + obj.restaurantId + '&orderLabel=' + obj.orderLabel  + '&orderType=' + obj.orderType
+    const url = this.apiBaseUrl + "/food/cart/search?restaurantId=" + obj.restaurantId + '&orderLabel=' + obj.orderLabel + '&orderType=' + obj.orderType
     return this.http.get(url);
   }
 
@@ -111,6 +111,19 @@ export class MenuService {
     }
 
     const url = this.apiBaseUrl + "/food/cart/deleteById?restaurantId=" + obj.restaurantId + "&cartId=" + cartId + '&orderLabel=' + obj.orderLabel
+    return this.http.get(url);
+  }
+
+  /**
+   * update the order status from cart
+   */
+  updateOrderStatus() {
+    const obj = {
+      restaurantId: this.clientService.getCookie().restaurantId ? this.clientService.getCookie().restaurantId : '',
+      orderLabel: this.clientService.getCookie().orderLabel ? this.clientService.getCookie().orderLabel : '',
+      orderType: this.clientService.getCookie().orderType ? this.clientService.getCookie().orderType : '',
+    }
+    const url = this.apiBaseUrl + "/food/cart/updateOrderStatus?restaurantId=" + obj.restaurantId + '&orderLabel=' + obj.orderLabel + '&orderType=' + obj.orderType
     return this.http.get(url);
   }
 }

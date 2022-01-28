@@ -14,6 +14,8 @@ declare var $: any;
 })
 export class CartSectionComponent implements OnInit {
 
+  loader = false
+
   constructor(public cartService: CartService,
               private MenuService: MenuService,
               public _helperService: HelperService,
@@ -100,10 +102,7 @@ export class CartSectionComponent implements OnInit {
   }
 
   placeOrder() {
-    this.cartService.cartProduct.forEach((item: any) => {
-        item.status = true
-      }
-    )
+    this.loader = true
     this.cartService.addToCart(this.cartService.cartProduct, true, 'place-order')
   }
 }

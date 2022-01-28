@@ -43,3 +43,11 @@ export async function updateCart(cart: any, filter: string) {
 export async function deleteCart(filter: string) {
     return Cart.findOneAndDelete(filter)
 }
+
+export async function updateCartStatus(filter: string) {
+    return Cart.updateMany(filter, {$set: {status: true}})
+}
+
+export async function modifyOrderStatus(filter: string) {
+    return Order.updateMany(filter, {$set: {orderStatus: true}})
+}

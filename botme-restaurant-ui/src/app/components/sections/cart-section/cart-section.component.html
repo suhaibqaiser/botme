@@ -4,20 +4,20 @@
     <div class="cart-table cart-table-dark">
       <table>
         <thead>
-          <tr>
-            <th></th>
-            <th></th>
-            <th>Product</th>
-            <th>Status</th>
-            <th>Sub Total</th>
-          </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th>Product</th>
+          <th>Status</th>
+          <th>Sub Total</th>
+        </tr>
         </thead>
         <tbody>
           <tr id="{{product.productId}}" *ngFor="let product of cartService.cartProduct">
             <td class="cancel">
               <a id="ctaId-remove" (click)="removeFromCart(product)"><i class='flaticon-cancel'></i></a>
               <a id="ctaId-edit" *ngIf="!product.status" style="font-size: medium;margin-left: 16px"
-                (click)="editFromCart(product)"><i class="fas fa-edit"></i></a>
+                 (click)="editFromCart(product)"><i class="fas fa-edit"></i></a>
             </td>
             <td>
               <div class="product-table-info">
@@ -30,7 +30,7 @@
             </td>
             <td class="td-product-name">
               {{product.productName}} <a id="ctaId-view" (click)="showProductInfo(product)"><i
-                  class="fas fa-info-circle"></i></a>
+              class="fas fa-info-circle"></i></a>
               <!--            <div class="cart-modal-action">-->
               <!--              <div class="cart-modal-action-item">-->
               <!--                <div class="cart-modal-quantity">-->
@@ -46,16 +46,17 @@
             </td>
             <td *ngIf="!product.status">In Waiting</td>
             <td *ngIf="product.status">In Progress</td>
-<!--            <td>-->
-<!--              <div class="cart-quantity">-->
-<!--                <a id="ctaId-remove-quantity" (click)="addProductQuantity(product,'subtracting')"-->
-<!--                  class="qu-btn dec">-</a>-->
-<!--                <input type="text" class="qu-input" [value]="product.productQuantity">-->
-<!--                <a id="ctaId-add-quantity" (click)="addProductQuantity(product,'adding')" class="qu-btn inc">+</a>-->
-<!--              </div>-->
-<!--            </td>-->
+            <!--            <td>-->
+            <!--              <div class="cart-quantity">-->
+            <!--                <a id="ctaId-remove-quantity" (click)="addProductQuantity(product,'subtracting')"-->
+            <!--                  class="qu-btn dec">-</a>-->
+            <!--                <input type="text" class="qu-input" [value]="product.productQuantity">-->
+            <!--                <a id="ctaId-add-quantity" (click)="addProductQuantity(product,'adding')" class="qu-btn inc">+</a>-->
+            <!--              </div>-->
+            <!--            </td>-->
             <td class="td-total-price">${{product.productTotalPrice}}</td>
           </tr>
+          <tr *ngIf="!loader && cartService.cartLoader"><td colspan="6"><app-spinner></app-spinner></td></tr>
         </tbody>
       </table>
     </div>
@@ -72,8 +73,13 @@
       <!--      </div>-->
       <div class="col-sm-12 col-md-12 col-lg-12">
         <div class="cart-update text-center cart-info-item">
-          <a *ngIf="cartService.cartProduct && cartService.cartProduct.length" id="ctaId-order-now" (click)="placeOrder()" class="btn">
+          <a *ngIf="cartService.cartProduct && cartService.cartProduct.length" id="ctaId-order-now"
+             (click)="placeOrder()" class="btn">
             Order Now
+            <div *ngIf="loader" class="spinner-border spinner-border-sm ml-3 text-warning"
+                 role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
           </a>
         </div>
       </div>
