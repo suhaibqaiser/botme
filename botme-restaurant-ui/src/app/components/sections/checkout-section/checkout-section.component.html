@@ -7,27 +7,20 @@
             <h3 class="color-white">Billing Details</h3>
           </div>
           <div class="checkout-form">
-            <form>
+            <form [formGroup]="customerForm">
               <div class="row">
-                <div class="col-sm-12 col-md-6">
+                <div class="col-sm-12 col-md-4">
                   <div class="form-group mb-20">
                     <div class="input-group">
-                      <input type="text" name="name" class="form-control" required placeholder="First Name*"/>
+                      <input type="text"  formControlName="customerName" class="form-control" required placeholder="First Name*"/>
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-12 col-md-6">
+                <div class="col-sm-12 col-md-4">
                   <div class="form-group mb-20">
                     <div class="input-group">
-                      <input type="text" name="name" class="form-control" required placeholder="Last Name*"/>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-12">
-                  <div class="form-group mb-20">
-                    <div class="input-group">
-                      <select name="country" class="form-control">
-                        <option value="1">Your Country*</option>
+                      <select formControlName="customerCountry" class="form-control">
+                        <option value="" disabled selected>Select country</option>
                         <option value="2">USA</option>
                         <option value="3">UK</option>
                         <option value="4">Germany</option>
@@ -35,66 +28,68 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-12">
+                <div class="col-sm-12 col-md-4">
                   <div class="form-group mb-20">
                     <div class="input-group">
-                      <input type="email" name="street" class="form-control" placeholder="Street"/>
+                      <input formControlName="customerStreet" type="text"  class="form-control" placeholder="Street"/>
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-12">
+                <div class="col-sm-12 col-md-4">
                   <div class="form-group mb-20">
                     <div class="input-group">
-                      <select name="country" class="form-control">
-                        <option value="1">Town*</option>
-                        <option value="2">New York</option>
-                        <option value="3">Florida</option>
+                      <select formControlName="customerTown"  class="form-control">
+                        <option value="" disabled selected>Select town</option>
+                        <option value="New-York">New York</option>
+                        <option value="Florida">Florida</option>
                       </select>
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-12">
+                <div class="col-sm-12 col-md-4">
                   <div class="form-group mb-20">
                     <div class="input-group">
-                      <select name="country" class="form-control">
-                        <option value="1">State*</option>
-                        <option value="2">NY</option>
-                        <option value="3">FL</option>
+                      <select formControlName="customerState"  class="form-control">
+                        <option value="" disabled selected>Select state</option>
+                        <option value="NY">NY</option>
+                        <option value="FL">FL</option>
                       </select>
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-12">
+                <div class="col-sm-12 col-md-4">
                   <div class="form-group mb-20">
                     <div class="input-group">
-                      <input type="email" name="address" class="form-control" required
+                      <input formControlName="customerAddress" type="text"  class="form-control" required
                              placeholder="Address With Zip Code*"/>
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-12">
+                <div class="col-sm-12 col-md-6">
                   <div class="form-group mb-20">
                     <div class="input-group">
-                      <input type="email" name="phone" class="form-control" required placeholder="Phone No*"/>
+                      <input formControlName="customerPhone" type="text" class="form-control" required placeholder="Phone No*"/>
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-12">
+                <div class="col-sm-12 col-md-6">
                   <div class="form-group mb-20">
                     <div class="input-group">
-                      <input type="email" name="email" class="form-control" required placeholder="Email*"/>
+                      <input formControlName="customerEmail" type="email"  class="form-control" required placeholder="Email*"/>
                     </div>
                   </div>
                 </div>
                 <div class="col-sm-12">
                   <div class="form-group mb-20">
                     <div class="input-group input-group-textarea">
-                      <textarea name="order" class="form-control" rows="5" placeholder="Order Notes*"></textarea>
+                      <textarea formControlName="orderNotes" class="form-control" rows="5" placeholder="Order Notes*"></textarea>
                     </div>
                   </div>
                 </div>
               </div>
-              <button class="btn full-width">Place Order</button>
+              <button [disabled]="!customerForm.valid" (click)="addCustomer()" class="btn full-width">Place Order <div *ngIf="loader" class="spinner-border spinner-border-sm ml-3 text-warning" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div></button>
             </form>
           </div>
         </div>
@@ -121,7 +116,7 @@
               </div>
             </div>
           </div>
-          <div class="checkout-payment-area">
+          <div *ngIf="false" class="checkout-payment-area">
             <h3 class="color-white cart-details-title">Payment Method</h3>
             <div class="checkout-form">
               <form>

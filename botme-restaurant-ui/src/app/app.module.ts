@@ -72,6 +72,7 @@ import {OrderSectionComponent} from './components/sections/order-section/order-s
 import {OrderService} from "./services/order.service";
 import {ToastComponent} from './components/toast/toast.component';
 import {ToastService} from "./services/toast.service";
+import {CustomerService} from "./services/customer.service";
 
 @NgModule({
   declarations: [
@@ -136,7 +137,7 @@ import {ToastService} from "./services/toast.service";
     NgMultiSelectDropDownModule.forRoot(),
     DragDropModule
   ],
-  providers: [ToastService, OrderService, ContextService, HelperService, ReservationService, SpeechService, BotmeClientService, SocketService, WindowService],
+  providers: [CustomerService, ToastService, OrderService, ContextService, HelperService, ReservationService, SpeechService, BotmeClientService, SocketService, WindowService],
   bootstrap: [AppComponent],
   entryComponents: [CustomizeProductModalComponent]
 })

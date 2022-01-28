@@ -509,7 +509,7 @@ export class CartService {
       reservationLabel: this._clientService.getCookie().reservationLabel,
       orderTimestamp: new Date(),
       orderType: this._clientService.getCookie().orderType,
-      customerId: this._clientService.getCookie().clientID ? this._clientService.getCookie().clientID : '',
+      customerId: this._clientService.getCookie().customerId ? this._clientService.getCookie().customerId : '',
       addressId: '',
       tableId: '',
       orderPaymentMethod: '',

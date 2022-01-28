@@ -29,7 +29,9 @@ export class ProductCartModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.cartService.cartLoader = true
-    this.getProducts();
+    if (this.clientService.getCookie().isLoggedIn && this.clientService.getCookie().orderType) {
+      this.getProducts();
+    }
   }
 
   getCartProducts() {
@@ -44,6 +46,7 @@ export class ProductCartModalComponent implements OnInit {
         this.clientService.setCookie('orderLabel', res.payload.order.orderLabel)
         this.clientService.setCookie('reservationLabel', res.payload.order.reservationLabel)
         this.clientService.setCookie('orderType', res.payload.order.orderType)
+        this.clientService.setCookie('customerId', res.payload.order.customerId)
         if (cartList && cartList.length) {
           cartList.forEach((cartItem: any) => {
             const product = this.cartService.products.find((item: any) => item.productId === cartItem.productId)
@@ -56,6 +59,7 @@ export class ProductCartModalComponent implements OnInit {
       this.clientService.setCookie('orderLabel', '')
       this.clientService.setCookie('reservationLabel', '')
       this.clientService.setCookie('orderType', '')
+      this.clientService.setCookie('customerId', '')
 
     })
   }

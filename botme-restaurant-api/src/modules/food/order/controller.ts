@@ -24,7 +24,7 @@ export async function findOrder(filter: any, restaurantId: any) {
         return response
     } else {
         response.payload = "order not found"
-        response.status = "error"
+        response.status = "danger"
         return response
     }
 }
@@ -33,7 +33,7 @@ export async function addOrder(order: any, restaurantId: any) {
     let response = new restResponse()
     if (!order || !restaurantId) {
         response.payload = "order and restaurantId is required"
-        response.status = "error"
+        response.status = "danger"
         return response;
     }
 
@@ -47,7 +47,7 @@ export async function addOrder(order: any, restaurantId: any) {
         return response
     } else {
         response.payload = "order not found"
-        response.status = "error"
+        response.status = "danger"
         return response
     }
 }
@@ -56,7 +56,7 @@ export async function editOrder(order: any, restaurantId: any) {
     let response = new restResponse()
     if (!order || !restaurantId) {
         response.payload = "order and restaurantId is required"
-        response.status = "error"
+        response.status = "danger"
         return response;
     }
 
@@ -67,7 +67,7 @@ export async function editOrder(order: any, restaurantId: any) {
         return response
     } else {
         response.payload = "order not found"
-        response.status = "error"
+        response.status = "danger"
         return response
     }
 }
@@ -107,7 +107,7 @@ export async function findCart(filter: any) {
         }
     } catch (e: any) {
         response.message = e.message
-        response.status = "error"
+        response.status = "danger"
         return response
     }
 }
@@ -125,7 +125,7 @@ export async function findCartById(filter: any, restaurantId: any) {
         return response
     } else {
         response.payload = "Cart not found against restaurantId=" + filter.cartLabel + ' --- =' + filter.cartLabel
-        response.status = "error"
+        response.status = "danger"
         return response
     }
 }
@@ -183,7 +183,7 @@ export async function addCart(obj: any, filter: any) {
         }
     } catch (e: any) {
         response.message = e.message
-        response.status = "error"
+        response.status = "danger"
         return response
     }
 }
@@ -211,7 +211,7 @@ export async function editCart(cart: any, filter: any) {
         return response
     } catch (e: any) {
         response.message = e.message
-        response.status = "error"
+        response.status = "danger"
         return response
     }
 
@@ -230,12 +230,12 @@ export async function deleteCartById(filter: any) {
             return response
         }
         response.message = "Cart not found."
-        response.status = "error"
+        response.status = "danger"
         return response
 
     } catch (e: any) {
         response.message = e.message
-        response.status = "error"
+        response.status = "danger"
         return response
     }
 }
@@ -258,17 +258,17 @@ export async function updateOrderStatus(filter: any) {
         //     return JSON.parse(JSON.stringify(updateCartStatus(filter)))
         // })
 
-        let orderResult = await modifyOrderStatus(filter)
-
-        if(!orderResult) {
-            response.message = 'Failed to update order status.'
-            response.status = "error"
-            return response
-        }
+        // let orderResult = await modifyOrderStatus(filter)
+        //
+        // if(!orderResult) {
+        //     response.message = 'Failed to update order status.'
+        //     response.status = "error"
+        //     return response
+        // }
 
         let result = await updateCartStatus(filter)
         if (result) {
-            response.message = 'Order and Cart Status updated.'
+            response.message = 'Cart Status updated.'
             response.status = "success"
             response.payload = JSON.parse(JSON.stringify(result))
             return response

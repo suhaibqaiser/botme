@@ -1,112 +1,118 @@
-import { restResponse } from "../../../utils/response";
-import { addCustomer, getAllCustomers, getCustomer, updateOneCustomer, getAddressByCustomer } from "./service";
-import { randomUUID } from "crypto";
-import { getMaxLabelValue } from "../../food/customer/service";
+import {restResponse} from "../../../utils/response";
+import {addCustomer, getAllCustomers, getCustomer, updateOneCustomer, getAddressByCustomer} from "./service";
+import {randomUUID} from "crypto";
+import {getMaxLabelValue} from "../../food/customer/service";
+import {getOrderById, modifyOrderStatus} from "../order/service";
 
-export async function findCustomer(filter: any, restaurantId: any) {
+export async function findCustomer(filter: any) {
     let response = new restResponse()
+    try {
+        if (!filter) {
+            response.payload = "Order Label is required"
+            response.status = "danger"
+            return response;
+        }
 
-    if (!restaurantId) {
-        response.payload = "restaurantId is required"
-        response.status = "error"
-        return response;
-    }
-    interface queryFilters {
-        customerName: any | undefined;
-        customerEmail: any | undefined;
-        customerPhone: any | undefined;
-        customerId: any | undefined;
-        restaurantId: any | undefined
-    }
+        // const tempFilter = JSON.parse(JSON.stringify(filter))
+        // console.log('tempFilter =>', tempFilter)
+        // let isOrderExists: any = await JSON.parse(JSON.stringify(getOrderById(tempFilter)))
+        // console.log('isOrderExists =>', isOrderExists)
+        // if (!isOrderExists) {
+        //     response.payload = "Order not found"
+        //     response.status = "danger"
+        //     return response
+        // }
 
-    let queryParams: queryFilters = {
-        customerName: undefined,
-        customerEmail: undefined,
-        customerPhone: undefined,
-        customerId: undefined,
-        restaurantId: undefined
-    }
-
-    if (filter.name) {
-        queryParams.customerName = { '$regex': filter.name, '$options': 'i' }
-    } else {
-        delete queryParams.customerName
-    }
-    if (filter.email) {
-        queryParams.customerEmail = filter.email
-    } else {
-        delete queryParams.customerEmail
-    }
-    if (filter.customerId) {
-        queryParams.customerId = filter.customerId
-    } else {
-        delete queryParams.customerId
-    }
-    if (filter.phone) {
-        queryParams.customerPhone = filter.phone
-    } else {
-        delete queryParams.customerPhone
-    }
-    if (filter.restaurantId) {
-        queryParams.restaurantId = filter.restaurantId
-    } else {
-        delete queryParams.restaurantId
-    }
-
-    let result = await getCustomer(queryParams)
-    if (result) {
-        response.payload = result
-        response.status = "success"
-        return response
-    } else {
-        response.payload = "customer not found"
-        response.status = "error"
+        let result = await getCustomer(filter)
+        if (result) {
+            response.payload = JSON.parse(JSON.stringify(result))
+            response.status = "success"
+            response.message = "customer fetched"
+            return response
+        } else {
+            response.message = "customer not found"
+            response.status = "danger"
+            return response
+        }
+    } catch (e: any) {
+        response.message = e.message
+        response.status = "danger"
         return response
     }
 }
 
-export async function createCustomer(customer: any, restaurantId: any) {
+export async function createCustomer(filter: any, customer: any) {
     let response = new restResponse()
-    if (!customer || !restaurantId) {
-        response.payload = "customer and restaurantId is required"
-        response.status = "error"
-        return response;
-    }
-    customer.customerId = randomUUID()
-    customer.customerActive = true
-    customer.restaurantId = restaurantId
+    try {
+        if (!customer || !customer.restaurantId) {
+            response.message = "customer and restaurantId is required"
+            response.status = "danger"
+            return response;
+        }
 
-    let val = await getMaxLabelValue()
-    customer.customerLabel = val ? (val.customerLabel + 1) : 1
+        let isOrderExists: any = await JSON.parse(JSON.stringify(getOrderById(filter)))
+        if (isOrderExists && isOrderExists.customerId) {
+            response.message = 'Customer already exist against this order.'
+            response.status = "danger"
+            return response
+        }
 
-    let result = await addCustomer(customer)
-    if (result) {
-        response.payload = result
-        response.status = "success"
-        return response
-    } else {
-        response.payload = "Customer not found"
-        response.status = "error"
+        customer.customerId = randomUUID()
+        customer.customerActive = true
+
+        let val = await getMaxLabelValue()
+        customer.customerLabel = val ? (val.customerLabel + 1) : 1
+
+        let result = await addCustomer(customer)
+        if (result) {
+            response.payload = JSON.parse(JSON.stringify(result))
+
+            let orderResult = await modifyOrderStatus(filter, response.payload.customerId)
+
+            if (orderResult) {
+                response.message = 'Your order placed has been successfully'
+                response.status = "success"
+                return response
+            }
+
+            response.message = 'Unable to place your order'
+            response.status = "danger"
+            return response
+        } else {
+            response.message = "Unable to place your order"
+            response.status = "danger"
+            return response
+        }
+    } catch (e: any) {
+        response.message = e.message
+        response.status = "danger"
         return response
     }
 }
 
-export async function updateCustomer(customer: any, restaurantId: any) {
+export async function updateCustomer(customer: any, filter: any) {
     let response = new restResponse()
-    if (!customer || !restaurantId) {
-        response.payload = "customer and restaurantId is required"
-        response.status = "error"
-        return response;
-    }
+    try {
+        if (!customer || !filter) {
+            response.message = "customer and restaurantId is required"
+            response.status = "danger"
+            return response;
+        }
 
-    let result = await updateOneCustomer(customer, restaurantId)
-    if (result) {
-        response.payload = result
-        response.status = "success"
-        return response
-    } else {
-        response.payload = "Customer not found"
-        response.status = "error"
+        let result = await updateOneCustomer(customer)
+        if (result) {
+            response.payload = JSON.parse(JSON.stringify(result))
+            response.message = "Customer updated successfully."
+            response.status = "success"
+            return response
+        } else {
+            response.message = "Unable to update your customer"
+            response.status = "danger"
+            return response
+        }
+    } catch (e: any) {
+        response.message = e.message
+        response.status = "danger"
         return response
     }
 }
@@ -117,11 +123,12 @@ export async function getAllCustomer(restaurantId: any) {
     let result = await getAllCustomers(restaurantId)
     if (result) {
         response.payload = result
+        response.message = 'Customer List fetched'
         response.status = "success"
         return response
     } else {
-        response.payload = "Customer not found"
-        response.status = "error"
+        response.message = "Customer not found"
+        response.status = "danger"
         return response
     }
 }
@@ -133,10 +140,11 @@ export async function getAddressByCustomerId(customerId: string, restaurantId: a
     if (result.length > 0) {
         response.payload = result
         response.status = "success"
+        response.message = "Address Fetched"
         return response
     } else {
-        response.payload = "Address not found"
-        response.status = "error"
+        response.message = "Address not found"
+        response.status = "danger"
         return response
     }
 }

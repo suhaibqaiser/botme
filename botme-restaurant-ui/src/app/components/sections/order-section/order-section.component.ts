@@ -45,6 +45,7 @@ export class OrderSectionComponent implements OnInit {
     this._cartService.cartProduct = []
     this._botMeService.setCookie('orderLabel', '')
     this._botMeService.setCookie('reservationLabel', '')
+    this._botMeService.setCookie('customerId', '')
     $('#order_modal').modal('show')
     if (type === 'dine_in') {
       this._orderService.selectedOrderButtons['dine_in'] = true
@@ -88,6 +89,7 @@ export class OrderSectionComponent implements OnInit {
         const cartList = res.payload.cart
         this._botMeService.setCookie('orderLabel', res.payload.order.orderLabel)
         this._botMeService.setCookie('reservationLabel', res.payload.order.reservationLabel)
+        this._botMeService.setCookie('customerId', res.payload.order.customerId)
         if (cartList && cartList.length) {
           cartList.forEach((cartItem: any) => {
             const product = this._cartService.products.find((item: any) => item.productId === cartItem.productId)
@@ -101,6 +103,7 @@ export class OrderSectionComponent implements OnInit {
       }
       this._botMeService.setCookie('orderLabel', '')
       this._botMeService.setCookie('reservationLabel', '')
+      this._botMeService.setCookie('customerId', '')
 
     })
   }
