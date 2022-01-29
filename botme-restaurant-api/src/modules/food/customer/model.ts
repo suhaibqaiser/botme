@@ -51,7 +51,7 @@ const tempCustomer = createSchema(
         customerState: Type.string(),
         customerAddress: Type.string(),
         orderNotes: Type.string(),
-        customerPhone: Type.string({maxlength: 256, unique: true}),
+        customerPhone: Type.string({maxlength: 256}),
         customerActive: Type.boolean({required: true}),
         customerStreet: Type.string()
     }

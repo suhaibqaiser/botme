@@ -5,6 +5,8 @@ import {ToastService} from "../../../services/toast.service";
 import {CustomerService} from "../../../services/customer.service";
 import {BotmeClientService} from "../../../services/botme-client.service";
 
+declare var $: any;
+
 @Component({
   selector: 'app-checkout-section',
   templateUrl: './checkout-section.component.html',
@@ -31,7 +33,7 @@ export class CheckoutSectionComponent implements OnInit {
 
   constructor(private _clientService: BotmeClientService, private _toastService: ToastService, private _customerService: CustomerService, public _cartService: CartService) {
     this.customerForm.controls['restaurantId'].setValue(this._clientService.getCookie().restaurantId)
-    if(this._clientService.getCookie().customerId && this._clientService.getCookie().customerId.length){
+    if (this._clientService.getCookie().customerId && this._clientService.getCookie().customerId.length) {
       this.getCustomer()
     }
 
@@ -53,6 +55,7 @@ export class CheckoutSectionComponent implements OnInit {
         })
         if (res.status === 'success') {
           this._clientService.setCookie('customerId', res.payload.customerId)
+          $('#checkout_modal').modal('show')
         }
         this.loader = false
       })
@@ -75,7 +78,7 @@ export class CheckoutSectionComponent implements OnInit {
         type: res.status
       })
       if (res.status === 'success') {
-        this._clientService.setCookie('customerId',res.payload.customerId)
+        this._clientService.setCookie('customerId', res.payload.customerId)
         this.populateCustomer(res.payload)
       }
     })
@@ -96,4 +99,22 @@ export class CheckoutSectionComponent implements OnInit {
     this.customerForm.controls['customerPhone'].setValue(obj.customerPhone)
     this.customerForm.controls['customerStreet'].setValue(obj.customerStreet)
   }
+
+  getOrderType() {
+    let id = ''
+
+    if (!this._clientService.getCookie().orderType) {
+      return ''
+    }
+
+    if (this._clientService.getCookie().orderType && this._clientService.getCookie().orderType === 'dine_in') {
+      id = this._clientService.getCookie().reservationLabel ? this._clientService.getCookie().reservationLabel : ''
+    } else if (this._clientService.getCookie().orderType) {
+      id = this._clientService.getCookie().orderLabel ? this._clientService.getCookie().orderLabel : ''
+    }
+
+    return this._clientService.getCookie().orderType.replace(/_/g, " ") + ' id' + ' : ' + id
+  }
+
+
 }

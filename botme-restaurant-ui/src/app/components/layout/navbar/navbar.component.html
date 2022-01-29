@@ -6,6 +6,7 @@
       <a href="home" class="mobile-brand">
         <img src="assets/images/logo/web-logo.png" alt="logo" class="blue-logo">
       </a>
+      <p class="ml-2 mt-0 mb-0">{{getOrderType()}}</p>
     </div>
 
     <!-- desktop menu -->
@@ -15,8 +16,9 @@
           <a class="navbar-brand" href="home">
             <img src="assets/images/logo/web-logo.png" alt="logo" class="logo">
           </a>
-          <li class="nav-item">
+          <li style="width: 40%;padding-top:10px" class="d-flex align-items-center nav-item">
             <app-sofia-bot *ngIf="_botMeClientService.getCookie().isLoggedIn && _botMeClientService.getCookie().clientVoiceEnabled == 'yes'"> </app-sofia-bot>
+            <p>{{getOrderType()}}</p>
           </li>
           <!-- nav-list -->
           <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">

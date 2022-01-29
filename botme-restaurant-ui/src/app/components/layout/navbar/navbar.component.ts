@@ -56,4 +56,20 @@ export class NavbarComponent implements OnInit {
   reload() {
     location.reload()
   }
+
+  getOrderType() {
+    let id = ''
+
+    if(!this._botMeClientService.getCookie().orderType) {
+      return ''
+    }
+
+    if (this._botMeClientService.getCookie().orderType && this._botMeClientService.getCookie().orderType === 'dine_in') {
+      id = this._botMeClientService.getCookie().reservationLabel ? this._botMeClientService.getCookie().reservationLabel : ''
+    } else if(this._botMeClientService.getCookie().orderType){
+      id = this._botMeClientService.getCookie().orderLabel ? this._botMeClientService.getCookie().orderLabel : ''
+    }
+
+    return this._botMeClientService.getCookie().orderType.replace(/_/g, " ") + ' : ' +  id
+  }
 }

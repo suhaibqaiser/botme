@@ -12,7 +12,8 @@
                 <div class="col-sm-12 col-md-4">
                   <div class="form-group mb-20">
                     <div class="input-group">
-                      <input type="text"  formControlName="customerName" class="form-control" required placeholder="First Name*"/>
+                      <input type="text" formControlName="customerName" class="form-control" required
+                             placeholder="First Name*"/>
                     </div>
                   </div>
                 </div>
@@ -31,14 +32,14 @@
                 <div class="col-sm-12 col-md-4">
                   <div class="form-group mb-20">
                     <div class="input-group">
-                      <input formControlName="customerStreet" type="text"  class="form-control" placeholder="Street"/>
+                      <input formControlName="customerStreet" type="text" class="form-control" placeholder="Street"/>
                     </div>
                   </div>
                 </div>
                 <div class="col-sm-12 col-md-4">
                   <div class="form-group mb-20">
                     <div class="input-group">
-                      <select formControlName="customerTown"  class="form-control">
+                      <select formControlName="customerTown" class="form-control">
                         <option value="" disabled selected>Select town</option>
                         <option value="New-York">New York</option>
                         <option value="Florida">Florida</option>
@@ -49,7 +50,7 @@
                 <div class="col-sm-12 col-md-4">
                   <div class="form-group mb-20">
                     <div class="input-group">
-                      <select formControlName="customerState"  class="form-control">
+                      <select formControlName="customerState" class="form-control">
                         <option value="" disabled selected>Select state</option>
                         <option value="NY">NY</option>
                         <option value="FL">FL</option>
@@ -60,7 +61,7 @@
                 <div class="col-sm-12 col-md-4">
                   <div class="form-group mb-20">
                     <div class="input-group">
-                      <input formControlName="customerAddress" type="text"  class="form-control" required
+                      <input formControlName="customerAddress" type="text" class="form-control" required
                              placeholder="Address With Zip Code*"/>
                     </div>
                   </div>
@@ -68,28 +69,33 @@
                 <div class="col-sm-12 col-md-6">
                   <div class="form-group mb-20">
                     <div class="input-group">
-                      <input formControlName="customerPhone" type="text" class="form-control" required placeholder="Phone No*"/>
+                      <input formControlName="customerPhone" type="text" class="form-control" required
+                             placeholder="Phone No*"/>
                     </div>
                   </div>
                 </div>
                 <div class="col-sm-12 col-md-6">
                   <div class="form-group mb-20">
                     <div class="input-group">
-                      <input formControlName="customerEmail" type="email"  class="form-control" required placeholder="Email*"/>
+                      <input formControlName="customerEmail" type="email" class="form-control" required
+                             placeholder="Email*"/>
                     </div>
                   </div>
                 </div>
                 <div class="col-sm-12">
                   <div class="form-group mb-20">
                     <div class="input-group input-group-textarea">
-                      <textarea formControlName="orderNotes" class="form-control" rows="5" placeholder="Order Notes*"></textarea>
+                      <textarea formControlName="orderNotes" class="form-control" rows="5"
+                                placeholder="Order Notes*"></textarea>
                     </div>
                   </div>
                 </div>
               </div>
-              <button [disabled]="!customerForm.valid" (click)="addCustomer()" class="btn full-width">Place Order <div *ngIf="loader" class="spinner-border spinner-border-sm ml-3 text-warning" role="status">
-                <span class="visually-hidden">Loading...</span>
-              </div></button>
+              <button [disabled]="!customerForm.valid" (click)="addCustomer()" class="btn full-width">Place Order
+                <div *ngIf="loader" class="spinner-border spinner-border-sm ml-3 text-warning" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </button>
             </form>
           </div>
         </div>
@@ -153,6 +159,24 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="checkout_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title m-auto text-capitalize" id="exampleModalLabel">Order successfully placed</h3>
+      </div>
+      <div class="modal-body p-5 text-center">
+        <h6 style="font-size: 19px" class="mb-3">Here is your generated {{getOrderType()}}</h6>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <a type="button" style="padding: 10px" class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
       </div>
     </div>
   </div>
