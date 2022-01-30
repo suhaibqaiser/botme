@@ -35,6 +35,7 @@ export class ProductCartModalComponent implements OnInit {
   }
 
   getCartProducts() {
+    this.cartService.cartProduct =[]
     this.MenuService.findAllCartById().subscribe((res: any) => {
       this._toastService.setToast({
         description: res.message,

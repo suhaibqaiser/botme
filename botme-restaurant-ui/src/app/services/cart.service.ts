@@ -50,7 +50,7 @@ export class CartService {
 
   cartLoader: boolean = false
 
-  constructor(private _router:Router,private _toastService: ToastService, private _menuService: MenuService, private _clientService: BotmeClientService, private _contextService: ContextService, public _helperService: HelperService, private _socketService: SocketService) {
+  constructor(private _router: Router, private _toastService: ToastService, private _menuService: MenuService, private _clientService: BotmeClientService, private _contextService: ContextService, public _helperService: HelperService, private _socketService: SocketService) {
   }
 
 
@@ -247,8 +247,9 @@ export class CartService {
    * @param productIngredient
    */
   getSelectedProductIngredient(productIngredientList: any = [], productIngredient: any = []) {
+    let list = []
     if (productIngredientList && productIngredientList.length) {
-      return productIngredientList.map((item: any) => {
+      list = productIngredientList.map((item: any) => {
         let obj = this.getProductById(item)
         return {
           productId: obj.productId,
@@ -257,6 +258,8 @@ export class CartService {
           selected: (productIngredient && productIngredient.length) ? !!productIngredient.find((dbItem: any) => obj.productId === dbItem.productId) : true,
         }
       })
+
+      return  list.filter((item:any) => item.productId && item.productId.length)
     }
   }
 

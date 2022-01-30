@@ -120,27 +120,6 @@ export class OrderSectionComponent implements OnInit {
     this.MenuService.getProducts()
       .subscribe(result => {
         this._cartService.products = result.payload
-        this.getCartProducts();
       });
-  }
-
-  getCartProducts() {
-    this.MenuService.findAllCartById().subscribe((res: any) => {
-      this._toastService.setToast({
-        description: res.message,
-        type: res.status
-      })
-      this._cartService.cartLoader = false
-      if (res.status === 'success') {
-        const cartList = res.payload.cart
-        if (cartList && cartList.length) {
-          cartList.forEach((cartItem: any) => {
-            const product = this._cartService.products.find((item: any) => item.productId === cartItem.productId)
-            this._cartService.cartProduct.push(JSON.parse(JSON.stringify(this._cartService.setSingleCustomizeProduct(product, cartItem))))
-          })
-        }
-        return
-      }
-    })
   }
 }
