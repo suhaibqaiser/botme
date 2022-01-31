@@ -299,7 +299,7 @@ export class CartService {
         this.cartLoader = false
         if (res.status === 'success') {
           this._clientService.setCookie('orderLabel', res.payload.order.orderLabel)
-          this._clientService.setCookie('reservationLabel', res.payload.order.orderLabel)
+          this._clientService.setCookie('reservationLabel', res.payload.order.reservationLabel)
           this.singleCustomProductObj.cartId = res.payload.cart.cartId
           this.cartProduct.push(JSON.parse(JSON.stringify(this.singleCustomProductObj)))
         }
