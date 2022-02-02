@@ -224,11 +224,18 @@ export class CartService {
    * @param productOptions
    */
   getSelectedProductOptions(productOptionsList: any = [], productOptions: any = []) {
-    let productOptionList = productOptionsList.reduce((prev: any, next: any) => {
+    console.log('productOptionsList => ', !productOptionsList.length)
+
+    if (!productOptionsList.length) return []
+    console.log('after')
+
+    let list = productOptionsList.reduce((prev: any, next: any) => {
       return [...prev, ...next]
     })
-    if (productOptionList && productOptionList.length) {
-      return productOptionList.map((item: any) => {
+
+
+    if (list && list.length) {
+      return list.map((item: any) => {
           let obj = this.getProductById(item)
           return {
             productId: obj.productId,
@@ -259,7 +266,7 @@ export class CartService {
         }
       })
 
-      return  list.filter((item:any) => item.productId && item.productId.length)
+      return list.filter((item: any) => item.productId && item.productId.length)
     }
   }
 
@@ -560,14 +567,18 @@ export class CartService {
 
   customizeBillCalculation() {
     this.singleCustomProductObj.productTotalPrice = this.roundToTwo(this.singleCustomProductObj.productPrice * this.singleCustomProductObj.productQuantity)
-    console.log(this.singleCustomProductObj.productTotalPrice)
-    this.singleCustomProductObj.productToppings.forEach((item: any) => {
-      this.singleCustomProductObj.productTotalPrice += item.productTotalPrice
-    })
 
-    this.singleCustomProductObj.productAddons.forEach((item: any) => {
-      this.singleCustomProductObj.productTotalPrice += item.productTotalPrice
-    })
+    if (this.singleCustomProductObj.productToppings && this.singleCustomProductObj.productToppings.length) {
+      this.singleCustomProductObj.productToppings.forEach((item: any) => {
+        this.singleCustomProductObj.productTotalPrice += item.productTotalPrice
+      })
+    }
+
+    if (this.singleCustomProductObj.productAddons && this.singleCustomProductObj.productAddons.length) {
+      this.singleCustomProductObj.productAddons.forEach((item: any) => {
+        this.singleCustomProductObj.productTotalPrice += item.productTotalPrice
+      })
+    }
     this.singleCustomProductObj.productTotalPrice = this.roundToTwo(this.singleCustomProductObj.productTotalPrice)
   }
 
@@ -646,16 +657,15 @@ export class CartService {
 
   isSelected(objectList: any, type: any = '') {
     let selectedList = []
-    if (type && type.length) {
+    if (type && type.length && !!objectList) {
       selectedList = objectList.filter((item: any) => item.productQuantity)
       return selectedList.length
     }
-    selectedList = objectList.filter((item: any) => item.selected)
-    return selectedList.length
+    return (!!objectList) ? objectList.filter((item: any) => item.selected).length : 0
   }
 
   checkCommasWithAttribute(objectList: any, optIndex: any) {
-    const selectedList = objectList.filter((item: any) => item.productQuantity)
+    const selectedList = (!!objectList) ? objectList.filter((item: any) => item.productQuantity).length : 0
     return optIndex + 1 < selectedList.length
   }
 
@@ -684,9 +694,9 @@ export class CartService {
 
   previousSlide() {
     this.slideToShow--
-    if (this.slideToShow === 3 && !this.singleCustomProductObj.productIngredients.length && !this.singleCustomProductObj.productFlavors.length) {
+    if (this.slideToShow === 3 && !this.singleCustomProductObj.productIngredients && !this.singleCustomProductObj.productFlavors) {
       this.slideToShow = 0
-    } else if (this.slideToShow === 2 && !this.singleCustomProductObj.productToppings.length) {
+    } else if (this.slideToShow === 2 && !this.singleCustomProductObj.productToppings) {
       this.slideToShow--
     }
     this.setCurrentContext()
@@ -694,9 +704,9 @@ export class CartService {
 
   nextSlide() {
     this.slideToShow++
-    if (this.slideToShow === 1 && !this.singleCustomProductObj.productIngredients.length && !this.singleCustomProductObj.productFlavors.length) {
+    if (this.slideToShow === 1 && !this.singleCustomProductObj.productIngredients && !this.singleCustomProductObj.productFlavors) {
       this.slideToShow = 4
-    } else if (this.slideToShow === 2 && !this.singleCustomProductObj.productToppings.length) {
+    } else if (this.slideToShow === 2 && !this.singleCustomProductObj.productToppings) {
       this.slideToShow++
     }
     this.setCurrentContext()
