@@ -3,39 +3,40 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {environment} from 'src/environments/environment';
 import {BotmeClientService} from "./botme-client.service";
+import {HelperService} from "./helper.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class MenuService {
 
-  constructor(private clientService: BotmeClientService, private http: HttpClient) {
+  constructor(private clientService: BotmeClientService, private http: HttpClient, public _helperService: HelperService) {
   }
 
   apiBaseUrl = environment.apiRestaurantUrl;
 
   getProducts(): Observable<any> {
-    const url = `${this.apiBaseUrl}/food/product/search?restaurantId=` + this.clientService.getCookie().restaurantId;
+    const url = `${this.apiBaseUrl}/food/product/search?restaurantId=` + this._helperService.getRestaurantIdOnAuthBasis();
     return this.http.get(url);
   }
 
   getCategory(): Observable<any> {
-    const url = `${this.apiBaseUrl}/food/category/all?restaurantId=` + this.clientService.getCookie().restaurantId;
+    const url = `${this.apiBaseUrl}/food/category/all?restaurantId=` + this._helperService.getRestaurantIdOnAuthBasis();
     return this.http.get(url);
   }
 
   getProductById(productId: string): Observable<any> {
-    const url = `${this.apiBaseUrl}/food/product/search?productId=${productId}` + '&restaurantId=' + this.clientService.getCookie().restaurantId;
+    const url = `${this.apiBaseUrl}/food/product/search?productId=${productId}` + '&restaurantId=' + this._helperService.getRestaurantIdOnAuthBasis();
     return this.http.get(url);
   }
 
   getProductByCategory(productCategory: string): Observable<any> {
-    const url = `${this.apiBaseUrl}/food/product/search?productCategory=${productCategory}` + '&restaurantId=' + this.clientService.getCookie().restaurantId;
+    const url = `${this.apiBaseUrl}/food/product/search?productCategory=${productCategory}` + '&restaurantId=' + this._helperService.getRestaurantIdOnAuthBasis();
     return this.http.get(url);
   }
 
   getProductsByFiltering(urlString: any) {
-    const url = this.apiBaseUrl + "/food/product/search?productCategory=" + urlString.productCategory + '&productName=' + urlString.productName + '&priceMin=' + urlString.priceMin + '&priceMax=' + urlString.priceMax + '&sortByPrice=' + urlString.sortByPrice + '&ratingMin=' + urlString.ratingMin + '&ratingMax=' + urlString.ratingMax + '&restaurantId=' + this.clientService.getCookie().restaurantId
+    const url = this.apiBaseUrl + "/food/product/search?productCategory=" + urlString.productCategory + '&productName=' + urlString.productName + '&priceMin=' + urlString.priceMin + '&priceMax=' + urlString.priceMax + '&sortByPrice=' + urlString.sortByPrice + '&ratingMin=' + urlString.ratingMin + '&ratingMax=' + urlString.ratingMax + '&restaurantId=' + this._helperService.getRestaurantIdOnAuthBasis()
     return this.http.get(url);
   }
 
@@ -46,7 +47,7 @@ export class MenuService {
   addToCartApi(cart: any) {
 
     let obj = {
-      restaurantId: this.clientService.getCookie().restaurantId ? this.clientService.getCookie().restaurantId : '',
+      restaurantId: this._helperService.getRestaurantIdOnAuthBasis(),
       orderLabel: this.clientService.getCookie().orderLabel ? this.clientService.getCookie().orderLabel : '',
     }
 
@@ -59,9 +60,9 @@ export class MenuService {
    */
   findAllCartById() {
     let obj = {
-      restaurantId: this.clientService.getCookie().restaurantId ? this.clientService.getCookie().restaurantId : '',
+      restaurantId: this._helperService.getRestaurantIdOnAuthBasis(),
       orderLabel: this.clientService.getCookie().orderLabel ? this.clientService.getCookie().orderLabel : '',
-      orderType: this.clientService.getCookie().orderType ? this.clientService.getCookie().orderType : '',
+      orderType: this._helperService.getOrderTypeOnAuthBasis(),
     }
     const url = this.apiBaseUrl + "/food/cart/search?restaurantId=" + obj.restaurantId + '&orderLabel=' + obj.orderLabel + '&orderType=' + obj.orderType
     return this.http.get(url);
@@ -72,15 +73,15 @@ export class MenuService {
     let obj: any = {}
     if (orderType === 'dine_in') {
       obj = {
-        restaurantId: this.clientService.getCookie().restaurantId ? this.clientService.getCookie().restaurantId : ''
+        restaurantId: this._helperService.getRestaurantIdOnAuthBasis()
       }
       url = this.apiBaseUrl + "/food/cart/search?restaurantId=" + obj.restaurantId + '&reservationLabel=' + id
       return this.http.get(url);
     }
 
     obj = {
-      restaurantId: this.clientService.getCookie().restaurantId ? this.clientService.getCookie().restaurantId : '',
-      orderType: this.clientService.getCookie().orderType ? this.clientService.getCookie().orderType : '',
+      restaurantId: this._helperService.getRestaurantIdOnAuthBasis(),
+      orderType: this._helperService.getOrderTypeOnAuthBasis(),
     }
     url = this.apiBaseUrl + "/food/cart/search?restaurantId=" + obj.restaurantId + '&orderLabel=' + id + '&orderType=' + obj.orderType
     return this.http.get(url);
@@ -92,7 +93,7 @@ export class MenuService {
   editToCartApi(cart: any) {
 
     let obj = {
-      restaurantId: this.clientService.getCookie().restaurantId ? this.clientService.getCookie().restaurantId : '',
+      restaurantId: this._helperService.getRestaurantIdOnAuthBasis(),
       orderLabel: this.clientService.getCookie().orderLabel ? this.clientService.getCookie().orderLabel : '',
     }
 
@@ -106,7 +107,7 @@ export class MenuService {
   deleteCartById(cartId: any) {
 
     let obj = {
-      restaurantId: this.clientService.getCookie().restaurantId ? this.clientService.getCookie().restaurantId : '',
+      restaurantId: this._helperService.getRestaurantIdOnAuthBasis(),
       orderLabel: this.clientService.getCookie().orderLabel ? this.clientService.getCookie().orderLabel : '',
     }
 
@@ -119,9 +120,9 @@ export class MenuService {
    */
   updateOrderStatus() {
     const obj = {
-      restaurantId: this.clientService.getCookie().restaurantId ? this.clientService.getCookie().restaurantId : '',
+      restaurantId: this._helperService.getRestaurantIdOnAuthBasis(),
       orderLabel: this.clientService.getCookie().orderLabel ? this.clientService.getCookie().orderLabel : '',
-      orderType: this.clientService.getCookie().orderType ? this.clientService.getCookie().orderType : '',
+      orderType: this._helperService.getOrderTypeOnAuthBasis(),
     }
     const url = this.apiBaseUrl + "/food/cart/updateOrderStatus?restaurantId=" + obj.restaurantId + '&orderLabel=' + obj.orderLabel + '&orderType=' + obj.orderType
     return this.http.get(url);

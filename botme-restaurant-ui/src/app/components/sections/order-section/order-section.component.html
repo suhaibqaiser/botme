@@ -57,10 +57,10 @@
             <div class="form-group">
               <div style="padding: 5px 10px;border-style: solid" class="input-group text-center">
                 <input style="color:black;" type="text" name="name" [formControl]="orderId" class="form-control"
-                       autocomplete="off" required [placeholder]="this._botMeService.getCookie().orderType === 'dine_in' ? 'Your reservation Id' : 'Your order Id'"/>
+                       autocomplete="off" required [placeholder]="_helperService.getOrderTypeOnAuthBasis() === 'dine_in' ? 'Your reservation Id' : 'Your order Id'"/>
               </div>
             </div>
-        <h5 *ngIf="this._botMeService.getCookie().orderType === 'dine_in'" class="mt-4"> Let me help you to generate it <br><br><a data-bs-dismiss="modal" aria-label="Close" style="padding: 10px" class="btn btn-yellow" (click)="goToRoute('/reservations')" routerLink="/reservations">Go to Reservation</a></h5>
+        <h5 *ngIf="_helperService.getOrderTypeOnAuthBasis() === 'dine_in'" class="mt-4"> Let me help you to generate it <br><br><a data-bs-dismiss="modal" aria-label="Close" style="padding: 10px" class="btn btn-yellow" (click)="goToRoute('/reservations')" routerLink="/reservations">Go to Reservation</a></h5>
         <h5 *ngIf="['pick_up','delivery'].includes(this._botMeService.getCookie().orderType)" class="mt-4"> Let me help you to generate it <br><br> <a data-bs-dismiss="modal" aria-label="Close" style="padding: 10px" (click)="goToRoute('/online-shop')" class="btn btn-yellow" routerLink="/online-shop">Go to Place Order Page</a></h5>
       </div>
       <div class="modal-footer justify-content-between">

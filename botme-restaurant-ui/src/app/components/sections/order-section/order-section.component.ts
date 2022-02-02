@@ -17,7 +17,7 @@ declare var $: any;
 })
 export class OrderSectionComponent implements OnInit {
 
-  constructor(private MenuService: MenuService, private _cartService: CartService, private _menuService: MenuService, private _helperService: HelperService, private _toastService: ToastService, public _orderService: OrderService, private _route: Router, public _botMeService: BotmeClientService) {
+  constructor(private MenuService: MenuService, private _cartService: CartService, private _menuService: MenuService, public _helperService: HelperService, private _toastService: ToastService, public _orderService: OrderService, private _route: Router, public _botMeService: BotmeClientService) {
     if (this._botMeService.getCookie().isLoggedIn) {
       this.getProducts()
     }
@@ -27,19 +27,19 @@ export class OrderSectionComponent implements OnInit {
   loader = false
 
   ngOnInit(): void {
-    this._orderService.selectedOrderButtons[this._botMeService.getCookie().orderType] = true
+    this._orderService.selectedOrderButtons[this._helperService.getOrderTypeOnAuthBasis()] = true
   }
 
   getOrderType() {
-    return this._botMeService.getCookie().orderType.replace(/_/g, " ")
+    return this._helperService.getOrderTypeOnAuthBasis().replace(/_/g, " ")
   }
 
   getStatement() {
-    return 'Do you have  ' + (['pick_up', 'delivery'].includes(this._botMeService.getCookie().orderType) ? 'Order' : 'Reservation') + ' Id ?'
+    return 'Do you have  ' + (['pick_up', 'delivery'].includes(this._helperService.getOrderTypeOnAuthBasis()) ? 'Order' : 'Reservation') + ' Id ?'
   }
 
   getButtonName() {
-    return 'Apply ' + (['pick_up', 'delivery'].includes(this._botMeService.getCookie().orderType) ? 'Order' : 'Reservation') + ' Id'
+    return 'Apply ' + (['pick_up', 'delivery'].includes(this._helperService.getOrderTypeOnAuthBasis()) ? 'Order' : 'Reservation') + ' Id'
   }
 
   selectOrderType(type: any) {
@@ -73,14 +73,14 @@ export class OrderSectionComponent implements OnInit {
   applyId() {
     if (!this._helperService.requiredCheck(this.orderId.value)) {
       this._toastService.setToast({
-        description: this._botMeService.getCookie().orderType === 'dine_in' ? 'Reservation Id is required.' : 'Order Id is required.',
+        description: this._helperService.getOrderTypeOnAuthBasis() === 'dine_in' ? 'Reservation Id is required.' : 'Order Id is required.',
         type: 'danger'
       })
       return
     }
     this.loader = true
     this._cartService.cartProduct = []
-    this._menuService.findOrderByOrderLabel(this.orderId.value, this._botMeService.getCookie().orderType).subscribe((res: any) => {
+    this._menuService.findOrderByOrderLabel(this.orderId.value, this._helperService.getOrderTypeOnAuthBasis()).subscribe((res: any) => {
       this._toastService.setToast({
         description: res.message,
         type: res.status

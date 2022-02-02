@@ -28,7 +28,7 @@ export class ReservationService {
   }
   conversationId: any = ''
 
-  constructor(private _clientService: BotmeClientService, private http: HttpClient, private _helperService: HelperService) {
+  constructor(private _clientService: BotmeClientService, private http: HttpClient, public _helperService: HelperService) {
   }
 
 
@@ -143,7 +143,7 @@ export class ReservationService {
   }
 
   addReservation(payload: any): Observable<any> {
-    const url = `${this.apiBaseUrl}/food/reservation/add?restaurantId=` + this._clientService.getCookie().restaurantId;
+    const url = `${this.apiBaseUrl}/food/reservation/add?restaurantId=` + this._helperService.getRestaurantIdOnAuthBasis();
     return this.http.put(url, {reservation: payload});
   }
 

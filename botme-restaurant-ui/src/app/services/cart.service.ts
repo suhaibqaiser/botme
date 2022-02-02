@@ -468,7 +468,7 @@ export class CartService {
 
     if (isEdit) {
       cart = {
-        restaurantId: this._clientService.getCookie().restaurantId,
+        restaurantId: this._helperService.getRestaurantIdOnAuthBasis(),
         cartId: singleCustomProductObj.cartId ? singleCustomProductObj.cartId : '',
         orderLabel: (this._clientService.getCookie().orderLabel) ? this._clientService.getCookie().orderLabel : '',
         productId: singleCustomProductObj.productId,
@@ -493,7 +493,7 @@ export class CartService {
     }
 
     cart = {
-      restaurantId: this._clientService.getCookie().restaurantId,
+      restaurantId: this._helperService.getRestaurantIdOnAuthBasis(),
       cartId: singleCustomProductObj.cartId ? singleCustomProductObj.cartId : '',
       orderLabel: (this._clientService.getCookie().orderLabel) ? this._clientService.getCookie().orderLabel : '',
       productId: singleCustomProductObj.productId,
@@ -514,11 +514,11 @@ export class CartService {
     }
 
     order = {
-      restaurantId: this._clientService.getCookie().restaurantId,
+      restaurantId: this._helperService.getRestaurantIdOnAuthBasis(),
       orderLabel: (this._clientService.getCookie().orderLabel) ? this._clientService.getCookie().orderLabel : '',
       reservationLabel: this._clientService.getCookie().reservationLabel,
       orderTimestamp: new Date(),
-      orderType: this._clientService.getCookie().orderType,
+      orderType: this._helperService.getOrderTypeOnAuthBasis(),
       customerId: this._clientService.getCookie().customerId ? this._clientService.getCookie().customerId : '',
       addressId: '',
       tableId: '',

@@ -47,7 +47,7 @@ export class ContextService {
     sectionId: ''
   }
 
-  constructor(private _helperService: HelperService) {
+  constructor(public _helperService: HelperService) {
   }
 
   /**

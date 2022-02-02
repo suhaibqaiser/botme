@@ -31,7 +31,7 @@ export class SocketService {
 
   isClickFound: any = false
 
-  constructor(private _clientService: BotmeClientService, private _contextService: ContextService, private _reservationService: ReservationService, private router: Router, private clients: BotmeClientService, private _helperService: HelperService) {
+  constructor(private _clientService: BotmeClientService, private _contextService: ContextService, private _reservationService: ReservationService, private router: Router, private clients: BotmeClientService, public _helperService: HelperService) {
 
     this.authToken = clients.getCookieToken();
 
@@ -83,7 +83,7 @@ export class SocketService {
         timestamp: Date()
       },
       context: {
-        restaurantId: this._clientService.getCookie().restaurantId,
+        restaurantId: this._helperService.getRestaurantIdOnAuthBasis(),
         pageId: this._contextService.currentContextObj.pageId,
         conversationSequence: this.conversationSequence,
         sectionId: this._contextService.currentContextObj.sectionId,

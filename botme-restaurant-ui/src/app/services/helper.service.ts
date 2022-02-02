@@ -1,6 +1,8 @@
 import {Injectable, isDevMode} from '@angular/core';
 import {DataDogLoggingService} from './datadog.service';
 import {Router} from "@angular/router";
+import {BotmeClientService} from "./botme-client.service";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +11,7 @@ export class HelperService {
 
   timer: any
 
-  constructor(private _router: Router, private logger: DataDogLoggingService) {
+  constructor(private _router: Router, private logger: DataDogLoggingService,private _clientService:BotmeClientService) {
   }
 
   resolveProductImage(productObj: any) {
@@ -90,5 +92,21 @@ export class HelperService {
    */
   requiredCheck(value: any) {
     return value && value.trim().length
+  }
+
+  /**
+   * get resturantid on the basis of login
+   */
+  getRestaurantIdOnAuthBasis() {
+    const cookie = this._clientService.getCookie()
+    return (cookie && cookie.isLoggedIn) ? (cookie.restaurantId ? cookie.restaurantId : '') : environment.restaurantId
+  }
+
+  /**
+   * get orderType on the basis of auth
+   */
+  getOrderTypeOnAuthBasis(){
+    const cookie = this._clientService.getCookie()
+    return (cookie && cookie.isLoggedIn) ? (cookie.orderType ? cookie.orderType : '') : environment.orderType
   }
 }

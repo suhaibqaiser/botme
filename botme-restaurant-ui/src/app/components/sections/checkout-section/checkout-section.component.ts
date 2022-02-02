@@ -4,6 +4,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ToastService} from "../../../services/toast.service";
 import {CustomerService} from "../../../services/customer.service";
 import {BotmeClientService} from "../../../services/botme-client.service";
+import {HelperService} from "../../../services/helper.service";
 
 declare var $: any;
 
@@ -31,8 +32,8 @@ export class CheckoutSectionComponent implements OnInit {
     customerStreet: new FormControl('', Validators.required)
   })
 
-  constructor(private _clientService: BotmeClientService, private _toastService: ToastService, private _customerService: CustomerService, public _cartService: CartService) {
-    this.customerForm.controls['restaurantId'].setValue(this._clientService.getCookie().restaurantId)
+  constructor(public _helperService: HelperService, private _clientService: BotmeClientService, private _toastService: ToastService, private _customerService: CustomerService, public _cartService: CartService) {
+    this.customerForm.controls['restaurantId'].setValue(this._helperService.getRestaurantIdOnAuthBasis())
     if (this._clientService.getCookie().customerId && this._clientService.getCookie().customerId.length) {
       this.getCustomer()
     }
@@ -85,7 +86,7 @@ export class CheckoutSectionComponent implements OnInit {
   }
 
   populateCustomer(obj: any) {
-    this.customerForm.controls['restaurantId'].setValue(this._clientService.getCookie().restaurantId)
+    this.customerForm.controls['restaurantId'].setValue(this._helperService.getRestaurantIdOnAuthBasis())
     this.customerForm.controls['customerId'].setValue(obj.customerId)
     this.customerForm.controls['customerLabel'].setValue(obj.customerLabel)
     this.customerForm.controls['customerName'].setValue(obj.customerName)
@@ -103,17 +104,17 @@ export class CheckoutSectionComponent implements OnInit {
   getOrderType() {
     let id = ''
 
-    if (!this._clientService.getCookie().orderType) {
+    if (!this._helperService.getOrderTypeOnAuthBasis()) {
       return ''
     }
 
-    if (this._clientService.getCookie().orderType && this._clientService.getCookie().orderType === 'dine_in') {
+    if (this._helperService.getOrderTypeOnAuthBasis() && this._helperService.getOrderTypeOnAuthBasis() === 'dine_in') {
       id = this._clientService.getCookie().reservationLabel ? this._clientService.getCookie().reservationLabel : ''
-    } else if (this._clientService.getCookie().orderType) {
+    } else if (this._helperService.getOrderTypeOnAuthBasis()) {
       id = this._clientService.getCookie().orderLabel ? this._clientService.getCookie().orderLabel : ''
     }
 
-    return this._clientService.getCookie().orderType.replace(/_/g, " ") + ' id' + ' : ' + id
+    return this._helperService.getOrderTypeOnAuthBasis().replace(/_/g, " ") + ' id' + ' : ' + id
   }
 
 
