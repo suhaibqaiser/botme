@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { MessageService, ConfirmationService } from 'primeng/api';
-import { Cart } from '../../../model/cart';
-import { Order } from '../../../model/order';
-import { CategoryService } from '../../../service/category.service';
-import { CustomerService } from '../../../service/customer.service';
-import { OrderService } from '../../../service/order.service';
-import { ProductService } from '../../../service/product.service';
-import { TableService } from '../../../service/table.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {MessageService, ConfirmationService} from 'primeng/api';
+import {Cart} from '../../../model/cart';
+import {Order} from '../../../model/order';
+import {CategoryService} from '../../../service/category.service';
+import {CustomerService} from '../../../service/customer.service';
+import {OrderService} from '../../../service/order.service';
+import {ProductService} from '../../../service/product.service';
+import {TableService} from '../../../service/table.service';
 
 @Component({
   selector: 'app-order-detail',
@@ -18,98 +18,74 @@ import { TableService } from '../../../service/table.service';
 export class OrderDetailComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private fb: FormBuilder,
-    private orderService: OrderService,
-    private customerService: CustomerService,
-    private productService: ProductService,
-    private categoryService: CategoryService,
-    private tableService: TableService,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService) { }
-
+              private orderService: OrderService,
+              private customerService: CustomerService,
+              private productService: ProductService,
+              private categoryService: CategoryService,
+              private tableService: TableService,
+              private messageService: MessageService,
+              private confirmationService: ConfirmationService) {
+  }
 
 
   orderForm = this.fb.group({
-    orderId: [],
-    orderLabel: [],
-    orderTimestamp: [],
-    orderType: [],
-    customerId: [],
-    addressId: [],
-    tableId: [],
-    cartId: [],
-    delivery: this.fb.group({
-      deliveryDate: [],
-      deliverFee: [],
-      deliveryNote: [],
-    }),
-    orderPaymentMethod: [],
-    orderSubTotal: [],
-    orderTip: [],
-    orderDiscount: [],
-    orderServiceTax: [],
-    orderSalesTax: [],
-    orderTotal: [],
-    orderActive: true,
-  })
-
-  order: Order = {
     restaurantId: '',
-    orderId: '',
     orderLabel: '',
-    orderTimestamp: new Date,
+    reservationLabel: '',
+    orderTimestamp: '', // datetime
     orderType: '',
     customerId: '',
     addressId: '',
     tableId: '',
-    cartId: '',
     delivery: {
-      deliveryDate: null,
-      deliverFee: 0,
+      deliveryDate: '', // datetime
+      deliverFee: '',
       deliveryNote: '',
     },
     orderPaymentMethod: '',
-    orderSubTotal: 0,
-    orderTip: 0,
-    orderDiscount: 0,
+    orderSubTotal: '',
+    orderTip: '',
+    orderDiscount: 0, // discount percent
     orderServiceTax: 0,
     orderSalesTax: 0,
     orderTotal: 0,
-    orderActive: true,
+    orderStatus: false
+  })
+
+  order: Order = {
+    restaurantId: '',
+    orderLabel: '',
+    reservationLabel: '',
+    orderTimestamp: '', // datetime
+    orderType: '',
+    customerId: '',
+    addressId: '',
+    tableId: '',
+    delivery: {
+      deliveryDate: '', // datetime
+      deliverFee: '',
+      deliveryNote: '',
+    },
+    orderPaymentMethod: '',
+    orderSubTotal: '',
+    orderTip: '',
+    orderDiscount: 0, // discount percent
+    orderServiceTax: 0,
+    orderSalesTax: 0,
+    orderTotal: 0,
+    orderStatus: false
   }
 
   newForm = false
   editMode = false
   loading = true
-  orderType = ['Dine In', 'Pickup', 'Delivery']
+  orderType = ['guest', 'dine_in', 'pick_up', 'delivery']
   customers = []
   tables = []
   addresses = []
   products = []
   categories = []
-  cart: Cart = {
-    restaurantId: '',
-    cartId: '',
-    cartLabel: 0,
-    cartDiscount: 0,
-    cartTotal: 0,
-    cartProduct: [{
-      productId: '',
-      productLabel: '',
-      productCategory: '',
-      productFlavor: '',
-      productProportion: '',
-      productToppings: [''],
-      productOptions: [['']],
-      productRate: {
-        standard: 0,
-        small: 0,
-        medium: 0,
-        large: 0,
-      },
-      productQuantity: 0,
-      productNotes: ''
-    }]
-  }
+  carts: any = []
   paymentMethod = ['Cash', 'Credit/Debit Card', 'Online']
   selectedProduct = ''
   productSelections: Array<any> = []
@@ -121,26 +97,25 @@ export class OrderDetailComponent implements OnInit {
   }
 
 
-
   ngOnInit(): void {
     this.getCustomers();
     this.getTables();
     this.getCategories();
     this.getProducts();
 
-    this.order.orderId = this.route.snapshot.queryParams['orderId'];
+    this.order.orderLabel = this.route.snapshot.queryParams['orderLabel'];
 
-    if (!this.order.orderId) {
+    if (!this.order.orderLabel) {
       this.newForm = true
       this.editMode = true
     } else {
-      this.getOrderDetail(this.order.orderId)
+      this.getOrderDetail(this.order.orderLabel)
       this.disableEdit()
     }
   }
 
-  getOrderDetail(orderId: string) {
-    this.orderService.getOrderById(orderId).subscribe(
+  getOrderDetail(orderLabel: string) {
+    this.orderService.getOrderById(orderLabel).subscribe(
       result => {
         (result.status === 'success') ? this.order = result.payload[0] : null
         if (this.order) {
@@ -149,7 +124,7 @@ export class OrderDetailComponent implements OnInit {
             // for (let opt in result.payload[0].productOptions) {
             //   this.productOptions.push(new FormControl(result.payload[0].productOptions[opt]))
             // }
-            this.getCartDetails(this.order.cartId)
+            this.getCartDetails(this.order.orderLabel)
             this.loading = false
           } catch (err) {
             console.log(err);
@@ -159,10 +134,10 @@ export class OrderDetailComponent implements OnInit {
     );
   }
 
-  getCartDetails(cartId: string) {
-    this.orderService.getCartById(cartId).subscribe(
+  getCartDetails(orderLabel: string) {
+    this.orderService.getCartById(orderLabel).subscribe(
       result => {
-        (result.status === 'success') ? this.cart = result.payload : null
+        (result.status === 'success') ? this.carts = result.payload.cart: null
       }
     )
   }
@@ -257,7 +232,6 @@ export class OrderDetailComponent implements OnInit {
   // }
 
 
-
   // removeFromCart() { }
 
   // addToCart() {
@@ -280,13 +254,16 @@ export class OrderDetailComponent implements OnInit {
   //   }));
   // }
 
-  productById(productId: string  | undefined) {
+  productById(productId: string | undefined) {
+    console.log(productId)
     let p: any = this.products.find((product: { productId: string }) => product.productId == productId);
-    return p ? p.productName : "";
+    console.log(p)
+    return p ? p.productName : "-";
   }
+
   categoryById(categoryId: string | undefined) {
     let p: any = this.categories.find((category: { categoryId: string }) => category.categoryId == categoryId);
-    return p ? p.categoryName : "";
+    return p ? p.categoryName : "-";
   }
 
   onSubmit() {

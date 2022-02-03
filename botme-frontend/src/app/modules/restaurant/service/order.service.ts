@@ -21,12 +21,12 @@ export class OrderService {
   }
 
   getOrderById(orderId: string): Observable<any> {
-    const url = `${this.apiBaseUrl}/food/order/search?restaurantId=${this.restaurantId}&orderId=${orderId}`;
+    const url = `${this.apiBaseUrl}/food/order/search?restaurantId=${this.restaurantId}&orderLabel=${orderId}`;
     return this.http.get(url);
   }
 
-  getCartById(cartId: string): Observable<any> {
-    const url = `${this.apiBaseUrl}/food/cart/findCartById?restaurantId=${this.restaurantId}&cartId=${cartId}`;
+  getCartById(orderLabel: string): Observable<any> {
+    const url = `${this.apiBaseUrl}/food/cart/search?restaurantId=${this.restaurantId}&orderLabel=${orderLabel}`;
     return this.http.get(url);
   }
 }

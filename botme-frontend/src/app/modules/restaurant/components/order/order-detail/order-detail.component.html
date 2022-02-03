@@ -104,7 +104,7 @@
                             Delivery Date
                         </label>
                         <div class="p-col-12 p-md-10">
-                            <p-calendar id="deliveryDate" formControlName="deliveryDate" [showTime]="true"
+                            <p-calendar id="deliveryDate" formControlName="delivery.deliveryDate" [showTime]="true"
                                 inputId="time" [showIcon]="true" placeholder="Select Delivery Date and Time">
                             </p-calendar>
                         </div>
@@ -205,11 +205,11 @@
                         </div>
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="form-orderActive" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
+                        <label for="form-orderStatus" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
                             Active
                         </label>
                         <div class="p-col-12 p-md-10">
-                            <p-toggleButton id="form-orderActive" formControlName="orderActive" onLabel="Enabled"
+                            <p-toggleButton id="form-orderStatus" formControlName="orderStatus" onLabel="Enabled"
                                 offLabel="Disabled" onIcon="pi pi-check" offIcon="pi pi-times"
                                 [style]="{'width': '10em'}">
                             </p-toggleButton>
@@ -223,98 +223,95 @@
                         <b>Cart</b>
                     </div>
                 </p-divider>
+              <!-- cart -->
                 <div class=" col-md-12 form-row m-b-50">
-                    <div class="form-group col-md-4">
-                        <label for="form-cartLabel" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
-                            Cart Label
-                        </label>
-                        {{cart.cartLabel}}
-                        <!-- <div class="p-col-12 p-md-10">
-                            <input type="text" pInputText id="form-cartLabel"
-                                placeholder="Enter Label">
-                        </div> -->
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="form-orderTotal" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
-                            Cart Discount
-                        </label>
-                        {{cart.cartDiscount}}
-                        <!-- <div class="p-col-12 p-md-10">
-                            <p-inputNumber id="form-orderTotal"
-                                placeholder="Enter Cart Discount" [min]="0" [minFractionDigits]="2"
-                                [maxFractionDigits]="2"></p-inputNumber>
-                        </div> -->
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="form-orderTotal" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
-                            Cart Total
-                        </label>{{cart.cartTotal}}
+<!--                    <div class="form-group col-md-4">-->
+<!--                        <label for="form-orderLabel" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">-->
+<!--                            Order Label-->
+<!--                        </label>-->
+<!--                        {{carts.orderLabel}}-->
+<!--                        &lt;!&ndash; <div class="p-col-12 p-md-10">-->
+<!--                            <input type="text" pInputText id="form-cartLabel"-->
+<!--                                placeholder="Enter Label">-->
+<!--                        </div> &ndash;&gt;-->
+<!--                    </div>-->
+<!--                    <div class="form-group col-md-4">-->
+<!--                        <label for="form-orderTotal" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">-->
+<!--                            Cart Discount-->
+<!--                        </label>-->
+<!--                        {{carts.cartDiscount}}-->
+<!--                        &lt;!&ndash; <div class="p-col-12 p-md-10">-->
+<!--                            <p-inputNumber id="form-orderTotal"-->
+<!--                                placeholder="Enter Cart Discount" [min]="0" [minFractionDigits]="2"-->
+<!--                                [maxFractionDigits]="2"></p-inputNumber>-->
+<!--                        </div> &ndash;&gt;-->
+<!--                    </div>-->
+<!--                    <div class="form-group col-md-4">-->
+<!--                        <label for="form-orderTotal" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">-->
+<!--                            Cart Total-->
+<!--                        </label>{{carts.cartTotal}}-->
 
-                    </div>
+<!--                    </div>-->
 
 
                     <div>
                         <!-- <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded right"
                             (click)="addToCart()" [disabled]="!editMode"></button> -->
 
-                        <p-table #dt1 [value]="cart.cartProduct" [responsive]="true" *ngIf="!loading">
+                        <p-table #dt1 [value]="carts" [responsive]="true" *ngIf="!loading">
                             <ng-template pTemplate="caption">
                                 <div class="p-d-flex p-ai-center p-jc-between right">
-                                    Products
+                                    Carts
                                 </div>
                             </ng-template>
                             <ng-template pTemplate="header">
                                 <tr>
+                                  <th>Order Label</th>
                                     <th>Name</th>
-                                    <th>Category</th>
                                     <th>Flavor</th>
                                     <th>Portion</th>
                                     <th>Toppings</th>
                                     <th>Options</th>
-                                    <th>Rate</th>
+                                    <th>Total</th>
                                     <th>Quantity</th>
-                                    <th>Note</th>
                                 </tr>
                             </ng-template>
-                            <ng-template pTemplate="body" let-ri="rowIndex">
+                            <ng-template pTemplate="body" let-cart>
                                 <tr>
+                                  <td class="p-col-12 p-md-10">
+                                    {{cart.orderLabel}}
+                                  </td>
                                     <td class="p-col-12 p-md-10">
-                                        {{productById(cart.cartProduct[ri]?.productId)}}
+                                        {{productById(cart.productId)}}
                                     </td>
                                     <td class="p-col-12 p-md-10">
-                                        {{categoryById(cart.cartProduct[ri]?.productCategory)}}
+                                        {{cart?.productFlavor}}
                                     </td>
                                     <td class="p-col-12 p-md-10">
-                                        {{cart.cartProduct[ri]?.productFlavor}}
+                                      <ul *ngFor="let item of cart.productProportion">
+                                      <li>{{productById(item.productId)}}</li>
+                                      </ul>
                                     </td>
                                     <td class="p-col-12 p-md-10">
-                                        {{cart.cartProduct[ri]?.productProportion}}
-                                    </td>
-                                    <td class="p-col-12 p-md-10">
-                                        <ul *ngFor="let topping of cart.cartProduct[ri]?.productToppings">
-                                            <li>{{productById(topping)}}</li>
+                                        <ul *ngFor="let topping of cart?.productToppings">
+                                            <li>{{productById(topping.productId)}}</li>
                                         </ul>
                                     </td>
                                     <td class="p-col-12 p-md-10">
-                                        <ul *ngFor="let option of cart.cartProduct[ri]?.productOptions; let i = index">
-                                            <li>
-                                                Option {{i}}
-                                                <ul *ngFor="let item of option" class="ml-2">
-                                                    <li>{{productById(item)}}</li>
-                                                </ul>
-                                            </li>
+                                        <ul *ngFor="let option of cart?.productOptions; let i = index">
+                                          <li>{{productById(option.productId)}}</li>
                                         </ul>
                                     </td>
 
                                     <td class="p-col-12 p-md-10">
-                                        Standard: {{cart.cartProduct[ri]?.productRate?.standard}}
+                                         {{cart?.productTotalPrice}}
                                     </td>
 
                                     <td class="p-col-12 p-md-10">
-                                        {{cart.cartProduct[ri]?.productQuantity}}
+                                        {{cart?.productQuantity}}
                                     </td>
                                     <td class="p-col-12 p-md-10">
-                                        {{cart.cartProduct[ri]?.productNotes}}
+                                        {{cart?.productNotes}}
                                     </td>
                                 </tr>
                             </ng-template>
@@ -550,7 +547,7 @@
                             </p-multiSelect>
                         </div>
                     </div>
-                   
+
                     <div class="form-group col-md-6">
                         <label for="form-productVariant" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">
                             Variants

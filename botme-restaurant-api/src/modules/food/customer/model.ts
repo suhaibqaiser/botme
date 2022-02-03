@@ -54,6 +54,9 @@ const tempCustomer = createSchema(
         customerPhone: Type.string({maxlength: 256}),
         customerActive: Type.boolean({required: true}),
         customerStreet: Type.string()
+    },
+    {
+        timestamps: {createdAt: true}
     }
 )
 

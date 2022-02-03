@@ -51,8 +51,8 @@
                     </th>
                     <th pSortableColumn="customer">Customer <p-sortIcon field="customer"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="orderPaymentMethod">Payment <p-sortIcon field="orderPaymentMethod"></p-sortIcon>
-                    </th>
+<!--                    <th pSortableColumn="orderPaymentMethod">Payment <p-sortIcon field="orderPaymentMethod"></p-sortIcon>-->
+<!--                    </th>-->
                     <th pSortableColumn="orderSubTotal">Sub Total <p-sortIcon field="orderSubTotal"></p-sortIcon>
                     </th>
                     <th pSortableColumn="orderTotal">Total <p-sortIcon field="orderTotal"></p-sortIcon>
@@ -71,17 +71,17 @@
                     </td>
                     <td>
                         <button class="btn btn-primary btn-tone m-r-5" [routerLink]="['detail']"
-                            [queryParams]="{ orderId: order.orderId }">O-{{order.orderLabel}}</button>
+                            [queryParams]="{ orderLabel: order.orderLabel }">{{order.orderLabel}}</button>
                     </td>
                     <td>{{order.orderType}}</td>
-                    <td>{{order.customer}}</td>
-                    <td>{{order.orderPaymentMethod}}</td>
+                    <td>{{(order.customerName) ? order.customerName : '-'}}</td>
+<!--                    <td>{{order.orderPaymentMethod}}</td>-->
                     <td>{{order.orderSubTotal}}</td>
                     <td>{{order.orderTotal}}</td>
                     <td>{{order.updatedAt}}</td>
-                    <td><span *ngIf="order.orderActive === true"
+                    <td><span *ngIf="!order.orderStatus === true"
                             class="badge badge-success">Yes</span>
-                        <span *ngIf="order.orderActive === false"
+                        <span *ngIf="!order.orderStatus === false"
                             class="badge badge-danger">No</span>
                     </td>
                 </tr>

@@ -33,7 +33,7 @@ export class OrderListComponent implements OnInit {
 
           if (Array.isArray(this.orders)) {
             for (let order of this.orders) {
-              order.customer = this.getCustomerName(order.customerId)
+              order.customerName = this.getCustomerName(order.customerId)
             }
           } else {
             this.orders = []

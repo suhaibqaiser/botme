@@ -34,8 +34,7 @@ const routes: Routes = [
   },
   {
     path: "online-shop",
-    component: SearchMenuComponent,
-    canActivate: [AuthenticationGuard]
+    component: SearchMenuComponent
   },
   {
     path: "contact-us",
@@ -57,13 +56,11 @@ const routes: Routes = [
   },
   {
     path: "product-detail",
-    component: ProductDetailComponent,
-    canActivate: [AuthenticationGuard]
+    component: ProductDetailComponent
   },
   {
     path: "cart",
-    component: CartComponent,
-    canActivate: [AuthenticationGuard]
+    component: CartComponent
   },
   {
     path: "checkout",

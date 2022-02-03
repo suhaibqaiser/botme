@@ -522,6 +522,11 @@ export class CartService {
       customerId: this._clientService.getCookie().customerId ? this._clientService.getCookie().customerId : '',
       addressId: '',
       tableId: '',
+      delivery: {
+        deliveryDate: '', // datetime
+        deliverFee: '',
+        deliveryNote: '',
+      },
       orderPaymentMethod: '',
       orderSubTotal: singleCustomProductObj.productTotalPrice,
       orderTip: 0,
