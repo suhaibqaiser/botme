@@ -98,7 +98,7 @@ export class HelperService {
    */
   getRestaurantIdOnAuthBasis() {
     const cookie = this._clientService.getCookie()
-    return (cookie && cookie.isLoggedIn) ? (cookie.restaurantId ? cookie.restaurantId : '') : 'guest'
+    return (cookie && cookie.isLoggedIn) ? (cookie.restaurantId ? cookie.restaurantId : '') : 'DM-R'
   }
 
   /**
@@ -106,6 +106,6 @@ export class HelperService {
    */
   getOrderTypeOnAuthBasis(){
     const cookie = this._clientService.getCookie()
-    return (cookie && cookie.isLoggedIn) ? (cookie.orderType ? cookie.orderType : '') : 'DM-R'
+    return (cookie && cookie.isLoggedIn) ? (cookie.orderType ? cookie.orderType : '') : 'guest'
   }
 }
