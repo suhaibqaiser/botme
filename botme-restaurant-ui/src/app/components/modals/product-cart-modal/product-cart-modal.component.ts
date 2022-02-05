@@ -30,8 +30,11 @@ export class ProductCartModalComponent implements OnInit {
   ngOnInit(): void {
     this.cartService.cartLoader = true
     // if (this.clientService.getCookie().isLoggedIn && this._helperService.getOrderTypeOnAuthBasis() && (this.clientService.getCookie().reservationLabel || this.clientService.getCookie().orderLabel)) {
-      this.getProducts();
+
     // }
+    if(this.clientService.getCookie().orderLabel) {
+      this.getProducts()
+    }
   }
 
   getCartProducts() {
