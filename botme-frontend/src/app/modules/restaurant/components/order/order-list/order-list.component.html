@@ -79,10 +79,9 @@
                     <td>{{order.orderSubTotal}}</td>
                     <td>{{order.orderTotal}}</td>
                     <td>{{order.updatedAt}}</td>
-                    <td><span *ngIf="!order.orderStatus === true"
-                            class="badge badge-success">Yes</span>
-                        <span *ngIf="!order.orderStatus === false"
-                            class="badge badge-danger">No</span>
+                    <td><span class="badge badge-success">Yes</span>
+<!--                        <span *ngIf="!order.orderStatus === false"-->
+<!--                            class="badge badge-danger">No</span>-->
                     </td>
                 </tr>
             </ng-template>

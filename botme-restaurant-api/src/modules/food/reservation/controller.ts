@@ -51,7 +51,7 @@ export async function editReservation(reservation: any, restaurantId: any) {
 }
 
 
-export async function findReservation(reservationId: string, restaurantId: any) {
+export async function findReservation(reservationId: any, restaurantId: any) {
     let response = new restResponse()
     if (!reservationId || !restaurantId) {
         response.payload = "reservationId and restaurantId is required"

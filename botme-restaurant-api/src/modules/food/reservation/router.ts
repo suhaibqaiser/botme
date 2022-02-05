@@ -22,7 +22,7 @@ export default [
         path: "/reservation/find",
         method: "get",
         handler: async (req: Request, res: Response) => {
-            let result = await findReservation(req.params.reservationId, req.query.restaurantId)
+            let result = await findReservation(req.query.reservationId, req.query.restaurantId)
             res.send(result);
         }
     },

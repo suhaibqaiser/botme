@@ -45,18 +45,18 @@
           </th>
           <th pSortableColumn="reservationLabel">Label <p-sortIcon field="reservationLabel"></p-sortIcon>
           </th>
-          <th pSortableColumn="customer.customerName">Customer <p-sortIcon field="customer.customerName"></p-sortIcon>
+          <th pSortableColumn="customer.customerName">Customer <p-sortIcon field="customerName"></p-sortIcon>
           </th>
           <th pSortableColumn="reservationSeats">Seats <p-sortIcon field="reservationSeats"></p-sortIcon>
           </th>
-          <th pSortableColumn="table.tableId">Table Label<p-sortIcon field="table.tableLabel"></p-sortIcon>
+          <th pSortableColumn="table.tableId">Date<p-sortIcon field="table.tableLabel"></p-sortIcon>
           </th>
-          <th pSortableColumn="reservationType">Type <p-sortIcon field="reservationType"></p-sortIcon>
+          <th pSortableColumn="reservationType">Time <p-sortIcon field="reservationType"></p-sortIcon>
           </th>
-          <th pSortableColumn="reservationSource">Source <p-sortIcon field="reservationSource"></p-sortIcon>
-          </th>
-          <th pSortableColumn="createdAt">DateTime <p-sortIcon field="createdAt"></p-sortIcon>
-          </th>
+<!--          <th pSortableColumn="reservationSource">Source <p-sortIcon field="reservationSource"></p-sortIcon>-->
+<!--          </th>-->
+<!--          <th pSortableColumn="createdAt">DateTime <p-sortIcon field="createdAt"></p-sortIcon>-->
+<!--          </th>-->
         </tr>
       </ng-template>
 
@@ -70,10 +70,10 @@
               R-{{reservation.reservationLabel}}</button></td>
           <td>{{reservation.customerName}}</td>
           <td>{{reservation.reservationSeats}}</td>
-          <td><span class="btn btn-primary btn-tone">T-{{reservation.tableLabel}}</span></td>
-          <td>{{reservation.reservationType}}</td>
-          <td>{{reservation.reservationSource}}</td>
-          <td>{{reservation.createdAt}}</td>
+          <td><span class="btn btn-primary btn-tone">{{reservation.reservationDate}}</span></td>
+          <td>{{reservation.reservationTime}}</td>
+<!--          <td>{{reservation.reservationSource}}</td>-->
+<!--          <td>{{reservation.createdAt}}</td>-->
         </tr>
       </ng-template>
       <ng-template pTemplate="paginatorleft">
