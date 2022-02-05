@@ -2,7 +2,6 @@ import {Injectable, isDevMode} from '@angular/core';
 import {DataDogLoggingService} from './datadog.service';
 import {Router} from "@angular/router";
 import {BotmeClientService} from "./botme-client.service";
-import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -99,7 +98,7 @@ export class HelperService {
    */
   getRestaurantIdOnAuthBasis() {
     const cookie = this._clientService.getCookie()
-    return (cookie && cookie.isLoggedIn) ? (cookie.restaurantId ? cookie.restaurantId : '') : environment.restaurantId
+    return (cookie && cookie.isLoggedIn) ? (cookie.restaurantId ? cookie.restaurantId : '') : 'guest'
   }
 
   /**
@@ -107,6 +106,6 @@ export class HelperService {
    */
   getOrderTypeOnAuthBasis(){
     const cookie = this._clientService.getCookie()
-    return (cookie && cookie.isLoggedIn) ? (cookie.orderType ? cookie.orderType : '') : environment.orderType
+    return (cookie && cookie.isLoggedIn) ? (cookie.orderType ? cookie.orderType : '') : 'DM-R'
   }
 }
