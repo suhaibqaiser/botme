@@ -10,7 +10,7 @@ export class HelperService {
 
   timer: any
 
-  constructor(private _router: Router, private logger: DataDogLoggingService,private _clientService:BotmeClientService) {
+  constructor(private _router: Router, private logger: DataDogLoggingService, private _clientService: BotmeClientService) {
   }
 
   resolveProductImage(productObj: any) {
@@ -104,8 +104,8 @@ export class HelperService {
   /**
    * get orderType on the basis of auth
    */
-  getOrderTypeOnAuthBasis(){
+  getOrderTypeOnAuthBasis() {
     const cookie = this._clientService.getCookie()
-    return (cookie && cookie.isLoggedIn) ? (cookie.orderType ? cookie.orderType : '') : 'guest'
+    return (cookie && cookie.orderType) ? cookie.orderType : ''
   }
 }
