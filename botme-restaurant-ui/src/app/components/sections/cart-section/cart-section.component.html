@@ -72,7 +72,7 @@
       <!--        </div>-->
       <!--      </div>-->
       <div class="col-sm-12 col-md-12 col-lg-12">
-        <div class="cart-update text-center cart-info-item">
+        <div *ngIf="_clientService.getCookie().isLoggedIn || this._clientService.getCookie().orderType" class="cart-update text-center cart-info-item">
           <a *ngIf="cartService.cartProduct && cartService.cartProduct.length" id="ctaId-order-now"
              (click)="placeOrder()" class="btn">
             Order Now
@@ -80,6 +80,12 @@
                  role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
+          </a>
+        </div>
+        <div *ngIf="!_clientService.getCookie().isLoggedIn && !this._clientService.getCookie().orderType" class="cart-update text-center cart-info-item">
+          <a *ngIf="cartService.cartProduct && cartService.cartProduct.length" (click)="openModal()" id="ctaId-order-now"
+             class="btn">
+            select order type
           </a>
         </div>
       </div>
@@ -128,3 +134,31 @@
     </div>
   </div>
 </section>
+
+
+
+<!-- order ype -->
+<div class="modal fade" id="order_type_modal" tabindex="-1" aria-labelledby="order_type_modal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title m-auto text-capitalize" id="exampleModalLabel">Order Type</h3>
+      </div>
+      <div class="modal-body p-5 text-center">
+        <h5 class="mb-3">Select your order type</h5>
+        <div class="form-group">
+          <div style="padding: 5px 10px;border-style: solid" class="input-group text-center">
+            <select (change)="_clientService.setCookie('orderType', orderType.value)" style="color: black" class="form-control" [formControl]="orderType">
+              <option value="pick_up">Pick Up</option>
+              <option value="delivery">Delivery</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <a type="button" style="padding: 10px" class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
+        <a (click)="placeOrder()" type="button" style="padding: 10px" class="btn btn-primary">Order Now</a>
+      </div>
+    </div>
+  </div>
+</div>

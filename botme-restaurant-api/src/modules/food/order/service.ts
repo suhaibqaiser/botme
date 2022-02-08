@@ -48,6 +48,10 @@ export async function updateCartStatus(filter: string) {
     return Cart.updateMany(filter, {$set: {status: true}})
 }
 
-export async function modifyOrderStatus(filter: string, customerId: string) {
-    return Order.updateMany(filter, {$set: {orderStatus: true, customerId: customerId}})
+export async function modifyOrderStatus(filter: string, customerId: any) {
+    return Order.updateOne(filter, {$set: {status: true, customerId: customerId}})
+}
+
+export async function modifyOrderType(filter: string, orderType: any) {
+    return Order.updateOne(filter, {$set: {orderType: orderType}})
 }

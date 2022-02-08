@@ -9,7 +9,7 @@ import {
     updateCart,
     updateOrder,
     updateCartStatus,
-    modifyOrderStatus
+    modifyOrderType
 } from "./service";
 import {randomUUID} from "crypto";
 
@@ -252,19 +252,22 @@ export async function updateOrderStatus(filter: any) {
         //     return response
         // }
         delete filter.restaurantId
-        delete filter.orderType
         // let updatedList = await cartResult.forEach((item: any) => {
         //     filter.cartId = item.cartId
         //     return JSON.parse(JSON.stringify(updateCartStatus(filter)))
         // })
+        const orderType = JSON.parse(JSON.stringify(filter.orderType))
+        delete filter.orderType
 
-        // let orderResult = await modifyOrderStatus(filter)
-        //
-        // if(!orderResult) {
-        //     response.message = 'Failed to update order status.'
-        //     response.status = "error"
-        //     return response
-        // }
+        let orderResult = await modifyOrderType(filter, orderType)
+        if (!orderResult) {
+            response.message = 'Failed to update order status.'
+            response.status = "error"
+            return response
+        }
+
+
+        delete filter.orderType
 
         let result = await updateCartStatus(filter)
         if (result) {

@@ -1,4 +1,4 @@
-<div class="contact-us-section pt-100 pb-70 bg-black">
+<div *ngIf="_botMeService.getCookie().isLoggedIn" class="contact-us-section pt-100 pb-70 bg-black">
   <div class="container">
     <div class="row">
       <div class="col-sm-12 col-md-12 col-lg-12 pb-30">
@@ -8,7 +8,7 @@
           </div>
           <div class="container order-types-main">
             <div class="row">
-              <div *ngIf="_botMeService.getCookie().isLoggedIn" class="col-lg-4 col-md-4 col-sm-12">
+              <div class="col-lg-4 col-md-4 col-sm-12">
                 <div data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="selectOrderType('dine_in')"
                      [class.active-order-type]="_orderService.selectedOrderButtons['dine_in']" class="card mb-2 text-center">
                   <div class="card-body">
@@ -17,7 +17,7 @@
                   </div>
                 </div>
               </div>
-              <div [class.col-lg-6]="!_botMeService.getCookie().isLoggedIn" class="col-lg-4 col-md-4 col-sm-12">
+              <div class="col-lg-4 col-md-4 col-sm-12">
                 <div data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="selectOrderType('pick_up')"
                      [class.active-order-type]="_orderService.selectedOrderButtons['pick_up']" class="card mb-2 text-center">
                   <div class="card-body">
@@ -26,7 +26,7 @@
                   </div>
                 </div>
               </div>
-              <div  [class.col-lg-6]="!_botMeService.getCookie().isLoggedIn" class="col-lg-4 col-md-4 col-sm-12">
+              <div class="col-lg-4 col-md-4 col-sm-12">
                 <div data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="selectOrderType('delivery')"
                      [class.active-order-type]="_orderService.selectedOrderButtons['delivery']"
                      class="card mb-2 text-center">

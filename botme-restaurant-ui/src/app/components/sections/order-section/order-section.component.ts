@@ -48,7 +48,7 @@ export class OrderSectionComponent implements OnInit {
     this._botMeService.setCookie('orderLabel', '')
     this._botMeService.setCookie('reservationLabel', '')
     this._botMeService.setCookie('customerId', '')
-
+    $('#order_modal').modal('show')
     if (type === 'dine_in') {
       this._orderService.selectedOrderButtons['dine_in'] = true
       this._orderService.selectedOrderButtons['pick_up'] = false
@@ -67,14 +67,6 @@ export class OrderSectionComponent implements OnInit {
       this._orderService.selectedOrderButtons['delivery'] = true
       this._botMeService.setCookie('orderType', 'delivery')
     }
-
-    if(this._botMeService.getCookie().isLoggedIn) {
-      $('#order_modal').modal('show')
-      return
-    }
-
-    this._route.navigate(['online-shop'])
-
     return ''
   }
 

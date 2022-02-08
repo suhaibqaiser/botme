@@ -335,6 +335,7 @@ export class CartService {
               item.status = true
             }
           )
+          $('#order_type_modal').modal('hide')
           this._router.navigate(['/checkout'])
         }
       })
