@@ -1,5 +1,5 @@
 import { restResponse } from "../../../utils/response";
-import { createProduct, getProduct, updateProduct, getMaxLabelValue } from "./service";
+import { createProduct, getProduct, updateProduct, getMaxLabelValue, getProductByTag } from "./service";
 import { randomUUID } from "crypto";
 
 export async function addProduct(product: any, restaurantId: any) {
@@ -104,4 +104,37 @@ export async function editProduct(product: any, restaurantId: any) {
         response.status = "error"
         return response
     }
+}
+
+export async function suggestProduct(searchParameters: any, restaurantId: any) {
+    let response = new restResponse()
+    if (!searchParameters || !restaurantId) {
+        response.payload = "searchParameters and restaurantId is required"
+        response.status = "error"
+        return response;
+    }
+
+    let persons = searchParameters.persons
+    let productTags = searchParameters.tags
+
+    let productList: any[] = []
+
+    for (const productTag of productTags) {
+        let products = await getProductByTag(productTag, persons, restaurantId)
+        products.forEach((product: any) => {
+            if (!productList.includes(product)) { productList.push(product) }
+        });
+    }
+
+    let result = await productList
+    if (result.length != 0) {
+        response.payload = result
+        response.status = "success"
+        return response
+    } else {
+        response.payload = "product not found"
+        response.status = "error"
+        return response
+    }
+
 }
