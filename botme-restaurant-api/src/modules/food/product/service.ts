@@ -20,7 +20,7 @@ export async function getProduct(queryParams: any, sort: any) {
 
 export async function getProductByTag(tag: string, person: number, restaurantId: string) {
     return Product.find({ "productTags": tag, "productServing": { $lte: person }, "restaurantId": restaurantId }, {
-        __v: 0,
+        "productId": 1,
         _id: 0,
     })
 }
