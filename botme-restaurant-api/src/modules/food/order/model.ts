@@ -23,7 +23,7 @@ const OrderSchema = createSchema(
         orderServiceTax: Type.number(),
         orderSalesTax: Type.number(),
         orderTotal: Type.number(),
-        orderStatus: Type.boolean()
+        orderStatus: Type.string()
     },
     {
         timestamps: {createdAt: true}

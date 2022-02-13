@@ -2,7 +2,7 @@ import {restResponse} from "../../../utils/response";
 import {addCustomer, getAllCustomers, getCustomer, updateOneCustomer, getAddressByCustomer} from "./service";
 import {randomUUID} from "crypto";
 import {getMaxLabelValue} from "../../food/customer/service";
-import {getOrderById, modifyOrderStatus} from "../order/service";
+import {getOrderById, updateCustomerId} from "../order/service";
 
 export async function findCustomer(filter: any) {
     let response = new restResponse()
@@ -67,7 +67,7 @@ export async function createCustomer(filter: any, customer: any) {
         if (result) {
             response.payload = JSON.parse(JSON.stringify(result))
 
-            let orderResult = await modifyOrderStatus(filter, response.payload.customerId)
+            let orderResult = await updateCustomerId(filter, response.payload.customerId)
 
             if (orderResult) {
                 response.message = 'Your order placed has been successfully'

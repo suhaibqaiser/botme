@@ -5,6 +5,7 @@ import { HomeComponent } from './components/pages/home/home.component';
 import { AuthGuard } from "./auth.guard";
 import { LoginComponent } from "./components/pages/login/login.component";
 import { WrapperComponent } from "./components/layout/wrapper/wrapper.component";
+import { OrderOverviewDetailComponent } from "./modules/restaurant/components/order/order-overview-detail/order-overview-detail.component";
 
 const routes: Routes = [
   {
@@ -22,6 +23,11 @@ const routes: Routes = [
         data: { pageTitle: 'Home' },
         component: HomeComponent,
         pathMatch: 'full'
+      },
+      {
+        path: 'order-detail',
+        data: { pageTitle: 'Order Detail' },
+        component: OrderOverviewDetailComponent
       },
       {
         path: 'contact',

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import {addCart, addOrder, deleteCartById, editCart, editOrder, findCart, findCartById, findOrder, updateOrderStatus} from "./controller";
+import {addCart, addOrder, deleteCartById, editCart, editOrder, findCart,findCartByRestaurantId, findCartById, findOrder, updateOrderStatus} from "./controller";
 
 export default [
     {
@@ -31,6 +31,14 @@ export default [
         method: "get",
         handler: async (req: Request, res: Response) => {
             let result = await findCart(req.query)
+            res.send(result);
+        }
+    },
+    {
+        path: "/cart/findCartByRestaurantId",
+        method: "get",
+        handler: async (req: Request, res: Response) => {
+            let result = await findCartByRestaurantId(req.query)
             res.send(result);
         }
     },

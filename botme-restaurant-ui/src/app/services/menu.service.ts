@@ -118,13 +118,13 @@ export class MenuService {
   /**
    * update the order status from cart
    */
-  updateOrderStatus() {
+  updateOrderStatus(orderStatus = '') {
     const obj = {
       restaurantId: this._helperService.getRestaurantIdOnAuthBasis(),
       orderLabel: this.clientService.getCookie().orderLabel ? this.clientService.getCookie().orderLabel : '',
       orderType: this._helperService.getOrderTypeOnAuthBasis(),
     }
-    const url = this.apiBaseUrl + "/food/cart/updateOrderStatus?restaurantId=" + obj.restaurantId + '&orderLabel=' + obj.orderLabel + '&orderType=' + obj.orderType
+    const url = this.apiBaseUrl + "/food/cart/updateOrderStatus?restaurantId=" + obj.restaurantId + '&orderLabel=' + obj.orderLabel + '&orderType=' + obj.orderType + '&orderStatus=' + orderStatus
     return this.http.get(url);
   }
 }

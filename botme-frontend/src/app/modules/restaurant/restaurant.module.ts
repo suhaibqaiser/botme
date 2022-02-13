@@ -34,6 +34,8 @@ import { TableDetailComponent } from './components/table/table-detail/table-deta
 import { CalendarModule } from 'primeng/calendar';
 import { RestaurantListComponent } from './components/restaurant/restaurant-list/restaurant-list.component';
 import { RestaurantDetailComponent } from './components/restaurant/restaurant-detail/restaurant-detail.component';
+import { OrderOverviewComponent } from './components/order/order-overview/order-overview.component';
+import { OrderOverviewDetailComponent } from './components/order/order-overview-detail/order-overview-detail.component';
 
 
 @NgModule({
@@ -51,7 +53,12 @@ import { RestaurantDetailComponent } from './components/restaurant/restaurant-de
     TableDetailComponent,
     CategoryListComponent,
     RestaurantListComponent,
-    RestaurantDetailComponent
+    RestaurantDetailComponent,
+    OrderOverviewComponent,
+    OrderOverviewDetailComponent
+  ],
+  exports: [
+    OrderOverviewComponent
   ],
   imports: [
     CommonModule,

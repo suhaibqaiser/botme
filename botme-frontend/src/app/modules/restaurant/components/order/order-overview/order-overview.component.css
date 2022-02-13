@@ -1,0 +1,19 @@
+.order_card:hover {
+  border-color: #0f69f2;
+  transform: scale(1.1)
+}
+
+.order_card {
+  transition: transform .2s; /* Animation */
+  padding: 0rem !important;
+}
+
+.order_card, .card-body {
+  padding: 0.5rem !important;
+}
+
+.detial_btn{
+  background: transparent;
+  border: none;
+  color: #0f69f2
+}

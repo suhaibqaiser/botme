@@ -9,7 +9,7 @@ import {
     updateCart,
     updateOrder,
     updateCartStatus,
-    modifyOrderType
+    updateOrderType, updateOrderStatusDB
 } from "./service";
 import {randomUUID} from "crypto";
 
@@ -119,6 +119,24 @@ export async function findCartById(filter: any, restaurantId: any) {
     // filter orderLabel & restaurantId & cartId
 
     let result = await getCartById(filter)
+    if (result) {
+        response.payload = result
+        response.status = "success"
+        return response
+    } else {
+        response.payload = "Cart not found against restaurantId=" + filter.cartLabel + ' --- =' + filter.cartLabel
+        response.status = "danger"
+        return response
+    }
+}
+
+
+export async function findCartByRestaurantId(filter: any) {
+    let response = new restResponse()
+
+    // filter orderLabel & restaurantId & cartId
+
+    let result = await getCart(filter)
     if (result) {
         response.payload = result
         response.status = "success"
@@ -252,6 +270,8 @@ export async function updateOrderStatus(filter: any) {
         //     return response
         // }
         delete filter.restaurantId
+        const orderStatus = filter.orderStatus
+        delete filter.orderStatus
         // let updatedList = await cartResult.forEach((item: any) => {
         //     filter.cartId = item.cartId
         //     return JSON.parse(JSON.stringify(updateCartStatus(filter)))
@@ -259,13 +279,19 @@ export async function updateOrderStatus(filter: any) {
         const orderType = JSON.parse(JSON.stringify(filter.orderType))
         delete filter.orderType
 
-        let orderResult = await modifyOrderType(filter, orderType)
+        let orderResult = await updateOrderType(filter, orderType)
         if (!orderResult) {
-            response.message = 'Failed to update order status.'
+            response.message = 'Failed to update order type.'
             response.status = "error"
             return response
         }
 
+        let orderStatusResult = await updateOrderStatusDB(filter, orderStatus)
+        if (!orderStatusResult) {
+            response.message = 'Failed to update order status.'
+            response.status = "error"
+            return response
+        }
 
         delete filter.orderType
 

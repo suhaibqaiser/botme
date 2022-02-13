@@ -9,6 +9,17 @@ import {BotmeClientService} from "./botme-client.service";
 export class HelperService {
 
   timer: any
+  orderStatusObject: any = {
+    hold: 'hold',
+    priced: 'priced',
+    ready: 'ready',
+    in_process: 'in_process',
+    received: 'received',
+    notified: 'notified',
+    delivered: 'delivered',
+    remade: 'remade',
+    returned: 'returned'
+  }
 
   constructor(private _router: Router, private logger: DataDogLoggingService, private _clientService: BotmeClientService) {
   }
@@ -107,5 +118,10 @@ export class HelperService {
   getOrderTypeOnAuthBasis() {
     const cookie = this._clientService.getCookie()
     return (cookie && cookie.orderType) ? cookie.orderType : ''
+  }
+
+  getOrderStatus(type = '') {
+    const status = this.orderStatusObject[type]
+    return status ? status : ''
   }
 }

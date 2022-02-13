@@ -324,7 +324,7 @@ export class CartService {
         return;
       }
 
-      this._menuService.updateOrderStatus().subscribe((res: any) => {
+      this._menuService.updateOrderStatus(this._helperService.getOrderStatus('notified')).subscribe((res: any) => {
         this._toastService.setToast({
           description: res.message,
           type: res.status
@@ -535,7 +535,7 @@ export class CartService {
       orderServiceTax: 0,
       orderSalesTax: 0,
       orderTotal: singleCustomProductObj.productTotalPrice,
-      orderStatus: false
+      orderStatus: this._helperService.getOrderStatus('hold')
     }
     return {
       cart: cart,
