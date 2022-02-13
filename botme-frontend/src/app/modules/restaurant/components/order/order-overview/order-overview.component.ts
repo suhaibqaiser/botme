@@ -26,8 +26,10 @@ export class OrderOverviewComponent implements OnInit {
   }
 
   async getOrders() {
+    this.loading = true
     this._orderService.getOrders()
       .subscribe(result => {
+        this.loading = false
         if (result.status === 'success') {
           this.orders = result.payload
 
@@ -45,8 +47,10 @@ export class OrderOverviewComponent implements OnInit {
   }
 
   async getCustomers() {
+    this.loading = true
     this._customerService.getCustomers()
       .subscribe(result => {
+        this.loading = false
         if ((result.status === 'success')) {
           this.customers = result.payload
           this.getCartDetails()
@@ -62,13 +66,14 @@ export class OrderOverviewComponent implements OnInit {
   }
 
   async getCartDetails() {
+    this.loading = true
     await this._orderService.getCartByRestaurantId().subscribe(
       result => {
+        this.loading = false
         if ((result.status === 'success')) {
           this.carts = result.payload
           this.getOrders()
         }
-        this.loading = false
       }
     )
     return true
@@ -86,8 +91,10 @@ export class OrderOverviewComponent implements OnInit {
   }
 
   async getProducts() {
+    this.loading = true
     await this._productService.getProducts()
       .subscribe(result => {
+        this.loading = false
         if (result.status === 'success') {
           this.products = result.payload
           this.getCustomers()
