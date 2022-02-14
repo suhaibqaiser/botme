@@ -1,19 +1,30 @@
 .order_card:hover {
-  border-color: #0f69f2;
-  transform: scale(1.1)
+  border-color: #84b5ff;
 }
 
 .order_card {
+  border-color: lightgrey;
   transition: transform .2s; /* Animation */
   padding: 0rem !important;
 }
 
 .order_card, .card-body {
-  padding: 0.5rem !important;
+  padding: 0.3rem !important;
 }
 
-.detial_btn{
+.detial_btn {
   background: transparent;
   border: none;
   color: #0f69f2
+}
+
+hr {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  border: 0.5px solid #84b5ff;
+}
+
+h4 {
+  font-size: 17px;
+  margin-bottom: 0px;
 }
