@@ -64,14 +64,33 @@ export class HelperService {
   }
 
   computeDate(date = '') {
-    return new Date(date).getDate() + '-' + new Date(date).getMonth() + '-' + new Date(date).getFullYear()
+    return new Date(date).getDate() + '/' + new Date(date).getMonth() + '/' + new Date(date).getFullYear()
   }
 
   computeTime(date = '') {
 
   }
 
-  computeProduct(productList: any, id:any) {
-    return productList.find((item:any) => item.productId === id)
+  computeProduct(productList: any, id: any) {
+    return productList.find((item: any) => item.productId === id)
+  }
+
+  getProductById(productList: any, id: any) {
+    return productList.find((item: any) => item.productId === id)
+  }
+
+  computeProductsForOrderCart(type = '', list: any = [], productList: any = []) {
+    let data = ''
+    if (['options','ingredients'].includes(type)) {
+      data = list.map((item: any) => {
+        return this.getProductById(productList, item.productId).productName
+      })
+      return data
+    }
+    data = list.map((item: any) => {
+      const product = this.getProductById(productList, item.productId)
+      return product.productName + '(' + item.productQuantity + ')'
+    })
+    return data
   }
 }
