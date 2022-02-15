@@ -90,6 +90,11 @@ nlu:
       - home page
       - homepage
 
+  - intent: Suggestion
+    examples: |
+      - we are looking for 
+      - i am looking for 
+
   - intent: reservation_page
     examples: |
       - [Reserve]{"entity":"pagethree","value":"reservation"} a table for me please
