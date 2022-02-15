@@ -113,7 +113,7 @@ export async function suggestProduct(searchParameters: any, restaurantId: any) {
         response.status = "error"
         return response;
     }
-
+    console.log(searchParameters,restaurantId)
     let persons = searchParameters.persons
     let productTags = searchParameters.tags
 

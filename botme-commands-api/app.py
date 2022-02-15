@@ -24,7 +24,6 @@ def send_Response():
 
     # RASA API CALL
     rasa_data = getIntent(message)
-    print(rasa_data)
     intent = rasa_data['intent']
 
     # RESPONSE RETURN
@@ -43,7 +42,7 @@ def send_Response():
         else:
             print("taha")
             response = utility.nluFallBack()
-            wrongCommand = insertingWrongResponseInDb(converstion['conversationId'],converstion['conversationLogId'],context['clientId'],context['sessionId'],response,text)
+            wrongCommand = insertingWrongResponseInDb(converstion['conversationId'],converstion['conversationLogId'],converstion['clientId'],converstion['sessionId'],response,text)
             return jsonify(response)
 
 if __name__ == '__main__':

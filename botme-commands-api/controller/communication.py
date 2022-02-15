@@ -7,6 +7,7 @@ from models.Products import Product
 from models.Reservation import Reservation
 from models.DateTime import DateTime
 from models.categories import Category
+from models.suggestion import Suggestion
 from controller.reservationField import reservationField , checkForEmptyField , validationOfFields
 
 # reminder need to change text to senti in responses
@@ -18,8 +19,13 @@ def getResponseUsingContext(intent,entity,text,pageId,sectionId,form,parentEntit
     value = val.parseEntityValue()
     db = getDbCta(intent,value,pageId,sectionId)
     form = checkForEmptyField(form)
+    if (pageId == "pageId-home"):
+        if intent == "Suggestion":
+            suggestion = Suggestion(intent,entity,senti,pageId,sectionId,text,db,converstion,context)
+            Response = suggestion.suggestionResponse()
+            return Response
 
-    if (pageId == "pageId-order-online" or pageId == "pageId-cart-modal" or pageId == "pageId-cart"):
+    elif (pageId == "pageId-order-online" or pageId == "pageId-cart-modal" or pageId == "pageId-cart"):
         if intent == "Order_meal" or intent == "remove_item" or intent == "reduce_product_quantity" or intent == "product_flavour" or intent == "product-detail" or intent == "remove_item" or intent == "edit_product":
             product = Product(intent,value,senti,pageId,sectionId,text,db,parentEntity,converstion,context)
             Response = product.ProductResponseIfNoParentEntity()
