@@ -5,6 +5,7 @@ import {ToastService} from "../../../services/toast.service";
 import {CustomerService} from "../../../services/customer.service";
 import {BotmeClientService} from "../../../services/botme-client.service";
 import {HelperService} from "../../../services/helper.service";
+import {Router} from "@angular/router";
 
 declare var $: any;
 
@@ -21,6 +22,11 @@ export class CheckoutSectionComponent implements OnInit {
     customerId: new FormControl(''),
     customerLabel: new FormControl(''),
     customerName: new FormControl('', Validators.required),
+
+    reservationSeats: new FormControl(''),
+    reservationDate: new FormControl(''),
+    reservationTime: new FormControl(''),
+
     customerEmail: new FormControl('', Validators.required),
     customerCountry: new FormControl('', Validators.required),
     customerTown: new FormControl('', Validators.required),
@@ -32,7 +38,7 @@ export class CheckoutSectionComponent implements OnInit {
     customerStreet: new FormControl('', Validators.required)
   })
 
-  constructor(public _helperService: HelperService, private _clientService: BotmeClientService, private _toastService: ToastService, private _customerService: CustomerService, public _cartService: CartService) {
+  constructor(private _router: Router, public _helperService: HelperService, public _clientService: BotmeClientService, private _toastService: ToastService, private _customerService: CustomerService, public _cartService: CartService) {
     this.customerForm.controls['restaurantId'].setValue(this._helperService.getRestaurantIdOnAuthBasis())
     if (this._clientService.getCookie().customerId && this._clientService.getCookie().customerId.length) {
       this.getCustomer()
@@ -45,9 +51,45 @@ export class CheckoutSectionComponent implements OnInit {
   }
 
   addCustomer() {
+    if (this._clientService.getCookie().orderType === 'dine_in') {
+      if (this.customerForm.controls['reservationSeats'].value <= 0) {
+        this._toastService.setToast({
+          description: 'Minimum one seat is required!',
+          type: 'danger'
+        })
+        return;
+      }
+
+      const date = this.customerForm.controls['reservationDate'].value
+      if (!date) {
+        this._toastService.setToast({
+          description: 'Date is required!',
+          type: 'danger'
+        })
+        return;
+      }
+
+      const time = this.customerForm.controls['reservationTime'].value
+      if (!time) {
+        this._toastService.setToast({
+          description: 'Time is required!',
+          type: 'danger'
+        })
+        return;
+      }
+
+      const reservationTimeCheck = new RegExp('^(0?[1-9]|1[0-2]):([0-5]\\d)\\s?((?:[Aa]|[Pp])\\.?[Mm]\\.?)$');
+      if (!reservationTimeCheck.test(time)) {
+        this._toastService.setToast({
+          description: 'Please enter valid time!',
+          type: 'danger'
+        })
+        return;
+      }
+    }
+
     this.loader = true
     let customerId = this.customerForm.controls['customerId'].value
-
     if (!customerId && !customerId.length) {
       this._customerService.addCustomer(this.customerForm.value).subscribe((res: any) => {
         this._toastService.setToast({
@@ -57,6 +99,7 @@ export class CheckoutSectionComponent implements OnInit {
         if (res.status === 'success') {
           this._clientService.setCookie('customerId', res.payload.customerId)
           $('#checkout_modal').modal('show')
+          this._cartService.addToCart(this._cartService.cartProduct, 'add_db')
         }
         this.loader = false
       })
@@ -99,6 +142,9 @@ export class CheckoutSectionComponent implements OnInit {
     this.customerForm.controls['customerActive'].setValue(obj.customerActive)
     this.customerForm.controls['customerPhone'].setValue(obj.customerPhone)
     this.customerForm.controls['customerStreet'].setValue(obj.customerStreet)
+    this.customerForm.controls['reservationSeats'].setValue(obj.reservationSeats)
+    this.customerForm.controls['reservationDate'].setValue(obj.reservationDate)
+    this.customerForm.controls['reservationTime'].setValue(obj.reservationTime)
   }
 
   getOrderType() {
@@ -108,14 +154,19 @@ export class CheckoutSectionComponent implements OnInit {
       return ''
     }
 
-    if (this._helperService.getOrderTypeOnAuthBasis() && this._helperService.getOrderTypeOnAuthBasis() === 'dine_in') {
-      id = this._clientService.getCookie().reservationLabel ? this._clientService.getCookie().reservationLabel : ''
-    } else if (this._helperService.getOrderTypeOnAuthBasis()) {
-      id = this._clientService.getCookie().orderLabel ? this._clientService.getCookie().orderLabel : ''
-    }
+    // if (this._helperService.getOrderTypeOnAuthBasis() && this._helperService.getOrderTypeOnAuthBasis() === 'dine_in') {
+    //   id = this._clientService.getCookie().reservationLabel ? this._clientService.getCookie().reservationLabel : ''
+    // } else if (this._helperService.getOrderTypeOnAuthBasis()) {
+    id = this._clientService.getCookie().orderLabel ? this._clientService.getCookie().orderLabel : ''
+    // }
 
     return this._helperService.getOrderTypeOnAuthBasis().replace(/_/g, " ") + ' id' + ' : ' + id
   }
 
+  close() {
+    this._clientService.reSetCookie()
+    $('#checkout_modal').modal('hide')
+    this._router.navigate(['/online-shop'])
+  }
 
 }
