@@ -124,4 +124,12 @@ export class HelperService {
     const status = this.orderStatusObject[type]
     return status ? status : ''
   }
+
+  /**
+   * get those cart items which has empty cartId
+   * @param cartList
+   */
+  filterCartByCartId(cartList:any = []){
+    return cartList.filter((item:any) => !item.cartId)
+  }
 }

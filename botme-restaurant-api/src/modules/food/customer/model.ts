@@ -53,7 +53,10 @@ const tempCustomer = createSchema(
         orderNotes: Type.string(),
         customerPhone: Type.string({maxlength: 256}),
         customerActive: Type.boolean({required: true}),
-        customerStreet: Type.string()
+        customerStreet: Type.string(),
+        reservationSeats: Type.number(),
+        reservationDate: Type.string(),
+        reservationTime: Type.string()
     },
     {
         timestamps: {createdAt: true}

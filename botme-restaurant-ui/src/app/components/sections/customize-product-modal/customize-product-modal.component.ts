@@ -19,12 +19,12 @@ export class CustomizeProductModalComponent implements OnInit {
 
   addToCart() {
     this._contextService.getCurrentContext()
-    this.cartService.addToCart(this.cartService.singleCustomProductObj);
+    this.cartService.addToCart(this.cartService.singleCustomProductObj, 'add_local_list');
   }
 
   editToCart() {
     this._contextService.getCurrentContext()
-    this.cartService.addToCart(this.cartService.singleCustomProductObj, true);
+    this.cartService.addToCart(this.cartService.singleCustomProductObj, 'edit_local_list');
   }
 
   cancelModal() {

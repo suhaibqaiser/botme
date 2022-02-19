@@ -13,7 +13,29 @@
                   <div class="form-group mb-20">
                     <div class="input-group">
                       <input type="text" formControlName="customerName" class="form-control" required
-                             placeholder="First Name*"/>
+                             placeholder="Name*"/>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="_clientService.getCookie().orderType === 'dine_in'" class="col-sm-12 col-md-4">
+                  <div class="form-group mb-20">
+                    <div class="input-group">
+                      <input type="number" formControlName="reservationSeats" class="form-control"
+                             placeholder="Number of persons"/>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="_clientService.getCookie().orderType === 'dine_in'" class="col-sm-12 col-md-4">
+                  <div class="form-group mb-20">
+                    <div class="input-group">
+                      <input  formControlName="reservationDate" id="entityId-date" type="date" placeholder="Date" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="_clientService.getCookie().orderType === 'dine_in'" class="col-sm-12 col-md-4">
+                  <div class="form-group mb-20">
+                    <div class="input-group">
+                      <input  formControlName="reservationTime" id="entityId-time" type="text" class="form-control" placeholder="e.g 12:30 AM"/>
                     </div>
                   </div>
                 </div>
@@ -166,7 +188,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="checkout_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div data-bs-backdrop="false" data-bs-keyboard="false" class="modal fade" id="checkout_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -176,7 +198,7 @@
         <h6 style="font-size: 19px" class="mb-3">Here is your generated {{getOrderType()}}</h6>
       </div>
       <div class="modal-footer justify-content-between">
-        <a type="button" style="padding: 10px" class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
+        <a type="button" style="padding: 10px" class="btn btn-secondary" (click)="close()" >Close</a>
       </div>
     </div>
   </div>
