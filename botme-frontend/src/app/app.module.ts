@@ -28,6 +28,8 @@ import {InplaceModule} from 'primeng/inplace';
 import {InputSwitchModule} from 'primeng/inputswitch';
 import {RestaurantModule} from "./modules/restaurant/restaurant.module";
 import {HelperService} from "./services/helper.service";
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,13 @@ import {HelperService} from "./services/helper.service";
     SelectButtonModule,
     InplaceModule,
     InputSwitchModule,
-    RestaurantModule
+    RestaurantModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [HelperService, Title, AuthGuard, {
     provide: HTTP_INTERCEPTORS,

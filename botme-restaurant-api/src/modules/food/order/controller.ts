@@ -1,3 +1,4 @@
+import { randomUUID } from "crypto";
 import {restResponse} from "../../../utils/response";
 import {
     createCart,
@@ -11,7 +12,9 @@ import {
     updateCartStatus,
     updateOrderType, updateOrderStatusDB
 } from "./service";
-import {randomUUID} from "crypto";
+import { orderNotification } from "../../notification/order-notification/order-notification";
+
+
 
 export async function findOrder(filter: any, restaurantId: any) {
     let response = new restResponse()
@@ -40,7 +43,9 @@ export async function addOrder(order: any, restaurantId: any) {
     order.orderLabel = Math.random().toString(36).slice(2)
     order.restaurantId = restaurantId
 
+    console.log("add order")
     let result = await createOrder(order)
+
     if (result) {
         response.payload = result
         response.status = "success"
@@ -149,6 +154,7 @@ export async function findCartByRestaurantId(filter: any) {
 }
 
 export async function addCart(obj: any, filter: any) {
+    console.log("add to cart")
     let response = new restResponse()
     try {
         if (!obj || !filter.restaurantId) {
@@ -216,9 +222,10 @@ export async function editCart(cart: any, filter: any) {
         }
 
         // filter restaurantId & cartId & orderLabel
-
+        
         let result = await updateCart(cart, filter)
         if (result) {
+            console.log("update")
             response.payload = {cart: JSON.parse(JSON.stringify(result))}
             response.message = "Cart updated."
             response.status = "success"
@@ -311,3 +318,35 @@ export async function updateOrderStatus(filter: any) {
         return response
     }
 }
+// export async function orderNotification() {
+//     const express = require('express'); 
+//     const webPush = require('web-push');
+//     const bodyParser = require('body-parser');
+//     const path = require('path');
+//     const cors = require('cors');
+
+
+//     const app = express();
+
+//     app.use(bodyParser.json());
+//     app.use(cors())
+
+//     const publicKey = 'BDCQVQ8eDIxkBtTKyu98APMWTQ_HNA5PrRL7XVac7U-GuPJBikGFJguHGC5dAd7BULCkTpyfuvN3Ns57SamWkpA';
+//     const privateKey = 'pRbJS-tqaGe3RkWBB29rZXFmZP1EaAw3XanPO6ZvEY4';
+
+//     webPush.setVapidDetails('mailto:tahahasan1997@gmail.com', publicKey,privateKey);
+
+//     app.post('/subscribe',(req:any,res:any) => {
+
+//         const subscription = req.body;
+
+//         res.status(201).json({});
+
+
+//         const payload = JSON.stringify({title: 'push test'})
+
+
+//         webPush.sendNotification(subscription,payload).catch((err:any) => console.error(err));
+//     });
+// }
+
