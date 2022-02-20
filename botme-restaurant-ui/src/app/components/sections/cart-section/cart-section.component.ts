@@ -6,6 +6,8 @@ import {ContextService} from "../../../services/context.service";
 import {SocketService} from "../../../services/socket.service";
 import {FormControl} from "@angular/forms";
 import {BotmeClientService} from "../../../services/botme-client.service";
+import {Router} from "@angular/router";
+import {ToastService} from "../../../services/toast.service";
 
 declare var $: any;
 
@@ -20,6 +22,8 @@ export class CartSectionComponent implements OnInit {
   orderType = new FormControl('')
 
   constructor(public cartService: CartService,
+              private _toastService:ToastService,
+              private _router:Router,
               private MenuService: MenuService,
               public _helperService: HelperService,
               private _contextService: ContextService,
@@ -95,7 +99,23 @@ export class CartSectionComponent implements OnInit {
 
   placeOrder() {
     this.loader = true
-    this.cartService.addToCart(this.cartService.cartProduct, true, 'place-order')
+    this.cartService.addToCart(this.cartService.cartProduct, 'add_db')
+    this.loader = false
+  }
+
+  selectOrderType(key: any = '') {
+    this._clientService.setCookie('orderType', key)
+  }
+
+  checkout(){
+    if(!this._clientService.getCookie().orderType){
+      this._toastService.setToast({
+        description: 'Please select order type!',
+        type: 'danger'
+      })
+      return
+    }
+    this._router.navigate(['/checkout'])
   }
 
   openModal() {

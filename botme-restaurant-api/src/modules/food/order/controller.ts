@@ -166,14 +166,20 @@ export async function addCart(obj: any, filter: any) {
         let cartObj = obj.cart
         let orderObj = obj.order
         let tempFilter = JSON.parse(JSON.stringify(filter))
-        cartObj.cartId = randomUUID()
+
 
         // checking is order exists
         // filter restaurantId & orderLabel
         let isOrderExists: any = await getOrderById(tempFilter)
+        console.log(isOrderExists)
         if (isOrderExists) {
+            console.log('yes fond')
+            cartObj.forEach((item: any) => {
+                item.cartId = (item.cartId && item.cartId.length) ? item.cartId : randomUUID()
+                item.orderLabel = isOrderExists.orderLabel
+            })
+
             // once order created just save cart only
-            cartObj.orderLabel = isOrderExists.orderLabel
             let cartResult = await createCart(cartObj)
             response.payload = {cart: cartResult, order: isOrderExists}
             response.status = "success"
@@ -187,7 +193,11 @@ export async function addCart(obj: any, filter: any) {
         let orderResult = await createOrder(orderObj)
         if (orderResult) {
             orderResult = JSON.parse(JSON.stringify(orderResult))
-            cartObj.orderLabel = orderResult.orderLabel
+            cartObj.forEach((item: any) => {
+                item.cartId = randomUUID()
+                item.orderLabel = orderResult.orderLabel
+            })
+
             let cartResult = await createCart(cartObj)
             if (cartResult) {
                 cartResult = JSON.parse(JSON.stringify(cartResult))

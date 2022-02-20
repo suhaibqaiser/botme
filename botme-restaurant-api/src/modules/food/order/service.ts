@@ -33,7 +33,7 @@ export async function getCartById(filter: string) {
 }
 
 export async function createCart(cart: any) {
-    return Cart.create(cart)
+    return Cart.insertMany(cart)
 }
 
 export async function updateCart(cart: any, filter: string) {
