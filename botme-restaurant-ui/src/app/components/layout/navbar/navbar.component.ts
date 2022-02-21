@@ -64,12 +64,12 @@ export class NavbarComponent implements OnInit {
       return ''
     }
 
-    if (this._helperService.getOrderTypeOnAuthBasis() && this._helperService.getOrderTypeOnAuthBasis() === 'dine_in') {
-      id = this._botMeClientService.getCookie().reservationLabel ? this._botMeClientService.getCookie().reservationLabel : ''
-    } else if(this._helperService.getOrderTypeOnAuthBasis()){
-      id = this._botMeClientService.getCookie().orderLabel ? this._botMeClientService.getCookie().orderLabel : ''
-    }
-
+    // if (this._helperService.getOrderTypeOnAuthBasis() && this._helperService.getOrderTypeOnAuthBasis() === 'dine_in') {
+    //   id = this._botMeClientService.getCookie().reservationLabel ? this._botMeClientService.getCookie().reservationLabel : ''
+    // } else if(this._helperService.getOrderTypeOnAuthBasis()){
+    //   id = this._botMeClientService.getCookie().orderLabel ? this._botMeClientService.getCookie().orderLabel : ''
+    // }
+    id = this._botMeClientService.getCookie().orderLabel ? this._botMeClientService.getCookie().orderLabel : ''
     return this._helperService.getOrderTypeOnAuthBasis().replace(/_/g, " ") + ' : ' +  id
   }
 }
