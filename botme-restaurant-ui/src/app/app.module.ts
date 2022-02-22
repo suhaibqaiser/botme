@@ -73,6 +73,7 @@ import {OrderService} from "./services/order.service";
 import {ToastComponent} from './components/toast/toast.component';
 import {ToastService} from "./services/toast.service";
 import {CustomerService} from "./services/customer.service";
+import { ProductSuggestionComponent } from './components/sections/product-suggestion/product-suggestion.component';
 
 @NgModule({
   declarations: [
@@ -125,7 +126,8 @@ import {CustomerService} from "./services/customer.service";
     LoginFormComponent,
     ProfileSectionComponent,
     OrderSectionComponent,
-    ToastComponent
+    ToastComponent,
+    ProductSuggestionComponent
   ],
   imports: [
     BrowserModule,

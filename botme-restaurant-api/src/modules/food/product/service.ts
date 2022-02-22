@@ -5,8 +5,6 @@ export async function createProduct(product: any) {
 }
 
 export async function getProduct(queryParams: any, sort: any) {
-    console.log('queryParams => ', queryParams);
-    console.log('sort =>', sort)
     if (parseInt(sort)) {
         return Product.find(queryParams, {
             __v: 0,
@@ -18,11 +16,33 @@ export async function getProduct(queryParams: any, sort: any) {
 
 }
 
-export async function getProductByTag(tag: string, person: number, restaurantId: string) {
-    return Product.find({ "productTags": tag, "productServing": { $lte: person }, "restaurantId": restaurantId }, {
+export async function getProductByTag(tag: string, person: number, restaurantId: string, attributes?: any) {
+    let filter: any = {
+        "productTags": tag,
+        "productServing": { $lte: person }, "restaurantId": restaurantId,
+    }
+    if (attributes) {
+        if (attributes.vegan) {
+            filter["productAttributes.vegan"] = true;
+        }
+        if (attributes.halal) {
+            filter["productAttributes.halal"] = true;
+        }
+        if (attributes.vegetarian) {
+            filter["productAttributes.vegetarian"] = true;
+        }
+        if (attributes.glutenFree) {
+            filter["productAttributes.glutenFree"] = true;
+        }
+        console.log(filter);
+    }
+
+
+    return Product.find(filter, {
         "productId": 1,
         _id: 0,
     })
+
 }
 
 export async function updateProduct(product: any) {
@@ -32,3 +52,4 @@ export async function updateProduct(product: any) {
 export async function getMaxLabelValue() {
     return Product.findOne({}).sort({ productLabel: -1 })
 }
+

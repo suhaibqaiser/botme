@@ -1,0 +1,106 @@
+<!-- welcome-section -->
+<section class="welcome-section bg-overlay-1 pt-100 pb-70 bg-black">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-sm-12 col-md-5 col-lg-12 pb-30">
+                <div class="section-title section-title-left text-center text-md-start m-0">
+                    <div class="mt-30">
+                        <form id="product-suggestion" [formGroup]="suggestionForm">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="form-group mb-20">
+                                        <div class="input-group">
+                                            <input type="text" name="tag" id="tag" class="form-control" required
+                                                formControlName="tags" data-error="Enter atleast one item"
+                                                placeholder="What would you like to eat?" />
+                                        </div>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="form-group mb-20">
+                                        <div class="input-group">
+                                            <input type="number" name="persons" id="persons" class="form-control"
+                                                formControlName="person" required data-error="Enter a valid number"
+                                                placeholder="How many people are you?" />
+                                        </div>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="form-control form-control-lg">
+                                        <label for="drinks" class="col-sm-3 control-label">Something to drink?</label>
+                                        <select id="drinks" (click)="null" class="btn btn-secondary dropdown-toggle"
+                                            formControlName="drinks">
+                                            <option value="cold">Cold</option>
+                                            <option value="hot">Hot</option>
+                                            <option value="shake">Shakes</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="form-group mb-20">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-check form-switch form-control-lg">
+                                                    <input class="form-check-input" type="checkbox" id="vegan"
+                                                        formControlName="vegan">
+                                                    <label class="form-check-label form-control"
+                                                        for="vegan">Vegan</label>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-check form-switch form-control-lg">
+                                                    <input class="form-check-input" type="checkbox" id="halal"
+                                                        formControlName="halal">
+                                                    <label class="form-check-label form-control"
+                                                        for="halal">Halal</label>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-check form-switch form-control-lg">
+                                                    <input class="form-check-input" type="checkbox" id="vegetarian"
+                                                        formControlName="vegetarian">
+                                                    <label class="form-check-label form-control"
+                                                        for="vegetarian">Vegetarian</label>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-check form-switch form-control-lg">
+                                                    <input class="form-check-input" type="checkbox" id="gluten"
+                                                        formControlName="glutenFree">
+                                                    <label class="form-check-label form-control"
+                                                        for="gluten">Gluten-Free</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <button class="btn full-width" type="submit" (click)="suggest()">
+                                        Suggest!
+                                    </button>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </form>
+                        <div *ngIf="suggestedItems.products.length == 0" class="text-light">
+                            <h1>Nothing found!</h1>
+                        </div>
+                        <div *ngIf="suggestedItems.products.length > 0">
+                            <ul class="list-group" *ngFor="let product of suggestedItems.products">
+                                <li class="list-group-item">{{product.productName}}</li>
+                            </ul>
+                            <ul class="list-group" *ngFor="let product of suggestedItems.drinks">
+                                <li class="list-group-item">{{product.productName}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- .end welcome-section -->

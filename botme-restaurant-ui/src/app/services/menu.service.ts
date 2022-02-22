@@ -1,9 +1,9 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {environment} from 'src/environments/environment';
-import {BotmeClientService} from "./botme-client.service";
-import {HelperService} from "./helper.service";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { BotmeClientService } from "./botme-client.service";
+import { HelperService } from "./helper.service";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class MenuService {
   apiBaseUrl = environment.apiRestaurantUrl;
 
   getProducts(): Observable<any> {
-    const url = `${this.apiBaseUrl}/food/product/search?restaurantId=` + this._helperService.getRestaurantIdOnAuthBasis();
+    const url = `${this.apiBaseUrl}/food/product/search?restaurantId=` + `DM-1`//this._helperService.getRestaurantIdOnAuthBasis();
     return this.http.get(url);
   }
 
@@ -38,6 +38,20 @@ export class MenuService {
   getProductsByFiltering(urlString: any) {
     const url = this.apiBaseUrl + "/food/product/search?productCategory=" + urlString.productCategory + '&productName=' + urlString.productName + '&priceMin=' + urlString.priceMin + '&priceMax=' + urlString.priceMax + '&sortByPrice=' + urlString.sortByPrice + '&ratingMin=' + urlString.ratingMin + '&ratingMax=' + urlString.ratingMax + '&restaurantId=' + this._helperService.getRestaurantIdOnAuthBasis()
     return this.http.get(url);
+  }
+
+  getSuggestions(searchParameters: any): Observable<any> {
+    const urlString = this.apiBaseUrl + "/food/product/suggest"
+    const body = {
+      "searchParameters": {
+        "tags": searchParameters.tags,
+        "drinks": searchParameters.drinks,
+        "attributes": searchParameters.attributes,
+        "persons": searchParameters.persons
+      },
+      "restaurantId": "DM-1"//this._helperService.getRestaurantIdOnAuthBasis()
+    };
+    return this.http.post(urlString, body)
   }
 
   // Cart Cruds///

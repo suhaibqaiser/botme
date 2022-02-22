@@ -45,3 +45,4 @@ urllib3==1.26.6
 waitress==2.0.0
 Werkzeug==2.0.1
 yarg==0.1.9
+wheel==0.37.1

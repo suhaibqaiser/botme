@@ -94,10 +94,10 @@ nlu:
     examples: |
       - we are looking for [Platter](productName) or [Wrap](productName) for [2](number) person
       - i am looking for [Platter](productName) or [Wrap](productName) for [four](number) people
-      - we want to eat something like [Platter](productName) or [Burger](productName) for [5](number) person
+      - we want to eat something like [platter](productName) or [burger](productName) for [5](number) person
       - i am in the mood for [Burger](productName) or [Platter](productName) for [7](number) person
       - i am looking for [Burger](productName) for [six](number) people
-      - we want to have [Wrap](productName) for [3](number) people
+      - we want to have [wrap](productName) for [3](number) people
       
 
   - intent: reservation_page

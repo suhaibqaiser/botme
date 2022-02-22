@@ -72,7 +72,6 @@ export async function findProduct(filter: any, restaurantId: any) {
         queryParam.productRating = { '$gte': Number(ratingMin), '$lte': Number(ratingMax) }
     }
 
-    console.log('before queryParam =>', queryParam)
 
     let result = await getProduct(queryParam, filter.sortByPrice)
     if (result.length != 0) {
@@ -93,7 +92,6 @@ export async function editProduct(product: any, restaurantId: any) {
         response.status = "error"
         return response;
     }
-    console.log(product)
     let result = await updateProduct(product)
     if (result) {
         response.payload = result
@@ -113,21 +111,36 @@ export async function suggestProduct(searchParameters: any, restaurantId: any) {
         response.status = "error"
         return response;
     }
-    console.log(searchParameters,restaurantId)
     let persons = searchParameters.persons
     let productTags = searchParameters.tags
+    let drinkTags = searchParameters.drinks
+    let attributes = searchParameters.attributes
 
     let productList: any[] = []
+    let drinkList: any[] = []
 
     for (const productTag of productTags) {
-        let products = await getProductByTag(productTag, persons, restaurantId)
+        let products = await getProductByTag(productTag, persons, restaurantId, attributes)
         products.forEach((product: any) => {
-            if (!productList.includes(product)) { productList.push(product) }
+            if (!productList.includes(product.productId)) { productList.push(product.productId) }
         });
     }
 
-    let result = await productList
-    if (result.length != 0) {
+    if (productList.length > 0) {
+        let products = await getProductByTag(drinkTags, persons, restaurantId)
+        products.forEach((product: any) => {
+            if (!drinkList.includes(product.productId)) { drinkList.push(product.productId) }
+        });
+    }
+
+
+    let itemList = {
+        products: productList,
+        drinks: drinkList
+    }
+
+    let result = itemList
+    if (result) {
         response.payload = result
         response.status = "success"
         return response
