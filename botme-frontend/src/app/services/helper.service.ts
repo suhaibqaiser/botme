@@ -64,7 +64,8 @@ export class HelperService {
   }
 
   computeDate(date = '') {
-    return new Date(date).getDate() + '/' + new Date(date).getMonth() + '/' + new Date(date).getFullYear()
+    let d = date.split('T')[0].split('-')
+    return d[0] + '/' + d[1] + '/' + d[2]
   }
 
   computeTime(date = '') {
@@ -81,7 +82,7 @@ export class HelperService {
 
   computeProductsForOrderCart(type = '', list: any = [], productList: any = []) {
     let data = ''
-    if (['options','ingredients'].includes(type)) {
+    if (['options', 'ingredients'].includes(type)) {
       data = list.map((item: any) => {
         return this.getProductById(productList, item.productId).productName
       })
@@ -92,5 +93,37 @@ export class HelperService {
       return product.productName + '(' + item.productQuantity + ')'
     })
     return data
+  }
+
+  customizeBillCalculation(order: any) {
+    let price = this.roundToTwo(order.productPrice * order.productQuantity)
+
+    if (order.productToppings && order.productToppings.length) {
+      order.productToppings.forEach((item: any) => {
+        price += item.productTotalPrice
+      })
+    }
+
+    if (order.productAddons && order.productAddons.length) {
+      order.productAddons.forEach((item: any) => {
+        price += item.productTotalPrice
+      })
+    }
+    price = this.roundToTwo(order.productTotalPrice)
+    return price
+  }
+
+  roundToTwo(num: number) {
+    return Math.round((num + Number.EPSILON) * 100) / 100;
+  }
+
+  calculateProductRate(productRate: any) {
+    let p: any
+      ['standard', 'medium', 'large', 'small'].forEach((item: any) => {
+        if(productRate[item] >= 1) {
+          p = productRate[item]
+        }
+    })
+    return p
   }
 }

@@ -85,7 +85,7 @@
               <div class="card-body">
                 <div class="head d-flex justify-content-between align-items-center">
                   <h6>{{cart.product.productName}}</h6>
-                  <p>Qty {{'(' + cart.productQuantity + ')'}}</p>
+                  <p>{{'qty (' + cart.productQuantity  +') = ' + (cart.productQuantity * _helperService.calculateProductRate(cart.productRate))}}</p>
                 </div>
                 <div *ngFor="let rate of cart.productRate | keyvalue"
                      class="serving_size d-flex justify-content-between align-items-center">
@@ -97,7 +97,7 @@
                   <p>{{cart.productFlavor}}</p>
                 </div>
                 <hr>
-                <div class="options d-flex justify-content-between align-items-center">
+                <div *ngIf="cart.productOptions.length" class="options d-flex justify-content-between align-items-center">
                   <h6>options</h6>
                   <div>
                     <ul *ngFor="let options of cart.productOptions">
@@ -105,8 +105,8 @@
                     </ul>
                   </div>
                 </div>
-                <hr>
-                <div class="options d-flex justify-content-between align-items-center">
+                <hr *ngIf="cart.productOptions.length">
+                <div *ngIf="cart.productIngredients.length" class="options d-flex justify-content-between align-items-center">
                   <h6>Ingredients</h6>
                   <div>
                     <ul *ngFor="let ingredients of cart.productIngredients">
@@ -114,8 +114,8 @@
                     </ul>
                   </div>
                 </div>
-                <hr>
-                <div class="options d-flex justify-content-between align-items-center">
+                <hr *ngIf="cart.productIngredients.length">
+                <div *ngIf="cart.productToppings.length" class="options d-flex justify-content-between align-items-center">
                   <h6>Toppings</h6>
                   <div>
                     <ul *ngFor="let topping of cart.productToppings">
@@ -125,8 +125,8 @@
                     </ul>
                   </div>
                 </div>
-                <hr>
-                <div class="options d-flex justify-content-between align-items-center">
+                <hr *ngIf="cart.productToppings.length">
+                <div *ngIf="cart.productProportion.length" class="options d-flex justify-content-between align-items-center">
                   <h6>Addons</h6>
                   <div>
                     <ul *ngFor="let addons of cart.productProportion">
