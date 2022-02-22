@@ -36,6 +36,9 @@ export class OrderOverviewComponent implements OnInit {
           if (Array.isArray(this.orders)) {
             for (let order of this.orders) {
               order.carts = this.getCartByOrderLabel(order.orderLabel)
+              order.productTotalPrice =  order.carts.reduce((prev: any, next: any) => {
+                return prev + next.productTotalPrice
+              },0)
               order.customer = this.getCustomerName(order.customerId)
             }
           }
