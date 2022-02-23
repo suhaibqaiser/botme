@@ -33,26 +33,38 @@
             <h6><strong>Customer Detail</strong></h6>
             <div class="head d-flex justify-content-between align-items-center">
               <h6 class="card-title">
-                Customer Name
+                <span *ngIf="orderDetailObj.customer && orderDetailObj.customer.customerName">Customer Name</span>
                 <br>
-                Country
+                <span *ngIf="orderDetailObj.customer && orderDetailObj.customer.reservationSeats">Seats</span>
                 <br>
-                Street
+                <span *ngIf="orderDetailObj.customer && orderDetailObj.customer.reservationDate">Reservation date</span>
                 <br>
-                Town
+                <span *ngIf="orderDetailObj.customer && orderDetailObj.customer.reservationTime">Reservation time</span>
                 <br>
-                State
+                <span *ngIf="orderDetailObj.customer && orderDetailObj.customer.customerCountry">Country</span>
                 <br>
-                Address
+                <span *ngIf="orderDetailObj.customer && orderDetailObj.customer.customerStreet">Street</span>
                 <br>
-                Phone
+                <span *ngIf="orderDetailObj.customer && orderDetailObj.customer.customerTown">Town</span>
                 <br>
-                Email
+                <span *ngIf="orderDetailObj.customer && orderDetailObj.customer.customerState">State</span>
                 <br>
-                Notes
+                <span *ngIf="orderDetailObj.customer && orderDetailObj.customer.customerAddress">Address</span>
+                <br>
+                <span *ngIf="orderDetailObj.customer && orderDetailObj.customer.customerPhone">Phone</span>
+                <br>
+                <span *ngIf="orderDetailObj.customer && orderDetailObj.customer.customerEmail">Email</span>
+                <br>
+                <span *ngIf="orderDetailObj.customer && orderDetailObj.customer.orderNotes">Notes</span>
               </h6>
               <p>
                 {{(orderDetailObj.customer && orderDetailObj.customer.customerName) ? orderDetailObj.customer.customerName : '-'}}
+                <br>
+                {{(orderDetailObj.customer && orderDetailObj.customer.reservationSeats) ? orderDetailObj.customer.reservationSeats : '-'}}
+                <br>
+                {{(orderDetailObj.customer && orderDetailObj.customer.reservationDate) ? orderDetailObj.customer.reservationDate : '-'}}
+                <br>
+                {{(orderDetailObj.customer && orderDetailObj.customer.reservationTime) ? orderDetailObj.customer.reservationTime : '-'}}
                 <br>
                 {{(orderDetailObj.customer && orderDetailObj.customer.customerCountry) ? orderDetailObj.customer.customerCountry : '-'}}
                 <br>
@@ -92,11 +104,11 @@
                   <h6>serving size</h6>
                   <p>{{rate.key + ' $' + rate.value}}</p>
                 </div>
-                <div class="head d-flex justify-content-between align-items-center">
+                <div *ngIf="cart.productFlavor" class="head d-flex justify-content-between align-items-center">
                   <h6>Flavor</h6>
                   <p>{{cart.productFlavor}}</p>
                 </div>
-                <hr>
+                <hr *ngIf="cart.productFlavor">
                 <div *ngIf="cart.productOptions.length" class="options d-flex justify-content-between align-items-center">
                   <h6>options</h6>
                   <div>
