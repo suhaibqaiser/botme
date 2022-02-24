@@ -15,7 +15,7 @@
 <!--                <li><a href="faqs">FAQ's</a></li>-->
                 <li><a routerLink="reservations">Reservation</a></li>
                 <li><a routerLink="contact-us">Contact Us</a></li>
-                <li><a routerLink="cart">Cart</a></li>
+                <li *ngIf="cartService.cartProduct.length"><a routerLink="cart">Cart</a></li>
               </ul>
               <ul class="footer-details footer-list">
 <!--                <li><a href="our-team">Teams</a></li>-->

@@ -130,6 +130,7 @@ export class ProductCartModalComponent implements OnInit {
 
   navigateToCart() {
     if (!this.cartService.cartProduct.length) return
+    document.getElementsByClassName('cart-modal-wrapper')[0]?.setAttribute('style', 'display:none')
     this._router.navigate(['/cart'])
   }
 

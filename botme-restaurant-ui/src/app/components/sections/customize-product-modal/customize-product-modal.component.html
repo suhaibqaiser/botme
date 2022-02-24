@@ -116,11 +116,11 @@
                            Back
                         </button>
                         <div [class.apply-left-margin]="cartService.slideToShow===0" class="d-flex">
-                          <button data-bs-dismiss="modal" id="ctaId-cancel" (click)="cancelModal()" type="button"
-                            class="btn btn-yellow">Cancel</button>
                           <button id="ctaId-next" *ngIf="cartService.slideToShow!==4"
                             (click)="cartService.nextSlide()" type="button" class="btn ml-2 btn-primary">Next
                             </button>
+                          <button data-bs-dismiss="modal" id="ctaId-cancel" (click)="cancelModal()" type="button"
+                                  class="btn btn-yellow">Cancel</button>
                           <div *ngIf="!cartService.singleCustomProductObj.isShowInfo">
                             <button id="ctaId-cart-item"
                               *ngIf="cartService.slideToShow==4 && !cartService.singleCustomProductObj.isEditable"
@@ -175,11 +175,11 @@
                            Back
                         </button>
                         <div [class.apply-left-margin]="cartService.slideToShow===0" class="d-flex">
+                          <button id="ctaId-next" *ngIf="cartService.slideToShow!==4"
+                                  (click)="cartService.nextSlide()" type="button" class="btn ml-2 btn-primary">Next
+                          </button>
                           <button data-bs-dismiss="modal" id="ctaId-cancel" (click)="cancelModal()" type="button"
                             class="btn btn-yellow">Cancel</button>
-                          <button id="ctaId-next" *ngIf="cartService.slideToShow!==4"
-                            (click)="cartService.nextSlide()" type="button" class="btn ml-2 btn-primary">Next
-                            </button>
                           <div *ngIf="!cartService.singleCustomProductObj.isShowInfo">
                             <button id="ctaId-cart-item"
                               *ngIf="cartService.slideToShow==4 && !cartService.singleCustomProductObj.isEditable"
@@ -235,11 +235,11 @@
                            Back
                         </button>
                         <div [class.apply-left-margin]="cartService.slideToShow===0" class="d-flex">
+                          <button id="ctaId-next" *ngIf="cartService.slideToShow!==4"
+                                  (click)="cartService.nextSlide()" type="button" class="btn ml-2 btn-primary">Next
+                          </button>
                           <button data-bs-dismiss="modal" id="ctaId-cancel" (click)="cancelModal()" type="button"
                             class="btn btn-yellow">Cancel</button>
-                          <button id="ctaId-next" *ngIf="cartService.slideToShow!==4"
-                            (click)="cartService.nextSlide()" type="button" class="btn ml-2 btn-primary">Next
-                            </button>
                           <div *ngIf="!cartService.singleCustomProductObj.isShowInfo">
                             <button id="ctaId-cart-item"
                               *ngIf="cartService.slideToShow==4 && !cartService.singleCustomProductObj.isEditable"
@@ -353,23 +353,23 @@
                            Back
                         </button>
                         <div [class.apply-left-margin]="cartService.slideToShow===0" class="d-flex">
-                          <button data-bs-dismiss="modal" id="ctaId-cancel" (click)="cancelModal()" type="button"
-                            class="btn btn-yellow">Cancel</button>
                           <button id="ctaId-next" *ngIf="cartService.slideToShow!==4"
-                            (click)="cartService.nextSlide()" type="button" class="btn ml-2 btn-primary">Next
-                            </button>
+                                  (click)="cartService.nextSlide()" type="button" class="btn ml-2 btn-primary">Next
+                          </button>
                           <div *ngIf="!cartService.singleCustomProductObj.isShowInfo">
                             <button id="ctaId-cart-item"
-                              *ngIf="cartService.slideToShow==4 && !cartService.singleCustomProductObj.isEditable"
-                              (click)="addToCart()" type="button" data-bs-dismiss="modal"
-                              class="btn ml-2 btn-primary">Cart Item
-                              </button>
+                                    *ngIf="cartService.slideToShow==4 && !cartService.singleCustomProductObj.isEditable"
+                                    (click)="addToCart()" type="button" data-bs-dismiss="modal"
+                                    class="btn ml-2 btn-primary">Cart Item
+                            </button>
                             <button id="ctaId-cart-item"
-                              *ngIf="cartService.slideToShow==4 && cartService.singleCustomProductObj.isEditable"
-                              (click)="editToCart()" type="button" data-bs-dismiss="modal"
-                              class="btn ml-2 btn-primary">Edit Cart Item
+                                    *ngIf="cartService.slideToShow==4 && cartService.singleCustomProductObj.isEditable"
+                                    (click)="editToCart()" type="button" data-bs-dismiss="modal"
+                                    class="btn ml-2 btn-primary">Edit Cart Item
                             </button>
                           </div>
+                          <button data-bs-dismiss="modal" id="ctaId-cancel" (click)="cancelModal()" type="button"
+                            class="btn btn-yellow">Cancel</button>
                         </div>
                       </div>
                     </div>
