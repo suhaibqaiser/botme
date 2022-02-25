@@ -592,6 +592,7 @@ export class CartService {
 
   selectServing(sizeObj: any) {
     let name = (this._socketService.voiceServingSize && this._socketService.voiceServingSize.length) ? this._socketService.voiceServingSize : sizeObj.serving_size_name
+    console.log(sizeObj, this.singleCustomProductObj.productServingSize)
     this.singleCustomProductObj.productServingSize.forEach((item: any) => {
       item.selected = item.serving_size_name.toLowerCase() === name.toLowerCase()
     })
