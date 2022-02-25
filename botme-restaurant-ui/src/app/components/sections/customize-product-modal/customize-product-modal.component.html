@@ -26,7 +26,7 @@
                             <div id="{{size.serving_size_name}}"
                                  *ngFor="let size of cartService.singleCustomProductObj.productServingSize"
                                  (click)="cartService.selectServing(size)" class="mb-2 col-lg-3">
-                              <i *ngIf="size.selected" class="fas fa-check"></i>
+                              <span *ngIf="size.selected"><i class="fas fa-check"></i></span>
                               <div class="d-flex align-items-center justify-content-around ">
                                 <h6>{{size.serving_size_name}}</h6>
                               </div>
@@ -41,7 +41,7 @@
                           <div id="{{options.productId}}"
                             *ngFor="let options of cartService.singleCustomProductObj.productOptions"
                             (click)="cartService.selectProductOptions(options)" class="mb-2 col-lg-3">
-                            <i *ngIf="options.selected" class="fas fa-check"></i>
+                            <span *ngIf="options.selected" ><i class="fas fa-check"></i></span>
                             <div class="d-flex align-items-center justify-content-around ">
                               <img [src]="options.productImage" />
                               <h6>{{options.productName}}</h6>
@@ -84,7 +84,7 @@
                           <div id="{{ingredients.productId}}"
                             *ngFor="let ingredients of cartService.singleCustomProductObj.productIngredients"
                             (click)="cartService.selectIngredients(ingredients)" class="mb-2 col-lg-3">
-                            <i *ngIf="ingredients.selected" class="fas fa-check"></i>
+                            <span *ngIf="ingredients.selected"><i  class="fas fa-check"></i></span>
                             <div class="d-flex align-items-center justify-content-around ">
                               <img [src]="ingredients.productImage" />
                               <h6>{{ingredients.productName}}</h6>
@@ -102,7 +102,7 @@
                           <div id="{{flavor.flavorName}}"
                             *ngFor="let flavor of cartService.singleCustomProductObj.productFlavors"
                             (click)="cartService.selectFlavor(flavor)" class="mb-2 col-lg-3">
-                            <i *ngIf="flavor.selected" class="fas fa-check"></i>
+                            <span *ngIf="flavor.selected"><i class="fas fa-check"></i></span>
                             <div class="d-flex align-items-center justify-content-around ">
                               <h6>{{flavor.flavorName}}</h6>
                             </div>
