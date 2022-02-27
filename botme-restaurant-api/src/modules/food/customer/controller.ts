@@ -3,6 +3,8 @@ import {addCustomer, getAllCustomers, getCustomer, updateOneCustomer, getAddress
 import {randomUUID} from "crypto";
 import {getMaxLabelValue} from "../../food/customer/service";
 import {getOrderById, updateCustomerId} from "../order/service";
+import { SendNotification } from "../../notification/order-notification/controller";
+import { GetAllSubscription } from "../../notification/order-notification/service";
 
 export async function findCustomer(filter: any) {
     let response = new restResponse()
@@ -91,6 +93,8 @@ export async function createCustomer(filter: any, customer: any) {
 }
 
 export async function updateCustomer(customer: any, filter: any) {
+    console.log("updated customer")
+    await SendNotification(await GetAllSubscription())
     let response = new restResponse()
     try {
         if (!customer || !filter) {
@@ -98,7 +102,6 @@ export async function updateCustomer(customer: any, filter: any) {
             response.status = "danger"
             return response;
         }
-
         let result = await updateOneCustomer(customer)
         if (result) {
             response.payload = JSON.parse(JSON.stringify(result))

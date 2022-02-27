@@ -13,13 +13,14 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 
 import { UserListComponent } from './components/user/user-list/user-list.component';
 import { UserDetailComponent } from './components/user/user-detail/user-detail.component';
-
+import { NotificationListComponent } from './components/notification/notification-list/notification-list.component';
 
 
 @NgModule({
   declarations: [
     UserListComponent,
     UserDetailComponent,
+    NotificationListComponent,
   ],
   imports: [
     CommonModule,

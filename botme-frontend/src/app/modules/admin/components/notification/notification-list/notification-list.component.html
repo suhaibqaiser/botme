@@ -1,0 +1,12 @@
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex align-items-center justify-content-between m-b-15">
+        <h4 class="m-b-0">Notification</h4>
+        <div class="card-toolbar"></div>
+        <ul>
+            <p-toggleButton #event (onChange)="handleChange(event)" onLabel="Enable" offLabel="Disable" onIcon="pi-pi-check" offIcon="pi pi-times" [style]="{'width': '10em'}"></p-toggleButton>  
+        </ul>
+    </div>
+  </div>
+</div>
+<script src="notification-list.component.ts"></script>
