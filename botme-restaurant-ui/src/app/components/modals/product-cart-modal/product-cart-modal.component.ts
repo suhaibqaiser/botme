@@ -48,7 +48,6 @@ export class ProductCartModalComponent implements OnInit {
       if (res.status === 'success') {
         const cartList = res.payload.cart
         this.clientService.setCookie('orderLabel', res.payload.order.orderLabel)
-        this.clientService.setCookie('reservationLabel', res.payload.order.reservationLabel)
         this.clientService.setCookie('orderType', res.payload.order.orderType)
         this.clientService.setCookie('customerId', res.payload.order.customerId)
         if (cartList && cartList.length) {
@@ -61,7 +60,6 @@ export class ProductCartModalComponent implements OnInit {
         return
       }
       this.clientService.setCookie('orderLabel', '')
-      this.clientService.setCookie('reservationLabel', '')
       this.clientService.setCookie('orderType', '')
       this.clientService.setCookie('customerId', '')
 

@@ -4,6 +4,7 @@ import {CustomerService} from "../../../service/customer.service";
 import {ProductService} from "../../../service/product.service";
 import {HelperService} from "../../../../../services/helper.service";
 import {Router} from "@angular/router";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-order-overview',
@@ -18,7 +19,7 @@ export class OrderOverviewComponent implements OnInit {
   carts: any = []
   products: any = []
 
-  constructor(private _router: Router, public _helperService: HelperService, private _productService: ProductService, private _orderService: OrderService, private _customerService: CustomerService) {
+  constructor(private messageService: MessageService, private _router: Router, public _helperService: HelperService, private _productService: ProductService, private _orderService: OrderService, private _customerService: CustomerService) {
   }
 
   async ngOnInit() {
@@ -36,9 +37,9 @@ export class OrderOverviewComponent implements OnInit {
           if (Array.isArray(this.orders)) {
             for (let order of this.orders) {
               order.carts = this.getCartByOrderLabel(order.orderLabel)
-              order.productTotalPrice =  order.carts.reduce((prev: any, next: any) => {
+              order.productTotalPrice = order.carts.reduce((prev: any, next: any) => {
                 return prev + next.productTotalPrice
-              },0)
+              }, 0)
               order.customer = this.getCustomerName(order.customerId)
             }
           }
@@ -113,5 +114,16 @@ export class OrderOverviewComponent implements OnInit {
   viewOrderDetail(order: any) {
     this._orderService.setOrderDetailObject(order)
     this._router.navigate(['/order-detail'])
+  }
+
+  updateOrderStatus(order: any) {
+    if(order.orderStatus === 'delivered') {
+      this.messageService.add({severity: 'info', summary: 'Update Success', detail: 'Already updated!'})
+      return
+    }
+    this._orderService.updateOrderStatus(order.orderLabel, order.orderType, 'delivered').subscribe((res: any) => {
+      this.messageService.add({severity: 'success', summary: 'Update Success', detail: 'Order status update!'})
+      order.orderStatus = 'delivered'
+    })
   }
 }

@@ -61,4 +61,5 @@ export class OrderListComponent implements OnInit {
   clear(table: Table) {
     table.clear();
   }
+
 }

@@ -96,7 +96,7 @@
 <!--          </a>-->
 <!--        </div>-->
 
-        <div style="width: 49%" class="cart-details m-auto mt-5">
+        <div *ngIf="!_clientService.getCookie().isLoggedIn" style="width: 49%" class="cart-details m-auto mt-5">
           <h3 class="cart-details-title text-center color-white">Select Order Type</h3>
           <form>
             <div class="d-flex justify-content-around mt-2 align-items-center cart-check-box">

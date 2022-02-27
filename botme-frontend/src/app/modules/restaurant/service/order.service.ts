@@ -44,4 +44,12 @@ export class OrderService {
   getOrderDetailObject() {
     return this.orderDetailObj
   }
+
+  /**
+   * update the order status from cart
+   */
+  updateOrderStatus(orderLabel = '', orderType = '', orderStatus = '') {
+    const url = this.apiBaseUrl + "/food/cart/updateOrderStatus?restaurantId=" + this.authService.getRestaurantId() + '&orderLabel=' + orderLabel + '&orderType=' + orderType + '&orderStatus=' + orderStatus
+    return this.http.get(url);
+  }
 }

@@ -15,11 +15,15 @@
           </h4>
         </div>
         <hr class="mt-1">
+        <h4 class="text-center">{{_helperService.computeOrderType(order.orderType).orderText + ': ' + order.orderLabel}}</h4>
         <div class="head d-flex align-items-center justify-content-between">
-          <h4>Order
-            Id: {{(order.orderType === _helperService.computeOrderType('dine_in')) ? order.reservationLabel : order.orderLabel}} ({{'$' + _helperService.roundToTwo(order.productTotalPrice)}})
-            <br> Table: 1</h4>
-          <h4 style="cursor: pointer">{{order.orderType}} <br> {{_helperService.computeDate(order.orderTimestamp)}}</h4>
+          <h4>Price
+          <br>
+            Order Type
+            <br>
+            Time
+          </h4>
+          <h4 style="cursor: pointer" class="text-right">{{'$' + _helperService.roundToTwo(order.productTotalPrice)}} <br> {{order.orderType}} <br> {{_helperService.computeDate(order.orderTimestamp)}}</h4>
         </div>
         <hr>
 
@@ -38,6 +42,8 @@
           <hr>
         </div>
         <div class="text-center">
+          <button (click)="updateOrderStatus(order)" class="btn mt-2 btn-sm detial_btn btn-primary"><< complete order >>
+          </button>
           <button (click)="viewOrderDetail(order)" class="btn mt-2 btn-sm detial_btn btn-primary"><< view details >>
           </button>
         </div>

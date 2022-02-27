@@ -77,7 +77,6 @@ export async function editOrder(order: any, restaurantId: any) {
 export async function findCart(filter: any) {
     let response = new restResponse()
     try {
-        // filter if order_type => dine_in (reservationLabel) otherwise orderLabel
         let orderResult: any = await getOrderById(filter)
         orderResult = JSON.parse(JSON.stringify(orderResult))
 
@@ -87,8 +86,7 @@ export async function findCart(filter: any) {
             return response
         }
 
-        // filter orderLabel &  restaurantId
-        delete filter.reservationLabel
+        // filter orderLabel
         delete filter.orderType
         filter.orderLabel = orderResult.orderLabel
         let result = await getCart(filter)

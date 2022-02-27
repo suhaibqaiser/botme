@@ -179,6 +179,7 @@ export class CheckoutSectionComponent implements OnInit {
         description: res.message,
         type: res.status
       })
+      this._cartService.addToCart(this._cartService.cartProduct, 'edit_db')
       this.loader = false
     })
   }

@@ -11,6 +11,12 @@ export class HelperService {
     delivery: 'delivery'
   }
 
+  orderText: any = {
+    dine_in: 'Reservation Label',
+    pick_up: 'Order Id',
+    delivery: 'Order Id'
+  }
+
   orderStatusObject: any = {
     hold: 'hold',
     priced: 'priced',
@@ -25,14 +31,14 @@ export class HelperService {
 
   orderStatusColors: any = {
     hold: 'badge bg-warning text-dark',
-    priced: 'badge bg-success',
+    priced: 'badge bg-success text-white',
     ready: 'badge bg-info text-dark',
     in_process: 'badge in_process',
-    received: 'badge bg-success',
+    received: 'badge bg-success text-dark',
     notified: 'badge bg-info text-dark',
-    delivered: 'badge bg-success',
-    remade: 'badge bg-danger',
-    returned: 'badge bg-danger'
+    delivered: 'badge bg-success text-white',
+    remade: 'badge bg-danger text-white',
+    returned: 'badge bg-danger text-white'
   }
 
   orderMessages: any = {
@@ -52,7 +58,10 @@ export class HelperService {
 
   computeOrderType(type = '') {
     const orderType = this.orderTypes[type]
-    return orderType ? orderType : ''
+    return {
+      orderType: orderType ? orderType : '',
+      orderText: this.orderText[orderType ? orderType : '']
+    }
   }
 
   computeOrderStatusColor(type = '') {
@@ -119,10 +128,10 @@ export class HelperService {
 
   calculateProductRate(productRate: any) {
     let p: any
-      ['standard', 'medium', 'large', 'small'].forEach((item: any) => {
-        if(productRate[item] >= 1) {
-          p = productRate[item]
-        }
+    ['standard', 'medium', 'large', 'small'].forEach((item: any) => {
+      if (productRate[item] >= 1) {
+        p = productRate[item]
+      }
     })
     return p
   }

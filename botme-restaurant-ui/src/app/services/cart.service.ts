@@ -56,22 +56,22 @@ export class CartService {
 
   addToCart(singleCustomProductObj: any, callType: any = '') {
     // when you are simply adding cart items in list
-    if (callType === 'add_local_list') {
+    if (callType === 'add_local_list' && !this._clientService.getCookie().isLoggedIn) {
       document.getElementById("ctaId-show-cart")?.click()
       this.cartProduct.push(JSON.parse(JSON.stringify(this.singleCustomProductObj)))
       return
     }
     // when you are saving all cart items to db first time
-    if (callType === 'add_db') {
+    if (this._clientService.getCookie().isLoggedIn || callType === 'add_db') {
       this.addCartToDb(singleCustomProductObj, callType)
       return;
     }
 
-    // // if cart exists in db and we need to edit it
-    // if (singleCustomProductObj.cartId && singleCustomProductObj.cartId.length) {
-    //   this.addCartToDb(singleCustomProductObj, 'edit_db')
-    //   return;
-    // }
+    // if cart exists in db and we need to edit it
+    if (singleCustomProductObj.cartId && singleCustomProductObj.cartId.length) {
+      this.addCartToDb(singleCustomProductObj, 'edit_db')
+      return;
+    }
 
     if (callType === 'edit_local_list') {
       let cart = JSON.parse(JSON.stringify(this.singleCustomProductObj))
@@ -84,25 +84,25 @@ export class CartService {
 
   removeFromCart(product: any) {
 
-    // if (product.cartId && product.cartId.length) {
-    //   this.cartLoader = true
-    //   this._menuService.deleteCartById(product.cartId).subscribe((res: any) => {
-    //     this._toastService.setToast({
-    //       description: res.message,
-    //       type: res.status
-    //     })
-    //     if (res.status === 'success') {
-    //       this.cartLoader = false
-    //       let cartListIndex = this.cartProduct.findIndex((item: any) => item._id === this.singleCustomProductObj._id)
-    //       this.cartProduct.splice(cartListIndex, 1)
-    //
-    //       if (this._helperService.getCurrentRouteName() !== '/cart') {
-    //         document.getElementById("ctaId-show-cart")?.click()
-    //       }
-    //     }
-    //   })
-    //   return
-    // }
+    if (product.cartId && product.cartId.length) {
+      this.cartLoader = true
+      this._menuService.deleteCartById(product.cartId).subscribe((res: any) => {
+        this._toastService.setToast({
+          description: res.message,
+          type: res.status
+        })
+        if (res.status === 'success') {
+          this.cartLoader = false
+          let cartListIndex = this.cartProduct.findIndex((item: any) => item._id === this.singleCustomProductObj._id)
+          this.cartProduct.splice(cartListIndex, 1)
+
+          if (this._helperService.getCurrentRouteName() !== '/cart') {
+            document.getElementById("ctaId-show-cart")?.click()
+          }
+        }
+      })
+      return
+    }
 
     let cartListIndex = this.cartProduct.findIndex((item: any) => item.productId === product.productId)
     this.cartProduct.splice(cartListIndex, 1)
@@ -339,8 +339,40 @@ export class CartService {
     //   return
     // }
 
+    let updatedList: any = {
+      order: {},
+      cart: []
+    }
+
+
+    if (callType === 'edit_db') {
+      console.log('yo')
+      this.cartLoader = true
+      const orderObj = this.orderObjGenerator(singleCustomProductObj)
+      if (this._helperService.getCurrentRouteName() !== '/cart') {
+        document.getElementById("ctaId-show-cart")?.click()
+        document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:block')
+      }
+      this._menuService.editToCartApi(orderObj).subscribe((res: any) => {
+        this._toastService.setToast({
+          description: res.message,
+          type: res.status
+        })
+        this.cartLoader = false
+        if (res.status === 'success') {
+          this.cartLoader = false
+          let cart = JSON.parse(JSON.stringify(this.singleCustomProductObj))
+
+          let cartListIndex = this.cartProduct.findIndex((item: any) => item._id === cart._id)
+          this.cartProduct.splice(cartListIndex, 1, cart)
+        }
+      })
+      return;
+    }
+
+
     // when calling from cart section and updating order & its cart item status
-    if (callType === 'add_db') {
+    if (this._clientService.getCookie().isLoggedIn || callType === 'add_db') {
 
       if (!this.cartProduct && !this.cartProduct.length) {
         this._toastService.setToast({
@@ -350,10 +382,30 @@ export class CartService {
         return;
       }
 
-      let updatedList: any = {
-        order: {},
-        cart: []
+
+      this.cartLoader = true
+      if (this._clientService.getCookie().isLoggedIn) {
+        const orderObj = this.orderObjGenerator(singleCustomProductObj)
+        updatedList.order = orderObj.order
+        updatedList.cart.push(orderObj.cart)
+        document.getElementById("ctaId-show-cart")?.click()
+        this._menuService.addToCartApi(updatedList).subscribe((res: any) => {
+          this._toastService.setToast({
+            description: res.message,
+            type: res.status
+          })
+          this.cartLoader = false
+          if (res.status === 'success') {
+            this._clientService.setCookie('orderLabel', res.payload.order.orderLabel)
+            this.singleCustomProductObj.cartId = res.payload.cart[0].cartId
+            this.cartProduct.push(JSON.parse(JSON.stringify(this.singleCustomProductObj)))
+            console.log(this.cartProduct)
+          }
+        })
+        return
       }
+
+
       let filterCartList = this._helperService.filterCartByCartId(JSON.parse(JSON.stringify(this.cartProduct)))
       filterCartList.forEach((item: any) => {
         let obj = this.orderObjGenerator(item)
@@ -370,7 +422,6 @@ export class CartService {
         this.cartLoader = false
         if (res.status === 'success') {
           this._clientService.setCookie('orderLabel', res.payload.order.orderLabel)
-          this._clientService.setCookie('reservationLabel', res.payload.order.reservationLabel)
           let cartList = res.payload.cart
           cartList.forEach((item: any, index: any) => {
             this.cartProduct[index].cartId = (!item.cartId && item.productId === this.cartProduct[index].productId) ? item.cartId : ''
@@ -399,29 +450,6 @@ export class CartService {
       // })
 
       return;
-    }
-
-
-    if (callType === 'edit_db') {
-      const orderObj = this.orderObjGenerator(singleCustomProductObj)
-      if (this._helperService.getCurrentRouteName() !== '/cart') {
-        document.getElementById("ctaId-show-cart")?.click()
-        document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:block')
-      }
-      this._menuService.editToCartApi(orderObj).subscribe((res: any) => {
-        this._toastService.setToast({
-          description: res.message,
-          type: res.status
-        })
-        this.cartLoader = false
-        if (res.status === 'success') {
-          this.cartLoader = false
-          let cart = JSON.parse(JSON.stringify(this.singleCustomProductObj))
-
-          let cartListIndex = this.cartProduct.findIndex((item: any) => item._id === cart._id)
-          this.cartProduct.splice(cartListIndex, 1, cart)
-        }
-      })
     }
   }
 
@@ -549,7 +577,6 @@ export class CartService {
     order = {
       restaurantId: this._helperService.getRestaurantIdOnAuthBasis(),
       orderLabel: (this._clientService.getCookie().orderLabel) ? this._clientService.getCookie().orderLabel : '',
-      reservationLabel: this._clientService.getCookie().reservationLabel,
       orderTimestamp: new Date(),
       orderType: this._helperService.getOrderTypeOnAuthBasis(),
       customerId: this._clientService.getCookie().customerId ? this._clientService.getCookie().customerId : '',
