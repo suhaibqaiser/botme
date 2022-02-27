@@ -21,7 +21,7 @@
                 <br> {{orderDetailObj.orderType}}
                 <br> {{_helperService.computeDate(orderDetailObj.orderTimestamp)}}
                 <br> -
-                <br> ${{orderDetailObj.orderTotal}}
+                <br> ${{ _helperService.roundToTwo(orderDetailObj.productTotalPrice)}}
               </p>
             </div>
           </div>
