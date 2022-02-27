@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
-import { GetSubscription, SendNotification } from "./controller";
-import { deleteAllSubscription } from "./service";
+import {Request, Response} from "express";
+import {GetSubscription, SendNotification} from "./controller";
+import {deleteAllSubscription} from "./service";
 
 export default [
     {
@@ -9,13 +9,12 @@ export default [
         handler: async (req: Request, res: Response) => {
             res.status(201).json({});
             console.log(req.body.endpoint)
-            if (req.body.endpoint == "remove"){
+            if (req.body.endpoint == "remove") {
                 await deleteAllSubscription()
-            }
-            else{
+            } else {
                 let result = await GetSubscription(req.body)
                 res.send(result);
-            }    
+            }
         }
     },
     {
@@ -23,7 +22,7 @@ export default [
         method: "post",
         handler: async (req: Request, res: Response) => {
             res.status(201).json({});
-            let result = await SendNotification(req)
+            let result = await SendNotification(req.body)
         }
     }
 ]

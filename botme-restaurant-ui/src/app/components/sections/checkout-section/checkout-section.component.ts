@@ -6,6 +6,7 @@ import {CustomerService} from "../../../services/customer.service";
 import {BotmeClientService} from "../../../services/botme-client.service";
 import {HelperService} from "../../../services/helper.service";
 import {Router} from "@angular/router";
+import {MenuService} from "../../../services/menu.service";
 
 declare var $: any;
 
@@ -57,7 +58,7 @@ export class CheckoutSectionComponent implements OnInit {
     'Dominican Republic'
   ]
 
-  stateList:any = [
+  stateList: any = [
     'Alaska',
     'Alabama',
     'Arizona',
@@ -106,7 +107,7 @@ export class CheckoutSectionComponent implements OnInit {
     'Tennessee',
   ]
 
-  constructor(private _router: Router, public _helperService: HelperService, public _clientService: BotmeClientService, private _toastService: ToastService, private _customerService: CustomerService, public _cartService: CartService) {
+  constructor(private _menuService: MenuService, private _router: Router, public _helperService: HelperService, public _clientService: BotmeClientService, private _toastService: ToastService, private _customerService: CustomerService, public _cartService: CartService) {
     this.customerForm.controls['restaurantId'].setValue(this._helperService.getRestaurantIdOnAuthBasis())
     if (this._clientService.getCookie().customerId && this._clientService.getCookie().customerId.length) {
       this.getCustomer()
@@ -168,6 +169,17 @@ export class CheckoutSectionComponent implements OnInit {
           this._clientService.setCookie('customerId', res.payload.customerId)
           $('#checkout_modal').modal('show')
           this._cartService.addToCart(this._cartService.cartProduct, 'add_db')
+          setTimeout(() => {
+            let obj = {
+              customerName: res.payload.customerName,
+              orderId: this._clientService.getCookie().orderLabel,
+              total: this._cartService.getSubTotal(),
+              orderType: this._clientService.getCookie().orderType
+            }
+            this._menuService.pushNotification(obj).subscribe((res: any) => {
+              console.log('notification pushed =>', res)
+            })
+          }, 2000)
         }
         this.loader = false
       })

@@ -79,10 +79,10 @@ export class MenuService {
   }
 
   /**
-   * update the order status from cart
+   * push notification
    */
-  updateOrderStatus(orderStatus = '') {
-    const url = this.apiBaseUrl + "/food/cart/updateOrderStatus?restaurantId=" + this._helperService.getRestaurantIdOnAuthBasis() + '&orderLabel=' + this.clientService.getCookie().orderLabel + '&orderType=' + this._helperService.getOrderTypeOnAuthBasis() + '&orderStatus=' + orderStatus
-    return this.http.get(url);
+  pushNotification(notificationObj: any) {
+    const url = this.apiBaseUrl + "/notification/send"
+    return this.http.post(url, notificationObj);
   }
 }
