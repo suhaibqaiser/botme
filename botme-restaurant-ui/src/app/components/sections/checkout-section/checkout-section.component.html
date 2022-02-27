@@ -21,7 +21,7 @@
                   <div class="form-group mb-20">
                     <div class="input-group">
                       <input type="number" formControlName="reservationSeats" class="form-control"
-                             placeholder="Number of persons"/>
+                             placeholder="Number of persons*"/>
                     </div>
                   </div>
                 </div>
@@ -44,9 +44,7 @@
                     <div class="input-group">
                       <select formControlName="customerCountry" class="form-control">
                         <option value="" disabled selected>Select country</option>
-                        <option value="2">USA</option>
-                        <option value="3">UK</option>
-                        <option value="4">Germany</option>
+                        <option *ngFor="let item of countryList" [value]="item">{{item}}</option>
                       </select>
                     </div>
                   </div>
@@ -54,18 +52,14 @@
                 <div class="col-sm-12 col-md-4">
                   <div class="form-group mb-20">
                     <div class="input-group">
-                      <input formControlName="customerStreet" type="text" class="form-control" placeholder="Street"/>
+                      <input formControlName="customerStreet" type="text" class="form-control" placeholder="Street*"/>
                     </div>
                   </div>
                 </div>
                 <div class="col-sm-12 col-md-4">
                   <div class="form-group mb-20">
                     <div class="input-group">
-                      <select formControlName="customerTown" class="form-control">
-                        <option value="" disabled selected>Select town</option>
-                        <option value="New-York">New York</option>
-                        <option value="Florida">Florida</option>
-                      </select>
+                      <input formControlName="customerTown" type="text" class="form-control" placeholder="Town*"/>
                     </div>
                   </div>
                 </div>
@@ -74,8 +68,7 @@
                     <div class="input-group">
                       <select formControlName="customerState" class="form-control">
                         <option value="" disabled selected>Select state</option>
-                        <option value="NY">NY</option>
-                        <option value="FL">FL</option>
+                        <option *ngFor="let item of stateList" [value]="item">{{item}}</option>
                       </select>
                     </div>
                   </div>
@@ -84,7 +77,7 @@
                   <div class="form-group mb-20">
                     <div class="input-group">
                       <input formControlName="customerAddress" type="text" class="form-control" required
-                             placeholder="Address With Zip Code*"/>
+                             placeholder="Address*"/>
                     </div>
                   </div>
                 </div>

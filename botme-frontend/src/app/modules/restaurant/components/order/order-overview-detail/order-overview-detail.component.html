@@ -33,26 +33,38 @@
             <h6><strong>Customer Detail</strong></h6>
             <div class="head d-flex justify-content-between align-items-center">
               <h6 class="card-title">
-                Customer Name
+                <span>Customer Name</span>
                 <br>
-                Country
+                <span>Seats</span>
                 <br>
-                Street
+                <span>Reservation date</span>
                 <br>
-                Town
+                <span>Reservation time</span>
                 <br>
-                State
+                <span>Country</span>
                 <br>
-                Address
+                <span>Street</span>
                 <br>
-                Phone
+                <span>Town</span>
                 <br>
-                Email
+                <span>State</span>
                 <br>
-                Notes
+                <span>Address</span>
+                <br>
+                <span>Phone</span>
+                <br>
+                <span>Email</span>
+                <br>
+                <span>Notes</span>
               </h6>
               <p>
                 {{(orderDetailObj.customer && orderDetailObj.customer.customerName) ? orderDetailObj.customer.customerName : '-'}}
+                <br>
+                {{(orderDetailObj.customer && orderDetailObj.customer.reservationSeats) ? orderDetailObj.customer.reservationSeats : '-'}}
+                <br>
+                {{(orderDetailObj.customer && orderDetailObj.customer.reservationDate) ? orderDetailObj.customer.reservationDate : '-'}}
+                <br>
+                {{(orderDetailObj.customer && orderDetailObj.customer.reservationTime) ? orderDetailObj.customer.reservationTime : '-'}}
                 <br>
                 {{(orderDetailObj.customer && orderDetailObj.customer.customerCountry) ? orderDetailObj.customer.customerCountry : '-'}}
                 <br>
@@ -85,19 +97,19 @@
               <div class="card-body">
                 <div class="head d-flex justify-content-between align-items-center">
                   <h6>{{cart.product.productName}}</h6>
-                  <p>Qty {{'(' + cart.productQuantity + ')'}}</p>
+                  <p>{{'qty (' + cart.productQuantity  +') = ' + (cart.productQuantity * _helperService.calculateProductRate(cart.productRate))}}</p>
                 </div>
                 <div *ngFor="let rate of cart.productRate | keyvalue"
                      class="serving_size d-flex justify-content-between align-items-center">
                   <h6>serving size</h6>
                   <p>{{rate.key + ' $' + rate.value}}</p>
                 </div>
-                <div class="head d-flex justify-content-between align-items-center">
+                <div *ngIf="cart.productFlavor" class="head d-flex justify-content-between align-items-center">
                   <h6>Flavor</h6>
                   <p>{{cart.productFlavor}}</p>
                 </div>
-                <hr>
-                <div class="options d-flex justify-content-between align-items-center">
+                <hr *ngIf="cart.productFlavor">
+                <div *ngIf="cart.productOptions.length" class="options d-flex justify-content-between align-items-center">
                   <h6>options</h6>
                   <div>
                     <ul *ngFor="let options of cart.productOptions">
@@ -105,8 +117,8 @@
                     </ul>
                   </div>
                 </div>
-                <hr>
-                <div class="options d-flex justify-content-between align-items-center">
+                <hr *ngIf="cart.productOptions.length">
+                <div *ngIf="cart.productIngredients.length" class="options d-flex justify-content-between align-items-center">
                   <h6>Ingredients</h6>
                   <div>
                     <ul *ngFor="let ingredients of cart.productIngredients">
@@ -114,8 +126,8 @@
                     </ul>
                   </div>
                 </div>
-                <hr>
-                <div class="options d-flex justify-content-between align-items-center">
+                <hr *ngIf="cart.productIngredients.length">
+                <div *ngIf="cart.productToppings.length" class="options d-flex justify-content-between align-items-center">
                   <h6>Toppings</h6>
                   <div>
                     <ul *ngFor="let topping of cart.productToppings">
@@ -125,8 +137,8 @@
                     </ul>
                   </div>
                 </div>
-                <hr>
-                <div class="options d-flex justify-content-between align-items-center">
+                <hr *ngIf="cart.productToppings.length">
+                <div *ngIf="cart.productProportion.length" class="options d-flex justify-content-between align-items-center">
                   <h6>Addons</h6>
                   <div>
                     <ul *ngFor="let addons of cart.productProportion">

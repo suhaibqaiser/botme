@@ -11,6 +11,12 @@ export class HelperService {
     delivery: 'delivery'
   }
 
+  orderText: any = {
+    dine_in: 'Reservation Label',
+    pick_up: 'Order Id',
+    delivery: 'Order Id'
+  }
+
   orderStatusObject: any = {
     hold: 'hold',
     priced: 'priced',
@@ -25,14 +31,14 @@ export class HelperService {
 
   orderStatusColors: any = {
     hold: 'badge bg-warning text-dark',
-    priced: 'badge bg-success',
+    priced: 'badge bg-success text-white',
     ready: 'badge bg-info text-dark',
     in_process: 'badge in_process',
-    received: 'badge bg-success',
+    received: 'badge bg-success text-dark',
     notified: 'badge bg-info text-dark',
-    delivered: 'badge bg-success',
-    remade: 'badge bg-danger',
-    returned: 'badge bg-danger'
+    delivered: 'badge bg-success text-white',
+    remade: 'badge bg-danger text-white',
+    returned: 'badge bg-danger text-white'
   }
 
   orderMessages: any = {
@@ -52,7 +58,10 @@ export class HelperService {
 
   computeOrderType(type = '') {
     const orderType = this.orderTypes[type]
-    return orderType ? orderType : ''
+    return {
+      orderType: orderType ? orderType : '',
+      orderText: this.orderText[orderType ? orderType : '']
+    }
   }
 
   computeOrderStatusColor(type = '') {
@@ -64,7 +73,8 @@ export class HelperService {
   }
 
   computeDate(date = '') {
-    return new Date(date).getDate() + '/' + new Date(date).getMonth() + '/' + new Date(date).getFullYear()
+    let d = date.split('T')[0].split('-')
+    return d[0] + '/' + d[1] + '/' + d[2]
   }
 
   computeTime(date = '') {
@@ -81,7 +91,7 @@ export class HelperService {
 
   computeProductsForOrderCart(type = '', list: any = [], productList: any = []) {
     let data = ''
-    if (['options','ingredients'].includes(type)) {
+    if (['options', 'ingredients'].includes(type)) {
       data = list.map((item: any) => {
         return this.getProductById(productList, item.productId).productName
       })
@@ -92,5 +102,37 @@ export class HelperService {
       return product.productName + '(' + item.productQuantity + ')'
     })
     return data
+  }
+
+  customizeBillCalculation(order: any) {
+    let price = this.roundToTwo(order.productPrice * order.productQuantity)
+
+    if (order.productToppings && order.productToppings.length) {
+      order.productToppings.forEach((item: any) => {
+        price += item.productTotalPrice
+      })
+    }
+
+    if (order.productAddons && order.productAddons.length) {
+      order.productAddons.forEach((item: any) => {
+        price += item.productTotalPrice
+      })
+    }
+    price = this.roundToTwo(order.productTotalPrice)
+    return price
+  }
+
+  roundToTwo(num: number) {
+    return Math.round((num + Number.EPSILON) * 100) / 100;
+  }
+
+  calculateProductRate(productRate: any) {
+    let p: any
+    ['standard', 'medium', 'large', 'small'].forEach((item: any) => {
+      if (productRate[item] >= 1) {
+        p = productRate[item]
+      }
+    })
+    return p
   }
 }

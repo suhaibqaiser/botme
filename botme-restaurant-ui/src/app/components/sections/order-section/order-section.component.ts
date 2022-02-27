@@ -46,7 +46,6 @@ export class OrderSectionComponent implements OnInit {
     this.orderId.reset()
     this._cartService.cartProduct = []
     this._botMeService.setCookie('orderLabel', '')
-    this._botMeService.setCookie('reservationLabel', '')
     this._botMeService.setCookie('customerId', '')
     $('#order_modal').modal('show')
     if (type === 'dine_in') {
@@ -80,7 +79,7 @@ export class OrderSectionComponent implements OnInit {
     }
     this.loader = true
     this._cartService.cartProduct = []
-    this._menuService.findOrderByOrderLabel(this.orderId.value, this._helperService.getOrderTypeOnAuthBasis()).subscribe((res: any) => {
+    this._menuService.findOrderByOrderLabel(this.orderId.value).subscribe((res: any) => {
       this._toastService.setToast({
         description: res.message,
         type: res.status
@@ -90,7 +89,6 @@ export class OrderSectionComponent implements OnInit {
       if (res.status === 'success') {
         const cartList = res.payload.cart
         this._botMeService.setCookie('orderLabel', res.payload.order.orderLabel)
-        this._botMeService.setCookie('reservationLabel', res.payload.order.reservationLabel)
         this._botMeService.setCookie('customerId', res.payload.order.customerId)
         if (cartList && cartList.length) {
           cartList.forEach((cartItem: any) => {
@@ -104,7 +102,6 @@ export class OrderSectionComponent implements OnInit {
         return
       }
       this._botMeService.setCookie('orderLabel', '')
-      this._botMeService.setCookie('reservationLabel', '')
       this._botMeService.setCookie('customerId', '')
 
     })
@@ -113,7 +110,6 @@ export class OrderSectionComponent implements OnInit {
   goToRoute(route: any = '') {
     this._route.navigate([route])
     this._botMeService.setCookie('orderLabel', '')
-    this._botMeService.setCookie('reservationLabel', '')
   }
 
   getProducts(): void {

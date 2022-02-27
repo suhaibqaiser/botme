@@ -5,7 +5,6 @@ const OrderSchema = createSchema(
     {
         restaurantId: Type.string({maxlength: 256, required: true}),
         orderLabel: Type.string({maxlength: 256, required: true, unique: true}),
-        reservationLabel: Type.string(),
         orderTimestamp: Type.date(), // datetime
         orderType: Type.string(),
         customerId: Type.string(),
