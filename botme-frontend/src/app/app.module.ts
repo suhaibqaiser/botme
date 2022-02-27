@@ -28,6 +28,7 @@ import {InplaceModule} from 'primeng/inplace';
 import {InputSwitchModule} from 'primeng/inputswitch';
 import {RestaurantModule} from "./modules/restaurant/restaurant.module";
 import {HelperService} from "./services/helper.service";
+import {ToggleButtonModule} from 'primeng/togglebutton';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import {HelperService} from "./services/helper.service";
     SelectButtonModule,
     InplaceModule,
     InputSwitchModule,
-    RestaurantModule
+    RestaurantModule,
+    ToggleButtonModule
   ],
   providers: [HelperService, Title, AuthGuard, {
     provide: HTTP_INTERCEPTORS,

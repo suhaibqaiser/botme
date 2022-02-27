@@ -13,6 +13,7 @@ import {
 } from "./service";
 import {randomUUID} from "crypto";
 
+
 export async function findOrder(filter: any, restaurantId: any) {
     let response = new restResponse()
     filter.restaurantId = restaurantId
@@ -228,6 +229,7 @@ export async function editCart(cart: any, filter: any) {
         // filter restaurantId & cartId & orderLabel
 
         let result = await updateCart(cart, filter)
+        console.log("update order")
         if (result) {
             response.payload = {cart: JSON.parse(JSON.stringify(result))}
             response.message = "Cart updated."
