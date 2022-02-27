@@ -22,6 +22,7 @@ export default [
         method: "post",
         handler: async (req: Request, res: Response) => {
             res.status(201).json({});
+            console.log("Result==>",req.body)
             let result = await SendNotification(req.body)
         }
     }
