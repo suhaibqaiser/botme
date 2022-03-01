@@ -25,9 +25,10 @@ function initDbConnection() {
 
 const foodDB = mongoose.connection.useDb(conf.get('foodDB'));
 const dictionaryDB = mongoose.connection.useDb(conf.get('dictionaryDB'));
+const clientsDB = mongoose.connection.useDb(conf.get('clientsDB'));
 
 async function init() {
     await initDbConnection();
 }
 
-export { init, foodDB, dictionaryDB };
+export { init, foodDB, dictionaryDB, clientsDB };
