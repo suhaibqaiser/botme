@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {HeaderService} from "../../../services/header.service";
 import { NgClass } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import {environment} from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-wrapper',
@@ -14,8 +17,10 @@ export class WrapperComponent implements OnInit {
 
   register:any
 
-  constructor(public headerService: HeaderService) {
+  constructor(public headerService: HeaderService,private authservice:AuthenticationService) {
   }
+
+  apiBaseUrl = environment.apiRestaurantUrl;
 
   ngOnInit(): void {
     this.allowNotification()
@@ -58,7 +63,7 @@ export class WrapperComponent implements OnInit {
           userVisibleOnly: true,
           applicationServerKey: this.publicKey
         });
-        await fetch('http://localhost:3100/notification/subscribe',{
+        await fetch(this.apiBaseUrl + '/notification/subscribe',{
         method:'POST',
         body: JSON.stringify(subscription),
         headers: {
@@ -74,7 +79,7 @@ export class WrapperComponent implements OnInit {
   async unregWorker(){
     const reg = await navigator.serviceWorker.register('/sw.js',{scope: '/'})
     const subscription = {"endpoint":"remove"}
-    await fetch('http://localhost:3100/notification/subscribe',{
+    await fetch(this.apiBaseUrl + '/notification/subscribe',{
       method:'POST',
       body: JSON.stringify(subscription),
       headers: {
