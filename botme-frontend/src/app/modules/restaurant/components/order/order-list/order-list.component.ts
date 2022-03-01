@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Table } from 'primeng/table';
-import { Order } from '../../../model/order';
-import { CustomerService } from '../../../service/customer.service';
-import { OrderService } from '../../../service/order.service';
+import {Component, OnInit} from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
+import {Table} from 'primeng/table';
+import {Order} from '../../../model/order';
+import {CustomerService} from '../../../service/customer.service';
+import {OrderService} from '../../../service/order.service';
+import {HelperService} from "../../../../../services/helper.service";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-order-list',
@@ -12,9 +14,10 @@ import { OrderService } from '../../../service/order.service';
 })
 export class OrderListComponent implements OnInit {
 
-  constructor(private orderService: OrderService,
-    private customerService: CustomerService,
-    private _router: Router, private route: ActivatedRoute,) { }
+  constructor(public _helperService: HelperService, private orderService: OrderService,
+              private customerService: CustomerService,
+              private _router: Router, private route: ActivatedRoute, private messageService: MessageService) {
+  }
 
   orders: Array<any> = []
   customers: any
@@ -52,6 +55,7 @@ export class OrderListComponent implements OnInit {
         (this.customers) ? this.getOrders() : null;
       });
   }
+
   getCustomerName(customerId: string) {
     let customer = this.customers.find((customer: { customerId: string; }) => customer.customerId === customerId);
     if (customer) return customer.customerName
@@ -60,6 +64,14 @@ export class OrderListComponent implements OnInit {
 
   clear(table: Table) {
     table.clear();
+  }
+
+  deleteOrder(order: any) {
+    this.orderService.deleteOrderByLabel(order).subscribe((res: any) => {
+      let cartListIndex = this.orders.findIndex((item: any) => item.orderLabel === order.orderLabel)
+      this.orders.splice(cartListIndex, 1)
+      this.messageService.add({severity: 'info', summary: 'Success', detail: 'Order deleted!'})
+    })
   }
 
 }

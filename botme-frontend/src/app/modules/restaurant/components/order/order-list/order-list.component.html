@@ -59,8 +59,10 @@
                     </th>
                     <th pSortableColumn="updatedAt">Updated <p-sortIcon field="updatedAt"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="orderActive">Active <p-sortIcon field="orderActive"></p-sortIcon>
+                    <th pSortableColumn="orderActive">State <p-sortIcon field="orderActive"></p-sortIcon>
                     </th>
+                  <th pSortableColumn="orderActive">Action <p-sortIcon field="orderActive"></p-sortIcon>
+                  </th>
                 </tr>
             </ng-template>
 
@@ -79,10 +81,11 @@
                     <td>{{order.orderSubTotal}}</td>
                     <td>{{order.orderTotal}}</td>
                     <td>{{order.updatedAt}}</td>
-                    <td><span class="badge badge-success">Yes</span>
-<!--                        <span *ngIf="!order.orderStatus === false"-->
-<!--                            class="badge badge-danger">No</span>-->
+                    <td><span [title]="_helperService.computeOrderMessages(order.orderStatus)"
+                              [classList]="_helperService.computeOrderStatusColor(order.orderStatus)">{{order.orderStatus}}</span>
                     </td>
+                  <td><button (click)="deleteOrder(order)" class="btn-danger btn btn-sm">delete</button>
+                  </td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="paginatorleft">

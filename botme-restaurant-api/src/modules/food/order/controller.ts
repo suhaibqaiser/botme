@@ -9,14 +9,20 @@ import {
     updateCart,
     updateOrder,
     updateCartStatus,
-    updateOrderType, updateOrderStatusDB
+    updateOrderType, updateOrderStatusDB,
+    deleteOrderByOrderLabel,
+    deleteCartByOrderLabel
 } from "./service";
 import {randomUUID} from "crypto";
 
 
-export async function findOrder(filter: any, restaurantId: any) {
+
+export async function findOrder(filter: any) {
     let response = new restResponse()
-    filter.restaurantId = restaurantId
+
+    if (filter && !filter.orderStatus) {
+        delete filter.orderStatus
+    }
 
     let result = await getOrder(filter)
     if (result.length != 0) {
@@ -318,6 +324,30 @@ export async function updateOrderStatus(filter: any) {
     } catch (e: any) {
         response.message = e.message
         response.status = "error"
+        return response
+    }
+}
+
+export async function deleteOrder(filter: any) {
+    let response = new restResponse()
+
+    // filter restaurantId & cartId & orderLabel
+    try {
+        let result = await deleteOrderByOrderLabel(filter)
+        let cartResult = await deleteCartByOrderLabel(filter)
+        if (result || cartResult) {
+            response.payload = result
+            response.message = "Deleted Successfully."
+            response.status = "success"
+            return response
+        }
+        response.message = "Order not found."
+        response.status = "danger"
+        return response
+
+    } catch (e: any) {
+        response.message = e.message
+        response.status = "danger"
         return response
     }
 }

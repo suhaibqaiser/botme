@@ -15,15 +15,17 @@
           </h4>
         </div>
         <hr class="mt-1">
-        <h4 class="text-center">{{_helperService.computeOrderType(order.orderType).orderText + ': ' + order.orderLabel}}</h4>
+        <h4
+          class="text-center">{{_helperService.computeOrderType(order.orderType).orderText + ': ' + order.orderLabel}}</h4>
         <div class="head d-flex align-items-center justify-content-between">
           <h4>Price
-          <br>
+            <br>
             Order Type
             <br>
             Time
           </h4>
-          <h4 style="cursor: pointer" class="text-right">{{'$' + _helperService.roundToTwo(order.productTotalPrice)}} <br> {{order.orderType}} <br> {{_helperService.computeDate(order.orderTimestamp)}}</h4>
+          <h4 style="cursor: pointer" class="text-right">{{'$' + _helperService.roundToTwo(order.productTotalPrice)}}
+            <br> {{order.orderType}} <br> {{_helperService.timeAgo(order.orderTimestamp)}}</h4>
         </div>
         <hr>
 
@@ -32,7 +34,8 @@
             *ngFor="let rate of cart.productRate | keyvalue">{{rate.key + ')'}}</span></h4>
           <h4 *ngIf="cart.productFlavor"><strong>Flavor :</strong> {{cart.productFlavor}}</h4>
           <h4 *ngIf="cart.productIngredients && cart.productIngredients.length"><strong>Ingredients
-            :</strong> {{_helperService.computeProductsForOrderCart('ingredients', cart.productIngredients, products)}}</h4>
+            :</strong> {{_helperService.computeProductsForOrderCart('ingredients', cart.productIngredients, products)}}
+          </h4>
           <h4 *ngIf="cart.productOptions && cart.productOptions.length"><strong>Options
             :</strong> {{_helperService.computeProductsForOrderCart('options', cart.productOptions, products)}}</h4>
           <h4 *ngIf="cart.productToppings && cart.productToppings.length"><strong>Toppings
@@ -41,10 +44,13 @@
             :</strong> {{_helperService.computeProductsForOrderCart('', cart.productProportion, products)}}</h4>
           <hr>
         </div>
-        <div class="text-center">
-          <button (click)="updateOrderStatus(order)" class="btn mt-2 btn-sm detial_btn btn-primary"><< complete order >>
+        <div class="d-flex justify-content-between">
+          <button (click)="updateOrderStatus(order,'delivered')" class="btn mt-2 btn-sm detial_btn btn-success">complete
+            order
           </button>
-          <button (click)="viewOrderDetail(order)" class="btn mt-2 btn-sm detial_btn btn-primary"><< view details >>
+          <button (click)="viewOrderDetail(order)" class="btn mt-2 btn-sm detial_btn btn-info">view details
+          </button>
+          <button (click)="updateOrderStatus(order,'delete')" class="btn mt-2 btn-sm detial_btn btn-warning">delete
           </button>
         </div>
       </div>
