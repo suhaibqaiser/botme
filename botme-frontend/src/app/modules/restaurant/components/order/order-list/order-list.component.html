@@ -57,7 +57,7 @@
                     </th>
                     <th pSortableColumn="orderTotal">Total <p-sortIcon field="orderTotal"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="updatedAt">Updated <p-sortIcon field="updatedAt"></p-sortIcon>
+                    <th pSortableColumn="updatedAt">Date <p-sortIcon field="updatedAt"></p-sortIcon>
                     </th>
                     <th pSortableColumn="orderActive">State <p-sortIcon field="orderActive"></p-sortIcon>
                     </th>
@@ -80,7 +80,7 @@
 <!--                    <td>{{order.orderPaymentMethod}}</td>-->
                     <td>{{order.orderSubTotal}}</td>
                     <td>{{order.orderTotal}}</td>
-                    <td>{{order.updatedAt}}</td>
+                    <td>{{_helperService.timeAgo(order.orderTimestamp)}}</td>
                     <td><span [title]="_helperService.computeOrderMessages(order.orderStatus)"
                               [classList]="_helperService.computeOrderStatusColor(order.orderStatus)">{{order.orderStatus}}</span>
                     </td>
