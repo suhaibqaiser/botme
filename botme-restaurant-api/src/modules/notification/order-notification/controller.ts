@@ -1,5 +1,4 @@
 import {AddSubscription, FindSubscription} from "./service";
-import {GetAllSubscription} from "./service";
 
 // const express = require('express');
 const webPush = require('web-push');
@@ -32,11 +31,11 @@ export async function GetSubscription(req: any) {
     // webPush.sendNotification(subscription,payload).catch((err:any) => console.error(err));
 }
 
-export async function SendNotification(req: any) {
+export async function SendNotification(req: any,subscription:any) {
 
     webPush.setVapidDetails('mailto:tahahasan1997@gmail.com', publicKey, privateKey);
 
-    const subscription = await GetAllSubscription();
+    // const subscription = await GetAllSubscription();
     const payload = JSON.stringify({
         title: 'New Order',
         body: 'Hi, Mister ' + req.customerName + ' has placed an order with order ID ' + req.orderId + ' with amount ' + req.total + ' and order type is ' + req.orderType + '. Thanks'

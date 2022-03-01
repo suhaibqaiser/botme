@@ -9,13 +9,8 @@ export async function FindSubscription(data:any) {
     return data
 }
 export async function GetAllSubscription() {
-    let subscriptionObj :any ={}
     var data = await Subscribe.find({})
-    for (let i=0; i<data.length;i++){
-        subscriptionObj = data[i]
-    }
-    console.log(subscriptionObj)
-    return subscriptionObj 
+    return data 
     // var result = data[0]
     // return result
 }

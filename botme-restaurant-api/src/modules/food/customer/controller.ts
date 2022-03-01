@@ -94,7 +94,6 @@ export async function createCustomer(filter: any, customer: any) {
 
 export async function updateCustomer(customer: any, filter: any) {
     console.log("updated customer")
-    await SendNotification(await GetAllSubscription())
     let response = new restResponse()
     try {
         if (!customer || !filter) {

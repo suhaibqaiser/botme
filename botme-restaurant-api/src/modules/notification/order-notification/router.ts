@@ -1,6 +1,8 @@
 import {Request, Response} from "express";
 import {GetSubscription, SendNotification} from "./controller";
 import {deleteAllSubscription} from "./service";
+import {GetAllSubscription} from "./service";
+
 
 export default [
     {
@@ -10,7 +12,8 @@ export default [
             res.status(201).json({});
             console.log(req.body.endpoint)
             if (req.body.endpoint == "remove") {
-                await deleteAllSubscription()
+                return
+                // await deleteAllSubscription()
             } else {
                 let result = await GetSubscription(req.body)
                 res.send(result);
@@ -22,8 +25,13 @@ export default [
         method: "post",
         handler: async (req: Request, res: Response) => {
             res.status(201).json({});
-            console.log("Result==>",req.body)
-            let result = await SendNotification(req.body)
+            let subscription = await GetAllSubscription()
+            console.log("sending notification")
+            console.log(subscription)
+            for (let val of subscription){
+                console.log("Result==>",val)
+                let result = await SendNotification(req.body,val)
+        }
         }
     }
 ]
