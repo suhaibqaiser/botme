@@ -51,6 +51,11 @@ export class CartService {
   cartLoader: boolean = false
 
   constructor(private _router: Router, private _toastService: ToastService, private _menuService: MenuService, private _clientService: BotmeClientService, private _contextService: ContextService, public _helperService: HelperService, private _socketService: SocketService) {
+    if (!this._clientService.getCookie().isLoggedIn) {
+      let list: any = localStorage.getItem('orderList')
+      list = JSON.parse(list)
+      this.cartProduct = list && list.length ? list : []
+    }
   }
 
 
@@ -59,6 +64,7 @@ export class CartService {
     if (callType === 'add_local_list' && !this._clientService.getCookie().isLoggedIn) {
       document.getElementById("ctaId-show-cart")?.click()
       this.cartProduct.push(JSON.parse(JSON.stringify(this.singleCustomProductObj)))
+      localStorage.setItem('orderList', JSON.stringify(this.cartProduct))
       return
     }
     // when you are saving all cart items to db first time
@@ -77,6 +83,7 @@ export class CartService {
       let cart = JSON.parse(JSON.stringify(this.singleCustomProductObj))
       let cartListIndex = this.cartProduct.findIndex((item: any) => item.productId === cart.productId)
       this.cartProduct.splice(cartListIndex, 1, cart)
+      localStorage.setItem('orderList', JSON.stringify(this.cartProduct))
       document.getElementById("ctaId-show-cart")?.click()
       return;
     }
@@ -106,7 +113,7 @@ export class CartService {
 
     let cartListIndex = this.cartProduct.findIndex((item: any) => item.productId === product.productId)
     this.cartProduct.splice(cartListIndex, 1)
-
+    localStorage.setItem('orderList', JSON.stringify(this.cartProduct))
 
   }
 
