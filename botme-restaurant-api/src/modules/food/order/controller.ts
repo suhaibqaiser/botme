@@ -93,6 +93,12 @@ export async function findCart(filter: any) {
             return response
         }
 
+        if (orderResult && orderResult.orderStatus !== 'notified') {
+            response.message = 'Only notified status order are allowed to search.'
+            response.status = "danger"
+            return response
+        }
+
         // filter orderLabel
         delete filter.orderType
         filter.orderLabel = orderResult.orderLabel

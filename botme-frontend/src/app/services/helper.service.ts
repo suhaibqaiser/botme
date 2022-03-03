@@ -27,6 +27,7 @@ export class HelperService {
     delivered: 'delivered',
     remade: 'remade',
     returned: 'returned',
+    cancel: 'cancel',
     delete: 'delete'
   }
 
@@ -40,7 +41,8 @@ export class HelperService {
     delivered: 'badge bg-success text-white',
     remade: 'badge bg-danger text-white',
     returned: 'badge bg-danger text-white',
-    delete: 'badge bg-danger text-white'
+    delete: 'badge bg-danger text-white',
+    cancel: 'badge bg-warning text-dark'
   }
 
   orderMessages: any = {
@@ -53,7 +55,8 @@ export class HelperService {
     delivered: 'Order delivered',
     remade: 'badge bg-danger',
     returned: 'badge bg-danger',
-    delete:'Order delete temporarily.'
+    cancel: 'Order canceled temporarily.',
+    delete: 'Delete order permanently.'
   }
 
   constructor() {
