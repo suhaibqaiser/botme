@@ -13,9 +13,7 @@
 }
 
 .detial_btn {
-  background: transparent;
-  border: none;
-  color: #0f69f2
+  color: black !important;
 }
 
 hr {

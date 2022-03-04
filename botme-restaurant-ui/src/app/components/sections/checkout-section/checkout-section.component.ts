@@ -247,6 +247,7 @@ export class CheckoutSectionComponent implements OnInit {
   close() {
     this._clientService.reSetCookie()
     this._cartService.cartProduct = []
+    localStorage.clear()
     $('#checkout_modal').modal('hide')
     this._router.navigate(['/online-shop'])
   }

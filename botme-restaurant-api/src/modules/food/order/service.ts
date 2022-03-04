@@ -11,7 +11,7 @@ export async function updateOrder(order: any, restaurantId: string) {
 export async function getOrder(queryParams: any) {
     let order: any[] = []
     try {
-        order = await Order.find(queryParams)
+        order = await Order.find(queryParams).sort({orderTimestamp: -1})
     } catch (e) {
         console.log(e)
     }
@@ -58,4 +58,12 @@ export async function updateOrderType(filter: string, orderType: any) {
 
 export async function updateOrderStatusDB(filter: string, orderStatus: any = '') {
     return Order.updateOne(filter, {$set: {orderStatus: orderStatus}})
+}
+
+export async function deleteOrderByOrderLabel(filter: string, orderStatus: any = '') {
+    return Order.findOneAndDelete(filter)
+}
+
+export async function deleteCartByOrderLabel(filter: string, orderStatus: any = '') {
+    return Cart.deleteMany(filter)
 }

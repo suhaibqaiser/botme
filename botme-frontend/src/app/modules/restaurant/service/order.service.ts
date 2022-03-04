@@ -17,8 +17,8 @@ export class OrderService {
   apiBaseUrl = environment.apiRestaurantUrl;
   orderDetailObj: any = {}
 
-  getOrders(): Observable<any> {
-    const url = `${this.apiBaseUrl}/food/order/search?restaurantId=${this.restaurantId}`;
+  getOrders(orderStatus: any = ''): Observable<any> {
+    const url = `${this.apiBaseUrl}/food/order/search?restaurantId=${this.restaurantId}` + '&orderStatus=' + orderStatus;
     return this.http.get(url);
   }
 
@@ -52,4 +52,10 @@ export class OrderService {
     const url = this.apiBaseUrl + "/food/cart/updateOrderStatus?restaurantId=" + this.authService.getRestaurantId() + '&orderLabel=' + orderLabel + '&orderType=' + orderType + '&orderStatus=' + orderStatus
     return this.http.get(url);
   }
+
+  deleteOrderByLabel(order: any): Observable<any> {
+    const url = `${this.apiBaseUrl}/food/order/deleteByOrderLabel?restaurantId=${this.restaurantId}` + '&orderLabel=' + order.orderLabel;
+    return this.http.get(url);
+  }
+
 }

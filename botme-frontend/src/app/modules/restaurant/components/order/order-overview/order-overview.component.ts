@@ -28,7 +28,7 @@ export class OrderOverviewComponent implements OnInit {
 
   async getOrders() {
     this.loading = true
-    this._orderService.getOrders()
+    this._orderService.getOrders('notified')
       .subscribe(result => {
         this.loading = false
         if (result.status === 'success') {
@@ -116,14 +116,11 @@ export class OrderOverviewComponent implements OnInit {
     this._router.navigate(['/order-detail'])
   }
 
-  updateOrderStatus(order: any) {
-    if(order.orderStatus === 'delivered') {
-      this.messageService.add({severity: 'info', summary: 'Update Success', detail: 'Already updated!'})
-      return
-    }
-    this._orderService.updateOrderStatus(order.orderLabel, order.orderType, 'delivered').subscribe((res: any) => {
+  updateOrderStatus(order: any, orderStatus: any) {
+    this._orderService.updateOrderStatus(order.orderLabel, order.orderType, orderStatus).subscribe((res: any) => {
       this.messageService.add({severity: 'success', summary: 'Update Success', detail: 'Order status update!'})
-      order.orderStatus = 'delivered'
+      let cartListIndex = this.orders.findIndex((item: any) => item.orderLabel === order.orderLabel)
+      this.orders.splice(cartListIndex, 1)
     })
   }
 }
