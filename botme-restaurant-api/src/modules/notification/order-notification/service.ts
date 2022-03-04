@@ -17,3 +17,8 @@ export async function GetAllSubscription() {
 export async function deleteAllSubscription(){
     return await Subscribe.deleteMany()
 }
+export async function deleteSubscription(req:any) {
+    console.log("subscribe deleting")
+    return await Subscribe.deleteOne(req)
+    
+}

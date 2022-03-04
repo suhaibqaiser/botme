@@ -16,6 +16,8 @@ export class WrapperComponent implements OnInit {
   private readonly publicKey = "BDCQVQ8eDIxkBtTKyu98APMWTQ_HNA5PrRL7XVac7U-GuPJBikGFJguHGC5dAd7BULCkTpyfuvN3Ns57SamWkpA"
 
   register:any
+  e:boolean=false
+  type:any
 
   constructor(public headerService: HeaderService,private authservice:AuthenticationService) {
   }
@@ -25,11 +27,14 @@ export class WrapperComponent implements OnInit {
   ngOnInit(): void {
     this.allowNotification()
   }
+  notificationType(type:any){
+    this.type = type
+  }
   allowNotification(){
     if (Notification.permission === 'default'){
       Notification.requestPermission().then((perm) => {
         if (Notification.permission === "granted"){
-          this.regWorker(true).catch((err) => {
+          this.regWorker(this.e).catch((err) => {
             console.error(err);
           });
         }
@@ -40,54 +45,76 @@ export class WrapperComponent implements OnInit {
     }
     else if (Notification.permission === "granted"){
       console.log("permission granted")
-      // this.regWorker().catch((err) => {
-      //   console.error(err);
-      // });
+      this.regWorker(this.e).catch((err) => {
+        console.error(err);
+      });
     }
     else {
       alert("please allow notifications.");
     }
   }
-  async regWorker(e:boolean) {
+  async regWorker(e:any) {
     if ('serviceWorker' in navigator){
-        // var subscriptionWrapper = {
-        //   "subscription":subscription,
-        //   "settings":{
-        //     "summary":"",
-        //     "":""
-        //   }
-        // }
+      this.register = navigator.serviceWorker.register('/sw.js',{scope: '/'})
+      let subscription = await (await this.register).pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: this.publicKey
+      });
+
+      console.log(this.type)
+
+      var subscriptionWrapper = {
+        "subscription":subscription,
+        "notificationType":this.type,
+        
+      }
+
       if (e == true){
-        this.register = navigator.serviceWorker.register('/sw.js',{scope: '/'})
-        let subscription = await (await this.register).pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey: this.publicKey
-        });
-        await fetch(this.apiBaseUrl + '/notification/subscribe',{
+      console.log("subscribed")
+      await fetch(this.apiBaseUrl + '/notification/subscribe',{
         method:'POST',
-        body: JSON.stringify(subscription),
+        body: JSON.stringify(subscriptionWrapper),
         headers: {
           'content-type': 'application/json'
         }
       });
       }
       else{
-        this.unregWorker()
+        console.log("unsubscribed")
+        await fetch(this.apiBaseUrl + '/notification/unsubscribe',{
+          method:'POST',
+          body: JSON.stringify(subscriptionWrapper),
+          headers: {
+            'content-type': 'application/json'
+          }
+        });
       }
     } 
-  }
-  async unregWorker(){
-    const reg = await navigator.serviceWorker.register('/sw.js',{scope: '/'})
-    const subscription = {"endpoint":"remove"}
-    await fetch(this.apiBaseUrl + '/notification/subscribe',{
-      method:'POST',
-      body: JSON.stringify(subscription),
-      headers: {
-        'content-type': 'application/json'
-      }
-    });
-    await (await reg).unregister()
-    console.log("service worker unregistered")
+  
+  // async unregWorker(){
+  //   let subscription = await (await this.register).pushManager.subscribe({
+  //     userVisibleOnly: true,
+  //     applicationServerKey: this.publicKey
+  //   });
+  //   await fetch(this.apiBaseUrl + '/notification/unsubscribe',{
+  //   method:'POST',
+  //   body: JSON.stringify(subscription),
+  //   headers: {
+  //     'content-type': 'application/json'
+  //   }
+  // });
+    // this.register.unregister()
+    // const reg = await navigator.serviceWorker.register('/sw.js',{scope: '/'})
+    // const subscription = {"endpoint":"remove"}
+    // await fetch(this.apiBaseUrl + '/notification/subscribe',{
+    //   method:'POST',
+    //   body: JSON.stringify(subscription),
+    //   headers: {
+    //     'content-type': 'application/json'
+    //   }
+    // });
+    // await (await reg).unregister()
+    // console.log("service worker unregistered")
 
   }
  

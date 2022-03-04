@@ -1,5 +1,5 @@
 import {Request, Response} from "express";
-import { summaryNotification } from "./controller";
+import { SummaryNotification } from "./controller";
 import { GetAllSubscription } from "../order-notification/service";
 
 
@@ -14,7 +14,7 @@ export default [
             console.log(subscription)
             for (let val of subscription){
                 console.log("Result==>",val)
-                let result = await summaryNotification(val)
+                let result = await SummaryNotification(val)
         }
         }
     }

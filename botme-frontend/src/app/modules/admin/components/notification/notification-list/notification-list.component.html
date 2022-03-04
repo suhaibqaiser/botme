@@ -2,10 +2,24 @@
   <div class="card-body">
     <div class="d-flex align-items-center justify-content-between m-b-15">
         <h4 class="m-b-0">Notification</h4>
+        <!-- <h5 class="m-t-1">enabled</h5> -->
         <div class="card-toolbar"></div>
-        <ul>
-            <p-toggleButton #event (onChange)="handleChange(event)" onLabel="Enable" offLabel="Disable" onIcon="pi-pi-check" offIcon="pi pi-times" [style]="{'width': '10em'}"></p-toggleButton>  
+        <ul id="menu">
+          <li>
+            <p-button *ngIf="event" label="Test Notification" (onClick)="testNotification()" [style]="{'width': '10em'}"></p-button>
+          </li>
+          <li>
+            <p-dropdown #dd (onChange)="dropDown(dd)" *ngIf="event" [options]="type" [(ngModel)]="selecteType" placeholder="Notification Type" optionLabel="name"></p-dropdown>
+          </li>
         </ul>
+        <ul>
+          <p-inputSwitch (onChange)="handleChange($event)"></p-inputSwitch>
+          <h6 *ngIf="event; else elseBlock">enable</h6>
+          <ng-template #elseBlock>
+            <h6>disable</h6>
+          </ng-template>   
+        </ul>
+
     </div>
   </div>
 </div>
