@@ -10,7 +10,7 @@ const privateKey = 'pRbJS-tqaGe3RkWBB29rZXFmZP1EaAw3XanPO6ZvEY4';
 export async function SummaryNotification(time:any) {
 
         webPush.setVapidDetails('mailto:tahahasan1997@gmail.com', publicKey,privateKey);
-        
+
         let subscription = await GetAllSubscription()
             for (let val of subscription){
 
@@ -22,9 +22,9 @@ export async function SummaryNotification(time:any) {
                     })
                 
                     webPush.sendNotification(subscription,payload).catch((err:any) => console.error(err));
-                    let summarytime = setTimeout(() => {
-                        SummaryNotification(time)
-                    }, time);
+                    // let summarytime = setTimeout(() => {
+                    //     SummaryNotification(time)
+                    // }, time);
                 }
                 
     }
