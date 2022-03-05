@@ -21,7 +21,7 @@ import { NotificationService } from '../../../service/notification.service';
     type: any=[]
     selecteType: any
     select:any
-    value1:any=localStorage.setItem("timeKey",JSON.stringify(1))
+    value1:any
     checked: any
 
 
