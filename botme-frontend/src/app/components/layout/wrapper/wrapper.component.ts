@@ -17,7 +17,7 @@ export class WrapperComponent implements OnInit {
 
   register:any
   e:boolean=false
-  type:any
+  type:any = "Order"
 
   constructor(public headerService: HeaderService,private authservice:AuthenticationService) {
   }
@@ -28,15 +28,22 @@ export class WrapperComponent implements OnInit {
     this.allowNotification()
   }
   notificationType(type:any){
-    this.type = type
+    if(this.type != type){
+      this.type = type
+      this.regWorker(true)
+      console.log("notification type changed")
+    }
   }
   allowNotification(){
     if (Notification.permission === 'default'){
       Notification.requestPermission().then((perm) => {
         if (Notification.permission === "granted"){
-          this.regWorker(this.e).catch((err) => {
-            console.error(err);
-          });
+          if (!this.type){}
+          else{
+            this.regWorker(this.e).catch((err) => {
+              console.error(err);
+            });
+          }
         }
         else{
           alert("please allow notifications.");
@@ -45,9 +52,14 @@ export class WrapperComponent implements OnInit {
     }
     else if (Notification.permission === "granted"){
       console.log("permission granted")
-      this.regWorker(this.e).catch((err) => {
-        console.error(err);
-      });
+      if (!this.type){
+        console.log("notification type require")
+      }
+      else{
+        this.regWorker(this.e).catch((err) => {
+          console.error(err);
+        });
+      }
     }
     else {
       alert("please allow notifications.");

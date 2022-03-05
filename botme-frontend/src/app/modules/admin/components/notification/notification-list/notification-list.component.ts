@@ -16,43 +16,65 @@ import { NotificationService } from '../../../service/notification.service';
     // selectedCity: select=[] 
     orders: any=[]
     result: any
-    size : any
-    event:boolean=false
+    dropdownvalue : any
+    event:any
     type: any=[]
     selecteType: any
     select:any
+    value1:any
+    checked: any
 
     constructor(private wc :WrapperComponent,private ns:NotificationService) {}
     
     ngOnInit(): void {
+      this.checked = JSON.parse(localStorage.getItem("inputSwitch") || '{}')
+      this.event = JSON.parse(localStorage.getItem("inputSwitch") || '{}')
+      // localStorage.setItem("inputSwitch",JSON.stringify(this.checked))
+      console.log("taha",localStorage.getItem("inputSwitch"))
+      localStorage.setItem("dropDownValue","Order")
+      this.dropdownvalue = localStorage.getItem("dropDownValue")
+      console.log("timekey",localStorage.getItem('timekey'))
+      this.value1 = localStorage.getItem("timeKey");
+
+      this.setTime()
+
       this.type = [
         {name: "Order"},
         {name: "Summary"}
       ]
       this.selecteType = this.type
-      
-      // this.handleChange(this.checked)
+      let Switch = document.getElementById("inputSwitch")?.innerHTML
+      console.log("Result ==>" ,Switch)
+
      }
 
     handleChange(e:any){
-      var isChecked = e.checked;
-      console.log(isChecked)
-      this.wc.regWorker(isChecked)
+      let bool = e.checked
+      let result = localStorage.setItem("inputSwitch",JSON.stringify(bool))
+      // this.checked = localStorage.getItem("inputSwitch")
+      this.event = JSON.parse(localStorage.getItem("inputSwitch") || '{}')
+      console.log("result==>",result)
+      this.wc.regWorker(e.checked)
       console.log(this.selecteType)
-      if (e.checked == true){
-        this.event = true 
-      }
-      else{
-        this.event = false
-      }
     }
     testNotification(){
       this.ns.testNotification().subscribe()
 
     }
     dropDown(dd:any){
-      this.select = dd.value.name
-      this.wc.notificationType(this.select)   
+      console.log(dd)
+      localStorage.setItem("dropDownValue",dd.value.name)
+      this.select = localStorage.getItem("dropDownValue")
+      console.log(this.select)
+      this.wc.notificationType(this.select)
+      let value = localStorage.getItem("timeKey")
+      this.ns.SetSummaryTime(value).subscribe()
+    }
+    setTime(){
+      localStorage.setItem("timeKey",this.value1);
+      let value = localStorage.getItem("timeKey")
+      console.log(value)
+      this.ns.SetSummaryTime(value).subscribe()
     }
   }
     // getOrders() {

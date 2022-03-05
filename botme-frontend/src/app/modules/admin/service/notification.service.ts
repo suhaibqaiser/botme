@@ -24,6 +24,11 @@ export class NotificationService {
         const body = {req:""};
         return this.http.post(url, body);
     }
+    SetSummaryTime(time:any){
+        const url = `${this.apiBaseUrl}/notification/time`;
+        const body = {req:time};
+        return this.http.post(url, body);
+    }
     // Notification(size:any=''){
     //   if (Notification.permission === 'granted'){
     //      const notification = new Notification("Order Summary",{

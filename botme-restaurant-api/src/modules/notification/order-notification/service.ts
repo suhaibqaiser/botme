@@ -5,7 +5,7 @@ export async function AddSubscription(data:any) {
 }
 export async function FindSubscription(data:any) {
     await GetAllSubscription()
-    var data = await Subscribe.find(data)
+    var data = await Subscribe.find({"subscription.endpoint":data.subscription.endpoint})
     return data
 }
 export async function GetAllSubscription() {
@@ -14,11 +14,16 @@ export async function GetAllSubscription() {
     // var result = data[0]
     // return result
 }
+export async function updateSubscription(req:any) {
+    var data = await Subscribe.findOneAndUpdate({"subscription.endpoint":req.subscription.endpoint},req)
+    
+}
 export async function deleteAllSubscription(){
     return await Subscribe.deleteMany()
 }
 export async function deleteSubscription(req:any) {
     console.log("subscribe deleting")
-    return await Subscribe.deleteOne(req)
+    let result =  await Subscribe.deleteOne({"subscription.endpoint":req.subscription.endpoint})
+    return result
     
 }

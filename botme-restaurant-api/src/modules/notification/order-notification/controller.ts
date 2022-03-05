@@ -1,5 +1,6 @@
-import {AddSubscription, FindSubscription} from "./service";
+import {AddSubscription, FindSubscription,updateSubscription} from "./service";
 import { GetAllSubscription } from "./service";
+
 
 // const express = require('express');
 const webPush = require('web-push');
@@ -13,6 +14,8 @@ export async function DoSubscription(req: any) {
 
     if (CheckIfExist.length != 0) {
         console.log("already exist")
+        let result = await updateSubscription(req);
+        
     } else {
         let result = await AddSubscription(req);
 

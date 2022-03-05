@@ -4,16 +4,22 @@
         <h4 class="m-b-0">Notification</h4>
         <!-- <h5 class="m-t-1">enabled</h5> -->
         <div class="card-toolbar"></div>
+        <ul>
+            <p-button *ngIf="event" label="Test Notification" (onClick)="testNotification()" [style]="{'width': '10em'}"></p-button>
+        </ul>
         <ul id="menu">
           <li>
-            <p-button *ngIf="event" label="Test Notification" (onClick)="testNotification()" [style]="{'width': '10em'}"></p-button>
+            <p-dropdown #dd (onChange)="dropDown(dd)" *ngIf="event" [options]="type" [(ngModel)]="selecteType" placeholder="Notification Type" optionLabel="name" dataKey=Order [style]="{'width': '8em'}"></p-dropdown>
+            <h6 *ngIf="event">  notification type</h6>
           </li>
-          <li>
-            <p-dropdown #dd (onChange)="dropDown(dd)" *ngIf="event" [options]="type" [(ngModel)]="selecteType" placeholder="Notification Type" optionLabel="name"></p-dropdown>
+          <li>  
+            <input *ngIf="select=='Summary'" type="text" pInputText [(ngModel)]="value1" placeholder="Time in Hour" [style]="{'width': '10em'}">
+            <h6 *ngIf="select=='Summary'">set time (default 1 Hour)</h6>
+            <p-button *ngIf="select=='Summary'" label="save" (onClick)="setTime()" [style]="{'width': '4em','height': '2em'}"></p-button>
           </li>
         </ul>
         <ul>
-          <p-inputSwitch (onChange)="handleChange($event)"></p-inputSwitch>
+          <p-inputSwitch (onChange)="handleChange($event)" [(ngModel)]="checked"></p-inputSwitch>
           <h6 *ngIf="event; else elseBlock">enable</h6>
           <ng-template #elseBlock>
             <h6>disable</h6>
