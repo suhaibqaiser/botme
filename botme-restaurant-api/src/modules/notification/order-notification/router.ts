@@ -47,7 +47,7 @@ export default [
             res.status(201).json({});
             let subscription = await GetAllSubscription()
             for (let val of subscription){
-                let result = await testNotification(val)
+                let result = await testNotification(val.subscription)
             }
         }
         
