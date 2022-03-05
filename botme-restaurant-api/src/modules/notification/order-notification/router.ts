@@ -2,7 +2,6 @@ import {Request, Response} from "express";
 import {DoSubscription, OrderNotification,testNotification} from "./controller";
 import {deleteAllSubscription} from "./service";
 import {GetAllSubscription,deleteSubscription} from "./service";
-import { SummaryNotification } from "../summary-notification/controller";
 
 export default [
     {
@@ -10,7 +9,6 @@ export default [
         method: "post",
         handler: async (req: Request, res: Response) => {
             res.status(201).json({});
-            console.log("1==>",req.body.subscription.endpoint)
             // if (req.body.endpoint == "remove") {
             //     return
             //     // await deleteAllSubscription()
@@ -24,7 +22,6 @@ export default [
         method: "post",
         handler: async (req: Request, res: Response) => {
             res.status(201).json({});
-            console.log("2==>",req.body.subscription.endpoint)
             let result = await deleteSubscription(req.body)
             console.log("subscription deleted")
         }
@@ -35,17 +32,12 @@ export default [
         handler: async (req: Request, res: Response) => {
             res.status(201).json({});
             let subscription = await GetAllSubscription()
-            console.log("sending notification")
-            console.log(subscription)
             for (let val of subscription){
                 console.log("Result==>",val)
                 if (val.notificationType == "Order"){
                     let result = await OrderNotification(req.body,val.subscription)
                 }
-                else{
-                    let result = await SummaryNotification(val.subscription)
-                }
-        }
+            }
         }
     },
     {
