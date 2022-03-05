@@ -3,7 +3,6 @@ import {addCustomer, getAllCustomers, getCustomer, updateOneCustomer, getAddress
 import {randomUUID} from "crypto";
 import {getMaxLabelValue} from "../../food/customer/service";
 import {getOrderById, updateCustomerId} from "../order/service";
-import { SendNotification } from "../../notification/order-notification/controller";
 import { GetAllSubscription } from "../../notification/order-notification/service";
 
 export async function findCustomer(filter: any) {

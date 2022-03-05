@@ -1,8 +1,7 @@
 import {Request, Response} from "express";
-import {GetSubscription, SendNotification} from "./controller";
+import {DoSubscription, OrderNotification,testNotification} from "./controller";
 import {deleteAllSubscription} from "./service";
-import {GetAllSubscription} from "./service";
-
+import {GetAllSubscription,deleteSubscription} from "./service";
 
 export default [
     {
@@ -10,14 +9,21 @@ export default [
         method: "post",
         handler: async (req: Request, res: Response) => {
             res.status(201).json({});
-            console.log(req.body.endpoint)
-            if (req.body.endpoint == "remove") {
-                return
-                // await deleteAllSubscription()
-            } else {
-                let result = await GetSubscription(req.body)
-                res.send(result);
-            }
+            // if (req.body.endpoint == "remove") {
+            //     return
+            //     // await deleteAllSubscription()
+            // } else {
+            let result = await DoSubscription(req.body)
+            // }
+        }
+    },
+    {
+        path: "/unsubscribe",
+        method: "post",
+        handler: async (req: Request, res: Response) => {
+            res.status(201).json({});
+            let result = await deleteSubscription(req.body)
+            console.log("subscription deleted")
         }
     },
     {
@@ -26,12 +32,24 @@ export default [
         handler: async (req: Request, res: Response) => {
             res.status(201).json({});
             let subscription = await GetAllSubscription()
-            console.log("sending notification")
-            console.log(subscription)
             for (let val of subscription){
                 console.log("Result==>",val)
-                let result = await SendNotification(req.body,val)
+                if (val.notificationType == "Order"){
+                    let result = await OrderNotification(req.body,val.subscription)
+                }
+            }
         }
+    },
+    {
+        path: "/test",
+        method: "post",
+        handler: async (req: Request, res: Response) => {
+            res.status(201).json({});
+            let subscription = await GetAllSubscription()
+            for (let val of subscription){
+                let result = await testNotification(val)
+            }
         }
+        
     }
 ]
