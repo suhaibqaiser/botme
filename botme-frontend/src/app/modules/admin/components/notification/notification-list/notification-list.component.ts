@@ -21,8 +21,9 @@ import { NotificationService } from '../../../service/notification.service';
     type: any=[]
     selecteType: any
     select:any
-    value1:any
+    value1:any=localStorage.setItem("timeKey",JSON.stringify(1))
     checked: any
+
 
     constructor(private wc :WrapperComponent,private ns:NotificationService) {}
     
@@ -33,7 +34,6 @@ import { NotificationService } from '../../../service/notification.service';
       console.log("taha",localStorage.getItem("inputSwitch"))
       localStorage.setItem("dropDownValue","Order")
       this.dropdownvalue = localStorage.getItem("dropDownValue")
-      console.log("timekey",localStorage.getItem('timekey'))
       this.value1 = localStorage.getItem("timeKey");
 
       this.setTime()
