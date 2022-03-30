@@ -14,4 +14,4 @@ export async function updateCategory(category: any) {
 
 export async function deleteCategory(categoryId: any, restaurantId: string) {
     return Category.findOneAndDelete({ categoryId: categoryId, restaurantId: restaurantId })
-}
+}  

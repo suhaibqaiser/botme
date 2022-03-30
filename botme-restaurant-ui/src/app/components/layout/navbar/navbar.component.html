@@ -6,7 +6,7 @@
       <a href="home" class="mobile-brand">
         <img src="assets/images/logo/web-logo.png" alt="logo" class="blue-logo">
       </a>
-      <p class="ml-2 mt-0 mb-0">{{getOrderType()}}</p>
+      <p *ngIf="['dine_in','pick_up','delivery'].includes(_helperService.getOrderTypeOnAuthBasis())" class="ml-2 mt-0 mb-0">{{getOrderType()}}</p>
     </div>
 
     <!-- desktop menu -->
@@ -18,7 +18,7 @@
           </a>
           <li style="width: 40%;padding-top:10px" class="d-flex align-items-center nav-item">
             <app-sofia-bot *ngIf="_botMeClientService.getCookie().isLoggedIn && _botMeClientService.getCookie().clientVoiceEnabled == 'yes'"> </app-sofia-bot>
-            <p>{{getOrderType()}}</p>
+            <p *ngIf="['dine_in','pick_up','delivery'].includes(_helperService.getOrderTypeOnAuthBasis())">{{getOrderType()}}</p>
           </li>
           <!-- nav-list -->
           <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
@@ -26,10 +26,10 @@
               <li class="nav-item">
                 <a routerLink="home" id="ctaId-home" class="nav-link" [class.active]="router.url=='/home'">HOME</a>
               </li>
-              <li class="nav-item">
-                <a *ngIf="_botMeClientService.getCookie().isLoggedIn && !['delivery','pick_up','guest'].includes(_helperService.getOrderTypeOnAuthBasis())" routerLink="reservations" id="ctaId-reservation" class="nav-link"
-                  [class.active]="router.url=='/reservations'">RESERVATION</a>
-              </li>
+<!--              <li class="nav-item">-->
+<!--                <a *ngIf="_botMeClientService.getCookie().isLoggedIn && !['delivery','pick_up'].includes(_helperService.getOrderTypeOnAuthBasis())" routerLink="reservations" id="ctaId-reservation" class="nav-link"-->
+<!--                  [class.active]="router.url=='/reservations'">RESERVATION</a>-->
+<!--              </li>-->
               <li class="nav-item">
                 <a routerLink="contact-us" id="ctaId-contact-us" class="nav-link"
                   [class.active]="router.url=='/contact-us'">CONTACT US</a>

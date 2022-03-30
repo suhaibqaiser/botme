@@ -1,12 +1,24 @@
 import { Request, Response } from "express";
-import {addCart, addOrder, deleteCartById, editCart, editOrder, findCart, findCartById, findOrder, updateOrderStatus} from "./controller";
+import {
+    addCart,
+    addOrder,
+    deleteCartById,
+    editCart,
+    editOrder,
+    findCart,
+    findCartByRestaurantId,
+    findCartById,
+    findOrder,
+    updateOrderStatus,
+    deleteOrder
+} from "./controller";
 
 export default [
     {
         path: "/order/search",
         method: "get",
         handler: async (req: Request, res: Response) => {
-            let result = await findOrder(req.query, req.query.restaurantId)
+            let result = await findOrder(req.query)
             res.send(result);
         }
     },
@@ -31,6 +43,14 @@ export default [
         method: "get",
         handler: async (req: Request, res: Response) => {
             let result = await findCart(req.query)
+            res.send(result);
+        }
+    },
+    {
+        path: "/cart/findCartByRestaurantId",
+        method: "get",
+        handler: async (req: Request, res: Response) => {
+            let result = await findCartByRestaurantId(req.query)
             res.send(result);
         }
     },
@@ -71,6 +91,14 @@ export default [
         method: "get",
         handler: async (req: Request, res: Response) => {
             let result = await updateOrderStatus(req.query)
+            res.send(result);
+        }
+    },
+    {
+        path: "/order/deleteByOrderLabel",
+        method: "get",
+        handler: async (req: Request, res: Response) => {
+            let result = await deleteOrder(req.query)
             res.send(result);
         }
     }

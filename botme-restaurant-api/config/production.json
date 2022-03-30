@@ -1,5 +1,6 @@
 {
     "commandsApi": "http://localhost:5010",
     "foodDB": "prod_food",
-    "dictionaryDB": "prod_dictionary"
+    "dictionaryDB": "prod_dictionary",
+    "clientsDB": "prod_clients"
 }

@@ -13,50 +13,54 @@
         </tr>
         </thead>
         <tbody>
-          <tr id="{{product.productId}}" *ngFor="let product of cartService.cartProduct">
-            <td class="cancel">
-              <a id="ctaId-remove" (click)="removeFromCart(product)"><i class='flaticon-cancel'></i></a>
-              <a id="ctaId-edit" *ngIf="!product.status" style="font-size: medium;margin-left: 16px"
-                 (click)="editFromCart(product)"><i class="fas fa-edit"></i></a>
-            </td>
-            <td>
-              <div class="product-table-info">
-                <div class="product-table-thumb">
-                  <a href="/product-detail/?productId={{product.productId}}">
-                    <img [src]="_helperService.resolveProductImage(product)" alt="product">
-                  </a>
-                </div>
+        <tr id="{{product.productId}}" *ngFor="let product of cartService.cartProduct">
+          <td class="cancel">
+            <a id="ctaId-remove" (click)="removeFromCart(product)"><i class='flaticon-cancel'></i></a>
+            <a id="ctaId-edit" *ngIf="!product.status" style="font-size: medium;margin-left: 16px"
+               (click)="editFromCart(product)"><i class="fas fa-edit"></i></a>
+          </td>
+          <td>
+            <div class="product-table-info">
+              <div class="product-table-thumb">
+                <a href="/product-detail/?productId={{product.productId}}">
+                  <img [src]="_helperService.resolveProductImage(product)" alt="product">
+                </a>
               </div>
-            </td>
-            <td class="td-product-name">
-              {{product.productName}} <a id="ctaId-view" (click)="showProductInfo(product)"><i
-              class="fas fa-info-circle"></i></a>
-              <!--            <div class="cart-modal-action">-->
-              <!--              <div class="cart-modal-action-item">-->
-              <!--                <div class="cart-modal-quantity">-->
-              <!--                  <p class="cart-quantity-price">-->
-              <!--                    <span *ngFor="let top of product.productToppings"><span *ngIf="top.productQuantity">{{top.productName }}( ${{top.productTotalPrice}})<br></span></span></p>-->
-              <!--                </div>-->
-              <!--                <div class="cart-modal-quantity">-->
-              <!--                  <p class="cart-quantity-price">-->
-              <!--                    <span *ngFor="let addon of product.productAddons"><span *ngIf="addon.productQuantity">{{addon.productName }}( ${{addon.productTotalPrice}})<br> </span></span></p>-->
-              <!--                </div>-->
-              <!--              </div>-->
-              <!--            </div>-->
-            </td>
-            <td *ngIf="!product.status">In Waiting</td>
-            <td *ngIf="product.status">In Progress</td>
-            <!--            <td>-->
-            <!--              <div class="cart-quantity">-->
-            <!--                <a id="ctaId-remove-quantity" (click)="addProductQuantity(product,'subtracting')"-->
-            <!--                  class="qu-btn dec">-</a>-->
-            <!--                <input type="text" class="qu-input" [value]="product.productQuantity">-->
-            <!--                <a id="ctaId-add-quantity" (click)="addProductQuantity(product,'adding')" class="qu-btn inc">+</a>-->
+            </div>
+          </td>
+          <td class="td-product-name">
+            {{product.productName}} <a id="ctaId-view" (click)="showProductInfo(product)"><i
+            class="fas fa-info-circle"></i></a>
+            <!--            <div class="cart-modal-action">-->
+            <!--              <div class="cart-modal-action-item">-->
+            <!--                <div class="cart-modal-quantity">-->
+            <!--                  <p class="cart-quantity-price">-->
+            <!--                    <span *ngFor="let top of product.productToppings"><span *ngIf="top.productQuantity">{{top.productName }}( ${{top.productTotalPrice}})<br></span></span></p>-->
+            <!--                </div>-->
+            <!--                <div class="cart-modal-quantity">-->
+            <!--                  <p class="cart-quantity-price">-->
+            <!--                    <span *ngFor="let addon of product.productAddons"><span *ngIf="addon.productQuantity">{{addon.productName }}( ${{addon.productTotalPrice}})<br> </span></span></p>-->
+            <!--                </div>-->
             <!--              </div>-->
-            <!--            </td>-->
-            <td class="td-total-price">${{product.productTotalPrice}}</td>
-          </tr>
-          <tr *ngIf="!loader && cartService.cartLoader"><td colspan="6"><app-spinner></app-spinner></td></tr>
+            <!--            </div>-->
+          </td>
+          <td *ngIf="!product.status">In Waiting</td>
+          <td *ngIf="product.status">In Progress</td>
+          <!--            <td>-->
+          <!--              <div class="cart-quantity">-->
+          <!--                <a id="ctaId-remove-quantity" (click)="addProductQuantity(product,'subtracting')"-->
+          <!--                  class="qu-btn dec">-</a>-->
+          <!--                <input type="text" class="qu-input" [value]="product.productQuantity">-->
+          <!--                <a id="ctaId-add-quantity" (click)="addProductQuantity(product,'adding')" class="qu-btn inc">+</a>-->
+          <!--              </div>-->
+          <!--            </td>-->
+          <td class="td-total-price">${{product.productTotalPrice}}</td>
+        </tr>
+        <tr *ngIf="!loader && cartService.cartLoader">
+          <td colspan="6">
+            <app-spinner></app-spinner>
+          </td>
+        </tr>
         </tbody>
       </table>
     </div>
@@ -72,16 +76,47 @@
       <!--        </div>-->
       <!--      </div>-->
       <div class="col-sm-12 col-md-12 col-lg-12">
-        <div class="cart-update text-center cart-info-item">
-          <a *ngIf="cartService.cartProduct && cartService.cartProduct.length" id="ctaId-order-now"
-             (click)="placeOrder()" class="btn">
-            Order Now
-            <div *ngIf="loader" class="spinner-border spinner-border-sm ml-3 text-warning"
-                 role="status">
-              <span class="visually-hidden">Loading...</span>
+<!--        <div *ngIf="_clientService.getCookie().isLoggedIn || this._clientService.getCookie().orderType"-->
+<!--             class="cart-update text-center cart-info-item">-->
+<!--          <a *ngIf="cartService.cartProduct && cartService.cartProduct.length" id="ctaId-order-now"-->
+<!--             (click)="placeOrder()" class="btn">-->
+<!--            Order Now-->
+<!--            <div *ngIf="loader" class="spinner-border spinner-border-sm ml-3 text-warning"-->
+<!--                 role="status">-->
+<!--              <span class="visually-hidden">Loading...</span>-->
+<!--            </div>-->
+<!--          </a>-->
+<!--        </div>-->
+<!--        <div *ngIf="!_clientService.getCookie().isLoggedIn && !this._clientService.getCookie().orderType"-->
+<!--             class="cart-update text-center cart-info-item">-->
+<!--          <a *ngIf="cartService.cartProduct && cartService.cartProduct.length" (click)="openModal()"-->
+<!--             id="ctaId-order-now"-->
+<!--             class="btn">-->
+<!--            select order type-->
+<!--          </a>-->
+<!--        </div>-->
+
+        <div *ngIf="!_clientService.getCookie().isLoggedIn" style="width: 49%" class="cart-details m-auto mt-5">
+          <h3 class="cart-details-title text-center color-white">Select Order Type</h3>
+          <form>
+            <div class="d-flex justify-content-around mt-2 align-items-center cart-check-box">
+              <div>
+                <input (change)="selectOrderType( 'dine_in')" [checked]="_clientService.getCookie().orderType === 'dine_in'" type="radio" name="1" id="reservation">
+                <label for="reservation">Reservation</label>
+              </div>
+              <div>
+                <input [checked]="_clientService.getCookie().orderType === 'pick_up'" (change)="selectOrderType('pick_up')" type="radio" name="1" id="pick_up">
+                <label for="pick_up">Pick Up</label>
+              </div>
+              <div>
+                <input [checked]="_clientService.getCookie().orderType === 'delivery'" (change)="selectOrderType('delivery')" type="radio" name="1" id="delivery">
+                <label for="delivery">Delivery</label>
+              </div>
             </div>
-          </a>
+          </form>
         </div>
+
+
       </div>
     </div>
     <div class="row">
@@ -122,9 +157,37 @@
               <p>$ {{cartService.getSubTotal()}}</p>
             </div>
           </div>
-          <a id="ctaId-checkout" routerLink="/checkout" class="btn">Checkout</a>
+          <a id="ctaId-checkout" (click)="checkout()" class="btn">Checkout</a>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+
+<!-- order ype -->
+<div  class="modal fade" id="order_type_modal" tabindex="-1" aria-labelledby="order_type_modal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title m-auto text-capitalize" id="exampleModalLabel">Order Type</h3>
+      </div>
+      <div class="modal-body p-5 text-center">
+        <h5 class="mb-3">Select your order type</h5>
+        <div class="form-group">
+          <div style="padding: 5px 10px;border-style: solid" class="input-group text-center">
+            <select (change)="_clientService.setCookie('orderType', orderType.value)" style="color: black"
+                    class="form-control" [formControl]="orderType">
+              <option value="pick_up">Pick Up</option>
+              <option value="delivery">Delivery</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <a type="button" style="padding: 10px" class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
+        <a (click)="placeOrder()" type="button" style="padding: 10px" class="btn btn-primary">Order Now</a>
+      </div>
+    </div>
+  </div>
+</div>
