@@ -19,9 +19,14 @@ export class NotificationService {
     //     const url = `${this.apiBaseUrl}/food/order/search?restaurantId=${this.restaurantId}`;
     //     return this.http.get(url);
     // }
-    sendNotification(){
-        const url = `${this.apiBaseUrl}/notification/send`;
+    testNotification(){
+        const url = `${this.apiBaseUrl}/notification/test`;
         const body = {req:""};
+        return this.http.post(url, body);
+    }
+    SetSummaryTime(time:any){
+        const url = `${this.apiBaseUrl}/notification/time`;
+        const body = {req:time};
         return this.http.post(url, body);
     }
     // Notification(size:any=''){
