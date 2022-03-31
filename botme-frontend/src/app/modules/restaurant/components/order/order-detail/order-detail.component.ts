@@ -9,6 +9,7 @@ import {CustomerService} from '../../../service/customer.service';
 import {OrderService} from '../../../service/order.service';
 import {ProductService} from '../../../service/product.service';
 import {TableService} from '../../../service/table.service';
+import { NotificationService } from 'src/app/modules/admin/service/notification.service';
 
 @Component({
   selector: 'app-order-detail',
@@ -24,9 +25,9 @@ export class OrderDetailComponent implements OnInit {
               private categoryService: CategoryService,
               private tableService: TableService,
               private messageService: MessageService,
-              private confirmationService: ConfirmationService) {
+              private confirmationService: ConfirmationService,
+              private notificationService: NotificationService) {
   }
-
 
   orderForm = this.fb.group({
     restaurantId: '',
@@ -267,6 +268,9 @@ export class OrderDetailComponent implements OnInit {
   }
 
   onSubmit() {
+    // console.log("sending notification")
+    // this.notificationService.sendNotification().subscribe();
+    // console.log("notification already send")
 
   }
 }

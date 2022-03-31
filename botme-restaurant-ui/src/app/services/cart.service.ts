@@ -51,37 +51,69 @@ export class CartService {
   cartLoader: boolean = false
 
   constructor(private _router: Router, private _toastService: ToastService, private _menuService: MenuService, private _clientService: BotmeClientService, private _contextService: ContextService, public _helperService: HelperService, private _socketService: SocketService) {
+    if (!this._clientService.getCookie().isLoggedIn) {
+      let list: any = localStorage.getItem('orderList')
+      list = JSON.parse(list)
+      this.cartProduct = list && list.length ? list : []
+    }
   }
 
 
-  addToCart(singleCustomProductObj: any, isEdit: any = false, type: any = '') {
-    if (!isEdit) {
-      this.addCartToDb(singleCustomProductObj, isEdit, type)
-    } else if (isEdit && type == 'place-order') {
-      this.addCartToDb(singleCustomProductObj, isEdit, type)
-    } else if (isEdit) {
-      this.addCartToDb(singleCustomProductObj, isEdit, type)
+  addToCart(singleCustomProductObj: any, callType: any = '') {
+    // when you are simply adding cart items in list
+    if (callType === 'add_local_list' && !this._clientService.getCookie().isLoggedIn) {
+      document.getElementById("ctaId-show-cart")?.click()
+      this.cartProduct.push(JSON.parse(JSON.stringify(this.singleCustomProductObj)))
+      localStorage.setItem('orderList', JSON.stringify(this.cartProduct))
+      return
+    }
+    // when you are saving all cart items to db first time
+    if (this._clientService.getCookie().isLoggedIn || callType === 'add_db') {
+      this.addCartToDb(singleCustomProductObj, callType)
+      return;
+    }
+
+    // if cart exists in db and we need to edit it
+    if (singleCustomProductObj.cartId && singleCustomProductObj.cartId.length) {
+      this.addCartToDb(singleCustomProductObj, 'edit_db')
+      return;
+    }
+
+    if (callType === 'edit_local_list') {
+      let cart = JSON.parse(JSON.stringify(this.singleCustomProductObj))
+      let cartListIndex = this.cartProduct.findIndex((item: any) => item.productId === cart.productId)
+      this.cartProduct.splice(cartListIndex, 1, cart)
+      localStorage.setItem('orderList', JSON.stringify(this.cartProduct))
+      document.getElementById("ctaId-show-cart")?.click()
+      return;
     }
   }
 
   removeFromCart(product: any) {
-    console.log(product)
-    this.cartLoader = true
-    this._menuService.deleteCartById(product.cartId).subscribe((res: any) => {
-      this._toastService.setToast({
-        description: res.message,
-        type: res.status
-      })
-      if (res.status === 'success') {
-        this.cartLoader = false
-        let cartListIndex = this.cartProduct.findIndex((item: any) => item._id === this.singleCustomProductObj._id)
-        this.cartProduct.splice(cartListIndex, 1)
 
-        if (this._helperService.getCurrentRouteName() !== '/cart') {
-          document.getElementById("ctaId-show-cart")?.click()
+    if (product.cartId && product.cartId.length) {
+      this.cartLoader = true
+      this._menuService.deleteCartById(product.cartId).subscribe((res: any) => {
+        this._toastService.setToast({
+          description: res.message,
+          type: res.status
+        })
+        if (res.status === 'success') {
+          this.cartLoader = false
+          let cartListIndex = this.cartProduct.findIndex((item: any) => item._id === this.singleCustomProductObj._id)
+          this.cartProduct.splice(cartListIndex, 1)
+
+          if (this._helperService.getCurrentRouteName() !== '/cart') {
+            document.getElementById("ctaId-show-cart")?.click()
+          }
         }
-      }
-    })
+      })
+      return
+    }
+
+    let cartListIndex = this.cartProduct.findIndex((item: any) => item.productId === product.productId)
+    this.cartProduct.splice(cartListIndex, 1)
+    localStorage.setItem('orderList', JSON.stringify(this.cartProduct))
 
   }
 
@@ -292,60 +324,38 @@ export class CartService {
     return priceList
   }
 
-  addCartToDb(singleCustomProductObj: any, isEdit: any = false, type: any = '') {
+  addCartToDb(singleCustomProductObj: any, callType: any = '') {
     // add product cart
-    this.cartLoader = true
-    if (!isEdit) {
+    // this.cartLoader = true
+    // if (!isEdit) {
+    //   // const orderObj = this.orderObjGenerator(singleCustomProductObj)
+    //   document.getElementById("ctaId-show-cart")?.click()
+    //   // this._menuService.addToCartApi(orderObj).subscribe((res: any) => {
+    //   //   this._toastService.setToast({
+    //   //     description: res.message,
+    //   //     type: res.status
+    //   //   })
+    //   //   this.cartLoader = false
+    //   //   if (res.status === 'success') {
+    //   //     this._clientService.setCookie('orderLabel', res.payload.order.orderLabel)
+    //   //     this._clientService.setCookie('reservationLabel', res.payload.order.reservationLabel)
+    //   //     this.singleCustomProductObj.cartId = res.payload.cart.cartId
+    //   this.cartProduct.push(JSON.parse(JSON.stringify(this.singleCustomProductObj)))
+    //   //   }
+    //   // })
+    //   return
+    // }
+
+    let updatedList: any = {
+      order: {},
+      cart: []
+    }
+
+
+    if (callType === 'edit_db') {
+      console.log('yo')
+      this.cartLoader = true
       const orderObj = this.orderObjGenerator(singleCustomProductObj)
-      document.getElementById("ctaId-show-cart")?.click()
-      this._menuService.addToCartApi(orderObj).subscribe((res: any) => {
-        this._toastService.setToast({
-          description: res.message,
-          type: res.status
-        })
-        this.cartLoader = false
-        if (res.status === 'success') {
-          this._clientService.setCookie('orderLabel', res.payload.order.orderLabel)
-          this._clientService.setCookie('reservationLabel', res.payload.order.reservationLabel)
-          this.singleCustomProductObj.cartId = res.payload.cart.cartId
-          this.cartProduct.push(JSON.parse(JSON.stringify(this.singleCustomProductObj)))
-        }
-      })
-      return
-    }
-
-    // when calling from cart section and updating order & its cart item status
-    if ((isEdit && type == 'place-order')) {
-      if (!this.cartProduct && !this.cartProduct.length) {
-        this._toastService.setToast({
-          description: 'Sorry you have not added food items in cart yet.',
-          type: 'error'
-        })
-        return;
-      }
-
-      this._menuService.updateOrderStatus().subscribe((res: any) => {
-        this._toastService.setToast({
-          description: res.message,
-          type: res.status
-        })
-        this.cartLoader = false
-        if (res.status === 'success') {
-          this.cartProduct.forEach((item: any) => {
-              item.status = true
-            }
-          )
-          this._router.navigate(['/checkout'])
-        }
-      })
-
-      return;
-    }
-
-
-    if (isEdit) {
-      const orderObj = this.orderObjGenerator(singleCustomProductObj, true)
-
       if (this._helperService.getCurrentRouteName() !== '/cart') {
         document.getElementById("ctaId-show-cart")?.click()
         document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:block')
@@ -364,6 +374,89 @@ export class CartService {
           this.cartProduct.splice(cartListIndex, 1, cart)
         }
       })
+      return;
+    }
+
+
+    // when calling from cart section and updating order & its cart item status
+    if (this._clientService.getCookie().isLoggedIn || callType === 'add_db') {
+
+      if (!this.cartProduct && !this.cartProduct.length) {
+        this._toastService.setToast({
+          description: 'Sorry you have not added food items in cart yet.',
+          type: 'error'
+        })
+        return;
+      }
+
+
+      this.cartLoader = true
+      if (this._clientService.getCookie().isLoggedIn) {
+        const orderObj = this.orderObjGenerator(singleCustomProductObj)
+        updatedList.order = orderObj.order
+        updatedList.cart.push(orderObj.cart)
+        document.getElementById("ctaId-show-cart")?.click()
+        this._menuService.addToCartApi(updatedList).subscribe((res: any) => {
+          this._toastService.setToast({
+            description: res.message,
+            type: res.status
+          })
+          this.cartLoader = false
+          if (res.status === 'success') {
+            this._clientService.setCookie('orderLabel', res.payload.order.orderLabel)
+            this.singleCustomProductObj.cartId = res.payload.cart[0].cartId
+            this.cartProduct.push(JSON.parse(JSON.stringify(this.singleCustomProductObj)))
+            console.log(this.cartProduct)
+          }
+        })
+        return
+      }
+
+
+      let filterCartList = this._helperService.filterCartByCartId(JSON.parse(JSON.stringify(this.cartProduct)))
+      filterCartList.forEach((item: any) => {
+        let obj = this.orderObjGenerator(item)
+        updatedList.order = obj.order
+        updatedList.cart.push(obj.cart)
+      })
+
+
+      this._menuService.addToCartApi(updatedList).subscribe((res: any) => {
+        this._toastService.setToast({
+          description: res.message,
+          type: res.status
+        })
+        this.cartLoader = false
+        if (res.status === 'success') {
+          this._clientService.setCookie('orderLabel', res.payload.order.orderLabel)
+          let cartList = res.payload.cart
+          cartList.forEach((item: any, index: any) => {
+            this.cartProduct[index].cartId = (!item.cartId && item.productId === this.cartProduct[index].productId) ? item.cartId : ''
+          })
+          // this.singleCustomProductObj.cartId = res.payload.cart.cartId
+          $('#order_type_modal').modal('hide')
+          this._router.navigate(['/checkout'])
+        }
+      })
+
+
+      // this._menuService.updateOrderStatus(this._helperService.getOrderStatus('notified')).subscribe((res: any) => {
+      //   this._toastService.setToast({
+      //     description: res.message,
+      //     type: res.status
+      //   })
+      //   this.cartLoader = false
+      //   if (res.status === 'success') {
+      //     this.cartProduct.forEach((item: any) => {
+      //         item.status = true
+      //       }
+      //     )
+      //     $('#order_type_modal').modal('hide')
+      //     this._router.navigate(['/checkout'])
+      //   }
+      // })
+
+      return;
     }
   }
 
@@ -461,36 +554,11 @@ export class CartService {
     }
   }
 
-  orderObjGenerator(singleCustomProductObj: any, isEdit = false) {
+  orderObjGenerator(singleCustomProductObj: any) {
     const modifiedObj = this.modifyCartObj(singleCustomProductObj)
     let cart: any = {}
     let order: any = {}
 
-    if (isEdit) {
-      cart = {
-        restaurantId: this._helperService.getRestaurantIdOnAuthBasis(),
-        cartId: singleCustomProductObj.cartId ? singleCustomProductObj.cartId : '',
-        orderLabel: (this._clientService.getCookie().orderLabel) ? this._clientService.getCookie().orderLabel : '',
-        productId: singleCustomProductObj.productId,
-        productSerialNo: '',
-        productCategory: '',
-        productFlavor: modifiedObj.productFlavor,
-        productProportion: modifiedObj.productProportion,
-        productToppings: modifiedObj.productToppings,
-        productOptions: modifiedObj.productOptions,
-        productRate: modifiedObj.productRate,
-        productQuantity: singleCustomProductObj.productQuantity,
-        productIngredients: modifiedObj.productIngredients,
-        productNotes: '', // customization Instructions
-        status: singleCustomProductObj.status, // pending, in-progress
-        productTotalPrice: singleCustomProductObj.productTotalPrice,
-        cartDiscount: 0,
-        cartTotal: singleCustomProductObj.productTotalPrice,
-      }
-      return {
-        cart: cart
-      }
-    }
 
     cart = {
       restaurantId: this._helperService.getRestaurantIdOnAuthBasis(),
@@ -516,7 +584,6 @@ export class CartService {
     order = {
       restaurantId: this._helperService.getRestaurantIdOnAuthBasis(),
       orderLabel: (this._clientService.getCookie().orderLabel) ? this._clientService.getCookie().orderLabel : '',
-      reservationLabel: this._clientService.getCookie().reservationLabel,
       orderTimestamp: new Date(),
       orderType: this._helperService.getOrderTypeOnAuthBasis(),
       customerId: this._clientService.getCookie().customerId ? this._clientService.getCookie().customerId : '',
@@ -534,7 +601,7 @@ export class CartService {
       orderServiceTax: 0,
       orderSalesTax: 0,
       orderTotal: singleCustomProductObj.productTotalPrice,
-      orderStatus: false
+      orderStatus: this._helperService.getOrderStatus('notified')
     }
     return {
       cart: cart,
@@ -559,6 +626,7 @@ export class CartService {
 
   selectServing(sizeObj: any) {
     let name = (this._socketService.voiceServingSize && this._socketService.voiceServingSize.length) ? this._socketService.voiceServingSize : sizeObj.serving_size_name
+    console.log(sizeObj, this.singleCustomProductObj.productServingSize)
     this.singleCustomProductObj.productServingSize.forEach((item: any) => {
       item.selected = item.serving_size_name.toLowerCase() === name.toLowerCase()
     })

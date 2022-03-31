@@ -2,7 +2,8 @@ import {restResponse} from "../../../utils/response";
 import {addCustomer, getAllCustomers, getCustomer, updateOneCustomer, getAddressByCustomer} from "./service";
 import {randomUUID} from "crypto";
 import {getMaxLabelValue} from "../../food/customer/service";
-import {getOrderById, modifyOrderStatus} from "../order/service";
+import {getOrderById, updateCustomerId} from "../order/service";
+import { GetAllSubscription } from "../../notification/order-notification/service";
 
 export async function findCustomer(filter: any) {
     let response = new restResponse()
@@ -67,7 +68,7 @@ export async function createCustomer(filter: any, customer: any) {
         if (result) {
             response.payload = JSON.parse(JSON.stringify(result))
 
-            let orderResult = await modifyOrderStatus(filter, response.payload.customerId)
+            let orderResult = await updateCustomerId(filter, response.payload.customerId)
 
             if (orderResult) {
                 response.message = 'Your order placed has been successfully'
@@ -91,6 +92,7 @@ export async function createCustomer(filter: any, customer: any) {
 }
 
 export async function updateCustomer(customer: any, filter: any) {
+    console.log("updated customer")
     let response = new restResponse()
     try {
         if (!customer || !filter) {
@@ -98,7 +100,6 @@ export async function updateCustomer(customer: any, filter: any) {
             response.status = "danger"
             return response;
         }
-
         let result = await updateOneCustomer(customer)
         if (result) {
             response.payload = JSON.parse(JSON.stringify(result))

@@ -28,6 +28,7 @@ export class LoginFormComponent implements OnInit {
 
   login() {
     this.loader = true
+    this._botMeClientService.reSetCookie()
     this._botMeClientService.loginBotMeClientApi(this.loginForm.value).subscribe(
       (res: any) => {
         if (res.status) {

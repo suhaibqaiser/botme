@@ -9,13 +9,20 @@ import {
     updateCart,
     updateOrder,
     updateCartStatus,
-    modifyOrderStatus
+    updateOrderType, updateOrderStatusDB,
+    deleteOrderByOrderLabel,
+    deleteCartByOrderLabel
 } from "./service";
 import {randomUUID} from "crypto";
 
-export async function findOrder(filter: any, restaurantId: any) {
+
+
+export async function findOrder(filter: any) {
     let response = new restResponse()
-    filter.restaurantId = restaurantId
+
+    if (filter && !filter.orderStatus) {
+        delete filter.orderStatus
+    }
 
     let result = await getOrder(filter)
     if (result.length != 0) {
@@ -77,7 +84,6 @@ export async function editOrder(order: any, restaurantId: any) {
 export async function findCart(filter: any) {
     let response = new restResponse()
     try {
-        // filter if order_type => dine_in (reservationLabel) otherwise orderLabel
         let orderResult: any = await getOrderById(filter)
         orderResult = JSON.parse(JSON.stringify(orderResult))
 
@@ -87,8 +93,13 @@ export async function findCart(filter: any) {
             return response
         }
 
-        // filter orderLabel &  restaurantId
-        delete filter.reservationLabel
+        if (orderResult && orderResult.orderStatus !== 'notified') {
+            response.message = 'Only notified status order are allowed to search.'
+            response.status = "danger"
+            return response
+        }
+
+        // filter orderLabel
         delete filter.orderType
         filter.orderLabel = orderResult.orderLabel
         let result = await getCart(filter)
@@ -130,6 +141,24 @@ export async function findCartById(filter: any, restaurantId: any) {
     }
 }
 
+
+export async function findCartByRestaurantId(filter: any) {
+    let response = new restResponse()
+
+    // filter orderLabel & restaurantId & cartId
+
+    let result = await getCart(filter)
+    if (result) {
+        response.payload = result
+        response.status = "success"
+        return response
+    } else {
+        response.payload = "Cart not found against restaurantId=" + filter.cartLabel + ' --- =' + filter.cartLabel
+        response.status = "danger"
+        return response
+    }
+}
+
 export async function addCart(obj: any, filter: any) {
     let response = new restResponse()
     try {
@@ -142,14 +171,20 @@ export async function addCart(obj: any, filter: any) {
         let cartObj = obj.cart
         let orderObj = obj.order
         let tempFilter = JSON.parse(JSON.stringify(filter))
-        cartObj.cartId = randomUUID()
+
 
         // checking is order exists
         // filter restaurantId & orderLabel
         let isOrderExists: any = await getOrderById(tempFilter)
+        console.log(isOrderExists)
         if (isOrderExists) {
+            console.log('yes fond')
+            cartObj.forEach((item: any) => {
+                item.cartId = (item.cartId && item.cartId.length) ? item.cartId : randomUUID()
+                item.orderLabel = isOrderExists.orderLabel
+            })
+
             // once order created just save cart only
-            cartObj.orderLabel = isOrderExists.orderLabel
             let cartResult = await createCart(cartObj)
             response.payload = {cart: cartResult, order: isOrderExists}
             response.status = "success"
@@ -163,7 +198,11 @@ export async function addCart(obj: any, filter: any) {
         let orderResult = await createOrder(orderObj)
         if (orderResult) {
             orderResult = JSON.parse(JSON.stringify(orderResult))
-            cartObj.orderLabel = orderResult.orderLabel
+            cartObj.forEach((item: any) => {
+                item.cartId = randomUUID()
+                item.orderLabel = orderResult.orderLabel
+            })
+
             let cartResult = await createCart(cartObj)
             if (cartResult) {
                 cartResult = JSON.parse(JSON.stringify(cartResult))
@@ -200,6 +239,7 @@ export async function editCart(cart: any, filter: any) {
         // filter restaurantId & cartId & orderLabel
 
         let result = await updateCart(cart, filter)
+        console.log("update order")
         if (result) {
             response.payload = {cart: JSON.parse(JSON.stringify(result))}
             response.message = "Cart updated."
@@ -252,19 +292,30 @@ export async function updateOrderStatus(filter: any) {
         //     return response
         // }
         delete filter.restaurantId
-        delete filter.orderType
+        const orderStatus = filter.orderStatus
+        delete filter.orderStatus
         // let updatedList = await cartResult.forEach((item: any) => {
         //     filter.cartId = item.cartId
         //     return JSON.parse(JSON.stringify(updateCartStatus(filter)))
         // })
+        const orderType = JSON.parse(JSON.stringify(filter.orderType))
+        delete filter.orderType
 
-        // let orderResult = await modifyOrderStatus(filter)
-        //
-        // if(!orderResult) {
-        //     response.message = 'Failed to update order status.'
-        //     response.status = "error"
-        //     return response
-        // }
+        let orderResult = await updateOrderType(filter, orderType)
+        if (!orderResult) {
+            response.message = 'Failed to update order type.'
+            response.status = "error"
+            return response
+        }
+
+        let orderStatusResult = await updateOrderStatusDB(filter, orderStatus)
+        if (!orderStatusResult) {
+            response.message = 'Failed to update order status.'
+            response.status = "error"
+            return response
+        }
+
+        delete filter.orderType
 
         let result = await updateCartStatus(filter)
         if (result) {
@@ -279,6 +330,30 @@ export async function updateOrderStatus(filter: any) {
     } catch (e: any) {
         response.message = e.message
         response.status = "error"
+        return response
+    }
+}
+
+export async function deleteOrder(filter: any) {
+    let response = new restResponse()
+
+    // filter restaurantId & cartId & orderLabel
+    try {
+        let result = await deleteOrderByOrderLabel(filter)
+        let cartResult = await deleteCartByOrderLabel(filter)
+        if (result || cartResult) {
+            response.payload = result
+            response.message = "Deleted Successfully."
+            response.status = "success"
+            return response
+        }
+        response.message = "Order not found."
+        response.status = "danger"
+        return response
+
+    } catch (e: any) {
+        response.message = e.message
+        response.status = "danger"
         return response
     }
 }

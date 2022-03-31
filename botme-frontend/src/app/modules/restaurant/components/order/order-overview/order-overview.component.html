@@ -1,0 +1,60 @@
+<div class="text-center mt-5" *ngIf="loading">
+  <div class="spinner-border text-center text-primary" role="status"></div>
+</div>
+<div class="text-center mt-5" *ngIf="!loading  && !orders.length">
+  <h6>No Orders Found!</h6>
+</div>
+<div *ngIf="orders && orders.length" class="row mt-4">
+  <div *ngFor="let order of orders" class="col-lg-4">
+    <div class="card order_card">
+      <div class="card-body">
+        <div class="customer d-flex justify-content-between align-items-center text-center">
+          <h4>Customer: <strong>{{order.customer ? order.customer.customerName : '-'}}</strong></h4>
+          <h4 style="cursor: pointer"><span [title]="_helperService.computeOrderMessages(order.orderStatus)"
+                                            [classList]="_helperService.computeOrderStatusColor(order.orderStatus)">{{order.orderStatus}}</span>
+          </h4>
+        </div>
+        <hr class="mt-1">
+        <h4
+          class="text-center">{{_helperService.computeOrderType(order.orderType).orderText + ': ' + order.orderLabel}}</h4>
+        <div class="head d-flex align-items-center justify-content-between">
+          <h4>Price
+            <br>
+            Order Type
+            <br>
+            Time
+          </h4>
+          <h4 style="cursor: pointer" class="text-right">{{'$' + _helperService.roundToTwo(order.productTotalPrice)}}
+            <br> {{order.orderType}} <br> {{_helperService.timeAgo(order.orderTimestamp)}}</h4>
+        </div>
+        <hr>
+
+        <div *ngFor="let cart of order.carts" class=cart_items>
+          <h4><strong>Item:</strong> {{cart.product.productName}} {{'(' + cart.productQuantity + ' x ' }} <span
+            *ngFor="let rate of cart.productRate | keyvalue">{{rate.key + ')'}}</span></h4>
+          <h4 *ngIf="cart.productFlavor"><strong>Flavor :</strong> {{cart.productFlavor}}</h4>
+          <h4 *ngIf="cart.productIngredients && cart.productIngredients.length"><strong>Ingredients
+            :</strong> {{_helperService.computeProductsForOrderCart('ingredients', cart.productIngredients, products)}}
+          </h4>
+          <h4 *ngIf="cart.productOptions && cart.productOptions.length"><strong>Options
+            :</strong> {{_helperService.computeProductsForOrderCart('options', cart.productOptions, products)}}</h4>
+          <h4 *ngIf="cart.productToppings && cart.productToppings.length"><strong>Toppings
+            :</strong> {{_helperService.computeProductsForOrderCart('', cart.productToppings, products)}}</h4>
+          <h4 *ngIf="cart.productProportion && cart.productProportion.length"><strong>Addons
+            :</strong> {{_helperService.computeProductsForOrderCart('', cart.productProportion, products)}}</h4>
+          <hr>
+        </div>
+        <div class="d-flex justify-content-between">
+          <button (click)="updateOrderStatus(order,'delivered')" class="btn mt-2 btn-sm detial_btn btn-success">complete
+            order
+          </button>
+          <button (click)="viewOrderDetail(order)" class="btn mt-2 btn-sm detial_btn btn-info">view details
+          </button>
+          <button (click)="updateOrderStatus(order,'cancel')" class="btn mt-2 btn-sm detial_btn btn-warning">cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
