@@ -21,57 +21,94 @@ import { NotificationService } from '../../../service/notification.service';
     type: any=[]
     selecteType: any
     select:any
-    value1:any
+    value1:any = "1"
     checked: any
+    checkSwitchValue:any
 
 
     constructor(private wc :WrapperComponent,private ns:NotificationService) {}
     
     ngOnInit(): void {
-      this.checked = JSON.parse(localStorage.getItem("inputSwitch") || '{}')
-      this.event = JSON.parse(localStorage.getItem("inputSwitch") || '{}')
+
+      this.checkSwitchValue = JSON.parse(localStorage.getItem("inputSwitch") || '{}')
+      this.handleChange(this.checkSwitchValue)
+      
+      // this.checked = JSON.parse(localStorage.getItem("inputSwitch") || '{}')
+      // this.event = JSON.parse(localStorage.getItem("inputSwitch") || '{}')
+
       // localStorage.setItem("inputSwitch",JSON.stringify(this.checked))
-      console.log("taha",localStorage.getItem("inputSwitch"))
-      localStorage.setItem("dropDownValue","Order")
-      this.dropdownvalue = localStorage.getItem("dropDownValue")
-      this.value1 = localStorage.getItem("timeKey");
+      // localStorage.setItem("dropDownValue","Order")
 
       this.setTime()
+      // this.value1 = JSON.parse(localStorage.getItem("timeKey") || '{}');
 
       this.type = [
         {name: "Order"},
         {name: "Summary"}
       ]
-      this.selecteType = this.type
-      let Switch = document.getElementById("inputSwitch")?.innerHTML
-      console.log("Result ==>" ,Switch)
+      this.dropdownvalue = JSON.parse(localStorage.getItem("dropDownValue") || '{}')
+      // this.selecteType = {name: this.dropdownvalue}
+      // this.select = {name: "Order"}
+      // this.select = this.dropdownvalue
 
+
+      // this.type = [
+      //   {name: "Order"},
+      //   {name: "Summary"}
+      // ]
      }
 
     handleChange(e:any){
-      let bool = e.checked
-      let result = localStorage.setItem("inputSwitch",JSON.stringify(bool))
-      // this.checked = localStorage.getItem("inputSwitch")
-      this.event = JSON.parse(localStorage.getItem("inputSwitch") || '{}')
-      console.log("result==>",result)
-      this.wc.regWorker(e.checked)
-      console.log(this.selecteType)
+      if(e==""){
+        console.log("by default true")
+        localStorage.setItem("inputSwitch",JSON.stringify(true))
+        this.checked = JSON.parse(localStorage.getItem("inputSwitch") || '{}')
+        this.event = JSON.parse(localStorage.getItem("inputSwitch") || '{}')
+        this.checkSwitchValue = JSON.parse(localStorage.getItem("inputSwitch") || '{}')
+        this.wc.regWorker(this.checkSwitchValue)
+      }
+      else{
+        if(e.checked==Boolean){
+          console.log("switch change event")
+          let bool = e.checked
+          localStorage.setItem("inputSwitch",JSON.stringify(bool))
+          this.checked = e.checked
+          this.event = e.checked
+          this.wc.regWorker(e.checked)
+        }
+        else{
+          console.log("local storage switch value")
+          this.checked = JSON.parse(localStorage.getItem("inputSwitch") || '{}')
+          this.event = JSON.parse(localStorage.getItem("inputSwitch") || '{}')
+          this.checkSwitchValue = JSON.parse(localStorage.getItem("inputSwitch") || '{}')
+          this.wc.regWorker(this.checkSwitchValue)
+        }
+      }
     }
     testNotification(){
       this.ns.testNotification().subscribe()
 
     }
     dropDown(dd:any){
-      console.log(dd)
-      localStorage.setItem("dropDownValue",dd.value.name)
-      this.select = localStorage.getItem("dropDownValue")
-      console.log(this.select)
-      this.wc.notificationType(this.select)
-      let value = localStorage.getItem("timeKey")
-      this.ns.SetSummaryTime(value).subscribe()
+      // localStorage.setItem()
+      if (dd.value.name == ""){
+        // localStorage.setItem("dropDownValue","Order")
+        alert("Notification Type Required")
+      }
+      else{
+        localStorage.setItem("dropDownValue",dd.value.name)
+        let value = JSON.parse(localStorage.getItem("inputSwitch") || '{}')
+        this.wc.regWorker(value)
+        this.select = dd.value.name
+      }
+      // this.wc.notificationType(this.select)
+      // let value = localStorage.getItem("timeKey")
+      // if(this.select=="Summary"){
+      //   this.ns.SetSummaryTime(value).subscribe()
+      // }
     }
     setTime(){
-      localStorage.setItem("timeKey",this.value1);
+      localStorage.setItem("timeKey",JSON.stringify(this.value1));
       let value = localStorage.getItem("timeKey")
       console.log(value)
       this.ns.SetSummaryTime(value).subscribe()

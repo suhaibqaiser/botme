@@ -16,8 +16,8 @@ export class WrapperComponent implements OnInit {
   private readonly publicKey = "BDCQVQ8eDIxkBtTKyu98APMWTQ_HNA5PrRL7XVac7U-GuPJBikGFJguHGC5dAd7BULCkTpyfuvN3Ns57SamWkpA"
 
   register:any
-  e:boolean=false
-  type:any = "Order"
+  e:any
+  type:any
 
   constructor(public headerService: HeaderService,private authservice:AuthenticationService) {
   }
@@ -25,25 +25,26 @@ export class WrapperComponent implements OnInit {
   apiBaseUrl = environment.apiRestaurantUrl;
 
   ngOnInit(): void {
+    // localStorage.setItem("inputSwitch",JSON.stringify(true))
+    // this.e = JSON.parse(localStorage.getItem("inputSwitch") || '{}')
+    // console.log("e=>",this.e)
+    this.type = JSON.parse(localStorage.getItem("dropDownValue") || '{}')
     this.allowNotification()
   }
-  notificationType(type:any){
-    if(this.type != type){
-      this.type = type
-      this.regWorker(true)
-      console.log("notification type changed")
-    }
-  }
+  // notificationType(type:any){
+  //   if(this.type != type){
+  //     this.type = type
+  //     this.regWorker(true)
+  //     console.log("notification type changed")
+  //   }
+  // }
   allowNotification(){
     if (Notification.permission === 'default'){
       Notification.requestPermission().then((perm) => {
         if (Notification.permission === "granted"){
-          if (!this.type){}
-          else{
             this.regWorker(this.e).catch((err) => {
               console.error(err);
             });
-          }
         }
         else{
           alert("please allow notifications.");
@@ -52,14 +53,9 @@ export class WrapperComponent implements OnInit {
     }
     else if (Notification.permission === "granted"){
       console.log("permission granted")
-      if (!this.type){
-        console.log("notification type require")
-      }
-      else{
-        this.regWorker(this.e).catch((err) => {
-          console.error(err);
-        });
-      }
+      this.regWorker(this.e).catch((err) => {
+        console.error(err);
+      });
     }
     else {
       alert("please allow notifications.");

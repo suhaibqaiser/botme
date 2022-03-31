@@ -17,7 +17,18 @@ export default [
             let time2 = time1*3600
             let time = time2*1000
             console.log(time)
-            let result = await SummaryNotification(time)
+            let subsciption = await GetAllSubscription()
+            let result = setInterval(() => {
+                for (let val of subsciption){
+                    if(val.notificationType=="Summary"){
+                        let SummaryResult = SummaryNotification(val.subsciption)
+                    }
+                    else{
+                        clearInterval(result)
+                    }
+                }
+            },time)
+            // let result = await SummaryNotification(time)
             
 
             

@@ -15,6 +15,7 @@ export async function DoSubscription(req: any) {
     if (CheckIfExist.length != 0) {
         console.log("already exist")
         let result = await updateSubscription(req);
+        console.log("subscription updated")
         
     } else {
         let result = await AddSubscription(req);

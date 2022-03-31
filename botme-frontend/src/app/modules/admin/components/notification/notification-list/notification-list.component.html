@@ -9,7 +9,7 @@
         </ul>
         <ul id="menu">
           <li>
-            <p-dropdown #dd (onChange)="dropDown(dd)" *ngIf="event" [options]="type" [(ngModel)]="selecteType" placeholder="Notification Type" optionLabel="name" dataKey=Order [style]="{'width': '8em'}"></p-dropdown>
+            <p-dropdown #dd (onChange)="dropDown(dd)" *ngIf="event" [options]="type" [(ngModel)]="selecteType" placeholder="Notification Type" optionLabel="name" dataKey="Order" [style]="{'width': '8em'}"></p-dropdown>
             <h6 *ngIf="event">  notification type</h6>
           </li>
           <li>  
