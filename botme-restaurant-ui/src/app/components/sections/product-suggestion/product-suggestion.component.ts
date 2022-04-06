@@ -45,7 +45,9 @@ export class ProductSuggestionComponent implements OnInit {
     this.prepareParameters()
     console.log(this.searchParameters);
     this.suggestedItems = { products: [], drinks: [] };
+    console.log("test",this.searchParameters)
     this.menuservice.getSuggestions(this.searchParameters).subscribe((res: any) => {
+      console.log("test",res)
       if (res.status == 'success') {
         this.suggestion.products = res.payload.products;
         this.suggestion.drinks = res.payload.drinks;
