@@ -15,7 +15,7 @@ export class ProductSuggestionComponent implements OnInit {
   attributes: any = {}
   products: any
   suggestion: any = { products: [], drinks: [] };
-  suggestedItems: any
+  suggestedItems: any = {}
 
 
   suggestionForm = new FormGroup({
@@ -42,6 +42,7 @@ export class ProductSuggestionComponent implements OnInit {
   }
 
   suggest() {
+    console.log('suggest')
     this.prepareParameters()
     console.log(this.searchParameters);
     this.suggestedItems = { products: [], drinks: [] };
@@ -77,5 +78,6 @@ export class ProductSuggestionComponent implements OnInit {
     this.attributes.halal = this.suggestionForm.get('halal')?.value
     this.attributes.glutenFree = this.suggestionForm.get('glutenFree')?.value
     this.searchParameters.attributes = this.attributes
+    console.log('prepareParameters =>',this.searchParameters)
   }
 }

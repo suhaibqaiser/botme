@@ -30,7 +30,7 @@
                                         <div class="input-group">
 
                                             <input type="number" name="persons" id="persons" class="form-control"
-                                                formControlName="tags" required data-error="Enter a valid number"
+                                                formControlName="person" required data-error="Enter a valid number"
                                                 placeholder="No of Persons" />
                                         </div>
 
@@ -111,10 +111,10 @@
                               </div>
                             </div>
                         </form>
-                        <div *ngIf="suggestedItems.products.length == 0" class="text-light">
+                        <div *ngIf="!suggestedItems.products" class="text-light">
                             <h1>Nothing found!</h1>
                         </div>
-                        <div *ngIf="suggestedItems.products.length > 0">
+                        <div *ngIf="suggestedItems.products && suggestedItems.products.length > 0">
                             <ul class="list-group" *ngFor="let product of suggestedItems.products">
                                 <li class="list-group-item">{{product.productName}}</li>
                             </ul>
