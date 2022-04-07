@@ -92,14 +92,18 @@ nlu:
 
   - intent: Suggestion
     examples: |
-      - we are looking for [Platter](productName) or [Wrap](productName) for [2](number) person
-      - i am looking for [Platter](productName) or [Wrap](productName) for [four](number) people
-      - we want to eat something like [platter](productName) or [burger](productName) for [5](number) person
-      - i am in the mood for [Burger](productName) or [Platter](productName) for [7](number) person
-      - i am looking for [Burger](productName) for [six](number) people
-      - we want to have [wrap](productName) for [3](number) people
-      
-
+      - we are looking for [Platter](productName) and [Wrap](productName) 
+      - i am looking for [Platter](productName) or [Wrap](productName) 
+      - we want to eat something like [platter](productName) or [burger](productName) 
+      - i am in the mood for [Burger](productName) or [Platter](productName)
+      - i am looking for [Burger](productName)
+      - i want to eat [burger](productName)
+      - suggest me some good [burger](productName)
+      - suggest me some good [wraps](productName)
+      - suggest me some good [platter](productName)
+      - i am looking for some good [burger](productName)
+      - we want to have [wrap](productName)
+    
   - intent: reservation_page
     examples: |
       - [Reserve]{"entity":"pagethree","value":"reservation"} a table for me please
