@@ -282,9 +282,16 @@ class Utility:
         return Response
         
 
+    # SUGGESTION RESPONSE
+    def suggestionResponse(self):
+        Response = {"ctaId":None,"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":""},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":""},"entities" : [{"entityId" : self.call,"entityValue" : self.value,"entitySelected":None,"clickAttribute" : "href, button","keywords" :""}]}}
+        return Response
+        
     # GETTING ENTITYID AND CLICK ATTRIBUTE
 
     def getEntityClickAttribute(entity):
         for x in entity:
             print("Result ==>",x)
             return {"entityId":x['entityId'],"actionType":x['clickAttribute']}
+
+    

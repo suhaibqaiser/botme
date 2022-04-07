@@ -44,6 +44,7 @@ const ProductSchema = createSchema(
         offeringTime: [Type.string()],
         productVariant: [Type.string()],
         productActive: Type.boolean({ required: true }),
+        productServing: Type.number(),
     },
     {
         timestamps: { createdAt: true },
