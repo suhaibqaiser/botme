@@ -51,8 +51,6 @@ def suggestReponse():
                 converstion['conversationId'], converstion['conversationLogId'], converstion['clientId'], converstion['sessionId'], response, text)
             return jsonify(response)
 
-    return
-
 @app.route('/response', methods=['POST'])
 def send_Response():
     req_data = request.get_json()
