@@ -32,6 +32,7 @@ export default [
         method: "post",
         handler: async (req: Request, res: Response) => {
             let result = await suggestProduct(req.body.searchParameters, req.body.restaurantId)
+            console.log(req.body)
             res.send(result);
         }
     }

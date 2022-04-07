@@ -1,3 +1,4 @@
+from crypt import methods
 from flask import Flask, jsonify, request
 from controller.communication import getResponseUsingContext
 from Service.servicerasa import getIntent
@@ -6,10 +7,56 @@ from controller.utility import Utility
 
 app = Flask(__name__)
 
+@app.route('/suggest', methods=['POST'])
+def suggestReponse():
+    req_data = request.get_json()
+    # REQUEST JSON
+    context = req_data['context']
+    inputText = req_data['inputText']
+    converstion = req_data['conversation']
+    searchParameter = req_data['searchParameters']
+    restaurantId = req_data['restaurant_id']
+
+    # INITIALIZATION
+    text = inputText['textValue']
+    pageId = context['pageId']
+    sectionId = context['sectionId']
+    form = context['entities']
+    parentEntity = context['parentEntity']
+    message = text.lower()
+
+    # RASA API CALL
+    rasa_data = getIntent(message)
+    print(rasa_data)
+    intent = rasa_data['intent']
+
+    # RESPONSE RETURN
+    value = None
+    db = None
+    call = None
+    utility = Utility(pageId, sectionId, value, text,
+                      intent['name'], db, form, call)
+    if(intent['name'] == "nlu_fallback"):
+        response = utility.nluFallBack()
+        wrongCommand = insertingWrongResponseInDb(converstion['conversationId'], converstion['conversationLogId'], converstion['clientId'], converstion['sessionId'], response, text)
+        return jsonify(response)
+    else:
+        response = getResponseUsingContext(intent['name'], rasa_data['entities'], text,pageId, sectionId, form, parentEntity, converstion, context, restaurantId,searchParameter)
+        if response:
+            return jsonify(response)
+        else:
+            print("taha")
+            response = utility.nluFallBack()
+            wrongCommand = insertingWrongResponseInDb(
+                converstion['conversationId'], converstion['conversationLogId'], converstion['clientId'], converstion['sessionId'], response, text)
+            return jsonify(response)
+
+    return
 
 @app.route('/response', methods=['POST'])
 def send_Response():
     req_data = request.get_json()
+
     # REQUEST JSON
     context = req_data['context']
     inputText = req_data['inputText']

@@ -3,10 +3,9 @@ from config import RESTAURANT_API
 import json
 
 
-def getProductId(entity, person, restaurantId):
+def getProductId(searchParameter, restaurantId):
     try:
-        body = {"searchParameters": {"tags": entity,
-                                     "persons": person}, "restaurantId": restaurantId}
+        body = {"searchParameters":searchParameter,"restaurantId":restaurantId}
         print("body ==>", body)
         response = requests.post(
             RESTAURANT_API + '/food/product/suggest', json=body)

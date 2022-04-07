@@ -5,7 +5,7 @@ from Service.suggestionApi import getProductId
 
 
 class Suggestion():
-    def __init__(self, intent, entities, senti, pageId, sectionId, text, db, converstion, context, restaurantId):
+    def __init__(self, intent, entities, senti, pageId, sectionId, text, db, converstion, context, restaurantId, searchParameter):
         self.intent = intent
         self.entity = entities
         self.senti = senti
@@ -16,15 +16,19 @@ class Suggestion():
         self.form = None
         self.converstion = converstion
         self.context = context
-        self.call = None
+        self.searchParameter = searchParameter
         self.restaurantId = restaurantId
+        self.call = None
 
     def suggestionResponse(self):
-        suggestion = Suggestion.entityArray(self.entity)
-        data = getProductId(suggestion['entity'],
-                            suggestion['number'], self.restaurantId)
+        suggestion = Suggestion.entityArray(self)
+        print(suggestion)
+
+        data = getProductId(self.searchParameter, self.restaurantId)
+
         if data['status'] == "success":
-            value = Suggestion.parseProductid(data['payload'])
+            # value = Suggestion.parseProductid(data['payload'])
+            value = data['payload']
             utility = Utility(self.pageId, self.sectionId, value,
                               self.text, self.intent, self.db, self.form, self.call)
             Response = utility.suggestionResponse()
@@ -36,21 +40,17 @@ class Suggestion():
             Response = utility.nluFallBack()
             return Response
 
-    def entityArray(entity):
-        arrEntity = []
-        for x in entity:
+    def entityArray(self):
+        for x in self.entity:
             if x['entity'] == 'productName':
                 value = x['value']
                 value = value.title()
-                arrEntity.append(value)
-            elif x['entity'] == "number":
-                number = int(x['value'])
+                self.searchParameter['tags'].append(value)
+        return self.searchParameter['tags']
 
-        return {"entity": arrEntity, "number": number}
-
-    def parseProductid(payload):
-        arr = []
-        for x in payload:
-            value = x['productId']
-            arr.append(value)
-        return arr
+    # def parseProductid(payload):
+    #     arr = []
+    #     for x in payload:
+    #         value = x['productId']
+    #         arr.append(value)
+    #     return arr
