@@ -1,11 +1,12 @@
 import imp
+from attr import attributes
 from flask import Response
 from controller.utility import Utility
 from Service.suggestionApi import getProductId
 
 
 class Suggestion():
-    def __init__(self, intent, entities, senti, pageId, sectionId, text, db, converstion, context, restaurantId, searchParameter):
+    def __init__(self, intent, entities, senti, pageId, sectionId, text, db, converstion, context, restaurantId):
         self.intent = intent
         self.entity = entities
         self.senti = senti
@@ -16,7 +17,7 @@ class Suggestion():
         self.form = None
         self.converstion = converstion
         self.context = context
-        self.searchParameter = searchParameter
+        # self.searchParameter = searchParameter
         self.restaurantId = restaurantId
         self.call = None
 
@@ -24,11 +25,14 @@ class Suggestion():
         suggestion = Suggestion.entityArray(self)
         print(suggestion)
 
-        data = getProductId(self.searchParameter, self.restaurantId)
+        data = getProductId(suggestion, self.restaurantId)
 
         if data['status'] == "success":
-            # value = Suggestion.parseProductid(data['payload'])
             value = data['payload']
+            value1 = Suggestion.getAllProductid(value['products'])
+            value2 = Suggestion.getAllProductid(value['drinks'])
+            value = value1 + value2
+
             utility = Utility(self.pageId, self.sectionId, value,
                               self.text, self.intent, self.db, self.form, self.call)
             Response = utility.suggestionResponse()
@@ -41,16 +45,43 @@ class Suggestion():
             return Response
 
     def entityArray(self):
+        productArray = []
+        valueNumber = 0
+        valueDrink = ""
+        attributes= {"glutenFree":False,"halal":False,"vegan":False,"vegetarian":False}
         for x in self.entity:
-            if x['entity'] == 'productName':
-                value = x['value']
-                value = value.title()
-                self.searchParameter['tags'].append(value)
-        return self.searchParameter['tags']
+            if x['entity'] == 'suggestion':
+                valueProduct = x['value']
+                valueProduct = valueProduct.lower()
+                productArray.append(valueProduct)
 
-    # def parseProductid(payload):
-    #     arr = []
-    #     for x in payload:
-    #         value = x['productId']
-    #         arr.append(value)
-    #     return arr
+            elif x['entity'] == "number":
+                valueNumber = x['value']
+                valueNumber = int(valueNumber)
+
+            elif x['entity'] == "drink":
+                valueDrink = x['value']
+                valueDrink = valueDrink.lower()
+
+            elif x['entity'] == "attribute":
+                if x['value'] == "glutenFree":
+                    attributes['glutenFree'] = True
+
+                if x['value'] == "halal":
+                    attributes['halal'] = True
+
+                if x['value'] == "vegan":
+                    attributes['vegan'] = True
+
+                if x['value'] == "vegetarian":
+                    attributes['vegetarian'] = True
+            else:
+                return {"product": [],"persons": "","drink": "","attributes": attributes}
+
+        return {"product": productArray,"persons": valueNumber,"drink": valueDrink,"attributes": attributes}
+
+    def getAllProductid(payload):
+        arr = []
+        for x in payload:
+            arr.append(x)
+        return arr
