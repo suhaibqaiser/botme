@@ -92,17 +92,25 @@ nlu:
 
   - intent: Suggestion
     examples: |
-      - we are looking for [Platter](productName) and [Wrap](productName) 
-      - i am looking for [Platter](productName) or [Wrap](productName) 
-      - we want to eat something like [platter](productName) or [burger](productName) 
-      - i am in the mood for [Burger](productName) or [Platter](productName)
-      - i am looking for [Burger](productName)
-      - i want to eat [burger](productName)
-      - suggest me some good [burger](productName)
-      - suggest me some good [wraps](productName)
-      - suggest me some good [platter](productName)
-      - i am looking for some good [burger](productName)
-      - we want to have [wrap](productName)
+      - we are looking for [nacho burger](suggestion) and [chicken burger](suggestion) for [4](number) people and make it [halal](attribute)
+      - i am looking for [nacho](suggestion) and [chicken](suggestion) for [two](number) person and make it [halal](attribute)
+      - we want to eat something like [sandwich](suggestion) and [burger](suggestion) for [3](number) people and make it [halal](attribute)
+      - i am in the mood for [Burger](suggestion) and [wraps](suggestion) for [six](number) and make it [halal](attribute)
+      - i want to order [burger](suggestion) and [cheese burger](suggestion) for [2](number) and make it [halal](attribute)
+      - i am looking for [chicken burger](suggestion) and [sandwich](suggestion) with [soft drink](drink) for [5](number) and keep it [halal](attribute)
+      - i want to eat [nacho burger](suggestion) and [wraps] with [soft drink](drink) for [three](number) and keep it [halal](attribute)
+      - suggest me some good [burger](suggestion) for [6](number) with [soft drink](drink)
+      - suggest me some good [wraps](suggestion) for [5](number) with [soft drink](drink)
+      - suggest me some good [platter](suggestion) for [8](number) with [soft drink](drink)
+      - i am looking for some good [burger](suggestion) for [7](number) with [soft drink](drink)
+      - we want to have [wrap](suggestion) for [5](number) with [soft drink](drink) and keep it [halal](attribute)
+      - suggest me some good [round burger](suggestion)
+      - i am looking for [round burger](suggestion)
+      - suggest some [kids meal](suggestion)
+      - show me good [wraps](suggestion)
+      - show me good [nacho](suggestion)
+      - i want to eat [nacho](suggestion)
+      - suggest me some good [nacho](suggestion)
     
   - intent: reservation_page
     examples: |
@@ -4496,6 +4504,269 @@ nlu:
       - kofta
       - craft
 
+  - lookup: suggestion
+    examples: |
+      - Cookies & Creme Shake
+      - Chocolate Shake
+      - Banana Shake
+      - Red Bull
+      - Sprite
+      - Diet Pepsi
+      - Strawberry Juice
+      - Apple Juice
+      - Fresh Orange Juice
+      - Water Bottle
+      - Baklawa
+      - Caesars Salad
+      - Greek Salad
+      - vegetable
+      - Tabouli Salad
+      - Fattoush Salad
+      - Shawarma Salad
+      - Chicken Wings
+      - Chicken Nuggets
+      - Chicken Tenders
+      - Junior Taystee Burger
+      - Grilled Stake Wrap
+      - Crispy Chicken Wrap
+      - Grilled Chicken Wrap
+      - Crazy Taystee
+      - Whole BBQ Chicken
+      - BBQ Platter
+      - Make Your Own Bowl
+      - Potatoes
+      - Falafel Plate
+      - Shish Tawook Plate
+      - Shish Kafta Plate
+      - Shawarma Plate
+      - Soujouk Sandwich
+      - Falafel Sandwich
+      - Tahini Sauce
+      - Tannour Sandwich
+      - Chicken Shawarma Sandwich
+      - Garlic Sauce
+      - American Cheese
+      - Taystee Vegan
+      - Chicken Taystee
+      - Taystee Fish
+      - Mushroom Swiss
+      - Beiruti
+      - Pepsi
+      - Rice
+      - Shish Kaboob Plate
+      - Kafta Sandwich
+      - Pickle
+      - Beef Shawarma
+      - Tomato
+      - Lettuce
+      - Spicy Deluxe
+      - Baba Ghanoush
+      - Hummus
+      - Poutine
+      - Soup
+      - Curly Fries
+      - Spicy Potato
+      - Fried Kibbeh
+      - Chicken Patty
+      - Beef Patty
+      - Jalapeno Poppers
+      - Cheese Sticks
+      - Onion Rings
+      - Beef Bacon
+      - French Fries
+      - Cole Slaw
+      - Nacho Cheese
+      - Cheese Slice
+      - Nacho Burger
+      - Pizza
+      - cookies & creme shake
+      - chocolate shake
+      - banana shake
+      - red bull
+      - sprite
+      - diet pepsi
+      - strawberry juice
+      - apple juice
+      - fresh orange juice
+      - fresh orange juice
+      - water bottle
+      - baklawa
+      - caesars salad
+      - greek salad
+      - Vegetable
+      - tabouli salad
+      - fattoush salad
+      - shawarma salad
+      - chicken wings
+      - chicken nuggets
+      - chicken tenders
+      - junior taystee burger
+      - grilled stake wrap
+      - crispy chicken wrap
+      - grilled chicken wrap
+      - crazy taystee
+      - whole bbq chicken
+      - bbq platter
+      - make your own bowl
+      - potatoes
+      - falafel plate
+      - shish tawook plate
+      - shish kafta plate
+      - shawarma plate
+      - soujouk sandwich
+      - falafel sandwich
+      - tahini sauce
+      - tannour sandwich
+      - chicken shawarma sandwich
+      - garlic sauce
+      - american cheese
+      - taystee vegan
+      - chicken taystee
+      - taystee fish
+      - mushroom swiss
+      - beiruti
+      - pepsi
+      - rice
+      - shish kaboob plate
+      - kafta sandwich
+      - pickle
+      - beef shawarma
+      - tomato
+      - lettuce
+      - spicy deluxe
+      - baba ghanoush
+      - hummus
+      - poutine
+      - soup
+      - curly fries
+      - spicy potato
+      - fried kibbeh
+      - chicken patty
+      - beef patty
+      - jalapeno poppers
+      - cheese sticks
+      - onion rings
+      - beef bacon
+      - french fries
+      - cole slaw
+      - nacho cheese
+      - cheese slice
+      - nacho burger     
+      - American Cheese Slice	
+      - american cheese slice	
+      - kofta sandwich
+      - craft a sandwich
+      - Cookies
+      - Chocolate
+      - Banana
+      - Red
+      - Diet
+      - Strawberry
+      - Apple
+      - Fresh
+      - Water
+      - Caesars
+      - Greek
+      - vegetable
+      - Tabouli
+      - Fattoush
+      - Shawarma
+      - Chicken
+      - Junior
+      - Grilled
+      - Crispy
+      - Crazy
+      - Whole
+      - BBQ
+      - Make
+      - Potatoes
+      - Falafel
+      - Shish
+      - Shawarma
+      - Soujouk
+      - Tahini
+      - Tannour
+      - Garlic
+      - American
+      - Taystee
+      - Taystee
+      - Mushroom
+      - Beiruti
+      - Shish
+      - Kafta
+      - Pickle
+      - Spicy
+      - Baba
+      - Hummus
+      - Poutine
+      - Curly
+      - Fried
+      - Beef
+      - Jalapeno
+      - Onion
+      - French
+      - Cole
+      - Cheese
+      - Nacho
+      - Pizza
+      - cookies
+      - chocolate
+      - banana
+      - red
+      - sprite
+      - diet
+      - strawberry
+      - apple
+      - fresh
+      - water
+      - baklawa
+      - caesars
+      - greek
+      - Vegetable
+      - tabouli
+      - fattoush
+      - shawarma
+      - junior
+      - grilled
+      - crispy
+      - crazy
+      - whole
+      - bbq
+      - make
+      - potatoes
+      - shish
+      - shawarma
+      - soujouk
+      - falafel
+      - tahini
+      - tannour
+      - chicken
+      - garlic
+      - american
+      - taystee
+      - mushroom
+      - beiruti
+      - shish
+      - kafta
+      - pickle
+      - spicy
+      - baba
+      - hummus
+      - poutine
+      - soup
+      - curly
+      - fried
+      - jalapeno
+      - onion
+      - beef
+      - french
+      - cole
+      - cheese
+      - nacho
+      - american
+      - kofta
+      - craft
+      
   - lookup: number   
     examples: |
       - 4
