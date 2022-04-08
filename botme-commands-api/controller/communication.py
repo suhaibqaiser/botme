@@ -13,7 +13,7 @@ from controller.reservationField import reservationField, checkForEmptyField, va
 # reminder need to change text to senti in responses
 
 
-def getResponseUsingContext(intent, entity, text, pageId, sectionId, form, parentEntity, converstion, context, restaurantId,searchParameter):
+def getResponseUsingContext(intent, entity, text, pageId, sectionId, form, parentEntity, converstion, context, restaurantId):
     blob = TextBlob(text)
     senti = blob.sentiment.polarity
     val = Entity(entity, intent)
@@ -21,9 +21,9 @@ def getResponseUsingContext(intent, entity, text, pageId, sectionId, form, paren
     db = getDbCta(intent, value, pageId, sectionId)
     form = checkForEmptyField(form)
     if (pageId == "pageId-home"):
-        if intent == "Suggestion" or intent == "menu_category":
+        if intent == "Suggestion":
             suggestion = Suggestion(intent, entity, senti, pageId,
-                                    sectionId, text, db, converstion, context, restaurantId, searchParameter)
+                                    sectionId, text, db, converstion, context, restaurantId)
             Response = suggestion.suggestionResponse()
             return Response
 

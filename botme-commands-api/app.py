@@ -7,49 +7,49 @@ from controller.utility import Utility
 
 app = Flask(__name__)
 
-@app.route('/suggest', methods=['POST'])
-def suggestReponse():
-    req_data = request.get_json()
-    # REQUEST JSON
-    context = req_data['context']
-    inputText = req_data['inputText']
-    converstion = req_data['conversation']
-    searchParameter = req_data['searchParameters']
-    restaurantId = req_data['restaurant_id']
+# @app.route('/suggest', methods=['POST'])
+# def suggestReponse():
+#     req_data = request.get_json()
+#     # REQUEST JSON
+#     context = req_data['context']
+#     inputText = req_data['inputText']
+#     converstion = req_data['conversation']
+#     searchParameter = req_data['searchParameters']
+#     restaurantId = req_data['restaurant_id']
 
-    # INITIALIZATION
-    text = inputText['textValue']
-    pageId = context['pageId']
-    sectionId = context['sectionId']
-    form = context['entities']
-    parentEntity = context['parentEntity']
-    message = text.lower()
+#     # INITIALIZATION
+#     text = inputText['textValue']
+#     pageId = context['pageId']
+#     sectionId = context['sectionId']
+#     form = context['entities']
+#     parentEntity = context['parentEntity']
+#     message = text.lower()
 
-    # RASA API CALL
-    rasa_data = getIntent(message)
-    print(rasa_data)
-    intent = rasa_data['intent']
+#     # RASA API CALL
+#     rasa_data = getIntent(message)
+#     print(rasa_data)
+#     intent = rasa_data['intent']
 
-    # RESPONSE RETURN
-    value = None
-    db = None
-    call = None
-    utility = Utility(pageId, sectionId, value, text,
-                      intent['name'], db, form, call)
-    if(intent['name'] == "nlu_fallback"):
-        response = utility.nluFallBack()
-        wrongCommand = insertingWrongResponseInDb(converstion['conversationId'], converstion['conversationLogId'], converstion['clientId'], converstion['sessionId'], response, text)
-        return jsonify(response)
-    else:
-        response = getResponseUsingContext(intent['name'], rasa_data['entities'], text,pageId, sectionId, form, parentEntity, converstion, context, restaurantId,searchParameter)
-        if response:
-            return jsonify(response)
-        else:
-            print("taha")
-            response = utility.nluFallBack()
-            wrongCommand = insertingWrongResponseInDb(
-                converstion['conversationId'], converstion['conversationLogId'], converstion['clientId'], converstion['sessionId'], response, text)
-            return jsonify(response)
+#     # RESPONSE RETURN
+#     value = None
+#     db = None
+#     call = None
+#     utility = Utility(pageId, sectionId, value, text,
+#                       intent['name'], db, form, call)
+#     if(intent['name'] == "nlu_fallback"):
+#         response = utility.nluFallBack()
+#         wrongCommand = insertingWrongResponseInDb(converstion['conversationId'], converstion['conversationLogId'], converstion['clientId'], converstion['sessionId'], response, text)
+#         return jsonify(response)
+#     else:
+#         response = getResponseUsingContext(intent['name'], rasa_data['entities'], text,pageId, sectionId, form, parentEntity, converstion, context, restaurantId,searchParameter)
+#         if response:
+#             return jsonify(response)
+#         else:
+#             print("taha")
+#             response = utility.nluFallBack()
+#             wrongCommand = insertingWrongResponseInDb(
+#                 converstion['conversationId'], converstion['conversationLogId'], converstion['clientId'], converstion['sessionId'], response, text)
+#             return jsonify(response)
 
 @app.route('/response', methods=['POST'])
 def send_Response():
@@ -71,9 +71,10 @@ def send_Response():
     # RASA API CALL
     rasa_data = getIntent(message)
     intent = rasa_data['intent']
+    print(rasa_data)
 
     # Restaurant Id
-    restaurant_id = req_data['restaurantId']
+    restaurant_id = context['restaurant_id']
 
     # RESPONSE RETURN
     value = None
