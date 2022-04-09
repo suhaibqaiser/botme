@@ -27,6 +27,7 @@ export class ProductSuggestionService {
       })
     }
 
+    this.loader = false
     console.log('suggestedProductList =>', this.suggestedProductList)
   }
 }

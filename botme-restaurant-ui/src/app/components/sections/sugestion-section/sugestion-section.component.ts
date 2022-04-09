@@ -33,6 +33,8 @@ export class SugestionSectionComponent implements OnInit {
 
   sendSuggestion() {
     console.log(this.suggestionControl.value)
+    this._productSuggestionService.suggestedProductList = []
+    this._productSuggestionService.loader = true
     this._socketService.sendMessage('communication', this.suggestionControl.value)
   }
 }
