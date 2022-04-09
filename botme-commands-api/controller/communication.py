@@ -20,12 +20,19 @@ def getResponseUsingContext(intent, entity, text, pageId, sectionId, form, paren
     value = val.parseEntityValue()
     db = getDbCta(intent, value, pageId, sectionId)
     form = checkForEmptyField(form)
+    print("here")
     if (pageId == "pageId-home"):
         if intent == "Suggestion":
             suggestion = Suggestion(intent, entity, senti, pageId,
                                     sectionId, text, db, converstion, context, restaurantId)
             Response = suggestion.suggestionResponse()
             return Response
+        else:
+            call = None
+            utility = Utility(pageId, sectionId, value,
+                              text, intent, db, form, call)
+            response = utility.dbResponse()
+            return response
 
     elif (pageId == "pageId-order-online" or pageId == "pageId-cart-modal" or pageId == "pageId-cart"):
         if intent == "Order_meal" or intent == "remove_item" or intent == "reduce_product_quantity" or intent == "product_flavour" or intent == "product-detail" or intent == "remove_item" or intent == "edit_product":
