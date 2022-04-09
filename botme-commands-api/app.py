@@ -59,6 +59,7 @@ def send_Response():
     context = req_data['context']
     inputText = req_data['inputText']
     converstion = req_data['conversation']
+    print(converstion)
 
     # INITIALIZATION
     text = inputText['textValue']
@@ -67,6 +68,7 @@ def send_Response():
     form = context['entities']
     parentEntity = context['parentEntity']
     message = text.lower()
+    print(context)
 
     # RASA API CALL
     rasa_data = getIntent(message)
@@ -74,7 +76,7 @@ def send_Response():
     print(rasa_data)
 
     # Restaurant Id
-    restaurant_id = context['restaurant_id']
+    restaurant_id = context['restaurantId']
 
     # RESPONSE RETURN
     value = None
@@ -85,7 +87,7 @@ def send_Response():
     if(intent['name'] == "nlu_fallback"):
         response = utility.nluFallBack()
         wrongCommand = insertingWrongResponseInDb(
-            converstion['conversationId'], converstion['conversationLogId'], context['clientId'], context['sessionId'], response, text)
+            converstion['conversationId'], converstion['conversationLogId'],context['clientId'],context['sessionId'],response, text)
         return jsonify(response)
     else:
         response = getResponseUsingContext(intent['name'], rasa_data['entities'], text,
@@ -95,8 +97,7 @@ def send_Response():
         else:
             print("taha")
             response = utility.nluFallBack()
-            wrongCommand = insertingWrongResponseInDb(
-                converstion['conversationId'], converstion['conversationLogId'], converstion['clientId'], converstion['sessionId'], response, text)
+            wrongCommand = insertingWrongResponseInDb(converstion['conversationId'], converstion['conversationLogId'],context['clientId'],context['sessionId'],response, text)
             return jsonify(response)
 
 
