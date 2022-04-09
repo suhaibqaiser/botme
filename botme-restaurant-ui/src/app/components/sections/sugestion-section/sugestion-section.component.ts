@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ProductSuggestionService} from "../../../services/product-suggestion.service";
 import {MenuService} from "../../../services/menu.service";
 import {HelperService} from "../../../services/helper.service";
+import {FormControl} from "@angular/forms";
+import {SocketService} from "../../../services/socket.service";
 
 @Component({
   selector: 'app-sugestion-section',
@@ -10,7 +12,9 @@ import {HelperService} from "../../../services/helper.service";
 })
 export class SugestionSectionComponent implements OnInit {
 
-  constructor(public _productSuggestionService: ProductSuggestionService, private menuservice: MenuService, public _helperService: HelperService) {
+  suggestionControl = new FormControl('')
+
+  constructor(private _socketService: SocketService, public _productSuggestionService: ProductSuggestionService, private menuservice: MenuService, public _helperService: HelperService) {
   }
 
 
@@ -25,5 +29,10 @@ export class SugestionSectionComponent implements OnInit {
         this._productSuggestionService.products = result.payload
         this._productSuggestionService.loader = false
       });
+  }
+
+  sendSuggestion() {
+    console.log(this.suggestionControl.value)
+    this._socketService.sendMessage('communication', this.suggestionControl.value)
   }
 }
