@@ -73,7 +73,7 @@ export async function getCommandResponse(text: string, pageId: string, sectionId
             }
         }
 
-        const res = await fetch("http://localhost:5010/response", {
+        const res = await fetch(config.get('commandAPI') + "/response", {
             method: 'post',
             body: JSON.stringify(body),
             headers: {
