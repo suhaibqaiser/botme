@@ -73,7 +73,7 @@ export async function getCommandResponse(text: string, pageId: string, sectionId
             }
         }
 
-        const res = await fetch(config.get('commandAPI') + "/response", {
+        const res = await fetch("http://localhost:5010/response", {
             method: 'post',
             body: JSON.stringify(body),
             headers: {
@@ -82,7 +82,7 @@ export async function getCommandResponse(text: string, pageId: string, sectionId
         });
         let data = await res.json()
         console.log(data);
-
+        console.log('entites => ', data.context.entities[0])
         if (data) {
             return answer = {
                 ctaId: data.ctaId,

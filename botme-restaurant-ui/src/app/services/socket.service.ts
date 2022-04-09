@@ -7,6 +7,7 @@ import {BotmeClientService} from './botme-client.service';
 import {HelperService} from "./helper.service";
 import {ReservationService} from "./reservation.service";
 import {ContextService} from "./context.service";
+import {ProductSuggestionService} from "./product-suggestion.service";
 
 
 @Injectable({
@@ -31,7 +32,7 @@ export class SocketService {
 
   isClickFound: any = false
 
-  constructor(private _clientService: BotmeClientService, private _contextService: ContextService, private _reservationService: ReservationService, private router: Router, private clients: BotmeClientService, public _helperService: HelperService) {
+  constructor(private _productSuggestionService: ProductSuggestionService, private _clientService: BotmeClientService, private _contextService: ContextService, private _reservationService: ReservationService, private router: Router, private clients: BotmeClientService, public _helperService: HelperService) {
 
     this.authToken = clients.getCookieToken();
 
@@ -140,6 +141,12 @@ export class SocketService {
         let conversationId = (msg.conversation && msg.conversation.conversationId) ? msg.conversation.conversationId : ''
         this._reservationService.setReservationForm(conversationId, msg.context.entities)
         document.getElementById(msg.ctaId)?.click()
+        return;
+      }
+
+      // for product suggestion we are setting the products in product suggestion service
+      if (msg.context.entities && msg.context.entities[0].keywords === 'product_suggestion') {
+        this._productSuggestionService.setSuggestedProducts(msg.context.entities[0].entityValue)
         return;
       }
 

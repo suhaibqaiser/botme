@@ -29,7 +29,7 @@ export class SpeechService {
   audio = new Audio();
   speechState = new Subject<string>()  // State for monitoring speech service eg. listening, processing, speaking, idle
   speechEnabled = new Subject<boolean>();
-  voiceTimeout = 3000; // default timeout
+  voiceTimeout = 9000; // default timeout
 
 
   constructor(private _contextService: ContextService, private socketService: SocketService, private helper: HelperService, private clientService: BotmeClientService) {

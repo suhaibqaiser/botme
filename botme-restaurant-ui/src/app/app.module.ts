@@ -73,6 +73,8 @@ import {OrderService} from "./services/order.service";
 import {ToastComponent} from './components/toast/toast.component';
 import {ToastService} from "./services/toast.service";
 import {CustomerService} from "./services/customer.service";
+import {SugestionSectionComponent} from './components/sections/sugestion-section/sugestion-section.component';
+import {ProductSuggestionService} from "./services/product-suggestion.service";
 
 @NgModule({
   declarations: [
@@ -125,7 +127,8 @@ import {CustomerService} from "./services/customer.service";
     LoginFormComponent,
     ProfileSectionComponent,
     OrderSectionComponent,
-    ToastComponent
+    ToastComponent,
+    SugestionSectionComponent
   ],
   imports: [
     BrowserModule,
@@ -137,7 +140,7 @@ import {CustomerService} from "./services/customer.service";
     NgMultiSelectDropDownModule.forRoot(),
     DragDropModule
   ],
-  providers: [CustomerService, ToastService, OrderService, ContextService, HelperService, ReservationService, SpeechService, BotmeClientService, SocketService, WindowService],
+  providers: [ProductSuggestionService, CustomerService, ToastService, OrderService, ContextService, HelperService, ReservationService, SpeechService, BotmeClientService, SocketService, WindowService],
   bootstrap: [AppComponent],
   entryComponents: [CustomizeProductModalComponent]
 })

@@ -1,0 +1,40 @@
+<div class="contact-us-section pt-100 pb-70 bg-black">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12 pb-30">
+        <div class="contact-item">
+          <div class="contact-item-title text-center">
+            <h3 class="color-white">Product Suggestions</h3>
+          </div>
+          <div class="container order-types-main">
+            <app-spinner *ngIf="_productSuggestionService.loader"></app-spinner>
+            <div *ngIf="!_productSuggestionService.suggestedProductList.length" class="contact-item-title text-center">
+              <h5 class="color-white">Please wait getting your suggested products....</h5>
+            </div>
+            <div *ngIf="!_productSuggestionService.loader" class="receipe-grid receipe-grid-three">
+              <div *ngFor="let item of _productSuggestionService.suggestedProductList"  class="receipe-item receipe-item-black pb-30">
+                <div class="receipe-item-inner">
+                  <div class="receipe-image">
+                    <img [src]="_helperService.resolveProductImage(item)" style="width:100px;height: 100px;border-radius: 10px" alt="receipe">
+                  </div>
+                  <div class="receipe-content">
+                    <div class="receipe-info">
+                      <h3><a href="/product-detail/?productId={{item.productId}}">{{item.productName}}</a></h3>
+                      <h4>${{item.productRate.standard}}</h4>
+                    </div>
+                    <div class="receipe-cart receipe-cart-main">
+                      <a>
+                        <i class="flaticon-supermarket-basket"></i>
+                        <i class="flaticon-supermarket-basket"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
