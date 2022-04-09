@@ -105,8 +105,32 @@ nlu:
       - i am looking for some good [burger](suggestion) for [7](number) with [soft drink](drink)
       - we want to have [wrap](suggestion) for [5](number) with [soft drink](drink) and keep it [halal](attribute)
       - I would like to order some [burgers](suggestion) with [cheese](suggestion) and [chicken](suggestion) and we are [three](number) people and [water](drink) 
-      - I have kids with me can you suggest some [meal for kids] light burgers and some juice
-
+      - I have kids with me can you suggest some [snacks for kids](suggestion) and some [juice](drink)
+      - I want to order some [fries](suggestion) with [soft drink](drink)
+      - I want some [nachos](suggestion) and [fries](suggestion) with [water bottle](drink)
+      - Do you have some [crispy burger](suggestion) or [grilled wraps](suggestion)
+      - show me some [veggie burger](suggestion)
+      - I want some [desserts](suggestion) and [salads](suggestion)
+      - Do you people have [sandwiches](suggestion) and [shakes](suggestion)
+      - I want [grilled sandwich](suggestion) with [extra cheese](suggestion) and some [desserts](suggestion) too along with some [drinks](drink) and grill item must be [halal](attribute)
+      - i am looking for [nacho](suggestion) and [chicken](suggestion) for [two](number) [person] and make it [halal]
+      - I would like to order some [burgers](suggestion) with [cheese](suggestion) and [chicken](suggestion) and we are [three](number) people and [water](drink)
+      - I am looking for some kind of [cheesy mushroom burger](suggestion) with regular [black drink](drink)
+      - I want to eat [spicy patty burger](suggestion) with [drinks] and make it for [two](number) people
+      - I would like to have some [chicken burger](suggestion) and [sweet dish](suggestion) and make sure that burger is [crispy](suggestion)
+      - I want to order [vegetable burger](suggestion) and [pepsi](suggestion) and one [water bottle](drink) also
+      - we want to order one [BBQ platter](suggestion) and [two] [non spicy burgers](suggestion) for [kid](suggestion)
+      - what kind of [milk shakes](suggestion) do you have? I would like to have [banana shake](suggestion)
+      - what kind of [sandwiches](suggestion) do you have? I want to order [juicy beef sandwich](suggestion) with [chilled sprite](drink)
+      - I want to order [grilled chicken](suggestion) for [2](number) people along with 2 [regular pepsi](suggestion) and 1 [bottle of water](drink)
+      - I want to have [nuggets](suggestion) with [heavy cheese topping](suggestion) and [one](number) [zinger burger](suggestion) with [soda](drink)
+      - I want to have [vegetable burger](suggestion) and [cheese burger](suggestion) with [dessert](suggestion)
+      - I want to eat [spicy patty burger](suggestion) with [drinks] and make it for [two](number) people
+      - I would like to order [beef burger](suggestion) and make sure its [halal](attribute)
+      - I want to eat [2](number) [falafel sandwich](suggestion) and 1 [barbecue](suggestion) platter along with 2 [sprite](drink)
+      - show me some [non spicy burgers](suggestion) or [snacks for kids](suggestion) 
+      - I would like to have some [spicy burger](suggestion)
+      - I want to order [fish burger](suggestion) and tell me which type of [sandwiches](suggestion) do you have?
       - suggest me some good [round burger](suggestion)
       - i am looking for [round burger](suggestion)
       - suggest some [kids meal](suggestion)
