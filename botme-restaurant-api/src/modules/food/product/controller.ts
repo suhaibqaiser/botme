@@ -1,5 +1,5 @@
 import { restResponse } from "../../../utils/response";
-import { createProduct, getProduct, updateProduct, getMaxLabelValue, getProductByTag } from "./service";
+import { createProduct, getProduct, updateProduct, getMaxLabelValue, getProductByTag , getProductByTagDrink } from "./service";
 import { randomUUID } from "crypto";
 
 export async function addProduct(product: any, restaurantId: any) {
@@ -127,7 +127,7 @@ export async function suggestProduct(searchParameters: any, restaurantId: any) {
     }
 
     if (productList.length > 0) {
-        let products = await getProductByTag(drinkTags, persons, restaurantId)
+        let products = await getProductByTagDrink(drinkTags, persons, restaurantId)
         products.forEach((product: any) => {
             if (!drinkList.includes(product.productId)) { drinkList.push(product.productId) }
         });

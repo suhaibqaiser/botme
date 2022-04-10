@@ -44,6 +44,33 @@ export async function getProductByTag(tag: string, person: number, restaurantId:
     })
 
 }
+export async function getProductByTagDrink(tag: string, person: number, restaurantId: string, attributes?: any) {
+    let filter: any = {
+        "productTags": tag,
+        "productServing": { $lte: person }, "restaurantId": restaurantId,
+    }
+    // if (attributes) {
+    //     if (attributes.vegan) {
+    //         filter["productAttributes.vegan"] = true;
+    //     }
+    //     if (attributes.halal) {
+    //         filter["productAttributes.halal"] = true;
+    //     }
+    //     if (attributes.vegetarian) {
+    //         filter["productAttributes.vegetarian"] = true;
+    //     }
+    //     if (attributes.glutenFree) {
+    //         filter["productAttributes.glutenFree"] = true;
+    //     }
+    //     console.log(filter);
+    // }
+
+    return Product.find(filter, {
+        "productId": 1,
+        _id: 0,
+    })
+
+}
 
 export async function updateProduct(product: any) {
     return Product.findOneAndUpdate({ productId: product.productId }, product)
