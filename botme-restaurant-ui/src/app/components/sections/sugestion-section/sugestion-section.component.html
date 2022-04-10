@@ -5,16 +5,19 @@
         <div class="contact-item">
           <div class="contact-item-title text-center">
             <h3 class="color-white">Product Suggestions</h3>
-            <div class="form-group mt-3 mb-20">
-              <div class="input-group w-50 p-2 m-auto">
-                <input  [formControl]="suggestionControl" type="text" name="name" id="name" class=" form-control" required
-                       data-error="Please enter your name" placeholder="Enter your suggestions"/>
+            <div *ngIf="!isVoiceToggleOn()">
+              <div class="form-group mt-3 mb-20">
+                <div class="input-group w-50 p-2 m-auto">
+                  <input [formControl]="suggestionControl" type="text" name="name" id="name" class=" form-control"
+                         required
+                         data-error="Please enter your name" placeholder="Enter your suggestions"/>
+                </div>
+                <div class="help-block with-errors"></div>
               </div>
-              <div class="help-block with-errors"></div>
+              <button (click)="sendSuggestion()" class="btn " type="submit">
+                Enter
+              </button>
             </div>
-            <button (click)="sendSuggestion()" class="btn " type="submit">
-              Enter
-            </button>
           </div>
           <div class="container order-types-main">
             <app-spinner *ngIf="_productSuggestionService.loader"></app-spinner>

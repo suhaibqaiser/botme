@@ -41,4 +41,8 @@ export class SugestionSectionComponent implements OnInit {
       this._socketService.sendMessage('communication', this.suggestionControl.value)
     }
   }
+
+  isVoiceToggleOn(){
+    return (this._clientService.getCookie() && this._clientService.getCookie().isVoiceToggleOn === 'false') ? false : true
+  }
 }
