@@ -15,7 +15,7 @@ export class SugestionSectionComponent implements OnInit {
 
   suggestionControl = new FormControl('')
 
-  constructor(private _clientService: BotmeClientService, private _socketService: SocketService, public _productSuggestionService: ProductSuggestionService, private menuservice: MenuService, public _helperService: HelperService) {
+  constructor(public _clientService: BotmeClientService, private _socketService: SocketService, public _productSuggestionService: ProductSuggestionService, private menuservice: MenuService, public _helperService: HelperService) {
   }
 
 

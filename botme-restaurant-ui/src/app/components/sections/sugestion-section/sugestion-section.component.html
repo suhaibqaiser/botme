@@ -1,4 +1,4 @@
-<div class="contact-us-section pt-100 pb-70 bg-black">
+<div *ngIf="_clientService.getCookie().isLoggedIn" class="contact-us-section pt-100 pb-70 bg-black">
   <div class="container">
     <div class="row">
       <div class="col-sm-12 col-md-12 col-lg-12 pb-30">
