@@ -3,6 +3,7 @@ import {BotmeClientService} from "../../../services/botme-client.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {ToastService} from "../../../services/toast.service";
+import {HelperService} from "../../../services/helper.service";
 
 @Component({
   selector: 'app-login-form',
@@ -11,8 +12,8 @@ import {ToastService} from "../../../services/toast.service";
 })
 export class LoginFormComponent implements OnInit {
   loginForm = new FormGroup({
-    clientID: new FormControl('', Validators.required),
-    clientSecret: new FormControl('', Validators.required),
+    clientID: new FormControl('', [Validators.required]),
+    clientSecret: new FormControl('', [Validators.required]),
     voiceType: new FormControl('cloud-voice', Validators.required)
   })
   _voiceType: string = this._botMeClientService.getVoiceType()
@@ -20,7 +21,7 @@ export class LoginFormComponent implements OnInit {
   botVoice: string = ''
   loader = false
 
-  constructor(private _toastService: ToastService, public _botMeClientService: BotmeClientService, public router: Router,) {
+  constructor(private _toastService: ToastService, public _botMeClientService: BotmeClientService, public router: Router, public _helperService: HelperService) {
   }
 
   ngOnInit(): void {

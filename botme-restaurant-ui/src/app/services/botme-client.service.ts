@@ -24,7 +24,7 @@ export class BotmeClientService {
     })
     const url = `${this.botMeClientBaseURL}/client/auth`;
     //
-    obj.clientSecret = Md5.hashStr(obj.clientSecret)
+    obj.clientSecret = JSON.parse(JSON.stringify(Md5.hashStr(obj.clientSecret)))
     //
     return this.http.post(url, obj, { headers: headers });
   }

@@ -21,6 +21,10 @@ export class HelperService {
     returned: 'returned'
   }
 
+  fieldErrorsCheckTypes = {
+    required: 'required'
+  }
+
   constructor(private _router: Router, private logger: DataDogLoggingService, private _clientService: BotmeClientService) {
   }
 
@@ -129,7 +133,28 @@ export class HelperService {
    * get those cart items which has empty cartId
    * @param cartList
    */
-  filterCartByCartId(cartList:any = []){
-    return cartList.filter((item:any) => !item.cartId)
+  filterCartByCartId(cartList: any = []) {
+    return cartList.filter((item: any) => !item.cartId)
   }
+
+  /**
+   * Only requiredCheck validation
+   * @param control
+   */
+  requiredCheckReal(control: { value: any; }) {
+    const enteredName = control.value;
+    const nameCheck = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
+    return (!nameCheck.test(enteredName) && enteredName) ? {requirements: true} : null;
+  }
+
+  getRequiredCheckError(form: any, formControlName: any, type:any = '', messageList:any = []) {
+
+    if (type === this.fieldErrorsCheckTypes.required) {
+      return form.get(formControlName)?.hasError('required') ?
+        messageList[0] : ''
+    }
+
+    return ''
+  }
+
 }
