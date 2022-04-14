@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"hash":{"$numberInt":"1"}},"name":"hash_1","background":true,"unique":true}],"uuid":"aacf48e20cd0449aa714cefc99fae110","collectionName":"texttospeeches","type":"collection"}
