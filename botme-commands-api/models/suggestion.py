@@ -33,6 +33,7 @@ class Suggestion():
             value2 = Suggestion.getAllProductid(value['drinks'])
             value = value1 + value2
 
+            self.call = suggestion['keywords']
             utility = Utility(self.pageId, self.sectionId, value,
                               self.text, self.intent, self.db, self.form, self.call)
             Response = utility.suggestionResponse()
@@ -45,40 +46,48 @@ class Suggestion():
             return Response
 
     def entityArray(self):
+        keyword = []
         productArray = []
-        valueNumber = 0
+        valueNumber = 1
         valueDrink = ""
         attributes= {"glutenFree":False,"halal":False,"vegan":False,"vegetarian":False}
         for x in self.entity:
             if x['entity'] == 'suggestion':
                 valueProduct = x['value']
                 valueProduct = valueProduct.lower()
+                keyword.append(valueProduct)
                 productArray.append(valueProduct)
 
             elif x['entity'] == "number":
                 valueNumber = x['value']
+                keyword.append(valueNumber)
                 valueNumber = int(valueNumber)
 
             elif x['entity'] == "drink":
                 valueDrink = x['value']
                 valueDrink = valueDrink.lower()
+                keyword.append(valueDrink)
 
             elif x['entity'] == "attribute":
                 if x['value'] == "glutenFree":
+                    keyword.append(x['value'])
                     attributes['glutenFree'] = True
 
                 if x['value'] == "halal":
+                    keyword.append(x['value'])
                     attributes['halal'] = True
                 
                 if x['value'] == "vegan":
+                    keyword.append(x['value'])
                     attributes['vegan'] = True
                 
                 if x['value'] == "vegetarian":
+                    keyword.append(x['value'])
                     attributes['vegetarian'] = True
             else:
-                return {"product": [],"persons": "","drink": "","attributes": attributes}
+                return {"product": [],"persons": "","drink": "","attributes": attributes,"keywords": keyword}
 
-        return {"product": productArray,"persons": valueNumber,"drink": valueDrink,"attributes": attributes}
+        return {"product": productArray,"persons": valueNumber,"drink": valueDrink,"attributes": attributes,"keywords": keyword}
 
     def getAllProductid(payload):
         arr = []
