@@ -29,13 +29,14 @@
           </div>
 
           <div class="authentication-btn">
-            <button (click)="login()" [disabled]="!loginForm.valid" class="btn full-width btn-border mb-20">Log
+            <button (click)="login()" class="btn full-width btn-border mb-20">Log
               In
               <div *ngIf="loader" class="spinner-border spinner-border-sm ml-3 text-warning" role="status">
                 <span class="visually-hidden">Loading...</span>
               </div>
             </button>
           </div>
+          <p class="text-white text-center">Don’t have an account? <a routerLink="/sign-up" style="color:#E7272D;font-weight: bold;cursor: pointer">Sign Up</a></p>
         </form>
       </div>
 

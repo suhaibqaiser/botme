@@ -28,11 +28,20 @@ export class LoginFormComponent implements OnInit {
   }
 
   login() {
+
+    if(!this.loginForm.get('clientID')?.value || !this.loginForm.get('clientSecret')?.value){
+      this._toastService.setToast({
+        description: (!this.loginForm.get('clientID')?.value) ? 'Client ID is required!' : 'Client Secret is required!',
+        type: 'danger'
+      })
+      return
+    }
+
     this.loader = true
     this._botMeClientService.reSetCookie()
-    this._botMeClientService.loginBotMeClientApi(this.loginForm.value).subscribe(
+    this._botMeClientService.loginBotMeClientApi(JSON.parse(JSON.stringify(this.loginForm.value))).subscribe(
       (res: any) => {
-        if (res.status) {
+        if (res.status === 'success') {
           this._toastService.setToast({
             description: 'Successfully Login.',
             type: 'success'

@@ -24,7 +24,8 @@ export class BotmeClientService {
     })
     const url = `${this.botMeClientBaseURL}/client/auth`;
     //
-    obj.clientSecret = JSON.parse(JSON.stringify(Md5.hashStr(obj.clientSecret)))
+    console.log(JSON.parse(JSON.stringify(obj.clientSecret)))
+    obj.clientSecret = Md5.hashStr(JSON.parse(JSON.stringify(obj.clientSecret)))
     //
     return this.http.post(url, obj, { headers: headers });
   }
@@ -74,5 +75,17 @@ export class BotmeClientService {
 
   isRobotAuth() {
     return (this.deviceService.isTablet())
+  }
+
+ signupBotMeClientApi(obj: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${'ea2d3aeaad77865f9769974a920892f5'}`
+    })
+    const url = `${this.botMeClientBaseURL}/client/register`;
+    //
+    obj.clientSecret = Md5.hashStr(obj.clientSecret)
+    //
+    return this.http.put(url, obj, { headers: headers });
   }
 }

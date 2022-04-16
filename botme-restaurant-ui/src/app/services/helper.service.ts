@@ -147,7 +147,20 @@ export class HelperService {
     return (!nameCheck.test(enteredName) && enteredName) ? {requirements: true} : null;
   }
 
-  getRequiredCheckError(form: any, formControlName: any, type:any = '', messageList:any = []) {
+  checkEmailRegex(control: { value: any; }) {
+    const reservationTime = control.value;
+    const reservationTimeCheck = new RegExp('^(([^<>()[\\]\\\\.,;:\\s@"]+(\\.[^<>()[\\]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$');
+    return (!reservationTimeCheck.test(reservationTime) && reservationTime) ? {requirements: true} : null;
+  }
+
+  getRequiredCheckError(form: any, formControlName: any, type: any = '', messageList: any = []) {
+
+    if (formControlName === 'clientEmail') {
+      return form.get('clientEmail')?.hasError('required') ?
+        messageList[0] :
+        form.get('clientEmail')?.hasError('requirements') ?
+          'Please enter valid email xyz@gmail.com' : '';
+    }
 
     if (type === this.fieldErrorsCheckTypes.required) {
       return form.get(formControlName)?.hasError('required') ?
