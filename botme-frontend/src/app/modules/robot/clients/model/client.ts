@@ -11,4 +11,6 @@ export interface IClient {
     clientActive: boolean;
     clientComment: string;
     restaurantId: string;
+  clientSecretHint: string,
+  clientEmail: string
 }

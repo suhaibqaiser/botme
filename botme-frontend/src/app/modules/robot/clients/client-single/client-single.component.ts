@@ -27,7 +27,9 @@ export class ClientSingleComponent implements OnInit {
     formclientdebug: false,
     formclientvoice: true,
     formclientvoicetimeout: [3000, Validators.required],
-    formrestaurantid: ['']
+    formrestaurantid: [''],
+    clientSecretHint: [''],
+    clientEmail: ['']
   });
 
   formMode = 'update';
@@ -44,7 +46,9 @@ export class ClientSingleComponent implements OnInit {
     clientUpdated: '',
     clientActive: true,
     clientComment: '',
-    restaurantId: ''
+    restaurantId: '',
+    clientSecretHint: '',
+    clientEmail: ''
   }
   restaurantObj: any = []
   resturantId: any = ''
@@ -109,7 +113,9 @@ export class ClientSingleComponent implements OnInit {
           formclientdebug: this.client.clientDebug,
           formclientvoice: this.client.clientVoiceEnabled,
           formclientvoicetimeout: this.client.clientVoiceTimeout,
-          formrestaurantid: this.client.restaurantId
+          formrestaurantid: this.client.restaurantId,
+          clientSecretHint: this.client.clientSecretHint,
+          clientEmail: this.client.clientEmail
         })
       }
     );
@@ -165,6 +171,8 @@ export class ClientSingleComponent implements OnInit {
     this.client.clientVoiceEnabled = this.clientForm.getRawValue().formclientvoice
     this.client.restaurantId = this.resturantId
     this.client.clientVoiceTimeout = this.clientForm.getRawValue().formclientvoicetimeout
+    this.client.clientSecretHint = this.clientForm.getRawValue().clientSecretHint
+    this.client.clientEmail = this.clientForm.getRawValue().clientEmail
   }
 }
 

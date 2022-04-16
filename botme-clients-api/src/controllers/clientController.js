@@ -162,7 +162,9 @@ async function updateClient(req, res) {
         clientUpdated: Date(),
         clientActive: req.body.clientActive,
         clientComment: req.body.clientComment,
-        restaurantId: req.body.restaurantId
+        restaurantId: req.body.restaurantId,
+        clientEmail: req.body.clientEmail,
+        clientSecretHint: req.body.clientSecretHint
     }
 
     let updatedClient = await clientService.updateClient(req.body.clientID, client)
