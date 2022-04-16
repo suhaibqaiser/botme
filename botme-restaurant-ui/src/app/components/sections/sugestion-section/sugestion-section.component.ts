@@ -5,6 +5,7 @@ import {HelperService} from "../../../services/helper.service";
 import {FormControl} from "@angular/forms";
 import {SocketService} from "../../../services/socket.service";
 import {BotmeClientService} from "../../../services/botme-client.service";
+import {ToastService} from "../../../services/toast.service";
 
 @Component({
   selector: 'app-sugestion-section',
@@ -15,7 +16,7 @@ export class SugestionSectionComponent implements OnInit {
 
   suggestionControl = new FormControl('')
 
-  constructor(public _clientService: BotmeClientService, private _socketService: SocketService, public _productSuggestionService: ProductSuggestionService, private menuservice: MenuService, public _helperService: HelperService) {
+  constructor(private _toastService: ToastService, public _clientService: BotmeClientService, private _socketService: SocketService, public _productSuggestionService: ProductSuggestionService, private menuservice: MenuService, public _helperService: HelperService) {
   }
 
 
@@ -34,6 +35,13 @@ export class SugestionSectionComponent implements OnInit {
 
   sendSuggestion() {
     console.log(this.suggestionControl.value)
+    if (!this.suggestionControl.value) {
+      this._toastService.setToast({
+        description: 'Suggestion is required.',
+        type: 'danger'
+      })
+      return
+    }
     this._productSuggestionService.suggestedProductList = []
     const isVoiceToggleOn = (this._clientService.getCookie() && this._clientService.getCookie().isVoiceToggleOn === 'false') ? false : true
     if (!isVoiceToggleOn) {
@@ -42,7 +50,7 @@ export class SugestionSectionComponent implements OnInit {
     }
   }
 
-  isVoiceToggleOn(){
+  isVoiceToggleOn() {
     return (this._clientService.getCookie() && this._clientService.getCookie().isVoiceToggleOn === 'false') ? false : true
   }
 }
