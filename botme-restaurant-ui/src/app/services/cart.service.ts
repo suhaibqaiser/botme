@@ -123,6 +123,12 @@ export class CartService {
 
   //
   setProductCustomization(product: any) {
+
+    if(!this._clientService.getCookie().isLoggedIn){
+      this._router.navigate(['/sign-up'])
+      return
+    }
+
     this._contextService.currentContextObj.pageId = 'pageId-product-customize-modal'
     this._contextService.currentContextObj.sectionId = 'sectionId-servingSize-productOptions'
     this.slideToShow = 0

@@ -31,7 +31,7 @@
               <div class="product-card product-card-dark" id="{{product.productId}}">
                 <div class="product-card-thumb">
                   <div class="product-card-thumb-inner">
-                    <a id="ctaId-product-detail-page" [routerLink]="['/product-detail',product.productId]"><img
+                    <a id="ctaId-product-detail-page" [routerLink]="['/product-detail']" [queryParams]="{productId: product.productId}"><img
                         [src]="_helperService.resolveProductImage(product)" alt="product"></a>
                   </div>
                   <div class="review-star mt-3">
