@@ -22,14 +22,15 @@
           <div class="container order-types-main">
             <app-spinner *ngIf="_productSuggestionService.loader"></app-spinner>
 
-            <p *ngIf="!_productSuggestionService.keywords" class="text-white">Suggested Keywords:</p>
-            <div *ngIf="!_productSuggestionService.loader" class="container w-50">
-              <div class="d-flex">
-                <div *ngFor="let item of _productSuggestionService.keywords" style="margin-right: 8px;border-radius: 20px;padding:5px;color:white;background-color: #E7272D"><strong>{{item}}</strong></div>
-              </div>
+
+            <div class="d-flex flex-wrap justify-content-center">
+              <div *ngFor="let item of _productSuggestionService.keywords"
+                   style="margin-right: 8px;border-radius: 20px;padding:5px;color:white;background-color: #E7272D">
+                <strong>{{item}}</strong></div>
             </div>
 
-            <div *ngIf="!_productSuggestionService.loader" class="receipe-grid mt-4 receipe-grid-three">
+
+            <div class="receipe-grid mt-4 receipe-grid-three">
               <div *ngFor="let item of _productSuggestionService.suggestedProductList"
                    class="receipe-item receipe-item-black pb-30">
                 <div class="receipe-item-inner">
