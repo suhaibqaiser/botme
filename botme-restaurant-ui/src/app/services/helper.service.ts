@@ -155,10 +155,10 @@ export class HelperService {
 
   getRequiredCheckError(form: any, formControlName: any, type: any = '', messageList: any = []) {
 
-    if (formControlName === 'clientEmail') {
-      return form.get('clientEmail')?.hasError('required') ?
+    if (['confirmClientEmail', 'clientEmail'].includes(formControlName)) {
+      return form.get(formControlName)?.hasError('required') ?
         messageList[0] :
-        form.get('clientEmail')?.hasError('requirements') ?
+        form.get(formControlName)?.hasError('requirements') ?
           'Please enter valid email xyz@gmail.com' : '';
     }
 
