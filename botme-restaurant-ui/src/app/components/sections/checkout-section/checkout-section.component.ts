@@ -30,7 +30,8 @@ export class CheckoutSectionComponent implements OnInit {
 
     customerEmail: new FormControl('', Validators.required),
     customerCountry: new FormControl('', Validators.required),
-    customerTown: new FormControl('', Validators.required),
+    customerCity: new FormControl('', Validators.required),
+    customerPostalCode: new FormControl('', Validators.required),
     customerState: new FormControl('', Validators.required),
     customerAddress: new FormControl('', Validators.required),
     orderNotes: new FormControl('', Validators.required),
@@ -216,7 +217,8 @@ export class CheckoutSectionComponent implements OnInit {
     this.customerForm.controls['customerName'].setValue(obj.customerName)
     this.customerForm.controls['customerEmail'].setValue(obj.customerEmail)
     this.customerForm.controls['customerCountry'].setValue(obj.customerCountry)
-    this.customerForm.controls['customerTown'].setValue(obj.customerTown)
+    this.customerForm.controls['customerCity'].setValue(obj.customerCity)
+    this.customerForm.controls['customerPostalCode'].setValue(obj.customerPostalCode)
     this.customerForm.controls['customerState'].setValue(obj.customerState)
     this.customerForm.controls['customerAddress'].setValue(obj.customerAddress)
     this.customerForm.controls['orderNotes'].setValue(obj.orderNotes)

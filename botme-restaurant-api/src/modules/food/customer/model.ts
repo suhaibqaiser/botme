@@ -47,13 +47,14 @@ const tempCustomer = createSchema(
             }
         }),
         customerCountry: Type.string(),
-        customerTown: Type.string(),
+        customerCity: Type.string(),
         customerState: Type.string(),
         customerAddress: Type.string(),
         orderNotes: Type.string(),
         customerPhone: Type.string({maxlength: 256}),
         customerActive: Type.boolean({required: true}),
         customerStreet: Type.string(),
+        customerPostalCode: Type.string(),
         reservationSeats: Type.number(),
         reservationDate: Type.string(),
         reservationTime: Type.string()
