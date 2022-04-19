@@ -23,7 +23,7 @@
             <app-spinner *ngIf="_productSuggestionService.loader"></app-spinner>
 
 
-            <div class="d-flex flex-wrap justify-content-center">
+            <div *ngIf="!_productSuggestionService.loader" class="d-flex flex-wrap justify-content-center">
               <div *ngFor="let item of _productSuggestionService.keywords"
                    style="margin-right: 8px;border-radius: 20px;padding:5px;color:white;background-color: #E7272D">
                 <strong>{{item}}</strong></div>

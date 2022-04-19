@@ -25,11 +25,14 @@ export class ProductSuggestionService {
       idsList.forEach((item: any) => {
         this.suggestedProductList.push(this.products.find((i: any) => i.productId === item))
       })
-
-      this.keywords = keywords
     }
-
+    this.keywords = keywords
     this.loader = false
     console.log('suggestedProductList =>', this.suggestedProductList)
+  }
+
+  reset(){
+    this.suggestedProductList = []
+    this.keywords = []
   }
 }
