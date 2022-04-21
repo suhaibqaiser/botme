@@ -22,13 +22,13 @@ const deviceSchema = new Schema({
   },
   deviceDescription: {
     type: String,
-    maxlength: 256,
+    maxlength: 800,
+    required: true
+  },
+  deviceActive: {
+    type: Boolean,
     required: true
   }
-//   deviceActive: {
-//     type: Boolean,
-//     required: true
-//   }
 }, {
   versionKey: false
 });

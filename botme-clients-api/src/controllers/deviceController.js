@@ -50,9 +50,9 @@ async function getDeviceDetails(req, res) {
 async function addDevice(req, res) {
   let response = new Response();
 
-  if (!req.body.deviceLabel) {
+  if (!req.body.deviceLabel || !req.body.deviceName) {
     response.payload = {
-      message: 'deviceLabel is required'
+      message: 'deviceLabel and deviceName is required'
     };
     return res.status(400).send(response);
   }
@@ -64,23 +64,32 @@ async function addDevice(req, res) {
     return res.status(400).send(response);
   }
 
+  if(!['robot','web'].includes(req.body.deviceType.toLowerCase())){
+    response.payload = 'Invalid device type. Please enter the correct one.'
+    response.status = "error"
+    return res.send(response)
+}
+
   let device = {
     deviceLabel : req.body.deviceLabel,
     deviceName : req.body.deviceName,
     deviceType : req.body.deviceType,
-    deviceDescription : req.body.deviceDescription
+    deviceDescription : req.body.deviceDescription,
+    deviceActive : req.body.deviceActive
   }
+
   let newDevice = await deviceService.addDevice(device);
 
   if (newDevice) {
     response.payload = newDevice;
     response.status = "success";
     return res.status(200).send(response);
-  } else {
-    response.payload = "Error in saving device";
-    response.status = "error";
-    return res.status(404).send(response);
   }
+  
+  response.payload = "Error in saving device";
+  response.status = "error";
+  return res.status(404).send(response);
+  
 } 
 
 // Update device
