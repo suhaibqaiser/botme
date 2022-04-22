@@ -68,7 +68,6 @@ def send_Response():
     form = context['entities']
     parentEntity = context['parentEntity']
     message = text.lower()
-    print(context)
 
     # RASA API CALL
     rasa_data = getIntent(message)
@@ -95,7 +94,6 @@ def send_Response():
         if response:
             return jsonify(response)
         else:
-            print("taha")
             response = utility.nluFallBack()
             wrongCommand = insertingWrongResponseInDb(converstion['conversationId'], converstion['conversationLogId'],context['clientId'],context['sessionId'],response, text)
             return jsonify(response)

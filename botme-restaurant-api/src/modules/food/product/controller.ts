@@ -138,7 +138,7 @@ export async function suggestProduct(searchParameters: any, restaurantId: any) {
         products: productList,
         drinks: drinkList
     }
-
+    console.log("item list==>",itemList)
     let result = itemList
     if (result) {
         response.payload = result
