@@ -61,6 +61,7 @@ export class ProductDetailSectionComponent implements OnInit {
     this.menuservice.getProducts()
       .subscribe(result => {
         this.cartService.products = result.payload
+        this._helperService.productList = result.payload
       });
   }
 

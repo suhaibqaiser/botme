@@ -53,7 +53,7 @@ export class ProductCartModalComponent implements OnInit {
         if (cartList && cartList.length) {
           cartList.forEach((cartItem: any) => {
             const product = this.cartService.products.find((item: any) => item.productId === cartItem.productId)
-            this.cartService.cartProduct.push(JSON.parse(JSON.stringify(this.cartService.setSingleCustomizeProduct(product, cartItem))))
+            this.cartService.cartProduct.push(JSON.parse(JSON.stringify(this._helperService.setSingleCustomizeProduct(product, cartItem))))
           })
         }
         console.log(this.cartService.cartProduct)
@@ -70,6 +70,7 @@ export class ProductCartModalComponent implements OnInit {
     this.MenuService.getProducts()
       .subscribe(result => {
         this.cartService.products = result.payload
+        this._helperService.productList = result.payload
         this.getCartProducts();
       });
   }
