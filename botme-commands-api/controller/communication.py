@@ -22,7 +22,7 @@ def getResponseUsingContext(intent, entity, text, pageId, sectionId, form, paren
     form = checkForEmptyField(form)
     print("here")
     if (pageId == "pageId-home" or pageId == "pageId-product-suggestions"):
-        if intent == "Suggestion":
+        if intent == "Suggestion" or intent == "Order_meal" or intent == "menu_category":
             suggestion = Suggestion(intent, entity, senti, pageId,
                                     sectionId, text, db, converstion, context, restaurantId)
             Response = suggestion.suggestionResponse()

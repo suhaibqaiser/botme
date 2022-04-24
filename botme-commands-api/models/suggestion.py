@@ -58,7 +58,7 @@ class Suggestion():
         suggestion = {"product": [],"persons": 1,"drink": "","attributes": {},"keywords": []}
         # attributes= {"glutenFree":False,"halal":False,"vegan":False,"vegetarian":False}
         for x in self.entity:
-            if x['entity'] == 'suggestion':
+            if x['entity'] == 'suggestion' or x['entity'] == 'categoryName' or x['entity'] == 'productName':
                 valueProduct = x['value']
                 valueProduct = valueProduct.lower()
                 suggestion['keywords'].append(valueProduct)
