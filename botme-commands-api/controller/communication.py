@@ -21,7 +21,7 @@ def getResponseUsingContext(intent, entity, text, pageId, sectionId, form, paren
     db = getDbCta(intent, value, pageId, sectionId)
     form = checkForEmptyField(form)
     print("here")
-    if (pageId == "pageId-home"):
+    if (pageId == "pageId-home" or pageId == "pageId-product-suggestions"):
         if intent == "Suggestion":
             suggestion = Suggestion(intent, entity, senti, pageId,
                                     sectionId, text, db, converstion, context, restaurantId)

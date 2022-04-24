@@ -90,6 +90,24 @@ nlu:
       - home page
       - homepage
 
+  - intent: suggestion_page
+    examples: |
+      - take me to [suggestions](pagetwo) page
+      - i want to make some [suggestions](pagetwo)
+      - please show me the [suggestions](pagetwo) page
+      - i want to see the [suggestions](pagetwo) page
+      - [suggest](pagetwo) me some good food
+      - show me [suggestions](pagetwo) page
+      - i want to visit [suggestions](pagetwo) page
+      - please [suggest](pagetwo) me good food
+      - [suggest](pagetwo) me some product
+      - [suggestions](pagetwo)
+      - [suggest](pagetwo)
+
+  - synonym: suggestions 
+    examples: |
+      - suggest
+
   - intent: Suggestion
     examples: |
       - we are looking for [nacho burger](suggestion) and [chicken burger](suggestion) for [4](number) people and make it [halal](attribute)
