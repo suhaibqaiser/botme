@@ -93,7 +93,7 @@ export class OrderSectionComponent implements OnInit {
         if (cartList && cartList.length) {
           cartList.forEach((cartItem: any) => {
             const product = this._cartService.products.find((item: any) => item.productId === cartItem.productId)
-            this._cartService.cartProduct.push(JSON.parse(JSON.stringify(this._cartService.setSingleCustomizeProduct(product, cartItem))))
+            this._cartService.cartProduct.push(JSON.parse(JSON.stringify(this._helperService.setSingleCustomizeProduct(product, cartItem))))
           })
         }
         this._cartService.cartLoader = false
@@ -116,6 +116,7 @@ export class OrderSectionComponent implements OnInit {
     this.MenuService.getProducts()
       .subscribe(result => {
         this._cartService.products = result.payload
+        this._helperService.productList = result.payload
       });
   }
 }

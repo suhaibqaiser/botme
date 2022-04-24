@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {HelperService} from "./helper.service";
 
 
 @Injectable({
@@ -12,26 +13,29 @@ export class ProductSuggestionService {
   loader: any = false
   keywords: any = []
 
-  constructor() {
+  constructor(private _helperService: HelperService) {
   }
 
-  async setSuggestedProducts(idsList: any = [], keywords: any = []) {
+  async setSuggestedProducts(cartList: any = [], keywords: any = []) {
 
-    console.log('idsList =>', idsList)
+    console.log('cartList =>', cartList)
     console.log('keywords =>', keywords)
     console.log('setSuggestedProducts =>', this.products)
-    if (idsList && idsList.length) {
-      this.suggestedProductList = this.products.filter((item: any, index: any) => item.productId === idsList[index])
-      idsList.forEach((item: any) => {
-        this.suggestedProductList.push(this.products.find((i: any) => i.productId === item))
+
+
+    if (cartList && cartList.length) {
+      cartList.forEach((cartItem: any) => {
+        const product = this.products.find((item: any) => item.productId === cartItem.productId)
+        this.suggestedProductList.push(JSON.parse(JSON.stringify(this._helperService.setSingleCustomizeProduct(product, cartItem))))
       })
     }
+
     this.keywords = keywords
     this.loader = false
     console.log('suggestedProductList =>', this.suggestedProductList)
   }
 
-  reset(){
+  reset() {
     this.suggestedProductList = []
     this.keywords = []
   }

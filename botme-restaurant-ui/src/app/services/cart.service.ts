@@ -131,197 +131,8 @@ export class CartService {
       entityValue: product.productName
     }
     this.reset()
-    this.singleCustomProductObj = this.setSingleCustomizeProduct(product)
+    this.singleCustomProductObj = this._helperService.setSingleCustomizeProduct(product)
     $('#pageId-productCustomizeModal').modal('show')
-  }
-
-  setSingleCustomizeProduct(product: any, cartProduct: any = {}) {
-    let productServingSizeList: any = []
-
-    productServingSizeList = this.getSelectedServingSize(product.productRate, cartProduct.productRate)
-
-    return {
-      _id: cartProduct._id,
-      restaurantId: cartProduct.restaurantId,
-      orderLabel: cartProduct.orderLabel,
-      cartId: cartProduct.cartId,
-      productName: product.productName,
-      productId: product.productId,
-      productImage: product.productImage,
-      productRate: product.productRate,
-      productServingSize: productServingSizeList,
-      productOptions: this.getSelectedProductOptions(product.productOptions, cartProduct.productOptions),
-      productIngredients: this.getSelectedProductIngredient(product.productIngredients, cartProduct.productIngredients),
-      productFlavors: this.getSelectedProductFlavor(product.productFlavor, cartProduct.productFlavor),
-      productAddons: this.getSelectedProductProportion(cartProduct.productProportion),
-      productToppings: this.getSelectedProductToppings(product.productToppings, cartProduct.productToppings),
-      productQuantity: (cartProduct && cartProduct.productQuantity) ? cartProduct.productQuantity : 1,
-      status: cartProduct.status,
-      productAttributes: product.productAttributes,
-      productNutrition: product.productNutrition,
-      productPrice: this.roundToTwo(productServingSizeList[0].serving_price),
-      productTotalPrice: (cartProduct.productTotalPrice) ? cartProduct.productTotalPrice : this.roundToTwo(productServingSizeList[0].serving_price),
-      cartDiscount: cartProduct.cartDiscount,
-      cartTotal: cartProduct.cartTotal
-    }
-  }
-
-  getProductById(productId: any) {
-    let obj = this.products.find((item: any) => item.productId == productId)
-    return obj ? obj : {}
-  }
-
-  getProductByType(productType: any) {
-    return this.products.filter((item: any) => item.productType == productType)
-  }
-
-  /**
-   * getting the modified list of user selected flavor
-   * @param productFlavorList
-   * @param productFlavorName
-   */
-  getSelectedProductFlavor(productFlavorList: any = [], productFlavorName: any = '') {
-    if (productFlavorList && productFlavorList.length) {
-      let list = productFlavorList.map((item: any) => {
-        return {
-          flavorName: item,
-          selected: (productFlavorName) ? (item === productFlavorName) : false
-        }
-      })
-
-      if (list && !(!!list.filter((item: any) => item.selected == true).length)) {
-        list[0].selected = true
-      }
-
-      return list
-    }
-  }
-
-
-  /**
-   * get user selected addons list
-   * @param productProportion
-   */
-  getSelectedProductProportion(productProportion: any = []) {
-    let productList = this.getProductByType('Addon')
-    let productProportionIdList = productProportion.map((item: any) => {
-      return item.productId
-    })
-    console.log('getSelectedProductProportion =>', productList, productProportionIdList, productProportion)
-    if (productList && productList.length) {
-      return productList.map((item: any) => {
-        const selectedProduct = productProportion.find((product: any) => product.productId === item.productId)
-        return {
-          productId: item.productId,
-          productName: item.productName,
-          productImage: this._helperService.resolveProductImage(item),
-          selected: (productProportionIdList) ? productProportionIdList.includes(item.productId) : false,
-          productQuantity: (selectedProduct && selectedProduct.productQuantity) ? selectedProduct.productQuantity : 0,
-          productPrice: this.roundToTwo(item.productRate.standard),
-          productTotalPrice: (selectedProduct && selectedProduct.productQuantity) ? (selectedProduct.productQuantity * this.roundToTwo(item.productRate.standard)) : 0,
-        }
-      })
-    }
-  }
-
-  /**
-   * get user selected product topping
-   * @param productToppingsList
-   * @param productToppings
-   */
-  getSelectedProductToppings(productToppingsList: any = [], productToppings: any = []) {
-    let productToppingsIdList = productToppings.map((item: any) => {
-      return item.productId
-    })
-    if (productToppingsList && productToppingsList.length) {
-      return productToppingsList.map((item: any) => {
-        let obj = this.getProductById(item)
-        const selectedProduct = productToppings.find((product: any) => product.productId === obj.productId)
-        return {
-          productId: obj.productId,
-          productName: obj.productName,
-          productImage: this._helperService.resolveProductImage(obj),
-          selected: (productToppingsIdList) ? productToppingsIdList.includes(obj.productId) : false,
-          productQuantity: (selectedProduct && selectedProduct.productQuantity) ? selectedProduct.productQuantity : 0,
-          productPrice: this.roundToTwo(obj.productRate.standard),
-          productTotalPrice: (selectedProduct && selectedProduct.productQuantity) ? (selectedProduct.productQuantity * this.roundToTwo(obj.productRate.standard)) : 0
-        }
-      })
-    }
-  }
-
-  /**
-   * get the user selected product options
-   * @param productOptionsList
-   * @param productOptions
-   */
-  getSelectedProductOptions(productOptionsList: any = [], productOptions: any = []) {
-    console.log('productOptionsList => ', !productOptionsList.length)
-
-    if (!productOptionsList.length) return []
-    console.log('after')
-
-    let list = productOptionsList.reduce((prev: any, next: any) => {
-      return [...prev, ...next]
-    })
-
-
-    if (list && list.length) {
-      return list.map((item: any) => {
-          let obj = this.getProductById(item)
-          return {
-            productId: obj.productId,
-            productName: obj.productName,
-            productImage: this._helperService.resolveProductImage(obj),
-            selected: (productOptions && productOptions.length) ? !!productOptions.find((dbItem: any) => obj.productId === dbItem.productId) : false,
-          }
-        }
-      )
-    }
-  }
-
-  /**
-   * get user selected product ingredients
-   * @param productIngredientList
-   * @param productIngredient
-   */
-  getSelectedProductIngredient(productIngredientList: any = [], productIngredient: any = []) {
-    let list = []
-    if (productIngredientList && productIngredientList.length) {
-      list = productIngredientList.map((item: any) => {
-        let obj = this.getProductById(item)
-        return {
-          productId: obj.productId,
-          productName: obj.productName,
-          productImage: this._helperService.resolveProductImage(obj),
-          selected: (productIngredient && productIngredient.length) ? !!productIngredient.find((dbItem: any) => obj.productId === dbItem.productId) : true,
-        }
-      })
-
-      return list.filter((item: any) => item.productId && item.productId.length)
-    }
-  }
-
-  /**
-   * get user selected select serving size
-   * @param productRateList
-   */
-  getSelectedServingSize(productRateList: any = [], productRate: any = {}) {
-    console.log('getSelectedServingSize =>', productRateList, productRate)
-    let keysList = Object.keys(productRateList)
-    let priceList = keysList.map((item: any, index) => {
-      return {
-        serving_size_name: item,
-        selected: productRate[item] ? true : false,
-        serving_price: productRateList[item]
-      }
-    })
-
-    let check = priceList.filter((item: any) => item.selected === true).length
-    if (!check) {
-      priceList[0].selected = true
-    }
-    return priceList
   }
 
   addCartToDb(singleCustomProductObj: any, callType: any = '') {
@@ -633,13 +444,13 @@ export class CartService {
 
 
     let obj = this.singleCustomProductObj.productServingSize.find((f: any) => f.selected == true)
-    this.singleCustomProductObj.productPrice = this.roundToTwo(obj.serving_price)
+    this.singleCustomProductObj.productPrice = this._helperService.roundToTwo(obj.serving_price)
     this._socketService.voiceServingSize = ''
     this.customizeBillCalculation()
   }
 
   customizeBillCalculation() {
-    this.singleCustomProductObj.productTotalPrice = this.roundToTwo(this.singleCustomProductObj.productPrice * this.singleCustomProductObj.productQuantity)
+    this.singleCustomProductObj.productTotalPrice = this._helperService.roundToTwo(this.singleCustomProductObj.productPrice * this.singleCustomProductObj.productQuantity)
 
     if (this.singleCustomProductObj.productToppings && this.singleCustomProductObj.productToppings.length) {
       this.singleCustomProductObj.productToppings.forEach((item: any) => {
@@ -652,7 +463,7 @@ export class CartService {
         this.singleCustomProductObj.productTotalPrice += item.productTotalPrice
       })
     }
-    this.singleCustomProductObj.productTotalPrice = this.roundToTwo(this.singleCustomProductObj.productTotalPrice)
+    this.singleCustomProductObj.productTotalPrice = this._helperService.roundToTwo(this.singleCustomProductObj.productTotalPrice)
   }
 
   addToppingQuantity(toppings: any, type: any) {
@@ -663,7 +474,7 @@ export class CartService {
       toppings.productQuantity = toppings.productQuantity - 1
     }
     toppings.productTotalPrice = toppings.productPrice * toppings.productQuantity
-    toppings.productTotalPrice = this.roundToTwo(toppings.productTotalPrice)
+    toppings.productTotalPrice = this._helperService.roundToTwo(toppings.productTotalPrice)
     this.customizeBillCalculation()
   }
 
@@ -675,7 +486,7 @@ export class CartService {
       addons.productQuantity = addons.productQuantity - 1
     }
     addons.productTotalPrice = addons.productPrice * addons.productQuantity
-    addons.productTotalPrice = this.roundToTwo(addons.productTotalPrice)
+    addons.productTotalPrice = this._helperService.roundToTwo(addons.productTotalPrice)
     this.customizeBillCalculation()
   }
 
@@ -688,7 +499,7 @@ export class CartService {
       product.productQuantity = product.productQuantity - 1
     }
     product.productTotalPrice = product.productTotalPrice * product.productQuantity
-    product.productTotalPrice = this.roundToTwo(product.productTotalPrice)
+    product.productTotalPrice = this._helperService.roundToTwo(product.productTotalPrice)
   }
 
   getTotalPrice(obj: any) {
@@ -698,7 +509,7 @@ export class CartService {
         total += item.productTotalPrice
       }
     })
-    return this.roundToTwo(total)
+    return this._helperService.roundToTwo(total)
   }
 
   checkCommas(objectList: any) {
@@ -793,10 +604,6 @@ export class CartService {
     if (this.slideToShow == 4) this._contextService.currentContextObj.sectionId = 'sectionId-summary'
   }
 
-  roundToTwo(num: number) {
-    return Math.round((num + Number.EPSILON) * 100) / 100;
-  }
-
   getSubTotal() {
     let total = 0
     if (this.cartProduct && this.cartProduct.length) {
@@ -804,7 +611,7 @@ export class CartService {
         total += item.productTotalPrice
       })
     }
-    return this.roundToTwo(total)
+    return this._helperService.roundToTwo(total)
   }
 
 }
