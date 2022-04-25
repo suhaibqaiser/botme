@@ -9,6 +9,8 @@ def getProductId(suggestion, restaurantId):
             "tags":suggestion['product'],
             "attributes":suggestion['attributes'],
             "drinks":suggestion['drink'],
+            "addon":suggestion['addon'],
+            "ingredient":suggestion['ingredient'],
             "persons":suggestion['persons']},"restaurantId":restaurantId}
         response = requests.post(
             RESTAURANT_API + '/food/product/suggest', json=body)
