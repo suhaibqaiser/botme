@@ -166,7 +166,7 @@ class Suggestion():
                 productTopping = Suggestion.productTopping(prod['productToppings'],ingredient)
                 productAddon = Suggestion.productAddon(addon,drinks)
 
-                productPrice = Suggestion.productPrice(prod['productRate'])
+                productPrice = Suggestion.productPrice(prod['productRate'],size)
                 Result = {"productRate":productRate,"productOption":productOption,"productIngrident":productIngrident,"productFlavour":productFlavour,"productPrice":productPrice,"productTopping":productTopping,"productAddon":productAddon}
                 return Result
 
@@ -239,7 +239,7 @@ class Suggestion():
 
         return array
 
-    def productPrice(Rate):
-        if Rate['standard']:
-            price = Rate['standard']
+    def productPrice(Rate,size):
+        if Rate[size]:
+            price = Rate[size]
             return price

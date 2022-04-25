@@ -110,45 +110,45 @@ nlu:
 
   - intent: Suggestion
     examples: |
-      - we are looking for [medium](size) [nacho burger](suggestion) and [chicken burger](suggestion) with [Chicken](flavour) and with [Lettuce](ingredients), [pepsi](drink) and [french fries](addon) for [4](number) people and make it [halal](attribute)
-      - we are looking for [large](size) [Burger](suggestion) with [cheese]() and [chicken burger](suggestion) with [Chicken](flavour) and with [pepsi](drink) and [french fries](addon) for [4](number) people and make it [halal](attribute)
+      - we are looking for [medium](size) [nacho burger](suggestion) and [chicken burger](suggestion) with [Chicken](flavour) flavour and with [Lettuce](ingredients), [pepsi](drink) and [french fries](addon) for [4](number) people and make it [halal](attribute)
+      - we are looking for [large](size) [Burger](suggestion) with [cheese](ingredients) and [chicken burger](suggestion) with [Chicken](flavour) and with [pepsi](drink) and [french fries](addon) for [4](number) people and make it [halal](attribute)
       - we are looking for [small](size) [grilled sandwich](suggestion) and [cheese burger](suggestion) [Lettuce](ingredients) with [pepsi](drink) and [french fries](addon) for [4](number) people and make it [halal](attribute)
       - i am looking for [nacho](suggestion) with [tomato](ingredients) and [chicken](suggestion) for [two](number) person and make it [halal](attribute)
       - we want to eat something like [sandwich](suggestion) and [burger](suggestion) for [3](number) people and make it [halal](attribute)
       - i am in the mood for [Burger](suggestion) and [wraps](suggestion) for [six](number) and make it [halal](attribute)
       - i want to order [burger](suggestion) and [cheese burger](suggestion) for [2](number) and make it [halal](attribute)
       - i am looking for [chicken burger](suggestion) and [sandwich](suggestion) with [soft drink](drink) for [5](number) and keep it [halal](attribute)
-      - i want to eat [nacho burger](suggestion) and [wraps] with [soft drink](drink) for [three](number) and keep it [halal](attribute)
+      - i want to eat [nacho burger](suggestion) with [fries](addon) and [wraps] with [soft drink](drink) for [three](number) and keep it [halal](attribute)
       - suggest me some good [burger](suggestion) for [6](number) with [soft drink](drink)
       - suggest me some good [wraps](suggestion) for [5](number) with [soft drink](drink)
-      - suggest me some good [platter](suggestion) for [8](number) with [soft drink](drink)
-      - i am looking for some good [burger](suggestion) for [7](number) with [soft drink](drink)
+      - suggest me some good [platter](suggestion) for [8](number) with [soft drink](drink) 
+      - i am looking for some good [burger](suggestion) with [fries](addon) for [7](number) with [soft drink](drink)
       - we want to have [wrap](suggestion) for [5](number) with [soft drink](drink) and keep it [halal](attribute)
-      - I would like to order some [burgers](suggestion) with [cheese](suggestion) and [chicken](suggestion) and we are [three](number) people and [water](drink) 
+      - I would like to order some [burgers](suggestion) with [cheese](ingredients) and [chicken](suggestion) and we are [three](number) people and [water](drink) 
       - I have [kids](suggestion) with me can you suggest some [snacks for kids](suggestion) and some [juice](drink)
       - I have [children](suggestion) with me can you suggest some [items for kids(suggestion) and [water bottle](drink)
       - I have [kids](suggestion) with me can you suggest some [snacks for kids](suggestion) and some [drink](drink)
-      - I want to order some [fries](suggestion) with [soft drink](drink)
-      - I want some [nachos](suggestion) and [fries](suggestion) with [water bottle](drink)
+      - I want to order some [fries](addon) with [soft drink](drink)
+      - I want some [nachos](suggestion) and [fries](addon) with [water bottle](drink)
       - Do you have some [crispy burger](suggestion) or [grilled wraps](suggestion) for [5](number) persons
       - Do you have some [grilled sandwich](suggestion) or [crispy burger](suggestion) for [six](number) people
       - Do you have some [veggie burger](suggestion) or [falafel sandwich](suggestion) for [three](number) people
       - show me some [veggie burger](suggestion)
       - I want some [desserts](suggestion) and [salads](suggestion)
       - Do you people have [sandwiches](suggestion) and [shakes](suggestion)
-      - I want [grilled sandwich](suggestion) with [extra cheese](suggestion) and some [desserts](suggestion) too along with some [drinks](drink) and grill item must be [halal](attribute)
+      - I want [grilled sandwich](suggestion) with extra [cheese](ingredients) and some [desserts](suggestion) too along with some [drinks](drink) and grill item must be [halal](attribute)
       - i am looking for [nacho](suggestion) and [chicken](suggestion) for [two](number) [person] and make it [halal]
-      - I would like to order some [burgers](suggestion) with [cheese](suggestion) and [chicken](suggestion) and we are [three](number) people and [water](drink)
+      - I would like to order some [burgers](suggestion) with [cheese](ingredients) and [chicken](suggestion) and we are [three](number) people and [water](drink)
       - I am looking for some kind of [cheesy mushroom burger](suggestion) with regular [black drink](drink)
       - I want to eat [spicy patty burger](suggestion) with [drinks](drink) and make it for [two](number) people
       - I want to eat [chicken burger](suggestion) with [drinks](drink)
       - I would like to have some [chicken burger](suggestion) and [sweet dish](suggestion) and make sure that burger is [crispy](suggestion)
-      - I want to order [vegetable burger](suggestion) and [pepsi](suggestion) and one [water bottle](drink) also
+      - I want to order [vegetable burger](suggestion) and [pepsi](drink) and one [water bottle](drink) also
       - we want to order one [BBQ platter](suggestion) and [two](number) [non spicy burgers](suggestion) for [kid](suggestion)
       - what kind of [milk shakes](suggestion) do you have? I would like to have [banana shake](suggestion)
       - what kind of [sandwiches](suggestion) do you have? I want to order [juicy beef sandwich](suggestion) with [chilled sprite](drink)
-      - I want to order [grilled chicken](suggestion) for [2](number) people along with 2 [regular pepsi](suggestion) and 1 [bottle of water](drink)
-      - I want to have [nuggets](suggestion) with [heavy cheese topping](suggestion) and [one](number) [zinger burger](suggestion) with [soda](drink)
+      - I want to order [grilled chicken](suggestion) for [2](number) people along with 2 [regular pepsi](drink) and [bottle of water](drink)
+      - I want to have [nuggets](suggestion) with heavy [cheese](ingredients) topping and [one](number) [zinger burger](suggestion) with [soda](drink)
       - I want to have [vegetable burger](suggestion) and [cheese burger](suggestion) with [dessert](suggestion)
       - I want to eat [spicy patty burger](suggestion) with [drinks] and make it for [two](number) people
       - I would like to order [beef burger](suggestion) and make sure its [halal](attribute)
@@ -210,6 +210,12 @@ nlu:
       - Can you please place a meal for my daughter [little one](suggestion)
       - May I order some items for my kids as [baby](suggestion)
       - Can I order for my children [food for children](suggestion)
+      - i want to order [nacho burger](suggestion) with [fries](addon)
+      - i want to order [chicken burger](suggestion) with [fries](addon)
+      - i want to eat [cheese burger](suggestion) with [salad](addon)
+      - i want to order [falafel sandwich] with [coleslaw](addon)
+      - i want to order [nacho burger](sugggestion) with [pepsi](addon)
+      - i want to eat [chicken burger](suggestion) with [sprite](addon)
     
   - intent: reservation_page
     examples: |
