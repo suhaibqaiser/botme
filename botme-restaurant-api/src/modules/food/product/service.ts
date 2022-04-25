@@ -44,7 +44,7 @@ export async function getProductByTag(tag: string, person: number, restaurantId:
     })
 
 }
-export async function getProductByTagDrink(tag: string, person: number, restaurantId: string, attributes?: any) {
+export async function getProductByTagWithoutAttribute(tag: string, person: number, restaurantId: string, attributes?: any) {
     let filter: any = {
         "productTags": tag,
         "productServing": { $lte: person }, "restaurantId": restaurantId,

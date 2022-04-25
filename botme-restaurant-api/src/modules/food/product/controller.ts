@@ -1,5 +1,5 @@
 import { restResponse } from "../../../utils/response";
-import { createProduct, getProduct, updateProduct, getMaxLabelValue, getProductByTag , getProductByTagDrink } from "./service";
+import { createProduct, getProduct, updateProduct, getMaxLabelValue, getProductByTag , getProductByTagWithoutAttribute } from "./service";
 import { randomUUID } from "crypto";
 
 export async function addProduct(product: any, restaurantId: any) {
@@ -114,10 +114,14 @@ export async function suggestProduct(searchParameters: any, restaurantId: any) {
     let persons = searchParameters.persons
     let productTags = searchParameters.tags
     let drinkTags = searchParameters.drinks
+    let addonTags = searchParameters.addon
+    let ingredientTags = searchParameters.ingredient
     let attributes = searchParameters.attributes
 
     let productList: any[] = []
     let drinkList: any[] = []
+    let addonList: any[] = []
+    let ingredientList: any[] = []
 
     for (const productTag of productTags) {
         let products = await getProductByTag(productTag, persons, restaurantId, attributes)
@@ -127,16 +131,32 @@ export async function suggestProduct(searchParameters: any, restaurantId: any) {
     }
 
     if (productList.length > 0) {
-        let products = await getProductByTagDrink(drinkTags, persons, restaurantId)
-        products.forEach((product: any) => {
-            if (!drinkList.includes(product.productId)) { drinkList.push(product.productId) }
-        });
+        for (const drinkTag of drinkTags) {
+            let products = await getProductByTagWithoutAttribute(drinkTag, persons, restaurantId, attributes)
+            products.forEach((product: any) => {
+                if (!drinkList.includes(product.productId)) { drinkList.push(product.productId) }
+            });
+        }
+        for (const addonTag of addonTags) {
+            let addons = await getProductByTagWithoutAttribute(addonTag, persons, restaurantId, attributes)
+            addons.forEach((addon:any) => {
+                if (!addonList.includes(addon.productId)) { drinkList.push(addon.productId)}
+            });
+        }
+        for (const ingredientTag of ingredientTags) {
+            let ingredients = await getProductByTagWithoutAttribute(ingredientTag,persons,restaurantId)
+            ingredients.forEach((ingredient:any) => {
+                if (!ingredientList.includes(ingredient.productId)) {ingredientList.push(ingredient.productId)}
+            });
+        }
     }
-
 
     let itemList = {
         products: productList,
-        drinks: drinkList
+        drinks: drinkList,
+        addons: addonList,
+        ingredient: ingredientList
+
     }
     console.log("item list==>",itemList)
     let result = itemList
