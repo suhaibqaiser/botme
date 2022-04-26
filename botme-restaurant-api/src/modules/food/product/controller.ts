@@ -132,15 +132,15 @@ export async function suggestProduct(searchParameters: any, restaurantId: any) {
 
     if (productList.length > 0) {
         for (const drinkTag of drinkTags) {
-            let products = await getProductByTagWithoutAttribute(drinkTag, persons, restaurantId, attributes)
+            let products = await getProductByTagWithoutAttribute(drinkTag, persons, restaurantId)
             products.forEach((product: any) => {
                 if (!drinkList.includes(product.productId)) { drinkList.push(product.productId) }
             });
         }
         for (const addonTag of addonTags) {
-            let addons = await getProductByTagWithoutAttribute(addonTag, persons, restaurantId, attributes)
+            let addons = await getProductByTagWithoutAttribute(addonTag, persons, restaurantId)
             addons.forEach((addon:any) => {
-                if (!addonList.includes(addon.productId)) { drinkList.push(addon.productId)}
+                if (!addonList.includes(addon.productId)) { addonList.push(addon.productId)}
             });
         }
         for (const ingredientTag of ingredientTags) {

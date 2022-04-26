@@ -24,7 +24,7 @@ export interface responseJson {
         sectionId: string,
         parentEntity: {
             entityId: string | null,
-            entityValue: string | null
+            entityValue: any | null
         },
         entities: [
             {

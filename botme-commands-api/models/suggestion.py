@@ -1,5 +1,3 @@
-from html import entities
-from turtle import rt
 from flask import Response
 from controller.utility import Utility
 from Service.suggestionApi import getProductId
@@ -133,7 +131,6 @@ class Suggestion():
             if data['status'] == "success":
                 value =data['payload']
                 result = Suggestion.handlingProductAttributes(value,drinks,addon,ingredient,size,persons,flavour)
-                print("Result==>",result)
                 obj['restaurantId'] = self.restaurantId
                 obj['productId'] = Id
 
@@ -158,6 +155,7 @@ class Suggestion():
         if len(product) > 0:
             for prod in product:
                 productRate = Suggestion.productRate(prod['productRate'],size)
+                print("FOR NEW PRODUCT")
                 productOption = Suggestion.productOption(prod['productOptions'],addon,drinks) 
 
                 productIngrident = Suggestion.productIngredients(prod['productIngredients'])
@@ -176,27 +174,37 @@ class Suggestion():
 
     def productOption(productOption,addon,drinks):
         addon_drinks = addon + drinks
-        obj = {"productId":"","productQuantity":0}
+        print("addon_drinks",addon_drinks)
+        # obj = {"productId":"","productQuantity":0}
         array = []
-        if productOption is not None:
+        add_array = []
+        if productOption is not None:  
             for options in productOption:
-                for id in options:
-                    if id in addon_drinks:
-                        obj['productId'] = id
-                        array.append(obj)
+                add_array = add_array + options
+
+            print("add_array==>",add_array)
+
+            for id in addon_drinks:
+                obj = {"productId":"","productQuantity":0}
+                if id in add_array:
+                    print("ID==.",id)
+                    obj['productId'] = id
+                    print(obj)
+                    array.append(obj)
+                    print("array==>",array)
+
+            print("array==>",array)
             return array
         else:
             return array
 
     def productIngredients(Ingredients):
-        obj = {"productId":"","productQuantity":0}
         array = []
         if Ingredients is not None:
             if len(Ingredients) > 0:
                 for ingred in Ingredients:
-                    print("Ingredients",ingred)
+                    obj = {"productId":"","productQuantity":0}
                     obj['productId'] = ingred
-                    print(obj)
                     array.append(obj)
                 return array
             else:
@@ -205,11 +213,11 @@ class Suggestion():
             return array
 
     def productFlavour(productFlavor,flavour):
-        prodFlavor = ""
+        # prodFlavor = ""
         if productFlavor is not None:
             if len(productFlavor) > 0:
-                if flavour in prodFlavor:
-                    prodFlavor = flavour
+                if flavour.title() in productFlavor:
+                    prodFlavor = flavour.title()
                     return prodFlavor
                 else:
                     return productFlavor[0]
@@ -219,11 +227,11 @@ class Suggestion():
             return productFlavor[0]
 
     def productTopping(topping,ingredient):
-        obj = {"productId":"","productQuantity":1}
         array = []
         if topping is not None:
             if len(ingredient) > 0:
                 for ingred in ingredient:
+                    obj = {"productId":"","productQuantity":1}
                     if ingred in topping:
                         obj['productId'] = ingred
                         array.append(obj)
@@ -231,9 +239,9 @@ class Suggestion():
 
     def productAddon(addon,drinks):
         productAddon = addon + drinks
-        obj = {"productId":"","productQuantity":1}
         array = []
         for id in productAddon:
+            obj = {"productId":"","productQuantity":1}
             obj['productId'] = id
             array.append(obj)
 
