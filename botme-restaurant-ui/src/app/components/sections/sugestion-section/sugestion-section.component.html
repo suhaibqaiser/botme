@@ -1,3 +1,4 @@
+<app-customize-product-modal></app-customize-product-modal>
 <div id="sectionId-product-suggestions" *ngIf="_clientService.getCookie().isLoggedIn"
      class="contact-us-section pt-100 pb-70 bg-black">
   <div class="container">
@@ -30,6 +31,11 @@
                 <strong>{{item}}</strong></div>
             </div>
 
+            <div *ngIf="!_productSuggestionService.loader && !_productSuggestionService.suggestedProductList.length" class="d-flex flex-wrap justify-content-center">
+              <div class="text-white">
+                <strong>No suggestion found please retry!</strong></div>
+            </div>
+
 
             <div class="receipe-grid mt-4 receipe-grid-three">
               <div *ngFor="let item of _productSuggestionService.suggestedProductList"
@@ -41,7 +47,7 @@
                   </div>
                   <div class="receipe-content">
                     <div class="receipe-info">
-                      <h3><a href="/product-detail/?productId={{item.productId}}">{{item.productName}}</a></h3>
+                      <h3>{{item.productName}}</h3>
                       <h4>${{item.productRate.standard}}</h4>
                     </div>
                     <div class="receipe-cart receipe-cart-main">

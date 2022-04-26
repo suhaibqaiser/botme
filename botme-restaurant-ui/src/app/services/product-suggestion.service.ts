@@ -31,12 +31,14 @@ export class ProductSuggestionService {
     }
 
     this.keywords = keywords
-    this.loader = false
+
     console.log('suggestedProductList =>', this.suggestedProductList)
   }
 
   reset() {
+    console.log('reset')
     this.suggestedProductList = []
     this.keywords = []
+    this.loader = false
   }
 }

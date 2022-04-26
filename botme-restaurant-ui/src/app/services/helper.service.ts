@@ -344,7 +344,7 @@ export class HelperService {
           productImage: this.resolveProductImage(obj),
           selected: (productToppingsIdList) ? productToppingsIdList.includes(obj.productId) : false,
           productQuantity: (selectedProduct && selectedProduct.productQuantity) ? selectedProduct.productQuantity : 0,
-          productPrice: this.roundToTwo(obj.productRate.standard),
+          productPrice: obj && obj.productRate && obj.productRate.standard ? this.roundToTwo(obj.productRate.standard) : 0,
           productTotalPrice: (selectedProduct && selectedProduct.productQuantity) ? (selectedProduct.productQuantity * this.roundToTwo(obj.productRate.standard)) : 0
         }
       })

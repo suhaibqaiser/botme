@@ -19,6 +19,7 @@ export class SugestionSectionComponent implements OnInit {
   suggestionControl = new FormControl('')
 
   constructor(private _contextService: ContextService, private cartService: CartService, private _toastService: ToastService, public _clientService: BotmeClientService, private _socketService: SocketService, public _productSuggestionService: ProductSuggestionService, private menuservice: MenuService, public _helperService: HelperService) {
+    this._contextService.getCurrentContext()
   }
 
 
