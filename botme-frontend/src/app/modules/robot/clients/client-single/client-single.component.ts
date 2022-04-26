@@ -14,7 +14,7 @@ import {AuthenticationService} from "../../../../services/authentication.service
 })
 export class ClientSingleComponent implements OnInit {
 
-  constructor(private authService:AuthenticationService,private _messageService: MessageService, private clientService: ClientService, private route: ActivatedRoute, private fb: FormBuilder) {
+  constructor(private messageService: MessageService, private authService: AuthenticationService, private _messageService: MessageService, private clientService: ClientService, private route: ActivatedRoute, private fb: FormBuilder) {
   }
 
   clientForm = this.fb.group({
@@ -27,7 +27,9 @@ export class ClientSingleComponent implements OnInit {
     formclientdebug: false,
     formclientvoice: true,
     formclientvoicetimeout: [3000, Validators.required],
-    formrestaurantid: ['']
+    formrestaurantid: [''],
+    clientSecretHint: [''],
+    clientEmail: ['']
   });
 
   formMode = 'update';
@@ -44,17 +46,20 @@ export class ClientSingleComponent implements OnInit {
     clientUpdated: '',
     clientActive: true,
     clientComment: '',
-    restaurantId: ''
+    restaurantId: '',
+    clientSecretHint: '',
+    clientEmail: ''
   }
   restaurantObj: any = []
   resturantId: any = ''
+  tempClientSceret = ''
 
   async ngOnInit() {
     await this.clientService.getActiveRestaurant().subscribe((res: any) => {
       if (res.status === 'success') {
         const restaurantList = res.payload
-        if(restaurantList && restaurantList.length) {
-          this.restaurantObj = restaurantList.find((item:any) => item.restaurantId === this.authService.getRestaurantId())
+        if (restaurantList && restaurantList.length) {
+          this.restaurantObj = restaurantList.find((item: any) => item.restaurantId === this.authService.getRestaurantId())
         }
       }
       return true
@@ -95,7 +100,8 @@ export class ClientSingleComponent implements OnInit {
   getClientDetail(clientId: string): void {
     this.clientService.getClientDetail(clientId).subscribe(
       result => {
-        this.client = result.payload
+        this.client = JSON.parse(JSON.stringify(result.payload))
+        this.tempClientSceret = JSON.parse(JSON.stringify(this.client.clientSecret))
         this.resturantId = localStorage.getItem('restaurantId') ? localStorage.getItem('restaurantId') : ''
         this.clientForm.patchValue({
           formclientid: this.client.clientID,
@@ -107,20 +113,31 @@ export class ClientSingleComponent implements OnInit {
           formclientdebug: this.client.clientDebug,
           formclientvoice: this.client.clientVoiceEnabled,
           formclientvoicetimeout: this.client.clientVoiceTimeout,
-          formrestaurantid: this.client.restaurantId
+          formrestaurantid: this.client.restaurantId,
+          clientSecretHint: this.client.clientSecretHint,
+          clientEmail: this.client.clientEmail
         })
       }
     );
   }
 
-  updateClient(client: object): void {
+  updateClient(client: any): void {
     this.patchFormValues();
 
-    let clientSecret = Md5.hashStr(this.client.clientSecret)
-    this.client.clientSecret = clientSecret
+    if (this.tempClientSceret !== this.client.clientSecret) {
+      let clientSecret = Md5.hashStr(this.client.clientSecret)
+      this.client.clientSecret = clientSecret
+    }
 
     this.clientService.updateClient(client)
-      .subscribe(result => this.client = result.payload);
+      .subscribe(result => {
+        this.client = result.payload
+        this.messageService.add({
+          severity: result.status === 'success' ? 'info' : 'error',
+          summary: result.status === 'success' ? 'Success' : 'Error',
+          detail: `Reason: ${result.statusMessage}`
+        })
+      });
   }
 
   registerClient(): void {
@@ -132,12 +149,18 @@ export class ClientSingleComponent implements OnInit {
     this.clientService.registerClient(this.client)
       .subscribe(result => {
         this.client = result.payload
+        this.messageService.add({
+          severity: result.status === 'success' ? 'info' : 'error',
+          summary: result.status === 'success' ? 'Success' : 'Error',
+          detail: `Reason: ${result.statusMessage}`
+        })
       })
 
   }
 
   patchFormValues() {
     this.resturantId = localStorage.getItem('restaurantId') ? localStorage.getItem('restaurantId') : ''
+    this.tempClientSceret = this.clientForm.getRawValue().formclientsecret
     this.client.clientID = this.clientForm.getRawValue().formclientid
     this.client.clientDeviceId = this.clientForm.getRawValue().formclientdeviceid
     this.client.clientSecret = this.clientForm.getRawValue().formclientsecret
@@ -148,6 +171,8 @@ export class ClientSingleComponent implements OnInit {
     this.client.clientVoiceEnabled = this.clientForm.getRawValue().formclientvoice
     this.client.restaurantId = this.resturantId
     this.client.clientVoiceTimeout = this.clientForm.getRawValue().formclientvoicetimeout
+    this.client.clientSecretHint = this.clientForm.getRawValue().clientSecretHint
+    this.client.clientEmail = this.clientForm.getRawValue().clientEmail
   }
 }
 

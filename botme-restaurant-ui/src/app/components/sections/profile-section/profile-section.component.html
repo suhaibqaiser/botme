@@ -4,18 +4,31 @@
       <div class="contact-item-title text-center">
         <h3 class="color-white">Profile</h3>
       </div>
+
       <div class="contact-item-info">
         <div class="text-capitalize contact-info-list">
-          <h3>Client Id</h3>
-          <p>{{_botMeClientService.getCookie().clientID}}</p>
+          <h6><strong style="color:#E7272D;">Client Id : </strong> <span class="text-white"> {{_botMeClientService.getCookie().clientID}}</span></h6>
         </div>
         <div class="text-capitalize contact-info-list">
-          <h3>Voice Type</h3>
-          <p>{{_botMeClientService.getCookie().voiceType}}</p>
+          <h6><strong style="color:#E7272D;">Client Name : </strong> <span class="text-white"> {{_botMeClientService.getCookie().clientName}}</span></h6>
         </div>
         <div class="text-capitalize contact-info-list">
-          <h3>Device Type</h3>
-          <p>{{_deviceService.deviceType}}</p>
+          <h6><strong style="color:#E7272D;">Client Debug : </strong> <span class="text-white"> {{_botMeClientService.getCookie().clientDebug}}</span></h6>
+        </div>
+        <div class="text-capitalize contact-info-list">
+          <h6><strong style="color:#E7272D;">Voice Enabled : </strong> <span class="text-white"> {{_botMeClientService.getCookie().clientVoiceEnabled}}</span></h6>
+        </div>
+        <div class="text-capitalize contact-info-list">
+          <h6><strong style="color:#E7272D;">Voice Time Out : </strong> <span class="text-white"> {{_botMeClientService.getCookie().voiceTimeout}}</span></h6>
+        </div>
+        <div class="text-capitalize contact-info-list">
+          <h6><strong style="color:#E7272D;">Restaurant Id : </strong> <span class="text-white"> {{_botMeClientService.getCookie().restaurantId}}</span></h6>
+        </div>
+        <div class="text-capitalize contact-info-list">
+          <h6><strong style="color:#E7272D;">Voice Type : </strong> <span class="text-white"> {{_botMeClientService.getCookie().voiceType}}</span></h6>
+        </div>
+        <div class="text-capitalize contact-info-list">
+          <h6><strong style="color:#E7272D;">Device Type : </strong> <span class="text-white"> {{_deviceService.deviceType}}</span></h6>
         </div>
         <div class="contact-info-list">
           <div class="mt-4 authentication-btn">

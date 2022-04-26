@@ -1,4 +1,5 @@
-<div *ngIf="_clientService.getCookie().isLoggedIn" class="contact-us-section pt-100 pb-70 bg-black">
+<div id="sectionId-product-suggestions" *ngIf="_clientService.getCookie().isLoggedIn"
+     class="contact-us-section pt-100 pb-70 bg-black">
   <div class="container">
     <div class="row">
       <div class="col-sm-12 col-md-12 col-lg-12 pb-30">
@@ -14,14 +15,23 @@
                 </div>
                 <div class="help-block with-errors"></div>
               </div>
-              <button (click)="sendSuggestion()" class="btn " type="submit">
+              <button (click)="sendSuggestion()" class="btn mt-3" type="submit">
                 Enter
               </button>
             </div>
           </div>
           <div class="container order-types-main">
             <app-spinner *ngIf="_productSuggestionService.loader"></app-spinner>
-            <div *ngIf="!_productSuggestionService.loader" class="receipe-grid receipe-grid-three">
+
+
+            <div *ngIf="!_productSuggestionService.loader" class="d-flex flex-wrap justify-content-center">
+              <div *ngFor="let item of _productSuggestionService.keywords"
+                   style="margin-right: 8px;border-radius: 20px;padding:5px;color:white;background-color: #E7272D">
+                <strong>{{item}}</strong></div>
+            </div>
+
+
+            <div class="receipe-grid mt-4 receipe-grid-three">
               <div *ngFor="let item of _productSuggestionService.suggestedProductList"
                    class="receipe-item receipe-item-black pb-30">
                 <div class="receipe-item-inner">
@@ -35,9 +45,14 @@
                       <h4>${{item.productRate.standard}}</h4>
                     </div>
                     <div class="receipe-cart receipe-cart-main">
-                      <a>
+                      <a (click)="editFromCart(item)">
                         <i class="flaticon-supermarket-basket"></i>
                         <i class="flaticon-supermarket-basket"></i>
+                      </a>
+                    </div>
+                    <div class="receipe-cart receipe-cart-main">
+                      <a (click)="showProductInfo(item)">
+                        <i class="fas fa-info-circle"></i>
                       </a>
                     </div>
                   </div>

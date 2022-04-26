@@ -14,6 +14,11 @@
           formControlName="formclientname">
       </div>
       <div class="form-group">
+        <label for="form-client-id">Client Email: </label>
+        <input type="text" class="form-control form-control-border " id="form-client-name"
+               formControlName="clientEmail">
+      </div>
+      <div class="form-group">
         <label for="form-client-id">Client ID: </label>
         <input *ngIf="formMode==='new'" type="text" class="form-control form-control-border " id="form-client-id"
           formControlName="formclientid">
@@ -29,6 +34,11 @@
         <label for="form-client-secret">Client Secret: </label>
         <input type="password" class="form-control form-control-border" id="form-client-secret" [feedback]="false"
           formControlName="formclientsecret" pPassword>
+      </div>
+      <div class="form-group">
+        <label for="form-client-id">client Secret Hint: </label>
+        <input type="text" class="form-control form-control-border " id="form-client-name"
+               formControlName="clientSecretHint">
       </div>
       <div class="form-group">
         <label for="form-restaurant-id">Restaurant: {{restaurantObj.restaurantName}}</label>

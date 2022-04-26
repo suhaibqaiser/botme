@@ -145,8 +145,9 @@ export class SocketService {
       }
 
       // for product suggestion we are setting the products in product suggestion service
-      if (msg.context.entities && msg.context.entities[0].keywords === 'product_suggestion') {
-        this._productSuggestionService.setSuggestedProducts(msg.context.entities[0].entityValue)
+      this._productSuggestionService.reset()
+      if (msg.context.entities && msg.context.entities[0].keywords.length) {
+        this._productSuggestionService.setSuggestedProducts(msg.context.entities[0].entityValue, msg.context.entities[0].keywords)
         return;
       }
 

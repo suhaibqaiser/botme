@@ -34,16 +34,16 @@ async function userLogin(req, res) {
             userService.updateUser(user)
             response.payload = user
             response.status = "success"
-            return res.status(200).send(user)
+            return res.send(user)
         } else {
             response.payload = "Username or password incorrect"
             response.status = "error"
-            return res.status(200).send(response)
+            return res.send(response)
         }
     } else {
         response.payload = "User not found"
         response.status = "error"
-        return res.status(200).send(response)
+        return res.send(response)
     }
 }
 

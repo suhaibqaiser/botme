@@ -13,6 +13,8 @@ import {AuthenticationGuard} from "./services/authentication.guard";
 import {DemoPageComponent} from "./components/pages/demo-page/demo-page.component";
 import {LoginComponent} from "./components/pages/login/login.component";
 import {ProfileComponent} from "./components/pages/profile/profile.component";
+import {SignupComponent} from "./components/pages/signup/signup.component";
+import {SuggestionsComponent} from "./components/pages/suggestions/suggestions.component";
 
 const routes: Routes = [
   {
@@ -69,8 +71,16 @@ const routes: Routes = [
   {
     path: "demo",
     component: DemoPageComponent
+  },
+  {
+    path: "sign-up",
+    component: SignupComponent
+  },
+  {
+    path: "product-suggestions",
+    component: SuggestionsComponent,
+    canActivate: [AuthenticationGuard]
   }
-
 ];
 
 @NgModule({

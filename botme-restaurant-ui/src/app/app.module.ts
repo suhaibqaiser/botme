@@ -75,6 +75,9 @@ import {ToastService} from "./services/toast.service";
 import {CustomerService} from "./services/customer.service";
 import {SugestionSectionComponent} from './components/sections/sugestion-section/sugestion-section.component';
 import {ProductSuggestionService} from "./services/product-suggestion.service";
+import { SignupComponent } from './components/pages/signup/signup.component';
+import { SignupFormSectionComponent } from './components/sections/signup-form-section/signup-form-section.component';
+import { SuggestionsComponent } from './components/pages/suggestions/suggestions.component';
 
 @NgModule({
   declarations: [
@@ -128,7 +131,10 @@ import {ProductSuggestionService} from "./services/product-suggestion.service";
     ProfileSectionComponent,
     OrderSectionComponent,
     ToastComponent,
-    SugestionSectionComponent
+    SugestionSectionComponent,
+    SignupComponent,
+    SignupFormSectionComponent,
+    SuggestionsComponent
   ],
   imports: [
     BrowserModule,
