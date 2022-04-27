@@ -18,7 +18,7 @@ export async function getProduct(queryParams: any, sort: any) {
 
 export async function getProductByTag(tag: string, person: number, restaurantId: string, attributes?: any) {
     let filter: any = {
-        "productTags": tag,
+        "productTags": { $regex: tag,$options:"i" },
         "productServing": { $lte: person }, "restaurantId": restaurantId,
     }
     if (attributes) {
@@ -46,7 +46,7 @@ export async function getProductByTag(tag: string, person: number, restaurantId:
 }
 export async function getProductByTagWithoutAttribute(tag: string, person: number, restaurantId: string) {
     let filter: any = {
-        "productTags": tag,
+        "productTags": { $regex: tag,$options:"i" },
         "productServing": { $lte: person }, "restaurantId": restaurantId,
     }
     // if (attributes) {
