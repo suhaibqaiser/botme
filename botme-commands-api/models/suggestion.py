@@ -35,7 +35,7 @@ class Suggestion():
             addon = value['addons']
             ingredient = value['ingredient']
 
-    
+
             if len(products) == 0:
                 value = []
                 utility = Utility(self.pageId, self.sectionId, value,
@@ -87,7 +87,7 @@ class Suggestion():
                 addon = addon.lower()
                 keywords['addon'].append(addon)
                 suggestion['addon'].append(addon)
-            
+
             if x['entity'] == "ingredients":
                 ingredients = x['value']
                 ingredients = ingredients.lower()
@@ -108,11 +108,11 @@ class Suggestion():
                 if x['value'] == "halal":
                     keywords['attributes'].append(x['value'])
                     suggestion['attributes']['halal'] = True
-                
+
                 if x['value'] == "vegan":
                     keywords['attributes'].append(x['value'])
                     suggestion['attributes']['vegan'] = True
-                
+
                 if x['value'] == "vegetarian":
                     keywords['attributes'].append(x['value'])
                     suggestion['attributes']['vegetarian'] = True
@@ -136,7 +136,7 @@ class Suggestion():
 
 
                 obj['productIngredients'] = result['productIngrident']
-                obj['productFlavor'] =  result['productFlavour'] 
+                obj['productFlavor'] =  result['productFlavour']
 
                 obj['productToppings'] = result['productTopping']
                 obj['productProportion'] = result['productAddon']
@@ -153,7 +153,7 @@ class Suggestion():
             for prod in product:
                 productRate = Suggestion.productRate(prod['productRate'],size)
                 print("FOR NEW PRODUCT")
-                productOption = Suggestion.productOption(prod['productOptions'],addon,drinks) 
+                productOption = Suggestion.productOption(prod['productOptions'],addon,drinks)
 
                 productIngrident = Suggestion.productIngredients(prod['productIngredients'])
                 productFlavour = Suggestion.productFlavour(prod['productFlavor'],flavour) #to be done
@@ -175,7 +175,7 @@ class Suggestion():
         # obj = {"productId":"","productQuantity":0}
         array = []
         add_array = []
-        if productOption is not None:  
+        if productOption is not None:
             for options in productOption:
                 add_array = add_array + options
 
@@ -228,6 +228,8 @@ class Suggestion():
                         obj['productId'] = ingred
                         array.append(obj)
                 return array
+        else:
+            return array
 
     def productAddon(addon,drinks):
         productAddon = addon + drinks
@@ -241,12 +243,12 @@ class Suggestion():
 
     def productPrice(self,Rate,size,addonPrice,toppingPrice,quantity):
         addon_Rate = Suggestion.addonToppingRate(self,addonPrice)
-        topping_Rate = Suggestion.addonToppingRate(self,toppingPrice) 
+        topping_Rate = Suggestion.addonToppingRate(self,toppingPrice)
         if Rate[size]:
             price = (quantity*Rate[size]) + addon_Rate + topping_Rate
             print(price)
             return price
-    
+
     def addonToppingRate(self,productPrice):
         totalRate = 0
         if productPrice is None:
@@ -268,4 +270,3 @@ class Suggestion():
                 return totalRate
             else:
                 return totalRate
-   
