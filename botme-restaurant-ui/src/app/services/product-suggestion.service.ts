@@ -30,6 +30,12 @@ export class ProductSuggestionService {
       })
     }
 
+    for (let key in keywords) {
+      if (keywords.hasOwnProperty(key) && !keywords[key].length) {
+        delete keywords[key]
+      }
+    }
+
     this.keywords = keywords
 
     console.log('suggestedProductList =>', this.suggestedProductList)
