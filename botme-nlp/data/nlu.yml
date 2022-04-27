@@ -107,7 +107,7 @@ nlu:
   - synonym: suggestions 
     examples: |
       - suggest
-
+      
   - intent: Suggestion
     examples: |
       - we are looking for [medium](size) [nacho burger](suggestion) and [chicken burger](suggestion) with [Chicken](flavour) flavour and with [Lettuce](ingredients), [pepsi](drink) and [french fries](addon) for [4](number) people and make it [halal](attribute)
