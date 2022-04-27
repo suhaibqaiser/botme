@@ -28,7 +28,7 @@
             <div *ngIf="!_productSuggestionService.loader" class="d-flex flex-wrap justify-content-center">
               <div *ngFor="let item of _productSuggestionService.keywords | keyvalue"
                    style="margin-right: 8px;border-radius: 20px;padding:5px;color:white;background-color: #E7272D">
-                <strong>{{item.key}} : {{item.value}}</strong></div>
+                <strong class="text-capitalize">{{item.key}} : {{item.value}}</strong></div>
             </div>
 
             <div *ngIf="!_productSuggestionService.loader && !_productSuggestionService.suggestedProductList.length" class="d-flex flex-wrap justify-content-center">
