@@ -56,7 +56,7 @@ class Suggestion():
             return Response
 
     def entityArray(self):
-        keywords = {"product":[],"quantity":1,"drink":[],"attributes":[],"servingSize":"standard","addon":[],"ingredient":[],"flavour":""}
+        keywords = {"product":[],"quantity":[],"drink":[],"attributes":[],"servingSize":[],"addon":[],"ingredient":[],"flavour":[]}
         suggestion = {"product": [],"persons": 1,"drink": [],"attributes": {},"keywords": keywords,"size":"standard","addon":[],"ingredient":[],"flavour":""}
         for x in self.entity:
             if x['entity'] == 'suggestion' or x['entity'] == 'categoryName' or x['entity'] == 'productName':
@@ -67,9 +67,8 @@ class Suggestion():
 
             if x['entity'] == "number":
                 valueNumber = x['value']
-                keywords['quantity'] = valueNumber
+                keywords['quantity'].append(valueNumber)
                 suggestion['persons'] = int(valueNumber)
-            
 
             if x['entity'] == "drink":
                 valueDrink = x['value']
@@ -80,9 +79,9 @@ class Suggestion():
             if x['entity'] == "size":
                 size = x['value']
                 size = size.lower()
-                keywords['servingSize'] = size
+                keywords['servingSize'].append(size)
                 suggestion['size'] = size
-            
+
             if x['entity'] == "addon":
                 addon = x['value']
                 addon = addon.lower()
@@ -98,7 +97,7 @@ class Suggestion():
             if x['entity'] == "flavour":
                 flavour = x['value']
                 flavour = flavour.lower()
-                keywords['flavour'] = flavour
+                keywords['flavour'].append(flavour)
                 suggestion['flavour'] = flavour
 
             if x['entity'] == "attribute":
