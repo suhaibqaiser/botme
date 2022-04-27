@@ -228,6 +228,8 @@ class Suggestion():
                         obj['productId'] = ingred
                         array.append(obj)
                 return array
+            else:
+                return array
         else:
             return array
 
