@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const mongoDBConnection = process.env.MONGODB_CONNECTION || 'mongodb+srv://mongoUser:1t3jWnpoC0imAM4d@cluster0.tipo5.mongodb.net?retryWrites=true&w=majority';
+const mongoDBConnection = process.env.MONGODB_CONNECTION || 'mongodb+srv://mongoUser:ePqZNaQzqT6fmBJC@cluster0.tipo5.mongodb.net';
 const conf = require('config');
 
 const connectionOptions = {
