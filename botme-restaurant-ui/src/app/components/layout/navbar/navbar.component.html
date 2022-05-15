@@ -30,6 +30,10 @@
 <!--                <a *ngIf="_botMeClientService.getCookie().isLoggedIn && !['delivery','pick_up'].includes(_helperService.getOrderTypeOnAuthBasis())" routerLink="reservations" id="ctaId-reservation" class="nav-link"-->
 <!--                  [class.active]="router.url=='/reservations'">RESERVATION</a>-->
 <!--              </li>-->
+              <li *ngIf="_botMeClientService.getCookie().isLoggedIn" class="nav-item">
+                <a routerLink="product-suggestions" id="ctaId-product-suggestions" class="nav-link"
+                   [class.active]="router.url=='/product-suggestions'">SUGGESTIONS</a>
+              </li>
               <li class="nav-item">
                 <a routerLink="contact-us" id="ctaId-contact-us" class="nav-link"
                   [class.active]="router.url=='/contact-us'">CONTACT US</a>

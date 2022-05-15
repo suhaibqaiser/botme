@@ -37,6 +37,11 @@ export class ContextService {
       currentRoute: '/contact-us',
       pageId: 'pageId-contact-us',
       sectionId: 'sectionId-message-form'
+    },
+    {
+      currentRoute: '/product-suggestions',
+      pageId: 'pageId-product-suggestions',
+      sectionId: 'sectionId-product-suggestions'
     }
   ]
 

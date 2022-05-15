@@ -77,6 +77,7 @@ import {SugestionSectionComponent} from './components/sections/sugestion-section
 import {ProductSuggestionService} from "./services/product-suggestion.service";
 import { SignupComponent } from './components/pages/signup/signup.component';
 import { SignupFormSectionComponent } from './components/sections/signup-form-section/signup-form-section.component';
+import { SuggestionsComponent } from './components/pages/suggestions/suggestions.component';
 
 @NgModule({
   declarations: [
@@ -132,7 +133,8 @@ import { SignupFormSectionComponent } from './components/sections/signup-form-se
     ToastComponent,
     SugestionSectionComponent,
     SignupComponent,
-    SignupFormSectionComponent
+    SignupFormSectionComponent,
+    SuggestionsComponent
   ],
   imports: [
     BrowserModule,

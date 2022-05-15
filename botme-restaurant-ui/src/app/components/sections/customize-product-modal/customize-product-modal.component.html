@@ -17,7 +17,7 @@
                     <div id="sectionId-servingSize-productOptions" class="section"
                       *ngIf="cartService.slideToShow===0">
                       <h3 class="text-center">{{cartService.singleCustomProductObj.productName}}</h3>
-                      <h6 class="text-center mt-2">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
+                      <h6 class="text-center mt-2">Total ${{_helperService.roundToTwo(cartService.singleCustomProductObj.productTotalPrice)}}</h6>
                       <!-- <app-sofia-bot></app-sofia-bot> -->
                       <div class="main-selection-container">
                         <div class="list mb-2">
@@ -76,7 +76,7 @@
                       <h3
                         *ngIf="cartService.singleCustomProductObj.productIngredients && cartService.singleCustomProductObj.productIngredients.length"
                         class="text-center">Product Ingredients</h3>
-                      <h6 class="text-center mt-2">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
+                      <h6 class="text-center mt-2">Total ${{_helperService.roundToTwo(cartService.singleCustomProductObj.productTotalPrice)}}</h6>
                       <div class="main-selection-container">
                         <div
                           *ngIf="cartService.singleCustomProductObj.productIngredients && cartService.singleCustomProductObj.productIngredients.length"
@@ -138,7 +138,7 @@
                     </div>
                     <div id="sectionId-toppings" class="section" *ngIf="cartService.slideToShow===2">
                       <h3 class="text-center">Product Topping</h3>
-                      <h6 class="text-center mt-2 ">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
+                      <h6 class="text-center mt-2 ">Total ${{_helperService.roundToTwo(cartService.singleCustomProductObj.productTotalPrice)}}</h6>
                       <div
                         *ngIf="cartService.singleCustomProductObj.productToppings && cartService.singleCustomProductObj.productToppings.length"
                         class="main-selection-container">
@@ -197,7 +197,7 @@
                     </div>
                     <div id="sectionId-addons" class="section" *ngIf="cartService.slideToShow===3">
                       <h3 class="text-center">Addons</h3>
-                      <h6 class="text-center mt-2">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
+                      <h6 class="text-center mt-2">Total ${{_helperService.roundToTwo(cartService.singleCustomProductObj.productTotalPrice)}}</h6>
                       <div
                         *ngIf="cartService.singleCustomProductObj.productAddons && cartService.singleCustomProductObj.productAddons.length"
                         class="main-selection-container">
@@ -257,7 +257,7 @@
                     </div>
                     <div  class="section" *ngIf="cartService.slideToShow===4">
                       <h3 class="text-center">Product Summary</h3>
-                      <h6 class="text-center mt-2">Total ${{cartService.singleCustomProductObj.productTotalPrice}}</h6>
+                      <h6 class="text-center mt-2">Total ${{_helperService.roundToTwo(cartService.singleCustomProductObj.productTotalPrice)}}</h6>
                       <div *ngIf="!cartService.singleCustomProductObj.isShowInfo"
                         class="d-flex mt-2 align-items-center justify-content-center">
                         <div class="btn-group">

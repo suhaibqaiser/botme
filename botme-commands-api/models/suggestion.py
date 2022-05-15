@@ -1,9 +1,6 @@
-import imp
-from attr import attributes
-from flask import Response
 from controller.utility import Utility
 from Service.suggestionApi import getProductId
-
+from Service.restaurantApi import getProductUsingProductId
 
 class Suggestion():
     def __init__(self, intent, entities, senti, pageId, sectionId, text, db, converstion, context, restaurantId):
@@ -23,21 +20,34 @@ class Suggestion():
 
     def suggestionResponse(self):
         suggestion = Suggestion.entityArray(self)
-        print(suggestion)
+        self.call = suggestion['keywords']
+        persons = suggestion['persons']
+        size = suggestion['size']
+        flavour = suggestion['flavour']
 
         data = getProductId(suggestion, self.restaurantId)
 
         if data['status'] == "success":
             value = data['payload']
-            value1 = Suggestion.getAllProductid(value['products'])
-            value2 = Suggestion.getAllProductid(value['drinks'])
-            value = value1 + value2
 
-            self.call = suggestion['keywords']
-            utility = Utility(self.pageId, self.sectionId, value,
-                              self.text, self.intent, self.db, self.form, self.call)
-            Response = utility.suggestionResponse()
-            return Response
+            products = value['products']
+            drinks = value['drinks']
+            addon = value['addons']
+            ingredient = value['ingredient']
+
+
+            if len(products) == 0:
+                value = []
+                utility = Utility(self.pageId, self.sectionId, value,
+                                  self.text, self.intent, self.db, self.form, self.call)
+                Response = utility.suggestionResponse()
+                return Response
+            else:
+                value = Suggestion.getAllPackage(self,products,drinks,addon,ingredient,persons,size,flavour)
+                utility = Utility(self.pageId, self.sectionId, value,
+                                  self.text, self.intent, self.db, self.form, self.call)
+                Response = utility.suggestionResponse()
+                return Response
         else:
             value = None
             utility = Utility(self.pageId, self.sectionId, value,
@@ -46,51 +56,219 @@ class Suggestion():
             return Response
 
     def entityArray(self):
-        keyword = []
-        productArray = []
-        valueNumber = 1
-        valueDrink = ""
-        attributes= {"glutenFree":False,"halal":False,"vegan":False,"vegetarian":False}
+        keywords = {"product":[],"quantity":[],"drink":[],"attributes":[],"servingSize":[],"addon":[],"ingredient":[],"flavour":[]}
+        suggestion = {"product": [],"persons": 1,"drink": [],"attributes": {},"keywords": keywords,"size":"standard","addon":[],"ingredient":[],"flavour":""}
         for x in self.entity:
-            if x['entity'] == 'suggestion':
+            if x['entity'] == 'suggestion' or x['entity'] == 'categoryName' or x['entity'] == 'productName':
                 valueProduct = x['value']
                 valueProduct = valueProduct.lower()
-                keyword.append(valueProduct)
-                productArray.append(valueProduct)
+                keywords['product'].append(valueProduct)
+                suggestion['product'].append(valueProduct)
 
-            elif x['entity'] == "number":
+            if x['entity'] == "number":
                 valueNumber = x['value']
-                keyword.append(valueNumber)
-                valueNumber = int(valueNumber)
+                keywords['quantity'].append(valueNumber)
+                suggestion['persons'] = int(valueNumber)
 
-            elif x['entity'] == "drink":
+            if x['entity'] == "drink":
                 valueDrink = x['value']
                 valueDrink = valueDrink.lower()
-                keyword.append(valueDrink)
+                keywords['drink'].append(valueDrink)
+                suggestion['drink'].append(valueDrink)
 
-            elif x['entity'] == "attribute":
+            if x['entity'] == "size":
+                size = x['value']
+                size = size.lower()
+                keywords['servingSize'].append(size)
+                suggestion['size'] = size
+
+            if x['entity'] == "addon":
+                addon = x['value']
+                addon = addon.lower()
+                keywords['addon'].append(addon)
+                suggestion['addon'].append(addon)
+
+            if x['entity'] == "ingredients":
+                ingredients = x['value']
+                ingredients = ingredients.lower()
+                keywords['ingredient'].append(ingredients)
+                suggestion['ingredient'].append(ingredients)
+
+            if x['entity'] == "flavour":
+                flavour = x['value']
+                flavour = flavour.lower()
+                keywords['flavour'].append(flavour)
+                suggestion['flavour'] = flavour
+
+            if x['entity'] == "attribute":
                 if x['value'] == "glutenFree":
-                    keyword.append(x['value'])
-                    attributes['glutenFree'] = True
+                    keywords['attributes'].append(x['value'])
+                    suggestion['attributes']['glutenFree'] = True
 
                 if x['value'] == "halal":
-                    keyword.append(x['value'])
-                    attributes['halal'] = True
-                
+                    keywords['attributes'].append(x['value'])
+                    suggestion['attributes']['halal'] = True
+
                 if x['value'] == "vegan":
-                    keyword.append(x['value'])
-                    attributes['vegan'] = True
-                
+                    keywords['attributes'].append(x['value'])
+                    suggestion['attributes']['vegan'] = True
+
                 if x['value'] == "vegetarian":
-                    keyword.append(x['value'])
-                    attributes['vegetarian'] = True
+                    keywords['attributes'].append(x['value'])
+                    suggestion['attributes']['vegetarian'] = True
+
+        print("suggestion==>",suggestion)
+        return suggestion
+
+    def getAllPackage(self,productId,drinks,addon,ingredient,persons,size,flavour):
+        package = []
+        for Id in productId:
+            obj = {"restaurantId":"","productId":"","productSerialNo":"","productCategory":"","productFlavor":"","productProportion":[],"productToppings":[],"productOptions":[],"productRate":{size:0},"productQuantity":"","productIngredients":[],"productNotes":"","productTotalPrice":0,"cartDiscount":0,"cartTotal":0}
+            data = getProductUsingProductId(Id,self.restaurantId)
+            if data['status'] == "success":
+                value =data['payload']
+                result = Suggestion.handlingProductAttributes(self,value,drinks,addon,ingredient,size,persons,flavour)
+                obj['restaurantId'] = self.restaurantId
+                obj['productId'] = Id
+
+                obj['productRate'][size] = result['productRate']
+                obj['productOptions'] = result['productOption']
+
+
+                obj['productIngredients'] = result['productIngrident']
+                obj['productFlavor'] =  result['productFlavour']
+
+                obj['productToppings'] = result['productTopping']
+                obj['productProportion'] = result['productAddon']
+
+                obj['productQuantity'] = persons
+                totalPrice = result['productPrice']
+                obj['productTotalPrice'] = totalPrice
+                package.append(obj)
+
+        return package
+
+    def handlingProductAttributes(self,product,drinks,addon,ingredient,size,persons,flavour):
+        if len(product) > 0:
+            for prod in product:
+                productRate = Suggestion.productRate(prod['productRate'],size)
+                print("FOR NEW PRODUCT")
+                productOption = Suggestion.productOption(prod['productOptions'],addon,drinks)
+
+                productIngrident = Suggestion.productIngredients(prod['productIngredients'])
+                productFlavour = Suggestion.productFlavour(prod['productFlavor'],flavour) #to be done
+
+                productTopping = Suggestion.productTopping(prod['productToppings'],ingredient)
+                productAddon = Suggestion.productAddon(addon,drinks)
+
+                productPrice = Suggestion.productPrice(self,prod['productRate'],size,productAddon,productTopping,persons)
+                Result = {"productRate":productRate,"productOption":productOption,"productIngrident":productIngrident,"productFlavour":productFlavour,"productPrice":productPrice,"productTopping":productTopping,"productAddon":productAddon}
+                return Result
+
+    def productRate(rate,size):
+        if size in rate:
+            return rate[size]
+
+    def productOption(productOption,addon,drinks):
+        addon_drinks = addon + drinks
+        print("addon_drinks",addon_drinks)
+        # obj = {"productId":"","productQuantity":0}
+        array = []
+        add_array = []
+        if productOption is not None:
+            for options in productOption:
+                add_array = add_array + options
+
+
+            for id in addon_drinks:
+                obj = {"productId":"","productQuantity":0}
+                if id in add_array:
+                    obj['productId'] = id
+                    array.append(obj)
+
+            print("array==>",array)
+            return array
+        else:
+            return array
+
+    def productIngredients(Ingredients):
+        array = []
+        if Ingredients is not None:
+            if len(Ingredients) > 0:
+                for ingred in Ingredients:
+                    obj = {"productId":"","productQuantity":0}
+                    obj['productId'] = ingred
+                    array.append(obj)
+                return array
             else:
-                return {"product": [],"persons": "","drink": "","attributes": attributes,"keywords": keyword}
+                return array
+        else:
+            return array
 
-        return {"product": productArray,"persons": valueNumber,"drink": valueDrink,"attributes": attributes,"keywords": keyword}
+    def productFlavour(productFlavor,flavour):
+        if productFlavor is not None:
+            if len(productFlavor) > 0:
+                if flavour.title() in productFlavor:
+                    prodFlavor = flavour.title()
+                    return prodFlavor
+                else:
+                    return productFlavor[0]
+            else:
+                return productFlavor[0]
+        else:
+            return ""
 
-    def getAllProductid(payload):
-        arr = []
-        for x in payload:
-            arr.append(x)
-        return arr
+    def productTopping(topping,ingredient):
+        array = []
+        if topping is not None:
+            if len(ingredient) > 0:
+                for ingred in ingredient:
+                    obj = {"productId":"","productQuantity":1}
+                    if ingred in topping:
+                        obj['productId'] = ingred
+                        array.append(obj)
+                return array
+            else:
+                return array
+        else:
+            return array
+
+    def productAddon(addon,drinks):
+        productAddon = addon + drinks
+        array = []
+        for id in productAddon:
+            obj = {"productId":"","productQuantity":1}
+            obj['productId'] = id
+            array.append(obj)
+
+        return array
+
+    def productPrice(self,Rate,size,addonPrice,toppingPrice,quantity):
+        addon_Rate = Suggestion.addonToppingRate(self,addonPrice)
+        topping_Rate = Suggestion.addonToppingRate(self,toppingPrice)
+        if Rate[size]:
+            price = (quantity*Rate[size]) + addon_Rate + topping_Rate
+            print(price)
+            return price
+
+    def addonToppingRate(self,productPrice):
+        totalRate = 0
+        if productPrice is None:
+            return totalRate
+        else:
+            if len(productPrice) > 0:
+                for obj in productPrice:
+                    id = obj['productId']
+                    quantity = obj['productQuantity']
+                    data = getProductUsingProductId(id,self.restaurantId)
+                    if data['status'] == "success":
+                        value =data['payload'][0]
+                        Rate = value['productRate']['standard']
+                        totalRate = quantity * Rate
+                        return totalRate
+                    else:
+                        totalRate = 0
+                        return totalRate
+                return totalRate
+            else:
+                return totalRate

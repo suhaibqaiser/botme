@@ -132,6 +132,7 @@ export class SocketService {
     console.log('fireInteractionEvent =>', msg)
 
     this._helperService.log('info', msg);
+    this._productSuggestionService.reset()
     if (msg.context.pageId) {
 
 
@@ -145,8 +146,7 @@ export class SocketService {
       }
 
       // for product suggestion we are setting the products in product suggestion service
-      this._productSuggestionService.reset()
-      if (msg.context.entities && msg.context.entities[0].keywords.length) {
+      if (msg.context.sectionId && msg.context.sectionId === 'sectionId-product-suggestions' && msg.context.entities) {
         this._productSuggestionService.setSuggestedProducts(msg.context.entities[0].entityValue, msg.context.entities[0].keywords)
         return;
       }

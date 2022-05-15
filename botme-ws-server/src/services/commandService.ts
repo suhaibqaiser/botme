@@ -120,13 +120,13 @@ export async function getCommandResponse(text: string, pageId: string, sectionId
             }
         } else {
             answer.inputText.textValue = text
-            answer.outputText.textValue = 'There is an error in backend service'
+            answer.outputText.textValue = 'There is an error in backend service 1 +>' + JSON.stringify(data)
             return answer
         }
     } catch (err) {
         console.log(err);
         answer.inputText.textValue = text
-        answer.outputText.textValue = 'There is an error in backend service'
+        answer.outputText.textValue = 'There is an error in backend service 2 +>' + JSON.stringify(err)
         return answer
     }
 }
