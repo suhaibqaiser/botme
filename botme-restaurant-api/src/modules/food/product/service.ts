@@ -71,6 +71,18 @@ export async function getProductByTagWithoutAttribute(tag: string, person: numbe
     })
 
 }
+export async function getProductByTime(tag: string , restaurantId: string) {
+    let filter: any = {
+        "offeringTime": { $regex: tag,$options:"i" },
+        "restaurantId": restaurantId,
+    }
+    console.log("filter",filter)
+    return Product.find(filter, {
+        "productId": 1,
+        _id: 0,
+    })
+
+}
 
 export async function updateProduct(product: any) {
     return Product.findOneAndUpdate({ productId: product.productId }, product)

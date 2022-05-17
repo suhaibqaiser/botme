@@ -221,6 +221,13 @@ nlu:
       - we are [six](number) people looking for good [sandwich](suggestion) with [spicy potato](addon) and [pepsi](drink)
       - we are [twp](number) persons looking for good [wraps](suggestion) with [spicy potato](addon) and [pepsi](drink)
 
+  - intent : meal_time
+    examples: |
+      - what's in the [lunch](offeringTime)
+      - show me [dinner](offeringTime) item
+      - i want to see the [breakfast](offeringTime) item
+      - food for [dinner](offeringTime)
+      - show me food item for [lunch](offeringTime)
 
   - intent: reservation_page
     examples: |
