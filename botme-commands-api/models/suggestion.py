@@ -19,8 +19,9 @@ class Suggestion():
         self.call = None
 
     def suggestionResponse(self):
+        print("here")
         suggestion = Suggestion.entityArray(self)
-
+        print("here1")
         if self.intent == "Suggestion" or self.intent == "Order_meal" or self.intent == "menu_category":
             self.call = suggestion['keywords']
             persons = suggestion['persons']
@@ -44,7 +45,8 @@ class Suggestion():
             addon = value['addons']
             ingredient = value['ingredient']
 
-            products = prod + drinks + addon
+            product = prod + drinks + addon
+            products = list(dict.fromkeys(product))
             print(products)
 
             if len(products) == 0:

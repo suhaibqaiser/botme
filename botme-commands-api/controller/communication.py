@@ -1,5 +1,5 @@
 from conf.mongodb import getDbCta, findResponse
-from textblob import TextBlob
+# from textbl import TextBlob
 from controller.utility import Utility
 from models.Entity import Entity
 from models.Name import Name
@@ -14,8 +14,9 @@ from controller.reservationField import reservationField, checkForEmptyField, va
 
 
 def getResponseUsingContext(intent, entity, text, pageId, sectionId, form, parentEntity, converstion, context, restaurantId):
-    blob = TextBlob(text)
-    senti = blob.sentiment.polarity
+    # blob = TextBlob(text)
+    # senti = blob.sentiment.polarity\
+    senti = 0
     val = Entity(entity, intent)
     value = val.parseEntityValue()
     db = getDbCta(intent, value, pageId, sectionId)
