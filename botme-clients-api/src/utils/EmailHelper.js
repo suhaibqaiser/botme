@@ -34,7 +34,7 @@ async function sendEmail(from = '', to = '', subject = '', body = '') {
         return !!info.messageId
     } catch (e) {
         console.log('Send Mail Exception => ', e)
-        return false
+        return e
     }
 }
 
