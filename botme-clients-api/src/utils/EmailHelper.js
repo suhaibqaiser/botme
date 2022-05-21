@@ -26,15 +26,21 @@ async function sendEmail(from = '', to = '', subject = '', body = '') {
             to: to, // list of receivers
             subject: "Verify your email address!", // Subject line
             text: "Hello world?", // plain text body
-            html:`<b>${body}</b>`, // html body
+            html: `<b>${body}</b>`, // html body
         });
 
         console.log("Message sent: %s", info.messageId);
 
-        return !!info.messageId
+        return {
+            status: !!info.messageId
+        }
+
     } catch (e) {
         console.log('Send Mail Exception => ', e)
-        return e
+        return {
+            status: false,
+            error: e
+        }
     }
 }
 

@@ -153,7 +153,7 @@ async function addClient(req, res) {
 
         console.log('Email Sent =>', sendEmail)
 
-        if (newClient && sendEmail) {
+        if (newClient && sendEmail.status) {
             response.payload = newClient
             response.statusMessage = "Your account has been created successfully! Verification link is sent on your email."
             response.status = "success"
