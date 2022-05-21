@@ -1,7 +1,8 @@
 let Client = require('../models/client');
+const {clientStateObj} = require("../utils/helper");
 
 async function getClientList() {
-    return Client.find({}, { _id: 0, __v: 0 });
+    return Client.find({}, {_id: 0, __v: 0});
 }
 
 async function getClientDetail(clientID, clientSecret) {
@@ -29,19 +30,38 @@ async function addClient(client) {
     return await newClient.save()
 }
 
-async function checkClientExists(clientDeviceId) {
-    return Client.exists({ clientDeviceId: clientDeviceId })
+async function checkClientExists(clientEmail) {
+    return Client.exists({clientEmail: clientEmail})
 }
 
 async function updateClient(clientID, client) {
-    return Client.findOneAndUpdate({ clientID: clientID }, client, {
-        "projection": { "_id": 0, "__v": 0 },
+    return Client.findOneAndUpdate({clientID: clientID}, client, {
+        "projection": {"_id": 0, "__v": 0},
         "new": true
     })
 }
 
 async function deleteClient(clientID) {
-    return Client.findOneAndDelete({ clientID: clientID })
+    return Client.findOneAndDelete({clientID: clientID})
 }
 
-module.exports = ({ getClientList, getClientDetail, getClientById, addClient, checkClientExists, updateClient, deleteClient })
+async function verifyAccount(filter) {
+    return Client.updateOne(filter, {
+        $set: {
+            clientEmailVerified: true,
+            clientState: clientStateObj.active,
+            clientActive: true
+        }
+    })
+}
+
+module.exports = ({
+    getClientList,
+    getClientDetail,
+    getClientById,
+    addClient,
+    checkClientExists,
+    updateClient,
+    deleteClient,
+    verifyAccount
+})

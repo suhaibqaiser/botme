@@ -23,6 +23,9 @@ router.post('/update', client_controller.updateClient);
 // POST request to report Client as alive.
 router.post('/heartbeat', client_controller.heartbeatClient);
 
+// get request to verify customer account
+router.get('/verifyAccount',client_controller.verifyCustomerAccount)
+
 // // POST request for the client to send commands
 // router.post('/command', client_controller.client_command);
 //
