@@ -160,6 +160,10 @@ async function addClient(req, res) {
             return res.send(response)
         } else {
             response.statusMessage = "Error in saving client"
+            response.errorPayload = {
+                newClient:newClient,
+                sendEmail:sendEmail
+            }
             response.status = "danger"
             return res.send(response)
         }
