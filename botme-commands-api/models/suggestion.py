@@ -1,5 +1,5 @@
 from controller.utility import Utility
-from Service.suggestionApi import getProductId , getProductIdByTime
+from Service.suggestionApi import getAllProducts, getProductId , getProductIdByTime
 from Service.restaurantApi import getProductUsingProductId
 
 class Suggestion():
@@ -35,6 +35,14 @@ class Suggestion():
             size = suggestion['size']
             flavour = suggestion['flavour']
             data = getProductIdByTime(suggestion, self.restaurantId)
+        
+        elif self.intent == "top_suggestion":
+            self.call = suggestion['keywords']
+            persons = suggestion['persons']
+            size = suggestion['size']
+            flavour = suggestion['flavour']
+            result = getAllProducts(self.restaurantId)
+            data = Suggestion.productIdOnRating(result['payload'])
 
 
         if data['status'] == "success":
@@ -69,7 +77,7 @@ class Suggestion():
             return Response
 
     def entityArray(self):
-        if self.intent == "Suggestion" or self.intent == "Order_meal" or self.intent == "menu_category":
+        if self.intent == "Suggestion" or self.intent == "Order_meal" or self.intent == "menu_category" or self.intent == "top_suggestion":
             keywords = {"product":[],"quantity":[],"drink":[],"attributes":[],"servingSize":[],"addon":[],"ingredient":[],"flavour":[]}
             suggestion = {"product": [],"persons": 1,"drink": [],"attributes": {},"keywords": keywords,"size":"standard","addon":[],"ingredient":[],"flavour":""}
             for x in self.entity:
@@ -297,3 +305,13 @@ class Suggestion():
                 return totalRate
             else:
                 return totalRate
+    
+    def productIdOnRating(payload):
+        result = {"status":"success","payload": {"products":[],"drinks":[],"addons":[],"ingredient":[]}}
+        for product in payload:
+            print(product)
+            if 'productRating' in product:
+                if product['productRating'] >= 4:
+                    productId = product['productId']
+                    result['payload']['products'].append(productId)
+        return result

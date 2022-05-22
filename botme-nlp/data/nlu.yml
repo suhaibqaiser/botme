@@ -257,6 +257,18 @@ nlu:
       - please provide us something for [supper](offeringTime)
       - please provide us something for [refreshments](offeringTime) 
 
+  - intent: top_suggestion
+    examples: |
+      - show me top [10](number) products 
+      - top [10](number) products in your restaurant
+      - top [10](number) best item in your restaurant
+      - top [5](number) products in your restaurant
+      - best items in your restaurant
+      - show me top products of your restaurant
+      - i want to see your special items
+      - show me your restaurant speciality
+
+
   - intent: reservation_page
     examples: |
       - [Reserve]{"entity":"pagethree","value":"reservation"} a table for me please
