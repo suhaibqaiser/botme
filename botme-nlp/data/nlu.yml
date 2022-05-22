@@ -113,6 +113,8 @@ nlu:
       - we are looking for [medium](size) [nacho burger](suggestion) and [chicken burger](suggestion) with [Chicken](flavour) flavour and with [Lettuce](ingredients), [pepsi](drink) and [french fries](addon) for [4](number) people and make it [halal](attribute)
       - we are looking for [large](size) [Burger](suggestion) with [cheese](ingredients) and [chicken burger](suggestion) with [Chicken](flavour) and with [sprite](drink) and [french fries](addon) for [4](number) people and make it [halal](attribute)
       - we are looking for [small](size) [grilled sandwich](suggestion) and [cheese burger](suggestion) [Lettuce](ingredients) with [pepsi](drink) and [french fries](addon) for [4](number) people and make it [halal](attribute)
+      - i want to order [cheese burger](suggestion) with [french fries](addon) and [sprite](drink)
+      - i want to order [falafel sandwich](suggestion) with [coleslaw](addon) and [pepsi](drink)  
       - i am looking for [nacho](suggestion) with [tomato](ingredients) and [chicken](suggestion) for [two](number) person and make it [halal](attribute)
       - we want to eat something like [sandwich](suggestion) and [burger](suggestion) for [3](number) people and make it [halal](attribute)
       - i am in the mood for [Burger](suggestion) and [wraps](suggestion) for [six](number) and make it [halal](attribute)
