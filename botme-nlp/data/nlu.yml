@@ -225,16 +225,19 @@ nlu:
 
   - intent : meal_time
     examples: |
-      - what's in the [lunch](offeringTime)
+      - what's in the [lunch](offeringTime) 
       - show me [dinner](offeringTime) item
       - i want to see the [breakfast](offeringTime) item
       - food for [dinner](offeringTime)
       - show me food item for [lunch](offeringTime)
-      - what's good idea for [dinner](offeringTime)
-      - what's good idea for [feast](offeringTime)
-      - what's a good idea for [lunch](offeringTime)
-      - what's a good idea for [supper](offeringTime)
-      - what's a good idea for [refreshments](offeringTime)
+      - what's good idea for [dinner](offeringTime) tonight
+      - what's good idea for [dinner](offeringTime) today
+      - what's good idea for [dinner](offeringTime) tomorrow
+      - what's good idea for [lunch](offeringTime) tomorrow
+      - what's good idea for [feast](offeringTime) tonight
+      - what's a good idea for [lunch](offeringTime) today
+      - what's a good idea for [supper](offeringTime) tonight
+      - what's a good idea for [refreshments](offeringTime) today
       - what are the items for [lunch](offeringTime)
       - what are the items for [dinner](offeringTime)
       - Do you have something special for [lunch](offeringTime)
