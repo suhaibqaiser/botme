@@ -4,23 +4,23 @@ import { UserService } from '../../../service/user.service';
 
 @Component({
   selector: 'app-device-list',
-  templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.css']
+  templateUrl: './device-list.component.html',
+  styleUrls: ['./device-list.component.css']
 })
-export class UserListComponent implements OnInit {
+export class DeviceListComponent implements OnInit {
 
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
     this.getClients();
   }
-  users: Array<any> = [];
+  devices: Array<any> = [];
   loading = true
 
   getClients(): void {
     this.userService.getUsers()
       .subscribe(result => {
-        this.users = result.payload
+        this.devices = result.payload
         this.loading = false;
       });
   }

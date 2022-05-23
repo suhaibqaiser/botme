@@ -9,8 +9,7 @@
             <div class="card shadow-lg">
               <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between m-b-30">
-                  <img class="img-fluid" alt="" src="assets/images/logo/logo.png">
-                  <h2 class="m-b-0">Sign In</h2>
+                  <h1 class="m-b-0" style="font-family: Calibri">Login</h1>
                 </div>
                 <form #f="ngForm" (ngSubmit)="onSubmit()">
                   <div class="form-group">
@@ -18,12 +17,13 @@
                     <div class="input-affix">
                       <i class="prefix-icon anticon anticon-user"></i>
                       <input type="text" class="form-control" placeholder="Username" name="username"
-                        [(ngModel)]="form.username" required #username="ngModel">
+                             [(ngModel)]="form.username" required #username="ngModel">
                     </div>
                   </div>
+
                   <div class="form-group">
                     <label class="font-weight-semibold" for="password">Password:</label>
-                    <a class="float-right font-size-13 text-muted" href="">Forget Password?</a>
+                    <a class="float-right font-size-13 text-muted" href="../forgot">Forget Password?</a>
                     <div class="input-affix m-b-10">
                       <i class="prefix-icon anticon anticon-lock"></i>
                       <input type="password" class="form-control" placeholder="Password" name="password"
@@ -34,7 +34,7 @@
                     <div class="d-flex align-items-center justify-content-between">
                       <span class="font-size-13 text-muted">
                         Don't have an account?
-                        <a class="small" href=""> Signup</a>
+                        <a class="small" href="../signup" style="font-size: 12px"> Signup</a>
                       </span>
                       <button class="btn btn-primary ">Sign In
                         <div *ngIf="loginLoader" class="spinner-border-sm spinner-border text-light" role="status">
@@ -47,6 +47,7 @@
                     <div class="alert alert-danger" role="alert" *ngIf="loginFormValidations.username">
                       User name is required!
                     </div>
+
                     <div class="alert alert-danger" role="alert" *ngIf="loginFormValidations.password">
                       Password is required!
                     </div>

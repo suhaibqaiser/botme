@@ -29,6 +29,8 @@ import {InputSwitchModule} from 'primeng/inputswitch';
 import {RestaurantModule} from "./modules/restaurant/restaurant.module";
 import {HelperService} from "./services/helper.service";
 import {ToggleButtonModule} from 'primeng/togglebutton';
+import { ForgotComponent } from './components/pages/forgot/forgot.component';
+import { SignupComponent } from './components/pages/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import {ToggleButtonModule} from 'primeng/togglebutton';
     ContactComponent,
     HomeComponent,
     LoginComponent,
-    WrapperComponent
+    WrapperComponent,
+    ForgotComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
