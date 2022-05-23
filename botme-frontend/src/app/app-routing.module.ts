@@ -6,12 +6,24 @@ import { AuthGuard } from "./auth.guard";
 import { LoginComponent } from "./components/pages/login/login.component";
 import { WrapperComponent } from "./components/layout/wrapper/wrapper.component";
 import { OrderOverviewDetailComponent } from "./modules/restaurant/components/order/order-overview-detail/order-overview-detail.component";
+import {ForgotComponent} from "./components/pages/forgot/forgot.component";
+import {SignupComponent} from "./components/pages/signup/signup.component";
 
 const routes: Routes = [
   {
     path: 'login',
     data: { pageTitle: 'Login' },
     component: LoginComponent
+  },
+  {
+    path: 'forgot',
+    data: {pageTitle: 'Forgot'},
+    component: ForgotComponent
+  },
+  {
+    path: 'signup',
+    data: {pageTitle: 'Signup'},
+    component: SignupComponent
   },
   {
     path: '',
@@ -63,6 +75,12 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: { pageTitle: 'Corpus' },
         loadChildren: () => import('./modules/robot/corpus/corpus.module').then(m => m.CorpusModule)
+      },
+      {
+        path: 'device',
+        canActivate: [AuthGuard],
+        data: { pageTitle: 'Device' },
+        loadChildren: () => import('./modules/robot/devices/devices.module').then(m => m.DevicesModule)
       },
       {
         path: 'restaurant',
