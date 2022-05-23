@@ -18,6 +18,10 @@ var ClientsSchema = new Schema(
         restaurantId: {type: String, maxlength: 256, required: true},
         clientEmail: {type: String, maxlength: 256, required: true},
         clientSecretHint: {type: String, minlength: 3, maxlength: 256, required: true},
+        clientEmailVerified: {type: Boolean},
+        clientState: {type: String, maxlength: 256},
+        clientDescription: {type: String, maxlength: 256},
+        verification_token: {type: String, maxlength: 256}
     }
 );
 

@@ -75,13 +75,15 @@ export class SugestionSectionComponent implements OnInit {
     this._contextService.currentContextObj.pageId = 'pageId-product-customize-modal'
     document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:none')
     console.log('product =>', product)
+
     this.cartService.singleCustomProductObj = JSON.parse(JSON.stringify(product))
-    this.cartService.singleCustomProductObj.isEditable = true
+
     this._socketService.parentEntity = {
       entityId: product.productId,
       entityValue: product.productName
     }
 
-    $('#pageId-productCustomizeModal').modal('show')
+    this.cartService.addToCart(product, 'add_local_list');
+
   }
 }

@@ -163,11 +163,14 @@ export class SignupFormSectionComponent implements OnInit {
           description: res.statusMessage,
           type: res.status
         })
-        if (res.status === 'success') {
-          this.router.navigate(['/login']).then(() => {
-            window.location.reload();
-          });
-        }
+        setTimeout(() => {
+          if (res.status === 'success') {
+            this.router.navigate(['/login']).then(() => {
+              window.location.reload();
+            });
+          }
+        }, 1000)
+
         this.loader = false
       })
   }

@@ -8,10 +8,10 @@ import { UserService } from '../../../service/user.service';
 
 @Component({
   selector: 'app-device-detail',
-  templateUrl: './user-detail.component.html',
-  styleUrls: ['./user-detail.component.css']
+  templateUrl: './device-detail.component.html',
+  styleUrls: ['./device-detail.component.css']
 })
-export class UserDetailComponent implements OnInit {
+export class DeviceDetailComponent implements OnInit {
 
 
   editMode = false
