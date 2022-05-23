@@ -17,6 +17,7 @@ class Suggestion():
         # self.searchParameter = searchParameter
         self.restaurantId = restaurantId
         self.call = None
+        self.number = 100
 
     def suggestionResponse(self):
         print("here")
