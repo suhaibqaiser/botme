@@ -113,6 +113,8 @@ nlu:
       - we are looking for [medium](size) [nacho burger](suggestion) and [chicken burger](suggestion) with [Chicken](flavour) flavour and with [Lettuce](ingredients), [pepsi](drink) and [french fries](addon) for [4](number) people and make it [halal](attribute)
       - we are looking for [large](size) [Burger](suggestion) with [cheese](ingredients) and [chicken burger](suggestion) with [Chicken](flavour) and with [sprite](drink) and [french fries](addon) for [4](number) people and make it [halal](attribute)
       - we are looking for [small](size) [grilled sandwich](suggestion) and [cheese burger](suggestion) [Lettuce](ingredients) with [pepsi](drink) and [french fries](addon) for [4](number) people and make it [halal](attribute)
+      - i want to order [cheese burger](suggestion) with [french fries](addon) and [sprite](drink)
+      - i want to order [falafel sandwich](suggestion) with [coleslaw](addon) and [pepsi](drink)  
       - i am looking for [nacho](suggestion) with [tomato](ingredients) and [chicken](suggestion) for [two](number) person and make it [halal](attribute)
       - we want to eat something like [sandwich](suggestion) and [burger](suggestion) for [3](number) people and make it [halal](attribute)
       - i am in the mood for [Burger](suggestion) and [wraps](suggestion) for [six](number) and make it [halal](attribute)
@@ -150,7 +152,7 @@ nlu:
       - I want to order [grilled chicken](suggestion) for [2](number) people along with 2 [regular pepsi](drink) and [bottle of water](drink)
       - I want to have [nuggets](suggestion) with heavy [cheese](ingredients) topping and [one](number) [zinger burger](suggestion) with [soda](drink)
       - I want to have [vegetable burger](suggestion) and [cheese burger](suggestion) with [dessert](suggestion)
-      - I want to eat [spicy patty burger](suggestion) with [coleslaw](drink) and make it for [two](number) people
+      - I want to eat [spicy patty burger](suggestion) with [coleslaw](addon) and make it for [two](number) people
       - I would like to order [beef burger](suggestion) and make sure its [halal](attribute)
       - I want to eat [2](number) [falafel sandwich](suggestion) and 1 [barbecue platter](suggestion) along with [sprite](drink)
       - I want to eat [3](number) [fish burger](suggestion) and [sandwiches](suggestion) along with [sprite](drink)
@@ -220,6 +222,56 @@ nlu:
       - we are [4](number) people looking for good [burgers](suggestion) with [spicy potato](addon) and [sprite](drink)
       - we are [six](number) people looking for good [sandwich](suggestion) with [spicy potato](addon) and [pepsi](drink)
       - we are [twp](number) persons looking for good [wraps](suggestion) with [spicy potato](addon) and [pepsi](drink)
+
+  - intent : meal_time
+    examples: |
+      - what's in the [lunch](offeringTime) 
+      - show me [dinner](offeringTime) item
+      - i want to see the [breakfast](offeringTime) item
+      - food for [dinner](offeringTime)
+      - show me food item for [lunch](offeringTime)
+      - what's good idea for [dinner](offeringTime) tonight
+      - what's good idea for [dinner](offeringTime) today
+      - what's good idea for [dinner](offeringTime) tomorrow
+      - what's good idea for [lunch](offeringTime) tomorrow
+      - what's good idea for [feast](offeringTime) tonight
+      - what's a good idea for [lunch](offeringTime) today
+      - what's a good idea for [supper](offeringTime) tonight
+      - what's a good idea for [refreshments](offeringTime) today
+      - what are the items for [lunch](offeringTime)
+      - what are the items for [dinner](offeringTime)
+      - Do you have something special for [lunch](offeringTime)
+      - Do you have something special for [dinner](offeringTime)
+      - what family [dinner](offeringTime) items you can serve
+      - what family [lunch](offeringTime) items you can serve
+      - what we can have in [lunch](offeringTime)
+      - what we can have in [supper](offeringTime)
+      - what we can have in [dinner](offeringTime)
+      - can you provide us [lunch](offeringTime) menu
+      - can you provide us [supper](offeringTime) menu
+      - can you provide us [dinner](offeringTime) menu
+      - i would like to eat something  in [lunch](offeringTime)
+      - i would like to eat something  in [dinner](offeringTime)
+      - i would like to eat something  in [supper](offeringTime)
+      - i want to see [lunch](offeringTime) items
+      - i want to see [dinner](offeringTime) items
+      - i want to see [supper](offeringTime) items
+      - i want to see [refreshments](offeringTime) items
+      - please provide us something for [lunch](offeringTime)
+      - please provide us something for [dinner](offeringTime)
+      - please provide us something for [supper](offeringTime)
+      - please provide us something for [refreshments](offeringTime) 
+
+  - intent: top_suggestion
+    examples: |
+      - show me top [10](number) products 
+      - top [10](number) products in your restaurant
+      - top [10](number) best item in your restaurant
+      - top [5](number) products in your restaurant
+      - best items in your restaurant
+      - show me top products of your restaurant
+      - i want to see your special items
+      - show me your restaurant speciality
 
 
   - intent: reservation_page
@@ -4495,7 +4547,7 @@ nlu:
       - onion rings
       - beef bacon
       - french fries
-      - cole slaw
+      - coleslaw
       - nacho cheese
       - cheese slice
       - nacho burger     
@@ -4503,116 +4555,6 @@ nlu:
       - american cheese slice	
       - kofta sandwich
       - craft a sandwich
-      - Cookies
-      - Chocolate
-      - Banana
-      - Red
-      - Diet
-      - Strawberry
-      - Apple
-      - Fresh
-      - Water
-      - Caesars
-      - Greek
-      - vegetable
-      - Tabouli
-      - Fattoush
-      - Shawarma
-      - Chicken
-      - Junior
-      - Grilled
-      - Crispy
-      - Crazy
-      - Whole
-      - BBQ
-      - Make
-      - Potatoes
-      - Falafel
-      - Shish
-      - Shawarma
-      - Soujouk
-      - Tahini
-      - Tannour
-      - Garlic
-      - American
-      - Taystee
-      - Taystee
-      - Mushroom
-      - Beiruti
-      - Shish
-      - Kafta
-      - Pickle
-      - Spicy
-      - Baba
-      - Hummus
-      - Poutine
-      - Curly
-      - Fried
-      - Beef
-      - Jalapeno
-      - Onion
-      - French
-      - Cole
-      - Cheese
-      - Nacho
-      - Pizza
-      - cookies
-      - chocolate
-      - banana
-      - red
-      - sprite
-      - diet
-      - strawberry
-      - apple
-      - fresh
-      - water
-      - baklawa
-      - caesars
-      - greek
-      - Vegetable
-      - tabouli
-      - fattoush
-      - shawarma
-      - junior
-      - grilled
-      - crispy
-      - crazy
-      - whole
-      - bbq
-      - make
-      - potatoes
-      - shish
-      - shawarma
-      - soujouk
-      - falafel
-      - tahini
-      - tannour
-      - chicken
-      - garlic
-      - american
-      - taystee
-      - mushroom
-      - beiruti
-      - shish
-      - kafta
-      - pickle
-      - spicy
-      - baba
-      - hummus
-      - poutine
-      - soup
-      - curly
-      - fried
-      - jalapeno
-      - onion
-      - beef
-      - french
-      - cole
-      - cheese
-      - nacho
-      - american
-      - kofta
-      - craft
 
   - lookup: suggestion
     examples: |

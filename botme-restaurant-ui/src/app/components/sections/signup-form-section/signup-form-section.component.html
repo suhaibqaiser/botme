@@ -44,11 +44,21 @@
             <div class="col-sm-12 col-md-6">
               <div class="form-group mb-20">
                 <div class="input-group">
-                  <input required type="text" formControlName="clientSecret" class="form-control"
+                  <input required type="password" formControlName="clientSecret" class="form-control"
                          placeholder="Client Secret*"/>
                 </div>
                 <span style="color: red;margin-left: 20px;"
                       *ngIf="!signupForm.controls['clientSecret'].valid && signupForm.controls['clientSecret'].touched">{{_helperService.getRequiredCheckError(signupForm, 'clientSecret', _helperService.fieldErrorsCheckTypes.required, ['Client Secret is required.'])}}</span>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <div class="form-group mb-20">
+                <div class="input-group">
+                  <input required type="password" formControlName="confirmClientSecret" class="form-control"
+                         placeholder="Confirm Client Secret*"/>
+                </div>
+                <span style="color: red;margin-left: 20px;"
+                      *ngIf="!signupForm.controls['confirmClientSecret'].valid && signupForm.controls['clientSecret'].touched">{{_helperService.getRequiredCheckError(signupForm, 'confirmClientSecret', _helperService.fieldErrorsCheckTypes.required, ['Confirm Client Secret is required.'])}}</span>
               </div>
             </div>
             <div class="col-sm-12 col-md-6">
@@ -59,6 +69,16 @@
                 </div>
                 <span style="color: red;margin-left: 20px;"
                       *ngIf="!signupForm.controls['clientEmail'].valid && signupForm.controls['clientEmail'].touched">{{_helperService.getRequiredCheckError(signupForm, 'clientEmail', _helperService.fieldErrorsCheckTypes.required, ['Client Email is required.'])}}</span>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <div class="form-group mb-20">
+                <div class="input-group">
+                  <input required type="text" formControlName="confirmClientEmail" class="form-control"
+                         placeholder="Confirm Client Email*"/>
+                </div>
+                <span style="color: red;margin-left: 20px;"
+                      *ngIf="!signupForm.controls['confirmClientEmail'].valid && signupForm.controls['confirmClientEmail'].touched">{{_helperService.getRequiredCheckError(signupForm, 'confirmClientEmail', _helperService.fieldErrorsCheckTypes.required, ['Confirm Client Email is required.'])}}</span>
               </div>
             </div>
             <div class="col-sm-12 col-md-6">

@@ -1,5 +1,5 @@
 from controller.utility import Utility
-from Service.suggestionApi import getProductId
+from Service.suggestionApi import getAllProducts, getProductId , getProductIdByTime
 from Service.restaurantApi import getProductUsingProductId
 
 class Suggestion():
@@ -19,22 +19,43 @@ class Suggestion():
         self.call = None
 
     def suggestionResponse(self):
+        print("here")
         suggestion = Suggestion.entityArray(self)
-        self.call = suggestion['keywords']
-        persons = suggestion['persons']
-        size = suggestion['size']
-        flavour = suggestion['flavour']
+        print("here1")
+        if self.intent == "Suggestion" or self.intent == "Order_meal" or self.intent == "menu_category":
+            self.call = suggestion['keywords']
+            persons = suggestion['persons']
+            size = suggestion['size']
+            flavour = suggestion['flavour']
+            data = getProductId(suggestion, self.restaurantId)
 
-        data = getProductId(suggestion, self.restaurantId)
+        elif self.intent == "meal_time":
+            self.call = suggestion['keywords']
+            persons = suggestion['persons']
+            size = suggestion['size']
+            flavour = suggestion['flavour']
+            data = getProductIdByTime(suggestion, self.restaurantId)
+        
+        elif self.intent == "top_suggestion":
+            self.call = suggestion['keywords']
+            persons = suggestion['persons']
+            size = suggestion['size']
+            flavour = suggestion['flavour']
+            result = getAllProducts(self.restaurantId)
+            data = Suggestion.productIdOnRating(result['payload'])
+
 
         if data['status'] == "success":
             value = data['payload']
 
-            products = value['products']
+            prod = value['products']
             drinks = value['drinks']
             addon = value['addons']
             ingredient = value['ingredient']
 
+            product = prod + drinks + addon
+            products = list(dict.fromkeys(product))
+            print(products)
 
             if len(products) == 0:
                 value = []
@@ -56,69 +77,81 @@ class Suggestion():
             return Response
 
     def entityArray(self):
-        keywords = {"product":[],"quantity":[],"drink":[],"attributes":[],"servingSize":[],"addon":[],"ingredient":[],"flavour":[]}
-        suggestion = {"product": [],"persons": 1,"drink": [],"attributes": {},"keywords": keywords,"size":"standard","addon":[],"ingredient":[],"flavour":""}
-        for x in self.entity:
-            if x['entity'] == 'suggestion' or x['entity'] == 'categoryName' or x['entity'] == 'productName':
-                valueProduct = x['value']
-                valueProduct = valueProduct.lower()
-                keywords['product'].append(valueProduct)
-                suggestion['product'].append(valueProduct)
+        if self.intent == "Suggestion" or self.intent == "Order_meal" or self.intent == "menu_category" or self.intent == "top_suggestion":
+            keywords = {"product":[],"quantity":[],"drink":[],"attributes":[],"servingSize":[],"addon":[],"ingredient":[],"flavour":[]}
+            suggestion = {"product": [],"persons": 1,"drink": [],"attributes": {},"keywords": keywords,"size":"standard","addon":[],"ingredient":[],"flavour":""}
+            for x in self.entity:
+                if x['entity'] == 'suggestion' or x['entity'] == 'categoryName' or x['entity'] == 'productName':
+                    valueProduct = x['value']
+                    valueProduct = valueProduct.lower()
+                    keywords['product'].append(valueProduct)
+                    suggestion['product'].append(valueProduct)
 
-            if x['entity'] == "number":
-                valueNumber = x['value']
-                keywords['quantity'].append(valueNumber)
-                suggestion['persons'] = int(valueNumber)
+                if x['entity'] == "number":
+                    valueNumber = x['value']
+                    keywords['quantity'].append(valueNumber)
+                    suggestion['persons'] = int(valueNumber)
 
-            if x['entity'] == "drink":
-                valueDrink = x['value']
-                valueDrink = valueDrink.lower()
-                keywords['drink'].append(valueDrink)
-                suggestion['drink'].append(valueDrink)
+                if x['entity'] == "drink":
+                    valueDrink = x['value']
+                    valueDrink = valueDrink.lower()
+                    keywords['drink'].append(valueDrink)
+                    suggestion['drink'].append(valueDrink)
 
-            if x['entity'] == "size":
-                size = x['value']
-                size = size.lower()
-                keywords['servingSize'].append(size)
-                suggestion['size'] = size
+                if x['entity'] == "size":
+                    size = x['value']
+                    size = size.lower()
+                    keywords['servingSize'].append(size)
+                    suggestion['size'] = size
 
-            if x['entity'] == "addon":
-                addon = x['value']
-                addon = addon.lower()
-                keywords['addon'].append(addon)
-                suggestion['addon'].append(addon)
+                if x['entity'] == "addon":
+                    addon = x['value']
+                    addon = addon.lower()
+                    keywords['addon'].append(addon)
+                    suggestion['addon'].append(addon)
 
-            if x['entity'] == "ingredients":
-                ingredients = x['value']
-                ingredients = ingredients.lower()
-                keywords['ingredient'].append(ingredients)
-                suggestion['ingredient'].append(ingredients)
+                if x['entity'] == "ingredients":
+                    ingredients = x['value']
+                    ingredients = ingredients.lower()
+                    keywords['ingredient'].append(ingredients)
+                    suggestion['ingredient'].append(ingredients)
 
-            if x['entity'] == "flavour":
-                flavour = x['value']
-                flavour = flavour.lower()
-                keywords['flavour'].append(flavour)
-                suggestion['flavour'] = flavour
+                if x['entity'] == "flavour":
+                    flavour = x['value']
+                    flavour = flavour.lower()
+                    keywords['flavour'].append(flavour)
+                    suggestion['flavour'] = flavour
 
-            if x['entity'] == "attribute":
-                if x['value'] == "glutenFree":
-                    keywords['attributes'].append(x['value'])
-                    suggestion['attributes']['glutenFree'] = True
+                if x['entity'] == "attribute":
+                    if x['value'] == "glutenFree":
+                        keywords['attributes'].append(x['value'])
+                        suggestion['attributes']['glutenFree'] = True
 
-                if x['value'] == "halal":
-                    keywords['attributes'].append(x['value'])
-                    suggestion['attributes']['halal'] = True
+                    if x['value'] == "halal":
+                        keywords['attributes'].append(x['value'])
+                        suggestion['attributes']['halal'] = True
 
-                if x['value'] == "vegan":
-                    keywords['attributes'].append(x['value'])
-                    suggestion['attributes']['vegan'] = True
+                    if x['value'] == "vegan":
+                        keywords['attributes'].append(x['value'])
+                        suggestion['attributes']['vegan'] = True
 
-                if x['value'] == "vegetarian":
-                    keywords['attributes'].append(x['value'])
-                    suggestion['attributes']['vegetarian'] = True
+                    if x['value'] == "vegetarian":
+                        keywords['attributes'].append(x['value'])
+                        suggestion['attributes']['vegetarian'] = True
 
-        print("suggestion==>",suggestion)
-        return suggestion
+            print("suggestion==>",suggestion)
+            return suggestion
+        
+        elif self.intent == "meal_time":
+            keywords = {"product":[]}
+            suggestion = {"product": [],"persons": 1,"drink": [],"attributes": {},"keywords": keywords,"size":"standard","addon":[],"ingredient":[],"flavour":""}
+            for x in self.entity:
+                if x['entity'] == "offeringTime":
+                    tag = x['value']
+                    tag = tag.lower()
+                    keywords['product'].append(tag)
+                    suggestion['product'].append(tag) 
+            return suggestion
 
     def getAllPackage(self,productId,drinks,addon,ingredient,persons,size,flavour):
         package = []
@@ -272,3 +305,13 @@ class Suggestion():
                 return totalRate
             else:
                 return totalRate
+    
+    def productIdOnRating(payload):
+        result = {"status":"success","payload": {"products":[],"drinks":[],"addons":[],"ingredient":[]}}
+        for product in payload:
+            print(product)
+            if 'productRating' in product:
+                if product['productRating'] >= 4:
+                    productId = product['productId']
+                    result['payload']['products'].append(productId)
+        return result

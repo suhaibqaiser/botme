@@ -3,6 +3,8 @@ const Response = require("../models/response")
 const {v4: uuidv4} = require('uuid');
 const crypto = require('crypto');
 const sessionController = require("./sessionController");
+const {clientStateObj} = require("../utils/helper");
+const emailHelper = require("../utils/EmailHelper.js")
 
 // Display list of all Clients.
 async function getClientList(req, res) {
@@ -50,8 +52,8 @@ async function addClient(req, res) {
         return res.send(response);
     }
 
-    if (await clientService.checkClientExists(req.body.clientDeviceId)) {
-        response.statusMessage = "Client Device already exists/"
+    if (await clientService.checkClientExists(req.body.clientEmail)) {
+        response.statusMessage = "An account with the same email address already exist. Please try using different email address"
         response.status = "danger"
         return res.send(response);
     }
@@ -74,22 +76,98 @@ async function addClient(req, res) {
             clientComment: req.body.clientComment,
             restaurantId: req.body.restaurantId,
             clientEmail: req.body.clientEmail,
-            clientSecretHint: req.body.clientSecretHint
+            clientSecretHint: req.body.clientSecretHint,
+            clientEmailVerified: false,
+            clientState: clientStateObj.pending,
+            clientDescription: '',
+            verification_token: uuidv4()
         }
 
         let newClient = await clientService.addClient(client)
 
-        if (newClient) {
+        const redirect_url = `https://stg.gofindmenu.com/home?verification_token=${client.verification_token}&clientID=${client.clientID}`
+
+        const sendEmail = await emailHelper.sendEmail(
+            'w11cafe113245@gmail.com',
+            client.clientEmail,
+            'Verify your email address!',
+            `
+            <!Doctype Html>  
+            <Html>     
+            <Head>     
+            <script type="text/javascript">  
+                function func() {  
+                    alert("You are Successfully Called the JavaScript function");  
+                    window.location.href = redirect_url;
+                }  
+        </script>  
+        </Head> 
+        <body>   
+            <div style="background: #222222;font-family: Roboto, sans-serif; list-style: none; color: white; outline: none; word-break: break-word; overflow-wrap: break-word; box-sizing: border-box; text-decoration: none; max-width: 600px; width: 600px; margin: 0px auto; padding: 60px 0px;">
+    <div style="font-family: Roboto, sans-serif; margin: 0px 0px 26px; list-style: none; color: white; padding: 0px; outline: none; word-break: break-word; overflow-wrap: break-word; box-sizing: border-box; text-decoration: none; text-align: center;background: #222222">
+        <a target="_blank" href="https://stg.gofindmenu.com/home" style="font-family: Roboto, sans-serif; margin: 0px; list-style: none; color: white; padding: 0px; outline: none; word-break: break-word; overflow-wrap: break-word; box-sizing: border-box; text-decoration: none; display: block;">
+            <img src="https://stg.gofindmenu.com/assets/images/logo/web-logo.png" alt="" style="width: 100px;">
+        </a>
+    </div>
+    <div style="font-family: Roboto, sans-serif; margin: 0px; list-style: none; color: white; padding: 0px; outline: none; word-break: break-word; overflow-wrap: break-word; box-sizing: border-box; text-decoration: none; text-align: center; box-shadow: rgba(184, 189, 209, 0.2) 0px 0px 20px 0px; border-top: 4px solid #E7272D; background: #222222;">
+        <div style="font-family: Roboto, sans-serif; margin: 0px; list-style: none; color: white; outline: none; word-break: break-word; overflow-wrap: break-word; box-sizing: border-box; text-decoration: none; padding: 60px 35px 0px;background: #222222">
+            <div style="font-family: Roboto, sans-serif; margin: 0px; list-style: none; color: white; padding: 0px 0px 60px; outline: none; word-break: break-word; overflow-wrap: break-word; box-sizing: border-box; text-decoration: none; border-bottom: 1px solid rgb(207, 210, 220);background: #222222">
+                <h3 style="font-family: Roboto, sans-serif; margin: 0px 0px 35px; list-style: none; color: white; padding: 0px; outline: none; word-break: break-word; overflow-wrap: break-word; box-sizing: border-box; text-decoration: none; font-size: 22px; font-weight: normal;">Verify your email address!</h3>
+                <p style="font-family: Roboto, sans-serif; margin: 0px; list-style: none; color: white; padding: 0px; outline: none; word-break: break-word; overflow-wrap: break-word; box-sizing: border-box; text-decoration: none; line-height: 1.59; font-size: 18px; text-align: left; font-weight: normal;">
+                    Hi ${client.clientName},
+                    <br>
+                    <br>
+                    We are happy to have you on board! Please copy the below link to verify your email address:
+                    <br>
+                    <br>
+                   <small style="color: #E7272D">${redirect_url}</small>
+                </p>
+           
+                <p style="font-family: Roboto, sans-serif; margin: 0px; list-style: none; color: white; padding: 0px; outline: none; word-break: break-word; overflow-wrap: break-word; box-sizing: border-box; text-decoration: none; line-height: 1.59; font-size: 18px; text-align: left; font-weight: normal;">
+                    <br>
+                    If you did not sign up, you can safely ignore this email.
+                </p>
+                <p style="font-family: Roboto, sans-serif; margin: 0px; list-style: none; color: white; padding: 0px; outline: none; word-break: break-word; overflow-wrap: break-word; box-sizing: border-box; text-decoration: none; line-height: 1.59; font-size: 18px; text-align: left; font-weight: normal;"><br>
+                    Thanks,<br>
+                </p>
+            </div>
+        </div>
+        <div style="font-family: Roboto, sans-serif; margin: 0px; list-style: none; color: white; outline: none; word-break: break-word; overflow-wrap: break-word; box-sizing: border-box; text-decoration: none; padding: 35px;">
+            <table style="width: 100%;">
+                <tbody>
+                <tr>
+                    <td style="width: 50%;">
+                        <p style="font-family: Roboto, sans-serif; margin: 0px; list-style: none; color: white; padding: 0px; outline: none; word-break: break-word; overflow-wrap: break-word; box-sizing: border-box; text-decoration: none; text-align: left; line-height: 1.59; font-size: 18px; font-weight: normal;">The <a href="https://stg.gofindmenu.com/home" target="_blank" style="font-family: Roboto, sans-serif; margin: 0px; list-style: none; padding: 0px; outline: none; word-break: break-word; overflow-wrap: break-word; box-sizing: border-box; text-decoration: none; color: #E7272D;">Botme</a>
+                            Team</p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+       
+            `
+        )
+
+        console.log('Email Sent =>', sendEmail)
+
+        if (newClient && sendEmail.status) {
             response.payload = newClient
-            response.statusMessage = "User created successfully!"
+            response.statusMessage = "Your account has been created successfully! Verification link is sent on your email."
             response.status = "success"
             return res.send(response)
         } else {
             response.statusMessage = "Error in saving client"
+            response.errorPayload = {
+                newClient:newClient,
+                sendEmail:sendEmail
+            }
             response.status = "danger"
             return res.send(response)
         }
-    }catch (e){
+    } catch (e) {
         response.payload = e
         response.statusMessage = "User validation failed"
         response.status = "danger"
@@ -102,12 +180,23 @@ async function authorizeClient(req, res) {
     let response = new Response()
 
     if (!req.body.clientID || !req.body.clientSecret) {
-        response.payload = {message: 'clientID, clientDeviceId and clientSecret is required'};
-        response.status = "error"
+        response.message = 'clientID, clientDeviceId and clientSecret is required';
+        response.status = "danger"
         return res.send(response);
     }
 
     let client = await clientService.getClientDetail(req.body.clientID, req.body.clientSecret)
+
+    client = JSON.parse(JSON.stringify(client))
+
+    console.log('client =>',client)
+
+    if (client && client.hasOwnProperty('clientEmailVerified') && !client.clientEmailVerified) {
+        response.message = `We have sent you a verification email to your email address. ${client.clientEmail} Click and follow the link inside it.`
+        response.status = "danger"
+        return res.send(response)
+    }
+
 
     if (client) {
 
@@ -122,7 +211,7 @@ async function authorizeClient(req, res) {
         let newSession = await sessionController.createSession(session)
         if (newSession) {
             response.payload = {
-                ...client._doc,
+                ...client,
                 "clientToken": newSession.clientToken,
                 'isLoggedIn': true,
                 'sessionId': newSession.sessionId
@@ -130,13 +219,13 @@ async function authorizeClient(req, res) {
             response.status = "success"
             return res.send(response)
         } else {
-            response.payload = "Error in creating session"
-            response.status = "error"
+            response.message = "Error in creating session"
+            response.status = "danger"
             return res.send(response)
         }
     } else {
-        response.payload = "clientID or clientSecret is incorrect or client is not active"
-        response.status = "error"
+        response.message = "clientID or clientSecret is incorrect or client is not active"
+        response.status = "danger"
         return res.send(response)
     }
 }
@@ -164,7 +253,11 @@ async function updateClient(req, res) {
         clientComment: req.body.clientComment,
         restaurantId: req.body.restaurantId,
         clientEmail: req.body.clientEmail,
-        clientSecretHint: req.body.clientSecretHint
+        clientSecretHint: req.body.clientSecretHint,
+        clientEmailVerified: req.body.clientEmailVerified,
+        clientState: req.body.clientState,
+        clientDescription: req.body.clientDescription,
+        verification_token: req.body.verification_token
     }
 
     let updatedClient = await clientService.updateClient(req.body.clientID, client)
@@ -197,6 +290,34 @@ async function deleteClient(req, res) {
         response.status = "error"
         return res.status(400).send(response)
     }
+}
+
+async function verifyCustomerAccount(req, res) {
+
+    let response = new Response()
+
+    const filter = req.query
+
+    console.log('filter =>', filter)
+
+    if (!filter.verification_token || !filter.clientID) {
+        response.message = `Sorry this request is invalid to verify your account!`
+        response.status = "danger"
+        return res.send(response)
+    }
+
+    const verify = await clientService.verifyAccount(filter)
+    console.log(JSON.parse(JSON.stringify(verify)))
+    if (verify.nModified) {
+        response.message = `Your account is successfully verified!`
+        response.status = "success"
+        return res.send(response)
+    }
+
+    response.message = `Sorry failed to verify your account!`
+    response.status = "danger"
+    return res.send(response)
+
 }
 
 // Client heartbeat to keep alive
@@ -253,5 +374,6 @@ module.exports = ({
     authorizeClient,
     updateClient,
     deleteClient,
-    heartbeatClient
+    heartbeatClient,
+    verifyCustomerAccount
 })

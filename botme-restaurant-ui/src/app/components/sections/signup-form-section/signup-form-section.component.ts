@@ -21,11 +21,13 @@ export class SignupFormSectionComponent implements OnInit {
     clientID: new FormControl('', Validators.required),
     clientName: new FormControl('', Validators.required),
     clientSecret: new FormControl('', Validators.required),
+    confirmClientSecret: new FormControl('', Validators.required),
     clientUpdated: new FormControl(new Date(), Validators.required),
     clientVoiceEnabled: new FormControl(false, Validators.required),
     clientVoiceTimeout: new FormControl(3000, Validators.required),
     restaurantId: new FormControl('', Validators.required),
-    clientEmail: new FormControl('', [Validators.required,this._helperService.checkEmailRegex]),
+    clientEmail: new FormControl('', [Validators.required, this._helperService.checkEmailRegex]),
+    confirmClientEmail: new FormControl('', [Validators.required, this._helperService.checkEmailRegex]),
     clientSecretHint: new FormControl('', Validators.required)
   })
 
@@ -96,7 +98,7 @@ export class SignupFormSectionComponent implements OnInit {
       return
     }
 
-    if (this.signupForm.controls['clientID'].value  && this.signupForm.controls['clientID'].value.length < 3) {
+    if (this.signupForm.controls['clientID'].value && this.signupForm.controls['clientID'].value.length < 3) {
       this._toastService.setToast({
         description: 'Client id should be greater than 3.',
         type: 'danger'
@@ -104,7 +106,7 @@ export class SignupFormSectionComponent implements OnInit {
       return
     }
 
-    if (this.signupForm.controls['clientDeviceId'].value  && this.signupForm.controls['clientDeviceId'].value.length < 3) {
+    if (this.signupForm.controls['clientDeviceId'].value && this.signupForm.controls['clientDeviceId'].value.length < 3) {
       this._toastService.setToast({
         description: 'Client device id is required!',
         type: 'danger'
@@ -112,7 +114,7 @@ export class SignupFormSectionComponent implements OnInit {
       return
     }
 
-    if (this.signupForm.controls['clientSecret'].value  && this.signupForm.controls['clientSecret'].value.length < 3) {
+    if (this.signupForm.controls['clientSecret'].value && this.signupForm.controls['clientSecret'].value.length < 3) {
       this._toastService.setToast({
         description: 'Client should be greater than 3.',
         type: 'danger'
@@ -120,7 +122,7 @@ export class SignupFormSectionComponent implements OnInit {
       return
     }
 
-    if (this.signupForm.controls['clientSecretHint'].value  && this.signupForm.controls['clientSecretHint'].value.length < 3) {
+    if (this.signupForm.controls['clientSecretHint'].value && this.signupForm.controls['clientSecretHint'].value.length < 3) {
       this._toastService.setToast({
         description: 'Client should be greater than 3.',
         type: 'danger'
@@ -129,9 +131,25 @@ export class SignupFormSectionComponent implements OnInit {
     }
 
     const emailRegex = new RegExp('^(([^<>()[\\]\\\\.,;:\\s@"]+(\\.[^<>()[\\]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$');
-    if (this.signupForm.controls['clientEmail'].value  && !emailRegex.test(this.signupForm.controls['clientEmail'].value)) {
+    if ((this.signupForm.controls['confirmClientEmail'].value && !emailRegex.test(this.signupForm.controls['confirmClientEmail'].value)) || (this.signupForm.controls['confirmClientEmail'].value && !emailRegex.test(this.signupForm.controls['confirmClientEmail'].value))) {
       this._toastService.setToast({
         description: 'Please enter valid email xyz@gmail.com',
+        type: 'danger'
+      })
+      return
+    }
+
+    if (this.signupForm.controls['clientSecret'].value !== this.signupForm.controls['confirmClientSecret'].value) {
+      this._toastService.setToast({
+        description: 'Your confirm client secret mismatched.',
+        type: 'danger'
+      })
+      return
+    }
+
+    if (this.signupForm.controls['clientEmail'].value !== this.signupForm.controls['confirmClientEmail'].value) {
+      this._toastService.setToast({
+        description: 'Your confirm client email mismatched.',
         type: 'danger'
       })
       return
@@ -145,11 +163,14 @@ export class SignupFormSectionComponent implements OnInit {
           description: res.statusMessage,
           type: res.status
         })
-        if (res.status === 'success') {
-          this.router.navigate(['/login']).then(() => {
-            window.location.reload();
-          });
-        }
+        setTimeout(() => {
+          if (res.status === 'success') {
+            this.router.navigate(['/login']).then(() => {
+              window.location.reload();
+            });
+          }
+        }, 1000)
+
         this.loader = false
       })
   }

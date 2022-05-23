@@ -29,7 +29,7 @@ export class LoginFormComponent implements OnInit {
 
   login() {
 
-    if(!this.loginForm.get('clientID')?.value || !this.loginForm.get('clientSecret')?.value){
+    if (!this.loginForm.get('clientID')?.value || !this.loginForm.get('clientSecret')?.value) {
       this._toastService.setToast({
         description: (!this.loginForm.get('clientID')?.value) ? 'Client ID is required!' : 'Client Secret is required!',
         type: 'danger'
@@ -60,13 +60,17 @@ export class LoginFormComponent implements OnInit {
           this.router.navigate(['/home']).then(() => {
             window.location.reload();
           });
-        } else {
-          this._toastService.setToast({
-            description: 'Invalid credentials.',
-            type: 'danger'
-          })
+
+          return
         }
+
+        this._toastService.setToast({
+          description: res.message,
+          type: res.status
+        })
+
         this.loader = false
+        return;
       },
       (err: any) => {
         console.error(err)
