@@ -15,6 +15,7 @@ import {LoginComponent} from "./components/pages/login/login.component";
 import {ProfileComponent} from "./components/pages/profile/profile.component";
 import {SignupComponent} from "./components/pages/signup/signup.component";
 import {SuggestionsComponent} from "./components/pages/suggestions/suggestions.component";
+import {OrderTypesComponent} from "./components/pages/order-types/order-types.component";
 
 const routes: Routes = [
   {
@@ -79,6 +80,11 @@ const routes: Routes = [
   {
     path: "product-suggestions",
     component: SuggestionsComponent,
+    canActivate: [AuthenticationGuard]
+  },
+  {
+    path: "order-types",
+    component: OrderTypesComponent,
     canActivate: [AuthenticationGuard]
   }
 ];

@@ -78,6 +78,7 @@ import {ProductSuggestionService} from "./services/product-suggestion.service";
 import { SignupComponent } from './components/pages/signup/signup.component';
 import { SignupFormSectionComponent } from './components/sections/signup-form-section/signup-form-section.component';
 import { SuggestionsComponent } from './components/pages/suggestions/suggestions.component';
+import { OrderTypesComponent } from './components/pages/order-types/order-types.component';
 
 @NgModule({
   declarations: [
@@ -134,7 +135,8 @@ import { SuggestionsComponent } from './components/pages/suggestions/suggestions
     SugestionSectionComponent,
     SignupComponent,
     SignupFormSectionComponent,
-    SuggestionsComponent
+    SuggestionsComponent,
+    OrderTypesComponent
   ],
   imports: [
     BrowserModule,
