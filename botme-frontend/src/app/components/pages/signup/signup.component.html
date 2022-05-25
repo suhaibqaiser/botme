@@ -12,34 +12,34 @@
                     <h2 style="padding-left: 140px">Sign Up</h2>
                   </div>
                   <p class="font-size-13 text-muted" style="padding-left: 50px; margin-top: -20px">Please fill in this form to create an account.</p>
-                  <form >
-                    <div class="form-group" style="padding-top: 10px;">
+                  <form [formGroup]="userForm">
+                    <div  style="padding-top: 10px;">
                       <div class="input-affix">
                         <i class="prefix-icon anticon anticon-user"></i>
-                        <input type="text" class="form-control" placeholder="User Name" name="username" style="background-color: #E8F0FE">
+                        <input formControlName="userFullName" type="text" class="form-control"  placeholder="Full Name" id="form-userFullName" style="background-color: #E8F0FE">
                       </div>
-                      <div class="input-affix" style="padding-top: 10px;">
+                      <div  class="input-affix" style="padding-top: 10px;">
                         <i class="prefix-icon fa fa-id-card" style="padding-top: 10px;"></i>
-                        <input type="text" class="form-control" placeholder="User Id" name="userid" style="background-color: #E8F0FE">
+                        <input formControlName="userName" type="username" class="form-control" placeholder="User Name" id="form-userName" style="background-color: #E8F0FE">
                       </div>
-                      <div class="input-affix" style="padding-top: 10px;">
+                      <div  class="input-affix" style="padding-top: 10px;">
                         <i class="prefix-icon anticon anticon-mail" style="padding-top: 10px;"></i>
-                        <input type="text" class="form-control" placeholder="Email Address" name="email" style="background-color: #E8F0FE">
+                        <input  type="email" class="form-control" placeholder="Email Address" id="form-userEmail" style="background-color: #E8F0FE">
                       </div>
-                      <div class="input-affix" style="padding-top: 10px;">
+                      <div  class="input-affix" style="padding-top: 10px;">
                         <i class="prefix-icon fa fa-solid fa-utensils" style="padding-top: 10px;"></i>
-                        <input type="text" class="form-control" placeholder="Restaurant Name" name="restaurantname" style="background-color: #E8F0FE">
+                        <input formControlName="userEmail" type="text" class="form-control" placeholder="Restaurant Name" id="form-restaurantId" style="background-color: #E8F0FE">
                       </div>
-                      <div class="input-affix" style="padding-top: 10px;">
+                      <div  class="input-affix" style="padding-top: 10px;">
                         <i class="prefix-icon anticon anticon-lock" style="padding-top: 10px;"></i>
-                        <input type="text" class="form-control" placeholder="Password" name="password" style="background-color: #E8F0FE">
+                        <input formControlName="userSecret" type="password" class="form-control" placeholder="Password" id="form-userSecret" style="background-color: #E8F0FE">
                       </div>
-                      <div class="input-affix" style="padding-top: 10px;">
+                      <div  class="input-affix" style="padding-top: 10px;">
                         <i class="prefix-icon anticon anticon-lock" style="padding-top: 10px;"></i>
-                        <input type="text" class="form-control" placeholder="Confirm Password" name="confirmpassword" style="background-color: #E8F0FE">
+                        <input formControlName="userSecret" type="password" class="form-control" placeholder="Confirm Password" id="form-userSecret" style="background-color: #E8F0FE">
                       </div>
-                      <div style="margin-top: 20px; padding-left: 140px" >
-                        <button class="btn btn-primary ">Sign Up</button>
+                      <div  style="margin-top: 20px; padding-left: 140px" >
+                        <button  type="submit" class="btn btn-primary " routerLink="/login" >Sign Up</button>
                       </div>
                     </div>
                   </form>
