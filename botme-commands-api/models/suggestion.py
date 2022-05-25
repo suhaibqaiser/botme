@@ -312,7 +312,7 @@ class Suggestion():
         result = {"status":"success","payload": {"products":"","drinks":[],"addons":[],"ingredient":[]}}
         for product in payload:
             if 'productRating' in product:
-                if product['productType'] == "Addon" or product['productType'] == "Ingredient":
+                if product['productType'] == "Addon" or product['productType'] == "Ingredient" or product['productType'] == "Item":
                     product
                 else:
                     if product['productRating'] >= 4:
