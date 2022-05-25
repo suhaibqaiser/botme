@@ -312,15 +312,19 @@ class Suggestion():
         result = {"status":"success","payload": {"products":"","drinks":[],"addons":[],"ingredient":[]}}
         for product in payload:
             if 'productRating' in product:
-                if product['productRating'] >= 4:
-                    productId = product['productId']
-                    array.append(productId)
+                if product['productType'] == "Addon" or product['productType'] == "Ingredient":
+                    product
+                else:
+                    if product['productRating'] >= 4:
+                        productId = product['productId']
+                        array.append(productId)
         print("ARRAY")
         print("array==>",array)
         productId = list(dict.fromkeys(array))
         print("PRODUCTID")
         print("productID:", productId)
         newArray = productId[0:self.number]
+        print("length",len(newArray))
         result['payload']['products'] = newArray
         print("NEW_ARRAY")
         print("new_array==>",newArray)            
