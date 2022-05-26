@@ -31,6 +31,7 @@ import {HelperService} from "./services/helper.service";
 import {ToggleButtonModule} from 'primeng/togglebutton';
 import { ForgotComponent } from './components/pages/forgot/forgot.component';
 import { SignupComponent } from './components/pages/signup/signup.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import { SignupComponent } from './components/pages/signup/signup.component';
     InplaceModule,
     InputSwitchModule,
     RestaurantModule,
-    ToggleButtonModule
+    ToggleButtonModule,
+    ReactiveFormsModule
   ],
   providers: [HelperService, Title, AuthGuard, {
     provide: HTTP_INTERCEPTORS,
