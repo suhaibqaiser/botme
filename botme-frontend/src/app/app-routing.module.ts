@@ -38,7 +38,7 @@ const routes: Routes = [
       },
       {
         path: 'order-detail',
-        data: { pageTitle: 'Order Detail' },
+        data: { pageTitle: 'Order Detail'},
         component: OrderOverviewDetailComponent
       },
       {

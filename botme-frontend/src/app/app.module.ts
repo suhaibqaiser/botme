@@ -32,6 +32,7 @@ import {ToggleButtonModule} from 'primeng/togglebutton';
 import { ForgotComponent } from './components/pages/forgot/forgot.component';
 import { SignupComponent } from './components/pages/signup/signup.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
