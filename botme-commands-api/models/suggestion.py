@@ -1,5 +1,5 @@
 from controller.utility import Utility
-from Service.suggestionApi import getAllProducts, getProductId , getProductIdByTime
+from Service.suggestionApi import getAllProducts, getProductId , getProductIdByTime, getProductIdByServingTime
 from Service.restaurantApi import getProductUsingProductId
 
 class Suggestion():
@@ -44,6 +44,13 @@ class Suggestion():
             flavour = suggestion['flavour']
             result = getAllProducts(self.restaurantId)
             data = Suggestion.productIdOnRating(self,result['payload'])
+        
+        elif self.intent == "serving_time":
+            self.call = suggestion['keywords']
+            persons = suggestion['persons']
+            size = suggestion['size']
+            flavour = suggestion['flavour']
+            data = getProductIdByServingTime(suggestion, self.restaurantId)
 
 
         if data['status'] == "success":
@@ -77,7 +84,7 @@ class Suggestion():
             return Response
 
     def entityArray(self):
-        if self.intent == "Suggestion" or self.intent == "Order_meal" or self.intent == "menu_category" or self.intent == "top_suggestion":
+        if self.intent == "Suggestion" or self.intent == "Order_meal" or self.intent == "menu_category" or self.intent == "top_suggestion" or self.intent == "serving_time":
             keywords = {"product":[],"quantity":[],"drink":[],"attributes":[],"servingSize":[],"addon":[],"ingredient":[],"flavour":[]}
             suggestion = {"product": [],"persons": 1,"drink": [],"attributes": {},"keywords": keywords,"size":"standard","addon":[],"ingredient":[],"flavour":""}
             for x in self.entity:
