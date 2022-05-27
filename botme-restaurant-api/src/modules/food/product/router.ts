@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { addProduct, editProduct, findProduct, suggestProduct, suggestProductByTime } from "./controller";
+import { addProduct, editProduct, findProduct, suggestProduct, suggestProductByServingTime, suggestProductByTime } from "./controller";
 
 
 export default [
@@ -41,6 +41,15 @@ export default [
         method: "post",
         handler: async (req: Request, res: Response) => {
             let result = await suggestProductByTime(req.body.searchParameters, req.body.restaurantId)
+            console.log(req.body)
+            res.send(result)
+        }
+    },
+    {
+        path: "/product/suggest/servingTime",
+        method: "post",
+        handler: async (req: Request, res: Response) => {
+            let result = await suggestProductByServingTime(req.body.searchParameters, req.body.restaurantId)
             console.log(req.body)
             res.send(result)
         }

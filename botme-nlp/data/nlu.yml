@@ -294,6 +294,17 @@ nlu:
       - i want to see your special items
       - show me your restaurant speciality
 
+  - intent: serving_time
+    examples: |
+      - what you can quickly serve
+      - what product you can make quickly
+      - what you can serve in [15](number) minute
+      - what product you can make in [30](number) minute
+      - what item i can get in [20](number) minute
+      - what item you can serve in [10](number) minute
+      - what you can serve quickly
+      - what can i get in [15](number) minutes
+
   - intent: reservation_page
     examples: |
       - [Reserve]{"entity":"pagethree","value":"reservation"} a table for me please
