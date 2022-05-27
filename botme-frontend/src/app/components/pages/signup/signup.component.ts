@@ -16,13 +16,14 @@ export class SignupComponent implements OnInit {
   }
 
   addUser= new FormGroup({
-    userId: new FormControl(''),
+    userId: new FormControl('sami'),
     userName: new FormControl(''),
     userSecret: new FormControl(''),
     userFullName: new FormControl(''),
     userEmail: new FormControl(''),
     userCreated: new FormControl(''),
     restaurantId: new FormControl(''),
+    userActive: new FormControl(true)
   });
 
   
@@ -32,10 +33,9 @@ export class SignupComponent implements OnInit {
   }
 
   saveData(){
-   // console.log(this.addUser.value);
-   this.user.saveUserData(this.addUser.value).subscribe((result)=>{
+   console.log(this.addUser.value);
+   this.user.saveUserData(this.addUser.value).subscribe(result => {
      console.log(result);
-     
    })
   }
   

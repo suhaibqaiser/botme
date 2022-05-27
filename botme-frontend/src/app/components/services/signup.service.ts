@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 export class SignupService {
  
   constructor(private http: HttpClient) { }
-  url=`${environment.apiBaseUrl}/user/add`
+  url=`${environment.apiBaseUrl} + /user/add`
   apiBaseUrl = environment.apiBaseUrl;
   apiRestaurantUrl = environment.apiRestaurantUrl;
 
@@ -20,8 +20,10 @@ export class SignupService {
   getAllUser(){  
     return this.http.get(this.url);
 }
-  saveUserData(data:any) {
-    console.log(data);
-    return this.http.post(this.url,data)
+  saveUserData(data:object):  Observable<any>  {
+      console.log("data ==>",data)
+      const url = `${this.apiBaseUrl}/user/add`;
+      const body = { user: data };
+      return this.http.put(url, body);
   }
 }
