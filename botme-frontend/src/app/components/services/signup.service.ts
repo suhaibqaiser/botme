@@ -6,21 +6,22 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class SignupService {
-  
-  constructor(private http: HttpClient) { }
 
+
+export class SignupService {
+ 
+  constructor(private http: HttpClient) { }
+  url=`${environment.apiBaseUrl}/user/add`
   apiBaseUrl = environment.apiBaseUrl;
   apiRestaurantUrl = environment.apiRestaurantUrl;
+
   
 
-  getAllUser(user: object): Observable<any> {
-    const url = `${this.apiBaseUrl}/user/add`;
-    const body = { user: user };
-    return this.http.put(url, body);
+  getAllUser(){  
+    return this.http.get(this.url);
 }
-  saveUserData(data: any){
+  saveUserData(data:any) {
     console.log(data);
-    return this.http.post( this.apiBaseUrl, data)
+    return this.http.post(this.url,data)
   }
 }
