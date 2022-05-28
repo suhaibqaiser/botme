@@ -25,7 +25,7 @@ export class HelperService {
     required: 'required'
   }
 
-  productList:any = []
+  productList: any = []
 
   constructor(private _router: Router, private logger: DataDogLoggingService, private _clientService: BotmeClientService) {
   }
@@ -362,5 +362,21 @@ export class HelperService {
 
   getProductByType(productType: any) {
     return this.productList.filter((item: any) => item.productType == productType)
+  }
+
+  getServingSize(servingSizeList: any = []) {
+    return servingSizeList && servingSizeList.find((item: any) => item.selected)
+  }
+
+  getProductOptions(list: any = []) {
+    return list && list.filter((item: any) => (item.selected)).map((a: any) => a.productName)
+  }
+
+  getProductAddons(list: any = []) {
+    return list && list.filter((item: any) => (item.selected)).map((a: any) => a.productName)
+  }
+
+  getProductTopping(list: any = []) {
+    return list && list.filter((item: any) => (item.selected)).map((a: any) => a.productName)
   }
 }

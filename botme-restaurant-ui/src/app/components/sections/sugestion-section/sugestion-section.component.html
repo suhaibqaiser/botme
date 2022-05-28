@@ -26,7 +26,7 @@
 
 
             <div *ngIf="!_productSuggestionService.loader" class="d-flex flex-wrap justify-content-center">
-              <div *ngFor="let item of _productSuggestionService.keywords | keyvalue"
+              <div *ngFor="let item of _productSuggestionService.keywords | keyvalue" class="mb-2"
                    style="margin-right: 8px;border-radius: 20px;padding:5px;color:white;background-color: #E7272D">
                 <strong class="text-capitalize">{{item.key}} : {{item.value}}</strong></div>
             </div>
@@ -47,8 +47,12 @@
                   </div>
                   <div class="receipe-content">
                     <div class="receipe-info">
-                      <h3>{{item.productName}}</h3>
-                      <h4>${{item.productRate.standard}}</h4>
+                      <h4>{{item.productName}} : ${{item.productRate.standard}}</h4>
+                      <p class="text-white mb-0 mt-1">Size: {{_helperService.getServingSize(item.productServingSize).serving_size_name}}</p>
+                      <p *ngIf="_helperService.getProductOptions(item.productOptions).length" class="mb-0 text-white">Options: {{_helperService.getProductOptions(item.productOptions)}}</p>
+                      <p *ngIf="_helperService.getProductAddons(item.productAddons).length" class="mb-0 text-white">Addons: {{_helperService.getProductAddons(item.productAddons)}}</p>
+                      <p *ngIf="_helperService.getProductTopping(item.productToppings).length" class="mb-0 text-white">Toppings: {{_helperService.getProductTopping(item.productToppings)}}</p>
+                      <p class="text-white">Quantity: {{item.productQuantity}}</p>
                     </div>
                     <div class="receipe-cart receipe-cart-main">
                       <a (click)="editFromCart(item)">
