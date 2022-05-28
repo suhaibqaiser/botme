@@ -8,10 +8,10 @@
             <div class="col-md-7 col-lg-5 m-h-auto">
               <div class="card shadow-lg">
                 <div class="card-body">
-                  <div class="d-flex align-items-center justify-content-between m-b-30">
-                    <h2 style="padding-left: 140px">Sign Up</h2>
+                  <div class="m-b-15">
+                    <h2 class="text-center">Sign Up</h2>
                   </div>
-                  <p class="font-size-13 text-muted" style="padding-left: 50px; margin-top: -20px">Please fill in this form to create an account.</p>
+                  <p class="font-size-13 text-muted text-center ">Please fill in this form to create an account.</p>
 
                   <form [formGroup]="addUser" (ngSubmit)="saveData()">
 
@@ -40,8 +40,8 @@
                         <i class="prefix-icon anticon anticon-lock" style="padding-top: 10px;"></i>
                         <input  type="password" class="form-control" formControlName="userSecret" placeholder="Confirm Password" id="form-userSecret" style="background-color: #E8F0FE">
                       </div>
-                      <div class="text-center mt-3">
-                        <button  type="submit" class="btn btn-sm btn-primary " >Sign Up</button>
+                      <div class="text-center mt-4">
+                        <button  type="submit" class="btn btn-sm btn-primary ">Sign Up</button>
                       </div>
                     </div>
                   </form>
