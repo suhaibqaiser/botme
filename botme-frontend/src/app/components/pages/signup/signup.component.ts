@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { SignupService } from '../../services/signup.service';
-import {  FormControl, FormGroup } from '@angular/forms';
-
+import {Component, OnInit} from '@angular/core';
+import {SignupService} from '../../services/signup.service';
+import {FormControl, FormGroup} from '@angular/forms';
+import {Md5} from "ts-md5";
 
 
 @Component({
@@ -15,7 +15,7 @@ export class SignupComponent implements OnInit {
   constructor(private user: SignupService) {
   }
 
-  addUser= new FormGroup({
+  addUser = new FormGroup({
     userId: new FormControl('sami'),
     userName: new FormControl(''),
     userSecret: new FormControl(''),
@@ -26,20 +26,21 @@ export class SignupComponent implements OnInit {
     userActive: new FormControl(true)
   });
 
-  
 
   ngOnInit(): void {
 
   }
 
-  saveData(){
-   console.log(this.addUser.value);
-   this.user.saveUserData(this.addUser.value).subscribe(result => {
-     console.log(result);
-   })
-  }
-  
-     
+  saveData() {
+    console.log(this.addUser.value);
+    const userSecret = Md5.hashStr(this.addUser.get('userSecret')?.value)
+    this.addUser.get('userSecret')?.setValue(userSecret)
+    this.user.saveUserData(this.addUser.value).subscribe(result => {
+      console.log(result);
+    })
   }
 
-  
+
+}
+
+

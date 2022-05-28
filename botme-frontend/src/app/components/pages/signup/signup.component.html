@@ -12,9 +12,9 @@
                     <h2 style="padding-left: 140px">Sign Up</h2>
                   </div>
                   <p class="font-size-13 text-muted" style="padding-left: 50px; margin-top: -20px">Please fill in this form to create an account.</p>
-                  
+
                   <form [formGroup]="addUser" (ngSubmit)="saveData()">
-                    
+
                     <div  style="padding-top: 10px;">
                       <div class="input-affix">
                         <i class="prefix-icon anticon anticon-user"></i>
@@ -40,8 +40,8 @@
                         <i class="prefix-icon anticon anticon-lock" style="padding-top: 10px;"></i>
                         <input  type="password" class="form-control" formControlName="userSecret" placeholder="Confirm Password" id="form-userSecret" style="background-color: #E8F0FE">
                       </div>
-                      <div  style="margin-top: 20px; padding-left: 140px" >
-                        <button  type="submit" class="btn btn-primary " >Sign Up</button>
+                      <div class="text-center mt-3">
+                        <button  type="submit" class="btn btn-sm btn-primary " >Sign Up</button>
                       </div>
                     </div>
                   </form>
@@ -52,5 +52,5 @@
         </div>
       </div>
     </div>
-    
+
     </body>
