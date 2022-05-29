@@ -38,7 +38,7 @@ def getProductIdByTime(suggestion, restaurantId):
 def getProductIdByServingTime(suggestion, restaurantId):
     try:
         body = {"searchParameters":{
-            "tags":suggestion['product']
+            "tags":suggestion['number']
         },"restaurantId":restaurantId}
         response = requests.post(
             RESTAURANT_API + '/food/product/suggest/servingTime', json=body)

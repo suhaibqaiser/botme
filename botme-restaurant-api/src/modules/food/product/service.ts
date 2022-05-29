@@ -85,7 +85,7 @@ export async function getProductByTime(tag: string , restaurantId: string) {
 }
 export async function getProductByServingTime(tag: string , restaurantId: string) {
     let filter: any = {
-        "servingTime": { $regex: tag,$options:"i" },
+        "servingTime": { $lte: tag },
         "restaurantId": restaurantId,
     }
     console.log("filter",filter)
