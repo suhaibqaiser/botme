@@ -3,6 +3,7 @@ import { environment } from '../../environments/environment';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Router } from "@angular/router";
+import { config } from 'process';
 
 @Injectable({
   providedIn: 'root'
@@ -61,5 +62,6 @@ export class AuthenticationService {
   getRestaurantId(): string | null {
     return localStorage.getItem('restaurantId');
   }
+
 
 }
