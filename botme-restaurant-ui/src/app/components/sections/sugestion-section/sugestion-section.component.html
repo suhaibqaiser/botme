@@ -6,13 +6,13 @@
       <div class="col-sm-12 col-md-12 col-lg-12 pb-30">
         <div class="contact-item">
           <div class="contact-item-title text-center">
-            <h3 class="color-white">Product Suggestions</h3>
+            <h3 class="color-white">Product Search</h3>
             <div *ngIf="!isVoiceToggleOn()">
               <div class="form-group mt-3 mb-20">
                 <div class="input-group w-50 p-2 m-auto">
                   <input [formControl]="suggestionControl" type="text" name="name" id="name" class=" form-control"
                          required
-                         data-error="Please enter your name" placeholder="Enter your suggestions"/>
+                         data-error="Please enter your name" placeholder="Please enter here what you want to order"/>
                 </div>
                 <div class="help-block with-errors"></div>
               </div>

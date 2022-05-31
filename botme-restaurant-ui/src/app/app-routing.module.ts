@@ -78,7 +78,7 @@ const routes: Routes = [
     component: SignupComponent
   },
   {
-    path: "product-suggestions",
+    path: "product-search",
     component: SuggestionsComponent,
     canActivate: [AuthenticationGuard]
   },
