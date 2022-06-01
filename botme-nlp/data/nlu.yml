@@ -221,7 +221,7 @@ nlu:
       - we are [six](number) people looking for good [sandwich](suggestion) with [coleslaw](addon) and [pepsi](drink)
       - we are [4](number) people looking for good [burgers](suggestion) with [spicy potato](addon) and [sprite](drink)
       - we are [six](number) people looking for good [sandwich](suggestion) with [spicy potato](addon) and [pepsi](drink)
-      - we are [twp](number) persons looking for good [wraps](suggestion) with [spicy potato](addon) and [pepsi](drink)
+      - we are [two](number) persons looking for good [wraps](suggestion) with [spicy potato](addon) and [pepsi](drink)
       - i want to order [medium](size) size [nacho burger](suggestion)
       - suggest me some good [standard](size) size [sandwich](suggestion)
       - i want to order [nacho burger](suggestion) with [spicy](flavour) 
@@ -233,9 +233,32 @@ nlu:
       - i want to have [mushroom swiss burger](suggestion) with [chicken](flavour)
       - suggest me some good [burger](suggestion) with [beef](flavour)
       - suggest me some good [wrap](suggestion) with [chicken](flavour)
+      - i want to order [burger](suggestion) with [halal](attribute)
+      - i want to eat [wraps](suggestion) with [glutenFree](attribute)
+      - i want to have [vegan](attribute) [sandwich](suggestion)
+      - suggest me some [vegetarian](attribute) [sandwich](suggestion)
+      - suggest me some good [vegetarian](attribute) [burger](suggestion) with [spicy](flavour)
+      - show me some [veggie](suggestion) items
+      - i want [halal](attribute) [kids](suggestion) meal for [two](number) kids
+      - i want [halal](attribute) [kids](suggestion) meal for [5](number) children
+      - recommend me some good [burgers](suggestion)
+      - recommend me some good [burger](suggestion)
+      - propose me some good [wraps](suggestion)
+      - propose me some good [wrap](suggestion)
+      - suggest me some good [sandwiches](suggestion)
+      - suggest me some good [sandwich](suggestion)
 
   - intent : meal_time
     examples: |
+      - suggest me items for [lunch](offeringTime)
+      - suggest me products for [dinner](offeringTime)
+      - suggest me meals for [supper](offeringTime)
+      - propose me items for [lunch](offeringTime)
+      - propose me products for [dinner](offeringTime)
+      - propose me meals for [supper](offeringTime)
+      - recommend me items for [lunch](offeringTime)
+      - recommend me products for [dinner](offeringTime)
+      - recommend me meals for [supper](offeringTime)
       - what's in the [lunch](offeringTime)
       - show me [dinner](offeringTime) item
       - i want to see the [breakfast](offeringTime) item
@@ -294,21 +317,44 @@ nlu:
     examples: |
       - show me top [10](number) products 
       - show me top [ten](number) products
+      - show me top [10](number) items
+      - show me top [ten](number) meals
+      - suggest me top [10](number) products
+      - suggest me top [five](number) meals
+      - suggest me top [8](number) items
+      - propose me top [10](number) products
+      - propose me top [5](number) meals
+      - propose me top [seven](number) items
+      - recommend me top [10](number) products
+      - recommend me top [6](number) meals
+      - recommend me top [eight](number) items
       - top [10](number) products in your restaurant
-      - top [ten](number) products in your restaurant
+      - top [ten](number) meals in your restaurant
       - top [10](number) best item in your restaurant
       - top [ten](number) best item in your restaurant
       - top [5](number) products in your restaurant
-      - top [five](number) products in your restaurant
+      - top [five](number) meals in your restaurant
+      - top [eight](number) products in your restaurant
+      - suggest me top [3](number) meals of your restaurant
+      - suggest me top [seven](number) meals of your restaurant
       - best items in your restaurant
+      - best products in your restaurant
       - show me top products of your restaurant
       - i want to see your special items
+      - suggest me your restaurant speciality
+      - suggest me top meals of your restaurant
       - show me your restaurant speciality
       - what is your restaurant speciality
       - show us your special products
       - whats special today
-      - 
-
+      - suggest me some good food
+      - i want to have something special in your restaurant
+      - suggest me some good products
+      - suggest me some good meals
+      - suggest me some good items
+      - suggest me top meals of your restaurant
+      - i am looking for some good products
+      - we are looking for special meals
 
   - intent: serving_time
     examples: |
@@ -320,6 +366,25 @@ nlu:
       - what item you can serve in [10](number) minute
       - what you can serve quickly
       - what can i get in [15](number) minutes
+      - what meals can i get fast
+      - what products can i get fast
+      - what meal you can quickly serve
+      - what food can i serve quickly
+      - what food can i get in [25](number) minute
+      - what meal can i get in [23](number) minute
+      - which item can i get in [15](number) minute
+      - which products can we get in [20](number) minute
+      - which food i can serve in [10](number) minute
+      - suggest me food which you can serve quickly
+      - suggest me meals which you can serve fast
+      - suggest me fast serving meals
+      - propose me some quick serve meals
+      - propose me food which you can serve quickly
+      - propose me items which you can serve fast
+      - recommend me some quick serving meals
+      - recommend me food which you can serve quickly
+      - recommend me items which you can serve fast
+
 
   - intent: reservation_page
     examples: |
@@ -4605,39 +4670,74 @@ nlu:
 
   - lookup: suggestion
     examples: |
-      - BBQ Platter	
+      - burger
+      - wraps
+      - wrap
+      - sandwich
+      - family platters
+      - todays special
+      - kids Meal
+      - drinks
+      - salads
+      - sides
+      - ingredients
+      - desserts
+      - pizza
+      - plates
+      - chicken
+      - beef
+      - BBQ Platter
+      - BBQ
+      - patter	
       - Make Your Own Bowl
       - make your own bowl
+      - bowl
       - Falafel Sandwich
       - falafel sandwich
+      - falafel
       - Shish Kabob Plate
       - shish kabob plate	
       - Nacho Burger
       - nacho burger
+      - nacho
       - Mushroom Swiss Burger
       - mushroom swiss burger
+      - mushroom
+      - swiss
       - Chicken Shawarma Sandwich
+      - shawarma
       - chicken shawarma sandwich
       - Kafta Sandwich
       - kafta Sandwich
+      - kafta
+      - Beef Shawarma
+      - beef shawarma
       - Grilled Chicken Wrap
       - grilled chicken wrap
       - Grilled Stake Wrap
       - grilled stake wrap
+      - stake
       - Junior Tasty Burger	
       - junior tasty burger
+      - junior
       - Chicken Nuggets
       - chicken nuggets
+      - nuggets
       - Taystee Fish Burger
       - taystee fish burger
+      - fish
       - Baklava
       - baklava	
       - Cheese Burger
       - cheese burger
+      - cheese
       - Spicy Mc Crispy Burger
-      - spicy Mc crispy burger	
+      - spicy Mc crispy burger
+      - crispy burger
+      - spicy burger	
       - Zinger Burger
       - zinger burger	
+      - zinger
       - Chicken Burger
       - chicken burger
       - Taystee Vegan Burger
@@ -4646,13 +4746,161 @@ nlu:
       - beef shawarma	
       - Tannour Sandwich
       - tannour sandwich
+      - tannour
       - Whopper Sandwich
       - whopper sandwich
+      - whopper
       - Chicken Tenders
       - chicken tenders
       - Shawarma Salad
-      - shawarma salad	
-
+      - shawarma salad
+      - shawarma
+      - salad
+      - Burgers 
+      - hamburger, patty sandwich 
+      - round burger 
+      - Patty burger 
+      - chilli patty burger
+      - sub 
+      - bread 
+      - roll 
+      - patty 
+      - sandwich
+      - fold bread
+      - soft tortilla
+      - Plates
+      - Platter
+      - BBQ platter
+      - full of food
+      - dish
+      - tray
+      - Special item
+      - item of the day
+      - menu of the day
+      - today's special dish
+      - particular
+      - unique
+      - outstanding
+      - uncommon
+      - this day
+      - today
+      - food for children
+      - items for kids
+      - kids favorite
+      - little one, baby
+      - snacks for kids
+      - Drink
+      - Drinks
+      - soft drink
+      - cold drink
+      - bevarage
+      - cola
+      - soda
+      - soda water
+      - carbonated water
+      - Salad
+      - greens
+      - mixed green
+      - tossed salad
+      - fruit salad
+      - extras
+      - sides
+      - toppings
+      - Ingredients
+      - components
+      - part
+      - element
+      - Sweet tooth
+      - sweet dish
+      - second course
+      - junk
+      - Pizza pie
+      - calzone
+      - large pizza
+      - small pizza
+      - server
+      - bowl
+      - plate
+      - pane
+      - dish
+      - Enchilada
+      - tacos
+      - crunchy nachos
+      - mushroom burger
+      - swiss burger
+      - sauted mushroom burger
+      - small burger
+      - kids burger
+      - small patty burger
+      - fish burger
+      - sea food burger
+      - filet o fish burger
+      - fish patty burger
+      - hamburger
+      - beef cheese burger
+      - cheese hamburger
+      - crispy burger
+      - spicy chicken burger
+      - crispy chicken
+      - heavy coated
+      - zinger cheese burger
+      - chicken patty
+      - crispy chicken
+      - veggie burger
+      - vegetable burger
+      - falafels
+      - non veggie burger
+      - non meaty burger
+      - Shawarma
+      - Chicken Sandwich
+      - Shawarma Sandwich
+      - gyro
+      - kofta
+      - kebab
+      - kafta sandwich
+      - beef
+      - beefy
+      - beef shawarma
+      - tender beefy
+      - tender 
+      - juicy beef shawarma
+      - tannour sandwich
+      - sandwich
+      - Large burger
+      - giant burger
+      - whopper sandwich
+      - whopper
+      - chicken wrap
+      - chicken roll
+      - Barbeque roll
+      - Stakes
+      - grilled stakes
+      - Barbeque wrap
+      - BBQ Items
+      - BBQ plate
+      - Barbeque platter
+      - grilled items
+      - customized platter
+      - my own bowl
+      - small kids burger
+      - kids burger
+      - non spicy burger
+      - nuggets
+      - poppers
+      - chicken balls
+      - chicken meat balls
+      - crunchy chicken
+      - chicken chunks
+      - fried chicken
+      - crispy chicken
+      - chicken meat balls
+      - crispy meat balls
+      - sweet pastry
+      - baklava
+      - baklawa
+      - middle east sweet dish
+      - nutty pastry 
+  
   - lookup: size
     examples: |
      - standard
@@ -4698,7 +4946,27 @@ nlu:
       - Banana Shake
       - banana shake
       - Fresh Orange Juice
-      - fresh orange juice		
+      - fresh orange juice
+      - water
+      - big water bottle
+      - small water bottle
+      - pepsi cola
+      - cola
+      - black
+      - black soda
+      - sprite
+      - sevenup
+      - 7up
+      - white
+      - white soda
+      - banana smoothie
+      - smoothy
+      - smoothie
+      - smoothie with milk  
+      - smoothie with banana
+      - fresh juice
+      - orange pulp juice
+      - citrus juice 		
 
   - lookup: attribute
     examples: |
