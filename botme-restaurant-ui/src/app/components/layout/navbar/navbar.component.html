@@ -31,13 +31,13 @@
 <!--                  [class.active]="router.url=='/reservations'">RESERVATION</a>-->
 <!--              </li>-->
               <li *ngIf="_botMeClientService.getCookie().isLoggedIn" class="nav-item">
-                <a routerLink="product-search" id="ctaId-product-suggestions" class="nav-link"
-                      [class.active]="router.url=='/product-search'">PRODUCT SEARCH</a>
+                <a routerLink="search-product" id="ctaId-product-suggestions" class="nav-link"
+                      [class.active]="router.url=='/search-product'">SEARCH PRODUCT</a>
               </li>
-<!--              <li *ngIf="_botMeClientService.getCookie().isLoggedIn" class="nav-item">-->
-<!--                <a routerLink="order-types" id="ctaId-order-types" class="nav-link"-->
-<!--                   [class.active]="router.url=='/order-types'">ORDER TYPES</a>-->
-<!--              </li>-->
+              <li *ngIf="_botMeClientService.getCookie().isLoggedIn" class="nav-item">
+                <a routerLink="track-order" id="ctaId-order-types" class="nav-link"
+                   [class.active]="router.url=='/track-order'">TRACK ORDER</a>
+              </li>
 <!--              <li class="nav-item">-->
 <!--                <a routerLink="contact-us" id="ctaId-contact-us" class="nav-link"-->
 <!--                  [class.active]="router.url=='/contact-us'">CONTACT US</a>-->
@@ -58,7 +58,8 @@
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li *ngIf="_botMeClientService.getCookie().isLoggedIn"><a class="dropdown-item" routerLink="/profile">Profile</a></li>
-                    <li><a routerLink="/login" *ngIf="!_botMeClientService.getCookie().isLoggedIn" class="nav-link" type="button"><i style="font-size: x-large" class="flaticon-login"></i></a></li>
+                    <li *ngIf="!_botMeClientService.getCookie().isLoggedIn"><a routerLink="/bot-login" class="dropdown-item" type="button"><i style="font-size: large" class="flaticon-login"></i>&nbsp;Bot Login</a></li>
+                    <li *ngIf="!_botMeClientService.getCookie().isLoggedIn"><a routerLink="/login" class="dropdown-item" type="button"><i style="font-size: large" class="flaticon-login"></i>&nbsp;User Login</a></li>
                     <li *ngIf="_botMeClientService.getCookie().clientDebug === 'yes'"><a data-bs-toggle="modal" data-bs-target="#voiceTest"
                            class="dropdown-item" type="button">Voice Note</a></li>
                   </ul>

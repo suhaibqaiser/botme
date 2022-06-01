@@ -6,7 +6,7 @@
       <div class="col-sm-12 col-md-12 col-lg-12 pb-30">
         <div class="contact-item">
           <div class="contact-item-title text-center">
-            <h3 class="color-white">Product Search</h3>
+            <h3 class="color-white">SEARCH PRODUCT</h3>
             <div *ngIf="!isVoiceToggleOn()">
               <div class="form-group mt-3 mb-20">
                 <div class="input-group w-50 p-2 m-auto">
@@ -16,7 +16,7 @@
                 </div>
                 <div class="help-block with-errors"></div>
               </div>
-              <button (click)="sendSuggestion()" class="btn mt-3" type="submit">
+              <button (click)="sendSuggestion()" class="btn mt-3" type="button">
                 Enter
               </button>
             </div>
@@ -31,7 +31,7 @@
                 <strong class="text-capitalize">{{item.key}} : {{item.value}}</strong></div>
             </div>
 
-            <div *ngIf="!_productSuggestionService.loader && !_productSuggestionService.suggestedProductList.length" class="d-flex flex-wrap justify-content-center">
+            <div *ngIf="suggestionControl.value && !_productSuggestionService.loader && !_productSuggestionService.suggestedProductList.length" class="d-flex flex-wrap justify-content-center">
               <div class="text-white">
                 <strong>No suggestion found please retry!</strong></div>
             </div>

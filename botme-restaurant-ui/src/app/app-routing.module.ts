@@ -28,7 +28,7 @@ const routes: Routes = [
     canActivate: [AuthenticationGuard]
   },
   {
-    path: "login",
+    path: "bot-login",
     component: LoginComponent
   },
   {
@@ -74,16 +74,16 @@ const routes: Routes = [
     component: DemoPageComponent
   },
   {
-    path: "sign-up",
+    path: "bot-signup",
     component: SignupComponent
   },
   {
-    path: "product-search",
+    path: "search-product",
     component: SuggestionsComponent,
     canActivate: [AuthenticationGuard]
   },
   {
-    path: "order-types",
+    path: "track-order",
     component: OrderTypesComponent,
     canActivate: [AuthenticationGuard]
   }
