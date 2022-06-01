@@ -165,7 +165,7 @@ nlu:
       - show me good [wraps](suggestion) with [salads](addon) for [2](number) people
       - show me good [nacho](suggestion) with [fries](addon)
       - i want to eat [medium](size) [nacho burger](suggestion) with [light](flavour)
-      - suggest me some good [nacho] or [beef](suggestion) products
+      - suggest me some good [nacho](suggestion) or [beef](suggestion) products
       - I am here to have [medium](size) size [hamburger](suggestion) with [pepsi](drink)
       - Can I order an item [hamburger](suggestion)
       - Can i get [hamburgers](suggestion)
@@ -212,20 +212,31 @@ nlu:
       - Can you please place a meal for my daughter [little one](suggestion)
       - May I order some items for my kids as [baby](suggestion)
       - Can I order for my children [food for children](suggestion)
-      - i want to order [nacho burger](productName) with [fries](addon) and [pickle](ingredients)
-      - i want to order [chicken burger](productName) with [fries](addon) and [garlic sauce](ingredients)
-      - i want to eat [cheese burger](productName) with [salad](addon) and [lettuce](ingredients)
-      - i want to order [falafel sandwich](productName) with [coleslaw](addon) and [lettuce](ingredients)
-      - i want to order [nacho burger](productName) with [pepsi](addon) and [garlic sauce](ingredients)
-      - i want to eat [chicken burger](productName) with [sprite](addon) and [cheese](ingredients)
+      - i want to order [nacho burger](suggestion) with [fries](addon) and [pickle](ingredients)
+      - i want to order [chicken burger](suggestion) with [fries](addon) and [garlic sauce](ingredients)
+      - i want to eat [cheese burger](suggestion) with [salad](addon) and [lettuce](ingredients)
+      - i want to order [falafel sandwich](suggestion) with [coleslaw](addon) and [lettuce](ingredients)
+      - i want to order [nacho burger](suggestion) with [pepsi](addon) and [garlic sauce](ingredients)
+      - i want to eat [chicken burger](suggestion) with [sprite](addon) and [cheese](ingredients)
       - we are [six](number) people looking for good [sandwich](suggestion) with [coleslaw](addon) and [pepsi](drink)
       - we are [4](number) people looking for good [burgers](suggestion) with [spicy potato](addon) and [sprite](drink)
       - we are [six](number) people looking for good [sandwich](suggestion) with [spicy potato](addon) and [pepsi](drink)
       - we are [twp](number) persons looking for good [wraps](suggestion) with [spicy potato](addon) and [pepsi](drink)
+      - i want to order [medium](size) size [nacho burger](suggestion)
+      - suggest me some good [standard](size) size [sandwich](suggestion)
+      - i want to order [nacho burger](suggestion) with [spicy](flavour) 
+      - i want to eat [cheese burger](suggestion) with [chicken](flavour)
+      - i want to eat [cheese burger](suggestion) with [beef](flavour)
+      - i want to have [falafel sandwich](suggestion) with [falfel](flavour)
+      - i want to order [mushroom swiss burger](suggestion) with [lamb](flavour)
+      - i want to eat [mushroom swiss burger](suggestion) with [fish](flavour)
+      - i want to have [mushroom swiss burger](suggestion) with [chicken](flavour)
+      - suggest me some good [burger](suggestion) with [beef](flavour)
+      - suggest me some good [wrap](suggestion) with [chicken](flavour)
 
   - intent : meal_time
     examples: |
-      - what's in the [lunch](offeringTime) 
+      - what's in the [lunch](offeringTime)
       - show me [dinner](offeringTime) item
       - i want to see the [breakfast](offeringTime) item
       - food for [dinner](offeringTime)
@@ -293,6 +304,11 @@ nlu:
       - show me top products of your restaurant
       - i want to see your special items
       - show me your restaurant speciality
+      - what is your restaurant speciality
+      - show us your special products
+      - whats special today
+      - 
+
 
   - intent: serving_time
     examples: |
@@ -4690,6 +4706,22 @@ nlu:
       - halal
       - vegan
       - vegetarian
+
+  - lookup: size
+    examples: |
+      - standard
+      - small
+      - medium
+      - large
+  
+  - lookup: flavour
+    examples: |
+      - chicken
+      - beef
+      - spicy
+      - lamb
+      - falafel
+      - fish
 
   - lookup: number   
     examples: |
