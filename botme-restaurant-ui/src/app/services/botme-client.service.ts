@@ -15,43 +15,35 @@ export class BotmeClientService {
   botMeClientBaseURL = environment.botMeClientAPI;
   deviceInfo: any;
 
+  headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${'ea2d3aeaad77865f9769974a920892f5'}`
+  })
+
   constructor(private deviceService: DeviceDetectorService, private cookieService: CookieService, private http: HttpClient) {
 
   }
 
   loginBotMeClientApi(obj: any): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${'ea2d3aeaad77865f9769974a920892f5'}`
-    })
     const url = `${this.botMeClientBaseURL}/client/auth`;
     //
     console.log(JSON.parse(JSON.stringify(obj.clientSecret)))
     obj.clientSecret = Md5.hashStr(JSON.parse(JSON.stringify(obj.clientSecret)))
     //
-    return this.http.post(url, obj, {headers: headers});
+    return this.http.post(url, obj, {headers: this.headers});
   }
 
   verifyClientAccount(verification_token: any = '', clientID: any = '') {
 
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${'ea2d3aeaad77865f9769974a920892f5'}`
-    })
-
     const url = `${this.botMeClientBaseURL}/client/verifyAccount?verification_token=${verification_token}&clientID=${clientID}`;
 
-    return this.http.get(url, {headers: headers});
+    return this.http.get(url, {headers: this.headers});
   }
 
   logutAPI(sessionId: any): Observable<any> {
     let body = {sessionId: sessionId}
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${'ea2d3aeaad77865f9769974a920892f5'}`
-    })
     const url = `${this.botMeClientBaseURL}/session/logoutSession`;
-    return this.http.post(url, body, {headers: headers});
+    return this.http.post(url, body, {headers: this.headers});
   }
 
   getCookie() {
@@ -92,14 +84,20 @@ export class BotmeClientService {
   }
 
   signupBotMeClientApi(obj: any): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${'ea2d3aeaad77865f9769974a920892f5'}`
-    })
+
     const url = `${this.botMeClientBaseURL}/client/register`;
     //
     obj.clientSecret = Md5.hashStr(obj.clientSecret)
     //
-    return this.http.put(url, obj, {headers: headers});
+    return this.http.put(url, obj, {headers: this.headers});
+  }
+
+  /**
+   * getting the device by id
+   * @param id
+   */
+  getDeviceById(id: any = ''): Observable<any> {
+    const url = `${this.botMeClientBaseURL}/device/detail?deviceId=${id}`;
+    return this.http.get(url, {headers: this.headers});
   }
 }

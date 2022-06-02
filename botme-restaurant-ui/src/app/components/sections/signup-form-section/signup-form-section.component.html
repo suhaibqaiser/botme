@@ -37,8 +37,8 @@
                   <input required type="text" formControlName="clientDeviceId" class="form-control"
                          placeholder="client device id*"/>
                 </div>
-                <span style="color: red;margin-left: 20px;"
-                      *ngIf="!signupForm.controls['clientDeviceId'].valid && signupForm.controls['clientDeviceId'].touched">{{_helperService.getRequiredCheckError(signupForm, 'clientDeviceId', _helperService.fieldErrorsCheckTypes.required, ['Client device id is required.'])}}</span>
+                <span style="color: #24AF95;margin-left: 20px;" *ngIf="checkDeviceIdLoader">Checking your device id....</span>
+                <span style="color: red;margin-left: 20px;" *ngIf="!signupForm.controls['clientDeviceId'].valid && signupForm.controls['clientDeviceId'].touched">{{_helperService.getRequiredCheckError(signupForm, 'clientDeviceId', _helperService.fieldErrorsCheckTypes.required, ['Client device id is required.'])}}</span>
               </div>
             </div>
             <div class="col-sm-12 col-md-6">

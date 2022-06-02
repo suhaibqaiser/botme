@@ -20,17 +20,16 @@ async function getDeviceList(req, res) {
     response.status = "error";
     return res.status(404).send(response);
   }
-} 
+}
 
 // Display specific device details
 async function getDeviceDetails(req, res) {
   let response = new Response();
 
   if (!req.query.deviceId) {
-    response.payload = {
-      message: 'deviceId is required'
-    };
-    return res.status(400).send(response);
+    response.status = "danger";
+    response.message= "Device id is required."
+    return res.json(response);
   }
 
   let device = await deviceService.getDeviceById(req.query.deviceId);
@@ -38,13 +37,15 @@ async function getDeviceDetails(req, res) {
   if (device) {
     response.payload = device;
     response.status = "success";
-    return res.status(200).send(response);
+    response.message= "Your Device Id verified!"
+    return res.json(response);
   } else {
     response.payload = "Device not found";
-    response.status = "error";
-    return res.status(404).send(response);
+    response.status = "danger";
+    response.message= "Opps! invalid device id."
+    return res.json(response);
   }
-} 
+}
 
 // Create new device
 async function addDevice(req, res) {
@@ -80,12 +81,12 @@ async function addDevice(req, res) {
     response.status = "success";
     return res.status(200).send(response);
   }
-  
+
   response.payload = "Error in saving device";
   response.status = "error";
   return res.status(404).send(response);
-  
-} 
+
+}
 
 // Update device
 async function updateDevice(req, res) {
@@ -110,7 +111,7 @@ async function updateDevice(req, res) {
     response.status = "error";
     return res.status(400).send(response);
   }
-} 
+}
 
 // Delete device
 async function deleteDevice(req, res) {
