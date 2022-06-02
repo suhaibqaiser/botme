@@ -6,9 +6,9 @@ const router = express.Router();
 const device_controller = require('../controllers/deviceController'); // GET request for all Device list.
 
 
-router.get('/list', device_controller.getDeviceList); // GET request for one Device.
+router.get('/list', device_controller.getDeviceList); // GET all Devices details.
 
-router.get('/detail', device_controller.getDeviceDetails); // PUT request for registering Device.
+router.get('/detail', device_controller.getDeviceDetails); // Get device detail on deviceId.
 
 router.put('/register', device_controller.addDevice); // POST request to update device.
 
