@@ -46,11 +46,11 @@ export class SugestionSectionComponent implements OnInit {
       return
     }
     this._productSuggestionService.suggestedProductList = []
-    const isVoiceToggleOn = (this._clientService.getCookie() && this._clientService.getCookie().isVoiceToggleOn === 'false') ? false : true
-    if (!isVoiceToggleOn) {
+    // const isVoiceToggleOn = (this._clientService.getCookie() && this._clientService.getCookie().isVoiceToggleOn === 'false') ? false : true
+    // if (!isVoiceToggleOn) {
       this._productSuggestionService.loader = true
       this._socketService.sendMessage('communication', this.suggestionControl.value)
-    }
+    // }
   }
 
   isVoiceToggleOn() {

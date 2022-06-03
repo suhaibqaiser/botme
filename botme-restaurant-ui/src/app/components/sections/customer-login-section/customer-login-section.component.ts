@@ -1,16 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {BotmeClientService} from "../../../services/botme-client.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
+import {BotmeClientService} from "../../../services/botme-client.service";
 import {ToastService} from "../../../services/toast.service";
+import {Router} from "@angular/router";
 import {HelperService} from "../../../services/helper.service";
 
 @Component({
-  selector: 'app-login-form',
-  templateUrl: './login-form.component.html',
-  styleUrls: ['./login-form.component.scss']
+  selector: 'app-customer-login-section',
+  templateUrl: './customer-login-section.component.html',
+  styleUrls: ['./customer-login-section.component.scss']
 })
-export class LoginFormComponent implements OnInit {
+export class CustomerLoginSectionComponent implements OnInit {
   loginForm = new FormGroup({
     clientID: new FormControl('', [Validators.required]),
     clientSecret: new FormControl('', [Validators.required]),
@@ -18,7 +18,7 @@ export class LoginFormComponent implements OnInit {
   })
   loader = false
 
-  constructor(private _toastService: ToastService, public _botMeClientService: BotmeClientService, public router: Router, public _helperService: HelperService) {
+  constructor(private router: Router, private _toastService: ToastService, private _botMeClientService: BotmeClientService, public _helperService: HelperService) {
   }
 
   ngOnInit(): void {

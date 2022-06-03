@@ -2,23 +2,23 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {HelperService} from "../../../services/helper.service";
 import {ToastService} from "../../../services/toast.service";
-import {BotmeClientService} from "../../../services/botme-client.service";
 import {Router} from "@angular/router";
-import {debounceTime, tap, switchMap, finalize} from 'rxjs/operators';
+import {BotmeClientService} from "../../../services/botme-client.service";
 
 @Component({
-  selector: 'app-signup-form-section',
-  templateUrl: './signup-form-section.component.html',
-  styleUrls: ['./signup-form-section.component.scss']
+  selector: 'app-customer-signup-section',
+  templateUrl: './customer-signup-section.component.html',
+  styleUrls: ['./customer-signup-section.component.scss']
 })
-export class SignupFormSectionComponent implements OnInit {
+export class CustomerSignupSectionComponent implements OnInit {
 
   signupForm = new FormGroup({
     clientActive: new FormControl(false, [Validators.required]),
     clientComment: new FormControl('restaurant ui', [Validators.required]),
     clientCreated: new FormControl(new Date(), Validators.required),
     clientDebug: new FormControl(false, Validators.required),
-    clientDeviceId: new FormControl('', Validators.required),
+    clientDeviceId: new FormControl(''),
+    clientType: new FormControl('customer'),
     clientID: new FormControl('', Validators.required),
     clientName: new FormControl('', Validators.required),
     clientSecret: new FormControl('', Validators.required),
@@ -29,20 +29,15 @@ export class SignupFormSectionComponent implements OnInit {
     restaurantId: new FormControl('', Validators.required),
     clientEmail: new FormControl('', [Validators.required, this._helperService.checkEmailRegex]),
     confirmClientEmail: new FormControl('', [Validators.required, this._helperService.checkEmailRegex]),
-    clientSecretHint: new FormControl('', Validators.required),
-    clientType: new FormControl('bot'),
+    clientSecretHint: new FormControl('', Validators.required)
   })
-
   loader: Boolean = false
-  checkDeviceIdLoader: Boolean = false
-  isDeviceVerified: Boolean = false
 
-  constructor(private router: Router, private _botMeClientService: BotmeClientService, public _helperService: HelperService, private _toastService: ToastService) {
+  constructor(private _botMeClientService: BotmeClientService, private router: Router, private _toastService: ToastService, public _helperService: HelperService) {
     this.signupForm.get('restaurantId')?.setValue(this._helperService.getRestaurantIdOnAuthBasis())
   }
 
   ngOnInit(): void {
-    this.checkDeviceId()
   }
 
   signUp() {
@@ -58,14 +53,6 @@ export class SignupFormSectionComponent implements OnInit {
     if (!this.signupForm.controls['clientID'].value) {
       this._toastService.setToast({
         description: 'Client id is required!',
-        type: 'danger'
-      })
-      return
-    }
-
-    if (!this.signupForm.controls['clientDeviceId'].value) {
-      this._toastService.setToast({
-        description: 'Client device id is required!',
         type: 'danger'
       })
       return
@@ -160,14 +147,6 @@ export class SignupFormSectionComponent implements OnInit {
       return
     }
 
-    if (!this.isDeviceVerified) {
-      this._toastService.setToast({
-        description: 'Oops your device id is ot verified.',
-        type: 'danger'
-      })
-      return;
-    }
-
     this.loader = true
 
     this._botMeClientService.signupBotMeClientApi(this.signupForm.value).subscribe(
@@ -178,7 +157,7 @@ export class SignupFormSectionComponent implements OnInit {
         })
         setTimeout(() => {
           if (res.status === 'success') {
-            this.router.navigate(['/login']).then(() => {
+            this.router.navigate(['/customer-login']).then(() => {
               window.location.reload();
             });
           }
@@ -187,30 +166,4 @@ export class SignupFormSectionComponent implements OnInit {
         this.loader = false
       })
   }
-
-  checkDeviceId() {
-    this.signupForm.get('clientDeviceId')?.valueChanges
-      .pipe(
-        debounceTime(500),
-        tap(() => {
-          this.checkDeviceIdLoader = true
-        }),
-        switchMap(value => this._botMeClientService.getDeviceById(value)
-          .pipe(
-            finalize(() => {
-              this.checkDeviceIdLoader = false
-            })
-          )
-        )
-      ).subscribe(
-      (res => {
-        this._toastService.setToast({
-          description: res.message,
-          type: res.status
-        })
-        this.isDeviceVerified = res.status === 'success'
-      })
-    )
-  }
-
 }

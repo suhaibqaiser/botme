@@ -79,6 +79,10 @@ import { SignupComponent } from './components/pages/signup/signup.component';
 import { SignupFormSectionComponent } from './components/sections/signup-form-section/signup-form-section.component';
 import { SuggestionsComponent } from './components/pages/suggestions/suggestions.component';
 import { OrderTypesComponent } from './components/pages/order-types/order-types.component';
+import { CustomerSignupComponent } from './components/pages/customer-signup/customer-signup.component';
+import { CustomerSignupSectionComponent } from './components/sections/customer-signup-section/customer-signup-section.component';
+import { CustomerLoginComponent } from './components/pages/customer-login/customer-login.component';
+import { CustomerLoginSectionComponent } from './components/sections/customer-login-section/customer-login-section.component';
 
 @NgModule({
   declarations: [
@@ -136,7 +140,11 @@ import { OrderTypesComponent } from './components/pages/order-types/order-types.
     SignupComponent,
     SignupFormSectionComponent,
     SuggestionsComponent,
-    OrderTypesComponent
+    OrderTypesComponent,
+    CustomerSignupComponent,
+    CustomerSignupSectionComponent,
+    CustomerLoginComponent,
+    CustomerLoginSectionComponent
   ],
   imports: [
     BrowserModule,
