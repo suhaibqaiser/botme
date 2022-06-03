@@ -63,5 +63,9 @@ export class AuthenticationService {
     return localStorage.getItem('restaurantId');
   }
 
+  getDeviceId(): string | null {
+    return localStorage.getItem('deviceId');
+  }
+
 
 }

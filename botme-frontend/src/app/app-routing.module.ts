@@ -49,13 +49,14 @@ const routes: Routes = [
       {
         path: 'client',
         canActivate: [AuthGuard],
-        data: { pageTitle: 'Clients' },
-        loadChildren: () => import('./modules/robot/clients/clients.module').then(m => m.ClientsModule)
+        data: { pageTitle: 'Clients', breadcrumb: {skip:true} },
+        loadChildren: () => import('./modules/robot/clients/clients.module').then(m => m.ClientsModule),
       },
       {
         path: 'session',
         canActivate: [AuthGuard],
-        data: { pageTitle: 'Sessions' },
+        data: { pageTitle: 'Sessions'
+       },
         loadChildren: () => import('./modules/robot/sessions/sessions.module').then(m => m.SessionsModule)
       },
       {

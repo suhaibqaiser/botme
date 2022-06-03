@@ -24,6 +24,7 @@
     "body-parser": "^1.19.2",
     "element-resize-detector": "^1.1.14",
     "express": "^4.17.3",
+    "ng-dynamic-breadcrumb": "^5.0.1",
     "primeicons": "^4.0.0",
     "primeng": "^11.4.2",
     "rxjs": "~6.6.0",

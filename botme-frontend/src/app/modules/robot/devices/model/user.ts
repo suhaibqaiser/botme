@@ -1,13 +1,8 @@
 export interface User {
-    userId: string,
-    userName: string,
-    userSecret: string,
-    userFullName: string,
-    userEmail: string,
-    userToken: string,
-    userCreated: Date,
-    userUpdated: Date | null,
-    userActive: boolean,
-    userComment: string,
-    restaurantId: string
+    deviceName: string,
+    deviceLabel: string,
+    deviceType: string,
+    deviceActive: boolean,
+    deviceDescription: string,
+    
 }
