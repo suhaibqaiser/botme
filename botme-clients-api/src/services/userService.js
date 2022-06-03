@@ -24,4 +24,8 @@ async function updateUser(user) {
     return User.findOneAndUpdate({ userId: user.userId }, user, { new: true })
 }
 
-module.exports = ({ getUserByUsername, getUsers, getUsersByRestaurantId, updateUser, addUser, getUserByUserId })
+async function getUsersByEmail(userEmail) {
+    return User.findOne({ userEmail: userEmail }, { _id: 0, __v: 0 });
+}
+
+module.exports = ({ getUserByUsername, getUsers, getUsersByRestaurantId, updateUser, addUser, getUserByUserId, getUsersByEmail })

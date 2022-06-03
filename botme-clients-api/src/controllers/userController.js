@@ -117,4 +117,30 @@ async function updateUser(req, res) {
     }
 }
 
-module.exports = ({ getUsers, getUserByUsername, addUser, updateUser, getUserById })
+async function getUserByEmail(req, res) {
+    let response = new Response()
+
+    if (!req.query.userEmail) {
+        response.payload = "Email is required"
+        response.status = "error"
+        return res.status(400).send(response)
+    }
+
+    let users = await userService.getUsersByEmail(req.query.userEmail)
+
+    if (users) {
+        response.payload = users
+        response.status = "success"
+        return res.status(200).send(response)
+    } else {
+        response.payload = "User not found"
+        response.status = "error"
+        return res.status(404).send(response)
+    }
+}
+
+
+
+
+
+module.exports = ({ getUsers, getUserByUsername, addUser, updateUser, getUserById, getUserByEmail })

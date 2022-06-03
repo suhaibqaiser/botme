@@ -28,7 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/client', verifyToken, clientsRouter);
 app.use('/session', verifyToken, sessionRouter);
 app.use('/conversation', verifyToken, conversationRouter);
-app.use('/user', verifyToken, userRouter);
+app.use('/user', userRouter);
 app.use('/nlp', verifyToken, nlpRouter);
 app.use('/speech', speechRouter);
 app.use('/auth', authRouter);
