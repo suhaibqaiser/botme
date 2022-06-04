@@ -1,6 +1,5 @@
 import {Request, Response} from "express";
 import {DoSubscription, OrderNotification,testNotification} from "./controller";
-import {deleteAllSubscription} from "./service";
 import {GetAllSubscription,deleteSubscription} from "./service";
 
 export default [

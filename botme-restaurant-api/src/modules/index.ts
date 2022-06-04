@@ -9,6 +9,7 @@ import orderRouter from "./food/order/router"
 import commandApiRouter from "./tests/command-api/router"
 import notificationsRouter from "./notification/order-notification/router"
 import SummaryNotificationRouter from "./notification/summary-notification/router"
+import emailRouter from "./notification/email/router"
 
 export default [
     ...customerRouter,
@@ -21,5 +22,6 @@ export default [
     ...orderRouter,
     ...commandApiRouter,
     ...notificationsRouter,
-    ...SummaryNotificationRouter
+    ...SummaryNotificationRouter,
+    ...emailRouter
 ];
