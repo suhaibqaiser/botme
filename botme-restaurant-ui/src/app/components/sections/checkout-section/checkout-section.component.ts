@@ -162,10 +162,6 @@ export class CheckoutSectionComponent implements OnInit {
     let customerId = this.customerForm.controls['customerId'].value
     if (!customerId && !customerId.length) {
       await this._customerService.addCustomer(this.customerForm.value).subscribe((res: any) => {
-        this._toastService.setToast({
-          description: res.message,
-          type: res.status
-        })
         if (res.status === 'success') {
           this._clientService.setCookie('customerId', res.payload.customerId)
           $('#checkout_modal').modal('show')

@@ -207,7 +207,7 @@ export async function addCart(obj: any, filter: any) {
                 cartResult = JSON.parse(JSON.stringify(cartResult))
                 response.payload = {order: orderResult, cart: cartResult}
                 response.status = "success"
-                response.message = 'Your order successfully placed.'
+                response.message = 'Item added to cart.'
                 return response
             } else {
                 response.message = "Failed add to cart."
@@ -300,7 +300,7 @@ export async function updateOrderStatus(filter: any, body: any) {
         }
 
 
-        response.message = 'Order Status updated.'
+        response.message = 'Your order placed successfully.'
         response.status = "success"
         return response
     } catch (e: any) {
