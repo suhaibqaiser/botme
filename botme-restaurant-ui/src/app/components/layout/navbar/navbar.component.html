@@ -59,7 +59,7 @@
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li *ngIf="_botMeClientService.getCookie().isLoggedIn"><a class="dropdown-item" routerLink="/profile">Profile</a></li>
                     <li *ngIf="!_botMeClientService.getCookie().isLoggedIn"><a routerLink="/bot-login" class="dropdown-item" type="button"><i style="font-size: large" class="flaticon-login"></i>&nbsp;Bot Login</a></li>
-                    <li *ngIf="!_botMeClientService.getCookie().isLoggedIn"><a routerLink="/customer-login" class="dropdown-item" type="button"><i style="font-size: large" class="flaticon-login"></i>&nbsp;User Login</a></li>
+                    <li *ngIf="!_botMeClientService.getCookie().isLoggedIn"><a routerLink="/customer-login" class="dropdown-item" type="button"><i style="font-size: large" class="flaticon-login"></i>&nbsp;Customer Login</a></li>
                     <li *ngIf="_botMeClientService.getCookie().clientDebug === 'yes'"><a data-bs-toggle="modal" data-bs-target="#voiceTest"
                            class="dropdown-item" type="button">Voice Note</a></li>
                   </ul>
