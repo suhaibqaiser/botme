@@ -379,4 +379,8 @@ export class HelperService {
   getProductTopping(list: any = []) {
     return list && list.filter((item: any) => (item.selected)).map((a: any) => a.productName)
   }
+
+  checkAuthAndRedirect(redirect:any = '') {
+    return this._clientService.getCookie() && this._clientService.getCookie().isLoggedIn ? redirect : '/customer-signup'
+  }
 }

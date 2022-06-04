@@ -76,40 +76,44 @@
       <!--        </div>-->
       <!--      </div>-->
       <div class="col-sm-12 col-md-12 col-lg-12">
-<!--        <div *ngIf="_clientService.getCookie().isLoggedIn || this._clientService.getCookie().orderType"-->
-<!--             class="cart-update text-center cart-info-item">-->
-<!--          <a *ngIf="cartService.cartProduct && cartService.cartProduct.length" id="ctaId-order-now"-->
-<!--             (click)="placeOrder()" class="btn">-->
-<!--            Order Now-->
-<!--            <div *ngIf="loader" class="spinner-border spinner-border-sm ml-3 text-warning"-->
-<!--                 role="status">-->
-<!--              <span class="visually-hidden">Loading...</span>-->
-<!--            </div>-->
-<!--          </a>-->
-<!--        </div>-->
-<!--        <div *ngIf="!_clientService.getCookie().isLoggedIn && !this._clientService.getCookie().orderType"-->
-<!--             class="cart-update text-center cart-info-item">-->
-<!--          <a *ngIf="cartService.cartProduct && cartService.cartProduct.length" (click)="openModal()"-->
-<!--             id="ctaId-order-now"-->
-<!--             class="btn">-->
-<!--            select order type-->
-<!--          </a>-->
-<!--        </div>-->
+        <!--        <div *ngIf="_clientService.getCookie().isLoggedIn || this._clientService.getCookie().orderType"-->
+        <!--             class="cart-update text-center cart-info-item">-->
+        <!--          <a *ngIf="cartService.cartProduct && cartService.cartProduct.length" id="ctaId-order-now"-->
+        <!--             (click)="placeOrder()" class="btn">-->
+        <!--            Order Now-->
+        <!--            <div *ngIf="loader" class="spinner-border spinner-border-sm ml-3 text-warning"-->
+        <!--                 role="status">-->
+        <!--              <span class="visually-hidden">Loading...</span>-->
+        <!--            </div>-->
+        <!--          </a>-->
+        <!--        </div>-->
+        <!--        <div *ngIf="!_clientService.getCookie().isLoggedIn && !this._clientService.getCookie().orderType"-->
+        <!--             class="cart-update text-center cart-info-item">-->
+        <!--          <a *ngIf="cartService.cartProduct && cartService.cartProduct.length" (click)="openModal()"-->
+        <!--             id="ctaId-order-now"-->
+        <!--             class="btn">-->
+        <!--            select order type-->
+        <!--          </a>-->
+        <!--        </div>-->
 
         <div *ngIf="!_clientService.getCookie().isLoggedIn" style="width: 49%" class="cart-details m-auto mt-5">
           <h3 class="cart-details-title text-center color-white">Select Order Type</h3>
           <form>
             <div class="d-flex justify-content-around mt-2 align-items-center cart-check-box">
               <div>
-                <input (change)="selectOrderType( 'dine_in')" [checked]="_clientService.getCookie().orderType === 'dine_in'" type="radio" name="1" id="reservation">
+                <input (change)="selectOrderType( 'dine_in')"
+                       [checked]="_clientService.getCookie().orderType === 'dine_in'" type="radio" name="1"
+                       id="reservation">
                 <label for="reservation">Reservation</label>
               </div>
               <div>
-                <input [checked]="_clientService.getCookie().orderType === 'pick_up'" (change)="selectOrderType('pick_up')" type="radio" name="1" id="pick_up">
+                <input [checked]="_clientService.getCookie().orderType === 'pick_up'"
+                       (change)="selectOrderType('pick_up')" type="radio" name="1" id="pick_up">
                 <label for="pick_up">Pick Up</label>
               </div>
               <div>
-                <input [checked]="_clientService.getCookie().orderType === 'delivery'" (change)="selectOrderType('delivery')" type="radio" name="1" id="delivery">
+                <input [checked]="_clientService.getCookie().orderType === 'delivery'"
+                       (change)="selectOrderType('delivery')" type="radio" name="1" id="delivery">
                 <label for="delivery">Delivery</label>
               </div>
             </div>
@@ -119,6 +123,55 @@
 
       </div>
     </div>
+
+    <div class="contact-us-section pb-5bg-black">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12 col-md-12 col-lg-12 pb-30">
+            <div class="contact-item">
+              <div class="contact-item-title text-center">
+                <h3 class="color-white">Order Types</h3>
+              </div>
+              <div class="container order-types-main">
+                <div class="row">
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div (click)="selectOrderType('dine_in')"
+                         [class.active-order-type]="_orderService.selectedOrderButtons['dine_in']"
+                         class="card mb-2 text-center">
+                      <div class="card-body">
+                        <i class="fas fa-utensils"></i>
+                        <h5 class="card-title">Dine In</h5>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div (click)="selectOrderType('pick_up')"
+                         [class.active-order-type]="_orderService.selectedOrderButtons['pick_up']"
+                         class="card mb-2 text-center">
+                      <div class="card-body">
+                        <i class="fas fa-truck-pickup"></i>
+                        <h5 class="card-title">Pick Up</h5>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div (click)="selectOrderType('delivery')"
+                         [class.active-order-type]="_orderService.selectedOrderButtons['delivery']"
+                         class="card mb-2 text-center">
+                      <div class="card-body">
+                        <i class="fas fa-truck"></i>
+                        <h5 class="card-title">Delivery</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="row">
       <div class="col-sm-12 col-md-8 col-lg-6 pb-30 offset-lg-3 offset-md-2">
         <div class="cart-details mt-20">
@@ -163,31 +216,3 @@
     </div>
   </div>
 </section>
-
-
-<!-- order ype -->
-<div  class="modal fade" id="order_type_modal" tabindex="-1" aria-labelledby="order_type_modal" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title m-auto text-capitalize" id="exampleModalLabel">Order Type</h3>
-      </div>
-      <div class="modal-body p-5 text-center">
-        <h5 class="mb-3">Select your order type</h5>
-        <div class="form-group">
-          <div style="padding: 5px 10px;border-style: solid" class="input-group text-center">
-            <select (change)="_clientService.setCookie('orderType', orderType.value)" style="color: black"
-                    class="form-control" [formControl]="orderType">
-              <option value="pick_up">Pick Up</option>
-              <option value="delivery">Delivery</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer justify-content-between">
-        <a type="button" style="padding: 10px" class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
-        <a (click)="placeOrder()" type="button" style="padding: 10px" class="btn btn-primary">Order Now</a>
-      </div>
-    </div>
-  </div>
-</div>

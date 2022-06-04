@@ -13,7 +13,7 @@
           <div class="form-group mb-20">
             <div class="input-group mb-1">
               <input required type="text" formControlName="clientID" class="form-control"
-                     placeholder="Client Id"/>
+                     placeholder="Customer Id"/>
             </div>
             <span style="color: red;margin-left: 20px;"
                   *ngIf="!loginForm.controls['clientID'].valid && loginForm.controls['clientID'].touched">{{_helperService.getRequiredCheckError(loginForm, 'clientID', _helperService.fieldErrorsCheckTypes.required, ['Client Id is required.'])}}</span>
@@ -21,7 +21,7 @@
           <div class="form-group mb-20">
             <div class="input-group">
               <input required type="password" formControlName="clientSecret" class="form-control"
-                     placeholder="Client Secret"/>
+                     placeholder="Customer Secret"/>
             </div>
             <span style="color: red;margin-left: 20px;"
                   *ngIf="!loginForm.controls['clientSecret'].valid && loginForm.controls['clientSecret'].touched">{{_helperService.getRequiredCheckError(loginForm, 'clientSecret', _helperService.fieldErrorsCheckTypes.required, ['Client Secret is required.'])}}</span>

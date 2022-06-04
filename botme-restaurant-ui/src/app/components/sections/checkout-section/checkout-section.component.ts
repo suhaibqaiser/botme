@@ -120,7 +120,7 @@ export class CheckoutSectionComponent implements OnInit {
 
   }
 
-  addCustomer() {
+  async addCustomer() {
     if (this._clientService.getCookie().orderType === 'dine_in') {
       if (this.customerForm.controls['reservationSeats'].value <= 0) {
         this._toastService.setToast({
@@ -161,7 +161,7 @@ export class CheckoutSectionComponent implements OnInit {
     this.loader = true
     let customerId = this.customerForm.controls['customerId'].value
     if (!customerId && !customerId.length) {
-      this._customerService.addCustomer(this.customerForm.value).subscribe((res: any) => {
+      await this._customerService.addCustomer(this.customerForm.value).subscribe((res: any) => {
         this._toastService.setToast({
           description: res.message,
           type: res.status
@@ -169,15 +169,23 @@ export class CheckoutSectionComponent implements OnInit {
         if (res.status === 'success') {
           this._clientService.setCookie('customerId', res.payload.customerId)
           $('#checkout_modal').modal('show')
-          this._cartService.addToCart(this._cartService.cartProduct, 'add_db')
-          setTimeout(() => {
+          // this._cartService.addToCart(this._cartService.cartProduct, 'add_db')
+          setTimeout(async () => {
+
+           await this._menuService.updateOrderStatus(this._helperService.getOrderStatus('notified')).subscribe((res: any) => {
+              this._toastService.setToast({
+                description: res.message,
+                type: res.status
+              })
+            })
+
             let obj = {
               customerName: res.payload.customerName,
               orderId: this._clientService.getCookie().orderLabel,
               total: this._cartService.getSubTotal(),
               orderType: this._clientService.getCookie().orderType
             }
-            this._menuService.pushNotification(obj).subscribe((res: any) => {
+           await this._menuService.pushNotification(obj).subscribe((res: any) => {
               console.log('notification pushed =>', res)
             })
           }, 2000)
@@ -192,7 +200,7 @@ export class CheckoutSectionComponent implements OnInit {
         description: res.message,
         type: res.status
       })
-      this._cartService.addToCart(this._cartService.cartProduct, 'edit_db')
+      // this._cartService.addToCart(this._cartService.cartProduct, 'edit_db')
       this.loader = false
     })
   }
@@ -247,11 +255,11 @@ export class CheckoutSectionComponent implements OnInit {
   }
 
   close() {
-    this._clientService.reSetCookie()
-    this._cartService.cartProduct = []
+    this._clientService.getCookie().orderType = ""
+    this._clientService.getCookie().orderLabel = ""
     localStorage.clear()
     $('#checkout_modal').modal('hide')
-    this._router.navigate(['/online-shop'])
+    this._router.navigate(['/home'])
   }
 
 }
