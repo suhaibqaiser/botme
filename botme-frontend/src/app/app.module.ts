@@ -31,6 +31,10 @@ import {HelperService} from "./services/helper.service";
 import {ToggleButtonModule} from 'primeng/togglebutton';
 import { ForgotComponent } from './components/pages/forgot/forgot.component';
 import { SignupComponent } from './components/pages/signup/signup.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import {NgDynamicBreadcrumbModule} from "ng-dynamic-breadcrumb";
+
+
 
 @NgModule({
   declarations: [
@@ -62,7 +66,9 @@ import { SignupComponent } from './components/pages/signup/signup.component';
     InplaceModule,
     InputSwitchModule,
     RestaurantModule,
-    ToggleButtonModule
+    ToggleButtonModule,
+    NgDynamicBreadcrumbModule,
+    ReactiveFormsModule
   ],
   providers: [HelperService, Title, AuthGuard, {
     provide: HTTP_INTERCEPTORS,

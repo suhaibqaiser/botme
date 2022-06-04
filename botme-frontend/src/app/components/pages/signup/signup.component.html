@@ -1,0 +1,56 @@
+<body class="login-page" style="min-height: 512.8px;">
+
+    <div class="container-fluid p-h-0 p-v-20 bg full-height d-flex"
+         style="background-image: url('assets/images/others/login-3.png')">
+      <div class="d-flex flex-column justify-content-between w-100">
+        <div class="container d-flex h-100">
+          <div class="row align-items-center w-100">
+            <div class="col-md-7 col-lg-5 m-h-auto">
+              <div class="card shadow-lg">
+                <div class="card-body">
+                  <div class="m-b-15">
+                    <h2 class="text-center">Sign Up</h2>
+                  </div>
+                  <p class="font-size-13 text-muted text-center ">Please fill in this form to create an account.</p>
+
+                  <form [formGroup]="addUser" (ngSubmit)="saveData()">
+
+                    <div  style="padding-top: 10px;">
+                      <div class="input-affix">
+                        <i class="prefix-icon anticon anticon-user"></i>
+                        <input  type="text" class="form-control" formControlName="userFullName"  placeholder="Full Name" id="form-userFullName" style="background-color: #E8F0FE">
+                      </div>
+                      <div  class="input-affix" style="padding-top: 10px;">
+                        <i class="prefix-icon fa fa-id-card" style="padding-top: 10px;"></i>
+                        <input  type="username" class="form-control" formControlName="userName" placeholder="User Name" id="form-userName" style="background-color: #E8F0FE">
+                      </div>
+                      <div  class="input-affix" style="padding-top: 10px;">
+                        <i class="prefix-icon anticon anticon-mail" style="padding-top: 10px;"></i>
+                        <input  type="email" class="form-control" formControlName="userEmail" placeholder="Email Address" id="form-userEmail" style="background-color: #E8F0FE">
+                      </div>
+                      <div  class="input-affix" style="padding-top: 10px;">
+                        <i class="prefix-icon fa fa-solid fa-utensils" style="padding-top: 10px;"></i>
+                        <input  type="text" class="form-control" formControlName="restaurantId" placeholder="Restaurant Name" id="form-restaurantId" style="background-color: #E8F0FE">
+                      </div>
+                      <div  class="input-affix" style="padding-top: 10px;">
+                        <i class="prefix-icon anticon anticon-lock" style="padding-top: 10px;"></i>
+                        <input  type="password" class="form-control" formControlName="userSecret" placeholder="Password" id="form-userSecret" style="background-color: #E8F0FE">
+                      </div>
+                      <div  class="input-affix" style="padding-top: 10px;">
+                        <i class="prefix-icon anticon anticon-lock" style="padding-top: 10px;"></i>
+                        <input  type="password" class="form-control" formControlName="userSecret" placeholder="Confirm Password" id="form-userSecret" style="background-color: #E8F0FE">
+                      </div>
+                      <div class="text-center mt-4">
+                       <button  type="submit" class="btn btn-sm btn-primary">Sign Up</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </body>

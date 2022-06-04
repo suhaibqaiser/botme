@@ -7,5 +7,6 @@ router.get('/byusername', userController.getUserByUsername);
 router.get('/byid', userController.getUserById);
 router.put('/add', userController.addUser);
 router.post('/update', userController.updateUser);
+router.get('./byemail', userController.getUserByEmail);
 
 module.exports = router;

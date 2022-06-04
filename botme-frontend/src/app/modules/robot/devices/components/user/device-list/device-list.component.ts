@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Table } from 'primeng/table';
-import { UserService } from '../../../service/user.service';
+import { MessageService, ConfirmationService, ConfirmEventType } from 'primeng/api';
+import { DeviceService } from '../../../service/device.service';
+import { User } from '../../../model/user';
 
 @Component({
   selector: 'app-device-list',
@@ -9,21 +11,29 @@ import { UserService } from '../../../service/user.service';
 })
 export class DeviceListComponent implements OnInit {
 
-  constructor(private userService: UserService) { }
+  constructor(private deviceService: DeviceService,private messageService: MessageService,
+    private confirmationService: ConfirmationService) { }
 
-  ngOnInit(): void {
-    this.getClients();
+   
+
+ async ngOnInit() {
+    await this.getDevices();
   }
-  devices: Array<any> = [];
+  device: Array<any> = []
+  newDevice: any
+  deviceDialog = false
   loading = true
 
-  getClients(): void {
-    this.userService.getUsers()
-      .subscribe(result => {
-        this.devices = result.payload
-        this.loading = false;
-      });
+  async getDevices() {
+    this.deviceService.getDevices().subscribe(res => {
+      console.log(res);
+      this.loading=false
+      if (res.status === 'error') return this.device 
+      return this.device = res.payload
+    })
   }
+ 
+
 
   clear(table: Table) {
     table.clear();

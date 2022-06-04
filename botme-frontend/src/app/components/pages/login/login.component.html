@@ -8,8 +8,8 @@
           <div class="col-md-7 col-lg-5 m-h-auto">
             <div class="card shadow-lg">
               <div class="card-body">
-                <div class="d-flex align-items-center justify-content-between m-b-30">
-                  <h1 class="m-b-0" style="font-family: Calibri">Login</h1>
+                <div class="m-b-15">
+                  <h2 class="text-center">Login</h2>
                 </div>
                 <form #f="ngForm" (ngSubmit)="onSubmit()">
                   <div class="form-group">
@@ -17,7 +17,7 @@
                     <div class="input-affix">
                       <i class="prefix-icon anticon anticon-user"></i>
                       <input type="text" class="form-control" placeholder="Username" name="username"
-                             [(ngModel)]="form.username" required #username="ngModel">
+                             [(ngModel)]="form.username" required #username="ngModel" style="background-color: #E8F0FE">
                     </div>
                   </div>
 
@@ -34,9 +34,9 @@
                     <div class="d-flex align-items-center justify-content-between">
                       <span class="font-size-13 text-muted">
                         Don't have an account?
-                        <a class="small" href="../signup" style="font-size: 12px"> Signup</a>
+                        <a class="small" routerLink="/signup" style="font-size: 12px"> Signup</a>
                       </span>
-                      <button class="btn btn-primary ">Sign In
+                      <button class="btn btn-sm btn-primary">Sign In
                         <div *ngIf="loginLoader" class="spinner-border-sm spinner-border text-light" role="status">
                         <span class="sr-only">Loading...</span>
                       </div>
