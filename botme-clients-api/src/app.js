@@ -10,6 +10,7 @@ const userRouter = require('./routes/userRouter')
 const nlpRouter = require('./routes/nlpRouter.js')
 const speechRouter = require('./routes/speechRouter')
 const deviceRouter = require('./routes/deviceRouter')
+const emailRouter = require('./routes/emailRouter')
 const db = require('./utils/mongodb');
 
 const app = express()
@@ -33,6 +34,7 @@ app.use('/nlp', verifyToken, nlpRouter);
 app.use('/speech', speechRouter);
 app.use('/auth', authRouter);
 app.use('/device', verifyToken, deviceRouter);
+app.use('/email', verifyToken, emailRouter);
 
 
 function verifyToken(req, res, next) {
