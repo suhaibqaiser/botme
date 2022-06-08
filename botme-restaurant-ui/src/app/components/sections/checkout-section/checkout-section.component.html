@@ -113,11 +113,19 @@
                   </div>
                 </div>
               </div>
-              <button (click)="addCustomer()" class="btn full-width">Place Order
-                <div *ngIf="loader" class="spinner-border spinner-border-sm ml-3 text-warning" role="status">
-                  <span class="visually-hidden">Loading...</span>
+              <div class="d-flex justify-content-center flex-row-reverse">
+                <div class="p-1">
+                  <button (click)="addCustomer()" class="btn full-width">Place Order
+                    <div *ngIf="loader" class="spinner-border spinner-border-sm ml-3 text-warning" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                  </button>
                 </div>
-              </button>
+                <div class="p-1">
+                  <button type="button" routerLink="/cart" class="btn btn-yellow full-width">< Cart
+                  </button>
+                </div>
+              </div>
             </form>
           </div>
         </div>

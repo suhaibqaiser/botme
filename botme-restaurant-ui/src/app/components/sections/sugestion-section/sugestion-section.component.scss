@@ -1,0 +1,7 @@
+.receipe-info {
+  height: 80px;
+  &:hover{
+    border-bottom: 2px solid red;
+    cursor: pointer;
+  }
+}
