@@ -218,6 +218,7 @@ export class SearchGridSectionComponent implements OnInit {
       ((res: any) => {
         this.filteredProducts = res.status !== 'error' ? res.payload : []
         this.isLoading = false
+        
       })
     )
   }

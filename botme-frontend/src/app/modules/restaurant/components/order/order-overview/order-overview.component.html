@@ -1,6 +1,31 @@
 <div class="text-center mt-5" *ngIf="loading">
   <div class="spinner-border text-center text-primary" role="status"></div>
 </div>
+
+<form>
+  <div class="form-group">
+    <input (change)="filterCustomersByName($event)"
+    type="text"
+    placeholder="Search"
+    style="width: 200px; padding: 2px 20px; margin: 10px 0px; height: 40px;"
+    id="entityId-search"
+    
+    
+    >
+   <button style=" height: 40px; border: none;"><i class="fa fa-search icon"></i></button> 
+
+   <select style="margin-left:20px; height: 40px;">
+    <option>Order Type</option>
+    <option>Dine in</option>
+    <option>Delivery</option>
+  </select>
+  </div>
+</form>
+
+
+
+
+
 <div class="text-center mt-5" *ngIf="!loading  && !orders.length">
   <h6>No Orders Found!</h6>
 </div>
