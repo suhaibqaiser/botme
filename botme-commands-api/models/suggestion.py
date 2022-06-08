@@ -17,6 +17,7 @@ class Suggestion():
         # self.searchParameter = searchParameter
         self.restaurantId = restaurantId
         self.call = None
+        self.number = 100
 
     def suggestionResponse(self):
         print("here")
@@ -42,7 +43,7 @@ class Suggestion():
             size = suggestion['size']
             flavour = suggestion['flavour']
             result = getAllProducts(self.restaurantId)
-            data = Suggestion.productIdOnRating(result['payload'])
+            data = Suggestion.productIdOnRating(self,result['payload'])
 
 
         if data['status'] == "success":
@@ -55,7 +56,6 @@ class Suggestion():
 
             product = prod + drinks + addon
             products = list(dict.fromkeys(product))
-            print(products)
 
             if len(products) == 0:
                 value = []
@@ -91,6 +91,7 @@ class Suggestion():
                     valueNumber = x['value']
                     keywords['quantity'].append(valueNumber)
                     suggestion['persons'] = int(valueNumber)
+                    self.number = int(x['value'])
 
                 if x['entity'] == "drink":
                     valueDrink = x['value']
@@ -306,12 +307,21 @@ class Suggestion():
             else:
                 return totalRate
     
-    def productIdOnRating(payload):
-        result = {"status":"success","payload": {"products":[],"drinks":[],"addons":[],"ingredient":[]}}
+    def productIdOnRating(self,payload):
+        array = []
+        result = {"status":"success","payload": {"products":"","drinks":[],"addons":[],"ingredient":[]}}
         for product in payload:
-            print(product)
             if 'productRating' in product:
                 if product['productRating'] >= 4:
                     productId = product['productId']
-                    result['payload']['products'].append(productId)
+                    array.append(productId)
+        print("ARRAY")
+        print("array==>",array)
+        productId = list(dict.fromkeys(array))
+        print("PRODUCTID")
+        print("productID:", productId)
+        newArray = productId[0:self.number]
+        result['payload']['products'] = newArray
+        print("NEW_ARRAY")
+        print("new_array==>",newArray)            
         return result

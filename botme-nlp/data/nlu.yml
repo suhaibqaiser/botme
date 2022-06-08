@@ -260,19 +260,39 @@ nlu:
       - please provide us something for [lunch](offeringTime)
       - please provide us something for [dinner](offeringTime)
       - please provide us something for [supper](offeringTime)
-      - please provide us something for [refreshments](offeringTime) 
+      - please provide us something for [refreshments](offeringTime)
+      - i want to see [lunch](offeringTime) and [refreshment](offeringTime) item
+      - what's a good idea for [lunch](offeringTime) and [supper](offeringTime)
+      - what's a good idea for [dinner](offeringTime) and [feast](offeringTime)
+      - what are the items for [lunch](offeringTime) and [dinner](offeringTime)
+      - what are the items for [lunch](offeringTime) and [feast](offeringTime)
+      - what are the items for [dinner](offeringTime) and [refreshments](offeringTime)
+      - Do you have something special for [lunch](offeringTime) or [dinner](offeringTime)
+      - Do you have something special for [dinner](offeringTime) or [supper](offeringTime)
+      - what family [dinner](offeringTime) or [lunch](offeringTime) item you can serve
+      - what family [lunch](offeringTime) or [feast](offeringTime) item you can serve
+      - i would like to eat something in [supper](offeringTime) or [dinner](offeringTime)
+      - i would like to eat something in [lunch](offeringTime) or [refreshments](offeringTime)
+      - i want to see [lunch](offeringTime) and [dinner](offeringTime) item
+      - i want to see [supper](offeringTime) and [feast](offeringTime) item
+      - please provide us something for [lunch](offeringTime) or [dinner](offeringTime)
+      - please provide us something for [supper](offeringTime) or [feast](offeringTime)
+      - please provide us something for [supper](offeringTime) and [refreshments](offeringTime) 
 
   - intent: top_suggestion
     examples: |
       - show me top [10](number) products 
+      - show me top [ten](number) products
       - top [10](number) products in your restaurant
+      - top [ten](number) products in your restaurant
       - top [10](number) best item in your restaurant
+      - top [ten](number) best item in your restaurant
       - top [5](number) products in your restaurant
+      - top [five](number) products in your restaurant
       - best items in your restaurant
       - show me top products of your restaurant
       - i want to see your special items
       - show me your restaurant speciality
-
 
   - intent: reservation_page
     examples: |
