@@ -3,8 +3,13 @@ import {OrderService} from "../../../service/order.service";
 import {CustomerService} from "../../../service/customer.service";
 import {ProductService} from "../../../service/product.service";
 import {HelperService} from "../../../../../services/helper.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {MessageService} from "primeng/api";
+import {FormControl} from "@angular/forms";
+import {HttpClient} from "@angular/common/http";
+
+
+declare var $: any;
 
 @Component({
   selector: 'app-order-overview',
@@ -15,15 +20,53 @@ export class OrderOverviewComponent implements OnInit {
 
   orders: any = []
   customers: any
+  filteredCustomers:any
   loading = true
   carts: any = []
   products: any = []
 
-  constructor(private messageService: MessageService, private _router: Router, public _helperService: HelperService, private _productService: ProductService, private _orderService: OrderService, private _customerService: CustomerService) {
+
+  isLoading = false;
+    //search text
+    searchControl = new FormControl("")
+    searchText = ''
+
+    searchList: any
+
+
+    payload: any = {
+      customerName:''
+    }
+
+    queryParams: any = {
+      customerName: ''
+    }
+  
+
+  constructor(private messageService: MessageService,private _http: HttpClient, private _router: Router,private _route: ActivatedRoute, public _helperService: HelperService, private _productService: ProductService, private _orderService: OrderService, private _customerService: CustomerService) 
+   {
+    clearTimeout(this._helperService.timer)
   }
+
 
   async ngOnInit() {
     await this.getProducts()
+    this.searchList = []
+    this.isLoading = true
+    await this.getQueryParams()
+  }
+
+
+
+  
+  async getQueryParams() {
+    this._route.queryParams.subscribe(param => {
+      this.queryParams = {
+        customerName: (param && param.customerName) ? param.customerName : '',
+      }
+      this.payload = this.queryParams
+      this.searchControl.setValue(this.payload.customerName)
+    })
   }
 
   async getOrders() {
@@ -61,6 +104,29 @@ export class OrderOverviewComponent implements OnInit {
         }
       });
     return true
+  }
+
+  filterCustomersByName(event: any = null) {
+    let text = event && event.target.value ? event.target.value : ''
+    this.searchControl.setValue(text)
+    if (this.searchControl.value && this.searchControl.value.length) {
+      this.setFilterList('Search', this.searchControl.value)
+      this.payload.customerName = this.searchControl.value
+      this.setQueryParameters()
+    } else {
+      this.payload.customerName = ''
+      this.setQueryParameters()
+      this.searchControl.setValue('')
+    }
+    console.log(this.searchControl.value);
+    
+    this._customerService.getCustomersByFiltering(this.searchControl.value).subscribe(
+  
+      ((res: any) => {
+        this.filteredCustomers = res.status !== 'error' ? res.payload : []
+        this.isLoading = false
+      })      
+    )
   }
 
   getCustomerName(customerId: string) {
@@ -114,6 +180,29 @@ export class OrderOverviewComponent implements OnInit {
   viewOrderDetail(order: any) {
     this._orderService.setOrderDetailObject(order)
     this._router.navigate(['/order-detail'])
+  }
+
+  setQueryParameters() {    
+    if (!this.payload.productName) this.payload.customerName = ''
+    this._router.navigate([], {
+      relativeTo: this._route,
+      queryParams: this.payload,
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  setFilterList(type: any, value: any) {
+    let check = this.searchList.filter((item: any) => item.name == type)
+    if (check[0]) {
+      check[0].value = value
+      localStorage.setItem('searchList', JSON.stringify(this.searchList))
+      return
+    }
+    this.searchList.push({
+      'name': type,
+      'value': value
+    })
+    localStorage.setItem('searchList', JSON.stringify(this.searchList))
   }
 
   updateOrderStatus(order: any, orderStatus: any) {
