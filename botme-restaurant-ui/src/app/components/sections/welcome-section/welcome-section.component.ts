@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {HelperService} from "../../../services/helper.service";
 
 @Component({
   selector: 'app-welcome-section',
@@ -7,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WelcomeSectionComponent implements OnInit {
 
-  constructor() { }
+  constructor(public _helperService: HelperService) {
+  }
 
   ngOnInit(): void {
   }

@@ -43,11 +43,11 @@ export class OrderSectionComponent implements OnInit {
   }
 
   selectOrderType(type: any) {
-    this.orderId.reset()
-    this._cartService.cartProduct = []
-    this._botMeService.setCookie('orderLabel', '')
-    this._botMeService.setCookie('customerId', '')
-    $('#order_modal').modal('show')
+    // this.orderId.reset()
+    // this._cartService.cartProduct = []
+    // this._botMeService.setCookie('orderLabel', '')
+    // this._botMeService.setCookie('customerId', '')
+    // $('#order_modal').modal('show')
     if (type === 'dine_in') {
       this._orderService.selectedOrderButtons['dine_in'] = true
       this._orderService.selectedOrderButtons['pick_up'] = false

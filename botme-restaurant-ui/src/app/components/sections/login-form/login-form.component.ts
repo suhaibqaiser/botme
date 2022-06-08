@@ -16,9 +16,6 @@ export class LoginFormComponent implements OnInit {
     clientSecret: new FormControl('', [Validators.required]),
     voiceType: new FormControl('cloud-voice', Validators.required)
   })
-  _voiceType: string = this._botMeClientService.getVoiceType()
-  userVoice: string = ''
-  botVoice: string = ''
   loader = false
 
   constructor(private _toastService: ToastService, public _botMeClientService: BotmeClientService, public router: Router, public _helperService: HelperService) {
@@ -57,6 +54,8 @@ export class LoginFormComponent implements OnInit {
           this._botMeClientService.setCookie('voiceTimeout', res.payload.clientVoiceTimeout)
           this._botMeClientService.setCookie('restaurantId', res.payload.restaurantId)
           this._botMeClientService.setCookie('clientVoiceEnabled', (res.payload.clientVoiceEnabled) ? "yes" : "no")
+          this._botMeClientService.setCookie('clientType', res.payload.clientType)
+          this._botMeClientService.setCookie('clientEmail', res.payload.clientEmail)
           this.router.navigate(['/home']).then(() => {
             window.location.reload();
           });
@@ -81,27 +80,5 @@ export class LoginFormComponent implements OnInit {
         })
       }
     )
-  }
-
-  logout() {
-    this.loader = true
-    this._botMeClientService.logutAPI(this._botMeClientService.getCookieByKey('sessionId')).subscribe(res => {
-      if (res.status === 'success') {
-        this._botMeClientService.reSetCookie()
-        this.router.navigate(['/home']).then(() => {
-          window.location.reload();
-        });
-        this.loader = false
-      }
-
-    })
-  }
-
-  setVoiceType() {
-    this._botMeClientService.setCookie('voiceType', this._voiceType)
-  }
-
-  reload() {
-    location.reload()
   }
 }

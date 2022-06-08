@@ -53,12 +53,14 @@ export class MenuService {
    * Api to get cart against filter customerId & reservationLabel & restaurantId
    */
   findAllCartById() {
-    const url = this.apiBaseUrl + "/food/cart/search?restaurantId=" + this._helperService.getRestaurantIdOnAuthBasis() + '&orderLabel=' + this.clientService.getCookie().orderLabel + '&orderType=' + this._helperService.getOrderTypeOnAuthBasis()
+    // + '&orderType=' + this._helperService.getOrderTypeOnAuthBasis()
+    const url = this.apiBaseUrl + "/food/cart/search?restaurantId=" + this._helperService.getRestaurantIdOnAuthBasis() + '&orderLabel=' + this.clientService.getCookie().orderLabel
     return this.http.get(url);
   }
 
   findOrderByOrderLabel(id: any = '') {
-    let url = this.apiBaseUrl + "/food/cart/search?restaurantId=" + this._helperService.getRestaurantIdOnAuthBasis() + '&orderLabel=' + id + '&orderType=' + this._helperService.getOrderTypeOnAuthBasis()
+    //+ '&orderType=' + this._helperService.getOrderTypeOnAuthBasis()
+    let url = this.apiBaseUrl + "/food/cart/search?restaurantId=" + this._helperService.getRestaurantIdOnAuthBasis() + '&orderLabel=' + id
     return this.http.get(url);
   }
 
@@ -85,4 +87,13 @@ export class MenuService {
     const url = this.apiBaseUrl + "/notification/send"
     return this.http.post(url, notificationObj);
   }
+
+  /**
+   * Api to get cart against filter restaurantId & cartId & orderLabel
+   */
+  updateOrderStatus(orderStatus: any = '') {
+    const url = this.apiBaseUrl + "/food/cart/updateOrderStatus?restaurantId=" + this._helperService.getRestaurantIdOnAuthBasis() + '&orderLabel=' + this.clientService.getCookie().orderLabel
+    return this.http.post(url, {orderType: this.clientService.getCookie().orderType, orderStatus: orderStatus});
+  }
+
 }

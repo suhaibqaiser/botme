@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import {Request, Response} from "express";
 import {
     addCart,
     addOrder,
@@ -26,6 +26,7 @@ export default [
         path: "/order/update",
         method: "post",
         handler: async (req: Request, res: Response) => {
+            console.log("order ==>",req.body.order)
             let result = await editOrder(req.body.order, req.body.restaurantId)
             res.send(result);
         }
@@ -88,9 +89,9 @@ export default [
     },
     {
         path: "/cart/updateOrderStatus",
-        method: "get",
+        method: "post",
         handler: async (req: Request, res: Response) => {
-            let result = await updateOrderStatus(req.query)
+            let result = await updateOrderStatus(req.query, req.body)
             res.send(result);
         }
     },

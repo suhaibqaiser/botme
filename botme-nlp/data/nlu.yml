@@ -110,36 +110,36 @@ nlu:
       
   - intent: Suggestion
     examples: |
-      - we are looking for [medium](size) [nacho burger](suggestion) and [chicken burger](suggestion) with [Chicken](flavour) flavour and with [Lettuce](ingredients), [pepsi](drink) and [french fries](addon) for [4](number) people and make it [halal](attribute)
+      - we are looking for [medium](size) [nacho burger](suggestion) and [chicken burger](suggestion) with [Chicken](flavour) flavour and with [garlic sauce](ingredients), [pepsi](drink) and [french fries](addon) for [4](number) people and make it [halal](attribute)
       - we are looking for [large](size) [Burger](suggestion) with [cheese](ingredients) and [chicken burger](suggestion) with [Chicken](flavour) and with [sprite](drink) and [french fries](addon) for [4](number) people and make it [halal](attribute)
       - we are looking for [small](size) [grilled sandwich](suggestion) and [cheese burger](suggestion) [Lettuce](ingredients) with [pepsi](drink) and [french fries](addon) for [4](number) people and make it [halal](attribute)
-      - i want to order [cheese burger](suggestion) with [french fries](addon) and [sprite](drink)
-      - i want to order [falafel sandwich](suggestion) with [coleslaw](addon) and [pepsi](drink)  
+      - i want to order [cheese burger](suggestion) with [french fries](addon) and [sprite](drink) and with extra [cheese](ingredients)
+      - i want to order [falafel sandwich](suggestion) with [coleslaw](addon) and [pepsi](drink) with extra [pickle](ingredients)  
       - i am looking for [nacho](suggestion) with [tomato](ingredients) and [chicken](suggestion) for [two](number) person and make it [halal](attribute)
       - we want to eat something like [sandwich](suggestion) and [burger](suggestion) for [3](number) people and make it [halal](attribute)
       - i am in the mood for [Burger](suggestion) and [wraps](suggestion) for [six](number) and make it [halal](attribute)
       - i want to order [burger](suggestion) and [cheese burger](suggestion) for [2](number) and make it [halal](attribute)
       - i am looking for [chicken burger](suggestion) and [sandwich](suggestion) with [soft drink](drink) for [5](number) and keep it [halal](attribute)
       - i want to eat [nacho burger](suggestion) with [fries](addon) and [wraps] with [soft drink](drink) for [three](number) and keep it [halal](attribute)
-      - suggest me some good [burger](suggestion) for [6](number) with [soft drink](drink)
+      - suggest me some good [burger](suggestion) for [6](number) with [soft drink](drink) with [cheese]((ingredients)) 
       - suggest me some good [wraps](suggestion) for [5](number) with [soft drink](drink)
       - suggest me some good [platter](suggestion) for [8](number) with [soft drink](drink) 
-      - i am looking for some good [burger](suggestion) with [fries](addon) for [7](number) with [sprite](drink)
+      - i am looking for some good [burger](suggestion) with [cheese](ingredients) and [fries](addon) for [7](number) with [sprite](drink)
       - we want to have [wrap](suggestion) for [5](number) with [soft drink](drink) and keep it [halal](attribute)
       - I would like to order some [burgers](suggestion) with [cheese](ingredients) and [chicken](suggestion) and we are [three](number) people and [water](drink) 
       - I have [kids](suggestion) with me can you suggest some [snacks for kids](suggestion) and some [juice](drink)
       - I have [children](suggestion) with me can you suggest me some [items for kids](suggestion) and [water bottle](drink)
       - I have [kids](suggestion) with me can you suggest some [snacks for kids](suggestion) and some [water bottle](drink)
-      - I want to order [kafta sandwich](suggestion) with [fries](addon) and [soft drink](drink)
-      - I want some [nachos](suggestion) and add [fries](addon) and [water bottle](drink) with it
-      - Do you have some [crispy burger](suggestion) or [grilled wraps](suggestion) with [coleslaw](addon) for [5](number) persons
+      - I want to order [kafta sandwich](suggestion) with [garlic sauce](ingredients) [fries](addon) and [soft drink](drink)
+      - I want some [nachos](suggestion) and add [garlic sauce](ingredients) with [fries](addon) and [water bottle](drink) with it
+      - Do you have some [crispy burger](suggestion) or [grilled wraps](suggestion) with [coleslaw](addon) and [garlic sauce](ingredients) for [5](number) persons
       - Do you have some [grilled sandwich](suggestion) or [crispy burger](suggestion) for [six](number) people
       - Do you have some [veggie burger](suggestion) or [falafel sandwich](suggestion) with [coleslaw](addon) for [three](number) people
-      - show me some [veggie burger](suggestion) with [salad](addon) 
+      - show me some [veggie burger](suggestion) with [salad](addon) and [lettuce](ingredients)
       - I want some [desserts](suggestion) with [sprite](addon) for [5](number) people
       - Do you people have [sandwiches](suggestion) and [shakes](suggestion)
       - I want [grilled sandwich](suggestion) with extra [cheese](ingredients) and some [desserts](suggestion) too along with some [drinks](drink) and grill item must be [halal](attribute)
-      - i am looking for [nacho](suggestion) and [chicken](suggestion) for [two](number) [person] and make it [halal]
+      - i am looking for [nacho](suggestion) and [chicken](suggestion) with [cheese](ingredients) for [two](number) [person] and make it [halal]
       - I would like to order some [burgers](suggestion) with [cheese](ingredients) and [chicken](suggestion) and we are [three](number) people and [water](drink)
       - I am looking for some kind of [cheesy mushroom burger](suggestion) with regular [black drink](drink)
       - I want to eat [spicy patty burger](suggestion) with [drinks](drink) and make it for [two](number) people
@@ -165,7 +165,7 @@ nlu:
       - show me good [wraps](suggestion) with [salads](addon) for [2](number) people
       - show me good [nacho](suggestion) with [fries](addon)
       - i want to eat [medium](size) [nacho burger](suggestion) with [light](flavour)
-      - suggest me some good [nacho] or [beef](suggestion) products
+      - suggest me some good [nacho](suggestion) or [beef](suggestion) products
       - I am here to have [medium](size) size [hamburger](suggestion) with [pepsi](drink)
       - Can I order an item [hamburger](suggestion)
       - Can i get [hamburgers](suggestion)
@@ -212,20 +212,54 @@ nlu:
       - Can you please place a meal for my daughter [little one](suggestion)
       - May I order some items for my kids as [baby](suggestion)
       - Can I order for my children [food for children](suggestion)
-      - i want to order [nacho burger](productName) with [fries](addon)
-      - i want to order [chicken burger](productName) with [fries](addon)
-      - i want to eat [cheese burger](productName) with [salad](addon)
-      - i want to order [falafel sandwich](productName) with [coleslaw](addon)
-      - i want to order [nacho burger](productName) with [pepsi](addon) and [cheese](ingredients)
-      - i want to eat [chicken burger](productName) with [sprite](addon)
+      - i want to order [nacho burger](suggestion) with [fries](addon) and [pickle](ingredients)
+      - i want to order [chicken burger](suggestion) with [fries](addon) and [garlic sauce](ingredients)
+      - i want to eat [cheese burger](suggestion) with [salad](addon) and [lettuce](ingredients)
+      - i want to order [falafel sandwich](suggestion) with [coleslaw](addon) and [lettuce](ingredients)
+      - i want to order [nacho burger](suggestion) with [pepsi](addon) and [garlic sauce](ingredients)
+      - i want to eat [chicken burger](suggestion) with [sprite](addon) and [cheese](ingredients)
       - we are [six](number) people looking for good [sandwich](suggestion) with [coleslaw](addon) and [pepsi](drink)
       - we are [4](number) people looking for good [burgers](suggestion) with [spicy potato](addon) and [sprite](drink)
       - we are [six](number) people looking for good [sandwich](suggestion) with [spicy potato](addon) and [pepsi](drink)
-      - we are [twp](number) persons looking for good [wraps](suggestion) with [spicy potato](addon) and [pepsi](drink)
+      - we are [two](number) persons looking for good [wraps](suggestion) with [spicy potato](addon) and [pepsi](drink)
+      - i want to order [medium](size) size [nacho burger](suggestion)
+      - suggest me some good [standard](size) size [sandwich](suggestion)
+      - i want to order [nacho burger](suggestion) with [spicy](flavour) 
+      - i want to eat [cheese burger](suggestion) with [chicken](flavour)
+      - i want to eat [cheese burger](suggestion) with [beef](flavour)
+      - i want to have [falafel sandwich](suggestion) with [falfel](flavour)
+      - i want to order [mushroom swiss burger](suggestion) with [lamb](flavour)
+      - i want to eat [mushroom swiss burger](suggestion) with [fish](flavour)
+      - i want to have [mushroom swiss burger](suggestion) with [chicken](flavour)
+      - suggest me some good [burger](suggestion) with [beef](flavour)
+      - suggest me some good [wrap](suggestion) with [chicken](flavour)
+      - i want to order [burger](suggestion) with [halal](attribute)
+      - i want to eat [wraps](suggestion) with [glutenFree](attribute)
+      - i want to have [vegan](attribute) [sandwich](suggestion)
+      - suggest me some [vegetarian](attribute) [sandwich](suggestion)
+      - suggest me some good [vegetarian](attribute) [burger](suggestion) with [spicy](flavour)
+      - show me some [veggie](suggestion) items
+      - i want [halal](attribute) [kids](suggestion) meal for [two](number) kids
+      - i want [halal](attribute) [kids](suggestion) meal for [5](number) children
+      - recommend me some good [burgers](suggestion)
+      - recommend me some good [burger](suggestion)
+      - propose me some good [wraps](suggestion)
+      - propose me some good [wrap](suggestion)
+      - suggest me some good [sandwiches](suggestion)
+      - suggest me some good [sandwich](suggestion)
 
   - intent : meal_time
     examples: |
-      - what's in the [lunch](offeringTime) 
+      - suggest me items for [lunch](offeringTime)
+      - suggest me products for [dinner](offeringTime)
+      - suggest me meals for [supper](offeringTime)
+      - propose me items for [lunch](offeringTime)
+      - propose me products for [dinner](offeringTime)
+      - propose me meals for [supper](offeringTime)
+      - recommend me items for [lunch](offeringTime)
+      - recommend me products for [dinner](offeringTime)
+      - recommend me meals for [supper](offeringTime)
+      - what's in the [lunch](offeringTime)
       - show me [dinner](offeringTime) item
       - i want to see the [breakfast](offeringTime) item
       - food for [dinner](offeringTime)
@@ -283,16 +317,74 @@ nlu:
     examples: |
       - show me top [10](number) products 
       - show me top [ten](number) products
+      - show me top [10](number) items
+      - show me top [ten](number) meals
+      - suggest me top [10](number) products
+      - suggest me top [five](number) meals
+      - suggest me top [8](number) items
+      - propose me top [10](number) products
+      - propose me top [5](number) meals
+      - propose me top [seven](number) items
+      - recommend me top [10](number) products
+      - recommend me top [6](number) meals
+      - recommend me top [eight](number) items
       - top [10](number) products in your restaurant
-      - top [ten](number) products in your restaurant
+      - top [ten](number) meals in your restaurant
       - top [10](number) best item in your restaurant
       - top [ten](number) best item in your restaurant
       - top [5](number) products in your restaurant
-      - top [five](number) products in your restaurant
+      - top [five](number) meals in your restaurant
+      - top [eight](number) products in your restaurant
+      - suggest me top [3](number) meals of your restaurant
+      - suggest me top [seven](number) meals of your restaurant
       - best items in your restaurant
+      - best products in your restaurant
       - show me top products of your restaurant
       - i want to see your special items
+      - suggest me your restaurant speciality
+      - suggest me top meals of your restaurant
       - show me your restaurant speciality
+      - what is your restaurant speciality
+      - show us your special products
+      - whats special today
+      - suggest me some good food
+      - i want to have something special in your restaurant
+      - suggest me some good products
+      - suggest me some good meals
+      - suggest me some good items
+      - suggest me top meals of your restaurant
+      - i am looking for some good products
+      - we are looking for special meals
+
+  - intent: serving_time
+    examples: |
+      - what you can quickly serve
+      - what product you can make quickly
+      - what you can serve in [15](number) minute
+      - what product you can make in [30](number) minute
+      - what item i can get in [20](number) minute
+      - what item you can serve in [10](number) minute
+      - what you can serve quickly
+      - what can i get in [15](number) minutes
+      - what meals can i get fast
+      - what products can i get fast
+      - what meal you can quickly serve
+      - what food can i serve quickly
+      - what food can i get in [25](number) minute
+      - what meal can i get in [23](number) minute
+      - which item can i get in [15](number) minute
+      - which products can we get in [20](number) minute
+      - which food i can serve in [10](number) minute
+      - suggest me food which you can serve quickly
+      - suggest me meals which you can serve fast
+      - suggest me fast serving meals
+      - propose me some quick serve meals
+      - propose me food which you can serve quickly
+      - propose me items which you can serve fast
+      - recommend me some quick serving meals
+      - recommend me food which you can serve quickly
+      - recommend me items which you can serve fast
+
 
   - intent: reservation_page
     examples: |
@@ -4578,39 +4670,74 @@ nlu:
 
   - lookup: suggestion
     examples: |
-      - BBQ Platter	
+      - burger
+      - wraps
+      - wrap
+      - sandwich
+      - family platters
+      - todays special
+      - kids Meal
+      - drinks
+      - salads
+      - sides
+      - ingredients
+      - desserts
+      - pizza
+      - plates
+      - chicken
+      - beef
+      - BBQ Platter
+      - BBQ
+      - patter	
       - Make Your Own Bowl
       - make your own bowl
+      - bowl
       - Falafel Sandwich
       - falafel sandwich
+      - falafel
       - Shish Kabob Plate
       - shish kabob plate	
       - Nacho Burger
       - nacho burger
+      - nacho
       - Mushroom Swiss Burger
       - mushroom swiss burger
+      - mushroom
+      - swiss
       - Chicken Shawarma Sandwich
+      - shawarma
       - chicken shawarma sandwich
       - Kafta Sandwich
       - kafta Sandwich
+      - kafta
+      - Beef Shawarma
+      - beef shawarma
       - Grilled Chicken Wrap
       - grilled chicken wrap
       - Grilled Stake Wrap
       - grilled stake wrap
+      - stake
       - Junior Tasty Burger	
       - junior tasty burger
+      - junior
       - Chicken Nuggets
       - chicken nuggets
+      - nuggets
       - Taystee Fish Burger
       - taystee fish burger
+      - fish
       - Baklava
       - baklava	
       - Cheese Burger
       - cheese burger
+      - cheese
       - Spicy Mc Crispy Burger
-      - spicy Mc crispy burger	
+      - spicy Mc crispy burger
+      - crispy burger
+      - spicy burger	
       - Zinger Burger
       - zinger burger	
+      - zinger
       - Chicken Burger
       - chicken burger
       - Taystee Vegan Burger
@@ -4619,13 +4746,161 @@ nlu:
       - beef shawarma	
       - Tannour Sandwich
       - tannour sandwich
+      - tannour
       - Whopper Sandwich
       - whopper sandwich
+      - whopper
       - Chicken Tenders
       - chicken tenders
       - Shawarma Salad
-      - shawarma salad	
-
+      - shawarma salad
+      - shawarma
+      - salad
+      - Burgers 
+      - hamburger, patty sandwich 
+      - round burger 
+      - Patty burger 
+      - chilli patty burger
+      - sub 
+      - bread 
+      - roll 
+      - patty 
+      - sandwich
+      - fold bread
+      - soft tortilla
+      - Plates
+      - Platter
+      - BBQ platter
+      - full of food
+      - dish
+      - tray
+      - Special item
+      - item of the day
+      - menu of the day
+      - today's special dish
+      - particular
+      - unique
+      - outstanding
+      - uncommon
+      - this day
+      - today
+      - food for children
+      - items for kids
+      - kids favorite
+      - little one, baby
+      - snacks for kids
+      - Drink
+      - Drinks
+      - soft drink
+      - cold drink
+      - bevarage
+      - cola
+      - soda
+      - soda water
+      - carbonated water
+      - Salad
+      - greens
+      - mixed green
+      - tossed salad
+      - fruit salad
+      - extras
+      - sides
+      - toppings
+      - Ingredients
+      - components
+      - part
+      - element
+      - Sweet tooth
+      - sweet dish
+      - second course
+      - junk
+      - Pizza pie
+      - calzone
+      - large pizza
+      - small pizza
+      - server
+      - bowl
+      - plate
+      - pane
+      - dish
+      - Enchilada
+      - tacos
+      - crunchy nachos
+      - mushroom burger
+      - swiss burger
+      - sauted mushroom burger
+      - small burger
+      - kids burger
+      - small patty burger
+      - fish burger
+      - sea food burger
+      - filet o fish burger
+      - fish patty burger
+      - hamburger
+      - beef cheese burger
+      - cheese hamburger
+      - crispy burger
+      - spicy chicken burger
+      - crispy chicken
+      - heavy coated
+      - zinger cheese burger
+      - chicken patty
+      - crispy chicken
+      - veggie burger
+      - vegetable burger
+      - falafels
+      - non veggie burger
+      - non meaty burger
+      - Shawarma
+      - Chicken Sandwich
+      - Shawarma Sandwich
+      - gyro
+      - kofta
+      - kebab
+      - kafta sandwich
+      - beef
+      - beefy
+      - beef shawarma
+      - tender beefy
+      - tender 
+      - juicy beef shawarma
+      - tannour sandwich
+      - sandwich
+      - Large burger
+      - giant burger
+      - whopper sandwich
+      - whopper
+      - chicken wrap
+      - chicken roll
+      - Barbeque roll
+      - Stakes
+      - grilled stakes
+      - Barbeque wrap
+      - BBQ Items
+      - BBQ plate
+      - Barbeque platter
+      - grilled items
+      - customized platter
+      - my own bowl
+      - small kids burger
+      - kids burger
+      - non spicy burger
+      - nuggets
+      - poppers
+      - chicken balls
+      - chicken meat balls
+      - crunchy chicken
+      - chicken chunks
+      - fried chicken
+      - crispy chicken
+      - chicken meat balls
+      - crispy meat balls
+      - sweet pastry
+      - baklava
+      - baklawa
+      - middle east sweet dish
+      - nutty pastry 
+  
   - lookup: size
     examples: |
      - standard
@@ -4636,10 +4911,12 @@ nlu:
   - lookup: ingredients
     examples: |
       - American Cheese Slice
+      - cheese
       - Pickle
       - Lettuce
       - Tomato
       - Garlic Sauce
+      - garlic sauce
 
   - lookup: addon
     examples: |
@@ -4669,7 +4946,27 @@ nlu:
       - Banana Shake
       - banana shake
       - Fresh Orange Juice
-      - fresh orange juice		
+      - fresh orange juice
+      - water
+      - big water bottle
+      - small water bottle
+      - pepsi cola
+      - cola
+      - black
+      - black soda
+      - sprite
+      - sevenup
+      - 7up
+      - white
+      - white soda
+      - banana smoothie
+      - smoothy
+      - smoothie
+      - smoothie with milk  
+      - smoothie with banana
+      - fresh juice
+      - orange pulp juice
+      - citrus juice 		
 
   - lookup: attribute
     examples: |
@@ -4677,6 +4974,22 @@ nlu:
       - halal
       - vegan
       - vegetarian
+
+  - lookup: size
+    examples: |
+      - standard
+      - small
+      - medium
+      - large
+  
+  - lookup: flavour
+    examples: |
+      - chicken
+      - beef
+      - spicy
+      - lamb
+      - falafel
+      - fish
 
   - lookup: number   
     examples: |

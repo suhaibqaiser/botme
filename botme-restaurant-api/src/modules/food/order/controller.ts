@@ -16,7 +16,6 @@ import {
 import {randomUUID} from "crypto";
 
 
-
 export async function findOrder(filter: any) {
     let response = new restResponse()
 
@@ -208,7 +207,7 @@ export async function addCart(obj: any, filter: any) {
                 cartResult = JSON.parse(JSON.stringify(cartResult))
                 response.payload = {order: orderResult, cart: cartResult}
                 response.status = "success"
-                response.message = 'Your order successfully placed.'
+                response.message = 'Item added to cart.'
                 return response
             } else {
                 response.message = "Failed add to cart."
@@ -280,26 +279,11 @@ export async function deleteCartById(filter: any) {
     }
 }
 
-export async function updateOrderStatus(filter: any) {
+export async function updateOrderStatus(filter: any, body: any) {
     let response = new restResponse()
     try {
 
-        // let cartResult = await JSON.parse(JSON.stringify(getCart(filter)))
-        //
-        // if (!cartResult && !cartResult.length) {
-        //     response.message = 'Cart not found to update.'
-        //     response.status = "error"
-        //     return response
-        // }
-        delete filter.restaurantId
-        const orderStatus = filter.orderStatus
-        delete filter.orderStatus
-        // let updatedList = await cartResult.forEach((item: any) => {
-        //     filter.cartId = item.cartId
-        //     return JSON.parse(JSON.stringify(updateCartStatus(filter)))
-        // })
-        const orderType = JSON.parse(JSON.stringify(filter.orderType))
-        delete filter.orderType
+        const orderType = JSON.parse(JSON.stringify(body.orderType))
 
         let orderResult = await updateOrderType(filter, orderType)
         if (!orderResult) {
@@ -308,24 +292,16 @@ export async function updateOrderStatus(filter: any) {
             return response
         }
 
-        let orderStatusResult = await updateOrderStatusDB(filter, orderStatus)
+        let orderStatusResult = await updateOrderStatusDB(filter, body.orderStatus)
         if (!orderStatusResult) {
             response.message = 'Failed to update order status.'
             response.status = "error"
             return response
         }
 
-        delete filter.orderType
 
-        let result = await updateCartStatus(filter)
-        if (result) {
-            response.message = 'Cart Status updated.'
-            response.status = "success"
-            response.payload = JSON.parse(JSON.stringify(result))
-            return response
-        }
-        response.message = 'Failed to update cart status.'
-        response.status = "error"
+        response.message = 'Your order placed successfully.'
+        response.status = "success"
         return response
     } catch (e: any) {
         response.message = e.message

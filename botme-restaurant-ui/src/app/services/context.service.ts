@@ -39,7 +39,7 @@ export class ContextService {
       sectionId: 'sectionId-message-form'
     },
     {
-      currentRoute: '/product-suggestions',
+      currentRoute: '/search-product',
       pageId: 'pageId-product-suggestions',
       sectionId: 'sectionId-product-suggestions'
     }

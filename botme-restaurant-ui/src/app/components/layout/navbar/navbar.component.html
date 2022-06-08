@@ -17,7 +17,7 @@
             <img src="assets/images/logo/web-logo.png" alt="logo" class="logo">
           </a>
           <li style="width: 40%;padding-top:10px" class="d-flex align-items-center nav-item">
-            <app-sofia-bot *ngIf="_botMeClientService.getCookie().isLoggedIn && _botMeClientService.getCookie().clientVoiceEnabled == 'yes'"> </app-sofia-bot>
+            <app-sofia-bot *ngIf="_botMeClientService.getCookie().isLoggedIn && _botMeClientService.getCookie().clientVoiceEnabled == 'yes' && _botMeClientService.getCookie().clientType !== 'customer'"> </app-sofia-bot>
             <p *ngIf="['dine_in','pick_up','delivery'].includes(_helperService.getOrderTypeOnAuthBasis())">{{getOrderType()}}</p>
           </li>
           <!-- nav-list -->
@@ -31,29 +31,48 @@
 <!--                  [class.active]="router.url=='/reservations'">RESERVATION</a>-->
 <!--              </li>-->
               <li *ngIf="_botMeClientService.getCookie().isLoggedIn" class="nav-item">
-                <a routerLink="product-suggestions" id="ctaId-product-suggestions" class="nav-link"
-                   [class.active]="router.url=='/product-suggestions'">SUGGESTIONS</a>
+                <a routerLink="search-product" id="ctaId-product-suggestions" class="nav-link"
+                      [class.active]="router.url=='/search-product'">SEARCH PRODUCT</a>
               </li>
-              <li class="nav-item">
-                <a routerLink="contact-us" id="ctaId-contact-us" class="nav-link"
-                  [class.active]="router.url=='/contact-us'">CONTACT US</a>
-              </li>
+<!--              <li *ngIf="_botMeClientService.getCookie().isLoggedIn" class="nav-item">-->
+<!--                <a routerLink="track-order" id="ctaId-order-types" class="nav-link"-->
+<!--                   [class.active]="router.url=='/track-order'">TRACK ORDER</a>-->
+<!--              </li>-->
+<!--              <li class="nav-item">-->
+<!--                <a routerLink="contact-us" id="ctaId-contact-us" class="nav-link"-->
+<!--                  [class.active]="router.url=='/contact-us'">CONTACT US</a>-->
+<!--              </li>-->
               <li class="nav-item">
                 <a [class.active]="router.url=='/online-shop'"
                   id="ctaId-order-online" routerLink="online-shop" class="nav-link">MENU</a>
               </li>
-              <li class="nav-item">
-                <a routerLink="/login" *ngIf="!_botMeClientService.getCookie().isLoggedIn" class="nav-link" type="button"><i style="font-size: x-large" class="flaticon-login"></i></a>
-                <a routerLink="/profile" *ngIf="_botMeClientService.getCookie().isLoggedIn" class="nav-link" type="button">PROFILE
-                </a>
-              </li>
+<!--              <li class="nav-item">-->
+<!--                <a routerLink="/login" *ngIf="!_botMeClientService.getCookie().isLoggedIn" class="nav-link" type="button"><i style="font-size: x-large" class="flaticon-login"></i></a>-->
+<!--                <a routerLink="/profile" *ngIf="_botMeClientService.getCookie().isLoggedIn" class="nav-link" type="button">PROFILE-->
+<!--                </a>-->
+<!--              </li>-->
               <li>
-                <a *ngIf="_botMeClientService.getCookie().clientDebug === 'yes'" data-bs-toggle="modal" data-bs-target="#voiceTest"
-                  class="nav-link" type="button">VOICE TEST</a>
+                <div class="dropdown">
+                  <a class="nav-link dropdown-toggle text-white" style="font-weight: 600;font-size: 16px" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    MORE
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li *ngIf="_botMeClientService.getCookie().isLoggedIn"><a class="dropdown-item" routerLink="/profile">Profile</a></li>
+                    <li *ngIf="!_botMeClientService.getCookie().isLoggedIn"><a routerLink="/bot-login" class="dropdown-item" type="button"><i style="font-size: large" class="flaticon-login"></i>&nbsp;Bot Login</a></li>
+                    <li *ngIf="!_botMeClientService.getCookie().isLoggedIn"><a routerLink="/customer-login" class="dropdown-item" type="button"><i style="font-size: large" class="flaticon-login"></i>&nbsp;Customer Login</a></li>
+                    <li *ngIf="_botMeClientService.getCookie().clientDebug === 'yes'"><a data-bs-toggle="modal" data-bs-target="#voiceTest"
+                           class="dropdown-item" type="button">Voice Note</a></li>
+                  </ul>
+                </div>
               </li>
+<!--              <li>-->
+<!--                <a *ngIf="_botMeClientService.getCookie().clientDebug === 'yes'" data-bs-toggle="modal" data-bs-target="#voiceTest"-->
+<!--                  class="nav-link" type="button">VOICE TEST</a>-->
+<!--              </li>-->
               <li *ngIf="_botMeClientService.getCookie().isLoggedIn" class="nav-item">
                 <a (click)="showCartModal()" id="ctaId-show-cart"
-                  class="productCart"><i style="font-size: x-large" class="flaticon-supermarket-basket"></i>
+                  class="productCart">
+                  <i style="font-size: x-large"  class="fas fa-cart-plus"></i>
                   <span
                     style="position: relative;background-color:#E7272D;border-radius: 10px;margin-top: -33px;margin-left: -8px;"
                     class="badge">{{getCartProductCount()}}</span>

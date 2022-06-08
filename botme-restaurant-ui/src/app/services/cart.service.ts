@@ -125,7 +125,7 @@ export class CartService {
   setProductCustomization(product: any) {
 
     if(!this._clientService.getCookie().isLoggedIn){
-      this._router.navigate(['/sign-up'])
+      this._router.navigate(['/customer-signup'])
       return
     }
 
@@ -212,7 +212,9 @@ export class CartService {
         const orderObj = this.orderObjGenerator(singleCustomProductObj)
         updatedList.order = orderObj.order
         updatedList.cart.push(orderObj.cart)
-        document.getElementById("ctaId-show-cart")?.click()
+        if (this._helperService.getCurrentRouteName() !== '/cart') {
+          document.getElementById("ctaId-show-cart")?.click()
+        }
         this._menuService.addToCartApi(updatedList).subscribe((res: any) => {
           this._toastService.setToast({
             description: res.message,

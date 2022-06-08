@@ -40,10 +40,6 @@ export class ProductCartModalComponent implements OnInit {
   getCartProducts() {
     this.cartService.cartProduct =[]
     this.MenuService.findAllCartById().subscribe((res: any) => {
-      this._toastService.setToast({
-        description: res.message,
-        type: res.status
-      })
       this.cartService.cartLoader = false
       if (res.status === 'success') {
         const cartList = res.payload.cart

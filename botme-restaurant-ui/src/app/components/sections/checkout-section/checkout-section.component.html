@@ -9,7 +9,7 @@
           <div class="checkout-form">
             <form [formGroup]="customerForm">
               <div class="row">
-                <div class="col-sm-12 col-md-4">
+                <div [className]="!['dine_in','pick_up'].includes(_clientService.getCookie().orderType) ? 'col-md-4' : 'col-md-12'" class="col-sm-12 col-md-4">
                   <div class="form-group mb-20">
                     <div class="input-group">
                       <input type="text" formControlName="customerName" class="form-control" required
@@ -39,7 +39,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-12 col-md-4">
+                <div *ngIf="!['dine_in','pick_up'].includes(_clientService.getCookie().orderType)" class="col-sm-12 col-md-4">
                   <div class="form-group mb-20">
                     <div class="input-group">
                       <select formControlName="customerCountry" class="form-control">
@@ -49,28 +49,28 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-12 col-md-4">
+                <div *ngIf="!['dine_in','pick_up'].includes(_clientService.getCookie().orderType)" class="col-sm-12 col-md-4">
                   <div class="form-group mb-20">
                     <div class="input-group">
                       <input formControlName="customerStreet" type="text" class="form-control" placeholder="Street*"/>
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-12 col-md-4">
+                <div *ngIf="!['dine_in','pick_up'].includes(_clientService.getCookie().orderType)" class="col-sm-12 col-md-4">
                   <div class="form-group mb-20">
                     <div class="input-group">
                       <input formControlName="customerCity" type="text" class="form-control" placeholder="City*"/>
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-12 col-md-4">
+                <div *ngIf="!['dine_in','pick_up'].includes(_clientService.getCookie().orderType)" class="col-sm-12 col-md-4">
                   <div class="form-group mb-20">
                     <div class="input-group">
                       <input formControlName="customerPostalCode" type="text" class="form-control" placeholder="Postal code*"/>
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-12 col-md-4">
+                <div *ngIf="!['dine_in','pick_up'].includes(_clientService.getCookie().orderType)" class="col-sm-12 col-md-4">
                   <div class="form-group mb-20">
                     <div class="input-group">
                       <select formControlName="customerState" class="form-control">
@@ -80,7 +80,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-12 col-md-4">
+                <div *ngIf="!['dine_in','pick_up'].includes(_clientService.getCookie().orderType)" class="col-sm-12 col-md-4">
                   <div class="form-group mb-20">
                     <div class="input-group">
                       <input formControlName="customerAddress" type="text" class="form-control" required
@@ -88,7 +88,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-12 col-md-6">
+                <div *ngIf="!['dine_in','pick_up'].includes(_clientService.getCookie().orderType)" class="col-sm-12 col-md-6">
                   <div class="form-group mb-20">
                     <div class="input-group">
                       <input formControlName="customerPhone" type="text" class="form-control" required
@@ -96,7 +96,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-12 col-md-6">
+                <div *ngIf="!['dine_in','pick_up'].includes(_clientService.getCookie().orderType)" class="col-sm-12 col-md-6">
                   <div class="form-group mb-20">
                     <div class="input-group">
                       <input formControlName="customerEmail" type="email" class="form-control" required
@@ -113,7 +113,7 @@
                   </div>
                 </div>
               </div>
-              <button [disabled]="!customerForm.valid" (click)="addCustomer()" class="btn full-width">Place Order
+              <button (click)="addCustomer()" class="btn full-width">Place Order
                 <div *ngIf="loader" class="spinner-border spinner-border-sm ml-3 text-warning" role="status">
                   <span class="visually-hidden">Loading...</span>
                 </div>

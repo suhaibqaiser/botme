@@ -10,7 +10,8 @@
             <div class="row">
               <div class="col-lg-4 col-md-4 col-sm-12">
                 <div data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="selectOrderType('dine_in')"
-                     [class.active-order-type]="_orderService.selectedOrderButtons['dine_in']" class="card mb-2 text-center">
+                     [class.active-order-type]="_orderService.selectedOrderButtons['dine_in']"
+                     class="card mb-2 text-center">
                   <div class="card-body">
                     <i class="fas fa-utensils"></i>
                     <h5 class="card-title">Dine In</h5>
@@ -19,7 +20,8 @@
               </div>
               <div class="col-lg-4 col-md-4 col-sm-12">
                 <div data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="selectOrderType('pick_up')"
-                     [class.active-order-type]="_orderService.selectedOrderButtons['pick_up']" class="card mb-2 text-center">
+                     [class.active-order-type]="_orderService.selectedOrderButtons['pick_up']"
+                     class="card mb-2 text-center">
                   <div class="card-body">
                     <i class="fas fa-truck-pickup"></i>
                     <h5 class="card-title">Pick Up</h5>
@@ -53,24 +55,34 @@
         <h3 class="modal-title m-auto text-capitalize" id="exampleModalLabel">{{getOrderType()}}</h3>
       </div>
       <div class="modal-body p-5 text-center">
-        <h5 class="mb-3">{{getStatement()}}</h5>
-            <div class="form-group">
-              <div style="padding: 5px 10px;border-style: solid" class="input-group text-center">
-                <input style="color:black;" type="text" name="name" [formControl]="orderId" class="form-control"
-                       autocomplete="off" required [placeholder]="_helperService.getOrderTypeOnAuthBasis() === 'dine_in' ? 'Your reservation Id' : 'Your order Id'"/>
-              </div>
-            </div>
-        <h5 *ngIf="_helperService.getOrderTypeOnAuthBasis() === 'dine_in'" class="mt-4"> Let me help you to generate it <br><br><a data-bs-dismiss="modal" aria-label="Close" style="padding: 10px" class="btn btn-yellow" (click)="goToRoute('/online-shop')" routerLink="/online-shop">Go to Place Order Page</a></h5>
-        <h5 *ngIf="['pick_up','delivery'].includes(this._botMeService.getCookie().orderType)" class="mt-4"> Let me help you to generate it <br><br> <a data-bs-dismiss="modal" aria-label="Close" style="padding: 10px" (click)="goToRoute('/online-shop')" class="btn btn-yellow" routerLink="/online-shop">Go to Place Order Page</a></h5>
+            <h5 class="mb-3">"We don't do fast Burgers We do quality Burgers!"</h5>
+<!--        <h5 class="mb-3">{{getStatement()}}</h5>-->
+<!--        <div class="form-group">-->
+<!--          <div style="padding: 5px 10px;border-style: solid" class="input-group text-center">-->
+<!--            <input style="color:black;" type="text" name="name" [formControl]="orderId" class="form-control"-->
+<!--                   autocomplete="off" required-->
+<!--                   [placeholder]="_helperService.getOrderTypeOnAuthBasis() === 'dine_in' ? 'Your reservation Id' : 'Your order Id'"/>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <h5 *ngIf="_helperService.getOrderTypeOnAuthBasis() === 'dine_in'" class="mt-4"> Let me help you to generate it-->
+<!--          <br><br><a data-bs-dismiss="modal" aria-label="Close" style="padding: 10px" class="btn btn-yellow"-->
+<!--                     (click)="goToRoute('/online-shop')" routerLink="/online-shop">Go to Place Order Page</a></h5>-->
+<!--        <h5 *ngIf="['pick_up','delivery'].includes(this._botMeService.getCookie().orderType)" class="mt-4"> Let me help-->
+<!--          you to generate it <br><br> <a data-bs-dismiss="modal" aria-label="Close" style="padding: 10px"-->
+<!--                                         (click)="goToRoute('/online-shop')" class="btn btn-yellow"-->
+<!--                                         routerLink="/online-shop">Go to Place Order Page</a></h5>-->
+        <a  style="padding: 10px"  class="btn product_suggestion_btn text-capitalize mr-3" data-bs-dismiss="modal" [routerLink]="_helperService.checkAuthAndRedirect('/search-product')">search product &
+          order</a>
+        <a data-bs-dismiss="modal" aria-label="Close" style="padding: 10px" data-bs-dismiss="modal" routerLink="/online-shop" class="btn btn-yellow">See Menu</a>
       </div>
       <div class="modal-footer justify-content-between">
         <a type="button" style="padding: 10px" class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
-        <a (click)="applyId()" type="button" style="padding: 10px" class="btn btn-primary">
-          {{ getButtonName() }}
-          <div *ngIf="loader" class="spinner-border spinner-border-sm ml-3 text-warning" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-        </a>
+<!--        <a (click)="applyId()" type="button" style="padding: 10px" class="btn btn-primary">-->
+<!--          {{ getButtonName() }}-->
+<!--          <div *ngIf="loader" class="spinner-border spinner-border-sm ml-3 text-warning" role="status">-->
+<!--            <span class="visually-hidden">Loading...</span>-->
+<!--          </div>-->
+<!--        </a>-->
       </div>
     </div>
   </div>

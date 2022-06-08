@@ -1,5 +1,5 @@
 import { restResponse } from "../../../utils/response";
-import { createProduct, getProduct, updateProduct, getMaxLabelValue, getProductByTag , getProductByTagWithoutAttribute, getProductByTime } from "./service";
+import { createProduct, getProduct, updateProduct, getMaxLabelValue, getProductByTag , getProductByTagWithoutAttribute, getProductByTime, getProductByServingTime } from "./service";
 import { randomUUID } from "crypto";
 
 export async function addProduct(product: any, restaurantId: any) {
@@ -209,7 +209,44 @@ export async function suggestProductByTime(searchParameters: any, restaurantId: 
         response.payload = "product not found"
         response.status = "error"
         return response
+    }   
+}
+export async function suggestProductByServingTime(searchParameters: any, restaurantId: any) {
+    let response = new restResponse()
+    if (!searchParameters || !restaurantId) {
+        response.payload = "searchParameters and restaurantId is required"
+        response.status = "error"
+        return response;
+    }
+    let tag = searchParameters.number
+
+    let productList: any[] = []
+    let drinkList: any[] = []
+    let addonList: any[] = []
+    let ingredientList: any[] = []
+
+    let products = await getProductByServingTime(tag,restaurantId)
+    products.forEach((product: any) => {
+        if (!productList.includes(product.productId)) { productList.push(product.productId) }
+    });
+    
+
+    let itemList = {
+        products: productList,
+        drinks: drinkList,
+        addons: addonList,
+        ingredient: ingredientList
     }
 
-    
+    console.log("item list==>",itemList)
+    let result = itemList
+    if (result) {
+        response.payload = result
+        response.status = "success"
+        return response
+    } else {
+        response.payload = "product not found"
+        response.status = "error"
+        return response
+    }   
 }

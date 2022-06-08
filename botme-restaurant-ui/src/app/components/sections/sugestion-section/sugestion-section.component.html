@@ -6,17 +6,17 @@
       <div class="col-sm-12 col-md-12 col-lg-12 pb-30">
         <div class="contact-item">
           <div class="contact-item-title text-center">
-            <h3 class="color-white">Product Suggestions</h3>
-            <div *ngIf="!isVoiceToggleOn()">
+            <h3 class="color-white">SEARCH PRODUCT</h3>
+            <div>
               <div class="form-group mt-3 mb-20">
                 <div class="input-group w-50 p-2 m-auto">
                   <input [formControl]="suggestionControl" type="text" name="name" id="name" class=" form-control"
                          required
-                         data-error="Please enter your name" placeholder="Enter your suggestions"/>
+                         data-error="Please enter your name" placeholder="Please enter here what you want to order"/>
                 </div>
                 <div class="help-block with-errors"></div>
               </div>
-              <button (click)="sendSuggestion()" class="btn mt-3" type="submit">
+              <button (click)="sendSuggestion()" class="btn mt-3" type="button">
                 Enter
               </button>
             </div>
@@ -26,12 +26,12 @@
 
 
             <div *ngIf="!_productSuggestionService.loader" class="d-flex flex-wrap justify-content-center">
-              <div *ngFor="let item of _productSuggestionService.keywords | keyvalue"
+              <div *ngFor="let item of _productSuggestionService.keywords | keyvalue" class="mb-2"
                    style="margin-right: 8px;border-radius: 20px;padding:5px;color:white;background-color: #E7272D">
                 <strong class="text-capitalize">{{item.key}} : {{item.value}}</strong></div>
             </div>
 
-            <div *ngIf="!_productSuggestionService.loader && !_productSuggestionService.suggestedProductList.length" class="d-flex flex-wrap justify-content-center">
+            <div *ngIf="suggestionControl.value && !_productSuggestionService.loader && !_productSuggestionService.suggestedProductList.length" class="d-flex flex-wrap justify-content-center">
               <div class="text-white">
                 <strong>No suggestion found please retry!</strong></div>
             </div>
@@ -47,13 +47,16 @@
                   </div>
                   <div class="receipe-content">
                     <div class="receipe-info">
-                      <h3>{{item.productName}}</h3>
-                      <h4>${{item.productRate.standard}}</h4>
+                      <h4>{{item.productName}} : ${{item.productRate.standard}}</h4>
+                      <p class="text-white mb-0 mt-1">Size: {{_helperService.getServingSize(item.productServingSize).serving_size_name}}</p>
+                      <p *ngIf="_helperService.getProductOptions(item.productOptions).length" class="mb-0 text-white">Options: {{_helperService.getProductOptions(item.productOptions)}}</p>
+                      <p *ngIf="_helperService.getProductAddons(item.productAddons).length" class="mb-0 text-white">Addons: {{_helperService.getProductAddons(item.productAddons)}}</p>
+                      <p *ngIf="_helperService.getProductTopping(item.productToppings).length" class="mb-0 text-white">Toppings: {{_helperService.getProductTopping(item.productToppings)}}</p>
+                      <p class="text-white">Quantity: {{item.productQuantity}}</p>
                     </div>
                     <div class="receipe-cart receipe-cart-main">
                       <a (click)="editFromCart(item)">
-                        <i class="flaticon-supermarket-basket"></i>
-                        <i class="flaticon-supermarket-basket"></i>
+                        <i style="font-size: x-large"  class="fas fa-cart-plus"></i>
                       </a>
                     </div>
                   </div>

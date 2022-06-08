@@ -45,15 +45,22 @@ async function getClientDetail(req, res) {
 async function addClient(req, res) {
     let response = new Response()
 
-
-    if (!req.body.clientDeviceId) {
-        response.statusMessage = "clientDeviceId is required"
+    if (req.body.clientType !== 'customer' && !req.body.clientDeviceId) {
+        response.message = "clientDeviceId is required."
         response.status = "danger"
         return res.send(response);
     }
 
-    if (await clientService.checkClientExists(req.body.clientEmail)) {
-        response.statusMessage = "An account with the same email address already exist. Please try using different email address"
+    const client = await clientService.checkClientExists(req.body.clientEmail)
+
+    if (client) {
+        response.message = "An account with the same email address already exist. Please try using different email address"
+        response.status = "danger"
+        return res.send(response);
+    }
+
+    if (client && client.clientDeviceId && client.clientType !== 'customer' && client.clientDeviceId === req.body.clientDeviceId) {
+        response.message = "Client device id must be unique."
         response.status = "danger"
         return res.send(response);
     }
@@ -80,7 +87,8 @@ async function addClient(req, res) {
             clientEmailVerified: false,
             clientState: clientStateObj.pending,
             clientDescription: '',
-            verification_token: uuidv4()
+            verification_token: uuidv4(),
+            clientType: req.body.clientType,
         }
 
         let newClient = await clientService.addClient(client)
@@ -155,21 +163,21 @@ async function addClient(req, res) {
 
         if (newClient && sendEmail.status) {
             response.payload = newClient
-            response.statusMessage = "Your account has been created successfully! Verification link is sent on your email."
+            response.message = "Your account has been created successfully! Verification link is sent on your email."
             response.status = "success"
             return res.send(response)
         } else {
-            response.statusMessage = "Error in saving client"
+            response.message = "Error in saving client"
             response.errorPayload = {
-                newClient:newClient,
-                sendEmail:sendEmail
+                newClient: newClient,
+                sendEmail: sendEmail
             }
             response.status = "danger"
             return res.send(response)
         }
     } catch (e) {
         response.payload = e
-        response.statusMessage = "User validation failed"
+        response.message = "User validation failed"
         response.status = "danger"
         return res.send(response)
     }
@@ -189,7 +197,7 @@ async function authorizeClient(req, res) {
 
     client = JSON.parse(JSON.stringify(client))
 
-    console.log('client =>',client)
+    console.log('client =>', client)
 
     if (client && client.hasOwnProperty('clientEmailVerified') && !client.clientEmailVerified) {
         response.message = `We have sent you a verification email to your email address. ${client.clientEmail} Click and follow the link inside it.`
@@ -257,17 +265,18 @@ async function updateClient(req, res) {
         clientEmailVerified: req.body.clientEmailVerified,
         clientState: req.body.clientState,
         clientDescription: req.body.clientDescription,
-        verification_token: req.body.verification_token
+        verification_token: req.body.verification_token,
+        clientType: req.body.clientType
     }
 
     let updatedClient = await clientService.updateClient(req.body.clientID, client)
     if (updatedClient) {
         response.payload = updatedClient
-        response.statusMessage = "User updated successfully!"
+        response.message = "User updated successfully!"
         response.status = "success"
         return res.status(200).send(response)
     } else {
-        response.statusMessage = "Error in updating client, make sure the clientId is correct."
+        response.message = "Error in updating client, make sure the clientId is correct."
         response.status = "error"
         return res.status(400).send(response)
     }

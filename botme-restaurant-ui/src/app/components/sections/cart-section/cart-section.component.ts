@@ -8,6 +8,7 @@ import {FormControl} from "@angular/forms";
 import {BotmeClientService} from "../../../services/botme-client.service";
 import {Router} from "@angular/router";
 import {ToastService} from "../../../services/toast.service";
+import {OrderService} from "../../../services/order.service";
 
 declare var $: any;
 
@@ -22,15 +23,17 @@ export class CartSectionComponent implements OnInit {
   orderType = new FormControl('')
 
   constructor(public cartService: CartService,
-              private _toastService:ToastService,
-              private _router:Router,
+              private _toastService: ToastService,
+              private _router: Router,
               private MenuService: MenuService,
               public _helperService: HelperService,
               private _contextService: ContextService,
               private _socketService: SocketService,
-              public _clientService: BotmeClientService
+              public _clientService: BotmeClientService,
+              public _orderService: OrderService,
+              public _botMeService: BotmeClientService
   ) {
-    this.orderType.setValue(this._clientService.getCookie().orderType ? this._clientService.getCookie().orderType : '')
+    this._orderService.selectedOrderButtons[this._helperService.getOrderTypeOnAuthBasis()] = true
   }
 
   ngOnInit(): void {
@@ -103,12 +106,8 @@ export class CartSectionComponent implements OnInit {
     this.loader = false
   }
 
-  selectOrderType(key: any = '') {
-    this._clientService.setCookie('orderType', key)
-  }
-
-  checkout(){
-    if(!this._clientService.getCookie().orderType){
+  checkout() {
+    if (!this._clientService.getCookie().orderType) {
       this._toastService.setToast({
         description: 'Please select order type!',
         type: 'danger'
@@ -122,5 +121,27 @@ export class CartSectionComponent implements OnInit {
     if (!this._clientService.getCookie().orderType) {
       $('#order_type_modal').modal('show')
     }
+  }
+
+  selectOrderType(type: any) {
+    if (type === 'dine_in') {
+      this._orderService.selectedOrderButtons['dine_in'] = true
+      this._orderService.selectedOrderButtons['pick_up'] = false
+      this._orderService.selectedOrderButtons['delivery'] = false
+      this._botMeService.setCookie('orderType', 'dine_in')
+    }
+    if (type === 'pick_up') {
+      this._orderService.selectedOrderButtons['dine_in'] = false
+      this._orderService.selectedOrderButtons['pick_up'] = true
+      this._orderService.selectedOrderButtons['delivery'] = false
+      this._botMeService.setCookie('orderType', 'pick_up')
+    }
+    if (type === 'delivery') {
+      this._orderService.selectedOrderButtons['dine_in'] = false
+      this._orderService.selectedOrderButtons['pick_up'] = false
+      this._orderService.selectedOrderButtons['delivery'] = true
+      this._botMeService.setCookie('orderType', 'delivery')
+    }
+    return ''
   }
 }

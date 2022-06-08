@@ -15,6 +15,9 @@ import {LoginComponent} from "./components/pages/login/login.component";
 import {ProfileComponent} from "./components/pages/profile/profile.component";
 import {SignupComponent} from "./components/pages/signup/signup.component";
 import {SuggestionsComponent} from "./components/pages/suggestions/suggestions.component";
+import {OrderTypesComponent} from "./components/pages/order-types/order-types.component";
+import {CustomerSignupComponent} from "./components/pages/customer-signup/customer-signup.component";
+import {CustomerLoginComponent} from "./components/pages/customer-login/customer-login.component";
 
 const routes: Routes = [
   {
@@ -27,7 +30,7 @@ const routes: Routes = [
     canActivate: [AuthenticationGuard]
   },
   {
-    path: "login",
+    path: "bot-login",
     component: LoginComponent
   },
   {
@@ -73,13 +76,26 @@ const routes: Routes = [
     component: DemoPageComponent
   },
   {
-    path: "sign-up",
+    path: "bot-signup",
     component: SignupComponent
   },
   {
-    path: "product-suggestions",
+    path: "search-product",
     component: SuggestionsComponent,
     canActivate: [AuthenticationGuard]
+  },
+  {
+    path: "track-order",
+    component: OrderTypesComponent,
+    canActivate: [AuthenticationGuard]
+  },
+  {
+    path: "customer-signup",
+    component: CustomerSignupComponent
+  },
+  {
+    path: "customer-login",
+    component: CustomerLoginComponent
   }
 ];
 

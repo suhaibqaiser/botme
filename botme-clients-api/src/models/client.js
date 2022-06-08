@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 
 var ClientsSchema = new Schema(
     {
-        clientDeviceId: {type: String, minlength: 3, maxlength: 256, required: true, unique: true},
+        clientDeviceId: {type: String, maxlength: 256},
         clientID: {type: String, minlength: 3, maxlength: 256, required: true},
         clientName: {type: String, minlength: 3, maxlength: 256, required: true},
         clientSecret: {type: String, minlength: 3, maxlength: 256, required: true},
@@ -21,7 +21,8 @@ var ClientsSchema = new Schema(
         clientEmailVerified: {type: Boolean},
         clientState: {type: String, maxlength: 256},
         clientDescription: {type: String, maxlength: 256},
-        verification_token: {type: String, maxlength: 256}
+        verification_token: {type: String, maxlength: 256},
+        clientType: {type: String, maxlength: 256, required: true}
     }
 );
 

@@ -5,13 +5,8 @@ async function getDeviceList() {
   return Device.find();
 }
 
-async function getDeviceById(deviceLabel) {
-  return Device.findOne({
-    deviceLabel: deviceLabel
-  }, {
-    _id: 0,
-    __v: 0
-  });
+async function getDeviceById(deviceId) {
+  return Device.findOne({ deviceId: deviceId }, { _id: 0,__v: 0});
 }
 
 async function checkDeviceExists(deviceLabel) {
@@ -25,9 +20,9 @@ async function addDevice(devices) {
   return await newDevice.save();
 }
 
-async function updateDevice(deviceLabel, device) {
+async function updateDevice(deviceId, device) {
   return Device.findOneAndUpdate({
-    deviceLabel: deviceLabel
+    deviceId: deviceId
   }, device, {
     "projection": {
       "_id": 0,
@@ -37,9 +32,9 @@ async function updateDevice(deviceLabel, device) {
   });
 }
 
-async function deleteDevice(deviceLabel) {
+async function deleteDevice(deviceId) {
   return Device.findOneAndDelete({
-    deviceLabel: deviceLabel
+    deviceId: deviceId
   });
 }
 
