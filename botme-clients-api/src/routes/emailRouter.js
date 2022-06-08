@@ -4,3 +4,5 @@ const email_controller = require('../controllers/emailController')
 
 // place order info summary email endpoints
 router.post('/notification', email_controller.orderInfoSummary);
+
+module.exports = router;
