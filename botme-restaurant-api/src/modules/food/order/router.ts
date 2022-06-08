@@ -26,6 +26,7 @@ export default [
         path: "/order/update",
         method: "post",
         handler: async (req: Request, res: Response) => {
+            console.log("order ==>",req.body.order)
             let result = await editOrder(req.body.order, req.body.restaurantId)
             res.send(result);
         }

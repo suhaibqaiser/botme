@@ -49,8 +49,10 @@ export class OrderService {
    * update the order status from cart
    */
   updateOrderStatus(orderLabel = '', orderType = '', orderStatus = '') {
-    const url = this.apiBaseUrl + "/food/cart/updateOrderStatus?restaurantId=" + this.authService.getRestaurantId() + '&orderLabel=' + orderLabel + '&orderType=' + orderType + '&orderStatus=' + orderStatus
-    return this.http.get(url);
+    // const url = this.apiBaseUrl + "/food/cart/updateOrderStatus?restaurantId=" + this.authService.getRestaurantId() + '&orderLabel=' + orderLabel + '&orderType=' + orderType + '&orderStatus=' + orderStatus
+    const url = this.apiBaseUrl + "/food/order/update"
+    const body = { order : {orderLabel: orderLabel, orderType: orderType, orderStatus: orderStatus}, restaurantId: this.authService.getRestaurantId() };
+    return this.http.post(url,body);
   }
 
   deleteOrderByLabel(order: any): Observable<any> {
