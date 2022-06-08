@@ -163,6 +163,17 @@ export class CheckoutSectionComponent implements OnInit {
     if (!customerId && !customerId.length) {
       await this._customerService.addCustomer(this.customerForm.value).subscribe((res: any) => {
         if (res.status === 'success') {
+
+          this._customerService.sendEmail({
+            customerName: this.customerForm.controls['customerName'].value,
+            orderId: this._clientService.getCookie().orderLabel,
+            clientEmail: this._clientService.getCookie().clientEmail
+          }).subscribe(
+            (res) => {
+              console.log(res)
+            }
+          )
+
           this._clientService.setCookie('customerId', res.payload.customerId)
           $('#checkout_modal').modal('show')
           // this._cartService.addToCart(this._cartService.cartProduct, 'add_db')
