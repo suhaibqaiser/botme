@@ -5,7 +5,7 @@ export async function createOrder(order: any) {
 }
 
 export async function updateOrder(order: any, restaurantId: string) {
-    return Order.findOneAndUpdate({orderId: order.orderId, restaurantId: restaurantId}, order)
+    return Order.findOneAndUpdate({orderLabel: order.orderLabel, restaurantId: restaurantId}, order)
 }
 
 export async function getOrder(queryParams: any) {
