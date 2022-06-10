@@ -46,7 +46,7 @@
                          style="width:100px;height: 100px;border-radius: 10px" alt="receipe">
                   </div>
                   <div class="receipe-content">
-                    <div class="receipe-info">
+                    <div (click)="showProductInfo(item)" class="receipe-info">
                       <h4>{{item.productName}} : ${{item.productRate.standard}}</h4>
                       <p class="text-white mb-0 mt-1">Size: {{_helperService.getServingSize(item.productServingSize).serving_size_name}}</p>
                       <p *ngIf="_helperService.getProductOptions(item.productOptions).length" class="mb-0 text-white">Options: {{_helperService.getProductOptions(item.productOptions)}}</p>

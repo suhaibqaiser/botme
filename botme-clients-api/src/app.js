@@ -34,7 +34,7 @@ app.use('/nlp', verifyToken, nlpRouter);
 app.use('/speech', speechRouter);
 app.use('/auth', authRouter);
 app.use('/device', verifyToken, deviceRouter);
-app.use('/email', verifyToken, emailRouter);
+app.use('/email', emailRouter);
 
 
 function verifyToken(req, res, next) {

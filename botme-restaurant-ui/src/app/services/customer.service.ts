@@ -8,7 +8,7 @@ import {BotmeClientService} from "./botme-client.service";
 })
 export class CustomerService {
   apiBaseUrl = environment.apiRestaurantUrl;
-
+  botMeClientBaseURL = environment.botMeClientAPI;
   constructor(private clientService: BotmeClientService, private _http: HttpClient) {
   }
 
@@ -25,5 +25,10 @@ export class CustomerService {
   getCustomer() {
     const url = this.apiBaseUrl + "/food/customer/search?customerId=" + this.clientService.getCookie().customerId;
     return this._http.get(url);
+  }
+
+  sendEmail(body:any) {
+    const url = `${this.botMeClientBaseURL}/email/sendEmail?emailSendingTypes=place_order`;
+    return this._http.post(url,body);
   }
 }

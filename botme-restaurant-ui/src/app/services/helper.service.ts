@@ -123,7 +123,7 @@ export class HelperService {
    */
   getOrderTypeOnAuthBasis() {
     const cookie = this._clientService.getCookie()
-    return (cookie && cookie.orderType) ? cookie.orderType : ''
+    return (cookie && cookie.orderType) ? cookie.orderType : 'dine_in'
   }
 
   getOrderStatus(type = '') {

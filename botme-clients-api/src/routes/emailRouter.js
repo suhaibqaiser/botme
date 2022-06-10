@@ -3,6 +3,6 @@ const router = express.Router();
 const email_controller = require('../controllers/emailController')
 
 // place order info summary email endpoints
-router.post('/notification', email_controller.orderInfoSummary);
+router.post('/sendEmail', email_controller.sendEmail);
 
 module.exports = router;

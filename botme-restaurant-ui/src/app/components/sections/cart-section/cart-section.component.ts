@@ -33,7 +33,9 @@ export class CartSectionComponent implements OnInit {
               public _orderService: OrderService,
               public _botMeService: BotmeClientService
   ) {
-    this._orderService.selectedOrderButtons[this._helperService.getOrderTypeOnAuthBasis()] = true
+    const orderType = this._helperService.getOrderTypeOnAuthBasis()
+    this._orderService.selectedOrderButtons[orderType] = true
+    this._botMeService.setCookie('orderType', orderType)
   }
 
   ngOnInit(): void {
@@ -107,6 +109,9 @@ export class CartSectionComponent implements OnInit {
   }
 
   checkout() {
+    const orderType = this._helperService.getOrderTypeOnAuthBasis()
+    this._orderService.selectedOrderButtons[orderType] = true
+    this._botMeService.setCookie('orderType', orderType)
     if (!this._clientService.getCookie().orderType) {
       this._toastService.setToast({
         description: 'Please select order type!',
