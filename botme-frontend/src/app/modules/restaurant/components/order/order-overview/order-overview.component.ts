@@ -21,6 +21,10 @@ export class OrderOverviewComponent implements OnInit {
   orders: any = []
   customers: any
   filteredCustomers:any
+  filteredOrders:any
+  filteredOrdersLabel:any
+  filteredStatus:any
+  filteredDeviceType:any
   loading = true
   carts: any = []
   products: any = []
@@ -33,13 +37,74 @@ export class OrderOverviewComponent implements OnInit {
 
     searchList: any
 
+    sortType = [
+      {
+        'name': 'All',
+        'value': 'all'
+      },
+      {
+        'name': 'Dine In',
+        'value': 'dine_in'
+      },
+      {
+        'name': 'Pick Up',
+        'value': 'pick_up'
+      },
+      {
+        'name': 'Delivery',
+        'value': 'delivery'
+      }
+    ]
+    sortControl = new FormControl('all')
+
+
+    sortStatus =[
+      {
+        'name': 'Notified',
+        'value': 'notified'
+      },
+      {
+        'name':'Delivered',
+        'value':'delivered'
+      },
+      {
+        'name':'Cancel',
+        'value':'cancel'
+      }      
+    ]
+    sortControlStatus=new FormControl('notified')
+
+    sortDevice =[
+      {
+        'name':'All',
+        'value':'all'
+      },
+      {
+        'name':'Robot',
+        'value':'robot'
+      },
+      {
+        'name':'Desktop',
+        'value':'desktop'
+      }
+    ]
+    sortControlType=new FormControl('all')
+
 
     payload: any = {
-      customerName:''
+      customerName:'',
+      sortByOrder:'',
+      sortByStatus:'',
+      orderLabel:'',
+      orderDevice:''
     }
 
     queryParams: any = {
-      customerName: ''
+      customerName: '',
+      sortByOrder:'',
+      sortByStatus:'',
+      orderLabel:'',
+      orderDevice:''
     }
   
 
@@ -110,7 +175,7 @@ export class OrderOverviewComponent implements OnInit {
     let text = event && event.target.value ? event.target.value : ''
     this.searchControl.setValue(text)
     if (this.searchControl.value && this.searchControl.value.length) {
-      this.setFilterList('Search', this.searchControl.value)
+      this.setFilterList('Customer Name', this.searchControl.value)
       this.payload.customerName = this.searchControl.value
       this.setQueryParameters()
     } else {
@@ -121,12 +186,135 @@ export class OrderOverviewComponent implements OnInit {
     console.log(this.searchControl.value);
     
     this._customerService.getCustomersByFiltering(this.searchControl.value).subscribe(
-  
+      
       ((res: any) => {
+        console.log(res);
+        
         this.filteredCustomers = res.status !== 'error' ? res.payload : []
         this.isLoading = false
+
       })      
     )
+  }
+
+  filterOrdersByLabel(event: any = null) {
+    let text = event && event.target.value ? event.target.value : ''
+    this.searchControl.setValue(text)
+    if (this.searchControl.value && this.searchControl.value.length) {
+      this.setFilterList('Order Id', this.searchControl.value)
+      this.payload.orderLabel = this.searchControl.value
+      this.setQueryParameters()
+    } else {
+      this.payload.orderLabel = ''
+      this.setQueryParameters()
+      this.searchControl.setValue('')
+    }
+    console.log(this.searchControl.value);
+    
+    this._orderService.getOrdersLabelByFiltering(this.searchControl.value).subscribe(
+      
+      ((res: any) => {
+        console.log(res);
+        
+        this.filteredOrdersLabel = res.status !== 'error' ? res.payload : []
+        this.isLoading = false
+
+      })      
+    )
+  }
+
+ 
+
+  sortByStatus() {
+    this.isLoading = true
+    this.filteredStatus = []
+    let url = ''
+
+    if (this.sortControlStatus.value != 'Notified') {
+      this.payload.sortByStatus = this.sortControlStatus.value
+      this.setQueryParameters()
+      if (this.sortControlStatus.value == 'deliverd') {
+        this.setFilterList('','Deliverd')
+      } else if (this.sortControlStatus.value == 'cancel') {
+        this.setFilterList('','Cancel')
+      }
+    } else {
+      this.payload.sortByStatus = 'notified'
+      this.setQueryParameters()
+    }
+    this._orderService.getOrderStatusByFiltering(this.sortControlStatus.value).subscribe(
+      ((res: any) => {
+        console.log(this.sortControlStatus.value);
+        
+        this.filteredStatus = res.status !== 'error' ? res.payload : []
+        this.isLoading = false
+        
+      })
+    )
+    return true
+  }
+
+
+
+  sortByOrder() {
+    this.isLoading = true
+    this.filteredOrders = []
+    let url = ''
+
+    if (this.sortControl.value != 'All') {
+      this.payload.sortByOrder = this.sortControl.value
+      this.setQueryParameters()
+      if (this.sortControl.value == 'dine_in') {
+        this.setFilterList('','Dine In')
+      } else if (this.sortControl.value == 'pick_up') {
+        this.setFilterList('','Pick Up')
+      }
+      else if (this.sortControl.value == 'delivery') {
+        this.setFilterList('', 'Delivery')
+      }
+    } else {
+      this.payload.sortByOrder = 'all'
+      this.setQueryParameters()
+    }
+    this._orderService.getOrderTypeByFiltering(this.sortControl.value).subscribe(
+      ((res: any) => {
+        console.log(this.sortControl.value);
+        
+        this.filteredOrders = res.status !== 'error' ? res.payload : []
+        this.isLoading = false
+        
+      })
+    )
+    return true
+  }
+
+  sortByDeviceType() {
+    this.isLoading = true
+    this.filteredDeviceType = []
+    let url = ''
+
+    if (this.sortControlType.value != 'All') {
+      this.payload.sortByDeviceType = this.sortControlType.value
+      this.setQueryParameters()
+      if (this.sortControlType.value == 'robot') {
+        this.setFilterList('','Robot')
+      } else if (this.sortControlType.value == 'desktop') {
+        this.setFilterList('','Desktop')
+      }
+    } else {
+      this.payload.sortByDeviceType = 'all'
+      this.setQueryParameters()
+    }
+    this._orderService.getDeviceTypeByFiltering(this.sortControlType.value).subscribe(
+      ((res: any) => {
+        console.log(this.sortControlType.value);
+        
+        this.filteredDeviceType = res.status !== 'error' ? res.payload : []
+        this.isLoading = false
+        
+      })
+    )
+    return true
   }
 
   getCustomerName(customerId: string) {

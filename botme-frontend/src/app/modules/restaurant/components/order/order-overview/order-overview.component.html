@@ -1,24 +1,47 @@
 <div class="text-center mt-5" *ngIf="loading">
   <div class="spinner-border text-center text-primary" role="status"></div>
 </div>
-
+<div style="padding-left: 230px; color: black; font-size: 14px;" >Filter by order type
+  <span style="margin-left: 20px;">Filter by status</span>
+  <span style="margin-left: 25px;">Filter by device type</span>
+</div>
 <form>
   <div class="form-group">
     <input (change)="filterCustomersByName($event)"
     type="text"
-    placeholder="Search"
+    placeholder="Customer Name"
     style="width: 200px; padding: 2px 20px; margin: 10px 0px; height: 40px;"
     id="entityId-search"
     
     
     >
-   <button style=" height: 40px; border: none;"><i class="fa fa-search icon"></i></button> 
+   <button style=" height: 40px; width: 40px; border: none; background-color: #02D3EF;"><i class="fa fa-search icon" ></i></button> 
 
-   <select style="margin-left:20px; height: 40px;">
-    <option>Order Type</option>
-    <option>Dine in</option>
-    <option>Delivery</option>
+   <select style="margin-left:25px; height: 40px;" (click)="sortByOrder()" [formControl]="sortControl">
+    <option *ngFor="let item of sortType" [value]="item.value">{{item.name}}</option>
   </select>
+
+  <select style="margin-left:45px; height: 40px;"(click)="sortByStatus()" [formControl]="sortControlStatus">
+    <option *ngFor="let item of sortStatus" [value]="item.value">{{item.name}}</option>
+  </select>
+
+
+    <select style="margin-left:50px; height: 40px;" (click)="sortByDeviceType()" [formControl]="sortControlType">
+      <option *ngFor="let item of sortDevice" [value]="item.value">{{item.name}}</option>
+    </select>
+  
+ 
+
+  <input
+  (change)="  filterOrdersByLabel($event)"
+  type="text"
+  placeholder="Order Id"
+  style="width: 150px; padding: 2px 20px; margin: 10px 0px; height: 40px; margin-left: 50px;"
+  id="entityId-search"
+  >
+ <button style=" height: 40px; width: 40px; border: none; background-color: #02D3EF;"><i class="fa fa-search icon" ></i></button> 
+
+ <input type="date" style="height: 40px; margin-left: 40px; ">
   </div>
 </form>
 

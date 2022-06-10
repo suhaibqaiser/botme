@@ -27,6 +27,39 @@ export class OrderService {
     return this.http.get(url);
   }
 
+  
+  getOrderTypeByFiltering(orderType: string): Observable<any> {
+    
+    const url = `${this.apiBaseUrl}/food/order/search?type=${orderType}`;
+    return this.http.get(url);
+  
+  }
+
+  getOrderStatusByFiltering(orderStatus: string): Observable<any> {
+    
+    const url = `${this.apiBaseUrl}/food/order/search?status=${orderStatus}`;
+    return this.http.get(url);
+  
+  }
+
+  getOrdersLabelByFiltering(orderLabel: string): Observable<any> {
+    
+    const url = `${this.apiBaseUrl}/food/order/search?orderLabel=${orderLabel}`;
+    return this.http.get(url);
+  
+  }
+
+  getDeviceTypeByFiltering(deviceType: string): Observable<any> {
+    
+    const url = `${this.apiBaseUrl}/food/order/search?deviceType=${deviceType}`;
+    return this.http.get(url);
+  
+  }
+
+
+
+
+
   getCartById(orderLabel: string = ''): Observable<any> {
     const url = `${this.apiBaseUrl}/food/cart/search?restaurantId=${this.restaurantId}&orderLabel=${orderLabel}`;
     return this.http.get(url);
