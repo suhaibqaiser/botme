@@ -1,4 +1,9 @@
 import {Order, Cart} from "./model";
+import { Customer } from "../customer/model";
+
+export async function getCustomerId(name:any) {
+    return Customer.find({customerName: { $regex: name, $options:"i"}})
+}
 
 export async function createOrder(order: any) {
     return Order.create(order)
@@ -16,6 +21,17 @@ export async function getOrder(queryParams: any) {
         console.log(e)
     }
     return order
+}
+
+export async function queryOrder(queryParams: any) {
+    let order: any[] = [] 
+    try {
+        order = await Order.find(queryParams).sort({orderTimestamp: -1})
+    } catch (e) {
+        console.log(e)
+    }
+    return order
+
 }
 
 export async function getOrderById(filter: string) {

@@ -6,14 +6,17 @@ import {
     getCartById,
     getOrder,
     getOrderById,
+    queryOrder,
     updateCart,
     updateOrder,
     updateCartStatus,
     updateOrderType, updateOrderStatusDB,
     deleteOrderByOrderLabel,
-    deleteCartByOrderLabel
+    deleteCartByOrderLabel,
+    getCustomerId,
 } from "./service";
 import {randomUUID} from "crypto";
+import { type } from "os";
 
 
 export async function findOrder(filter: any) {
@@ -77,7 +80,69 @@ export async function editOrder(order: any, restaurantId: any) {
         return response
     }
 }
+export async function searchOrder(filter:any) {
+    let response = new restResponse()
 
+    if (filter){
+        for (const filt in filter){
+            if (filter[filt] == "" || filter[filt] == "all"){
+                delete filter[filt]
+            }
+        }    
+    }
+    try {
+        console.log("filter==>",filter)
+        let orderlist :any[] = []
+        if (filter.customerName) {
+            console.log("here")
+            let result = await getCustomerId(filter.customerName)
+            delete filter.customerName
+            console.log(result)
+            if (result.length != 0) {
+                for (const res of result){
+                    // console.log(res)
+                    filter.customerId = res.customerId
+                    console.log("getting order")
+                    let data = await queryOrder(filter)
+                    data.forEach((order: any) => {
+                        if (!orderlist.includes(order)) {orderlist.push(order)}
+                    })
+                }
+                response.payload = orderlist
+                response.status = "success"
+                return response
+                    // if (data) {
+                    //     response.payload = data
+                    //     response.status = "success"
+                    //     return response
+                    // } else {
+                    //     response.payload = "order not found"
+                    //     response.status = "danger"
+                    //     return response
+                    // }
+            }
+            response.payload = "order not found"
+            response.status = "danger"
+            return response 
+
+        } else {
+            let result = await queryOrder(filter)
+            if (result) {
+                response.payload = result
+                response.status = "success"
+                return response
+            } else {
+                response.payload = "order not found"
+                response.status = "danger"
+                return response
+            }
+        }
+    } catch (e) {
+            response.payload = "order not found"
+            response.status = "danger"
+            return response
+    }
+}
 // CART //
 
 export async function findCart(filter: any) {
