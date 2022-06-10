@@ -32,13 +32,20 @@ export class CustomerService {
   }
 
   getCustomersByFiltering(name: string): Observable<any> {
-
-    console.log(name);
     
     const url = `${this.apiBaseUrl}/food/customer/search?customerName=${name}`;
     return this.http.get(url);
   
   }
+
+  getCustomersIdByFiltering(customerId: string): Observable<any> {
+    
+    const url = `${this.apiBaseUrl}/food/customer/search?customerId=${customerId}`;
+    return this.http.get(url);
+  
+  }
+
+
 
   registerCustomer(customer: object): Observable<any> {
     const url = `${this.apiBaseUrl}/food/customer/add`;
