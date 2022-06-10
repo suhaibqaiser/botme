@@ -3,112 +3,121 @@ const Response = require("../models/response")
 const {v4: uuidv4} = require('uuid');
 const crypto = require('crypto');
 const sessionController = require("./sessionController");
-const {clientStateObj} = require("../utils/helper");
+const {clientStateObj, stakeholdersList, stakeholdersObj} = require("../utils/helper");
 const emailHelper = require("../utils/EmailHelper.js")
+const {addDevice} = require("../utils/helperMethods");
 
 // Display list of all Clients.
 async function getClientList(req, res) {
-    let response = new Response()
-    let clients = await clientService.getClientList()
-    if (clients) {
-        response.payload = clients
-        response.status = "success"
-        return res.status(200).send(response)
-    } else {
-        response.payload = "No clients found"
-        response.status = "error"
-        return res.status(404).send(response)
+    try {
+        let response = new Response()
+        let clients = await clientService.getClientList()
+
+        if (clients) {
+            response.payload = clients
+            response.status = "success"
+            return res.json(response);
+        }
+
+        response.message = "No clients found";
+        response.status = "danger";
+        return res.json(response);
+
+    } catch (e) {
+        response.status = "danger";
+        response.message = e
+        return res.json(response);
     }
 }
 
 // Display details for a specific Client.
 async function getClientDetail(req, res) {
-    let response = new Response()
+    try {
+        let response = new Response()
 
-    if (!req.query.clientID) {
-        response.payload = {message: 'clientID is required'};
-        return res.status(400).send(response);
-    }
-    let client = await clientService.getClientById(req.query.clientID)
-    if (client) {
-        response.payload = client
-        response.status = "success"
-        return res.status(200).send(response)
-    } else {
-        response.payload = "Client not found"
-        response.status = "error"
-        return res.status(404).send(response)
+        if (!req.query.clientID) {
+            response.status = "danger";
+            response.message = "Client id is required."
+            return res.json(response);
+        }
+
+        const client = await clientService.getClientById(req.query.clientID)
+
+        if (client) {
+            response.payload = client;
+            response.status = "success";
+            return res.json(response);
+        }
+
+        response.message = "No clients are added yet.";
+        response.status = "danger";
+        return res.json(response);
+
+    } catch (e) {
+        response.status = "danger";
+        response.message = e
+        return res.json(response);
     }
 }
 
 // Create new client
 async function addClient(req, res) {
-    let response = new Response()
-
-    if (req.body.clientType !== 'customer' && !req.body.clientDeviceId) {
-        response.message = "clientDeviceId is required."
-        response.status = "danger"
-        return res.send(response);
-    }
-
-    const client = await clientService.checkClientExists(req.body.clientEmail)
-
-    if (client) {
-        response.message = "An account with the same email address already exist. Please try using different email address"
-        response.status = "danger"
-        return res.send(response);
-    }
-
-    if (client && client.clientDeviceId && client.clientType !== 'customer' && client.clientDeviceId === req.body.clientDeviceId) {
-        response.message = "Client device id must be unique."
-        response.status = "danger"
-        return res.send(response);
-    }
-
-    // let hash = crypto.createHash('sha256');
-    // let clientSecret = hash.update(req.body.clientSecret).digest('hex');
-
     try {
-        let client = {
-            clientDeviceId: req.body.clientDeviceId,
-            clientID: req.body.clientID,
-            clientSecret: req.body.clientSecret,
-            clientName: req.body.clientName,
-            clientDebug: req.body.clientDebug,
-            clientVoiceEnabled: req.body.clientVoiceEnabled,
-            clientVoiceTimeout: req.body.clientVoiceTimeout,
-            clientCreated: Date(),
-            clientUpdated: null,
-            clientActive: req.body.clientActive,
-            clientComment: req.body.clientComment,
-            restaurantId: req.body.restaurantId,
-            clientEmail: req.body.clientEmail,
-            clientSecretHint: req.body.clientSecretHint,
-            clientEmailVerified: false,
-            clientState: clientStateObj.pending,
-            clientDescription: '',
-            verification_token: uuidv4(),
-            clientType: req.body.clientType,
+        let response = new Response()
+
+
+        if (!stakeholdersList.includes(client.clientType)) {
+            response.status = "danger";
+            response.message = "Client type is invalid."
+            return res.json(response);
         }
 
-        let newClient = await clientService.addClient(client)
+        if (!client.clientType || !client.clientSecret || !client.restaurantId || !client.secretHint) {
+            response.message = "Clients validation failed."
+            response.status = "danger"
+            return res.send(response);
+        }
 
-        const redirect_url = `https://stg.gofindmenu.com/home?verification_token=${client.verification_token}&clientID=${client.clientID}`
+        let stakeholder = {}
+        let client = JSON.parse(JSON.stringify(req.body.client))
+
+        // getting the stakeholder object
+        if (stakeholdersObj[client.clientType] === stakeholdersObj.device) stakeholder = await addDevice(stakeholder)
+        if (stakeholdersObj[client.clientType] === stakeholdersObj.customer) stakeholder = req.body.customer
+
+        if(!stakeholder) {
+            response.message = "Failed to add stakeholder."
+            response.status = "danger"
+            return res.send(response);
+        }
+
+        if(!stakeholder || !stakeholder.label) {
+            response.message = "Stakeholder label required."
+            response.status = "danger"
+            return res.send(response);
+        }
+
+        client.label = uuidv4()
+        client.clientID = stakeholder.label
+
+        let newClient = await clientService.addClient(client)
+        if (!newClient) {
+            response.message = "Failed to add client."
+            response.status = "danger"
+            return res.send(response);
+        }
+
+
+        const redirect_url = `https://stg.gofindmenu.com/home?verification_token=${stakeholder.verificationToken}&clientID=${stakeholder.clientID}`
 
         const sendEmail = await emailHelper.sendEmail(
             'w11cafe113245@gmail.com',
-            client.clientEmail,
+            stakeholder.clientEmail,
             'Verify your email address!',
             `
             <!Doctype Html>  
             <Html>     
-            <Head>     
-            <script type="text/javascript">  
-                function func() {  
-                    alert("You are Successfully Called the JavaScript function");  
-                    window.location.href = redirect_url;
-                }  
-        </script>  
+            <Head>      
         </Head> 
         <body>   
             <div style="background: #222222;font-family: Roboto, sans-serif; list-style: none; color: white; outline: none; word-break: break-word; overflow-wrap: break-word; box-sizing: border-box; text-decoration: none; max-width: 600px; width: 600px; margin: 0px auto; padding: 60px 0px;">
@@ -122,7 +131,7 @@ async function addClient(req, res) {
             <div style="font-family: Roboto, sans-serif; margin: 0px; list-style: none; color: white; padding: 0px 0px 60px; outline: none; word-break: break-word; overflow-wrap: break-word; box-sizing: border-box; text-decoration: none; border-bottom: 1px solid rgb(207, 210, 220);background: #222222">
                 <h3 style="font-family: Roboto, sans-serif; margin: 0px 0px 35px; list-style: none; color: white; padding: 0px; outline: none; word-break: break-word; overflow-wrap: break-word; box-sizing: border-box; text-decoration: none; font-size: 22px; font-weight: normal;">Verify your email address!</h3>
                 <p style="font-family: Roboto, sans-serif; margin: 0px; list-style: none; color: white; padding: 0px; outline: none; word-break: break-word; overflow-wrap: break-word; box-sizing: border-box; text-decoration: none; line-height: 1.59; font-size: 18px; text-align: left; font-weight: normal;">
-                    Hi ${client.clientName},
+                    Hi ${stakeholder.name},
                     <br>
                     <br>
                     We are happy to have you on board! Please copy the below link to verify your email address:
@@ -166,18 +175,19 @@ async function addClient(req, res) {
             response.message = "Your account has been created successfully! Verification link is sent on your email."
             response.status = "success"
             return res.send(response)
-        } else {
-            response.message = "Error in saving client"
-            response.errorPayload = {
-                newClient: newClient,
-                sendEmail: sendEmail
-            }
-            response.status = "danger"
-            return res.send(response)
         }
+
+        response.message = "Error in saving client"
+        response.payload = {
+            newClient: newClient,
+            sendEmail: sendEmail
+        }
+        response.status = "danger"
+        return res.send(response)
+
     } catch (e) {
+        response.message = 'Exception: Failed to add client.'
         response.payload = e
-        response.message = "User validation failed"
         response.status = "danger"
         return res.send(response)
     }
