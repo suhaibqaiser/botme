@@ -30,8 +30,8 @@ async function addClient(client) {
     return await newClient.save()
 }
 
-async function checkClientExists(clientEmail) {
-    return Client.exists({clientEmail: clientEmail})
+async function checkClientExists(key = '', value = '') {
+    return Client.exists({key: value})
 }
 
 async function updateClient(clientID, client) {

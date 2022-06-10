@@ -1,20 +1,23 @@
-
 const mongoose = require('mongoose');
 
 const mongodb = require('../utils/mongodb');
 
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 const deviceSchema = new Schema(
-  {
-    deviceId: {type: String, maxlength: 256, required: true},
-    deviceLabel: {type: String, maxlength: 256, required: true},
-    deviceName: {type: String, maxlength: 256, required: true},
-    deviceType: {type: String, maxlength: 256, required: true},
-    deviceDescription: {type: String, maxlength: 800, required: true},
-    deviceActive: {type: Boolean, required: true}
-  }
-);
-// }, {
-//   versionKey: false
-// });
+    {
+        label: {type: String, maxlength: 256, required: true},
+        name: {type: String, maxlength: 256, required: true},
+        debug: {type: Boolean, required: true},
+        isVoiceEnabled: {type: Boolean, required: true},
+        voiceTime: {type: Number, required: true},
+        active: {type: Boolean, required: true},
+        description: {type: String, maxlength: 256, required: true},
+        email: {type: String, maxlength: 256, required: true},
+        emailVerified: {type: Boolean, required: true},
+        state: {type: String, maxlength: 256, required: true}, // active, deleted, disabled
+        verificationToken: {type: String, maxlength: 256, required: true}
+    }, {
+        versionKey: false
+    });
+
 module.exports = mongodb.clientsDB.model('devices', deviceSchema);

@@ -1,30 +1,19 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const mongodb = require('../utils/mongodb');
-var Schema = mongoose.Schema;
 
-var ClientsSchema = new Schema(
+const Schema = mongoose.Schema;
+const ClientsSchema = new Schema(
     {
-        clientDeviceId: {type: String, maxlength: 256},
+        label: {type: String, minlength: 3, maxlength: 256, required: true},
         clientID: {type: String, minlength: 3, maxlength: 256, required: true},
-        clientName: {type: String, minlength: 3, maxlength: 256, required: true},
+        clientType: {type: String, minlength: 3, maxlength: 256, required: true}, // device, customer, user
         clientSecret: {type: String, minlength: 3, maxlength: 256, required: true},
-        clientDebug: {type: Boolean},
-        clientVoiceEnabled: {type: Boolean},
-        clientVoiceTimeout: {type: Number, required: true},
-        clientCreated: {type: Date, required: true},
-        clientUpdated: {type: Date},
-        clientActive: {type: Boolean, required: true},
-        clientComment: {type: String},
         restaurantId: {type: String, maxlength: 256, required: true},
-        clientEmail: {type: String, maxlength: 256, required: true},
-        clientSecretHint: {type: String, minlength: 3, maxlength: 256, required: true},
-        clientEmailVerified: {type: Boolean},
-        clientState: {type: String, maxlength: 256},
-        clientDescription: {type: String, maxlength: 256},
-        verification_token: {type: String, maxlength: 256},
-        clientType: {type: String, maxlength: 256, required: true}
-    }
-);
+        secretHint: {type: String, maxlength: 256, required: true}
+    }, {
+        versionKey: false
+    });
+
 
 //Export model
 module.exports = mongodb.clientsDB.model('Clients', ClientsSchema);
