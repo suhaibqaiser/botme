@@ -23,9 +23,8 @@ export async function getOrder(queryParams: any) {
     return order
 }
 
-export async function queryOrder(queryParams: any, restaurantId: any) {
+export async function queryOrder(queryParams: any) {
     let order: any[] = []
-    queryParams.restaurantId =restaurantId
     try {
         order = await Order.find(queryParams)
     } catch (e) {
