@@ -89,11 +89,14 @@ export async function searchOrder(filter:any) {
             }
         }
 
-        if (Object.keys((filter).length === 0)){
-            response.payload = "queries required"
-            response.status = "danger"
-            return response
-        }
+        filter.orderTimestamp = new Date()
+        console.log(filter.orderTimestamp)
+
+        // if (Object.keys((filter).length === 0)){
+        //     response.payload = "queries required"
+        //     response.status = "danger"
+        //     return response
+        // }
 
         console.log("filter==>",filter)
         let orderlist :any[] = []
