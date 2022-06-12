@@ -5,12 +5,13 @@ import { environment } from 'src/environments/environment';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
 
-  constructor(private http: HttpClient, private authService: AuthenticationService) {
+  constructor(private http: HttpClient, private authService: AuthenticationService, ) {
   }
   restaurantId = this.authService.getRestaurantId()
 
@@ -31,9 +32,9 @@ export class CustomerService {
     return this.http.get(url);
   }
 
-  getCustomersByFiltering(name: string): Observable<any> {
+  getOrdersByFiltering(urlString: any){
     
-    const url = `${this.apiBaseUrl}/food/customer/search?customerName=${name}`;
+    const url = this.apiBaseUrl+"/food/order/look?customerName="+ urlString.customerName + '&orderStatus=' + urlString.orderStatus + '&orderType=' + urlString.orderType + '&orderLabel=' + urlString.orderLabel;
     return this.http.get(url);
   
   }

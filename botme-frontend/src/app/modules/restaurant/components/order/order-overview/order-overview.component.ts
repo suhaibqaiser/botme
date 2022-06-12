@@ -18,6 +18,9 @@ declare var $: any;
 })
 export class OrderOverviewComponent implements OnInit {
 
+
+  
+
   orders: any = []
   customers: any
   filteredCustomers:any
@@ -28,11 +31,13 @@ export class OrderOverviewComponent implements OnInit {
   loading = true
   carts: any = []
   products: any = []
+  
 
 
   isLoading = false;
     //search text
     searchControl = new FormControl("")
+    
     searchText = ''
 
     searchList: any
@@ -90,6 +95,8 @@ export class OrderOverviewComponent implements OnInit {
     ]
     sortControlType=new FormControl('all')
 
+    
+
 
     payload: any = {
       customerName:'',
@@ -99,12 +106,21 @@ export class OrderOverviewComponent implements OnInit {
       orderDevice:''
     }
 
+
     queryParams: any = {
       customerName: '',
       sortByOrder:'',
       sortByStatus:'',
       orderLabel:'',
       orderDevice:''
+    }
+
+    filter:any={
+        customerName:'',
+        orderType:'',
+        orderStatus:'',
+        deviceType:'',
+        orderLabel:'',
     }
   
 
@@ -123,11 +139,18 @@ export class OrderOverviewComponent implements OnInit {
 
 
 
+
+
+
+
   
   async getQueryParams() {
     this._route.queryParams.subscribe(param => {
       this.queryParams = {
         customerName: (param && param.customerName) ? param.customerName : '',
+        orderStatus: (param && param.orderStatus) ? param.orderStatus : '',
+        orderType: (param && param.orderType) ? param.orderType : '',
+        orderLabel: (param && param.orderLabel) ? param.orderLabel : '',
       }
       this.payload = this.queryParams
       this.searchControl.setValue(this.payload.customerName)
@@ -177,6 +200,7 @@ export class OrderOverviewComponent implements OnInit {
     if (this.searchControl.value && this.searchControl.value.length) {
       this.setFilterList('Customer Name', this.searchControl.value)
       this.payload.customerName = this.searchControl.value
+      this.filter.customerName= this.searchControl.value
       this.setQueryParameters()
     } else {
       this.payload.customerName = ''
@@ -185,12 +209,12 @@ export class OrderOverviewComponent implements OnInit {
     }
     console.log(this.searchControl.value);
     
-    this._customerService.getCustomersByFiltering(this.searchControl.value).subscribe(
+    this._customerService.getOrdersByFiltering(this.searchControl.value).subscribe(
       
       ((res: any) => {
         console.log(res);
         
-        this.filteredCustomers = res.status !== 'error' ? res.payload : []
+        this.orders = res.status !== 'error' ? res.payload : []
         this.isLoading = false
 
       })      
@@ -203,6 +227,7 @@ export class OrderOverviewComponent implements OnInit {
     if (this.searchControl.value && this.searchControl.value.length) {
       this.setFilterList('Order Id', this.searchControl.value)
       this.payload.orderLabel = this.searchControl.value
+      this.filter.orderLabel= this.searchControl.value
       this.setQueryParameters()
     } else {
       this.payload.orderLabel = ''
@@ -211,12 +236,12 @@ export class OrderOverviewComponent implements OnInit {
     }
     console.log(this.searchControl.value);
     
-    this._orderService.getOrdersLabelByFiltering(this.searchControl.value).subscribe(
+    this._customerService.getOrdersByFiltering(this.searchControl.value).subscribe(
       
       ((res: any) => {
         console.log(res);
         
-        this.filteredOrdersLabel = res.status !== 'error' ? res.payload : []
+        this.orders = res.status !== 'error' ? res.payload : []
         this.isLoading = false
 
       })      
@@ -232,6 +257,7 @@ export class OrderOverviewComponent implements OnInit {
 
     if (this.sortControlStatus.value != 'Notified') {
       this.payload.sortByStatus = this.sortControlStatus.value
+      this.filter.orderStatus= this.sortControlStatus.value
       this.setQueryParameters()
       if (this.sortControlStatus.value == 'deliverd') {
         this.setFilterList('','Deliverd')
@@ -242,11 +268,11 @@ export class OrderOverviewComponent implements OnInit {
       this.payload.sortByStatus = 'notified'
       this.setQueryParameters()
     }
-    this._orderService.getOrderStatusByFiltering(this.sortControlStatus.value).subscribe(
+    this._customerService.getOrdersByFiltering(this.sortControlStatus.value).subscribe(
       ((res: any) => {
         console.log(this.sortControlStatus.value);
         
-        this.filteredStatus = res.status !== 'error' ? res.payload : []
+        this.orders = res.status !== 'error' ? res.payload : []
         this.isLoading = false
         
       })
@@ -263,6 +289,7 @@ export class OrderOverviewComponent implements OnInit {
 
     if (this.sortControl.value != 'All') {
       this.payload.sortByOrder = this.sortControl.value
+      this.filter.orderType= this.sortControl.value
       this.setQueryParameters()
       if (this.sortControl.value == 'dine_in') {
         this.setFilterList('','Dine In')
@@ -276,16 +303,28 @@ export class OrderOverviewComponent implements OnInit {
       this.payload.sortByOrder = 'all'
       this.setQueryParameters()
     }
-    this._orderService.getOrderTypeByFiltering(this.sortControl.value).subscribe(
+    this._customerService.getOrdersByFiltering(this.sortControl.value).subscribe(
       ((res: any) => {
         console.log(this.sortControl.value);
         
-        this.filteredOrders = res.status !== 'error' ? res.payload : []
+        this.orders = res.status !== 'error' ? res.payload : []
         this.isLoading = false
         
       })
     )
     return true
+  }
+
+
+  filteringOrder(){
+   console.log("order=>",this.filter);
+   this._customerService.getOrdersByFiltering(this.filter).subscribe(
+    ((res: any) => {
+      console.log('res=>',res);      
+      this.orders = res.status !== 'error' ? res.payload : []
+      this.isLoading = false
+      
+    }))
   }
 
   sortByDeviceType() {
@@ -295,6 +334,7 @@ export class OrderOverviewComponent implements OnInit {
 
     if (this.sortControlType.value != 'All') {
       this.payload.sortByDeviceType = this.sortControlType.value
+      this.filter.deviceType = this.sortControlType.value
       this.setQueryParameters()
       if (this.sortControlType.value == 'robot') {
         this.setFilterList('','Robot')
@@ -305,11 +345,11 @@ export class OrderOverviewComponent implements OnInit {
       this.payload.sortByDeviceType = 'all'
       this.setQueryParameters()
     }
-    this._orderService.getDeviceTypeByFiltering(this.sortControlType.value).subscribe(
+    this._customerService.getOrdersByFiltering(this.sortControlType.value).subscribe(
       ((res: any) => {
         console.log(this.sortControlType.value);
         
-        this.filteredDeviceType = res.status !== 'error' ? res.payload : []
+        this.orders = res.status !== 'error' ? res.payload : []
         this.isLoading = false
         
       })
@@ -371,7 +411,10 @@ export class OrderOverviewComponent implements OnInit {
   }
 
   setQueryParameters() {    
-    if (!this.payload.productName) this.payload.customerName = ''
+    if (!this.payload.customerName) this.payload.customerName = ''
+    if (!this.payload.orderStatus) this.payload.orderStatus = ''
+    if (!this.payload.orderType) this.payload.orderType = ''
+    if (!this.payload.orderLabel) this.payload.orderLabel = ''
     this._router.navigate([], {
       relativeTo: this._route,
       queryParams: this.payload,
