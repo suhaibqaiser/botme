@@ -218,6 +218,7 @@ export class SearchGridSectionComponent implements OnInit {
       ((res: any) => {
         this.filteredProducts = res.status !== 'error' ? res.payload : []
         this.isLoading = false
+        
       })
     )
   }
@@ -326,6 +327,8 @@ export class SearchGridSectionComponent implements OnInit {
     }
     this.menuservice.getProductsByFiltering(this.payload).subscribe(
       ((res: any) => {
+        console.log(this.sortControl.value);
+        
         this.filteredProducts = res.status !== 'error' ? res.payload : []
         this.isLoading = false
       })

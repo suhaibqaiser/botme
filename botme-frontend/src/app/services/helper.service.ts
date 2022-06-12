@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
   providedIn: 'root'
 })
 export class HelperService {
-
+  timer: any
   orderTypes: any = {
     dine_in: 'dine_in',
     pick_up: 'pick_up',
@@ -197,24 +197,4 @@ export class HelperService {
     return time;
   }
 
-  breadCrumbList:any = [
-		{
-		parent:'robot',
-		child: 'session'
-		},
-		{
-		parent:'robot',
-		child: 'bots'	
-		},
-		{
-		parent:'restaurant',
-		child: 'bots'	
-		}
-	]
-
-  getCurrentBreadCrumb(routerName = '') {
-		
-		return this.breadCrumbList.find((item:any) => item.child === routerName)
-			
-	}
 }

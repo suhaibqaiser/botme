@@ -14,6 +14,8 @@ export default [
         path: "/customer/search",
         method: "get",
         handler: async (req: Request, res: Response) => {
+            console.log(req.query);
+            
             let result = await findCustomer(req.query)
             res.send(result);
         }
