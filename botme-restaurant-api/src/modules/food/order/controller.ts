@@ -88,17 +88,15 @@ export async function searchOrder(filter:any) {
                 delete filter[filt]
             }
         }
-        let restaurantId = filter.restaurantId
-        delete filter.restaurantId
         // filter.orderTimestamp = new Date()
         // console.log(filter.orderTimestamp)
-        console.log("filter ==>",Object.keys(filter).length)
-        if (Object.keys(filter).length === 0){
-            console.log("query require")
-            response.payload = "queries required"
-            response.status = "danger"
-            return response
-        }
+        // console.log("filter ==>",Object.keys(filter).length)
+        // if (Object.keys(filter).length === 0){
+        //     console.log("query require")
+        //     response.payload = "queries required"
+        //     response.status = "danger"
+        //     return response
+        // }
 
         console.log("filter==>",filter)
         let orderlist :any[] = []
@@ -112,7 +110,7 @@ export async function searchOrder(filter:any) {
                     // console.log(res)
                     filter.customerId = res.customerId
                     console.log("getting order")
-                    let data = await queryOrder(filter,restaurantId)
+                    let data = await queryOrder(filter)
                     data.forEach((order: any) => {
                         if (!orderlist.includes(order)) {orderlist.push(order)}
                     })
@@ -135,7 +133,7 @@ export async function searchOrder(filter:any) {
             return response 
 
         } else {
-            let result = await queryOrder(filter,restaurantId)
+            let result = await queryOrder(filter)
             console.log("result ==>",result)
             if (result) {
                 response.payload = result

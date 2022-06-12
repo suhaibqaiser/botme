@@ -197,24 +197,28 @@ export class OrderOverviewComponent implements OnInit {
   filterCustomersByName(event: any = null) {
     let text = event && event.target.value ? event.target.value : ''
     this.searchControl.setValue(text)
-    if (this.searchControl.value && this.searchControl.value.length) {
-      this.setFilterList('Customer Name', this.searchControl.value)
+    console.log(text)
+    if (!!text) {
+      this.setFilterList('customerName', this.searchControl.value)
       this.payload.customerName = this.searchControl.value
       this.filter.customerName= this.searchControl.value
       this.setQueryParameters()
     } else {
+      console.log(this.searchControl.value)
       this.payload.customerName = ''
       this.setQueryParameters()
       this.searchControl.setValue('')
     }
     console.log(this.searchControl.value);
     
-    this._customerService.getOrdersByFiltering(this.searchControl.value).subscribe(
+    this._customerService.getOrdersByFiltering(this.filter).subscribe(
       
       ((res: any) => {
         console.log(res);
         
         this.orders = res.status !== 'error' ? res.payload : []
+        this.resolveFilter(res.payload)
+
         this.isLoading = false
 
       })      
@@ -236,12 +240,14 @@ export class OrderOverviewComponent implements OnInit {
     }
     console.log(this.searchControl.value);
     
-    this._customerService.getOrdersByFiltering(this.searchControl.value).subscribe(
+    this._customerService.getOrdersByFiltering(this.filter).subscribe(
       
       ((res: any) => {
         console.log(res);
         
         this.orders = res.status !== 'error' ? res.payload : []
+        this.resolveFilter(res.payload)
+
         this.isLoading = false
 
       })      
@@ -268,11 +274,13 @@ export class OrderOverviewComponent implements OnInit {
       this.payload.sortByStatus = 'notified'
       this.setQueryParameters()
     }
-    this._customerService.getOrdersByFiltering(this.sortControlStatus.value).subscribe(
+    this._customerService.getOrdersByFiltering(this.filter).subscribe(
       ((res: any) => {
         console.log(this.sortControlStatus.value);
         
         this.orders = res.status !== 'error' ? res.payload : []
+        this.resolveFilter(res.payload)
+
         this.isLoading = false
         
       })
@@ -303,11 +311,13 @@ export class OrderOverviewComponent implements OnInit {
       this.payload.sortByOrder = 'all'
       this.setQueryParameters()
     }
-    this._customerService.getOrdersByFiltering(this.sortControl.value).subscribe(
+    this._customerService.getOrdersByFiltering(this.filter).subscribe(
       ((res: any) => {
         console.log(this.sortControl.value);
         
         this.orders = res.status !== 'error' ? res.payload : []
+        this.resolveFilter(res.payload)
+
         this.isLoading = false
         
       })
@@ -322,9 +332,21 @@ export class OrderOverviewComponent implements OnInit {
     ((res: any) => {
       console.log('res=>',res);      
       this.orders = res.status !== 'error' ? res.payload : []
+      this.resolveFilter(res.payload)
       this.isLoading = false
       
     }))
+  }
+  resolveFilter(orders: any = {}) {
+    if (Array.isArray(orders)) {
+      for (let order of orders) {
+        order.carts = this.getCartByOrderLabel(order.orderLabel)
+        order.productTotalPrice = order.carts.reduce((prev: any, next: any) => {
+          return prev + next.productTotalPrice
+        }, 0)
+        order.customer = this.getCustomerName(order.customerId)
+      }
+    }
   }
 
   sortByDeviceType() {
@@ -345,15 +367,17 @@ export class OrderOverviewComponent implements OnInit {
       this.payload.sortByDeviceType = 'all'
       this.setQueryParameters()
     }
-    this._customerService.getOrdersByFiltering(this.sortControlType.value).subscribe(
-      ((res: any) => {
-        console.log(this.sortControlType.value);
+    // this._customerService.getOrdersByFiltering(this.filter).subscribe(
+    //   ((res: any) => {
+    //     console.log(this.sortControlType.value);
         
-        this.orders = res.status !== 'error' ? res.payload : []
-        this.isLoading = false
+    //     this.orders = res.status !== 'error' ? res.payload : []
+          //  this.resolveFilter(res.payload)
+
+    //     this.isLoading = false
         
-      })
-    )
+    //   })
+    // )
     return true
   }
 
