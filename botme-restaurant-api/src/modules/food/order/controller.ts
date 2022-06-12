@@ -89,8 +89,8 @@ export async function searchOrder(filter:any) {
             }
         }
 
-        filter.orderTimestamp = new Date()
-        console.log(filter.orderTimestamp)
+        // filter.orderTimestamp = new Date()
+        // console.log(filter.orderTimestamp)
 
         // if (Object.keys((filter).length === 0)){
         //     response.payload = "queries required"
