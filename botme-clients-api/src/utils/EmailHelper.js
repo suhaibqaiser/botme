@@ -24,7 +24,7 @@ async function sendEmail(from = '', to = '', subject = '', body = '') {
         let info = await transporter.sendMail({
             from: '"BotMe" <w11cafe113245@gmail.com>', // sender address
             to: to, // list of receivers
-            subject: "Verify your email address!", // Subject line
+            subject: subject, // Subject line
             text: "Hello world?", // plain text body
             html: `<b>${body}</b>`, // html body
         });
