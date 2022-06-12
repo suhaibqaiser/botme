@@ -21,8 +21,8 @@ function sendPlaceOrderEmail(body = {}) {
                     <br>
                     We have just received your order and has notified to our shef and below is your order Id from which you can trace your order details
                     <br>
-                    
-                    <h3 style="color:red;font-weight:bold">Order Id: <span style="color:white">${orderId}</span></h6>
+                     <br>
+                    <h5 style="color:red;font-weight:bold">Order Id: <span style="color:white">${orderId}</span></h6>
                     
                 </p>
            

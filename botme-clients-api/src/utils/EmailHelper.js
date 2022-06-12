@@ -6,7 +6,7 @@ let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: 'w11cafe113245@gmail.com', // generated ethereal user
-        pass: 'w11cafe321', // generated ethereal password
+        pass: 'nhgkammrmwfmdouc', // generated ethereal password
     },
 });
 
@@ -24,7 +24,7 @@ async function sendEmail(from = '', to = '', subject = '', body = '') {
         let info = await transporter.sendMail({
             from: '"BotMe" <w11cafe113245@gmail.com>', // sender address
             to: to, // list of receivers
-            subject: "Verify your email address!", // Subject line
+            subject: subject, // Subject line
             text: "Hello world?", // plain text body
             html: `<b>${body}</b>`, // html body
         });
