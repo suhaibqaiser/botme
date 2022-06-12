@@ -82,15 +82,19 @@ export async function editOrder(order: any, restaurantId: any) {
 }
 export async function searchOrder(filter:any) {
     let response = new restResponse()
-
-    if (filter){
+    try {
         for (const filt in filter){
-            if (filter[filt] == "" || filter[filt] == "all"){
+            if (filter[filt] == 'undefined' || filter[filt] == "" || filter[filt] == "all"){
                 delete filter[filt]
             }
-        }    
-    }
-    try {
+        }
+
+        if (Object.keys((filter).length === 0)){
+            response.payload = "queries required"
+            response.status = "danger"
+            return response
+        }
+
         console.log("filter==>",filter)
         let orderlist :any[] = []
         if (filter.customerName) {
@@ -127,6 +131,7 @@ export async function searchOrder(filter:any) {
 
         } else {
             let result = await queryOrder(filter)
+            console.log("result ==>",result)
             if (result) {
                 response.payload = result
                 response.status = "success"

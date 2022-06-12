@@ -26,7 +26,7 @@ export async function getOrder(queryParams: any) {
 export async function queryOrder(queryParams: any) {
     let order: any[] = [] 
     try {
-        order = await Order.find(queryParams).sort({orderTimestamp: -1})
+        order = await Order.find(queryParams)
     } catch (e) {
         console.log(e)
     }
