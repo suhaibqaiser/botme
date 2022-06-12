@@ -2,7 +2,7 @@ const Response = require("../models/response");
 const deviceService = require("../services/deviceServices");
 const {v4: uuidv4} = require('uuid');
 const {accountStateList} = require('../utils/helper.js')
-const {addDevice} = require('../utils/helperMethods.js')
+const {addDeviceToDB} = require('../utils/helperMethods.js')
 
 // Display All Devices
 async function getDeviceList(req, res) {
@@ -39,7 +39,7 @@ async function getDeviceDetails(req, res) {
             return res.json(response);
         }
 
-        let device = await deviceService.getDeviceById(req.query.label);
+        let device = await deviceService.getDeviceById(req.query.deviceLabel);
 
         if (device) {
             response.payload = device;
@@ -63,7 +63,7 @@ async function getDeviceDetails(req, res) {
 // Create new device
 async function addDevice(req, res) {
     try {
-        const response = await addDevice(req.body)
+        const response = await addDeviceToDB(req.body)
         return res.json(response);
 
     } catch (e) {
@@ -81,27 +81,27 @@ async function updateDevice(req, res) {
 
         const device = JSON.parse(JSON.stringify(req.body))
 
-        if (!req.query.label) {
+        if (!req.query.deviceLabel) {
             response.message = "Device label is required.";
             response.status = "danger";
             return res.json(response);
         }
 
 
-        if (!accountStateList.includes(device.state)) {
+        if (!accountStateList.includes(device.deviceState)) {
             response.status = "danger";
             response.message = "Device state is invalid."
             return res.json(response);
         }
 
 
-        if (await deviceService.checkDeviceExists('email', device.email)) {
+        if (await deviceService.checkDeviceExists('deviceEmail', device.deviceEmail)) {
             response.status = "danger";
             response.message = "Device already exists with this email."
             return res.json(response);
         }
 
-        const updatedDevice = await deviceService.updateDevice(req.query.label, device);
+        const updatedDevice = await deviceService.updateDevice(req.query.deviceLabel, device);
 
         if (updatedDevice) {
             response.payload = updatedDevice;
@@ -127,13 +127,13 @@ async function deleteDevice(req, res) {
     try {
         let response = new Response();
 
-        if (!req.query.label) {
+        if (!req.query.deviceLabel) {
             response.message = "Device label is required.";
             response.status = "danger";
             return res.json(response);
         }
 
-        const device = await deviceService.deleteDevice(req.query.label)
+        const device = await deviceService.deleteDevice(req.query.deviceLabel)
 
         if (device) {
             response.payload = device;

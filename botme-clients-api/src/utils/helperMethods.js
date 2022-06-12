@@ -8,35 +8,35 @@ const Response = require("../models/response");
  * @param body
  * @returns {*}
  */
-addDevice = async (body = {}) => {
+ async function addDeviceToDB(body = {})  {
     let response = new Response();
     let device = JSON.parse(JSON.stringify(body))
 
-    if (!accountStateList.includes(device.state)) {
+    if (!accountStateList.includes(device.deviceState)) {
         response.status = "danger";
         response.message = "Device state is invalid."
         return response
     }
 
-    if (!device.name || !device.restaurantId || !device.email) {
+    if (!device.deviceName || !device.deviceRestaurantId || !device.deviceEmail) {
         response.status = "danger";
         response.message = "Device validation failed."
         return response
     }
 
-    if (await deviceService.checkDeviceExists('label', device.label)) {
+    if (await deviceService.checkDeviceExists('deviceLabel', device.deviceLabel)) {
         response.status = "danger";
         response.message = "Device already exists with this label."
         return response
     }
 
-    if (await deviceService.checkDeviceExists('email', device.email)) {
+    if (await deviceService.checkDeviceExists('deviceEmail', device.deviceEmail)) {
         response.status = "danger";
         response.message = "Device already exists with this email."
         return response
     }
 
-    device.label = uuidv4()
+    device.deviceLabel = uuidv4()
     device.verificationToken = uuidv4()
     const newDevice = await deviceService.addDevice(device);
 
@@ -53,5 +53,5 @@ addDevice = async (body = {}) => {
 }
 
 module.exports = ({
-    addDevice
+    addDeviceToDB
 })

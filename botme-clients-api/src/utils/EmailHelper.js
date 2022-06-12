@@ -6,7 +6,7 @@ let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: 'w11cafe113245@gmail.com', // generated ethereal user
-        pass: 'w11cafe321', // generated ethereal password
+        pass: 'nhgkammrmwfmdouc', // generated ethereal password
     },
 });
 

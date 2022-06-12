@@ -5,17 +5,17 @@ const mongodb = require('../utils/mongodb');
 const Schema = mongoose.Schema;
 const deviceSchema = new Schema(
     {
-        label: {type: String, maxlength: 256, required: true},
-        name: {type: String, maxlength: 256, required: true},
-        debug: {type: Boolean, required: true},
-        isVoiceEnabled: {type: Boolean, required: true},
-        voiceTime: {type: Number, required: true},
-        active: {type: Boolean, required: true},
-        description: {type: String, maxlength: 256, required: true},
-        email: {type: String, maxlength: 256, required: true},
-        emailVerified: {type: Boolean, required: true},
-        state: {type: String, maxlength: 256, required: true}, // active, deleted, disabled
-        verificationToken: {type: String, maxlength: 256, required: true}
+        deviceLabel: {type: String, maxlength: 256, required: true},
+        deviceName: {type: String, maxlength: 256, required: true},
+        deviceDebug: {type: Boolean, required: true},
+        deviceIsVoiceEnabled: {type: Boolean, required: true},
+        deviceVoiceTime: {type: Number, required: true},
+        deviceActive: {type: Boolean, required: true},
+        deviceDescription: {type: String, maxlength: 256, required: true},
+        deviceEmail: {type: String, maxlength: 256, required: true},
+        deviceState: {type: String, maxlength: 256, required: true}, // active, deleted, disabled
+        deviceVerificationToken: {type: String, maxlength: 256, required: true},
+        deviceRestaurantId: {type: String, maxlength: 256, required: true},
     }, {
         versionKey: false
     });

@@ -48,9 +48,9 @@ async function deleteClient(clientID) {
 async function verifyAccount(filter) {
     return Client.updateOne(filter, {
         $set: {
-            clientEmailVerified: true,
-            clientState: clientStateObj.active,
-            clientActive: true
+            emailVerified: true,
+            state: clientStateObj.active,
+            active: true
         }
     })
 }

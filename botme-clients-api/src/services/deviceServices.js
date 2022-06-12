@@ -1,11 +1,12 @@
 const Device = require('../models/devices');
+const {clientStateObj} = require("../utils/helper");
 
 async function getDeviceList() {
     return Device.find();
 }
 
-async function getDeviceById(deviceId) {
-    return Device.findOne({label: label}, {_id: 0, __v: 0});
+async function getDeviceById(deviceLabel) {
+    return Device.findOne({deviceLabel: deviceLabel}, {_id: 0, __v: 0});
 }
 
 async function checkDeviceExists(key = '', value) {
@@ -19,9 +20,9 @@ async function addDevice(device = {}) {
     return await newDevice.save();
 }
 
-async function updateDevice(label, device = {}) {
+async function updateDevice(deviceLabel, device = {}) {
     return Device.findOneAndUpdate({
-        label: label
+        deviceLabel: deviceLabel
     }, device, {
         "projection": {
             "_id": 0,
@@ -31,10 +32,20 @@ async function updateDevice(label, device = {}) {
     });
 }
 
-async function deleteDevice(label) {
+async function deleteDevice(deviceLabel) {
     return Device.findOneAndDelete({
-        label: label
+        deviceLabel: deviceLabel
     });
+}
+
+async function verifyDeviceAccount(filter) {
+    return Device.updateOne(filter, {
+        $set: {
+            deviceVerificationToken: true,
+            deviceState: clientStateObj.active,
+            deviceActive: true
+        }
+    })
 }
 
 module.exports = {
@@ -43,5 +54,6 @@ module.exports = {
     checkDeviceExists,
     addDevice,
     updateDevice,
-    deleteDevice
+    deleteDevice,
+    verifyDeviceAccount
 };

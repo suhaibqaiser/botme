@@ -3,9 +3,10 @@ const Response = require("../models/response")
 const {v4: uuidv4} = require('uuid');
 const crypto = require('crypto');
 const sessionController = require("./sessionController");
-const {clientStateObj, stakeholdersList, stakeholdersObj} = require("../utils/helper");
+const {accountStateObj, stakeholdersList, stakeholdersObj} = require("../utils/helper");
 const emailHelper = require("../utils/EmailHelper.js")
 const {addDevice} = require("../utils/helperMethods");
+const deviceService = require("../services/deviceServices");
 
 // Display list of all Clients.
 async function getClientList(req, res) {
@@ -65,6 +66,7 @@ async function addClient(req, res) {
     try {
         let response = new Response()
 
+        let client = JSON.parse(JSON.stringify(req.body.client))
 
         if (!stakeholdersList.includes(client.clientType)) {
             response.status = "danger";
@@ -79,26 +81,36 @@ async function addClient(req, res) {
         }
 
         let stakeholder = {}
-        let client = JSON.parse(JSON.stringify(req.body.client))
-
         // getting the stakeholder object
-        if (stakeholdersObj[client.clientType] === stakeholdersObj.device) stakeholder = await addDevice(stakeholder)
-        if (stakeholdersObj[client.clientType] === stakeholdersObj.customer) stakeholder = req.body.customer
-
-        if(!stakeholder) {
-            response.message = "Failed to add stakeholder."
-            response.status = "danger"
-            return res.send(response);
+        if (stakeholdersObj[client.clientType] === stakeholdersObj.device) {
+            let body = {
+                deviceLabel: '',
+                deviceName: client.deviceName,
+                deviceDebug: false,
+                deviceIsVoiceEnabled: false,
+                deviceVoiceTime: 3000,
+                deviceActive: false,
+                deviceDescription: '',
+                deviceEmail: client.deviceEmail,
+                deviceState: accountStateObj.pending, // active, deleted, disabled
+                deviceVerificationToken: '',
+                deviceRestaurantId: client.deviceRestaurantId,
+            }
+            stakeholder = await addDevice(body)
+            if (!stakeholder.status == 'danger') {
+                return res.send(stakeholder);
+            }
         }
 
-        if(!stakeholder || !stakeholder.label) {
+
+        if (!stakeholder || !stakeholder.payload.deviceLabel) {
             response.message = "Stakeholder label required."
             response.status = "danger"
             return res.send(response);
         }
 
-        client.label = uuidv4()
-        client.clientID = stakeholder.label
+        client.clientLabel = uuidv4()
+        client.clientID = stakeholder.payload.deviceLabel
 
         let newClient = await clientService.addClient(client)
         if (!newClient) {
@@ -108,11 +120,11 @@ async function addClient(req, res) {
         }
 
 
-        const redirect_url = `https://stg.gofindmenu.com/home?verification_token=${stakeholder.verificationToken}&clientID=${stakeholder.clientID}`
+        const redirect_url = `https://stg.gofindmenu.com/home?deviceVerificationToken=${stakeholder.payload.deviceVerificationToken}`
 
         const sendEmail = await emailHelper.sendEmail(
             'w11cafe113245@gmail.com',
-            stakeholder.clientEmail,
+            stakeholder.payload.deviceEmail,
             'Verify your email address!',
             `
             <!Doctype Html>  
@@ -311,32 +323,47 @@ async function deleteClient(req, res) {
     }
 }
 
-async function verifyCustomerAccount(req, res) {
+async function verifyClientAccount(req, res) {
 
-    let response = new Response()
+    try {
+        let response = new Response()
 
-    const filter = req.query
+        const filter = req.query
 
-    console.log('filter =>', filter)
+        console.log('filter =>', filter)
 
-    if (!filter.verification_token || !filter.clientID) {
-        response.message = `Sorry this request is invalid to verify your account!`
+        if (!filter.deviceVerificationToken) {
+            response.message = `Sorry this request is invalid to verify your account!`
+            response.status = "danger"
+            return res.json(response)
+        }
+
+        if (!stakeholdersList.includes(filter.clientType)) {
+            response.status = "danger";
+            response.message = "Client type is invalid."
+            return res.json(response);
+        }
+
+        if (stakeholdersObj[filter.clientType] === stakeholdersObj.device) {
+            const verify = await deviceService.verifyDeviceAccount(filter)
+            if (verify.nModified) {
+                response.message = `Your account is successfully verified!`
+                response.status = "success"
+                return res.send(response)
+            }
+        }
+
+
+        response.message = `Sorry failed to verify your account!`
         response.status = "danger"
         return res.send(response)
+
+    } catch (e) {
+        response.status = "danger";
+        response.message = 'Exception: Failed to verify stakeholder.'
+        response.payload = e
+        return res.json(response);
     }
-
-    const verify = await clientService.verifyAccount(filter)
-    console.log(JSON.parse(JSON.stringify(verify)))
-    if (verify.nModified) {
-        response.message = `Your account is successfully verified!`
-        response.status = "success"
-        return res.send(response)
-    }
-
-    response.message = `Sorry failed to verify your account!`
-    response.status = "danger"
-    return res.send(response)
-
 }
 
 // Client heartbeat to keep alive
@@ -394,5 +421,5 @@ module.exports = ({
     updateClient,
     deleteClient,
     heartbeatClient,
-    verifyCustomerAccount
+    verifyClientAccount
 })

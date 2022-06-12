@@ -1,6 +1,6 @@
 <div class="authentication-body container w-75 p-5">
   <div class="contact-item">
-    <h4 class="text-white text-center">Bot Signup</h4>
+    <h4 class="text-white text-center">Device Signup</h4>
     <ul class="authentication-tab">
 
     </ul>
@@ -15,7 +15,7 @@
               <div class="form-group mb-20">
                 <div class="input-group mb-1">
                   <input required type="text" formControlName="clientName" class="form-control"
-                         placeholder="Client Name*"/>
+                         placeholder="Device Name*"/>
                 </div>
                 <span style="color: red;margin-left: 20px;"
                       *ngIf="!signupForm.controls['clientName'].valid && signupForm.controls['clientName'].touched">{{_helperService.getRequiredCheckError(signupForm, 'clientName', _helperService.fieldErrorsCheckTypes.required, ['Client name is required.'])}}</span>
@@ -24,18 +24,8 @@
             <div class="col-sm-12 col-md-6">
               <div class="form-group mb-20">
                 <div class="input-group mb-1">
-                  <input required type="text" formControlName="clientID" class="form-control"
-                         placeholder="Client Id*"/>
-                </div>
-                <span style="color: red;margin-left: 20px;"
-                      *ngIf="!signupForm.controls['clientID'].valid && signupForm.controls['clientID'].touched">{{_helperService.getRequiredCheckError(signupForm, 'clientID', _helperService.fieldErrorsCheckTypes.required, ['Client Id is required.'])}}</span>
-              </div>
-            </div>
-            <div class="col-sm-12 col-md-6">
-              <div class="form-group mb-20">
-                <div class="input-group mb-1">
                   <input required type="text" formControlName="clientDeviceId" class="form-control"
-                         placeholder="client device id*"/>
+                         placeholder="Device id*"/>
                 </div>
                 <span style="color: #24AF95;margin-left: 20px;" *ngIf="checkDeviceIdLoader">Checking your device id....</span>
                 <span style="color: red;margin-left: 20px;" *ngIf="!signupForm.controls['clientDeviceId'].valid && signupForm.controls['clientDeviceId'].touched">{{_helperService.getRequiredCheckError(signupForm, 'clientDeviceId', _helperService.fieldErrorsCheckTypes.required, ['Client device id is required.'])}}</span>
@@ -45,7 +35,7 @@
               <div class="form-group mb-20">
                 <div class="input-group">
                   <input required type="password" formControlName="clientSecret" class="form-control"
-                         placeholder="Client Secret*"/>
+                         placeholder="Device Secret*"/>
                 </div>
                 <span style="color: red;margin-left: 20px;"
                       *ngIf="!signupForm.controls['clientSecret'].valid && signupForm.controls['clientSecret'].touched">{{_helperService.getRequiredCheckError(signupForm, 'clientSecret', _helperService.fieldErrorsCheckTypes.required, ['Client Secret is required.'])}}</span>
@@ -55,7 +45,7 @@
               <div class="form-group mb-20">
                 <div class="input-group">
                   <input required type="password" formControlName="confirmClientSecret" class="form-control"
-                         placeholder="Confirm Client Secret*"/>
+                         placeholder="Confirm Device Secret*"/>
                 </div>
                 <span style="color: red;margin-left: 20px;"
                       *ngIf="!signupForm.controls['confirmClientSecret'].valid && signupForm.controls['clientSecret'].touched">{{_helperService.getRequiredCheckError(signupForm, 'confirmClientSecret', _helperService.fieldErrorsCheckTypes.required, ['Confirm Client Secret is required.'])}}</span>
@@ -65,7 +55,7 @@
               <div class="form-group mb-20">
                 <div class="input-group">
                   <input required type="text" formControlName="clientEmail" class="form-control"
-                         placeholder="Client Email*"/>
+                         placeholder="Device Email*"/>
                 </div>
                 <span style="color: red;margin-left: 20px;"
                       *ngIf="!signupForm.controls['clientEmail'].valid && signupForm.controls['clientEmail'].touched">{{_helperService.getRequiredCheckError(signupForm, 'clientEmail', _helperService.fieldErrorsCheckTypes.required, ['Client Email is required.'])}}</span>
@@ -75,7 +65,7 @@
               <div class="form-group mb-20">
                 <div class="input-group">
                   <input required type="text" formControlName="confirmClientEmail" class="form-control"
-                         placeholder="Confirm Client Email*"/>
+                         placeholder="Confirm Device Email*"/>
                 </div>
                 <span style="color: red;margin-left: 20px;"
                       *ngIf="!signupForm.controls['confirmClientEmail'].valid && signupForm.controls['confirmClientEmail'].touched">{{_helperService.getRequiredCheckError(signupForm, 'confirmClientEmail', _helperService.fieldErrorsCheckTypes.required, ['Confirm Client Email is required.'])}}</span>
@@ -85,7 +75,7 @@
               <div class="form-group mb-20">
                 <div class="input-group">
                   <input required type="text" formControlName="clientSecretHint" class="form-control"
-                         placeholder="Client Secret Hint*"/>
+                         placeholder="Client Device Hint*"/>
                 </div>
                 <span style="color: red;margin-left: 20px;"
                       *ngIf="!signupForm.controls['clientSecretHint'].valid && signupForm.controls['clientSecretHint'].touched">{{_helperService.getRequiredCheckError(signupForm, 'clientSecretHint', _helperService.fieldErrorsCheckTypes.required, ['Client Secret Hint is required.'])}}</span>
