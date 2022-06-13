@@ -88,20 +88,19 @@ export async function searchOrder(filter:any) {
                 delete filter[filt]
             }
         }
-        // filter.orderTimestamp = new Date()
-        // console.log(filter.orderTimestamp)
-        // console.log("filter ==>",Object.keys(filter).length)
-        // if (Object.keys(filter).length === 0){
-        //     console.log("query require")
-        //     response.payload = "queries required"
-        //     response.status = "danger"
-        //     return response
-        // }
+        if(filter.orderTimestamp){
+            let fromDate=new Date(filter.orderTimestamp)
+            let toDate = new Date(filter.orderTimestamp)
+            toDate.setDate(toDate.getDate() + 1)
+            console.log(toDate)
+            filter.orderTimestamp = {$gte: fromDate,$lt: toDate}
+
+        }
 
         console.log("filter==>",filter)
         let orderlist :any[] = []
         if (filter.customerName) {
-            console.log("here")
+            // console.log("here")
             let result = await getCustomerId(filter.customerName)
             delete filter.customerName
             console.log(result)
