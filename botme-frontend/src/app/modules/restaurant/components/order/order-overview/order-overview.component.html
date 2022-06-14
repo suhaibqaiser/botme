@@ -3,7 +3,7 @@
 </div>
 <div style="margin-left: 235px; color: black; font-size: 14px;" >Filter by order type
   <span style="margin-left: 32px;">Filter by status</span>
-  <span style="margin-left: 32px;">Filter by device type</span>
+
 </div>
 <form>
   <div class="form-group">
@@ -23,9 +23,7 @@
   </select>
 
 
-    <select style="margin-left:65px; height: 40px;" (click)="sortByDeviceType()" [formControl]="sortControlType">
-      <option *ngFor="let item of sortDevice" [value]="item.value">{{item.name}}</option>
-    </select>
+    
   
  
 
@@ -37,12 +35,13 @@
   id="entityId-search"
   >
  
- <input type="date" style="height: 40px; margin-left: 40px; ">
+ <input (change)='setDate($event)' type="date" style="height: 40px; margin-left: 40px; " >
 
+ <button (click)="filteringOrder()"  style="margin-left: 40px; height: 40px; width: 100px; border: none; background-color: #02D3EF; border-radius: 4px;"><i class="fa fa-search icon" style="font-size: 18px" > Search</i></button>
 
   </div>
   <div class="text-center ">
-    <button (click)="filteringOrder()"  style="height: 40px; width: 100px; border: none; background-color: #02D3EF; border-radius: 4px;"><i class="fa fa-search icon" style="font-size: 18px" > Search</i></button> 
+    
   </div>
   
 </form>

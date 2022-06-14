@@ -34,7 +34,7 @@ export class CustomerService {
 
   getOrdersByFiltering(urlString: any){
     
-    const url = this.apiBaseUrl+"/food/order/look?restaurantId="+ this.restaurantId + "&customerName="+ urlString.customerName + '&orderStatus=' + urlString.orderStatus + '&orderType=' + urlString.orderType + '&orderLabel=' + urlString.orderLabel;
+    const url = this.apiBaseUrl+"/food/order/look?restaurantId="+ this.restaurantId + "&customerName="+ urlString.customerName + '&orderStatus=' + urlString.orderStatus + '&orderType=' + urlString.orderType + '&orderLabel=' + urlString.orderLabel + '&orderTimestamp=' + urlString.orderTimestamp
     return this.http.get(url);
   
   }

@@ -103,7 +103,8 @@ export class OrderOverviewComponent implements OnInit {
       sortByOrder:'',
       sortByStatus:'',
       orderLabel:'',
-      orderDevice:''
+      orderDevice:'',
+      orderTimestamp:''
     }
 
 
@@ -112,15 +113,16 @@ export class OrderOverviewComponent implements OnInit {
       sortByOrder:'',
       sortByStatus:'',
       orderLabel:'',
-      orderDevice:''
+      orderDevice:'',
+      orderTimestamp:''
     }
 
     filter:any={
         customerName:'',
         orderType:'',
         orderStatus:'',
-        deviceType:'',
         orderLabel:'',
+        orderTimestamp:''
     }
   
 
@@ -132,9 +134,12 @@ export class OrderOverviewComponent implements OnInit {
 
   async ngOnInit() {
     await this.getProducts()
+    
     this.searchList = []
     this.isLoading = true
     await this.getQueryParams()
+    await this.sortByStatus()
+    await this.sortByOrder()
   }
 
 
@@ -206,10 +211,11 @@ export class OrderOverviewComponent implements OnInit {
     } else {
       console.log(this.searchControl.value)
       this.payload.customerName = ''
+      this.filter.customerName= this.searchControl.value
       this.setQueryParameters()
       this.searchControl.setValue('')
     }
-    console.log(this.searchControl.value);
+    //console.log(this.searchControl.value);
     
     this._customerService.getOrdersByFiltering(this.filter).subscribe(
       
@@ -235,11 +241,30 @@ export class OrderOverviewComponent implements OnInit {
       this.setQueryParameters()
     } else {
       this.payload.orderLabel = ''
+      this.filter.orderLabel= this.searchControl.value
       this.setQueryParameters()
       this.searchControl.setValue('')
     }
     console.log(this.searchControl.value);
+    console.log('filter=>',this.filter);
     
+    
+    this._customerService.getOrdersByFiltering(this.filter).subscribe(
+      
+      ((res: any) => {
+        console.log(res);
+        
+        this.orders = res.status !== 'error' ? res.payload : []
+        this.resolveFilter(res.payload)
+
+        this.isLoading = false
+
+      })      
+    )
+  }
+
+  setDate(event:any=null){
+    this.filter.orderTimestamp=event.target.value
     this._customerService.getOrdersByFiltering(this.filter).subscribe(
       
       ((res: any) => {
@@ -439,6 +464,7 @@ export class OrderOverviewComponent implements OnInit {
     if (!this.payload.orderStatus) this.payload.orderStatus = ''
     if (!this.payload.orderType) this.payload.orderType = ''
     if (!this.payload.orderLabel) this.payload.orderLabel = ''
+    if (!this.payload.orderTimestamp) this.payload.orderTimestamp= ''
     this._router.navigate([], {
       relativeTo: this._route,
       queryParams: this.payload,
