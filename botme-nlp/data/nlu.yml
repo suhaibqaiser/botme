@@ -1,5 +1,60 @@
 version: "2.0"
 nlu: 
+  - intent: order_type
+    examples: |
+      - [dine in](orderType)
+      - select order type [dine in](orderType)
+      - pick order type [dine in](orderType)
+      - choose order type [dine in](orderType)
+      - order type [dine in](orderType)
+      - [dining](orderType)
+      - select order type [dining](orderType)
+      - pick order type [dining](orderType)
+      - choose order type [dining](orderType)
+      - order type [dining](orderType)
+      - [pick up](orderType)
+      - select order type [pick up](orderType)
+      - pick order type [pick up](orderType)
+      - choose order type [pick up](orderType)
+      - order type [pick up](orderType)
+      - [delivery](orderType)
+      - select order type [delivery](orderType)
+      - pick order type [delivery](orderType)
+      - choose order type [delivery](orderType)
+      - order type [delivery](orderType)
+
+  - synonym: dine in 
+    examples: |
+      - dining
+
+  - intent: sort_by_price
+    examples: |
+      - sort by price [high to low](sortPrice)
+      - sort by price [low to high](sortPrice)
+      - [low to high](sortPrice)
+      - [high to low](sortPrice)
+
+  - intent: filter_by_price
+    examples: |
+      - [increase](filterPrice) filter by price
+      - [decrease](filterPrice) filter by price
+      - please [increase](filterPrice) filter by price
+      - please [decrease](filterPrice) filter by price
+  
+  - intent: filter_by_rating
+    examples: |
+      - [increase](filterRating) filter by rating
+      - [decrease](filterRating) filter by rating
+      - please [increase](filterRating) filter by rating
+      - please [decrease](filterRating) filter by rating
+  
+  - intent: search_product
+    examples: |
+      - search [nacho burger](productName)
+      - search [cheese burger](productName)
+      - search [chicken burger](productName)
+      - search [chicken](productName)
+
   - intent: greet
     examples: |
       - hi
@@ -103,6 +158,17 @@ nlu:
       - [suggest](pagetwo) me some product
       - [suggestions](pagetwo)
       - [suggest](pagetwo)
+      - take me to [search product](pagetwo) page
+      - i want to make some [search](pagetwo)
+      - please show me the [search product](pagetwo) page
+      - i want to see the [search product](pagetwo) page
+      - [search](pagetwo) me some good food
+      - show me [search product](pagetwo) page
+      - i want to visit [search product](pagetwo) page
+      - please [search](pagetwo) me good products
+      - [search](pagetwo) me some product
+      - [search product](pagetwo)
+      - [search product](pagetwo) and order
 
   - synonym: suggestions 
     examples: |
@@ -783,51 +849,46 @@ nlu:
 
   - intent: place_order_page
     examples: |
-      - take me to [place order Beach](pagesix)
-      - show me the [place of the beach](pagesix)
-      - Take me to [place order page](pagesix) screen
-      - i want to visit [place order pitch](pagesix)
-      - i want to visit [place order page](pagesix)
-      - open [place order page](pagesix) screen please
-      - i want to see the [place order page](pagesix)
-      - can you please redirect me to [place order page](pagesix)
-      - he want to redirect to [place order page](pagesix)
-      - i want to redirect to [place order page](pagesix)
-      - show me the [place order page](pagesix) screen
-      - show us the [place order page](pagesix) screen
-      - i want you to take me to the [place order page](pagesix)
-      - she want to visit [place order page](pagesix)
-      - Take me to [place order](pagesix)
-      - i want to visit [place order page](pagesix)
-      - open [place order page](pagesix) please
-      - i want to see the [place order page](pagesix)
-      - can you please redirect me to [place order page](pagesix)
-      - he want to redirect to [place order page](pagesix)
-      - i want to redirect to [place order](pagesix)
-      - show me the [place order page](pagesix)
-      - show us the [place order](pagesix)
-      - i want you to take me to the [place order page](pagesix)
-      - she want to visit [place order](pagesix)
-      - [place order](pagesix)
-      - [place order page](pagesix)
-      - i want to redirect to [place order](pagesix)
-      - i want to redirect to [place order page](pagesix)
-      - Redirect me to [place order](pagesix)
-      - Redirect me to [place order page](pagesix)
+      - take me to [menu](pagesix) page
+      - show me the [menu](pagesix) page
+      - Take me to [menu](pagesix) screen
+      - i want to visit [menu](pagesix) page
+      - i want to visit [menu](pagesix)
+      - open [menu](pagesix) screen please
+      - i want to see the [menu](pagesix)
+      - can you please redirect me to [menu](pagesix)
+      - he want to redirect to [menu](pagesix)
+      - i want to redirect to [menu](pagesix)
+      - show me the [menu](pagesix) screen
+      - show us the [menu](pagesix) screen
+      - i want you to take me to the [menu](pagesix)
+      - she want to visit [menu](pagesix)
+      - Take me to [menu](pagesix)
+      - i want to visit [menu](pagesix)
+      - open [menu](pagesix) please
+      - i want to see the [menu](pagesix)
+      - can you please redirect me to [menu](pagesix)
+      - he want to redirect to [menu](pagesix)
+      - i want to redirect to [menu](pagesix)
+      - show me the [menu](pagesix)
+      - show us the [menu](pagesix)
+      - i want you to take me to the [menu](pagesix)
+      - she want to visit [menu](pagesix)
+      - [menu](pagesix)
+      - i want to redirect to [menu](pagesix)
+      - i want to redirect to [menu](pagesix)
+      - Redirect me to [menu](pagesix)
+      - Redirect me to [menu](pagesix) page
       - i want to [place](pagesix) an order please
       - we want to [place](pagesix) an order please
       - i want to [place an order](pagesix) please
       - he want to [place an order](pagesix) please
       - she want to [place](pagesix) an order please 
 
-  - synonym: place order page
+  - synonym: menu
     examples: |
       - place an order
       - place
-      - place order
-      - place order Beach
-      - place of the beach
-      - place order pitch
       
   - intent: menu_category
     examples: |
@@ -1098,7 +1159,6 @@ nlu:
       - I want ask for [Pizza](categoryName)
       - We want ask for [pizzas](categoryName)
       - [Pizza](categoryName)
-
 
   - synonym: Sandwich
     examples: |
