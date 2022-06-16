@@ -22,18 +22,12 @@ def getResponseUsingContext(intent, entity, text, pageId, sectionId, form, paren
     db = getDbCta(intent, value, pageId, sectionId)
     form = checkForEmptyField(form)
     if (pageId == "pageId-product-suggestions"):
-        if intent == "Suggestion" or intent == "menu_category" or intent == "meal_time" or intent == "top_suggestion" or intent == "serving_time":
+        if intent == "Suggestion" or intent == "Order_meal" or intent == "menu_category" or intent == "meal_time" or intent == "top_suggestion" or intent == "serving_time":
             suggestion = Suggestion(intent, entity, senti, pageId,
                                     sectionId, text, db, converstion, context, restaurantId)
             Response = suggestion.suggestionResponse()
             return Response
-        elif intent == "Order_meal":
-            product = Product(intent, value, senti, pageId, sectionId,
-                              text, db, parentEntity, converstion, context)
-            Response = product.ProductResponseIfNoParentEntity()
-            return Response
         else:
-            print("here")
             call = None
             utility = Utility(pageId, sectionId, value,
                               text, intent, db, form, call)
