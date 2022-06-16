@@ -24,9 +24,9 @@ def getProductUsingProductId(id,restaurantId):
         now = datetime.now()
         return {"status": "error","timestamp": now,"payload": "product not found"}
 
-def getAllCategory(restaurantId):
+def getCategory(categoryName,restaurantId):
     try:
-        Response = requests.get(RESTAURANT_API + '/food/category/all?restaurantId='+restaurantId)
+        Response = requests.get(RESTAURANT_API + '/food/category/search?restaurantId='+restaurantId + '&categoryName=' + categoryName)
         data = Response.json()
         print(data)
         return data

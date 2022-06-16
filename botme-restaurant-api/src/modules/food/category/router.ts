@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { addCategory, editCategory, getAllCategory, removeCategory } from "./controller";
+import { addCategory, editCategory, getAllCategory, removeCategory, searchCategory } from "./controller";
 
 
 export default [
@@ -8,6 +8,14 @@ export default [
         method: "put",
         handler: async (req: Request, res: Response) => {
             let result = await addCategory(req.body.category, req.body.restaurantId)
+            res.send(result);
+        }
+    },
+    {
+        path: "/category/search",
+        method: "get",
+        handler: async (req: Request, res: Response) => {
+            let result = await searchCategory(req.query)
             res.send(result);
         }
     },

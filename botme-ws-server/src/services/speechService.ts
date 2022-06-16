@@ -117,6 +117,6 @@ export async function getTTS(hash: string) {
             return undefined
         }
     } catch (err) {
-        console.log(err);
+        console.log("error=>",err);
     }
 }

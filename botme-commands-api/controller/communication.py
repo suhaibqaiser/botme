@@ -27,6 +27,11 @@ def getResponseUsingContext(intent, entity, text, pageId, sectionId, form, paren
                                     sectionId, text, db, converstion, context, restaurantId)
             Response = suggestion.suggestionResponse()
             return Response
+        elif intent == "add_product_to_cart":
+            product = Product(intent, value, senti, pageId, sectionId,
+                              text, db, parentEntity, converstion, context)
+            Response = product.ProductResponseIfNoParentEntity()
+            return Response
         else:
             call = None
             utility = Utility(pageId, sectionId, value,
