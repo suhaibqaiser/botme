@@ -135,7 +135,7 @@
               <div class="container order-types-main">
                 <div class="row">
                   <div class="col-lg-4 col-md-4 col-sm-12">
-                    <div (click)="selectOrderType('dine_in')"
+                    <div id="ctaId-dine-in" (click)="selectOrderType('dine_in')"
                          [class.active-order-type]="_orderService.selectedOrderButtons['dine_in']"
                          class="card mb-2 text-center">
                       <div class="card-body">
@@ -145,7 +145,7 @@
                     </div>
                   </div>
                   <div class="col-lg-4 col-md-4 col-sm-12">
-                    <div (click)="selectOrderType('pick_up')"
+                    <div id="ctaId-pick-up" (click)="selectOrderType('pick_up')"
                          [class.active-order-type]="_orderService.selectedOrderButtons['pick_up']"
                          class="card mb-2 text-center">
                       <div class="card-body">
@@ -155,7 +155,7 @@
                     </div>
                   </div>
                   <div class="col-lg-4 col-md-4 col-sm-12">
-                    <div (click)="selectOrderType('delivery')"
+                    <div id="ctaId-delivery" (click)="selectOrderType('delivery')"
                          [class.active-order-type]="_orderService.selectedOrderButtons['delivery']"
                          class="card mb-2 text-center">
                       <div class="card-body">
