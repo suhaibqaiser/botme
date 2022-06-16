@@ -55,6 +55,12 @@ nlu:
       - search [chicken burger](productName)
       - search [chicken](productName)
 
+  - intent: add_product_to_cart
+    examples: |
+      - add [nacho burger](productName) to cart
+      - add [cheese burger](productName) to cart
+      - add [chicken burger](productName) to cart
+
   - intent: greet
     examples: |
       - hi
@@ -158,10 +164,10 @@ nlu:
       - [suggest](pagetwo) me some product
       - [suggestions](pagetwo)
       - [suggest](pagetwo)
-      - take me to [search product](pagetwo) page
+      - take me to [search product](pagetwo) and order page
       - i want to make some [search](pagetwo)
       - please show me the [search product](pagetwo) page
-      - i want to see the [search product](pagetwo) page
+      - i want to see the [search product](pagetwo) and order page
       - [search](pagetwo) me some good food
       - show me [search product](pagetwo) page
       - i want to visit [search product](pagetwo) page
@@ -173,7 +179,9 @@ nlu:
   - synonym: suggestions 
     examples: |
       - suggest
-      
+      - search
+      - search product
+
   - intent: Suggestion
     examples: |
       - we are looking for [medium](size) [nacho burger](suggestion) and [chicken burger](suggestion) with [Chicken](flavour) flavour and with [garlic sauce](ingredients), [pepsi](drink) and [french fries](addon) for [4](number) people and make it [halal](attribute)
@@ -1093,7 +1101,8 @@ nlu:
       - We demand you to bring [desserts](categoryName)
       - I want ask for desserts
       - We want ask for [desserts](categoryName) 
-      - [desserts](categoryName)
+      - [desserts](categoryName) categories
+      - [desserts](categoryName) category
       - I want to order from [sandwich](categoryName)
       - We want to order from [sandwich](categoryName)
       - can you pop up the [sandwich](categoryName) category
@@ -1141,7 +1150,8 @@ nlu:
       - We demand you to bring [ingredient](categoryName)
       - I want ask for [Ingredients](categoryName)
       - We want ask for [ingredient](categoryName)
-      - [Ingredients](categoryName)
+      - [Ingredients](categoryName) categories
+      - [Ingredients](categoryName) category
       - I want to order from [Pizza](categoryName)
       - We want to order from [Pizzas](categoryName)
       - show me the [Pizzas](categoryName) category
@@ -1158,7 +1168,24 @@ nlu:
       - We demand you to bring [Pizza](categoryName)
       - I want ask for [Pizza](categoryName)
       - We want ask for [pizzas](categoryName)
-      - [Pizza](categoryName)
+      - [Pizza](categoryName) category
+      - [Pizza](categoryName) categories
+      - I want to order from [raps](categoryName)
+      - We want to order from [maps](categoryName)
+      - show me the [labs](categoryName) category
+      - i want to see the [raps](categoryName) category
+      - can you pop up the [sights](categoryName) category
+      - I want to eat [sight](categoryName)
+      - We want to eat [sights](categoryName)
+      - i want to order [sight](categoryName)
+      - I request you to bring [map](categoryName)
+      - We request you to bring [rap](categoryName)
+      - I want to make a request you to bring [raps](categoryName)
+      - We want to make a request you to bring [lab](categoryName)
+      - I demand you to bring [desert](categoryName)
+      - We demand you to bring [deserts](categoryName)
+      - I want ask for [desert](categoryName)
+      - We want ask for [deserts](categoryName)
 
   - synonym: Sandwich
     examples: |
@@ -1201,6 +1228,12 @@ nlu:
       - Wrap
       - wrap
       - wraps
+      - raps
+      - maps
+      - labs
+      - rap
+      - map
+      - lab
 
   - synonym: Kids Meal
     examples: |
@@ -1225,12 +1258,16 @@ nlu:
       - Side
       - side
       - sides
+      - sights
+      - sight
 
   - synonym: Desserts
     examples: |
       - dessert
       - Dessert
       - desserts
+      - deserts
+      - desert
 
   - synonym: Ingredients
     examples: |

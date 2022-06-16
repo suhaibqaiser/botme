@@ -1,5 +1,5 @@
 import { restResponse } from "../../../utils/response";
-import { createCategory, deleteCategory, getCategory, updateCategory } from "./service";
+import { createCategory, deleteCategory, findCategory, getCategory, updateCategory } from "./service";
 import { randomUUID } from "crypto";
 
 
@@ -15,6 +15,30 @@ export async function addCategory(category: any, restaurantId: any) {
 
     let result = await createCategory(category)
     if (result) {
+        response.payload = result
+        response.status = "success"
+        return response
+    } else {
+        response.payload = "category not found"
+        response.status = "error"
+        return response
+    }
+}
+
+export async function searchCategory(filter:any) {
+    let response = new restResponse()
+
+    if (filter.categoryName == "" || filter.restaurantId == ""){
+        response.payload = "categoryName and restaurantId required"
+        response.status = "error"
+        return response
+    }
+    filter.categoryName = { $regex: filter.categoryName,$options:"i" }
+    // filter.categoryActive = true
+    console.log(filter)
+    let result = await findCategory(filter)
+
+    if (result.length != 0) {
         response.payload = result
         response.status = "success"
         return response

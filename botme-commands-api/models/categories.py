@@ -1,5 +1,5 @@
 from pymongo import response
-from Service.restaurantApi import getAllCategory
+from Service.restaurantApi import getCategory
 from controller.utility import Utility
 
 class Category:
@@ -17,13 +17,18 @@ class Category:
         self.context = context
     
     def getCategoryResponse(self):
-        data = getAllCategory(self.context['restaurantId'])
+        data = getCategory(self.value,self.context['restaurantId'])
+        print(data)
         payload = data['payload']
-        category = Category.checkForCategory(self.value,payload,self.context['restaurantId'])
-        print("category ==>",category)
-        if category :
-            if Category.checkIfCategoryActive(category):
-                call = category['categoryId']
+        # category = Category.checkForCategory(self.value,payload,self.context['restaurantId'])
+        # print("category ==>",category)
+        if data['status'] == "success":
+            # call = payload[0]['categoryId']
+            # utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
+            # response = utility.categoryResponse()
+            # return response
+            if payload[0]['categoryActive'] == True:
+                call = payload[0]['categoryId']
                 utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
                 response = utility.categoryResponse()
                 return response
@@ -38,17 +43,5 @@ class Category:
             response = utility.ifNoCategory()
             return response    
 
-    def checkForCategory(value,payload,restaurantId):
-        for x in payload:
-            print(x)
-            if x['categoryName'] == value.title() and x['restaurantId'] == restaurantId:
-                return x
-        return None
-
-    def checkIfCategoryActive(category):
-        if category['categoryActive'] == True:
-            return True
-        else:
-            return False
-        
+    
         
