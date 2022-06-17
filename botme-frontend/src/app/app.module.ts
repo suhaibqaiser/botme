@@ -33,6 +33,7 @@ import { ForgotComponent } from './components/pages/forgot/forgot.component';
 import { SignupComponent } from './components/pages/signup/signup.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import {NgDynamicBreadcrumbModule} from "ng-dynamic-breadcrumb";
+import { ListComponent } from './components/pages/list/list.component';
 
 
 
@@ -48,7 +49,8 @@ import {NgDynamicBreadcrumbModule} from "ng-dynamic-breadcrumb";
     LoginComponent,
     WrapperComponent,
     ForgotComponent,
-    SignupComponent
+    SignupComponent,
+    ListComponent
   ],
   imports: [
     BrowserModule,
