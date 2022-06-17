@@ -126,7 +126,7 @@ export async function getCommandResponse(text: string, pageId: string, sectionId
     } catch (err) {
         console.log(err);
         answer.inputText.textValue = text
-        answer.outputText.textValue = 'There is an error in backend service 2 +>' + JSON.stringify(err)
+        answer.outputText.textValue = 'There is an error in backend service'
         return answer
     }
 }

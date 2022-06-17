@@ -38,7 +38,7 @@
 
 
             <div class="receipe-grid mt-4 receipe-grid-three">
-              <div *ngFor="let item of _productSuggestionService.suggestedProductList"
+              <div [id]="item.productId" *ngFor="let item of _productSuggestionService.suggestedProductList"
                    class="receipe-item receipe-item-black pb-30">
                 <div class="receipe-item-inner">
                   <div class="receipe-image">
@@ -54,7 +54,7 @@
                       <p *ngIf="_helperService.getProductTopping(item.productToppings).length" class="mb-0 text-white">Toppings: {{_helperService.getProductTopping(item.productToppings)}}</p>
                       <p class="text-white">Quantity: {{item.productQuantity}}</p>
                     </div>
-                    <div class="receipe-cart receipe-cart-main">
+                    <div id="ctaId-product-add-to-cart" class="receipe-cart receipe-cart-main">
                       <a (click)="editFromCart(item)">
                         <i style="font-size: x-large"  class="fas fa-cart-plus"></i>
                       </a>

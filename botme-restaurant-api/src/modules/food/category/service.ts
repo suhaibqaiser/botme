@@ -4,6 +4,10 @@ export async function createCategory(category: any) {
     return Category.create(category)
 }
 
+export async function findCategory(filter:any) {
+    return Category.find(filter)
+}
+
 export async function getCategory(restaurantId: string) {
     return Category.find({ restaurantId: restaurantId })
 }
