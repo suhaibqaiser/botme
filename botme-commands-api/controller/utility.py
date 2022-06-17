@@ -284,7 +284,8 @@ class Utility:
 
     # SUGGESTION RESPONSE
     def suggestionResponse(self):
-        Response = {"ctaId":None,"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":"Here is your Suggestion Response"},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":""},"entities" : [{"entityId" : "","entityValue" : self.value,"entitySelected":None,"clickAttribute" : "href, button","keywords" :self.call}]}}
+        number = "16"
+        Response = {"ctaId":None,"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":findResponse(number)},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":""},"entities" : [{"entityId" : "","entityValue" : self.value,"entitySelected":None,"clickAttribute" : "href, button","keywords" :self.call}]}}
         return Response
         
     # GETTING ENTITYID AND CLICK ATTRIBUTE

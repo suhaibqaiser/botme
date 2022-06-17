@@ -218,7 +218,7 @@ export async function suggestProductByServingTime(searchParameters: any, restaur
         response.status = "error"
         return response;
     }
-    let tag = searchParameters.number
+    let tag = searchParameters.tags
 
     let productList: any[] = []
     let drinkList: any[] = []
