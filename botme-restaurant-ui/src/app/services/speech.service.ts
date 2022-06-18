@@ -17,7 +17,7 @@ export class SpeechService {
 
   // TODO: These messages should be moved to database
   // to avoid hardcoding and for better management
-  private voiceWelcomeMessage = "Welcome to the interactive online shop experience. Start by saying, I want to make a reservation!"
+  private voiceWelcomeMessage = "Welcome to the interactive online shop experience. you can navigate to other pages by saying, I want to search product or I want see the menu"
   private voiceEndingMessage = "Handing the controls over to you."
   private voiceProcessingDelayed = "Something went wrong, please say again!"
 

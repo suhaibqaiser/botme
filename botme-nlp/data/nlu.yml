@@ -646,7 +646,7 @@ nlu:
       - what product you can make in [30](number) minute
       - what item i can get in [20](number) minute
       - what item you can serve in [10](number) minute
-      - what you can serve quickly
+      - what item you can serve quickly
       - what can i get in [15](number) minutes
       - what meals can i get fast
       - what products can i get fast
@@ -835,15 +835,23 @@ nlu:
       - [order now](done)
       - i want to [order now](done)
       - [order now](done) please
+      - [place order](done)
+      - i want to [place order](done)
+      - [place order](done) please
       - we want to [order now](done)
-      - i want to [order](done) my order
-      - we want to [order](done) our order
+      - we want to [place order](done)
+      - i want to [place](done) my order
+      - we want to [place](done) our order
       - everything is done [order now](done)
-      - click on [order now](done)
+      - click on [place order](done)
+      - i want to [order](done) now
+      - we want to [order](done) now
 
   - synonym: order now
     examples: |
       - order
+      - place order
+      - place
 
   - intent: proceed_to_checkout
     examples: |
