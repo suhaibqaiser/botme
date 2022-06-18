@@ -8,6 +8,7 @@ import { WrapperComponent } from "./components/layout/wrapper/wrapper.component"
 import { OrderOverviewDetailComponent } from "./modules/restaurant/components/order/order-overview-detail/order-overview-detail.component";
 import {ForgotComponent} from "./components/pages/forgot/forgot.component";
 import {SignupComponent} from "./components/pages/signup/signup.component";
+import { ListComponent } from './components/pages/list/list.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
     data: {pageTitle: 'Forgot'},
     component: ForgotComponent
   },
+
   {
     path: 'signup',
     data: {pageTitle: 'Signup'},
@@ -35,6 +37,11 @@ const routes: Routes = [
         data: { pageTitle: 'Home' },
         component: HomeComponent,
         pathMatch: 'full'
+      },
+      {
+        path: 'list',
+        data: {pageTitle: 'Listview'},
+        component: ListComponent
       },
       {
         path: 'order-detail',

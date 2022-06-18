@@ -1,0 +1,54 @@
+.order_card:hover {
+    border-color: #84b5ff;
+  }
+  
+  .order_card {
+    border-color: lightgrey;
+    transition: transform .2s; /* Animation */
+    padding: 0rem !important;
+  }
+  
+  .order_card, .card-body {
+    padding: 0.3rem !important;
+  }
+  
+  .detial_btn {
+    color: black !important;
+  }
+  
+  hr {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    border: 0.5px solid #84b5ff;
+  }
+  
+  h4 {
+    font-size: 17px;
+    margin-bottom: 0px;
+  }
+  
+  form.example button {
+    float: left;
+    width: 20%;
+    padding: 10px;
+    background: #2196F3;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none; /* Prevent double borders */
+    cursor: pointer;
+  }
+  
+  form.example input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid grey;
+    float: left;
+    width: 80%;
+    background: #f1f1f1;
+  }
+
+  .icon:hover{
+    background-color: #D3DEDC;
+  }
+ 

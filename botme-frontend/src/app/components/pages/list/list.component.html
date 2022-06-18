@@ -1,0 +1,114 @@
+<div class="container-fluid">
+    <h5>Orders Overview</h5>
+   
+      <div style="margin-left: 235px; color: black; font-size: 14px;" >Filter by order type
+        <span style="margin-left: 32px;">Filter by status</span>
+      
+      </div>
+      <form>
+        <div class="form-group">
+          <input (change)="filterCustomersByName($event)"
+          type="text"
+          placeholder="Customer Name"
+          style="width: 200px; padding: 2px 20px; margin: 10px 0px; height: 40px;"
+          id="entityId-search"
+          >
+      
+         <select style="margin-left:65px; height: 40px;" (click)="sortByOrder()" [formControl]="sortControl">
+          <option *ngFor="let item of sortType" [value]="item.value">{{item.name}}</option>
+        </select>
+      
+        <select style="margin-left:65px; height: 40px;"(click)="sortByStatus()" [formControl]="sortControlStatus">
+          <option *ngFor="let item of sortStatus" [value]="item.value">{{item.name}}</option>
+        </select>
+      
+      
+          
+        
+       
+      
+        <input
+        (change)="  filterOrdersByLabel($event)"
+        type="text"
+        placeholder="Order Id"
+        style="width: 150px; padding: 2px 20px; margin: 10px 0px; height: 40px; margin-left: 50px;"
+        id="entityId-search"
+        >
+       
+       <input (change)='setDate($event)' type="date" style="height: 40px; margin-left: 40px; " >
+      
+       <button (click)="filteringOrder()"  style="margin-left: 40px; height: 40px; width: 100px; border: none; background-color: #02D3EF; border-radius: 4px;"><i class="fa fa-search icon" style="font-size: 18px" > Search</i></button>
+      
+        </div>
+        <div class="m-b-15">
+          <svg routerLink="/list" class="icon" xmlns="http://www.w3.org/2000/svg"style="width: 35px; height: 30px; cursor:pointer;" viewBox="0 0 512 512"><path d="M88 48C101.3 48 112 58.75 112 72V120C112 133.3 101.3 144 88 144H40C26.75 144 16 133.3 16 120V72C16 58.75 26.75 48 40 48H88zM480 64C497.7 64 512 78.33 512 96C512 113.7 497.7 128 480 128H192C174.3 128 160 113.7 160 96C160 78.33 174.3 64 192 64H480zM480 224C497.7 224 512 238.3 512 256C512 273.7 497.7 288 480 288H192C174.3 288 160 273.7 160 256C160 238.3 174.3 224 192 224H480zM480 384C497.7 384 512 398.3 512 416C512 433.7 497.7 448 480 448H192C174.3 448 160 433.7 160 416C160 398.3 174.3 384 192 384H480zM16 232C16 218.7 26.75 208 40 208H88C101.3 208 112 218.7 112 232V280C112 293.3 101.3 304 88 304H40C26.75 304 16 293.3 16 280V232zM88 368C101.3 368 112 378.7 112 392V440C112 453.3 101.3 464 88 464H40C26.75 464 16 453.3 16 440V392C16 378.7 26.75 368 40 368H88z"/></svg>
+          <img  src="./assets/images/ssssssssssss-removebg-preview.png" routerLink="/home"  class="icon" style="width: 45px; height: 38px; cursor: pointer;">
+        </div>
+        
+        
+      </form>
+
+      <div class="text-center" *ngIf="loading">
+        <div class="spinner-border text-center text-primary" role="status"></div>
+      </div>
+      <p-table #dt1 [value]="orders" [responsive]="true" [paginator]="true" [rows]="10"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [rowsPerPageOptions]="[10,25,50]"
+      [globalFilterFields]="['orderLabel','orderType', 'customerName','orderTotal','orderTimestamp','orderStatus','updateOrder']"
+      >
+
+     
+      <div class="text-center mt-5" *ngIf="!loading  && !orders.length">
+        <h6>No Orders Found!</h6>
+      </div>
+      <ng-template pTemplate="header">
+   
+        <tr>
+            <th pSortableColumn="orderLabel">Label <p-sortIcon field="orderLabel"></p-sortIcon>
+            </th>
+            <th pSortableColumn="orderType">Type <p-sortIcon field="orderType"></p-sortIcon>
+            </th>
+            <th pSortableColumn="customerName">Customer <p-sortIcon field="customerName"></p-sortIcon>
+            </th>
+<!--                    <th pSortableColumn="orderPaymentMethod">Payment <p-sortIcon field="orderPaymentMethod"></p-sortIcon>-->
+<!--                    </th>-->
+            <th pSortableColumn="orderTotal">Total <p-sortIcon field="orderTotal"></p-sortIcon>
+            </th>
+            <th pSortableColumn="orderTimestamp">Date <p-sortIcon field="orderTimestamp"></p-sortIcon>
+            </th>
+            <th pSortableColumn="orderStatus">Status <p-sortIcon field="orderStatus"></p-sortIcon>
+            </th>
+            <th pSortableColumn="updateOrder">Action <p-sortIcon field="updateOrder"></p-sortIcon>
+            </th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-order>
+      <div class="text-center mt-5" *ngIf="!loading  && !orders.length">
+        <h6>No Orders Found!</h6>
+      </div>
+          <tr>
+            <td> <button class="btn btn-primary btn-tone m-r-5" routerLink='/order-detail' >{{order.orderLabel}}</button></td>
+            <td>{{order.orderType}}</td>
+            <td>{{order.customer ? order.customer.customerName : '-' }}</td>
+            <td>{{order.orderTotal}}</td>
+            <td>{{_helperService.timeAgo(order.orderTimestamp)}}</td>
+            <td><span [title]="_helperService.computeOrderMessages(order.orderStatus)"
+              [classList]="_helperService.computeOrderStatusColor(order.orderStatus)">{{order.orderStatus}}</span>
+            </td>
+            <td>
+              <div style="width: 200px;">
+                <button (click)="updateOrderStatus(order,'delivered')" class="btn mt-2 btn-sm detial_btn btn-success">complete
+                  order
+                </button>
+                <button (click)="updateOrderStatus(order,'cancel')" style="width: 130px;" class="btn mt-2  btn-sm detial_btn btn-warning">cancel
+                </button>
+              </div>
+            
+            </td>
+          </tr>
+    </ng-template>
+        </p-table>
+      
+  </div>
