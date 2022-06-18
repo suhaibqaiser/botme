@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HelperService} from "./helper.service";
+import {FormControl} from "@angular/forms";
 
 
 @Injectable({
@@ -8,6 +9,7 @@ import {HelperService} from "./helper.service";
 export class ProductSuggestionService {
 
   suggestedProductList: any = []
+  suggestionControl = new FormControl('')
   categories: any = []
   products: any = []
   loader: any = false
@@ -16,13 +18,13 @@ export class ProductSuggestionService {
   constructor(private _helperService: HelperService) {
   }
 
-  async setSuggestedProducts(cartList: any = [], keywords: any = []) {
+  async setSuggestedProducts(inputText: any = '', cartList: any = [], keywords: any = []) {
 
     console.log('cartList =>', cartList)
     console.log('keywords =>', keywords)
     console.log('setSuggestedProducts =>', this.products)
 
-
+    this.suggestionControl.setValue(inputText)
     if (cartList && cartList.length) {
       cartList.forEach((cartItem: any) => {
         const product = this.products.find((item: any) => item.productId === cartItem.productId)

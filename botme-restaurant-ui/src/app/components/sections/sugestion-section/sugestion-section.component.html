@@ -10,7 +10,7 @@
             <div>
               <div class="form-group mt-3 mb-20">
                 <div class="input-group w-50 p-2 m-auto">
-                  <input [formControl]="suggestionControl" type="text" name="name" id="name" class=" form-control"
+                  <input [formControl]="_productSuggestionService.suggestionControl" type="text" name="name" id="name" class=" form-control"
                          required
                          data-error="Please enter your name" placeholder="Please enter here what you want to order"/>
                 </div>
@@ -31,7 +31,7 @@
                 <strong class="text-capitalize">{{item.key}} : {{item.value}}</strong></div>
             </div>
 
-            <div *ngIf="suggestionControl.value && !_productSuggestionService.loader && !_productSuggestionService.suggestedProductList.length" class="d-flex flex-wrap justify-content-center">
+            <div *ngIf="_productSuggestionService.suggestionControl.value && !_productSuggestionService.loader && !_productSuggestionService.suggestedProductList.length" class="d-flex flex-wrap justify-content-center">
               <div class="text-white">
                 <strong>No suggestion found please retry!</strong></div>
             </div>
@@ -39,23 +39,23 @@
 
             <div class="receipe-grid mt-4 receipe-grid-three">
               <div [id]="item.productId" *ngFor="let item of _productSuggestionService.suggestedProductList"
-                   class="receipe-item receipe-item-black pb-30">
+                   class="receipe-item receipe-item-black">
                 <div class="receipe-item-inner">
                   <div class="receipe-image">
                     <img [src]="_helperService.resolveProductImage(item)"
                          style="width:100px;height: 100px;border-radius: 10px" alt="receipe">
                   </div>
                   <div class="receipe-content">
-                    <div (click)="showProductInfo(item)" class="receipe-info">
+                    <a id="ctaId-view" (click)="showProductInfo(item)" class="receipe-info">
                       <h4>{{item.productName}} : ${{item.productRate.standard}}</h4>
                       <p class="text-white mb-0 mt-1">Size: {{_helperService.getServingSize(item.productServingSize).serving_size_name}}</p>
                       <p *ngIf="_helperService.getProductOptions(item.productOptions).length" class="mb-0 text-white">Options: {{_helperService.getProductOptions(item.productOptions)}}</p>
                       <p *ngIf="_helperService.getProductAddons(item.productAddons).length" class="mb-0 text-white">Addons: {{_helperService.getProductAddons(item.productAddons)}}</p>
                       <p *ngIf="_helperService.getProductTopping(item.productToppings).length" class="mb-0 text-white">Toppings: {{_helperService.getProductTopping(item.productToppings)}}</p>
                       <p class="text-white">Quantity: {{item.productQuantity}}</p>
-                    </div>
-                    <div id="ctaId-product-add-to-cart" class="receipe-cart receipe-cart-main">
-                      <a (click)="editFromCart(item)">
+                    </a>
+                    <div class="receipe-cart receipe-cart-main">
+                      <a id="ctaId-product-add-to-cart" (click)="editFromCart(item)">
                         <i style="font-size: x-large"  class="fas fa-cart-plus"></i>
                       </a>
                     </div>

@@ -132,7 +132,6 @@ export class SocketService {
     console.log('fireInteractionEvent =>', msg)
 
     this._helperService.log('info', msg);
-    this._productSuggestionService.reset()
     if (msg.context.pageId) {
 
 
@@ -146,8 +145,9 @@ export class SocketService {
       }
 
       // for product suggestion we are setting the products in product suggestion service
-      if (msg.context.sectionId && msg.context.sectionId === 'sectionId-product-suggestions' && msg.context.entities) {
-        this._productSuggestionService.setSuggestedProducts(msg.context.entities[0].entityValue, msg.context.entities[0].keywords)
+      if (msg.context.sectionId && !msg.ctaId && msg.context.sectionId === 'sectionId-product-suggestions' && msg.context.entities) {
+        this._productSuggestionService.reset()
+        this._productSuggestionService.setSuggestedProducts(msg.inputText.textValue, msg.context.entities[0].entityValue, msg.context.entities[0].keywords)
         return;
       }
 
@@ -156,6 +156,7 @@ export class SocketService {
   }
 
   performClickAction(entities: any, ctaId: any) {
+    console.log('performClickAction => ', entities)
     this.isClickFound = false
     if (entities && entities.length) {
       entities.forEach((item: any) => {

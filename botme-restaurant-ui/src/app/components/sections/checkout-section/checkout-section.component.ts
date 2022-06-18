@@ -7,6 +7,7 @@ import {BotmeClientService} from "../../../services/botme-client.service";
 import {HelperService} from "../../../services/helper.service";
 import {Router} from "@angular/router";
 import {MenuService} from "../../../services/menu.service";
+import {ContextService} from "../../../services/context.service";
 
 declare var $: any;
 
@@ -108,7 +109,7 @@ export class CheckoutSectionComponent implements OnInit {
     'Tennessee',
   ]
 
-  constructor(private _menuService: MenuService, private _router: Router, public _helperService: HelperService, public _clientService: BotmeClientService, private _toastService: ToastService, private _customerService: CustomerService, public _cartService: CartService) {
+  constructor(private _contextService: ContextService, private _menuService: MenuService, private _router: Router, public _helperService: HelperService, public _clientService: BotmeClientService, private _toastService: ToastService, private _customerService: CustomerService, public _cartService: CartService) {
     this.customerForm.controls['restaurantId'].setValue(this._helperService.getRestaurantIdOnAuthBasis())
     if (this._clientService.getCookie().customerId && this._clientService.getCookie().customerId.length) {
       this.getCustomer()
@@ -117,7 +118,7 @@ export class CheckoutSectionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this._contextService.getCurrentContext()
   }
 
   async addCustomer() {
@@ -179,7 +180,7 @@ export class CheckoutSectionComponent implements OnInit {
           // this._cartService.addToCart(this._cartService.cartProduct, 'add_db')
           setTimeout(async () => {
 
-           await this._menuService.updateOrderStatus(this._helperService.getOrderStatus('notified')).subscribe((res: any) => {
+            await this._menuService.updateOrderStatus(this._helperService.getOrderStatus('notified')).subscribe((res: any) => {
               this._toastService.setToast({
                 description: res.message,
                 type: res.status
@@ -192,7 +193,7 @@ export class CheckoutSectionComponent implements OnInit {
               total: this._cartService.getSubTotal(),
               orderType: this._clientService.getCookie().orderType
             }
-           await this._menuService.pushNotification(obj).subscribe((res: any) => {
+            await this._menuService.pushNotification(obj).subscribe((res: any) => {
               console.log('notification pushed =>', res)
             })
           }, 2000)

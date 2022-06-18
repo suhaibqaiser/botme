@@ -16,7 +16,6 @@ declare var $: any;
 })
 export class SugestionSectionComponent implements OnInit {
 
-  suggestionControl = new FormControl('')
 
   constructor(private _contextService: ContextService, private cartService: CartService, private _toastService: ToastService, public _clientService: BotmeClientService, private _socketService: SocketService, public _productSuggestionService: ProductSuggestionService, private menuservice: MenuService, public _helperService: HelperService) {
     this._contextService.getCurrentContext()
@@ -37,8 +36,8 @@ export class SugestionSectionComponent implements OnInit {
   }
 
   sendSuggestion() {
-    console.log(this.suggestionControl.value)
-    if (!this.suggestionControl.value) {
+    console.log(this._productSuggestionService.suggestionControl.value)
+    if (!this._productSuggestionService.suggestionControl.value) {
       this._toastService.setToast({
         description: 'Suggestion is required.',
         type: 'danger'
@@ -49,7 +48,7 @@ export class SugestionSectionComponent implements OnInit {
     // const isVoiceToggleOn = (this._clientService.getCookie() && this._clientService.getCookie().isVoiceToggleOn === 'false') ? false : true
     // if (!isVoiceToggleOn) {
       this._productSuggestionService.loader = true
-      this._socketService.sendMessage('communication', this.suggestionControl.value)
+      this._socketService.sendMessage('communication', this._productSuggestionService.suggestionControl.value)
     // }
   }
 

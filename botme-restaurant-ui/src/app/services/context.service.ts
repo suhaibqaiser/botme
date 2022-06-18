@@ -24,6 +24,11 @@ export class ContextService {
       sectionId: 'sectionId-product-list'
     },
     {
+      currentRoute: '/checkout',
+      pageId: 'pageId-checkout',
+      sectionId: 'sectionId-checkout'
+    },
+    {
       currentRoute: '/cart',
       pageId: 'pageId-cart',
       sectionId: 'sectionId-product-list'

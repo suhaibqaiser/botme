@@ -1,7 +1,9 @@
-.receipe-info {
-  height: 80px;
-  &:hover{
-    border-bottom: 2px solid red;
-    cursor: pointer;
+.receipe-item {
+  background: #171717;
+  border-radius: 10px;
+  border: 1px solid transparent;
+
+  &:hover {
+    border: 1px solid red;
   }
 }
