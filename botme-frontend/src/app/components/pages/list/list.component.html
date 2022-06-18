@@ -48,13 +48,17 @@
         
       </form>
 
-      <p-table #dt1 [value]="orders" [responsive]="true" [paginator]="true" [rows]="10" 
+      <div class="text-center" *ngIf="loading">
+        <div class="spinner-border text-center text-primary" role="status"></div>
+      </div>
+      <p-table #dt1 [value]="orders" [responsive]="true" [paginator]="true" [rows]="10"
       [showCurrentPageReport]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
       [rowsPerPageOptions]="[10,25,50]"
-      [globalFilterFields]="['orderLabel','orderType', 'customerName','orderTotal','orderTimestamp','orderStatus']"
+      [globalFilterFields]="['orderLabel','orderType', 'customerName','orderTotal','orderTimestamp','orderStatus','updateOrder']"
       >
 
+     
       <div class="text-center mt-5" *ngIf="!loading  && !orders.length">
         <h6>No Orders Found!</h6>
       </div>
@@ -75,6 +79,8 @@
             </th>
             <th pSortableColumn="orderStatus">Status <p-sortIcon field="orderStatus"></p-sortIcon>
             </th>
+            <th pSortableColumn="updateOrder">Action <p-sortIcon field="updateOrder"></p-sortIcon>
+            </th>
         </tr>
     </ng-template>
 
@@ -83,13 +89,23 @@
         <h6>No Orders Found!</h6>
       </div>
           <tr>
-            <td> <button class="btn btn-primary btn-tone m-r-5" >{{order.orderLabel}}</button></td>
+            <td> <button class="btn btn-primary btn-tone m-r-5" routerLink='/order-detail' >{{order.orderLabel}}</button></td>
             <td>{{order.orderType}}</td>
             <td>{{order.customer ? order.customer.customerName : '-' }}</td>
             <td>{{order.orderTotal}}</td>
             <td>{{_helperService.timeAgo(order.orderTimestamp)}}</td>
             <td><span [title]="_helperService.computeOrderMessages(order.orderStatus)"
               [classList]="_helperService.computeOrderStatusColor(order.orderStatus)">{{order.orderStatus}}</span>
+            </td>
+            <td>
+              <div style="width: 200px;">
+                <button (click)="updateOrderStatus(order,'delivered')" class="btn mt-2 btn-sm detial_btn btn-success">complete
+                  order
+                </button>
+                <button (click)="updateOrderStatus(order,'cancel')" style="width: 130px;" class="btn mt-2  btn-sm detial_btn btn-warning">cancel
+                </button>
+              </div>
+            
             </td>
           </tr>
     </ng-template>

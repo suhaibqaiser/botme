@@ -123,7 +123,14 @@ export class ListComponent implements OnInit {
     }
   
 
-  constructor(private messageService: MessageService,private _http: HttpClient, private _router: Router,private _route: ActivatedRoute, public _helperService: HelperService, private _productService: ProductService, private _orderService: OrderService, private _customerService: CustomerService) 
+  constructor(private messageService: MessageService,
+    private _http: HttpClient,
+    private _router: Router,
+    private _route: ActivatedRoute,
+    public _helperService: HelperService,
+    private _productService: ProductService,
+    private _orderService: OrderService,
+    private _customerService: CustomerService) 
    {
     clearTimeout(this._helperService.timer)
   }
@@ -141,7 +148,7 @@ export class ListComponent implements OnInit {
     await this.sortByOrder()
   }
 
-  lists: Array<any> = []
+
 
 
 
@@ -155,6 +162,7 @@ export class ListComponent implements OnInit {
         orderStatus: (param && param.orderStatus) ? param.orderStatus : '',
         orderType: (param && param.orderType) ? param.orderType : '',
         orderLabel: (param && param.orderLabel) ? param.orderLabel : '',
+        orderTimestamp: (param && param.orderTimestamp) ? param.orderTimestamp  : '',
       }
       this.payload = this.queryParams
       this.searchControl.setValue(this.payload.customerName)
@@ -208,7 +216,6 @@ export class ListComponent implements OnInit {
       this.filter.customerName= this.searchControl.value
       this.setQueryParameters()
     } else {
-      console.log(this.searchControl.value)
       this.payload.customerName = ''
       this.filter.customerName= this.searchControl.value
       this.setQueryParameters()
@@ -488,8 +495,8 @@ export class ListComponent implements OnInit {
   updateOrderStatus(order: any, orderStatus: any) {
     this._orderService.updateOrderStatus(order.orderLabel, order.orderType, orderStatus).subscribe((res: any) => {
       this.messageService.add({severity: 'success', summary: 'Update Success', detail: 'Order status update!'})
-      let cartListIndex = this.orders.findIndex((item: any) => item.orderLabel === order.orderLabel)
-      this.orders.splice(cartListIndex, 1)
+      let orderListIndex = this.orders.findIndex((item: any) => item.orderLabel === order.orderLabel)
+      this.orders.splice(orderListIndex, 1)
     })
   }
 
