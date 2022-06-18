@@ -1,8 +1,9 @@
-.receipe-item {
+.receipe-item-inner {
   background: #171717;
   border-radius: 10px;
   border: 1px solid transparent;
-
+  padding: 0px 5px 0px 17px !important;
+  margin-bottom: 20px;
   &:hover {
     border: 1px solid red;
   }
