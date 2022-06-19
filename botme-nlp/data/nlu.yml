@@ -60,6 +60,42 @@ nlu:
       - add [nacho burger](productName) to cart
       - add [cheese burger](productName) to cart
       - add [chicken burger](productName) to cart
+      - add [cheese slice](productName) to cart
+      - i want to add [Cheese Slice](productName) to my cart
+      - we want to add [cheese slice](productName) to my cart
+      - i want to add [Nacho Burger](productName) to my cart
+      - we want to add [nacho burger](productName) to my cart
+      - i want to add [nacho cheese](productName) to my cart
+      - we want to add [Nacho Cheese](productName) to my cart
+      - add [Nacho Cheese](productName) to cart
+      - add [Nacho Burger](productName) to cart
+      - add [Nacho Cheese](productName) to cart
+      - i want to add [Cole Slaw](productName) to my cart
+      - we want to add [cole slaw](productName) to my cart
+      - add [cole slaw](productName) to cart
+      - add [french fries](productName) to cart
+      - i want to add [French Fries](productName) to cart
+      - add [american cheese slice](productName)
+      - add [Garlic Sauce](productName) to cart
+      - add [Pickle](productName) to card
+      - add [Lettuce](productName) to card
+      - add [Tomato](productName) to card
+      - add [Rice](productName) to cart
+      - add [French Fries](productName) to card
+      - [Cole Slaw](productName) to cart
+      - [Garlic Sauce](productName) to cart
+      - [Spicy Potato](productName) to cart
+      - [Soup](productName) to cart
+      - [Hummus](productName) to card
+      - [Baba Ghanoush](productName) to card
+      - [Water Bottle](productName) to card
+      - add [Pepsi](productName)
+      - add [Sprite](productName)
+      - add [chicken burger](productName)
+      - add [chicken nuggets](productName)
+      - add [falafel sandwich](productName)
+      - add [letters]{"entity":"productName","value":"Lettuce"}
+      - add [tickle] {"entity":"productName","value":"Pickle"}
 
   - intent: greet
     examples: |
@@ -1322,48 +1358,34 @@ nlu:
       - i want to have [Cheese Slice](productName)
       - he want to order [Cheese Slice](productName)
       - she like to buy [Cheese Slice](productName)
-      - i want to add [Cheese Slice](productName) to my cart
       - i want to select [Cheese Slice](productName)
       - select [cheese slice](productName)
       - he want to choose [Cheese Slice](productName)
       - she want to pick [Cheese Slice](productName)
       - can you please select [cheese slice](productName)
-      - we want to add [cheese slice](productName) to my cart
       - I would like to order a [cheese slice](productName)
       - she want to place an order for [cheese slice](productName)
-      - add [cheese slice](productName) to cart
       - I want to order [Nacho Burger](productName)
       - i want to open [Nacho Burger](productName)
       - he like to buy [Nacho Burger](productName)
-      - i want to add [Nacho Burger](productName) to my cart
-      - we want to add [nacho burger](productName) to my cart
       - he would like to order a [nacho burger](productName)
       - I want to place an order for [nacho burger](productName)
       - she would like to order a [Nacho Burger](productName)
-      - add [Nacho Burger](productName) to cart
       - he want to order [Nacho Cheese](productName)
       - she like to buy [Nacho Cheese](productName)
-      - i want to add [nacho cheese](productName) to my cart
-      - we want to add [Nacho Cheese](productName) to my cart
       - I want to place an order for [nacho cheese](productName)
       - I would like to order a [nacho cheese](productName)
-      - add [Nacho Cheese](productName) to cart
       - I want to order [Cole Slaw](productName)
       - I like to buy [Cole Slaw](productName)
       - i want to open [Cole Slaw](productName) 
-      - i want to add Cole Slaw to my cart
-      - we want to add [cole slaw](productName) to my cart
       - he would like to order a [cole slaw](productName)
       - she want to place an order for [cole slaw](productName)
       - i want to have [cole slaw](productName)
-      - add [cole slaw](productName) to cart
       - I want to order [French Fries](productName)
       - I like to buy [French Fries](productName)
       - i want to have [French Fries](productName)
       - i want to eat [French Fries](productName)
       - i request you to order [French Fries](productName)
-      - add [french fries](productName) to cart
-      - i want to add [French Fries](productName) to cart
       - He would like to order a [french fries](productName)
       - I want to place an order for [french fries](productName)
       - She want to order [Beef Bacon](productName)
@@ -1656,7 +1678,6 @@ nlu:
       - i want to choose [American Cheese Slice](productName)
       - i want to pick [American Cheese Slice](productName)
       - can you please select [american cheese slice](productName)
-      - add [american cheese slice](productName)
       - i want to increase [American Cheese Slice](productName) quantity
       - i want to take [American Cheese Slice](productName) 
       - take [American Cheese Slice](productName)
@@ -1669,7 +1690,6 @@ nlu:
       - i want to choose [Garlic Sauce](productName)
       - i want to pick [Garlic Sauce](productName)
       - can you please select [Garlic Sauce](productName)
-      - add [Garlic Sauce](productName)
       - i want to increase [Garlic Sauce](productName) quantity
       - i want to take [Garlic Sauce](productName) 
       - take [Garlic Sauce](productName)
@@ -1682,7 +1702,6 @@ nlu:
       - i want to choose [Tomato](productName)
       - i want to pick [Tomato](productName)
       - can you please select [Tomato](productName)
-      - add [Tomato](productName)
       - i want to increase [Tomato](productName) quantity
       - i want to take [Tomato](productName) 
       - take [Tomato](productName)
@@ -1695,7 +1714,6 @@ nlu:
       - i want to choose [Lettuce](productName)
       - i want to pick [Lettuce](productName)
       - can you please select [Lettuce](productName)
-      - add [Lettuce](productName)
       - i want to increase [Lettuce](productName) quantity
       - i want to take [Lettuce](productName) 
       - i want to eat [Lettuce](productName)
@@ -1709,7 +1727,6 @@ nlu:
       - i want to choose [Pickle](productName)
       - i want to pick [Pickle](productName)
       - can you please select [Pickle](productName)
-      - add [Pickle](productName)
       - i want to increase [Pickle](productName) quantity
       - i want to take [Pickle](productName)
       - i want to eat [Pickle](productName)
@@ -1723,7 +1740,6 @@ nlu:
       - i want to choose [French Fries](productName)
       - i want to pick [French Fries](productName)
       - can you please select [French Fries](productName)
-      - add [French Fries](productName)
       - i want to increase [French Fries](productName) quantity
       - i want to take [French Fries](productName) 
       - take [French Fries](productName)
@@ -1736,7 +1752,6 @@ nlu:
       - i want to choose [Rice](productName)
       - i want to pick [Rice](productName)
       - can you please select [Rice](productName)
-      - add [Rice](productName)
       - i want to increase [Rice](productName) quantity
       - i want to take [Rice](productName) 
       - take [Rice](productName)
@@ -1749,7 +1764,6 @@ nlu:
       - i want to choose [Cole Slaw](productName)
       - i want to pick [Cole Slaw](productName)
       - can you please select [Cole Slaw](productName)
-      - add [Cole Slaw](productName)
       - i want to increase [Cole Slaw](productName) quantity
       - i want to take [Cole Slaw](productName) 
       - take [Cole Slaw](productName)
@@ -1762,7 +1776,6 @@ nlu:
       - i want to choose [Garlic Sauce](productName)
       - i want to pick [Garlic Sauce](productName)
       - can you please select [Garlic Sauce](productName)
-      - add [Garlic Sauce](productName)
       - i want to increase [Garlic Sauce](productName) quantity
       - i want to take [Garlic Sauce](productName) 
       - take [Garlic Sauce](productName)
@@ -1775,7 +1788,6 @@ nlu:
       - i want to choose [Spicy Potato](productName)
       - i want to pick [Spicy Potato](productName)
       - can you please select [Spicy Potato](productName)
-      - add [Spicy Potato](productName)
       - i want to increase [Spicy Potato](productName) quantity
       - i want to take [Spicy Potato](productName) 
       - take [Spicy Potato](productName)
@@ -1788,7 +1800,6 @@ nlu:
       - i want to choose [Soup](productName)
       - i want to pick [Soup](productName)
       - can you please select [Soup](productName)
-      - add [Soup](productName)
       - i want to increase [Soup](productName) quantity
       - i want to take [Soup](productName) 
       - take [Soup](productName)
@@ -1801,7 +1812,6 @@ nlu:
       - i want to choose [Hummus](productName)
       - i want to pick [Hummus](productName)
       - can you please select [Hummus](productName)
-      - add [Hummus](productName)
       - i want to increase [Hummus](productName) quantity
       - i want to take [Hummus](productName) 
       - i want to eat [Hummus](productName)
@@ -1815,7 +1825,6 @@ nlu:
       - i want to choose [Baba Ghanoush](productName)
       - i want to pick [Baba Ghanoush](productName)
       - can you please select [Baba Ghanoush](productName)
-      - add [Baba Ghanoush](productName)
       - i want to increase [Baba Ghanoush](productName) quantity
       - i want to take [Baba Ghanoush](productName) 
       - take [Baba Ghanoush](productName)
@@ -1828,7 +1837,6 @@ nlu:
       - i want to choose [Water Bottle](productName)
       - i want to pick [Water Bottle](productName)
       - can you please select [Water Bottle](productName)
-      - add [Water Bottle](productName)
       - i want to increase [Water Bottle](productName) quantity
       - i want to take [Water Bottle](productName) 
       - take [Water Bottle](productName)
@@ -1841,7 +1849,6 @@ nlu:
       - i want to choose [Pepsi](productName)
       - i want to pick [Pepsi](productName)
       - can you please select [Pepsi](productName)
-      - add [Pepsi](productName)
       - i want to increase [Pepsi](productName) quantity
       - i want to take [Pepsi](productName) 
       - take [Pepsi](productName)
@@ -1854,7 +1861,6 @@ nlu:
       - i want to choose [Sprite](productName)
       - i want to pick [Sprite](productName)
       - can you please select [Sprite](productName)
-      - add [Sprite](productName)
       - i want to increase [Sprite](productName) quantity
       - i want to take [Sprite](productName) 
       - take [Sprite](productName)
@@ -1873,9 +1879,7 @@ nlu:
       - I want to eat [humans]{"entity":"productName","value":"Hummus"}
       - I want to eat [momos]{"entity":"productName","value":"Hummus"}
       - I want to order [letters]{"entity":"productName","value":"Lettuce"}
-      - add [letters]{"entity":"productName","value":"Lettuce"}
       - I want to order [tickle] {"entity":"productName","value":"Pickle"}
-      - add [tickle] {"entity":"productName","value":"Pickle"}
       - I want to order [tasty fish burger]{"entity":"productName","value":"Taystee Fish Burger"}
       - I want to eat [tasty fish burger]{"entity":"productName","value":"Taystee Fish Burger"}
 
