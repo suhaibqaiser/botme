@@ -27,7 +27,7 @@ def getResponseUsingContext(intent, entity, text, pageId, sectionId, form, paren
                                     sectionId, text, db, converstion, context, restaurantId)
             Response = suggestion.suggestionResponse()
             return Response
-        elif intent == "add_product_to_cart":
+        elif intent == "add_product_to_cart" or intent == "product-detail":
             product = Product(intent, value, senti, pageId, sectionId,
                               text, db, parentEntity, converstion, context)
             Response = product.ProductResponseIfNoParentEntity()
@@ -40,7 +40,7 @@ def getResponseUsingContext(intent, entity, text, pageId, sectionId, form, paren
             return response
 
     elif (pageId == "pageId-order-online" or pageId == "pageId-cart-modal" or pageId == "pageId-cart"):
-        if intent == "Order_meal" or intent == "remove_item" or intent == "reduce_product_quantity" or intent == "product_flavour" or intent == "product-detail" or intent == "remove_item" or intent == "edit_product":
+        if intent == "Order_meal" or intent == "add_product_to_cart" or intent == "remove_item" or intent == "reduce_product_quantity" or intent == "product_flavour" or intent == "product-detail" or intent == "edit_product":
             product = Product(intent, value, senti, pageId, sectionId,
                               text, db, parentEntity, converstion, context)
             Response = product.ProductResponseIfNoParentEntity()
@@ -58,7 +58,7 @@ def getResponseUsingContext(intent, entity, text, pageId, sectionId, form, paren
             return response
 
     elif (pageId == "pageId-product-customize-modal"):
-        if intent == "Order_meal" or intent == "remove_item" or intent == "reduce_product_quantity" or intent == "product_flavour" or intent == "product-detail" or intent == "remove_item":
+        if intent == "Order_meal" or intent == "add_product_to_cart" or intent == "remove_item" or intent == "reduce_product_quantity" or intent == "product_flavour" or intent == "product-detail":
             product = Product(intent, value, senti, pageId, sectionId,
                               text, db, parentEntity, converstion, context)
             Response = product.productResponseIfParentEntity()
