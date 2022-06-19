@@ -160,7 +160,7 @@ export async function suggestProduct(searchParameters: any, restaurantId: any) {
     }
     console.log("item list==>",itemList)
     let result = itemList
-    if (result) {
+    if (result.products.length != 0 || result.drinks.length !=0 || result.addons.length !=0 || result.ingredient.length !=0) {
         response.payload = result
         response.status = "success"
         return response
@@ -201,7 +201,7 @@ export async function suggestProductByTime(searchParameters: any, restaurantId: 
 
     console.log("item list==>",itemList)
     let result = itemList
-    if (result) {
+    if (result.products.length != 0 || result.drinks.length !=0 || result.addons.length !=0 || result.ingredient.length !=0) {
         response.payload = result
         response.status = "success"
         return response
@@ -240,7 +240,7 @@ export async function suggestProductByServingTime(searchParameters: any, restaur
 
     console.log("item list==>",itemList)
     let result = itemList
-    if (result) {
+    if (result.products.length != 0 || result.drinks.length !=0 || result.addons.length !=0 || result.ingredient.length !=0) {
         response.payload = result
         response.status = "success"
         return response
