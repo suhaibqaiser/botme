@@ -6,7 +6,7 @@ def getDbCta(intent,entity,pageId,sectionId):
     db = mydb['food']
     mycollection = db['ctas']
     if (entity != None):
-        if (intent == "unreserved_table_person" or intent == "inform_name" or intent == "inform_date" or intent == "inform_time" or intent == "place_order_page" or intent == "menu_category" or intent == "add_product_to_cart"):
+        if (intent == "unreserved_table_person" or intent == "inform_name" or intent == "inform_date" or intent == "inform_time" or intent == "place_order_page" or intent == "menu_category" or intent == "add_product_to_cart" or intent == "search_product"):
             my_query = {"intentName":intent,"context.pageId":pageId,"context.sectionId":sectionId}
             mycta = mycollection.find(my_query)
             for x in mycta:
