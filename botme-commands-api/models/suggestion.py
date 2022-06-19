@@ -80,7 +80,7 @@ class Suggestion():
             value = None
             utility = Utility(self.pageId, self.sectionId, value,
                               self.text, self.intent, self.db, self.form, self.call)
-            Response = utility.nluFallBack()
+            Response = utility.suggestionResponseIfNoResult()
             return Response
 
     def entityArray(self):

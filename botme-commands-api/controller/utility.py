@@ -287,9 +287,13 @@ class Utility:
         number = "16"
         Response = {"ctaId":None,"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":findResponse(number)},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":""},"entities" : [{"entityId" : "","entityValue" : self.value,"entitySelected":None,"clickAttribute" : "href, button","keywords" :self.call}]}}
         return Response
-        
-    # GETTING ENTITYID AND CLICK ATTRIBUTE
+    
+    def suggestionResponseIfNoResult(self):
+        number = "17"
+        Response = {"ctaId":None,"inputText":{"textValue":self.text,"language":"english","timestamp":self.now},"outputText":{"textValue":findResponse(number)},"context" : {"pageId" : self.pageId,"sectionId":self.sectionId,"parentEntity":{"entityId":"","entityValue":""},"entities" : [{"entityId" : "","entityValue" : self.value,"entitySelected":None,"clickAttribute" : "href, button","keywords" :self.call}]}}
+        return Response
 
+    # GETTING ENTITYID AND CLICK ATTRIBUTE
     def getEntityClickAttribute(entity):
         for x in entity:
             print("Result ==>",x)
