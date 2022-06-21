@@ -14,6 +14,7 @@ export class CustomerLoginSectionComponent implements OnInit {
   loginForm = new FormGroup({
     clientID: new FormControl('', [Validators.required]),
     clientSecret: new FormControl('', [Validators.required]),
+    clientType: new FormControl('customer'),
     voiceType: new FormControl('cloud-voice', Validators.required)
   })
   loader = false
