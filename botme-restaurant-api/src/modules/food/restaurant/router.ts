@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { areaTable, getAllRestaurants, getAreaList, getActivedRestaurants, addRestaurants, updateRestaurants, getRestaurantsById } from "./controller"
+import { areaTable, getAllRestaurants, getAreaList, getActivedRestaurants, addRestaurants, updateRestaurants, getRestaurantsById, deleteRestaurant } from "./controller"
 
 export default [
     {
@@ -40,6 +40,14 @@ export default [
         method: "post",
         handler: async (req: Request, res: Response) => {
             let result = await updateRestaurants(req.body.restaurant)
+            res.send(result);
+        }
+    },
+    {
+        path: "/restaurant/delete",
+        method: "delete",
+        handler: async (req: Request, res: Response) => {
+            let result = deleteRestaurant(req.query.restaurantId)
             res.send(result);
         }
     },

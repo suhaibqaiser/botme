@@ -25,6 +25,11 @@ export function updateRestaurant(restaurant: any) {
     return Restaurant.findOneAndUpdate({ restaurantId: restaurant.restaurantId }, restaurant, { new: true });
 }
 
+export function deleteRestaurants(restaurantId: any) {
+    return Restaurant.findOneAndDelete({restaurantId:restaurantId})
+
+} 
+
 export async function getAreas() {
     return Area.find({}, { _id: 0, __v: 0 });
 }

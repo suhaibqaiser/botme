@@ -5,7 +5,8 @@ import {
     getActiveRestaurants,
     addRestaurant,
     updateRestaurant,
-    getRestaurantById
+    getRestaurantById,
+    deleteRestaurants,
 } from "./service"
 import { restResponse } from "../../../utils/response"
 import { randomUUID } from "crypto";
@@ -121,4 +122,21 @@ export async function updateRestaurants(restaurant: any) {
         response.status = "error"
         return response
     }
+}
+
+export async function deleteRestaurant(restaurantId:any) {
+    let response = new restResponse()
+
+    let result = await deleteRestaurants(restaurantId)
+    if (result) {
+        console.log("Restaurant Deleted")
+        response.payload = result
+        response.status = "success"
+        return response
+    } else {
+        response.payload = "error in deleting restaurant"
+        response.status = "error"
+        return response
+    }
+    
 }
