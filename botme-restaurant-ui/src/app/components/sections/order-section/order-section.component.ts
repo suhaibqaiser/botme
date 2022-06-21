@@ -35,19 +35,20 @@ export class OrderSectionComponent implements OnInit {
   }
 
   getStatement() {
-    return 'Do you have  ' + (['pick_up', 'delivery'].includes(this._helperService.getOrderTypeOnAuthBasis()) ? 'Order' : 'Reservation') + ' Id ?'
+    return 'Do you have  ' + (['pick_up', 'delivery'].includes(this._helperService.getOrderTypeOnAuthBasis()) ? 'Order' : 'Order') + ' Id ?'
   }
 
   getButtonName() {
-    return 'Apply ' + (['pick_up', 'delivery'].includes(this._helperService.getOrderTypeOnAuthBasis()) ? 'Order' : 'Reservation') + ' Id'
+    return 'Apply ' + (['pick_up', 'delivery'].includes(this._helperService.getOrderTypeOnAuthBasis()) ? 'Order' : 'Order') + ' Id'
   }
 
   selectOrderType(type: any) {
-    // this.orderId.reset()
-    // this._cartService.cartProduct = []
-    // this._botMeService.setCookie('orderLabel', '')
-    // this._botMeService.setCookie('customerId', '')
-    // $('#order_modal').modal('show')
+    this.orderId.reset()
+    this._cartService.cartProduct = []
+    this._botMeService.setCookie('orderLabel', '')
+    this._botMeService.setCookie('customerId', '')
+    this._botMeService.setCookie('orderType', '')
+    $('#order_modal').modal('show')
     if (type === 'dine_in') {
       this._orderService.selectedOrderButtons['dine_in'] = true
       this._orderService.selectedOrderButtons['pick_up'] = false
@@ -90,6 +91,7 @@ export class OrderSectionComponent implements OnInit {
         const cartList = res.payload.cart
         this._botMeService.setCookie('orderLabel', res.payload.order.orderLabel)
         this._botMeService.setCookie('customerId', res.payload.order.customerId)
+        this._botMeService.setCookie('orderType', res.payload.order.orderType)
         if (cartList && cartList.length) {
           cartList.forEach((cartItem: any) => {
             const product = this._cartService.products.find((item: any) => item.productId === cartItem.productId)
