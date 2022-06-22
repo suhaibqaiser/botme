@@ -53,6 +53,16 @@
                     <input type="text" pInputText formControlName="restaurantName" id="form-restaurantName"
                         placeholder="Enter Name">
                 </div>
+                 <div class="form-group">
+                    <label for="form-restaurantEmail" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">Restaurant Label</label>
+                    <input pInputText type="text" formControlName="restaurantLabel" id="form-restaurantLabel"
+                        placeholder="Enter Label">
+                </div>
+                <div class="form-group">
+                    <label for="form-restaurantEmail" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">Restaurant Location</label>
+                    <input pInputText type="text" formControlName="restaurantLocation" id="form-restaurantLocation"
+                        placeholder="Enter Location">
+                </div>
                 <!-- <div class="form-group">
                     <label for="form-restaurantEmail" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">restaurant
                         Email</label>
@@ -69,7 +79,7 @@
                     <label class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">Active</label>
                     <div class="p-col-12 p-md-10">
                         <p-toggleButton class="ml-2" formControlName="restaurantActive" id="form-restaurantActive"
-                            onLabel="Enabled" offLabel="Disabled" onIcon="pi pi-check" offIcon="pi pi-times"
+                            onLabel="Enabled" offLabel="Disabled" onIcon="pi-check" offIcon="pi pi-times"
                             [style]="{'width': '10em'}"></p-toggleButton>
                     </div>
                 </div>

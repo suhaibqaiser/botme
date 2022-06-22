@@ -18,9 +18,6 @@ declare var $: any;
 })
 export class OrderOverviewComponent implements OnInit {
 
-
-  
-
   orders: any = []
   customers: any
   filteredCustomers:any
@@ -37,11 +34,9 @@ export class OrderOverviewComponent implements OnInit {
   isLoading = false;
     //search text
     searchControl = new FormControl("")
-    
     searchText = ''
 
     searchList: any
-
     sortType = [
       {
         'name': 'All',
@@ -103,7 +98,6 @@ export class OrderOverviewComponent implements OnInit {
       sortByOrder:'',
       sortByStatus:'',
       orderLabel:'',
-      orderDevice:'',
       orderTimestamp:''
     }
 
@@ -113,7 +107,6 @@ export class OrderOverviewComponent implements OnInit {
       sortByOrder:'',
       sortByStatus:'',
       orderLabel:'',
-      orderDevice:'',
       orderTimestamp:''
     }
 
@@ -126,7 +119,14 @@ export class OrderOverviewComponent implements OnInit {
     }
   
 
-  constructor(private messageService: MessageService,private _http: HttpClient, private _router: Router,private _route: ActivatedRoute, public _helperService: HelperService, private _productService: ProductService, private _orderService: OrderService, private _customerService: CustomerService) 
+  constructor(private messageService:
+    MessageService,private _http: HttpClient,
+    private _router: Router,
+    private _route: ActivatedRoute,
+    public _helperService: HelperService,
+    private _productService: ProductService,
+    private _orderService: OrderService,
+    private _customerService: CustomerService) 
    {
     clearTimeout(this._helperService.timer)
   }
@@ -140,15 +140,9 @@ export class OrderOverviewComponent implements OnInit {
     await this.getQueryParams()
     await this.sortByStatus()
     await this.sortByOrder()
+    await this.setDate()
   }
 
-
-
-
-
-
-
-  
   async getQueryParams() {
     this._route.queryParams.subscribe(param => {
       this.queryParams = {
@@ -156,9 +150,11 @@ export class OrderOverviewComponent implements OnInit {
         orderStatus: (param && param.orderStatus) ? param.orderStatus : '',
         orderType: (param && param.orderType) ? param.orderType : '',
         orderLabel: (param && param.orderLabel) ? param.orderLabel : '',
+        orderTimestamp: (param && param.orderTimestamp) ? param.orderTimestamp : ''
       }
       this.payload = this.queryParams
       this.searchControl.setValue(this.payload.customerName)
+      this.searchControl.setValue(this.payload.orderLabel)
     })
   }
 
@@ -179,9 +175,10 @@ export class OrderOverviewComponent implements OnInit {
               order.customer = this.getCustomerName(order.customerId)
             }
           }
-          console.log(this.orders)
+          //console.log(this.orders)
         }
         this.loading = false
+        this.filterFromQueryParam()
       });
     return true
   }
@@ -197,6 +194,26 @@ export class OrderOverviewComponent implements OnInit {
         }
       });
     return true
+  }
+
+  
+  filterFromQueryParam() {
+
+    let data: any = localStorage.getItem('searchList')
+    if (data) {
+      data = JSON.parse(data)
+      this.searchList = data
+    }
+
+    this.filteredOrders = []
+    this.isLoading = true
+
+   this._customerService.getOrdersByFiltering(this.queryParams).subscribe(
+      ((res: any) => {
+        this.filteredOrders = res.status !== 'error' ? res.payload : []
+        this.isLoading = false
+      })
+    )
   }
 
   filterCustomersByName(event: any = null) {
