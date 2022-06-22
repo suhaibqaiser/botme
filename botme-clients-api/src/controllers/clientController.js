@@ -197,7 +197,11 @@ async function authorizeClient(req, res) {
 
     client = JSON.parse(JSON.stringify(client))
 
-    console.log('client =>', client)
+    if(client && client.clientType !== req.body.clientType){
+        response.message = "clientID or clientSecret is incorrect or client is not active"
+        response.status = "danger"
+        return res.send(response)
+    }
 
     if (client && client.hasOwnProperty('clientEmailVerified') && !client.clientEmailVerified) {
         response.message = `We have sent you a verification email to your email address. ${client.clientEmail} Click and follow the link inside it.`

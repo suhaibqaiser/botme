@@ -34,6 +34,11 @@ export class CartSectionComponent implements OnInit {
               public _botMeService: BotmeClientService
   ) {
     const orderType = this._helperService.getOrderTypeOnAuthBasis()
+    this._orderService.selectedOrderButtons = {
+      'dine_in': false,
+      'pick_up': false,
+      'delivery': false
+    }
     this._orderService.selectedOrderButtons[orderType] = true
     this._botMeService.setCookie('orderType', orderType)
   }

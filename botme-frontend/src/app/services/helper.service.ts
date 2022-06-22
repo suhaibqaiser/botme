@@ -12,7 +12,7 @@ export class HelperService {
   }
 
   orderText: any = {
-    dine_in: 'Reservation Label',
+    dine_in: 'Order Id',
     pick_up: 'Order Id',
     delivery: 'Order Id'
   }
@@ -28,7 +28,8 @@ export class HelperService {
     remade: 'remade',
     returned: 'returned',
     cancel: 'cancel',
-    delete: 'delete'
+    delete: 'delete',
+    pending: 'pending'
   }
 
   orderStatusColors: any = {
@@ -42,21 +43,23 @@ export class HelperService {
     remade: 'badge bg-danger text-white',
     returned: 'badge bg-danger text-white',
     delete: 'badge bg-danger text-white',
-    cancel: 'badge bg-warning text-dark'
+    cancel: 'badge bg-warning text-dark',
+    pending: 'badge badge-secondary text-white'
   }
 
   orderMessages: any = {
     hold: 'Customer hold items in cart!',
-    priced: 'badge bg-success',
-    ready: 'badge bg-info text-dark',
-    in_process: 'badge in_process',
-    received: 'badge bg-success',
+    priced: '',
+    ready: '',
+    in_process: '',
+    received: '',
     notified: 'Customer has booked his order!',
     delivered: 'Order delivered',
-    remade: 'badge bg-danger',
-    returned: 'badge bg-danger',
+    remade: '',
+    returned: '',
     cancel: 'Order canceled temporarily.',
-    delete: 'Delete order permanently.'
+    delete: 'Delete order permanently.',
+    pending: 'Items in cart waiting for checkout.'
   }
 
   constructor() {
