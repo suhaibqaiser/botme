@@ -13,7 +13,7 @@ import {environment} from 'src/environments/environment';
 })
 export class WrapperComponent implements OnInit {
 
-  private readonly publicKey = "BDCQVQ8eDIxkBtTKyu98APMWTQ_HNA5PrRL7XVac7U-GuPJBikGFJguHGC5dAd7BULCkTpyfuvN3Ns57SamWkpA"
+  private readonly publicKey = "BASpDNILoNMWYHhzrhEY6QKqFZqH8FOtybXu_3fqVk1lxbWNYU1VAmigQuN2u8lahgGOiW-FGHrWmrDwpbQ1-l0"
 
   register:any
   e:boolean=false
