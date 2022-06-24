@@ -13,7 +13,7 @@ export class CustomerService {
   }
 
   addCustomer(obj: any) {
-    const url = this.apiBaseUrl + "/food/customer/add?orderLabel=" + this.clientService.getCookie().orderLabel;
+    const url = this.apiBaseUrl + "/food/customer/add?orderLabel=" + this.clientService.getCookie().orderLabel +"&clientID=" + this.clientService.getCookie().clientID;
     return this._http.post(url, obj);
   }
 
