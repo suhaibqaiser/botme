@@ -19,122 +19,116 @@ declare var $: any;
 export class OrderOverviewComponent implements OnInit {
 
 
-  
-
   orders: any = []
   customers: any
-  filteredCustomers:any
-  filteredOrders:any
-  filteredOrdersLabel:any
-  filteredStatus:any
-  filteredDeviceType:any
+  filteredCustomers: any
+  filteredOrders: any
+  filteredOrdersLabel: any
+  filteredStatus: any
+  filteredDeviceType: any
   loading = true
   carts: any = []
   products: any = []
-  
 
 
   isLoading = false;
-    //search text
-    searchControl = new FormControl("")
-    
-    searchText = ''
+  //search text
+  searchControl = new FormControl("")
 
-    searchList: any
+  searchText = ''
 
-    sortType = [
-      {
-        'name': 'All',
-        'value': 'all'
-      },
-      {
-        'name': 'Dine In',
-        'value': 'dine_in'
-      },
-      {
-        'name': 'Pick Up',
-        'value': 'pick_up'
-      },
-      {
-        'name': 'Delivery',
-        'value': 'delivery'
-      }
-    ]
-    sortControl = new FormControl('all')
+  searchList: any
 
-
-    sortStatus =[
-      {
-        'name': 'Notified',
-        'value': 'notified'
-      },
-      {
-        'name':'Delivered',
-        'value':'delivered'
-      },
-      {
-        'name':'Cancel',
-        'value':'cancel'
-      }      
-    ]
-    sortControlStatus=new FormControl('notified')
-
-    sortDevice =[
-      {
-        'name':'All',
-        'value':'all'
-      },
-      {
-        'name':'Robot',
-        'value':'robot'
-      },
-      {
-        'name':'Desktop',
-        'value':'desktop'
-      }
-    ]
-    sortControlType=new FormControl('all')
-
-    
-
-
-    payload: any = {
-      customerName:'',
-      sortByOrder:'',
-      sortByStatus:'',
-      orderLabel:'',
-      orderDevice:'',
-      orderTimestamp:''
+  sortType = [
+    {
+      'name': 'All',
+      'value': 'all'
+    },
+    {
+      'name': 'Dine In',
+      'value': 'dine_in'
+    },
+    {
+      'name': 'Pick Up',
+      'value': 'pick_up'
+    },
+    {
+      'name': 'Delivery',
+      'value': 'delivery'
     }
+  ]
+  sortControl = new FormControl('all')
 
 
-    queryParams: any = {
-      customerName: '',
-      sortByOrder:'',
-      sortByStatus:'',
-      orderLabel:'',
-      orderDevice:'',
-      orderTimestamp:''
+  sortStatus = [
+    {
+      'name': 'Notified',
+      'value': 'notified'
+    },
+    {
+      'name': 'Delivered',
+      'value': 'delivered'
+    },
+    {
+      'name': 'Cancel',
+      'value': 'cancel'
     }
+  ]
+  sortControlStatus = new FormControl('notified')
 
-    filter:any={
-        customerName:'',
-        orderType:'',
-        orderStatus:'',
-        orderLabel:'',
-        orderTimestamp:''
+  sortDevice = [
+    {
+      'name': 'All',
+      'value': 'all'
+    },
+    {
+      'name': 'Robot',
+      'value': 'robot'
+    },
+    {
+      'name': 'Desktop',
+      'value': 'desktop'
     }
-  
+  ]
+  sortControlType = new FormControl('all')
 
-  constructor(private messageService: MessageService,private _http: HttpClient, private _router: Router,private _route: ActivatedRoute, public _helperService: HelperService, private _productService: ProductService, private _orderService: OrderService, private _customerService: CustomerService) 
-   {
+
+  payload: any = {
+    customerName: '',
+    sortByOrder: '',
+    sortByStatus: '',
+    orderLabel: '',
+    orderDevice: '',
+    orderTimestamp: ''
+  }
+
+
+  queryParams: any = {
+    customerName: '',
+    sortByOrder: '',
+    sortByStatus: '',
+    orderLabel: '',
+    orderDevice: '',
+    orderTimestamp: ''
+  }
+
+  filter: any = {
+    customerName: '',
+    orderType: '',
+    orderStatus: '',
+    orderLabel: '',
+    orderTimestamp: ''
+  }
+
+
+  constructor(private messageService: MessageService, private _http: HttpClient, private _router: Router, private _route: ActivatedRoute, public _helperService: HelperService, private _productService: ProductService, private _orderService: OrderService, private _customerService: CustomerService) {
     clearTimeout(this._helperService.timer)
   }
 
 
   async ngOnInit() {
     await this.getProducts()
-    
+
     this.searchList = []
     this.isLoading = true
     await this.getQueryParams()
@@ -143,12 +137,6 @@ export class OrderOverviewComponent implements OnInit {
   }
 
 
-
-
-
-
-
-  
   async getQueryParams() {
     this._route.queryParams.subscribe(param => {
       this.queryParams = {
@@ -206,28 +194,27 @@ export class OrderOverviewComponent implements OnInit {
     if (!!text) {
       this.setFilterList('customerName', this.searchControl.value)
       this.payload.customerName = this.searchControl.value
-      this.filter.customerName= this.searchControl.value
+      this.filter.customerName = this.searchControl.value
       this.setQueryParameters()
     } else {
       console.log(this.searchControl.value)
       this.payload.customerName = ''
-      this.filter.customerName= this.searchControl.value
+      this.filter.customerName = this.searchControl.value
       this.setQueryParameters()
       this.searchControl.setValue('')
     }
     //console.log(this.searchControl.value);
-    
+
     this._customerService.getOrdersByFiltering(this.filter).subscribe(
-      
       ((res: any) => {
         console.log(res);
-        
+
         this.orders = res.status !== 'error' ? res.payload : []
         this.resolveFilter(res.payload)
 
         this.isLoading = false
 
-      })      
+      })
     )
   }
 
@@ -237,49 +224,46 @@ export class OrderOverviewComponent implements OnInit {
     if (this.searchControl.value && this.searchControl.value.length) {
       this.setFilterList('Order Id', this.searchControl.value)
       this.payload.orderLabel = this.searchControl.value
-      this.filter.orderLabel= this.searchControl.value
+      this.filter.orderLabel = this.searchControl.value
       this.setQueryParameters()
     } else {
       this.payload.orderLabel = ''
-      this.filter.orderLabel= this.searchControl.value
+      this.filter.orderLabel = this.searchControl.value
       this.setQueryParameters()
       this.searchControl.setValue('')
     }
     console.log(this.searchControl.value);
-    console.log('filter=>',this.filter);
-    
-    
+    console.log('filter=>', this.filter);
+
+
     this._customerService.getOrdersByFiltering(this.filter).subscribe(
-      
       ((res: any) => {
         console.log(res);
-        
+
         this.orders = res.status !== 'error' ? res.payload : []
         this.resolveFilter(res.payload)
 
         this.isLoading = false
 
-      })      
+      })
     )
   }
 
-  setDate(event:any=null){
-    this.filter.orderTimestamp=event.target.value
+  setDate(event: any = null) {
+    this.filter.orderTimestamp = event.target.value
     this._customerService.getOrdersByFiltering(this.filter).subscribe(
-      
       ((res: any) => {
         console.log(res);
-        
+
         this.orders = res.status !== 'error' ? res.payload : []
         this.resolveFilter(res.payload)
 
         this.isLoading = false
 
-      })      
+      })
     )
   }
 
- 
 
   sortByStatus() {
     this.isLoading = true
@@ -288,12 +272,12 @@ export class OrderOverviewComponent implements OnInit {
 
     if (this.sortControlStatus.value != 'Notified') {
       this.payload.sortByStatus = this.sortControlStatus.value
-      this.filter.orderStatus= this.sortControlStatus.value
+      this.filter.orderStatus = this.sortControlStatus.value
       this.setQueryParameters()
       if (this.sortControlStatus.value == 'deliverd') {
-        this.setFilterList('','Deliverd')
+        this.setFilterList('', 'Deliverd')
       } else if (this.sortControlStatus.value == 'cancel') {
-        this.setFilterList('','Cancel')
+        this.setFilterList('', 'Cancel')
       }
     } else {
       this.payload.sortByStatus = 'notified'
@@ -302,17 +286,16 @@ export class OrderOverviewComponent implements OnInit {
     this._customerService.getOrdersByFiltering(this.filter).subscribe(
       ((res: any) => {
         console.log(this.sortControlStatus.value);
-        
+
         this.orders = res.status !== 'error' ? res.payload : []
         this.resolveFilter(res.payload)
 
         this.isLoading = false
-        
+
       })
     )
     return true
   }
-
 
 
   sortByOrder() {
@@ -322,14 +305,13 @@ export class OrderOverviewComponent implements OnInit {
 
     if (this.sortControl.value != 'All') {
       this.payload.sortByOrder = this.sortControl.value
-      this.filter.orderType= this.sortControl.value
+      this.filter.orderType = this.sortControl.value
       this.setQueryParameters()
       if (this.sortControl.value == 'dine_in') {
-        this.setFilterList('','Dine In')
+        this.setFilterList('', 'Dine In')
       } else if (this.sortControl.value == 'pick_up') {
-        this.setFilterList('','Pick Up')
-      }
-      else if (this.sortControl.value == 'delivery') {
+        this.setFilterList('', 'Pick Up')
+      } else if (this.sortControl.value == 'delivery') {
         this.setFilterList('', 'Delivery')
       }
     } else {
@@ -339,29 +321,30 @@ export class OrderOverviewComponent implements OnInit {
     this._customerService.getOrdersByFiltering(this.filter).subscribe(
       ((res: any) => {
         console.log(this.sortControl.value);
-        
+
         this.orders = res.status !== 'error' ? res.payload : []
         this.resolveFilter(res.payload)
 
         this.isLoading = false
-        
+
       })
     )
     return true
   }
 
 
-  filteringOrder(){
-   console.log("order=>",this.filter);
-   this._customerService.getOrdersByFiltering(this.filter).subscribe(
-    ((res: any) => {
-      console.log('res=>',res);      
-      this.orders = res.status !== 'error' ? res.payload : []
-      this.resolveFilter(res.payload)
-      this.isLoading = false
-      
-    }))
+  filteringOrder() {
+    console.log("order=>", this.filter);
+    this._customerService.getOrdersByFiltering(this.filter).subscribe(
+      ((res: any) => {
+        console.log('res=>', res);
+        this.orders = res.status !== 'error' ? res.payload : []
+        this.resolveFilter(res.payload)
+        this.isLoading = false
+
+      }))
   }
+
   resolveFilter(orders: any = {}) {
     if (Array.isArray(orders)) {
       for (let order of orders) {
@@ -384,9 +367,9 @@ export class OrderOverviewComponent implements OnInit {
       this.filter.deviceType = this.sortControlType.value
       this.setQueryParameters()
       if (this.sortControlType.value == 'robot') {
-        this.setFilterList('','Robot')
+        this.setFilterList('', 'Robot')
       } else if (this.sortControlType.value == 'desktop') {
-        this.setFilterList('','Desktop')
+        this.setFilterList('', 'Desktop')
       }
     } else {
       this.payload.sortByDeviceType = 'all'
@@ -395,12 +378,12 @@ export class OrderOverviewComponent implements OnInit {
     // this._customerService.getOrdersByFiltering(this.filter).subscribe(
     //   ((res: any) => {
     //     console.log(this.sortControlType.value);
-        
+
     //     this.orders = res.status !== 'error' ? res.payload : []
-          //  this.resolveFilter(res.payload)
+    //  this.resolveFilter(res.payload)
 
     //     this.isLoading = false
-        
+
     //   })
     // )
     return true
@@ -459,12 +442,12 @@ export class OrderOverviewComponent implements OnInit {
     this._router.navigate(['/order-detail'])
   }
 
-  setQueryParameters() {    
+  setQueryParameters() {
     if (!this.payload.customerName) this.payload.customerName = ''
     if (!this.payload.orderStatus) this.payload.orderStatus = ''
     if (!this.payload.orderType) this.payload.orderType = ''
     if (!this.payload.orderLabel) this.payload.orderLabel = ''
-    if (!this.payload.orderTimestamp) this.payload.orderTimestamp= ''
+    if (!this.payload.orderTimestamp) this.payload.orderTimestamp = ''
     this._router.navigate([], {
       relativeTo: this._route,
       queryParams: this.payload,
@@ -487,7 +470,7 @@ export class OrderOverviewComponent implements OnInit {
   }
 
   updateOrderStatus(order: any, orderStatus: any) {
-    this._orderService.updateOrderStatus(order.orderLabel, order.orderType, orderStatus).subscribe((res: any) => {
+    this._orderService.updateOrderStatus(order.orderLabel, order.orderType, orderStatus, order.clientID).subscribe((res: any) => {
       this.messageService.add({severity: 'success', summary: 'Update Success', detail: 'Order status update!'})
       let cartListIndex = this.orders.findIndex((item: any) => item.orderLabel === order.orderLabel)
       this.orders.splice(cartListIndex, 1)

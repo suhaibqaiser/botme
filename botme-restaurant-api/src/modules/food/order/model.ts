@@ -4,6 +4,7 @@ import {foodDB} from "../../../config/mongoDB";
 const OrderSchema = createSchema(
     {
         restaurantId: Type.string({maxlength: 256, required: true}),
+        clientID: Type.string({maxlength: 256, required: true}),
         orderLabel: Type.string({maxlength: 256, required: true, unique: true}),
         orderTimestamp: Type.date(), // datetime
         orderType: Type.string(),
