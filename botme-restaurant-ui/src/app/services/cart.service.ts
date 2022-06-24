@@ -124,7 +124,7 @@ export class CartService {
   //
   setProductCustomization(product: any) {
 
-    if(!this._clientService.getCookie().isLoggedIn){
+    if (!this._clientService.getCookie().isLoggedIn) {
       this._router.navigate(['/customer-signup'])
       return
     }
@@ -402,6 +402,7 @@ export class CartService {
 
     order = {
       restaurantId: this._helperService.getRestaurantIdOnAuthBasis(),
+      clientID: this._clientService.getCookie().clientID,
       orderLabel: (this._clientService.getCookie().orderLabel) ? this._clientService.getCookie().orderLabel : '',
       orderTimestamp: new Date(),
       orderType: this._helperService.getOrderTypeOnAuthBasis(),

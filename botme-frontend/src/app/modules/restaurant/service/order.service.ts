@@ -27,37 +27,34 @@ export class OrderService {
     return this.http.get(url);
   }
 
-  
+
   getOrderTypeByFiltering(orderType: string): Observable<any> {
-    
+
     const url = `${this.apiBaseUrl}/food/order/search?type=${orderType}`;
     return this.http.get(url);
-  
+
   }
 
   getOrderStatusByFiltering(orderStatus: string): Observable<any> {
-    
+
     const url = `${this.apiBaseUrl}/food/order/search?status=${orderStatus}`;
     return this.http.get(url);
-  
+
   }
 
   getOrdersLabelByFiltering(orderLabel: string): Observable<any> {
-    
+
     const url = `${this.apiBaseUrl}/food/order/search?orderLabel=${orderLabel}`;
     return this.http.get(url);
-  
+
   }
 
   getDeviceTypeByFiltering(deviceType: string): Observable<any> {
-    
+
     const url = `${this.apiBaseUrl}/food/order/search?deviceType=${deviceType}`;
     return this.http.get(url);
-  
+
   }
-
-
-
 
 
   getCartById(orderLabel: string = ''): Observable<any> {
@@ -81,11 +78,14 @@ export class OrderService {
   /**
    * update the order status from cart
    */
-  updateOrderStatus(orderLabel = '', orderType = '', orderStatus = '') {
+  updateOrderStatus(orderLabel = '', orderType = '', orderStatus = '', clientID = '') {
     // const url = this.apiBaseUrl + "/food/cart/updateOrderStatus?restaurantId=" + this.authService.getRestaurantId() + '&orderLabel=' + orderLabel + '&orderType=' + orderType + '&orderStatus=' + orderStatus
     const url = this.apiBaseUrl + "/food/order/update"
-    const body = { order : {orderLabel: orderLabel, orderType: orderType, orderStatus: orderStatus}, restaurantId: this.authService.getRestaurantId() };
-    return this.http.post(url,body);
+    const body = {
+      order: {orderLabel: orderLabel, orderType: orderType, orderStatus: orderStatus, clientID: clientID},
+      restaurantId: this.authService.getRestaurantId()
+    };
+    return this.http.post(url, body);
   }
 
   deleteOrderByLabel(order: any): Observable<any> {

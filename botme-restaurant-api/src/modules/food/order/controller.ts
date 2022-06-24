@@ -17,6 +17,7 @@ import {
 } from "./service";
 import {randomUUID} from "crypto";
 import { type } from "os";
+import { sendingPlaceOrderNotification } from "../../../utils/helpers";
 
 
 export async function findOrder(filter: any) {
@@ -71,6 +72,7 @@ export async function editOrder(order: any, restaurantId: any) {
 
     let result = await updateOrder(order, restaurantId)
     if (result) {
+        await orderStatusNotification(order)
         response.payload = result
         response.status = "success"
         return response
@@ -80,6 +82,17 @@ export async function editOrder(order: any, restaurantId: any) {
         return response
     }
 }
+
+export async function orderStatusNotification(order:any) {
+
+    if (order.orderStatus == "delivered"){
+        await sendingPlaceOrderNotification(order.clientID,"Dear Customer","Your order has been delivered with order id: " + order.orderLabel + " ,Thanks!")
+
+    } else if (order.orderStatus == "cancel") {
+        await sendingPlaceOrderNotification(order.clientID,"Dear Customer","Your order has been cancelled, Thanks!")
+    }
+}
+
 export async function searchOrder(filter:any) {
     let response = new restResponse()
     try {

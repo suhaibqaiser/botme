@@ -33,7 +33,6 @@ export default [
             res.status(201).json({});
             let subscription = await GetAllSubscription()
             for (let val of subscription){
-                console.log("Result==>",val)
                 if (val.notificationType == "Order"){
                     let result = await OrderNotification(req.body,val.subscription)
                 }
