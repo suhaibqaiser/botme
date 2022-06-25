@@ -35,6 +35,7 @@ export class UserDetailComponent implements OnInit {
     userActive: new FormControl(true),
     userComment: new FormControl(''),
     restaurantId: new FormControl('', [Validators.required, Validators.maxLength(120)]),
+    userRole: new FormControl('')
   });
 
   userId = '';
@@ -49,9 +50,16 @@ export class UserDetailComponent implements OnInit {
     userUpdated: null,
     userActive: true,
     userComment: '',
-    restaurantId: ''
+    restaurantId: '',
+    userRole: ''
   }
   restaurantList = new Array
+
+  roleList :any []= [
+    {label:'admin', value:'admin'},
+    {label:'staff', value:'staff'},
+    {label:'super user', value:'super user'}
+  ]
 
   ngOnInit(): void {
     this.route.queryParams
@@ -162,6 +170,8 @@ export class UserDetailComponent implements OnInit {
               this.user = result.payload
               this.userId = result.payload.userId
               this.userForm.patchValue(this.user)
+              console.log(this.user);
+              
               this.messageService.add({ severity: 'info', summary: 'Update Success', detail: 'User added!' })
               this.formMode = 'update'
             } else {

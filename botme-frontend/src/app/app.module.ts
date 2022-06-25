@@ -37,6 +37,7 @@ import { ListComponent } from './components/pages/list/list.component';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,7 +71,8 @@ import { ListComponent } from './components/pages/list/list.component';
     RestaurantModule,
     ToggleButtonModule,
     NgDynamicBreadcrumbModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    
   ],
   providers: [HelperService, Title, AuthGuard, {
     provide: HTTP_INTERCEPTORS,

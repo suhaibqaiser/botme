@@ -84,6 +84,18 @@
                     <input pInputText type="text" formControlName="userComment" id="form-userComment"
                         placeholder="Enter comment">
                 </div>
+
+
+                <div class="form-group">
+                    <label for="form-userRole" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">User Roles
+                    </label>
+                    <p-dropdown [options]="roleList" placeholder="Select Role" optionLabel="label"
+                        optionValue="value" [ngClass]="{ 'ng-invalid ng-dirty': f.restaurantId.errors }"
+                        formControlName="userRole" id="form-userRole">
+                    </p-dropdown>
+                </div>
+
+
                 <div class="form-group">
                     <label for="form-restaurantId" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">Restaurant
                     </label>

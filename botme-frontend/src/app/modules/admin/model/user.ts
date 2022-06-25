@@ -9,5 +9,6 @@ export interface User {
     userUpdated: Date | null,
     userActive: boolean,
     userComment: string,
-    restaurantId: string
+    restaurantId: string,
+    userRole: string
 }

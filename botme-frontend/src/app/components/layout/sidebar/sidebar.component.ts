@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HelperService } from 'src/app/services/helper.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -12,7 +13,7 @@ export class SidebarComponent implements OnInit {
   restaurantToggleObj: any
   dictionaryToggleObj: any
 
-  constructor() {
+  constructor(public _helperService: HelperService) {
   }
 
   ngOnInit(): void {
