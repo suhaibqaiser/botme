@@ -142,7 +142,7 @@ export async function searchOrder(filter:any) {
             }
             response.payload = "order not found"
             response.status = "danger"
-            return response 
+            return response
 
         } else {
             let result = await queryOrder(filter)
@@ -168,9 +168,16 @@ export async function searchOrder(filter:any) {
 export async function findCart(filter: any) {
     let response = new restResponse()
     try {
+
+        if(filter.clientType === 'bot'){
+            delete filter.clientType
+            delete filter.clientID
+        }
+
+        delete filter.clientType
         let orderResult: any = await getOrderById(filter)
         orderResult = JSON.parse(JSON.stringify(orderResult))
-
+        delete filter.clientID
         if (!orderResult) {
             response.message = 'Order not found.'
             response.status = "danger"
