@@ -14,6 +14,7 @@ const UserSchema = new Schema(
                 userActive: { type: Boolean, required: true },
                 userComment: { type: String },
                 restaurantId: { type: String },
+                userRole: {type: String},
         }
 );
 

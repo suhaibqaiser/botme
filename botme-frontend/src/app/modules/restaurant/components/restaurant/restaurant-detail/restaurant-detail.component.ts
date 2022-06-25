@@ -23,6 +23,8 @@ export class RestaurantDetailComponent implements OnInit {
 
   restaurantForm = this.fb.group({
     restaurantName: new FormControl('', [Validators.required, Validators.maxLength(30)]),
+    restaurantLabel: new FormControl(''),
+    restaurantLocation: new FormControl(''),
     restaurantActive: true,
   });
 
@@ -31,6 +33,8 @@ export class RestaurantDetailComponent implements OnInit {
   restaurant: Restaurant = {
     restaurantId: '',
     restaurantName: '',
+    restaurantLabel:'',
+    restaurantLocation:'',
     restaurantActive: true
   }
 
@@ -129,6 +133,8 @@ export class RestaurantDetailComponent implements OnInit {
             if (result.status === 'success') {
               this.restaurant = result.payload
               this.restaurantId = result.payload.restaurantId
+              console.log(this.restaurant);
+              
               this.messageService.add({ severity: 'info', summary: 'Update Success', detail: 'Restaurant added!' })
               this.formMode = 'update'
             } else {

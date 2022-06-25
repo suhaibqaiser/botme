@@ -1,11 +1,11 @@
 <div class="card">
     <div class="card-body">
         <div class="d-flex align-items-center justify-content-between m-b-15">
-            <h4 class="m-b-0">Restaurant List</h4>
+            <h4 class="m-b-0 ml-0">Restaurant List</h4>
             <div class="card-toolbar">
                 <ul>
                     <li>
-                        <a class="p-button p-button-icon-left" [routerLink]="['detail']">
+                        <a class="p-button p-button-icon-left" [routerLink]="['detail']" style="color: white;">
                             <i class="anticon anticon-plus font-size-20"></i>
                             Add New
                         </a>
@@ -58,6 +58,8 @@
                             [queryParams]="{ restaurantId: restaurant.restaurantId }">{{restaurant.restaurantId}}</button>
                     </td>
                     <td>{{restaurant.restaurantName}}</td>
+                    <!-- <td>{{restaurant.restaurantLabel}}</td>
+                    <td>{{restaurant.restaurantLocation}}</td> -->
                     <td>{{restaurant.createdAt}}</td>
                     <td>{{restaurant.updatedAt}}</td>
                     <td><span *ngIf="restaurant.restaurantActive === true"

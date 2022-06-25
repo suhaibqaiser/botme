@@ -1,4 +1,5 @@
-import {Injectable} from '@angular/core';
+import {Injectable, Input, TemplateRef, ViewContainerRef} from '@angular/core';
+import { Key } from 'protractor';
 
 @Injectable({
   providedIn: 'root'
@@ -62,8 +63,19 @@ export class HelperService {
     pending: 'Items in cart waiting for checkout.'
   }
 
-  constructor() {
+
+
+  constructor() {}
+
+  
+  /**
+   * getting the values from localStorage
+   * @param key
+   */
+   getLocalStorageByKey(key: any = '') {
+    return localStorage.getItem(key)
   }
+
 
   computeOrderType(type = '') {
     const orderType = this.orderTypes[type]

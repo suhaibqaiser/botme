@@ -3,18 +3,25 @@
     <div class="row">
       <div class="col-md">
         <div class="card">
-          <div class="card-header">
-            <h2 class="card-title">Client List</h2>
-            <button type="button" class="btn btn-primary float-right"
-                    [routerLink]="['/client/single']">Add New
-            </button>
-          </div>
+          <div class="d-flex align-items-center justify-content-between m-b-15">
+            <h4 class="m-t-15 ml-4">Client List</h4>
+            <div class="card-toolbar">
+                <ul>
+                    <li>
+                        <a class="p-button p-button-icon-left m-t-15 mr-4 " [routerLink]="['/client/single']" style="color: white;">
+                            <i class="anticon anticon-plus font-size-20"></i>
+                            Add New
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <table class="table table-bordered">
+            <table class="table table-bordered" >
               <thead>
               <tr>
-                <th style="width: 10px">#</th>
+                <th>#</th>
                 <th>Client Name</th>
                 <th>Client ID</th>
                 <th>Client Device ID</th>
@@ -25,8 +32,8 @@
               </thead>
               <tbody>
               <tr *ngFor="let client of clients; let i = index" (click)="onSelect(client)"
-                  [class.selected]="client === selectedClient">
-                <button type="button" class="btn btn-default"
+                  [class.selected]="client === selectedClient" >
+                <button type="button" class="btn btn-default m-t-15"
                         [routerLink]="['/client/single']" [queryParams]="{ clientId: client.clientID}">View
                 </button>
                 <!--                                    <td>{{i}}</td>-->
