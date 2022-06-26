@@ -44,8 +44,7 @@
             <!--              </div>-->
             <!--            </div>-->
           </td>
-          <td *ngIf="!product.status">In Waiting</td>
-          <td *ngIf="product.status">In Progress</td>
+          <td><span [classList]="_helperService.computeOrderStatusColor(_botMeService.getCookie().orderStatus)" [title]="_helperService.computeOrderMessages(_botMeService.getCookie().orderStatus)">{{_botMeService.getCookie().orderStatus}}</span></td>
           <!--            <td>-->
           <!--              <div class="cart-quantity">-->
           <!--                <a id="ctaId-remove-quantity" (click)="addProductQuantity(product,'subtracting')"-->

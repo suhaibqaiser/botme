@@ -100,6 +100,7 @@ export class CartService {
         })
         if (res.status === 'success') {
           this.cartLoader = false
+          this._clientService.setCookie('orderStatus', res.payload.order.orderStatus)
           let cartListIndex = this.cartProduct.findIndex((item: any) => item._id === this.singleCustomProductObj._id)
           this.cartProduct.splice(cartListIndex, 1)
 
@@ -184,6 +185,7 @@ export class CartService {
         })
         this.cartLoader = false
         if (res.status === 'success') {
+          this._clientService.setCookie('orderStatus', res.payload.order.orderStatus)
           this.cartLoader = false
           let cart = JSON.parse(JSON.stringify(this.singleCustomProductObj))
 
@@ -222,6 +224,7 @@ export class CartService {
           })
           this.cartLoader = false
           if (res.status === 'success') {
+            this._clientService.setCookie('orderStatus', res.payload.order.orderStatus)
             this._clientService.setCookie('orderLabel', res.payload.order.orderLabel)
             this.singleCustomProductObj.cartId = res.payload.cart[0].cartId
             this.cartProduct.push(JSON.parse(JSON.stringify(this.singleCustomProductObj)))
@@ -247,6 +250,7 @@ export class CartService {
         })
         this.cartLoader = false
         if (res.status === 'success') {
+          this._clientService.setCookie('orderStatus', res.payload.order.orderStatus)
           this._clientService.setCookie('orderLabel', res.payload.order.orderLabel)
           let cartList = res.payload.cart
           cartList.forEach((item: any, index: any) => {

@@ -21,6 +21,7 @@ export class CartSectionComponent implements OnInit {
 
   loader = false
   orderType = new FormControl('')
+  orderStatus: any = ''
 
   constructor(public cartService: CartService,
               private _toastService: ToastService,
@@ -31,7 +32,9 @@ export class CartSectionComponent implements OnInit {
               private _socketService: SocketService,
               public _clientService: BotmeClientService,
               public _orderService: OrderService,
-              public _botMeService: BotmeClientService
+              public _botMeService: BotmeClientService,
+              private _cartService: CartService,
+              private _menuService: MenuService
   ) {
     const orderType = this._helperService.getOrderTypeOnAuthBasis()
     this._orderService.selectedOrderButtons = {
@@ -43,8 +46,12 @@ export class CartSectionComponent implements OnInit {
     this._botMeService.setCookie('orderType', orderType)
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this._contextService.getCurrentContext()
+    const timeIntevalSeconds = 5
+    setInterval(() => {
+      this.getOrders()
+    }, timeIntevalSeconds * 1000);
   }
 
   removeFromCart(productId: string) {
@@ -153,5 +160,14 @@ export class CartSectionComponent implements OnInit {
       this._botMeService.setCookie('orderType', 'delivery')
     }
     return ''
+  }
+
+  async getOrders() {
+    this._menuService.findOrderByOrderLabel(this._botMeService.getCookie().orderLabel).subscribe((res: any) => {
+      if (res.status === 'success') {
+        this._botMeService.setCookie('orderStatus', res.payload.order.orderStatus)
+        return
+      }
+    })
   }
 }

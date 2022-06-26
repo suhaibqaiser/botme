@@ -8,6 +8,35 @@ import {BotmeClientService} from "./botme-client.service";
 })
 export class HelperService {
 
+  orderStatusColors: any = {
+    hold: 'badge bg-warning text-dark',
+    priced: 'badge bg-success text-white',
+    ready: 'badge bg-info text-dark',
+    in_process: 'badge in_process',
+    received: 'badge bg-success text-dark',
+    notified: 'badge bg-info text-dark',
+    delivered: 'badge bg-success text-white',
+    remade: 'badge bg-danger text-white',
+    returned: 'badge bg-danger text-white',
+    delete: 'badge bg-danger text-white',
+    cancel: 'badge bg-warning text-dark',
+    pending: 'badge badge-secondary text-white'
+  }
+
+  orderMessages: any = {
+    hold: 'Customer hold items in cart!',
+    priced: '',
+    ready: '',
+    in_process: '',
+    received: '',
+    notified: 'Customer has booked his order!',
+    delivered: 'Order delivered',
+    remade: '',
+    returned: '',
+    cancel: 'Order canceled temporarily.',
+    delete: 'Delete order permanently.',
+    pending: 'Items in cart waiting for checkout.'
+  }
   timer: any
   orderStatusObject: any = {
     hold: 'hold',
@@ -382,5 +411,13 @@ export class HelperService {
 
   checkAuthAndRedirect(redirect:any = '') {
     return this._clientService.getCookie() && this._clientService.getCookie().isLoggedIn ? redirect : '/customer-signup'
+  }
+
+  computeOrderStatusColor(type = '') {
+    return this.orderStatusColors[type] ? this.orderStatusColors[type] : 'bg-light text-dark'
+  }
+
+  computeOrderMessages(type = '') {
+    return this.orderMessages[type] ? this.orderMessages[type] : ''
   }
 }
