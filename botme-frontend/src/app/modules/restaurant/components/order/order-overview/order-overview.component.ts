@@ -9,6 +9,7 @@ import {FormControl} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 
 
+
 declare var $: any;
 
 @Component({
@@ -126,8 +127,10 @@ export class OrderOverviewComponent implements OnInit {
 
 
   async ngOnInit() {
+    // const date= new Date()
+    // console.log(date.toLocaleString());
+   
     await this.getProducts()
-
     this.searchList = []
     this.isLoading = true
     await this.getQueryParams()

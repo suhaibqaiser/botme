@@ -127,7 +127,10 @@ export async function searchOrder(filter:any) {
                         if (!orderlist.includes(order)) {orderlist.push(order)}
                     })
                 }
-                response.payload = orderlist
+                response.payload = orderlist.sort(function(a:any,b:any){
+                    // @ts-ignore
+                    return new Date(b.orderTimestamp) - new Date(a.orderTimestamp);
+                });
                 response.status = "success"
                 return response
                     // if (data) {
