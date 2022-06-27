@@ -31,7 +31,7 @@ export class DeviceDetailComponent implements OnInit {
     deviceDescription: new FormControl(''),
   });
 
- 
+  deviceLabel='';
   user: User = {
     
     deviceName: '',
@@ -46,7 +46,7 @@ export class DeviceDetailComponent implements OnInit {
     ]
 
   async ngOnInit() {
-
+ 
   }
 
 
