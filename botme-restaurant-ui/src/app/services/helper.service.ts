@@ -33,7 +33,7 @@ export class HelperService {
     delivered: 'Order delivered',
     remade: '',
     returned: '',
-    cancel: 'Order canceled temporarily.',
+    cancel: 'Order cancelled temporarily.',
     delete: 'Delete order permanently.',
     pending: 'Items in cart waiting for checkout.'
   }
