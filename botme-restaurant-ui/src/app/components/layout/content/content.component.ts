@@ -42,10 +42,10 @@ export class ContentComponent implements OnInit {
       }
     }, 1000)
 
-    console.log("client loggin ==>",this.botMeClientService.getCookie().isLoggedIn)
-    if(this.botMeClientService.getCookie().isLoggedIn) {
-      this.allowNotification()
-    }
+    // console.log("client loggin ==>",this.botMeClientService.getCookie().isLoggedIn)
+    // if(this.botMeClientService.getCookie().isLoggedIn) {
+    //   this.allowNotification()
+    // }
   }
 
   onActivate(event: any) {
@@ -65,47 +65,47 @@ export class ContentComponent implements OnInit {
       }
     )
   }
-  allowNotification(){
-    if (Notification.permission === 'default'){
-      Notification.requestPermission().then((perm) => {
-        if (Notification.permission === "granted"){
-          this.regWorker()
-        }
-        else{
-          alert("please allow notifications.");
-        }
-      });
-    }
-    else if (Notification.permission === "granted"){
-      console.log("permission granted")
-      this.regWorker()
-    }
-    else {
-      alert("please allow notifications.");
-    }
-    }
-  async regWorker() {
-    if('serviceWorker' in navigator){
+  // allowNotification(){
+  //   if (Notification.permission === 'default'){
+  //     Notification.requestPermission().then((perm) => {
+  //       if (Notification.permission === "granted"){
+  //         this.regWorker()
+  //       }
+  //       else{
+  //         alert("please allow notifications.");
+  //       }
+  //     });
+  //   }
+  //   else if (Notification.permission === "granted"){
+  //     console.log("permission granted")
+  //     this.regWorker()
+  //   }
+  //   else {
+  //     alert("please allow notifications.");
+  //   }
+  //   }
+  // async regWorker() {
+  //   if('serviceWorker' in navigator){
 
-      console.log(this.publicKey)
-      const register = await navigator.serviceWorker.register('/sw.js',{scope: '/'})
-      let subscription = await register.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: this.publicKey
-      })
-      var subscriptionWrapper = {
-        "subscription":subscription,
-        "clientId": this.cookieService.get("clientID"),
-      }
-      console.log("Subscription==>",subscriptionWrapper)
+  //     console.log(this.publicKey)
+  //     const register = await navigator.serviceWorker.register('/sw.js',{scope: '/'})
+  //     let subscription = await register.pushManager.subscribe({
+  //       userVisibleOnly: true,
+  //       applicationServerKey: this.publicKey
+  //     })
+  //     var subscriptionWrapper = {
+  //       "subscription":subscription,
+  //       "clientId": this.cookieService.get("clientID"),
+  //     }
+  //     console.log("Subscription==>",subscriptionWrapper)
 
-      fetch(this.restaurantUrl + '/notification/subscribe/save',{
-        method:'POST',
-        body: JSON.stringify(subscriptionWrapper),
-        headers: {
-          'content-type': 'application/json'
-        }
-      });
-    }
-  }
+  //     fetch(this.restaurantUrl + '/notification/subscribe/save',{
+  //       method:'POST',
+  //       body: JSON.stringify(subscriptionWrapper),
+  //       headers: {
+  //         'content-type': 'application/json'
+  //       }
+  //     });
+  //   }
+  // }
 }

@@ -9,7 +9,7 @@ const { v4: uuidv4 } = require('uuid');
 // Display All Devices
 async function getDeviceList(req, res) {
   let response = new Response();
-  let devices = await deviceService.getDeviceList();
+  let devices = await deviceService.getDeviceList(req.query.restaurantId);
 
   if (devices) {
     response.payload = devices;
@@ -51,14 +51,14 @@ async function getDeviceDetails(req, res) {
 async function addDevice(req, res) {
   let response = new Response();
 
-  if (!req.body.deviceLabel || !req.body.deviceName || !req.body.deviceType || !req.body.deviceDescription) {
+  if (!req.body.deviceLabel || !req.body.deviceName || !req.body.deviceType || !req.body.deviceDescription || !req.body.restaurantId) {
     response.payload = {
       message: 'deviceLabel,deviceName,deviceType and deviceDescription is required'
     };
     return res.status(400).send(response);
   }
 
-  if (await deviceService.checkDeviceExists(req.body.deviceLabel)) {
+  if (await deviceService.checkDeviceExists(req.body.deviceLabel,req.body.restaurantId)) {
     response.payload = {
       message: 'Device already exists'
     };
@@ -73,6 +73,8 @@ async function addDevice(req, res) {
 
   let device = req.body
   device.deviceId = uuidv4()
+
+  console.log("device==>",device)
 
   let newDevice = await deviceService.addDevice(device);
 
