@@ -1,7 +1,7 @@
 <div class="card card-primary" xmlns="http://www.w3.org/1999/html">
     <div class="card-header">
         <div class="d-flex align-items-center justify-content-between m-v-15">
-            <h3 class="card-title">Device Details: <span *ngIf="!newForm"></span></h3>
+            <h3 class="card-title">Device Details: <span *ngIf="!newForm">{{user.deviceName}}</span></h3>
             <div class="card-toolbar">
                 <div class="d-flex">
                     <button pButton pRipple type="button" label="Back" icon="pi pi-chevron-left" *ngIf="!editMode"
@@ -72,7 +72,7 @@
 
                 <div class="form-group">
                     <label for="form-deviceDescription" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0 font-weight-bold">Description</label>
-                    <input pInputText type="text" formControlName="deviceDescription" id="form-userComment"
+                    <input pInputText type="text" formControlName="deviceDescription" id="form-userDescription"
                         placeholder="Enter description">
                 </div>
 
