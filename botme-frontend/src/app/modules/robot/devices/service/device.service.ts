@@ -25,6 +25,11 @@ export class DeviceService {
         return this.http.get(url, {headers: this.headers});
       }
 
+    getDeviceDetails(deviceLabel: string): Observable<any> {
+        const url = `${this.apiBaseUrl}/device/detail?deviceId=${deviceLabel}`;
+        return this.http.get(url);
+    }
+
     addDevice(device: object): Observable<any> {
         const url = `${this.apiBaseUrl}/device/register`;
         return this.http.put(url,device,{headers: this.headers});
