@@ -11,7 +11,8 @@ const deviceSchema = new Schema(
     deviceName: {type: String, maxlength: 256, required: true},
     deviceType: {type: String, maxlength: 256, required: true},
     deviceDescription: {type: String, maxlength: 800, required: true},
-    deviceActive: {type: Boolean, required: true}
+    deviceActive: {type: Boolean, required: true},
+    restaurantId: {type: String, maxlength: 256, required: true}
   }
 );
 // }, {
