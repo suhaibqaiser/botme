@@ -157,9 +157,7 @@ export class CustomerSignupSectionComponent implements OnInit {
         })
         setTimeout(() => {
           if (res.status === 'success') {
-            this.router.navigate(['/customer-login']).then(() => {
-              window.location.reload();
-            });
+            this._helperService.navigateTo('customer-login')
           }
         }, 1000)
 

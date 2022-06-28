@@ -70,7 +70,7 @@ export class ContextService {
       currentRoute = currentRoute.substr(0, currentRoute.indexOf('?'))
     }
     this.currentContextList.filter((item: any) => {
-      if (item.currentRoute === currentRoute) {
+      if ('/' + this._helperService.getRestaurantIdOnAuthBasis() + item.currentRoute === currentRoute) {
         this.currentContextObj = JSON.parse(JSON.stringify(item))
       }
     })
@@ -82,6 +82,6 @@ export class ContextService {
    */
   getPageRoute(serverPageId = '') {
     return this.currentContextList.find((item: any) =>
-       (item.pageId === serverPageId) ? item.currentRoute : null)
+      (item.pageId === serverPageId) ? item.currentRoute : null)
   }
 }

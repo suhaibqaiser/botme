@@ -126,7 +126,7 @@ export class CartService {
   setProductCustomization(product: any) {
 
     if (!this._clientService.getCookie().isLoggedIn) {
-      this._router.navigate(['/customer-signup'])
+      this._helperService.navigateTo('customer-signup')
       return
     }
 
@@ -258,7 +258,7 @@ export class CartService {
           })
           // this.singleCustomProductObj.cartId = res.payload.cart.cartId
           $('#order_type_modal').modal('hide')
-          this._router.navigate(['/checkout'])
+          this._helperService.navigateTo('checkout')
         }
       })
 

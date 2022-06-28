@@ -99,7 +99,7 @@ export class OrderSectionComponent implements OnInit {
           })
         }
         this._cartService.cartLoader = false
-        this._route.navigate(['/cart'])
+        this._helperService.navigateTo('cart')
 
         return
       }
@@ -107,11 +107,6 @@ export class OrderSectionComponent implements OnInit {
       this._botMeService.setCookie('customerId', '')
 
     })
-  }
-
-  goToRoute(route: any = '') {
-    this._route.navigate([route])
-    this._botMeService.setCookie('orderLabel', '')
   }
 
   getProducts(): void {

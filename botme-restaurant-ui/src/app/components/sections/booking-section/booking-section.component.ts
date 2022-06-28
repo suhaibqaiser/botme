@@ -24,7 +24,7 @@ export class BookingSectionComponent implements OnInit {
   }
   reservationLoader: boolean = false
 
-  constructor(private _toastService: ToastService, private _botMeService: BotmeClientService, private _contextService: ContextService, private _helper: HelperService, private _router: Router, public _reservationService: ReservationService) {
+  constructor(public _helperService: HelperService, private _toastService: ToastService, private _botMeService: BotmeClientService, private _contextService: ContextService, private _helper: HelperService, private _router: Router, public _reservationService: ReservationService) {
     clearTimeout(this._helper.timer)
     this._reservationService.reservationForm.reset()
     this._reservationService.resetFocus()
@@ -38,11 +38,11 @@ export class BookingSectionComponent implements OnInit {
     this.reservationLoader = true
     this.disableFormOnSubmit()
     this._reservationService.addReservation(this._reservationService.reservationForm.value).subscribe((res: any) => {
-      this._toastService.setToast({
-        description: res.message,
-        type: res.status
-      })
-      if (res.status === "success") {
+        this._toastService.setToast({
+          description: res.message,
+          type: res.status
+        })
+        if (res.status === "success") {
           this._botMeService.setCookie('reservationLabel', res.payload.reservationLabel)
           this.reservation = {
             isReservationCompleted: true,
@@ -58,7 +58,7 @@ export class BookingSectionComponent implements OnInit {
           this._reservationService.reservationForm.reset()
           this.reservationLoader = false
           this._helper.timer = setTimeout(() => {
-            if (this._helper.getCurrentRouteName() === '/reservations') this._router.navigate(['home'])
+            if (this._helper.getCurrentRouteName() === '/reservations') this._helperService.navigateTo('home')
             this.reservation.isReservationCompleted = false
           }, 10000)
         }

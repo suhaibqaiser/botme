@@ -131,7 +131,7 @@ export class CartSectionComponent implements OnInit {
       })
       return
     }
-    this._router.navigate(['/checkout'])
+    this._helperService.navigateTo('checkout')
   }
 
   openModal() {

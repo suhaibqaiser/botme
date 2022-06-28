@@ -57,10 +57,7 @@ export class CustomerLoginSectionComponent implements OnInit {
           this._botMeClientService.setCookie('clientVoiceEnabled', (res.payload.clientVoiceEnabled) ? "yes" : "no")
           this._botMeClientService.setCookie('clientType', res.payload.clientType)
           this._botMeClientService.setCookie('clientEmail', res.payload.clientEmail)
-          this.router.navigate(['/home']).then(() => {
-            window.location.reload();
-          });
-
+          this._helperService.navigateTo('home')
           return
         }
 

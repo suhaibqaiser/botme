@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CartService} from "../../../services/cart.service";
+import {HelperService} from "../../../services/helper.service";
 
 @Component({
   selector: 'app-footer',
@@ -8,7 +9,7 @@ import {CartService} from "../../../services/cart.service";
 })
 export class FooterComponent implements OnInit {
 
-  constructor(public cartService: CartService) {
+  constructor(public cartService: CartService, public _helperService: HelperService) {
   }
 
   ngOnInit(): void {

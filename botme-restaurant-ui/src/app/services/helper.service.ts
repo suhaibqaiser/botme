@@ -1,6 +1,6 @@
 import {Injectable, isDevMode} from '@angular/core';
 import {DataDogLoggingService} from './datadog.service';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {BotmeClientService} from "./botme-client.service";
 
 @Injectable({
@@ -56,7 +56,7 @@ export class HelperService {
 
   productList: any = []
 
-  constructor(private _router: Router, private logger: DataDogLoggingService, private _clientService: BotmeClientService) {
+  constructor(private _router: Router, private logger: DataDogLoggingService, private _clientService: BotmeClientService, private _activatedRoute: ActivatedRoute) {
   }
 
   resolveProductImage(productObj: any) {
@@ -409,8 +409,8 @@ export class HelperService {
     return list && list.filter((item: any) => (item.selected)).map((a: any) => a.productName)
   }
 
-  checkAuthAndRedirect(redirect:any = '') {
-    return this._clientService.getCookie() && this._clientService.getCookie().isLoggedIn ? redirect : '/customer-signup'
+  checkAuthAndRedirect(redirect: any = '') {
+    return this._clientService.getCookie() && this._clientService.getCookie().isLoggedIn ? this.navigateTo(redirect) : this.navigateTo('customer-signup')
   }
 
   computeOrderStatusColor(type = '') {
@@ -419,5 +419,14 @@ export class HelperService {
 
   computeOrderMessages(type = '') {
     return this.orderMessages[type] ? this.orderMessages[type] : ''
+  }
+
+  /**
+   * resolve navigation on the basis of resturant id
+   * @param to
+   * @param param
+   */
+  navigateTo(to = '', param: any = {}) {
+    this._router.navigate([this.getRestaurantIdOnAuthBasis() + '/' + to + '/'], {queryParams: {productId: param.productId}})
   }
 }

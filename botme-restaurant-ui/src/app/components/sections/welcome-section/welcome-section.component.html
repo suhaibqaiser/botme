@@ -10,9 +10,9 @@
           <p>We are the country's no.1 Fast food retailer with 15+ years of reputation. Country's best burger and pizza
             are delivered by us. We gain the satisfaction of our customers with our delicate service and extreme high
             food quality.</p>
-          <a class="btn product_suggestion_btn text-capitalize mt-3" [routerLink]="_helperService.checkAuthAndRedirect('/search-product')">search product &
+          <a class="btn product_suggestion_btn text-capitalize mt-3" (click)="_helperService.checkAuthAndRedirect('search-product')">search product &
             order</a>
-          <a class="btn text-capitalize mt-3" routerLink="/online-shop">see menu</a>
+          <a class="btn text-capitalize mt-3" (click)="_helperService.navigateTo('online-shop')">see menu</a>
         </div>
       </div>
       <div class="col-sm-12 col-md-7 col-lg-7">

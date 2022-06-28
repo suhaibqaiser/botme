@@ -7,6 +7,7 @@ import {CookieService} from 'ngx-cookie-service';
 import { Subscription } from 'rxjs';
 import {environment} from "../../../../environments/environment";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HelperService} from "../../../services/helper.service";
 
 
 @Component({
@@ -22,7 +23,8 @@ export class ContentComponent implements OnInit {
 
   queryParams: any = {}
 
-  constructor(private _toastService:ToastService,private _route: ActivatedRoute, public socketService: SocketService, public botMeClientService: BotmeClientService, private router: Router, private actRouter: ActivatedRoute, private cookieService: CookieService) {
+  constructor(private _toastService:ToastService,private _route: ActivatedRoute, public socketService: SocketService, public botMeClientService: BotmeClientService, private router: Router, private actRouter: ActivatedRoute, private cookieService: CookieService,private _helperService:HelperService) {
+    console.log('ContentComponent')
   }
 
   async ngOnInit() {

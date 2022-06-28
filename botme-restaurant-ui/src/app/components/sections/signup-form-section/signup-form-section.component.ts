@@ -162,7 +162,7 @@ export class SignupFormSectionComponent implements OnInit {
 
     if (!this.isDeviceVerified) {
       this._toastService.setToast({
-        description: 'Oops your device id is ot verified.',
+        description: 'Oops your device id is not verified.',
         type: 'danger'
       })
       return;
@@ -178,9 +178,7 @@ export class SignupFormSectionComponent implements OnInit {
         })
         setTimeout(() => {
           if (res.status === 'success') {
-            this.router.navigate(['/login']).then(() => {
-              window.location.reload();
-            });
+            this._helperService.navigateTo('home')
           }
         }, 1000)
 

@@ -28,7 +28,7 @@ export function updateRestaurant(restaurant: any) {
 export function deleteRestaurants(restaurantId: any) {
     return Restaurant.findOneAndDelete({restaurantId:restaurantId})
 
-} 
+}
 
 export async function getAreas() {
     return Area.find({}, { _id: 0, __v: 0 });
@@ -36,4 +36,8 @@ export async function getAreas() {
 
 export async function getAreaTables(areaId: string) {
     return Area.find({ areaId: areaId }, { _id: 0, __v: 0, "tables.area": 0 }).populate("tables", { "area": 0, _id: 0 });
+}
+
+export async function getMaxLabelValue() {
+    return Restaurant.findOne({}).sort({ restaurantLabel: -1 })
 }

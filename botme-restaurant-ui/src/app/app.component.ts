@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { CtaService } from './services/cta.service';
-import { SocketService } from './services/socket.service';
+import {Component} from '@angular/core';
+import {Router} from '@angular/router';
+import {CtaService} from './services/cta.service';
+import {SocketService} from './services/socket.service';
+import {HelperService} from "./services/helper.service";
 
 @Component({
   selector: 'app-root',
@@ -12,8 +13,9 @@ export class AppComponent {
   title = 'botme-restaurant-ui';
 
   constructor(private socketService: SocketService,
-    private ctaService: CtaService,
-    private router: Router) {
+              private ctaService: CtaService,
+              private router: Router,
+              public _helperService: HelperService) {
 
     this.socketService.messages.subscribe(r => {
       let res: any = r
@@ -24,10 +26,10 @@ export class AppComponent {
       } else if (res.status === 'success' && res.message.navLink) {
 
         if (res.message.navLink === 'menu') {
-          this.router.navigate(['online-shop'])
+          this._helperService.navigateTo('online-shop')
         }
         if (res.message.navLink === 'reservation') {
-          this.router.navigate(['reservations'])
+          this._helperService.navigateTo('reservations')
         }
       }
     })

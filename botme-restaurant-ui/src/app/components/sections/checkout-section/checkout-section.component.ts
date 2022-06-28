@@ -267,7 +267,7 @@ export class CheckoutSectionComponent implements OnInit {
     this._clientService.getCookie().orderLabel = ""
     localStorage.clear()
     $('#checkout_modal').modal('hide')
-    this._router.navigate(['/home'])
+    this._helperService.navigateTo('home')
   }
 
 }

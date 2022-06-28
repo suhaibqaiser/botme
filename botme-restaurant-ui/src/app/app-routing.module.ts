@@ -21,80 +21,80 @@ import {CustomerLoginComponent} from "./components/pages/customer-login/customer
 
 const routes: Routes = [
   {
-    path: "home",
+    path: ":restaurantId/home",
     component: HomeComponent
   },
   {
-    path: "profile",
+    path: ":restaurantId/profile",
     component: ProfileComponent,
     canActivate: [AuthenticationGuard]
   },
   {
-    path: "bot-login",
+    path: ":restaurantId/bot-login",
     component: LoginComponent
   },
   {
-    path: "menu",
+    path: ":restaurantId/menu",
     component: MenuComponent
   },
   {
-    path: "online-shop",
+    path: ":restaurantId/online-shop",
     component: SearchMenuComponent
   },
   {
-    path: "contact-us",
+    path: ":restaurantId/contact-us",
     component: ContactUsComponent
   },
   {
-    path: "reservations",
+    path: ":restaurantId/reservations",
     component: ReservationsComponent,
     canActivate: [AuthenticationGuard]
   },
   {
-    path: "privacy-policy",
+    path: ":restaurantId/privacy-policy",
     component: PrivacyPolicyComponent
   },
   {
     path: "",
-    redirectTo: "/home",
+    redirectTo: "home",
     pathMatch: "full"
   },
   {
-    path: "product-detail",
+    path: ":restaurantId/product-detail",
     component: ProductDetailComponent
   },
   {
-    path: "cart",
+    path: ":restaurantId/cart",
     component: CartComponent
   },
   {
-    path: "checkout",
+    path: ":restaurantId/checkout",
     component: CheckoutComponent
   },
   {
-    path: "demo",
+    path: ":restaurantId/demo",
     component: DemoPageComponent
   },
   {
-    path: "bot-signup",
+    path: ":restaurantId/bot-signup",
     component: SignupComponent
   },
   {
-    path: "search-product",
+    path: ":restaurantId/search-product",
     component: SuggestionsComponent,
     canActivate: [AuthenticationGuard]
   },
   {
-    path: "track-order",
+    path: ":restaurantId/track-order",
     component: OrderTypesComponent,
     canActivate: [AuthenticationGuard]
   },
   {
-    path: "customer-signup",
+    path: ":restaurantId/customer-signup",
     component: CustomerSignupComponent
   },
   {
-    path: "customer-login",
+    path: ":restaurantId/customer-login",
     component: CustomerLoginComponent
   }
 ];

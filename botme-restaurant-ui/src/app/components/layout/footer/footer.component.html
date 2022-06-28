@@ -13,9 +13,9 @@
 <!--                <li><a href="about-us">About Us</a></li>-->
 <!--                <li><a href="blogs-grid-without-sidebar">Blogs</a></li>-->
 <!--                <li><a href="faqs">FAQ's</a></li>-->
-                <li><a routerLink="reservations">Reservation</a></li>
-                <li><a routerLink="contact-us">Contact Us</a></li>
-                <li *ngIf="cartService.cartProduct.length"><a routerLink="cart">Cart</a></li>
+                <li><a (click)="_helperService.navigateTo('reservations')">Reservation</a></li>
+                <li><a (click)="_helperService.navigateTo('contact-us')">Contact Us</a></li>
+                <li *ngIf="cartService.cartProduct.length"><a (click)="_helperService.navigateTo('cart')">Cart</a></li>
               </ul>
               <ul class="footer-details footer-list">
 <!--                <li><a href="our-team">Teams</a></li>-->

@@ -7,6 +7,7 @@ import {
     updateRestaurant,
     getRestaurantById,
     deleteRestaurants,
+    getMaxLabelValue
 } from "./service"
 import { restResponse } from "../../../utils/response"
 import { randomUUID } from "crypto";
@@ -95,7 +96,9 @@ export async function getActivedRestaurants() {
 
 export async function addRestaurants(restaurant: any) {
     let response = new restResponse()
-    restaurant.restaurantId = randomUUID()
+
+    let val = await getMaxLabelValue()
+    restaurant.restaurantLabel = val ? (val.restaurantLabel + 1) : 1
     let result = await addRestaurant(restaurant)
     if (result) {
         response.payload = result
@@ -138,5 +141,5 @@ export async function deleteRestaurant(restaurantId:any) {
         response.status = "error"
         return response
     }
-    
+
 }

@@ -16,7 +16,7 @@ export class HeadingbannerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.currentRoute = this.router.url.replace(/\//g, "").replace("-", " ");
+    this.currentRoute = this.router.url.replace("-", " ").split('/')[2].split('-').join(' ');
     if (this.router.url.split('/')[1]==='product-detail' && this.router.url.split('/').length > 1 && this.router.url.split('/')[2].length > 0) {
       this.currentRoute = this.router.url.split('/')[1]
       return
