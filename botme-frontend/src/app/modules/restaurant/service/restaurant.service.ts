@@ -20,8 +20,8 @@ export class RestaurantService {
         return this.http.get(url);
     }
 
-    getRestaurantById(id: string): Observable<any> {
-        const url = `${this.apiBaseUrl}/food/restaurant/getbyid?restaurantId=${id}`;
+    getRestaurantByLabel(restaurantLabel: string): Observable<any> {
+        const url = `${this.apiBaseUrl}/food/restaurant/getByLabel?restaurantLabel=${restaurantLabel}`;
         return this.http.get(url);
     }
 

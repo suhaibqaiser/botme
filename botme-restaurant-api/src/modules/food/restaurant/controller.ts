@@ -64,10 +64,10 @@ export async function getAllRestaurants() {
     }
 }
 
-export async function getRestaurantsById(restaurantId: any) {
+export async function getRestaurantsByLabel(restaurantLabel: any) {
     let response = new restResponse()
 
-    let result = await getRestaurantById(restaurantId)
+    let result = await getRestaurantById(restaurantLabel)
     if (result) {
         response.payload = result
         response.status = "success"
@@ -104,11 +104,11 @@ export async function addRestaurants(restaurant: any) {
         response.payload = result
         response.status = "success"
         return response
-    } else {
-        response.payload = "Cannot add new restaurant"
-        response.status = "error"
-        return response
     }
+
+    response.payload = "Cannot add new restaurant"
+    response.status = "error"
+    return response
 }
 
 

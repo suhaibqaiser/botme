@@ -9,8 +9,8 @@ export async function getRestaurants() {
     return Restaurant.find({}, { _id: 0, __v: 0 });
 }
 
-export async function getRestaurantById(restaurantId: string) {
-    return Restaurant.findOne({ restaurantId: restaurantId }, { _id: 0, __v: 0 });
+export async function getRestaurantById(restaurantLabel: string) {
+    return Restaurant.findOne({ restaurantLabel: restaurantLabel }, { _id: 0, __v: 0 });
 }
 
 export async function getActiveRestaurants() {

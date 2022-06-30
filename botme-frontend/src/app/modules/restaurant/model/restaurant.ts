@@ -1,7 +1,7 @@
 export interface Restaurant {
     restaurantId: string;
-    restaurantName: String,
-    restaurantLabel: string,
+    restaurantName: string,
+    restaurantLabel: number,
     restaurantLocation: string,
     restaurantActive: Boolean,
 }

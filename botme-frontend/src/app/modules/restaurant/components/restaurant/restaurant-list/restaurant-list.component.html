@@ -36,14 +36,16 @@
                     <th style="width: 3rem">
                         <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                     </th>
-                    <th pSortableColumn="restaurantId">Id <p-sortIcon field="restaurantId"></p-sortIcon>
+                    <th pSortableColumn="restaurantLabel">Label <p-sortIcon field="restaurantLabel"></p-sortIcon>
                     </th>
+                  <th pSortableColumn="restaurantId">Id <p-sortIcon field="restaurantId"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="URL">URL <p-sortIcon field="URL"></p-sortIcon>
+                  </th>
                     <th pSortableColumn="restaurantName">Name <p-sortIcon field="restaurantName"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="createdAt">Created <p-sortIcon field="createdAt"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="updatedAt">Updated <p-sortIcon field="updatedAt"></p-sortIcon>
-                    </th>
+                  <th pSortableColumn="restaurantLocation">Location <p-sortIcon field="restaurantLocation"></p-sortIcon>
+                  </th>
                     <th pSortableColumn="restaurantActive">Active <p-sortIcon field="restaurantActive"></p-sortIcon>
                     </th>
                 </tr>
@@ -55,13 +57,14 @@
                     </td>
                     <td>
                         <button class="btn btn-primary btn-tone m-r-5" [routerLink]="['detail']"
-                            [queryParams]="{ restaurantId: restaurant.restaurantId }">{{restaurant.restaurantId}}</button>
+                            [queryParams]="{ restaurantLabel: restaurant.restaurantLabel }">R-{{restaurant.restaurantLabel}}</button>
                     </td>
+                  <td>{{restaurant.restaurantId}}</td>
+                  <td>{{'https://stg.gofindmenu.com/'+restaurant.restaurantId+'/home'}}</td>
                     <td>{{restaurant.restaurantName}}</td>
                     <!-- <td>{{restaurant.restaurantLabel}}</td>
                     <td>{{restaurant.restaurantLocation}}</td> -->
-                    <td>{{restaurant.createdAt}}</td>
-                    <td>{{restaurant.updatedAt}}</td>
+                    <td>{{restaurant.restaurantLocation}}</td>
                     <td><span *ngIf="restaurant.restaurantActive === true"
                             class="badge badge-success">{{restaurant.restaurantActive}}</span>
                         <span *ngIf="restaurant.restaurantActive === false"
