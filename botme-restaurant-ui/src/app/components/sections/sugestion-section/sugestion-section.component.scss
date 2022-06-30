@@ -7,4 +7,12 @@
   &:hover {
     border: 1px solid red;
   }
+  @media screen and (max-width:390px){
+    #name{
+       max-width:100px;
+       background-color: red;
+       
+    }
+  }
+  
 }
