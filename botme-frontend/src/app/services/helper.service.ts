@@ -1,4 +1,6 @@
+import { splitAtColon } from '@angular/compiler/src/util';
 import {Injectable, Input, TemplateRef, ViewContainerRef} from '@angular/core';
+import { NgbTimepicker } from '@ng-bootstrap/ng-bootstrap';
 import { Key } from 'protractor';
 
 @Injectable({
@@ -65,6 +67,8 @@ export class HelperService {
 
 
 
+
+
   constructor() {}
 
   
@@ -95,11 +99,16 @@ export class HelperService {
 
   computeDate(date = '') {
     let d = date.split('T')[0].split('-')
-    return d[0] + '/' + d[1] + '/' + d[2]
+    return d[2] + '-' + d[1] + '-' + d[0] 
   }
 
-  computeTime(date = '') {
-
+ 
+  computeTime(time = '') {
+    // let dates= new Date()
+    // return dates.toLocaleString()
+    //dates = dates.split(' ').slice(0, 4).join(' ');
+    return new Date(time).toLocaleDateString() + ' - ' + new Date(time).toLocaleTimeString() 
+   
   }
 
   computeProduct(productList: any, id: any) {
@@ -156,6 +165,9 @@ export class HelperService {
     })
     return p
   }
+
+  
+
 
   timeAgo(time: any) {
 

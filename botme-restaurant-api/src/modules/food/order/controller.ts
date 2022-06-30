@@ -17,7 +17,7 @@ import {
 } from "./service";
 import {randomUUID} from "crypto";
 import { type } from "os";
-import { sendingPlaceOrderNotification } from "../../../utils/helpers";
+// import { sendingPlaceOrderNotification } from "../../../utils/helpers";
 
 
 export async function findOrder(filter: any) {
@@ -72,7 +72,7 @@ export async function editOrder(order: any, restaurantId: any) {
 
     let result = await updateOrder(order, restaurantId)
     if (result) {
-        await orderStatusNotification(order)
+        // await orderStatusNotification(order)
         response.payload = result
         response.status = "success"
         return response
@@ -83,15 +83,15 @@ export async function editOrder(order: any, restaurantId: any) {
     }
 }
 
-export async function orderStatusNotification(order:any) {
+// export async function orderStatusNotification(order:any) {
 
-    if (order.orderStatus == "delivered"){
-        await sendingPlaceOrderNotification(order.clientID,"Dear Customer","Your order has been delivered with order id: " + order.orderLabel + " ,Thanks!")
+//     if (order.orderStatus == "delivered"){
+//         await sendingPlaceOrderNotification(order.clientID,"Dear Customer","Your order has been delivered with order id: " + order.orderLabel + " ,Thanks!")
 
-    } else if (order.orderStatus == "cancel") {
-        await sendingPlaceOrderNotification(order.clientID,"Dear Customer","Your order has been cancelled, Thanks!")
-    }
-}
+//     } else if (order.orderStatus == "cancel") {
+//         await sendingPlaceOrderNotification(order.clientID,"Dear Customer","Your order has been cancelled, Thanks!")
+//     }
+// }
 
 export async function searchOrder(filter:any) {
     let response = new restResponse()
@@ -127,7 +127,10 @@ export async function searchOrder(filter:any) {
                         if (!orderlist.includes(order)) {orderlist.push(order)}
                     })
                 }
-                response.payload = orderlist
+                response.payload = orderlist.sort(function(a:any,b:any){
+                    // @ts-ignore
+                    return new Date(b.orderTimestamp) - new Date(a.orderTimestamp);
+                });
                 response.status = "success"
                 return response
                     // if (data) {

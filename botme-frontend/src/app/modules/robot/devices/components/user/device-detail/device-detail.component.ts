@@ -17,6 +17,8 @@ export class DeviceDetailComponent implements OnInit {
   editMode = false
   newForm = false
   formMode = 'update';
+  deviceType: any;
+  
 
   constructor(private confirmationService: ConfirmationService,
     private messageService: MessageService, private deviceService: DeviceService,
@@ -31,9 +33,8 @@ export class DeviceDetailComponent implements OnInit {
     deviceDescription: new FormControl(''),
   });
 
- 
-  user: User = {
-    
+  deviceLabel='';
+  user: User = {   
     deviceName: '',
     deviceLabel: '',
     deviceType: '',
@@ -42,17 +43,44 @@ export class DeviceDetailComponent implements OnInit {
   }
   deviceList :any []= [
     {label:'web', value:'web'},
-      {label:'robot', value:'robot'}
+    {label:'robot', value:'robot'}
     ]
 
   async ngOnInit() {
+    this.route.queryParams
+    .subscribe(params => {
+      this.deviceLabel = params.userId;
+    });
+  if (!this.deviceLabel) {
+    this.formMode = 'new'
+    this.newForm = true
+    this.enableEdit()
+  } else {
+    this.getDeviceDetails(this.deviceLabel);
+  }
+  this.disableEdit()
 
+  this.deviceService.getDevices().subscribe(res => {
+    console.log(res.payload);
+
+    this.deviceType = res.payload
+  })
   }
 
 
   device: Array<any> = []
   newDevice: any
   deviceDialog = false
+
+
+  getDeviceDetails(deviceLabel: string): void {
+    this.deviceService.getDeviceDetails(deviceLabel).subscribe(
+      result => {
+        this.user = result.payload
+        this.userForm.patchValue(this.user)
+      }
+    );
+  }
 
   async addDevice() {
     console.log(this.userForm.value);

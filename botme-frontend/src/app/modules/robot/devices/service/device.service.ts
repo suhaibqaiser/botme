@@ -18,26 +18,33 @@ export class DeviceService {
     }
 
     deviceId = this.authService.getDeviceId()
+    restaurantId = this.authService.getRestaurantId()
     apiBaseUrl = environment.apiBaseUrl;
 
     getDevices(): Observable<any> {
-        const url = `${this.apiBaseUrl}/device/list`;
+        const url = `${this.apiBaseUrl}/device/list?restaurantId=${this.restaurantId}`;
         return this.http.get(url, {headers: this.headers});
       }
 
-    addDevice(device: object): Observable<any> {
-        const url = `${this.apiBaseUrl}/device/register`;
-        return this.http.put(url,device,{headers: this.headers});
-      }
+    getDeviceDetails(deviceLabel: string): Observable<any> {
+        const url = `${this.apiBaseUrl}/device/detail?deviceId=${deviceLabel}`;
+        return this.http.get(url);
+    }
 
-      editDevice(device: object): Observable<any> {
-        const url = `${this.apiBaseUrl}/device`;
-        const body = { device: device, deviceId: this.deviceId };
-        return this.http.post(url, body,{headers: this.headers});
-      }
+    addDevice(device: any): Observable<any> {
+      device.restaurantId = this.restaurantId
+      const url = `${this.apiBaseUrl}/device/register`;
+      return this.http.put(url,device,{headers: this.headers});
+    }
+
+    editDevice(device: object): Observable<any> {
+      const url = `${this.apiBaseUrl}/device`;
+      const body = { device: device, deviceId: this.deviceId };
+      return this.http.post(url, body,{headers: this.headers});
+    }
     
-      removeDevice(deviceId: string): Observable<any> {
-        const url = `${this.apiBaseUrl}/food/category/remove?deviceId=${deviceId}`;
-        return this.http.delete(url,{headers: this.headers});
-      }
+    removeDevice(deviceId: string): Observable<any> {
+      const url = `${this.apiBaseUrl}/food/category/remove?deviceId=${deviceId}`;
+      return this.http.delete(url,{headers: this.headers});
+    }
 }

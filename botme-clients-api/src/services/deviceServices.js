@@ -1,17 +1,18 @@
 
 const Device = require('../models/devices');
 
-async function getDeviceList() {
-  return Device.find();
+async function getDeviceList(restaurantId) {
+  return Device.find({restaurantId: restaurantId});
 }
 
 async function getDeviceById(deviceId) {
-  return Device.findOne({ deviceId: deviceId }, { _id: 0,__v: 0});
+  return Device.findOne({ deviceId: deviceId}, { _id: 0,__v: 0});
 }
 
-async function checkDeviceExists(deviceLabel) {
+async function checkDeviceExists(deviceLabel,restaurantId) {
   return Device.exists({
-    deviceLabel: deviceLabel
+    deviceLabel: deviceLabel,
+    restaurantId: restaurantId
   });
 }
 
