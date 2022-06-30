@@ -36,4 +36,10 @@ export class RestaurantService {
         let body = { restaurant: restaurant };
         return this.http.post(url, body);
     }
+
+    deleteRestaurant(restaurant: any): Observable<any> {
+        console.log("id=>",restaurant.restaurantId)
+        const url = `${this.apiBaseUrl}/food/restaurant/delete?restaurantId=${restaurant.restaurantId}`;
+        return this.http.delete(url);
+    }
 }

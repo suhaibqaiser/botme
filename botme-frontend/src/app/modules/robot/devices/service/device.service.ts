@@ -26,8 +26,8 @@ export class DeviceService {
         return this.http.get(url, {headers: this.headers});
       }
 
-    getDeviceDetails(deviceLabel: string): Observable<any> {
-        const url = `${this.apiBaseUrl}/device/detail?deviceId=${deviceLabel}`;
+    getDeviceDetails(deviceId: string): Observable<any> {
+        const url = `${this.apiBaseUrl}/device/detail?deviceId=${deviceId}`;
         return this.http.get(url);
     }
 
@@ -37,14 +37,15 @@ export class DeviceService {
       return this.http.put(url,device,{headers: this.headers});
     }
 
-    editDevice(device: object): Observable<any> {
-      const url = `${this.apiBaseUrl}/device`;
-      const body = { device: device, deviceId: this.deviceId };
+    editDevice(device: any): Observable<any> {
+      device.restaurantId = this.restaurantId
+      const url = `${this.apiBaseUrl}/device/update?deviceId=${device.deviceId}`;
+      const body = { device: device};
       return this.http.post(url, body,{headers: this.headers});
     }
     
-    removeDevice(deviceId: string): Observable<any> {
-      const url = `${this.apiBaseUrl}/food/category/remove?deviceId=${deviceId}`;
+    removeDevice(device: any): Observable<any> {
+      const url = `${this.apiBaseUrl}/device/remove?deviceId=${device.deviceId}`;
       return this.http.delete(url,{headers: this.headers});
     }
 }

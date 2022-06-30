@@ -42,4 +42,9 @@ export class UserService {
         const url = `${this.apiRestaurantUrl}/food/restaurant`;
         return this.http.get(url);
     }
+    
+    deleteUser(user: any): Observable<any> {
+        const url = `${this.apiBaseUrl}/user/delete?userId=${user.userId}`;
+        return this.http.delete(url)
+    }
 }

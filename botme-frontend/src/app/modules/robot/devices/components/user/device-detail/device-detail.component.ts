@@ -26,6 +26,7 @@ export class DeviceDetailComponent implements OnInit {
   }
 
   userForm = this.fb.group({
+    deviceId: new FormControl(''),
     deviceName: new FormControl('', Validators.required),
     deviceLabel: new FormControl(''),
     deviceType: new FormControl(''),
@@ -33,8 +34,9 @@ export class DeviceDetailComponent implements OnInit {
     deviceDescription: new FormControl(''),
   });
 
-  deviceLabel='';
-  user: User = {   
+  deviceId='';
+  user: User = {
+    deviceId: '',
     deviceName: '',
     deviceLabel: '',
     deviceType: '',
@@ -47,25 +49,25 @@ export class DeviceDetailComponent implements OnInit {
     ]
 
   async ngOnInit() {
-    this.route.queryParams
-    .subscribe(params => {
-      this.deviceLabel = params.userId;
-    });
-  if (!this.deviceLabel) {
-    this.formMode = 'new'
-    this.newForm = true
-    this.enableEdit()
-  } else {
-    this.getDeviceDetails(this.deviceLabel);
-  }
-  this.disableEdit()
+    this.deviceId = this.route.snapshot.queryParams['deviceId']
 
-  this.deviceService.getDevices().subscribe(res => {
-    console.log(res.payload);
+    console.log("deviceId==>",this.deviceId)
 
-    this.deviceType = res.payload
-  })
-  }
+    if (!this.deviceId) {
+      this.formMode = 'new'
+      this.newForm = true
+      this.enableEdit()
+    } else {
+      this.getDeviceDetails(this.deviceId);
+      this.disableEdit()
+    }
+  
+    this.deviceService.getDevices().subscribe(res => {
+      console.log(res.payload);
+
+      this.deviceType = res.payload
+    })
+    }
 
 
   device: Array<any> = []
@@ -73,8 +75,8 @@ export class DeviceDetailComponent implements OnInit {
   deviceDialog = false
 
 
-  getDeviceDetails(deviceLabel: string): void {
-    this.deviceService.getDeviceDetails(deviceLabel).subscribe(
+  getDeviceDetails(deviceId: string): void {
+    this.deviceService.getDeviceDetails(deviceId).subscribe(
       result => {
         this.user = result.payload
         this.userForm.patchValue(this.user)
@@ -87,30 +89,37 @@ export class DeviceDetailComponent implements OnInit {
     
     this.deviceService.addDevice(this.userForm.value).subscribe(res => {
  
-      (res.status === 'success') ?
-        this.messageService.add({ severity: 'info', summary: 'Add Success', detail: 'Device added!' }) :
+      if (res.status === 'success') {
+        this.messageService.add({ severity: 'info', summary: 'Add Success', detail: 'Device added!' }) 
+        this.disableEdit()
+      } else { 
         this.messageService.add({ severity: 'error', summary: 'Add Failed', detail: `Reason: ${res.payload}` })
+      }
     })
   }
 
-  editDevice(id: any) {
+  editDevice() {
     this.deviceService.editDevice(this.userForm.value).subscribe(res => {
-      (res.status === 'success') ?
-        this.messageService.add({ severity: 'info', summary: 'Update Success', detail: 'Device updated!' }) :
+      if (res.status === 'success') {
+        this.messageService.add({ severity: 'info', summary: 'Update Success', detail: 'Device updated!' }) 
+        this.disableEdit()
+      } else {
         this.messageService.add({ severity: 'error', summary: 'Update Failed', detail: `Reason: ${res.payload}` })
+      }
     })
   }
 
-  removeDevice(id: any) {
+  removeDevice() {
     this.confirmationService.confirm({
       message: 'Do you want to delete this record?',
       header: 'Delete Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
         this.deviceService.removeDevice(this.userForm.value).subscribe(res => {
+        let iD = this.userForm.value
           if (res.status === 'success') {
             this.messageService.add({ severity: 'info', summary: 'Delete Success', detail: 'Device deleted!' })
-            this.device.splice(id, 1)
+            this.device.splice(iD.deviceId, 1)
           } else {
             this.messageService.add({ severity: 'error', summary: 'Delete Failed', detail: `Reason: ${res.payload}` })
           }
@@ -162,6 +171,13 @@ export class DeviceDetailComponent implements OnInit {
       this.validateAllFormFields(this.userForm); //{7}
       this.messageService.add({ severity: 'error', summary: 'Validation Error', detail: 'Please fill all the required fields' })
       return
+    }
+    if (this.formMode === 'update') {
+      console.log("EditUserForm=>",this.userForm.value)
+      this.editDevice();
+    } else {
+      console.log("AddUserForm=>",this.userForm.value)
+      this.addDevice()
     }
   }
 
