@@ -38,7 +38,7 @@ export class SignupFormSectionComponent implements OnInit {
   isDeviceVerified: Boolean = false
 
   constructor(private router: Router, private _botMeClientService: BotmeClientService, public _helperService: HelperService, private _toastService: ToastService) {
-    this.signupForm.get('restaurantId')?.setValue(this._helperService.getRestaurantIdOnAuthBasis())
+
   }
 
   ngOnInit(): void {
@@ -46,7 +46,7 @@ export class SignupFormSectionComponent implements OnInit {
   }
 
   signUp() {
-
+    this.signupForm.get('restaurantId')?.setValue(this._helperService.getRestaurantIdOnAuthBasis())
     if (!this.signupForm.controls['clientName'].value) {
       this._toastService.setToast({
         description: 'Client name is required!',

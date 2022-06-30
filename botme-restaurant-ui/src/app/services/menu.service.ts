@@ -96,4 +96,12 @@ export class MenuService {
     return this.http.post(url, {orderType: this.clientService.getCookie().orderType, orderStatus: orderStatus});
   }
 
+  /**
+   * Api to verify restaurantId
+   */
+  verifyRestaurantId(){
+    let currentRoute = this._helperService.getCurrentRouteName().split('/')[1]
+    const url = this.apiBaseUrl + "/food/restaurant/verifyRestaurantById?restaurantId=" + currentRoute
+    return this.http.get(url);
+  }
 }

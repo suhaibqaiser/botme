@@ -1,7 +1,18 @@
-import { Request, Response } from "express";
-import { areaTable, getAllRestaurants, getAreaList, getActivedRestaurants, addRestaurants, updateRestaurants, getRestaurantsByLabel, deleteRestaurant } from "./controller"
+import {Request, Response} from "express";
+import {
+    areaTable,
+    getAllRestaurants,
+    getAreaList,
+    getActivedRestaurants,
+    addRestaurants,
+    updateRestaurants,
+    getRestaurantsByLabel,
+    deleteRestaurant,
+    verifyRestaurantId
+} from "./controller"
 
 export default [
+
     {
         path: "/restaurant",
         method: "get",
@@ -64,6 +75,15 @@ export default [
         method: "get",
         handler: async (req: Request, res: Response) => {
             let result = await getAreaList()
+            res.send(result);
+        }
+    },
+
+    {
+        path: "/restaurant/verifyRestaurantById",
+        method: "get",
+        handler: async (req: Request, res: Response) => {
+            let result = await verifyRestaurantId(req, res)
             res.send(result);
         }
     }

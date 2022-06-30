@@ -4,10 +4,11 @@ import {BotmeClientService} from "../../../services/botme-client.service";
 import {SocketService} from "../../../services/socket.service";
 import {ToastService} from "../../../services/toast.service";
 import {CookieService} from 'ngx-cookie-service';
-import { Subscription } from 'rxjs';
+import {Subscription} from 'rxjs';
 import {environment} from "../../../../environments/environment";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {HelperService} from "../../../services/helper.service";
+import {MenuService} from "../../../services/menu.service";
 
 
 @Component({
@@ -23,12 +24,18 @@ export class ContentComponent implements OnInit {
 
   queryParams: any = {}
 
-  constructor(private _toastService:ToastService,private _route: ActivatedRoute, public socketService: SocketService, public botMeClientService: BotmeClientService, private router: Router, private actRouter: ActivatedRoute, private cookieService: CookieService,private _helperService:HelperService) {
+  constructor(private _menuService: MenuService, private _toastService: ToastService, private _route: ActivatedRoute, public socketService: SocketService, public botMeClientService: BotmeClientService, private router: Router, private actRouter: ActivatedRoute, private cookieService: CookieService, private _helperService: HelperService) {
     console.log('ContentComponent')
   }
 
   async ngOnInit() {
     setTimeout(async () => {
+      let currentRoute = this._helperService.getCurrentRouteName().split('/')[1]
+
+      if (currentRoute != this._helperService.getRestaurantIdOnAuthBasis()) {
+        await this.verifyRestaurantById()
+      }
+
       await this._route.queryParams.subscribe(param => {
         console.log(' params =>', param)
         this.queryParams = {
@@ -67,6 +74,7 @@ export class ContentComponent implements OnInit {
       }
     )
   }
+
   // allowNotification(){
   //   if (Notification.permission === 'default'){
   //     Notification.requestPermission().then((perm) => {
@@ -110,4 +118,20 @@ export class ContentComponent implements OnInit {
   //     });
   //   }
   // }
+
+  async verifyRestaurantById() {
+    this._menuService.verifyRestaurantId().subscribe(
+      (res: any) => {
+        if (res.status != 'success') {
+          this.botMeClientService.reSetCookie()
+          this._toastService.setToast({
+            description: res.message,
+            type: res.status
+          })
+          return
+        }
+        this.botMeClientService.setCookie('restaurantId', res.payload)
+      }
+    )
+  }
 }

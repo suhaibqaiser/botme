@@ -34,14 +34,14 @@ export class CustomerSignupSectionComponent implements OnInit {
   loader: Boolean = false
 
   constructor(private _botMeClientService: BotmeClientService, private router: Router, private _toastService: ToastService, public _helperService: HelperService) {
-    this.signupForm.get('restaurantId')?.setValue(this._helperService.getRestaurantIdOnAuthBasis())
+
   }
 
   ngOnInit(): void {
   }
 
   signUp() {
-
+    this.signupForm.get('restaurantId')?.setValue(this._helperService.getRestaurantIdOnAuthBasis())
     if (!this.signupForm.controls['clientName'].value) {
       this._toastService.setToast({
         description: 'Client name is required!',

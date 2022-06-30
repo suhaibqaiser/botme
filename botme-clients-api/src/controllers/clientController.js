@@ -93,7 +93,7 @@ async function addClient(req, res) {
 
         let newClient = await clientService.addClient(client)
 
-        const redirect_url = `https://stg.gofindmenu.com/home?verification_token=${client.verification_token}&clientID=${client.clientID}`
+        const redirect_url = `https://stg.gofindmenu.com/${client.restaurantId}/home?verification_token=${client.verification_token}&clientID=${client.clientID}`
 
         const sendEmail = await emailHelper.sendEmail(
             'w11cafe113245@gmail.com',

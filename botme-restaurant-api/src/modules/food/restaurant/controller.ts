@@ -7,10 +7,10 @@ import {
     updateRestaurant,
     getRestaurantById,
     deleteRestaurants,
-    getMaxLabelValue
+    getMaxLabelValue, getRestaurantId
 } from "./service"
-import { restResponse } from "../../../utils/response"
-import { randomUUID } from "crypto";
+import {restResponse} from "../../../utils/response"
+import {randomUUID} from "crypto";
 
 
 export async function areaTable(areaId: string) {
@@ -127,7 +127,7 @@ export async function updateRestaurants(restaurant: any) {
     }
 }
 
-export async function deleteRestaurant(restaurantId:any) {
+export async function deleteRestaurant(restaurantId: any) {
     let response = new restResponse()
 
     let result = await deleteRestaurants(restaurantId)
@@ -142,4 +142,32 @@ export async function deleteRestaurant(restaurantId:any) {
         return response
     }
 
+}
+
+export async function verifyRestaurantId(req: any, res: any) {
+    let response = new restResponse()
+    try {
+        const filter = req.query
+        if (!filter.restaurantId) {
+            response.message = `Sorry this request is invalid to verify your restaurant!`
+            response.status = "danger"
+            return res.send(response)
+        }
+
+        let verify = await getRestaurantId(filter.restaurantId)
+        verify = JSON.parse(JSON.stringify(verify))
+        if (!verify) {
+            response.message = `Sorry failed to verify your restaurant!`
+            response.status = "danger"
+            return res.send(response)
+        }
+
+        response.payload = verify.restaurantId
+        response.message = `Successfully restaurant verified!`
+        response.status = "success"
+        return res.send(response)
+    }catch (e) {
+        response.payload = e
+        response.status = "danger"
+    }
 }
