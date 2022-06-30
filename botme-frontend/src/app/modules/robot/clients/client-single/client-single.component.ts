@@ -4,7 +4,7 @@ import {IClient} from '../model/client';
 import {ClientService} from '../service/client.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {Md5} from 'ts-md5/dist/md5';
-import {MessageService} from "primeng/api";
+import {MessageService,} from "primeng/api";
 import {AuthenticationService} from "../../../../services/authentication.service";
 import { DeviceService } from '../../devices/service/device.service';
 
