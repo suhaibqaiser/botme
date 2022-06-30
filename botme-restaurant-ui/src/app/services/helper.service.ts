@@ -144,7 +144,7 @@ export class HelperService {
    */
   getRestaurantIdOnAuthBasis() {
     const cookie = this._clientService.getCookie()
-    return (cookie && cookie.restaurantId) ? cookie.restaurantId  : 'xxx'
+    return (cookie && cookie.restaurantId) ? cookie.restaurantId  : ''
   }
 
   /**

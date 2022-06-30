@@ -30,9 +30,10 @@ export class ContentComponent implements OnInit {
 
   async ngOnInit() {
     setTimeout(async () => {
-      let currentRoute = this._helperService.getCurrentRouteName().split('/')[1]
 
-      if (currentRoute != this._helperService.getRestaurantIdOnAuthBasis()) {
+      let currentRoute = this._helperService.getCurrentRouteName().split('/')[1]
+      console.log(currentRoute)
+      if (!this._helperService.getRestaurantIdOnAuthBasis() || currentRoute != this._helperService.getRestaurantIdOnAuthBasis()) {
         await this.verifyRestaurantById()
       }
 
