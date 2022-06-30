@@ -34,12 +34,13 @@ export class DeviceDetailComponent implements OnInit {
   });
 
   deviceLabel='';
-  user: User = {   
+  user: User = {
     deviceName: '',
     deviceLabel: '',
     deviceType: '',
     deviceActive: true,
     deviceDescription: '',
+
   }
   deviceList :any []= [
     {label:'web', value:'web'},
