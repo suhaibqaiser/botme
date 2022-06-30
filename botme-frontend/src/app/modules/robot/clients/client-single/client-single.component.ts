@@ -6,6 +6,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {Md5} from 'ts-md5/dist/md5';
 import {MessageService} from "primeng/api";
 import {AuthenticationService} from "../../../../services/authentication.service";
+import { DeviceService } from '../../devices/service/device.service';
 
 @Component({
   selector: 'app-client-single',
@@ -14,7 +15,7 @@ import {AuthenticationService} from "../../../../services/authentication.service
 })
 export class ClientSingleComponent implements OnInit {
 
-  constructor(private messageService: MessageService, private authService: AuthenticationService, private _messageService: MessageService, private clientService: ClientService, private route: ActivatedRoute, private fb: FormBuilder) {
+  constructor(private messageService: MessageService, private authService: AuthenticationService, private _messageService: MessageService, private clientService: ClientService, private route: ActivatedRoute, private fb: FormBuilder, private deviceService: DeviceService) {
   }
 
   clientForm = this.fb.group({
@@ -53,8 +54,17 @@ export class ClientSingleComponent implements OnInit {
   restaurantObj: any = []
   resturantId: any = ''
   tempClientSceret = ''
+  deviceList = new Array
 
   async ngOnInit() {
+
+    this.deviceService.getDevices().subscribe(res => {
+      
+      console.log(res.payload);
+
+      this.deviceList = res.payload
+    })
+
     await this.clientService.getActiveRestaurant().subscribe((res: any) => {
       if (res.status === 'success') {
         const restaurantList = res.payload

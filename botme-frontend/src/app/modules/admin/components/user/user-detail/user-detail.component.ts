@@ -83,6 +83,8 @@ export class UserDetailComponent implements OnInit {
   }
   get f() { return this.userForm.controls; }
 
+  users: Array<any> = []
+
   disableEdit() {
     this.editMode = false
     this.userForm.disable()
@@ -196,6 +198,36 @@ export class UserDetailComponent implements OnInit {
         this.disableEdit()
       }
     })
+  }
+
+  removeUser() {
+    this.confirmationService.confirm({
+      message: 'Do you want to delete this record?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.userService.deleteUser(this.userForm.value).subscribe(result => {
+          let iD = this.userForm.value
+          console.log("res=>",result)
+          if (result.status === 'success') {
+            this.messageService.add({ severity: 'info', summary: 'Delete Success', detail: 'User deleted!' })
+            this.users.splice(iD.userId, 1)
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Delete Failed', detail: `Reason: ${result.payload}` })
+          }
+        })
+      },
+      reject: (type: any) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
+            break;
+        }
+      }
+    });
   }
 
   validateAllFormFields(formGroup: FormGroup) {         //{1}

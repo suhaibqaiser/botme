@@ -138,9 +138,30 @@ async function getUserByEmail(req, res) {
         return res.status(404).send(response)
     }
 }
+async function deleteUser(req, res) {
+    let response = new Response()
+
+    if (!req.query.userId) {
+        response.payload = "userId Required"
+        response.status = "error"
+        return res.status(400).send(response)
+    }
+
+    let users = await userService.deleteUser(req.query.userId)
+
+    if (users) {
+        response.payload = users
+        response.status = "success"
+        return res.status(200).send(response)
+    } else {
+        response.payload = "failed to delete user"
+        response.status = "error"
+        return res.status(404).send(response)
+    }
+}
 
 
 
 
 
-module.exports = ({ getUsers, getUserByUsername, addUser, updateUser, getUserById, getUserByEmail })
+module.exports = ({ getUsers, getUserByUsername, addUser, updateUser, getUserById, getUserByEmail, deleteUser })

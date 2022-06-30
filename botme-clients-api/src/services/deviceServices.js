@@ -22,15 +22,8 @@ async function addDevice(devices) {
 }
 
 async function updateDevice(deviceId, device) {
-  return Device.findOneAndUpdate({
-    deviceId: deviceId
-  }, device, {
-    "projection": {
-      "_id": 0,
-      "__v": 0
-    },
-    "new": true
-  });
+  console.log("device==>",device)
+  return Device.findOneAndUpdate({deviceId: deviceId}, device);
 }
 
 async function deleteDevice(deviceId) {

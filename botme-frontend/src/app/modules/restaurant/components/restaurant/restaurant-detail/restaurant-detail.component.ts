@@ -22,6 +22,7 @@ export class RestaurantDetailComponent implements OnInit {
   }
 
   restaurantForm = this.fb.group({
+    restaurantId: new FormControl(''),
     restaurantName: new FormControl('', [Validators.required, Validators.maxLength(30)]),
     restaurantLabel: new FormControl(''),
     restaurantLocation: new FormControl(''),
@@ -51,6 +52,9 @@ export class RestaurantDetailComponent implements OnInit {
     }
     this.disableEdit()
   }
+
+  restaurants: Array<any> = []
+
 
   disableEdit() {
     this.editMode = false
@@ -159,5 +163,35 @@ export class RestaurantDetailComponent implements OnInit {
         this.disableEdit()
       }
     })
+  }
+
+  removeRestaurant() {
+    this.confirmationService.confirm({
+      message: 'Do you want to delete this record?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.restaurantService.deleteRestaurant(this.restaurantForm.value).subscribe(result => {
+          let iD = this.restaurantForm.value
+          console.log("res=>",result)
+          if (result.status === 'success') {
+            this.messageService.add({ severity: 'info', summary: 'Delete Success', detail: 'Restaurant deleted!' })
+            this.restaurants.splice(iD.restaurantId, 1)
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Delete Failed', detail: `Reason: ${result.payload}` })
+          }
+        })
+      },
+      reject: (type: any) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
+            break;
+        }
+      }
+    });
   }
 }

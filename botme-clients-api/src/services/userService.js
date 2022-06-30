@@ -28,4 +28,8 @@ async function getUsersByEmail(userEmail) {
     return User.findOne({ userEmail: userEmail }, { _id: 0, __v: 0 });
 }
 
-module.exports = ({ getUserByUsername, getUsers, getUsersByRestaurantId, updateUser, addUser, getUserByUserId, getUsersByEmail })
+async function deleteUser(userId) {
+    return User.findOneAndDelete({userId: userId})
+}
+
+module.exports = ({ getUserByUsername, getUsers, getUsersByRestaurantId, updateUser, addUser, getUserByUserId, getUsersByEmail, deleteUser })
