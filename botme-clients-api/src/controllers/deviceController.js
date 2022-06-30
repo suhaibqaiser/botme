@@ -100,10 +100,9 @@ async function updateDevice(req, res) {
     };
     return res.status(400).send(response);
   }
-
-  let device = req.body
+  let device = req.body.device
   let updatedDevice = await deviceService.updateDevice(req.query.deviceId, device);
-
+  
   if (updatedDevice) {
     response.payload = updatedDevice;
     response.status = "success";

@@ -47,7 +47,7 @@ export default [
         path: "/restaurant/delete",
         method: "delete",
         handler: async (req: Request, res: Response) => {
-            let result = deleteRestaurant(req.query.restaurantId)
+            let result = await deleteRestaurant(req.query.restaurantId)
             res.send(result);
         }
     },

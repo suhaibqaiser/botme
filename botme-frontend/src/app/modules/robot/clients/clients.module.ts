@@ -10,8 +10,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
-
-
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [ClientListComponent, ClientSingleComponent],
@@ -23,7 +22,8 @@ import { PasswordModule } from 'primeng/password';
     InputSwitchModule,
     ToggleButtonModule,
     InputTextModule,
-    PasswordModule
+    PasswordModule,
+    DropdownModule
   ]
 })
 export class ClientsModule { }
