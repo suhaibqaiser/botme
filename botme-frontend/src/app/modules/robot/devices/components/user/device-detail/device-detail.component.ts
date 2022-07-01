@@ -33,9 +33,8 @@ export class DeviceDetailComponent implements OnInit {
     deviceDescription: new FormControl(''),
   });
 
-  deviceId='';
+  deviceLabel='';
   user: User = {
-    deviceId: '',
     deviceName: '',
     deviceLabel: '',
     deviceType: '',
@@ -51,14 +50,14 @@ export class DeviceDetailComponent implements OnInit {
   async ngOnInit() {
     this.route.queryParams
     .subscribe(params => {
-      this.deviceId = params.userId;
+      this.deviceLabel = params.userId;
     });
-  if (!this.deviceId) {
+  if (!this.deviceLabel) {
     this.formMode = 'new'
     this.newForm = true
     this.enableEdit()
   } else {
-    this.getDeviceDetails(this.deviceId);
+    this.getDeviceDetails(this.deviceLabel);
   }
   this.disableEdit()
 
