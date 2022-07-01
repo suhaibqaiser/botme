@@ -1,6 +1,8 @@
 <div class="authentication-body container  p-5">
   <div class="contact-item">
-    <h4 class="text-white text-center mt-3" *ngIf="!_botMeClientService.getCookie().isLoggedIn">Log In</h4>
+    <div class="contact-item-title text-center mt-3 mb-2">
+      <h3 class="color-white" *ngIf="!_botMeClientService.getCookie().isLoggedIn">Log In</h3>
+    </div>
     <h4 class="text-white text-center" *ngIf="_botMeClientService.getCookie().isLoggedIn">Dashboard</h4>
     <ul class="authentication-tab">
 
@@ -11,12 +13,12 @@
       <div  class="authentication-details-item active"
            data-authentication-details="1">
         <form [formGroup]="loginForm">
-          <div class="form-group mb-20">           
+          <div class="form-group mb-20 ">           
               <div class="input-groups text-center">
                 <input style="border-radius: 25px;" required type="text" formControlName="clientID" class="form-control"
                        placeholder="Client Id"/>
               </div>
-            <span style="color: red;margin-left: 20px;"
+            <span class="required"
                   *ngIf="!loginForm.controls['clientID'].valid && loginForm.controls['clientID'].touched">{{_helperService.getRequiredCheckError(loginForm, 'clientID', _helperService.fieldErrorsCheckTypes.required, ['Client Id is required.'])}}</span>
           </div>
           <div class="form-group mb-20">
@@ -24,7 +26,7 @@
               <input style="border-radius: 25px;" required type="password" formControlName="clientSecret" class="form-control"
                      placeholder="Client Secret"/>
             </div>
-            <span style="color: red;margin-left: 20px;"
+            <span class="required" 
                   *ngIf="!loginForm.controls['clientSecret'].valid && loginForm.controls['clientSecret'].touched">{{_helperService.getRequiredCheckError(loginForm, 'clientSecret', _helperService.fieldErrorsCheckTypes.required, ['Client Secret is required.'])}}</span>
           </div>
 
@@ -36,7 +38,7 @@
               </div>
             </button>
           </div>
-          <p class="text-white text-center mt-3">Don’t have an account? <a routerLink="/bot-signup" style="color:#E7272D;font-weight: bold;cursor: pointer">Bot Signup</a></p>
+          <p class="text-white text-center mt-3 mb-4">Don’t have an account? <a routerLink="/bot-signup" style="color:#E7272D;font-weight: bold;cursor: pointer">Bot Signup</a></p>
         </form>
       </div>
 

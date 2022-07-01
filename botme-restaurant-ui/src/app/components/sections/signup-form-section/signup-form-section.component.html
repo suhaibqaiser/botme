@@ -1,6 +1,8 @@
 <div class="authenticationed-body container p-5">
   <div class="contact-item">
-    <h4 class="text-white text-center mt-3">Bot Signup</h4>
+    <div class="contact-item-title text-center mt-3 mb-2">
+      <h3 class="color-white">Bot Signup</h3>
+    </div>
     <ul class="authentication-tab">
 
     </ul>
@@ -37,8 +39,8 @@
                   <input required type="text" formControlName="clientDeviceId" class="form-control"
                          placeholder="client device id*"/>
                 </div>
-                <span style="color: #24AF95;margin-left: 20px;" *ngIf="checkDeviceIdLoader">Checking your device id....</span>
-                <span style="color: red;margin-left: 20px;" *ngIf="!signupForm.controls['clientDeviceId'].valid && signupForm.controls['clientDeviceId'].touched">{{_helperService.getRequiredCheckError(signupForm, 'clientDeviceId', _helperService.fieldErrorsCheckTypes.required, ['Client device id is required.'])}}</span>
+                <span style="color: #24AF95;margin-left: 40px;" *ngIf="checkDeviceIdLoader">Checking your device id....</span>
+                <span style="color: red;margin-left: 40px;" *ngIf="!signupForm.controls['clientDeviceId'].valid && signupForm.controls['clientDeviceId'].touched">{{_helperService.getRequiredCheckError(signupForm, 'clientDeviceId', _helperService.fieldErrorsCheckTypes.required, ['Client device id is required.'])}}</span>
               </div>
             </div>
             <div class="col-sm-12 col-md-6">
@@ -99,7 +101,7 @@
               </div>
             </button>
           </div>
-          <p class="text-white text-center mt-3">Already have an account? <a routerLink="/bot-login"
+          <p class="text-white text-center mt-3 mb-4">Already have an account? <a routerLink="/bot-login"
                                                                         style="color:#E7272D;font-weight: bold;cursor: pointer">Bot Sign
             In</a></p>
         </form>

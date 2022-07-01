@@ -9660,6 +9660,16 @@ textarea.form-control {
   }
 }
 
+.required{
+  color: red;
+  margin-left: 150px;
+}
+
+@media screen and (max-width:786px) {
+  .required{
+    margin-left: 60px;
+  }
+}
 
 
 .submit-post-info.text-danger {
