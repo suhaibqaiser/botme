@@ -1,5 +1,6 @@
 export interface IClient {
     clientDeviceId: string;
+    clientType: string;
     clientID: string;
     clientName: string;
     clientSecret: string;
