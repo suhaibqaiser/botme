@@ -9480,7 +9480,7 @@ textarea.form-control {
 
 .contact-item {
   border: 1px dashed #7a7a7a;
-  /* padding: 30px;  */
+  /* padding: 30px;   */
 }
 @media screen and (max-width:786px){
   .contact-item{
