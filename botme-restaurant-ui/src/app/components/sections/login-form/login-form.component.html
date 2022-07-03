@@ -1,4 +1,4 @@
-<div class="authentication-body container  p-5">
+<div class="authentication-body container p-5 ">
   <div class="contact-item">
     <div class="contact-item-title text-center mt-3 mb-2">
       <h3 class="color-white" *ngIf="!_botMeClientService.getCookie().isLoggedIn">Log In</h3>
@@ -20,7 +20,7 @@
                        placeholder="Client Id"/>
               </div>
             </div>
-            <span class="required" style="color: red;margin-left: 20px;"
+            <span class="required" style="color: red;"
                   *ngIf="!loginForm.controls['clientID'].valid && loginForm.controls['clientID'].touched">{{_helperService.getRequiredCheckError(loginForm, 'clientID', _helperService.fieldErrorsCheckTypes.required, ['Client Id is required.'])}}</span>
           </div>
           <div class="form-group mb-20">
@@ -30,7 +30,7 @@
                        placeholder="Client Secret"/>
               </div>
             </div>       
-            <span class="required" style="color: red;margin-left: 20px;"
+            <span class="required" style="color: red;"
                   *ngIf="!loginForm.controls['clientSecret'].valid && loginForm.controls['clientSecret'].touched">{{_helperService.getRequiredCheckError(loginForm, 'clientSecret', _helperService.fieldErrorsCheckTypes.required, ['Client Secret is required.'])}}</span>
           </div>
 
