@@ -13,29 +13,37 @@
             data-authentication-details="1">
         <form [formGroup]="loginForm">
           <div class="form-group mb-20">
-            <div class="input-groups text-center">
-              <input   required type="text" formControlName="clientID" class="form-control p-1"
-                     placeholder="Customer Id"/>
+            <div class="login-div">
+              <div class="input-group text-center w-75" >
+                <input   required type="text" formControlName="clientID" class="form-control p-1"
+                       placeholder="Customer Id"/>
+              </div>
             </div>
+           
             <span class="required"
                   *ngIf="!loginForm.controls['clientID'].valid && loginForm.controls['clientID'].touched">{{_helperService.getRequiredCheckError(loginForm, 'clientID', _helperService.fieldErrorsCheckTypes.required, ['Client Id is required.'])}}</span>
           </div>
           <div class="form-group mb-20">
-            <div class="input-groups text-center ">
-              <input   required type="password" formControlName="clientSecret" class="form-control p-1"
-                     placeholder="Customer Secret"/>
+            <div class="login-div">
+              <div class="input-group text-center w-75">
+                <input   required type="password" formControlName="clientSecret" class="form-control p-1"
+                       placeholder="Customer Secret"/>
+              </div>
             </div>
+          
             <span class="required"
                   *ngIf="!loginForm.controls['clientSecret'].valid && loginForm.controls['clientSecret'].touched">{{_helperService.getRequiredCheckError(loginForm, 'clientSecret', _helperService.fieldErrorsCheckTypes.required, ['Client Secret is required.'])}}</span>
           </div>
 
           <div class="authentication-btn">
-            <button (click)="login()" class="btns">Log
+            <div class="login-div">
+            <button (click)="login()" class="btn full-width btn-border mb-20 w-75">Log
               In
               <div *ngIf="loader" class="spinner-border spinner-border-sm ml-3 text-warning" role="status">
                 <span class="visually-hidden">Loading...</span>
               </div>
             </button>
+          </div>
           </div>
             <p class="text-white text-center mt-3 mb-4">Don’t have an account? <a routerLink="/customer-signup" style="color:#E7272D;font-weight: bold;cursor: pointer">Customer Signup</a></p>
           
