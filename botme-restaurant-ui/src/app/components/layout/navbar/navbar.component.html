@@ -24,7 +24,7 @@
           <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto align-items-center">
               <li class="nav-item">
-                <a (click)="_helperService.navigateTo('home')" id="ctaId-home" class="nav-link" [class.active]="router.url=='/home'">HOME</a>
+                <a (click)="_helperService.navigateTo('home')" id="ctaId-home" class="nav-link" [class.active]="router.url=='/home'" style="cursor: pointer;">HOME</a>
               </li>
 <!--              <li class="nav-item">-->
 <!--                <a *ngIf="_botMeClientService.getCookie().isLoggedIn && !['delivery','pick_up'].includes(_helperService.getOrderTypeOnAuthBasis())" routerLink="reservations" id="ctaId-reservation" class="nav-link"-->
@@ -32,11 +32,11 @@
 <!--              </li>-->
               <li *ngIf="_botMeClientService.getCookie().isLoggedIn" class="nav-item">
                 <a (click)="_helperService.navigateTo('search-product')" id="ctaId-product-suggestions" class="nav-link"
-                      [class.active]="router.url=='/search-product'">SEARCH PRODUCT</a>
+                      [class.active]="router.url=='/search-product'" style="cursor: pointer;">SEARCH PRODUCT</a>
               </li>
               <li *ngIf="_botMeClientService.getCookie().isLoggedIn" class="nav-item">
                 <a (click)="_helperService.navigateTo('track-order')" id="ctaId-order-types" class="nav-link"
-                   [class.active]="router.url=='/track-order'">TRACK ORDER</a>
+                   [class.active]="router.url=='/track-order'" style="cursor: pointer;">TRACK ORDER</a>
               </li>
 <!--              <li class="nav-item">-->
 <!--                <a routerLink="contact-us" id="ctaId-contact-us" class="nav-link"-->
@@ -44,7 +44,7 @@
 <!--              </li>-->
               <li class="nav-item">
                 <a [class.active]="router.url=='/online-shop'"
-                  id="ctaId-order-online" (click)="_helperService.navigateTo('online-shop')" class="nav-link">MENU</a>
+                  id="ctaId-order-online" (click)="_helperService.navigateTo('online-shop')" class="nav-link" style="cursor: pointer;">MENU</a>
               </li>
 <!--              <li class="nav-item">-->
 <!--                <a routerLink="/login" *ngIf="!_botMeClientService.getCookie().isLoggedIn" class="nav-link" type="button"><i style="font-size: x-large" class="flaticon-login"></i></a>-->
@@ -57,7 +57,7 @@
                     MORE
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li *ngIf="_botMeClientService.getCookie().isLoggedIn"><a class="dropdown-item" (click)="_helperService.navigateTo('profile')">Profile</a></li>
+                    <li *ngIf="_botMeClientService.getCookie().isLoggedIn"><a class="dropdown-item" (click)="_helperService.navigateTo('profile')" style="cursor: pointer;">Profile</a></li>
                     <li *ngIf="!_botMeClientService.getCookie().isLoggedIn"><a (click)="_helperService.navigateTo('bot-login')" class="dropdown-item" type="button"><i style="font-size: large" class="flaticon-login"></i>&nbsp;Bot Login</a></li>
                     <li *ngIf="!_botMeClientService.getCookie().isLoggedIn"><a (click)="_helperService.navigateTo('customer-login')" class="dropdown-item" type="button"><i style="font-size: large" class="flaticon-login"></i>&nbsp;Customer Login</a></li>
                     <li *ngIf="_botMeClientService.getCookie().clientDebug === 'yes'"><a data-bs-toggle="modal" data-bs-target="#voiceTest"
