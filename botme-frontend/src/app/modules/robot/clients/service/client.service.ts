@@ -26,7 +26,7 @@ export class ClientService {
   }
 
   registerClient(client: object): Observable<any> {
-    const url = `${this.apiBaseUrl}/client/register`;
+    const url = `${this.apiBaseUrl}/client/register?admin=admin`;
     const body = client;
     return this.http.put(url, body);
   }

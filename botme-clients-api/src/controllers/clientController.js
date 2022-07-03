@@ -45,6 +45,9 @@ async function getClientDetail(req, res) {
 async function addClient(req, res) {
     let response = new Response()
 
+    console.log("query==>",req.query)
+    console.log("body==>",req.body)
+
     if (req.body.clientType !== 'customer' && !req.body.clientDeviceId) {
         response.message = "clientDeviceId is required."
         response.status = "danger"
@@ -69,33 +72,74 @@ async function addClient(req, res) {
     // let clientSecret = hash.update(req.body.clientSecret).digest('hex');
 
     try {
-        let client = {
-            clientDeviceId: req.body.clientDeviceId,
-            clientID: req.body.clientID,
-            clientSecret: req.body.clientSecret,
-            clientName: req.body.clientName,
-            clientDebug: req.body.clientDebug,
-            clientVoiceEnabled: req.body.clientVoiceEnabled,
-            clientVoiceTimeout: req.body.clientVoiceTimeout,
-            clientCreated: Date(),
-            clientUpdated: null,
-            clientActive: req.body.clientActive,
-            clientComment: req.body.clientComment,
-            restaurantId: req.body.restaurantId,
-            clientEmail: req.body.clientEmail,
-            clientSecretHint: req.body.clientSecretHint,
-            clientEmailVerified: false,
-            clientState: clientStateObj.pending,
-            clientDescription: '',
-            verification_token: uuidv4(),
-            clientType: req.body.clientType,
-        }
+        if (req.query.admin){
+            let client = {
+                clientDeviceId: req.body.clientDeviceId,
+                clientID: req.body.clientID,
+                clientSecret: req.body.clientSecret,
+                clientName: req.body.clientName,
+                clientDebug: req.body.clientDebug,
+                clientVoiceEnabled: req.body.clientVoiceEnabled,
+                clientVoiceTimeout: req.body.clientVoiceTimeout,
+                clientCreated: Date(),
+                clientUpdated: null,
+                clientActive: req.body.clientActive,
+                clientComment: req.body.clientComment,
+                restaurantId: req.body.restaurantId,
+                clientEmail: req.body.clientEmail,
+                clientSecretHint: req.body.clientSecretHint,
+                clientEmailVerified: true,
+                clientState: clientStateObj.active,
+                clientDescription: '',
+                verification_token: uuidv4(),
+                clientType: req.body.clientType,
+            }
 
-        let newClient = await clientService.addClient(client)
+            let newClient = await clientService.addClient(client)
+            
+            if (newClient) {
+                response.payload = newClient
+                response.message = "Your account has been created successfully!"
+                response.status = "success"
+                return res.send(response)
+            } else {
+                response.message = "Error in saving client"
+                response.errorPayload = {
+                    newClient: newClient,
+                    sendEmail: sendEmail
+                }
+                response.status = "danger"
+                return res.send(response)
+            }
 
-        const redirect_url = `https://stg.gofindmenu.com/${client.restaurantId}/home?verification_token=${client.verification_token}&clientID=${client.clientID}`
+        } else {
+            let client = {
+                clientDeviceId: req.body.clientDeviceId,
+                clientID: req.body.clientID,
+                clientSecret: req.body.clientSecret,
+                clientName: req.body.clientName,
+                clientDebug: req.body.clientDebug,
+                clientVoiceEnabled: req.body.clientVoiceEnabled,
+                clientVoiceTimeout: req.body.clientVoiceTimeout,
+                clientCreated: Date(),
+                clientUpdated: null,
+                clientActive: req.body.clientActive,
+                clientComment: req.body.clientComment,
+                restaurantId: req.body.restaurantId,
+                clientEmail: req.body.clientEmail,
+                clientSecretHint: req.body.clientSecretHint,
+                clientEmailVerified: false,
+                clientState: clientStateObj.pending,
+                clientDescription: '',
+                verification_token: uuidv4(),
+                clientType: req.body.clientType,
+            }
 
-        const sendEmail = await emailHelper.sendEmail(
+            let newClient = await clientService.addClient(client)
+
+            const redirect_url = `https://stg.gofindmenu.com/${client.restaurantId}/home?verification_token=${client.verification_token}&clientID=${client.clientID}`
+
+            const sendEmail = await emailHelper.sendEmail(
             'w11cafe113245@gmail.com',
             client.clientEmail,
             'Verify your email address!',
@@ -159,21 +203,22 @@ async function addClient(req, res) {
             `
         )
 
-        console.log('Email Sent =>', sendEmail)
+            console.log('Email Sent =>', sendEmail)
 
-        if (newClient && sendEmail.status) {
-            response.payload = newClient
-            response.message = "Your account has been created successfully! Verification link is sent on your email."
-            response.status = "success"
-            return res.send(response)
-        } else {
-            response.message = "Error in saving client"
-            response.errorPayload = {
-                newClient: newClient,
-                sendEmail: sendEmail
+            if (newClient && sendEmail.status) {
+                response.payload = newClient
+                response.message = "Your account has been created successfully! Verification link is sent on your email."
+                response.status = "success"
+                return res.send(response)
+            } else {
+                response.message = "Error in saving client"
+                response.errorPayload = {
+                    newClient: newClient,
+                    sendEmail: sendEmail
+                }
+                response.status = "danger"
+                return res.send(response)
             }
-            response.status = "danger"
-            return res.send(response)
         }
     } catch (e) {
         response.payload = e

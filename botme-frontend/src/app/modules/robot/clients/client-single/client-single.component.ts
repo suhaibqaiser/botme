@@ -37,6 +37,7 @@ export class ClientSingleComponent implements OnInit {
   clientId = '';
   client: IClient = {
     clientDeviceId: '',
+    clientType: 'bot',
     clientID: '',
     clientName: '',
     clientSecret: '',
@@ -49,7 +50,7 @@ export class ClientSingleComponent implements OnInit {
     clientComment: '',
     restaurantId: '',
     clientSecretHint: '',
-    clientEmail: ''
+    clientEmail: '',
   }
   restaurantObj: any = []
   resturantId: any = ''
@@ -139,6 +140,8 @@ export class ClientSingleComponent implements OnInit {
       this.client.clientSecret = clientSecret
     }
 
+    console.log("update bot")
+
     this.clientService.updateClient(client)
       .subscribe(result => {
         this.client = result.payload
@@ -153,8 +156,11 @@ export class ClientSingleComponent implements OnInit {
   registerClient(): void {
     this.patchFormValues();
 
+
     let clientSecret = Md5.hashStr(this.client.clientSecret)
     this.client.clientSecret = clientSecret
+
+    console.log("saving bot")
 
     this.clientService.registerClient(this.client)
       .subscribe(result => {
@@ -162,7 +168,7 @@ export class ClientSingleComponent implements OnInit {
         this.messageService.add({
           severity: result.status === 'success' ? 'info' : 'error',
           summary: result.status === 'success' ? 'Success' : 'Error',
-          detail: `Reason: ${result.statusMessage}`
+          detail: result.message
         })
       })
 
@@ -173,6 +179,7 @@ export class ClientSingleComponent implements OnInit {
     this.tempClientSceret = this.clientForm.getRawValue().formclientsecret
     this.client.clientID = this.clientForm.getRawValue().formclientid
     this.client.clientDeviceId = this.clientForm.getRawValue().formclientdeviceid
+    this.client.clientType = 'bot'
     this.client.clientSecret = this.clientForm.getRawValue().formclientsecret
     this.client.clientComment = this.clientForm.getRawValue().formclientcomment
     this.client.clientName = this.clientForm.getRawValue().formclientname

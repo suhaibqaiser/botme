@@ -5,6 +5,8 @@ import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/a
 import { Md5 } from 'ts-md5';
 import { User } from '../../../model/user';
 import { DeviceService } from '../../../service/device.service';
+import { Router } from "@angular/router";
+
 
 @Component({
   selector: 'app-device-detail',
@@ -22,7 +24,7 @@ export class DeviceDetailComponent implements OnInit {
 
   constructor(private confirmationService: ConfirmationService,
     private messageService: MessageService, private deviceService: DeviceService,
-    private route: ActivatedRoute, private fb: FormBuilder) {
+    private route: ActivatedRoute, private fb: FormBuilder,private router: Router) {
   }
 
   userForm = this.fb.group({
@@ -120,6 +122,7 @@ export class DeviceDetailComponent implements OnInit {
           if (res.status === 'success') {
             this.messageService.add({ severity: 'info', summary: 'Delete Success', detail: 'Device deleted!' })
             this.device.splice(iD.deviceId, 1)
+            this.router.navigate(['device/device'])
           } else {
             this.messageService.add({ severity: 'error', summary: 'Delete Failed', detail: `Reason: ${res.payload}` })
           }

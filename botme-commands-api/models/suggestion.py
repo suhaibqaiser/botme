@@ -23,7 +23,7 @@ class Suggestion():
         print("here")
         suggestion = Suggestion.entityArray(self)
         print("here1")
-        if self.intent == "Suggestion" or self.intent == "Order_meal" or self.intent == "menu_category":
+        if self.intent == "Suggestion" or self.intent == "Order_meal" or self.intent == "menu_category" or self.intent == "search_product":
             self.call = suggestion['keywords']
             persons = suggestion['persons']
             size = suggestion['size']
@@ -84,7 +84,7 @@ class Suggestion():
             return Response
 
     def entityArray(self):
-        if self.intent == "Suggestion" or self.intent == "Order_meal" or self.intent == "menu_category" or self.intent == "top_suggestion" or self.intent == "serving_time":
+        if self.intent == "Suggestion" or self.intent == "Order_meal" or self.intent == "menu_category" or self.intent == "top_suggestion" or self.intent == "serving_time" or self.intent == "search_product":
             keywords = {"product":[],"quantity":[],"drink":[],"attributes":[],"servingSize":[],"addon":[],"ingredient":[],"flavour":[]}
             suggestion = {"product": [],"persons": 1,"drink": [],"attributes": {},"keywords": keywords,"size":"standard","addon":[],"ingredient":[],"flavour":"","number":15}
             for x in self.entity:
