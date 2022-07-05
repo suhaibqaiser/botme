@@ -6,7 +6,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {Md5} from 'ts-md5/dist/md5';
 import {MessageService,} from "primeng/api";
 import {AuthenticationService} from "../../../../services/authentication.service";
-import { DeviceService } from '../../devices/service/device.service';
+import {DeviceService} from '../../devices/service/device.service';
 
 @Component({
   selector: 'app-client-single',
@@ -36,7 +36,7 @@ export class ClientSingleComponent implements OnInit {
 
   formMode = 'update';
   clientId = '';
-  client: IClient = {
+  client: any = {
     clientDeviceId: '',
     clientType: '',
     clientID: '',
@@ -57,12 +57,12 @@ export class ClientSingleComponent implements OnInit {
   resturantId: any = ''
   tempClientSceret = ''
   deviceList = new Array
-  clientType :any []= ['customer','bot']
+  clientType: any [] = ['customer', 'bot']
 
   async ngOnInit() {
 
     this.deviceService.getDevices().subscribe(res => {
-      
+
       console.log(res.payload);
 
       this.deviceList = res.payload
@@ -135,7 +135,7 @@ export class ClientSingleComponent implements OnInit {
   }
 
   updateClient(client: any): void {
-    this.patchFormValues();
+    this.client = this.patchFormValues();
 
     if (this.tempClientSceret !== this.client.clientSecret) {
       let clientSecret = Md5.hashStr(this.client.clientSecret)
@@ -156,7 +156,7 @@ export class ClientSingleComponent implements OnInit {
   }
 
   registerClient(): void {
-    this.patchFormValues();
+    this.client = this.patchFormValues();
 
 
     let clientSecret = Md5.hashStr(this.client.clientSecret)
@@ -180,22 +180,24 @@ export class ClientSingleComponent implements OnInit {
   }
 
   patchFormValues() {
-    let test = JSON.parse(JSON.stringify(this.clientForm.getRawValue()))
+    let clientFormObj = JSON.parse(JSON.stringify(this.clientForm.getRawValue()))
     this.resturantId = localStorage.getItem('restaurantId') ? localStorage.getItem('restaurantId') : ''
-    this.tempClientSceret = test.formclientsecret
-    this.client.clientID = test.formclientid
-    this.client.clientDeviceId = test.formclientdeviceid
-    this.client.clientType = test.formclientType
-    this.client.clientSecret = test.formclientsecret
-    this.client.clientComment = test.formclientcomment
-    this.client.clientName = test.formclientname
-    this.client.clientActive = test.formclientactive
-    this.client.clientDebug = test.formclientdebug
-    this.client.clientVoiceEnabled = test.formclientvoice
-    this.client.restaurantId = this.resturantId
-    this.client.clientVoiceTimeout = test.formclientvoicetimeout
-    this.client.clientSecretHint = test.clientSecretHint
-    this.client.clientEmail = test.clientEmail
+    this.tempClientSceret = clientFormObj.formclientsecret
+    return {
+      clientID: clientFormObj.formclientid,
+      clientDeviceId: clientFormObj.formclientdeviceid,
+      clientType: clientFormObj.formclientType,
+      clientSecret: clientFormObj.formclientsecret,
+      clientComment: clientFormObj.formclientcomment,
+      clientName: clientFormObj.formclientname,
+      clientActive: clientFormObj.formclientactive,
+      clientDebug: clientFormObj.formclientdebug,
+      clientVoiceEnabled: clientFormObj.formclientvoice,
+      restaurantId: this.resturantId,
+      clientVoiceTimeout: clientFormObj.formclientvoicetimeout,
+      clientSecretHint: clientFormObj.clientSecretHint,
+      clientEmail: clientFormObj.clientEmail
+    }
   }
 }
 
