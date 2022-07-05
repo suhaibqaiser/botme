@@ -25,13 +25,15 @@
         <input *ngIf="formMode==='update'" type="text" class="form-control form-control-border " id="form-client-id"
           formControlName="formclientid" readonly>
       </div>
-      <div class="form-group">
-        
-        <div><label for="form-clientdeviceid" >Client Device ID: </label></div>
+      <div class="form-group">      
+        <div><label for="form-clientType" >Client Type: </label></div>
+          <p-dropdown [options]="clientType" placeholder="Select client type" id="form-clientType" 
+            formControlName="formclientType" [style]="{'width':'100%'}"></p-dropdown>
+        </div>
+      <div *ngIf="this.clientForm.controls['formclientType'].value == 'bot'" class="form-group">      
+      <div><label for="form-clientdeviceid" >Client Device ID: </label></div>
         <p-dropdown [options]="deviceList" placeholder="Select device" optionLabel="deviceName"
           optionValue="deviceId" id="form-client-device-id" formControlName="formclientdeviceid" [style]="{'width':'100%'}"></p-dropdown>
-        <!-- <input type="text" class="form-control form-control-border" id="form-client-device-id"
-          formControlName="formclientdeviceid"> -->
       </div>
       <div class="form-group">
         <label for="form-client-secret">Client Secret: </label>

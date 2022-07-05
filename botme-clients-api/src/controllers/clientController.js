@@ -68,11 +68,20 @@ async function addClient(req, res) {
         return res.send(response);
     }
 
+    let ID = await clientService.checkClientIdExists(req.body.clientID) 
+
+    if (ID) {
+        response.message = "an account with the same client id already exist!"
+        response.status = "danger"
+        return res.send(response);
+    }
+
     // let hash = crypto.createHash('sha256');
     // let clientSecret = hash.update(req.body.clientSecret).digest('hex');
 
     try {
         if (req.query.admin){
+            console.log("created from admin bot crud")
             let client = {
                 clientDeviceId: req.body.clientDeviceId,
                 clientID: req.body.clientID,
@@ -113,6 +122,7 @@ async function addClient(req, res) {
             }
 
         } else {
+            console.log("created from botme ui")
             let client = {
                 clientDeviceId: req.body.clientDeviceId,
                 clientID: req.body.clientID,

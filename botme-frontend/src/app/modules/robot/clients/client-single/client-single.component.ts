@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {IClient} from '../model/client';
 import {ClientService} from '../service/client.service';
 import {FormBuilder, Validators} from '@angular/forms';
@@ -15,12 +15,13 @@ import { DeviceService } from '../../devices/service/device.service';
 })
 export class ClientSingleComponent implements OnInit {
 
-  constructor(private messageService: MessageService, private authService: AuthenticationService, private _messageService: MessageService, private clientService: ClientService, private route: ActivatedRoute, private fb: FormBuilder, private deviceService: DeviceService) {
+  constructor(private messageService: MessageService, private authService: AuthenticationService, private _messageService: MessageService, private clientService: ClientService, private route: ActivatedRoute, private fb: FormBuilder, private deviceService: DeviceService, private router: Router) {
   }
 
   clientForm = this.fb.group({
-    formclientdeviceid: ['', Validators.required],
+    formclientdeviceid: [''],
     formclientid: ['', Validators.required],
+    formclientType: ['', Validators.required],
     formclientsecret: [''],
     formclientcomment: [''],
     formclientname: ['', Validators.required],
@@ -37,7 +38,7 @@ export class ClientSingleComponent implements OnInit {
   clientId = '';
   client: IClient = {
     clientDeviceId: '',
-    clientType: 'bot',
+    clientType: '',
     clientID: '',
     clientName: '',
     clientSecret: '',
@@ -56,6 +57,7 @@ export class ClientSingleComponent implements OnInit {
   resturantId: any = ''
   tempClientSceret = ''
   deviceList = new Array
+  clientType :any []= ['customer','bot']
 
   async ngOnInit() {
 
@@ -170,26 +172,30 @@ export class ClientSingleComponent implements OnInit {
           summary: result.status === 'success' ? 'Success' : 'Error',
           detail: result.message
         })
+        if (result.status == "success") {
+          this.router.navigate(['client'])
+        }
       })
 
   }
 
   patchFormValues() {
+    let test = JSON.parse(JSON.stringify(this.clientForm.getRawValue()))
     this.resturantId = localStorage.getItem('restaurantId') ? localStorage.getItem('restaurantId') : ''
-    this.tempClientSceret = this.clientForm.getRawValue().formclientsecret
-    this.client.clientID = this.clientForm.getRawValue().formclientid
-    this.client.clientDeviceId = this.clientForm.getRawValue().formclientdeviceid
-    this.client.clientType = 'bot'
-    this.client.clientSecret = this.clientForm.getRawValue().formclientsecret
-    this.client.clientComment = this.clientForm.getRawValue().formclientcomment
-    this.client.clientName = this.clientForm.getRawValue().formclientname
-    this.client.clientActive = this.clientForm.getRawValue().formclientactive
-    this.client.clientDebug = this.clientForm.getRawValue().formclientdebug
-    this.client.clientVoiceEnabled = this.clientForm.getRawValue().formclientvoice
+    this.tempClientSceret = test.formclientsecret
+    this.client.clientID = test.formclientid
+    this.client.clientDeviceId = test.formclientdeviceid
+    this.client.clientType = test.formclientType
+    this.client.clientSecret = test.formclientsecret
+    this.client.clientComment = test.formclientcomment
+    this.client.clientName = test.formclientname
+    this.client.clientActive = test.formclientactive
+    this.client.clientDebug = test.formclientdebug
+    this.client.clientVoiceEnabled = test.formclientvoice
     this.client.restaurantId = this.resturantId
-    this.client.clientVoiceTimeout = this.clientForm.getRawValue().formclientvoicetimeout
-    this.client.clientSecretHint = this.clientForm.getRawValue().clientSecretHint
-    this.client.clientEmail = this.clientForm.getRawValue().clientEmail
+    this.client.clientVoiceTimeout = test.formclientvoicetimeout
+    this.client.clientSecretHint = test.clientSecretHint
+    this.client.clientEmail = test.clientEmail
   }
 }
 
