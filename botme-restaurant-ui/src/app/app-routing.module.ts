@@ -65,11 +65,13 @@ const routes: Routes = [
   },
   {
     path: ":restaurantId/cart",
-    component: CartComponent
+    component: CartComponent,
+    canActivate: [AuthenticationGuard]
   },
   {
     path: ":restaurantId/checkout",
-    component: CheckoutComponent
+    component: CheckoutComponent,
+    canActivate: [AuthenticationGuard]
   },
   {
     path: ":restaurantId/demo",
