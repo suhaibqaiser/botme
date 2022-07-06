@@ -6,7 +6,7 @@ import {getOrderById, updateCustomerId} from "../order/service";
 import { GetAllSubscription } from "../../notification/order-notification/service";
 // import { placeOrderNotification } from "../../notification/place-order-notification/controller";
 // import { Subscription } from "../../notification/place-order-notification/model";
-// import { sendingPlaceOrderNotification } from "../../../utils/helpers";
+import { sendingPlaceOrderNotification } from "../../../utils/helpers";
 
 export async function findCustomer(filter: any) {
     let response = new restResponse()
@@ -78,7 +78,7 @@ export async function createCustomer(filter: any, customer: any) {
             let orderResult = await updateCustomerId(filter, response.payload.customerId)
 
             if (orderResult) {
-                // await sendingPlaceOrderNotification(clientId,"Dear Customer","Your order has been placed with order id: " + filter.orderLabel + ", Thanks!")
+                await sendingPlaceOrderNotification(customer.customerName,filter.orderLabel,filter.restaurantId,filter.orderTotal)
                 response.message = 'Your order placed has been successfully'
                 response.status = "success"
                 return response

@@ -9,7 +9,6 @@ export default [
         method: "post",
         handler: async (req: Request, res: Response) => {
             res.status(201).json({});
-            console.log("subscription==>",req.body)
             await DoSubscription(req.body)
         }
     },
@@ -18,7 +17,7 @@ export default [
         method: "post",
         handler: async (req: Request, res: Response) => {
             res.status(201).json({});
-            let subscription = await GetAllSubscription()
+            let subscription = await GetAllSubscription(req.query.restaurantId)
             for (let val of subscription){
                 if (val.notificationType == "Order"){
                     await OrderNotification(req.body,val.subscription)
@@ -31,7 +30,7 @@ export default [
         method: "post",
         handler: async (req: Request, res: Response) => {
             res.status(201).json({});
-            let subscription = await GetAllSubscription()
+            let subscription = await GetAllSubscription(req.query.restaurantId)
             for (let val of subscription){
                 await testNotification(val.subscription)
             }

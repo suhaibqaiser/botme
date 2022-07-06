@@ -6,8 +6,8 @@ export async function AddSubscription(data:any) {
 export async function checkIfSubscriptionExists(data:any) {
     return await Subscribe.exists({"subscription.endpoint":data.subscription.endpoint,"notificationType":data.notificationType,"restaurantId":data.restaurantId})
 }
-export async function GetAllSubscription() {
-    return await Subscribe.find({})
+export async function GetAllSubscription(restaurantId:any) {
+    return await Subscribe.find({"restaurantId":restaurantId})
 }
 export async function updateSubscription(req:any) {
     return await Subscribe.findOneAndUpdate({"subscription.endpoint":req.subscription.endpoint,"restaurantId":req.restaurantId},req)

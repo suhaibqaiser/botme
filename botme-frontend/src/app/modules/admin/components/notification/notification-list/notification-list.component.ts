@@ -14,12 +14,13 @@ import { NotificationService } from '../../../service/notification.service';
 
     constructor(private wc :WrapperComponent,private ns:NotificationService) {}
 
-    SelectType: any = "Order"
+    SelectType: any
     checked: boolean = true
     NotificationType: any =["Order","Summary"]
 
     ngOnInit(): void {
       this.retrieveLocalStorgeValue()
+      this.setTime()
     }
 
     handleChange(e:any){
@@ -37,8 +38,10 @@ import { NotificationService } from '../../../service/notification.service';
 
     dropDown(dd:any){
       localStorage.setItem("dropDownValue",dd.value)
-      this.wc.setNotificationType(this.SelectType)
-      // this.ns.SetSummaryTime(value).subscribe()
+      this.wc.setNotificationType(dd.value)
+      if (dd.value == "Summary") {
+      this.ns.SetSummaryTime().subscribe()
+      }
     }
 
     testNotification(){
@@ -51,38 +54,12 @@ import { NotificationService } from '../../../service/notification.service';
     }
 
     retrieveLocalStorgeValue(){
-      this.SelectType = JSON.parse(localStorage.getItem("dropDownValue")|| '{}')
+      this.SelectType = localStorage.getItem("dropDownValue")
+      console.log(this.SelectType)
       this.checked = JSON.parse(localStorage.getItem("inputSwitch") || '{}')
+      console.log(this.checked)
+
     }
     
-  }
-    // getOrders() {
-    //   console.log("taha")
-    //   this.result = this.notificationService.getOrders()
-    //   this.result = this.result.subscribe()
-    //   console.log(this.result)
-    //   if (this.result.status === 'success'){
-    //     console.log("taha0.5")
-    //     this.orders = this.result.payload
-    //     this.size = this.orders.length
-    //     console.log(this.size)
-    //     this.showNotification();
-    //   }
-    // }
-    // showNotification(){
-    //   console.log("taha1")
-    //   const notification = new Notification("Order Summary",{
-    //     body: this.size + " order placed in 30 second" 
-    //   });
-    // }
-    // Notification(){
-    //   if (Notification.permission === 'granted'){
-    //     this.showNotification();
-    //   }else if (Notification.permission !== 'denied'){
-    //     Notification.requestPermission().then(permission =>{
-    //       this.showNotification();
-    //     });
-    //   }
-    // }
-  
+  }  
   

@@ -16,7 +16,6 @@ export class WrapperComponent implements OnInit {
   private readonly publicKey = "BASpDNILoNMWYHhzrhEY6QKqFZqH8FOtybXu_3fqVk1lxbWNYU1VAmigQuN2u8lahgGOiW-FGHrWmrDwpbQ1-l0"
 
   register:any
-  e:boolean=false
   notificationType:any 
 
   constructor(public headerService: HeaderService,private authservice:AuthenticationService) {
