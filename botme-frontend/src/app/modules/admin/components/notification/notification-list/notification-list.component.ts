@@ -14,12 +14,23 @@ import { NotificationService } from '../../../service/notification.service';
 
     constructor(private wc :WrapperComponent,private ns:NotificationService) {}
 
-    SelectType: any
+    SelectType: any = "Order"
     checked: boolean = true
     NotificationType: any =["Order","Summary"]
 
     ngOnInit(): void {
       this.retrieveLocalStorgeValue()
+      console.log("selectType==>",this.SelectType)
+      console.log("checked==>",this.checked)
+
+      this.wc.setNotificationType(this.SelectType)
+      if (this.checked == true){
+        this.wc.regWorker()
+      }
+      if (this.checked == false){
+        this.wc.unregWorker()
+      }
+
       this.setTime()
     }
 

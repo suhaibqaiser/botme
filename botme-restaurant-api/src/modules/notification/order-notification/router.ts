@@ -17,7 +17,7 @@ export default [
         method: "post",
         handler: async (req: Request, res: Response) => {
             res.status(201).json({});
-            let subscription = await GetAllSubscription(req.query.restaurantId)
+            let subscription = await GetAllSubscription(req.body.restaurantId)
             for (let val of subscription){
                 if (val.notificationType == "Order"){
                     await OrderNotification(req.body,val.subscription)

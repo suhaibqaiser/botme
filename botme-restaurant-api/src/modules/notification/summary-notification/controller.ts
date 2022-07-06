@@ -8,16 +8,17 @@ const privateKey = 'PhOBfVwSvRnXMzqSyuL4FZtUWTS3p8sMwH0GehRScTw';
 
 
 export async function SummaryNotification(restuarantId:any) {
-    webPush.setVapidDetails('mailto:tahahasan1997@gmail.com', publicKey,privateKey);
+    webPush.setVapidDetails('mailto:botme@123.com', publicKey,privateKey);
 
     let subscription = await GetAllSubscription(restuarantId)
         for (let val of subscription){
             if (val.notificationType == "Summary"){
+                console.log(val)
                 const subscription = val.subscription;
                 const payload = JSON.stringify({
-                    title: 'Order Summary'
-                })
-            
+                    title: 'Order Summary',
+                    body: "here is summary notification"
+                });
                 webPush.sendNotification(subscription,payload).catch((err:any) => {
                     console.error(err)
                     if (err.body == "push subscription has unsubscribed or expired.\n") {

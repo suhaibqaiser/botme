@@ -49,7 +49,7 @@ export async function OrderNotification(req: any,subscription:any) {
 
     const payload = JSON.stringify({
         title: 'New Order',
-        body: 'An order has been placed with order id: ' + req.orderLabel + ', by customer :' + req.customerName + ' with total amount: ' + req.total 
+        body: 'An Order Has Been Placed With: \nOrder Id:'+req.orderId+'\ncustomer:'+req.customerName+'\ntotal amount:'+req.total 
     });
 
     webPush.sendNotification(subscription, payload).catch((err: any) => {

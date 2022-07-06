@@ -24,6 +24,9 @@ export class WrapperComponent implements OnInit {
   apiBaseUrl = environment.apiRestaurantUrl;
 
   ngOnInit(): void {
+    localStorage.setItem("dropDownValue", "Order")
+    localStorage.setItem("inputSwitch", "true")
+
     this.notificationType = localStorage.getItem("dropDownValue")
     this.allowNotification()
   }

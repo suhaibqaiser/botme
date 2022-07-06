@@ -175,6 +175,17 @@ export class CheckoutSectionComponent implements OnInit {
             }
           )
 
+          let obj = {
+            customerName: res.payload.customerName,
+            orderId: this._clientService.getCookie().orderLabel,
+            total: this._cartService.getSubTotal(),
+            orderType: this._clientService.getCookie().orderType,
+            restaurantId : this._helperService.getRestaurantIdOnAuthBasis()
+          }
+          this._menuService.pushNotification(obj).subscribe((res: any) => {
+            console.log('notification pushed =>', res)
+          })
+
           this._clientService.setCookie('customerId', res.payload.customerId)
           $('#checkout_modal').modal('show')
           // this._cartService.addToCart(this._cartService.cartProduct, 'add_db')
@@ -186,17 +197,6 @@ export class CheckoutSectionComponent implements OnInit {
                 type: res.status
               })
             })
-
-            // let obj = {
-            //   customerName: res.payload.customerName,
-            //   orderId: this._clientService.getCookie().orderLabel,
-            //   total: this._cartService.getSubTotal(),
-            //   orderType: this._clientService.getCookie().orderType
-            // }
-            // await this._menuService.pushNotification(obj).subscribe((res: any) => {
-            //   console.log('notification pushed =>', res)
-            // })
-
           }, 2000)
         }
         this.loader = false
