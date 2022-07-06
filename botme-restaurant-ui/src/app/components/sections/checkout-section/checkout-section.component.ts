@@ -187,15 +187,16 @@ export class CheckoutSectionComponent implements OnInit {
               })
             })
 
-            let obj = {
-              customerName: res.payload.customerName,
-              orderId: this._clientService.getCookie().orderLabel,
-              total: this._cartService.getSubTotal(),
-              orderType: this._clientService.getCookie().orderType
-            }
-            await this._menuService.pushNotification(obj).subscribe((res: any) => {
-              console.log('notification pushed =>', res)
-            })
+            // let obj = {
+            //   customerName: res.payload.customerName,
+            //   orderId: this._clientService.getCookie().orderLabel,
+            //   total: this._cartService.getSubTotal(),
+            //   orderType: this._clientService.getCookie().orderType
+            // }
+            // await this._menuService.pushNotification(obj).subscribe((res: any) => {
+            //   console.log('notification pushed =>', res)
+            // })
+
           }, 2000)
         }
         this.loader = false
