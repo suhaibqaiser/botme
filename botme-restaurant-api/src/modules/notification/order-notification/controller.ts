@@ -10,6 +10,11 @@ const privateKey = 'PhOBfVwSvRnXMzqSyuL4FZtUWTS3p8sMwH0GehRScTw';
 
 export async function DoSubscription(req: any) {
 
+    if (req.notificationType == null || req.restaurantId == null) {
+        console.log("notificationType and restaurantId required")
+        return "notificationType and restaurantId required"
+    }
+
     let CheckIfExist = await checkIfSubscriptionExists(req)
 
     if (CheckIfExist) {
@@ -44,7 +49,7 @@ export async function OrderNotification(req: any,subscription:any) {
 
     const payload = JSON.stringify({
         title: 'New Order',
-        body: 'Hi ' + req.customerName + ', your order has been placed with order ID ' + req.orderId + ' with amount ' + req.total + ' and order type is ' + req.orderType + '. Thanks'
+        body: 'An order has been placed with order id: ' + req.orderLabel + ', by customer :' + req.customerName + ' with total amount: ' + req.total 
     });
 
     webPush.sendNotification(subscription, payload).catch((err: any) => {
