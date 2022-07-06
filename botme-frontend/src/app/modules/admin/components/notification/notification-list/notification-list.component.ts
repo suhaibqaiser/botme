@@ -12,70 +12,49 @@ import { NotificationService } from '../../../service/notification.service';
   
   export class NotificationListComponent implements OnInit {
 
-    // private readonly publicKey = "BDCQVQ8eDIxkBtTKyu98APMWTQ_HNA5PrRL7XVac7U-GuPJBikGFJguHGC5dAd7BULCkTpyfuvN3Ns57SamWkpA"
-    // selectedCity: select=[] 
-    orders: any=[]
-    result: any
-    dropdownvalue : any
-    event:any
-    type: any=[]
-    selecteType: any
-    select:any
-    value1:any
-    checked: any
-
-
     constructor(private wc :WrapperComponent,private ns:NotificationService) {}
-    
+
+    SelectType: any = "Order"
+    checked: boolean = true
+    NotificationType: any =["Order","Summary"]
+
     ngOnInit(): void {
-      this.checked = JSON.parse(localStorage.getItem("inputSwitch") || '{}')
-      this.event = JSON.parse(localStorage.getItem("inputSwitch") || '{}')
-      // localStorage.setItem("inputSwitch",JSON.stringify(this.checked))
-      console.log("taha",localStorage.getItem("inputSwitch"))
-      localStorage.setItem("dropDownValue","Order")
-      this.dropdownvalue = localStorage.getItem("dropDownValue")
-      this.value1 = localStorage.getItem("timeKey");
-
-      this.setTime()
-
-      this.type = [
-        {name: "Order"},
-        {name: "Summary"}
-      ]
-      this.selecteType = this.type
-      let Switch = document.getElementById("inputSwitch")?.innerHTML
-      console.log("Result ==>" ,Switch)
-
-     }
+      this.retrieveLocalStorgeValue()
+    }
 
     handleChange(e:any){
-      let bool = e.checked
-      let result = localStorage.setItem("inputSwitch",JSON.stringify(bool))
-      // this.checked = localStorage.getItem("inputSwitch")
-      this.event = JSON.parse(localStorage.getItem("inputSwitch") || '{}')
-      console.log("result==>",result)
-      this.wc.regWorker(e.checked)
-      console.log(this.selecteType)
-    }
-    testNotification(){
-      this.ns.testNotification().subscribe()
+      localStorage.setItem("inputSwitch",e.checked)
+
+      if (e.checked == true){
+        this.wc.regWorker()
+      }
+
+      if (e.checked == false){
+        this.wc.unregWorker()
+      }
 
     }
+
     dropDown(dd:any){
-      console.log(dd)
-      localStorage.setItem("dropDownValue",dd.value.name)
-      this.select = localStorage.getItem("dropDownValue")
-      console.log(this.select)
-      this.wc.notificationType(this.select)
-      let value = localStorage.getItem("timeKey")
-      this.ns.SetSummaryTime(value).subscribe()
+      localStorage.setItem("dropDownValue",dd.value)
+      this.wc.setNotificationType(this.SelectType)
+      // this.ns.SetSummaryTime(value).subscribe()
     }
+
+    testNotification(){
+      this.ns.testNotification().subscribe()
+    }
+
+
     setTime(){
-      localStorage.setItem("timeKey",this.value1);
-      let value = localStorage.getItem("timeKey")
-      console.log(value)
-      this.ns.SetSummaryTime(value).subscribe()
+      this.ns.SetSummaryTime().subscribe()
     }
+
+    retrieveLocalStorgeValue(){
+      this.SelectType = JSON.parse(localStorage.getItem("dropDownValue")|| '{}')
+      this.checked = JSON.parse(localStorage.getItem("inputSwitch") || '{}')
+    }
+    
   }
     // getOrders() {
     //   console.log("taha")
