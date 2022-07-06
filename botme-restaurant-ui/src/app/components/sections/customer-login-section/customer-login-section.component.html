@@ -15,15 +15,15 @@
             <div class="input-group mb-1">
               <input required type="text" formControlName="clientID" class="form-control p-1"
                        placeholder="Customer Id"/>
-              </div>      
+              </div>
               <span style="color: red;margin-left: 20px;"
                   *ngIf="!loginForm.controls['clientID'].valid && loginForm.controls['clientID'].touched">{{_helperService.getRequiredCheckError(loginForm, 'clientID', _helperService.fieldErrorsCheckTypes.required, ['Client Id is required.'])}}</span>
           </div>
-          <div class="form-group mb-20">         
+          <div class="form-group mb-20">
               <div class="input-group">
                 <input   required type="password" formControlName="clientSecret" class="form-control p-1"
                        placeholder="Customer Secret"/>
-              </div>      
+              </div>
               <span style="color: red;margin-left: 20px;"
                   *ngIf="!loginForm.controls['clientSecret'].valid && loginForm.controls['clientSecret'].touched">{{_helperService.getRequiredCheckError(loginForm, 'clientSecret', _helperService.fieldErrorsCheckTypes.required, ['Client Secret is required.'])}}</span>
           </div>
@@ -35,8 +35,7 @@
               </div>
             </button>
           </div>
-            <p class="text-white text-center">Don’t have an account? <a routerLink="/customer-signup" style="color:#E7272D;font-weight: bold;cursor: pointer">Customer Signup</a></p>
-          
+            <p class="text-white text-center">Don’t have an account? <a (click)="_helperService.navigateTo('customer-signup')"  style="color:#E7272D;font-weight: bold;cursor: pointer">Customer Signup</a></p>
         </form>
       </div>
 

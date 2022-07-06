@@ -25,7 +25,9 @@ export class ProfileSectionComponent implements OnInit {
     this._botMeClientService.logutAPI(this._botMeClientService.getCookieByKey('sessionId')).subscribe(res => {
       if (res.status === 'success') {
         this._toastService.setToast({description: 'Logout successfully.', type: 'success'})
+        let restaurantId = this._botMeClientService.getCookie().restaurantId
         this._botMeClientService.reSetCookie()
+        this._botMeClientService.setCookie('restaurantId', restaurantId)
         this._helperService.navigateTo('home')
       }
       this.loader = false
