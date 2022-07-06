@@ -11,13 +11,7 @@ export default [
         method: "post",
         handler: async (req: Request, res: Response) => {
             res.status(201).json({});
-            console.log("setting time")
-            console.log(req.body.req)
-            let time1 =  parseFloat(req.body.req)
-            let time2 = time1*3600
-            let time = time2*1000
-            console.log(time)
-            let result = await SummaryNotification(time)
+            await SummaryNotification(req.query.restuarantId)
             
 
             

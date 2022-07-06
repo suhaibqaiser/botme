@@ -34,6 +34,10 @@ async function checkClientExists(clientEmail) {
     return Client.exists({clientEmail: clientEmail})
 }
 
+async function checkClientIdExists(clientID) {
+    return Client.exists({clientID: clientID})
+}
+
 async function updateClient(clientID, client) {
     return Client.findOneAndUpdate({clientID: clientID}, client, {
         "projection": {"_id": 0, "__v": 0},
@@ -63,5 +67,6 @@ module.exports = ({
     checkClientExists,
     updateClient,
     deleteClient,
-    verifyAccount
+    verifyAccount,
+    checkClientIdExists
 })

@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {IClient} from '../model/client';
 import {ClientService} from '../service/client.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {Md5} from 'ts-md5/dist/md5';
 import {MessageService,} from "primeng/api";
 import {AuthenticationService} from "../../../../services/authentication.service";
-import { DeviceService } from '../../devices/service/device.service';
+import {DeviceService} from '../../devices/service/device.service';
 
 @Component({
   selector: 'app-client-single',
@@ -15,12 +15,13 @@ import { DeviceService } from '../../devices/service/device.service';
 })
 export class ClientSingleComponent implements OnInit {
 
-  constructor(private messageService: MessageService, private authService: AuthenticationService, private _messageService: MessageService, private clientService: ClientService, private route: ActivatedRoute, private fb: FormBuilder, private deviceService: DeviceService) {
+  constructor(private messageService: MessageService, private authService: AuthenticationService, private _messageService: MessageService, private clientService: ClientService, private route: ActivatedRoute, private fb: FormBuilder, private deviceService: DeviceService, private router: Router) {
   }
 
   clientForm = this.fb.group({
-    formclientdeviceid: ['', Validators.required],
+    formclientdeviceid: [''],
     formclientid: ['', Validators.required],
+    formclientType: ['', Validators.required],
     formclientsecret: [''],
     formclientcomment: [''],
     formclientname: ['', Validators.required],
@@ -35,9 +36,9 @@ export class ClientSingleComponent implements OnInit {
 
   formMode = 'update';
   clientId = '';
-  client: IClient = {
+  client: any = {
     clientDeviceId: '',
-    clientType: 'bot',
+    clientType: '',
     clientID: '',
     clientName: '',
     clientSecret: '',
@@ -56,11 +57,12 @@ export class ClientSingleComponent implements OnInit {
   resturantId: any = ''
   tempClientSceret = ''
   deviceList = new Array
+  clientType: any [] = ['customer', 'bot']
 
   async ngOnInit() {
 
     this.deviceService.getDevices().subscribe(res => {
-      
+
       console.log(res.payload);
 
       this.deviceList = res.payload
@@ -133,7 +135,7 @@ export class ClientSingleComponent implements OnInit {
   }
 
   updateClient(client: any): void {
-    this.patchFormValues();
+    this.client = this.patchFormValues();
 
     if (this.tempClientSceret !== this.client.clientSecret) {
       let clientSecret = Md5.hashStr(this.client.clientSecret)
@@ -154,7 +156,7 @@ export class ClientSingleComponent implements OnInit {
   }
 
   registerClient(): void {
-    this.patchFormValues();
+    this.client = this.patchFormValues();
 
 
     let clientSecret = Md5.hashStr(this.client.clientSecret)
@@ -170,26 +172,32 @@ export class ClientSingleComponent implements OnInit {
           summary: result.status === 'success' ? 'Success' : 'Error',
           detail: result.message
         })
+        if (result.status == "success") {
+          this.router.navigate(['client'])
+        }
       })
 
   }
 
   patchFormValues() {
+    let clientFormObj = JSON.parse(JSON.stringify(this.clientForm.getRawValue()))
     this.resturantId = localStorage.getItem('restaurantId') ? localStorage.getItem('restaurantId') : ''
-    this.tempClientSceret = this.clientForm.getRawValue().formclientsecret
-    this.client.clientID = this.clientForm.getRawValue().formclientid
-    this.client.clientDeviceId = this.clientForm.getRawValue().formclientdeviceid
-    this.client.clientType = 'bot'
-    this.client.clientSecret = this.clientForm.getRawValue().formclientsecret
-    this.client.clientComment = this.clientForm.getRawValue().formclientcomment
-    this.client.clientName = this.clientForm.getRawValue().formclientname
-    this.client.clientActive = this.clientForm.getRawValue().formclientactive
-    this.client.clientDebug = this.clientForm.getRawValue().formclientdebug
-    this.client.clientVoiceEnabled = this.clientForm.getRawValue().formclientvoice
-    this.client.restaurantId = this.resturantId
-    this.client.clientVoiceTimeout = this.clientForm.getRawValue().formclientvoicetimeout
-    this.client.clientSecretHint = this.clientForm.getRawValue().clientSecretHint
-    this.client.clientEmail = this.clientForm.getRawValue().clientEmail
+    this.tempClientSceret = clientFormObj.formclientsecret
+    return {
+      clientID: clientFormObj.formclientid,
+      clientDeviceId: clientFormObj.formclientdeviceid,
+      clientType: clientFormObj.formclientType,
+      clientSecret: clientFormObj.formclientsecret,
+      clientComment: clientFormObj.formclientcomment,
+      clientName: clientFormObj.formclientname,
+      clientActive: clientFormObj.formclientactive,
+      clientDebug: clientFormObj.formclientdebug,
+      clientVoiceEnabled: clientFormObj.formclientvoice,
+      restaurantId: this.resturantId,
+      clientVoiceTimeout: clientFormObj.formclientvoicetimeout,
+      clientSecretHint: clientFormObj.clientSecretHint,
+      clientEmail: clientFormObj.clientEmail
+    }
   }
 }
 

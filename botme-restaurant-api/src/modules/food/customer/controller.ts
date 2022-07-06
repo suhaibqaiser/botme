@@ -78,7 +78,6 @@ export async function createCustomer(filter: any, customer: any) {
             let orderResult = await updateCustomerId(filter, response.payload.customerId)
 
             if (orderResult) {
-                // await sendingPlaceOrderNotification(clientId,"Dear Customer","Your order has been placed with order id: " + filter.orderLabel + ", Thanks!")
                 response.message = 'Your order placed has been successfully'
                 response.status = "success"
                 return response

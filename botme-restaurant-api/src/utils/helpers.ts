@@ -1,17 +1,23 @@
-// import { placeOrderNotification } from "../modules/notification/place-order-notification/controller";
-// import { getSubscriptionByClientId } from "../modules/notification/place-order-notification/service";
+// import { OrderNotification } from "../modules/notification/order-notification/controller"
+// import { GetAllSubscription } from "../modules/notification/order-notification/service"
 
 
 
-// export async function sendingPlaceOrderNotification(clientId:any,title:any,body:any) {
+// export async function sendingPlaceOrderNotification(customerName:any,orderLabel:any,restaurantId:any,total:any) {
 
-//     console.log("clientId==>",clientId)
-//     let subscription = await getSubscriptionByClientId(clientId)
+//     try{
+//         let body = {"customerName":customerName,"orderLabel":orderLabel,"restaurantId":restaurantId,"total":total}
 
-//     if(subscription.length !=0) {
-//         for (let subsribe of subscription) {
-//             console.log("subscription ==>",subsribe.subscription)
-//             await placeOrderNotification(subsribe.subscription,title,body)
+//         let subscription = await GetAllSubscription(restaurantId)
+        
+//         if (subscription.length != 0){
+//             for (let val of subscription) {
+//                 if (val.notificationType == "Order"){
+//                     await OrderNotification(body,val.subscription)
+//                 }
+//             }
 //         }
+//     } catch(err) {
+//         console.log("error in sending notification")
 //     }
 // }
