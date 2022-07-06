@@ -2,17 +2,19 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-12 col-md-12 col-lg-12 pb-30">
-        <div class="contact-items">
-          <div class="contact-item-title text-center pt-5">
+        <div class="contact-item">
+          <div class="contact-item-title text-center">
             <h3 class="color-white">Track Your Order</h3>
-            <div class="form-group mt-3 mb-20">
-              <div style="padding: 5px 10px" class="input-group-suggest text-center">
+          </div>
+          <div class="modal-body m-auto w-50 text-center">
+            <div class="form-group">
+              <div  class="input-group w-100 p-2 m-auto">
                 <input style="color:white;border-color: white" type="text" name="name" [formControl]="orderId" class="form-control"
                        autocomplete="off" required
                        placeholder="Enter your order id"/>
               </div>
             </div>
-            <a (click)="applyId()" type="button" style="padding: 10px;width: 80px;" class="btn mt-3 mb-4 btn-primary">
+            <a (click)="applyId()" type="button" style="padding: 10px;width: 80px;" class="btn mt-5 mb-3 btn-primary">
               Apply
               <div *ngIf="loader" class="spinner-border spinner-border-sm ml-3 text-warning" role="status">
                 <span class="visually-hidden">Loading...</span>
@@ -21,7 +23,6 @@
             <!--        <h5 *ngIf="_helperService.getOrderTypeOnAuthBasis() === 'dine_in'" class="mt-4"> Let me help you to generate it-->
             <!--          <br><br><a data-bs-dismiss="modal" aria-label="Close" style="padding: 10px" class="btn btn-yellow"-->
             <!--                     (click)="goToRoute('/online-shop')" routerLink="/online-shop">Go to Place Order Page</a></h5>-->
-          </div>
 <!--          <div class="container order-types-main">-->
 <!--            <div class="row">-->
 <!--              <div class="col-lg-4 col-md-4 col-sm-12">-->

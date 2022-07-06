@@ -1,9 +1,9 @@
-<div class="authentication-body container p-5 ">
+<div class="authentication-body w-50 container p-5 ">
   <div class="contact-item">
-    <div class="contact-item-title text-center mt-3 mb-2">
-      <h3 class="color-white" *ngIf="!_botMeClientService.getCookie().isLoggedIn">Log In</h3>
+    <div class="contact-item-title text-center mt-2 mb-2">
+      <h3 class="color-white">Log In</h3>
     </div>
-    <h4 class="text-white text-center" *ngIf="_botMeClientService.getCookie().isLoggedIn">Dashboard</h4>
+    <!-- <h4 class="text-white text-center" *ngIf="_botMeClientService.getCookie().isLoggedIn">Dashboard</h4> -->
     <ul class="authentication-tab">
 
     </ul>
@@ -14,38 +14,31 @@
            data-authentication-details="1">
         <form [formGroup]="loginForm">
           <div class="form-group mb-20">
-            <div class="login-div">
-              <div class="input-group mb-1 w-75">
+              <div class="input-group mb-1">
                 <input required type="text" formControlName="clientID" class="form-control p-1"
                        placeholder="Client Id"/>
               </div>
-            </div>
-            <span class="required" style="color: red;"
+              <span style="color: red;margin-left: 20px;"
                   *ngIf="!loginForm.controls['clientID'].valid && loginForm.controls['clientID'].touched">{{_helperService.getRequiredCheckError(loginForm, 'clientID', _helperService.fieldErrorsCheckTypes.required, ['Client Id is required.'])}}</span>
           </div>
           <div class="form-group mb-20">
-            <div class="login-div">
-              <div class="input-group mb-1 w-75">
+              <div class="input-group mb-1">
                 <input required type="password" formControlName="clientSecret" class="form-control p-1"
                        placeholder="Client Secret"/>
-              </div>
-            </div>       
-            <span class="required" style="color: red;"
+              </div>      
+            <span style="color: red;margin-left: 20px;"
                   *ngIf="!loginForm.controls['clientSecret'].valid && loginForm.controls['clientSecret'].touched">{{_helperService.getRequiredCheckError(loginForm, 'clientSecret', _helperService.fieldErrorsCheckTypes.required, ['Client Secret is required.'])}}</span>
           </div>
 
           <div class="authentication-btn">
-            <div class="login-div">
-              <button (click)="login()" class="btn full-width btn-border mb-20 w-75">Log
+              <button (click)="login()" class="btn full-width btn-border mb-20">Log
                 In
                 <div *ngIf="loader" class="spinner-border spinner-border-sm ml-3 text-warning" role="status">
                   <span class="visually-hidden">Loading...</span>
                 </div>
               </button>
-            </div>
-        
           </div>
-          <p class="text-white text-center mt-3 mb-4">Don’t have an account? <a type="button" (click)="_helperService.navigateTo('bot-signup')" style="color:#E7272D;font-weight: bold;cursor: pointer">Bot Signup</a></p>
+          <p class="text-white text-center">Don’t have an account? <a type="button" (click)="_helperService.navigateTo('bot-signup')" style="color:#E7272D;font-weight: bold;cursor: pointer">Bot Signup</a></p>
         </form>
       </div>
 
