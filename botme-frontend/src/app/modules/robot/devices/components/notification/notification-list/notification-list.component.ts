@@ -54,7 +54,7 @@ import { NotificationService } from '../../../service/notification.service';
       // this.checked = localStorage.getItem("inputSwitch")
       this.event = JSON.parse(localStorage.getItem("inputSwitch") || '{}')
       console.log("result==>",result)
-      this.wc.regWorker(e.checked)
+      this.wc.regWorker()
       console.log(this.selecteType)
     }
     testNotification(){

@@ -4,14 +4,15 @@ import {clientsDB} from '../../../config/mongoDB';
 const SubscribeSchema = createSchema(
     {
       subscription:{
-        endpoint: Type.string({maxlength: 256, required: true}),
+        endpoint: Type.string({maxlength: 256}),
         expirationTime: Type.string(),
         keys: {
-          p256dh: Type.string({maxlength: 256, required: true}),
-          auth: Type.string({maxlength: 256, required: true})
+          p256dh: Type.string({maxlength: 256}),
+          auth: Type.string({maxlength: 256})
         },
       },
-      notificationType: Type.string({maxlength: 256}) 
+      notificationType: Type.string({maxlength: 256}),
+      restaurantId: Type.string({maxlength: 256}) 
     },
 );
 

@@ -1,4 +1,4 @@
-import {AddSubscription, FindSubscription,updateSubscription} from "./service";
+import {AddSubscription, checkIfSubscriptionExists, deleteSubscription,updateSubscription} from "./service";
 import { GetAllSubscription } from "./service";
 
 
@@ -10,46 +10,55 @@ const privateKey = 'PhOBfVwSvRnXMzqSyuL4FZtUWTS3p8sMwH0GehRScTw';
 
 export async function DoSubscription(req: any) {
 
-    let CheckIfExist = await FindSubscription(req)
+    let CheckIfExist = await checkIfSubscriptionExists(req)
 
-    if (CheckIfExist.length != 0) {
+    if (CheckIfExist) {
         console.log("already exist")
-        let result = await updateSubscription(req);
-        
+        return CheckIfExist
     } else {
-        let result = await AddSubscription(req);
-
-        if (result) {
-            console.log("subscribed to restuarant api")
+        let update = await updateSubscription(req);
+        if (update){
+            console.log("subscription updated")
+            return update
         } else {
-            console.log("error in subscription")
+            console.log("cannot update subscription")
         }
     }
-    // const subscription = req;
 
-    // console.log(subscription)
+    let result = await AddSubscription(req);
 
-    // const payload = JSON.stringify({title: 'New Order'})
-
-    // webPush.sendNotification(subscription,payload).catch((err:any) => console.error(err));
+    if (result) {
+        console.log("subscribed to restuarant api")
+        return null
+    } else {
+        console.log("error in subscription")
+        return null
+    }
 }
 
 export async function OrderNotification(req: any,subscription:any) {
 
-    webPush.setVapidDetails('mailto:tahahasan1997@gmail.com', publicKey, privateKey);
+    console.log("orderNotification")
 
-    // const subscription = await GetAllSubscription();
+    webPush.setVapidDetails('mailto:botme@123.com', publicKey, privateKey);
+
     const payload = JSON.stringify({
         title: 'New Order',
-        body: 'Hi, Mister ' + req.customerName + ' has placed an order with order ID ' + req.orderId + ' with amount ' + req.total + ' and order type is ' + req.orderType + '. Thanks'
+        body: 'Hi ' + req.customerName + ', your order has been placed with order ID ' + req.orderId + ' with amount ' + req.total + ' and order type is ' + req.orderType + '. Thanks'
     });
 
-    webPush.sendNotification(subscription, payload).catch((err: any) => console.error(err));
+    webPush.sendNotification(subscription, payload).catch((err: any) => {
+        console.error(err)
+        if (err.body == "push subscription has unsubscribed or expired.\n") {
+            deleteSubscription(err.endpoint)
+            console.log("expired subscription deleted successfully")
+        }
+        });
 }
 
 export async function testNotification(subscription:any) {
 
-    webPush.setVapidDetails('mailto:tahahasan1997@gmail.com', publicKey, privateKey);
+    webPush.setVapidDetails('mailto:botme@123.com', publicKey, privateKey);
     
     // const subscription = await GetAllSubscription();
 
@@ -58,5 +67,12 @@ export async function testNotification(subscription:any) {
         body: 'This is Notification'
     });
 
-    webPush.sendNotification(subscription, payload).catch((err: any) => console.error(err));
-}
+    webPush.sendNotification(subscription, payload).catch((err: any) => {
+    console.error("error==>",err)
+    if (err.body == "push subscription has unsubscribed or expired.\n") {
+        console.log("endpoints==>",err.endpoint)
+        deleteSubscription(err.endpoint)
+        console.log("expired subscription deleted successfully")
+    }
+    });
+}   

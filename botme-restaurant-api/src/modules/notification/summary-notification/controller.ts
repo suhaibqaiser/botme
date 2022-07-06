@@ -9,23 +9,23 @@ const privateKey = 'PhOBfVwSvRnXMzqSyuL4FZtUWTS3p8sMwH0GehRScTw';
 
 export async function SummaryNotification(time:any) {
 
-        webPush.setVapidDetails('mailto:tahahasan1997@gmail.com', publicKey,privateKey);
+        // webPush.setVapidDetails('mailto:tahahasan1997@gmail.com', publicKey,privateKey);
 
-        let subscription = await GetAllSubscription()
-            for (let val of subscription){
+        // let subscription = await GetAllSubscription()
+        //     for (let val of subscription){
 
-                if (val.notificationType == "Summary"){
-                    const subscription = val.subscription;
+        //         if (val.notificationType == "Summary"){
+        //             const subscription = val.subscription;
 
-                    const payload = JSON.stringify({
-                        title: 'Order Summary'
-                    })
+        //             const payload = JSON.stringify({
+        //                 title: 'Order Summary'
+        //             })
                 
-                    webPush.sendNotification(subscription,payload).catch((err:any) => console.error(err));
+        //             webPush.sendNotification(subscription,payload).catch((err:any) => console.error(err));
                     // let summarytime = setTimeout(() => {
                     //     SummaryNotification(time)
                     // }, time);
-                }
+    //             }
                 
-    }
+    // }
 }

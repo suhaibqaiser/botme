@@ -17,7 +17,7 @@ export class WrapperComponent implements OnInit {
 
   register:any
   e:boolean=false
-  type:any = "Order"
+  notificationType:any 
 
   constructor(public headerService: HeaderService,private authservice:AuthenticationService) {
   }
@@ -25,25 +25,22 @@ export class WrapperComponent implements OnInit {
   apiBaseUrl = environment.apiRestaurantUrl;
 
   ngOnInit(): void {
+    this.notificationType = localStorage.getItem("dropDownValue")
     this.allowNotification()
   }
-  notificationType(type:any){
-    if(this.type != type){
-      this.type = type
-      this.regWorker(true)
-      console.log("notification type changed")
-    }
+  setNotificationType(type:any){
+    this.notificationType = type
+    this.regWorker()
+    console.log("notification type changed")
+    
   }
   allowNotification(){
     if (Notification.permission === 'default'){
       Notification.requestPermission().then((perm) => {
         if (Notification.permission === "granted"){
-          if (!this.type){}
-          else{
-            this.regWorker(this.e).catch((err) => {
-              console.error(err);
-            });
-          }
+          this.regWorker().catch((err) => {
+            console.error(err);
+          });
         }
         else{
           alert("please allow notifications.");
@@ -52,37 +49,31 @@ export class WrapperComponent implements OnInit {
     }
     else if (Notification.permission === "granted"){
       console.log("permission granted")
-      if (!this.type){
-        console.log("notification type require")
-      }
-      else{
-        this.regWorker(this.e).catch((err) => {
-          console.error(err);
-        });
-      }
+      this.regWorker().catch((err) => {
+        console.error(err);
+      });
     }
     else {
       alert("please allow notifications.");
     }
   }
-  async regWorker(e:any) {
+  async regWorker() {
     if ('serviceWorker' in navigator){
-      this.register = navigator.serviceWorker.register('/sw.js',{scope: '/'})
+      this.register = await navigator.serviceWorker.register('/sw.js',{scope: '/'}).catch((err) => {
+        console.error("err==>",err)
+      })
       let subscription = await (await this.register).pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: this.publicKey
       });
 
-      console.log(this.type)
+      console.log("register==>",this.register)
 
       var subscriptionWrapper = {
         "subscription":subscription,
-        "notificationType":this.type,
-        
+        "notificationType":this.notificationType,
+        "restaurantId": localStorage.getItem("restaurantId")
       }
-
-      if (e == true){
-      console.log("subscribed")
       await fetch(this.apiBaseUrl + '/notification/subscribe',{
         method:'POST',
         body: JSON.stringify(subscriptionWrapper),
@@ -90,55 +81,12 @@ export class WrapperComponent implements OnInit {
           'content-type': 'application/json'
         }
       });
-      }
-      else{
-        console.log("unsubscribed")
-        await fetch(this.apiBaseUrl + '/notification/unsubscribe',{
-          method:'POST',
-          body: JSON.stringify(subscriptionWrapper),
-          headers: {
-            'content-type': 'application/json'
-          }
-        });
-      }
     } 
-  
-  // async unregWorker(){
-  //   let subscription = await (await this.register).pushManager.subscribe({
-  //     userVisibleOnly: true,
-  //     applicationServerKey: this.publicKey
-  //   });
-  //   await fetch(this.apiBaseUrl + '/notification/unsubscribe',{
-  //   method:'POST',
-  //   body: JSON.stringify(subscription),
-  //   headers: {
-  //     'content-type': 'application/json'
-  //   }
-  // });
-    // this.register.unregister()
-    // const reg = await navigator.serviceWorker.register('/sw.js',{scope: '/'})
-    // const subscription = {"endpoint":"remove"}
-    // await fetch(this.apiBaseUrl + '/notification/subscribe',{
-    //   method:'POST',
-    //   body: JSON.stringify(subscription),
-    //   headers: {
-    //     'content-type': 'application/json'
-    //   }
-    // });
-    // await (await reg).unregister()
-    // console.log("service worker unregistered")
-
   }
- 
-  // fetchNotification(subscription:any){
-
-  //   fetch('http://localhost:3100/notification/subscribe',{
-  //   method:'POST',
-  //   body: JSON.stringify(subscription),
-  //   headers: {
-  //     'content-type': 'application/json'
-  //   }
-  //     });
-  // }
-// }
+  async unregWorker() {
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+      for(let registration of registrations) {
+       registration.unregister()
+      } })
+  }  
 }

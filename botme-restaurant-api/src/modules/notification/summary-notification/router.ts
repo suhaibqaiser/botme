@@ -17,7 +17,7 @@ export default [
             let time2 = time1*3600
             let time = time2*1000
             console.log(time)
-            let result = await SummaryNotification(time)
+            await SummaryNotification(time)
             
 
             

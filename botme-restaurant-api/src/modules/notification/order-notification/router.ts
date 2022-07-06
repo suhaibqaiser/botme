@@ -9,21 +9,8 @@ export default [
         method: "post",
         handler: async (req: Request, res: Response) => {
             res.status(201).json({});
-            // if (req.body.endpoint == "remove") {
-            //     return
-            //     // await deleteAllSubscription()
-            // } else {
-            let result = await DoSubscription(req.body)
-            // }
-        }
-    },
-    {
-        path: "/unsubscribe",
-        method: "post",
-        handler: async (req: Request, res: Response) => {
-            res.status(201).json({});
-            let result = await deleteSubscription(req.body)
-            console.log("subscription deleted")
+            console.log("subscription==>",req.body)
+            await DoSubscription(req.body)
         }
     },
     {
@@ -34,7 +21,7 @@ export default [
             let subscription = await GetAllSubscription()
             for (let val of subscription){
                 if (val.notificationType == "Order"){
-                    let result = await OrderNotification(req.body,val.subscription)
+                    await OrderNotification(req.body,val.subscription)
                 }
             }
         }
@@ -46,7 +33,7 @@ export default [
             res.status(201).json({});
             let subscription = await GetAllSubscription()
             for (let val of subscription){
-                let result = await testNotification(val.subscription)
+                await testNotification(val.subscription)
             }
         }
         

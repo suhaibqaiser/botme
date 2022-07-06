@@ -21,12 +21,12 @@ export class NotificationService {
     // }
     testNotification(){
         const url = `${this.apiBaseUrl}/notification/test`;
-        const body = {req:""};
+        const body = {};
         return this.http.post(url, body);
     }
-    SetSummaryTime(time:any){
+    SetSummaryTime(){
         const url = `${this.apiBaseUrl}/notification/time`;
-        const body = {req:time};
+        const body = {};
         return this.http.post(url, body);
     }
     // Notification(size:any=''){
