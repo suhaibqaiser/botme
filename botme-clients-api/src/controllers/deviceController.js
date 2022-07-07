@@ -51,18 +51,18 @@ async function getDeviceDetails(req, res) {
 async function addDevice(req, res) {
   let response = new Response();
 
-  if (!req.body.deviceLabel || !req.body.deviceName || !req.body.deviceType || !req.body.deviceDescription || !req.body.restaurantId) {
+  if (!req.body.deviceLabel || !req.body.deviceName || !req.body.deviceType || !req.body.restaurantId) {
     response.payload = {
       message: 'deviceLabel,deviceName,deviceType and deviceDescription is required'
     };
-    return res.status(400).send(response);
+    return res.json(response)
   }
 
   let check = await deviceService.checkDeviceExists(req.body.deviceLabel,req.body.restaurantId)
   if (check){
       response.payload = "device already exists with this label"
       response.status = "error"
-      return res.status(400).send(response);
+      return res.json(response)
   } 
 
   // if (await deviceService.checkDeviceExists(req.body.deviceLabel,req.body.restaurantId)) {
