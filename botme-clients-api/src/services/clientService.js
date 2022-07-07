@@ -5,10 +5,11 @@ async function getClientList() {
     return Client.find({}, {_id: 0, __v: 0});
 }
 
-async function getClientDetail(clientID, clientSecret) {
+async function getClientDetail(clientID, clientSecret, restaurantId) {
     return Client.findOne({
         clientID: clientID,
         clientSecret: clientSecret,
+        restaurantId: restaurantId,
         clientActive: true
     }, {
         _id: 0,

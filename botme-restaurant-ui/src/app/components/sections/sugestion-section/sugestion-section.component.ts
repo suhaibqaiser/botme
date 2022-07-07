@@ -69,6 +69,7 @@ export class SugestionSectionComponent implements OnInit {
   }
 
   editFromCart(product: any) {
+    console.log('editFromCart')
     this.cartService.slideToShow = 0
     this._contextService.currentContextObj.sectionId = 'sectionId-servingSize-productOptions'
     this._contextService.currentContextObj.pageId = 'pageId-product-customize-modal'

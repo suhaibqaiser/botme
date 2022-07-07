@@ -15,7 +15,8 @@ export class LoginFormComponent implements OnInit {
     clientID: new FormControl('', [Validators.required]),
     clientSecret: new FormControl('', [Validators.required]),
     clientType: new FormControl('bot'),
-    voiceType: new FormControl('cloud-voice', Validators.required)
+    voiceType: new FormControl('cloud-voice', Validators.required),
+    restaurantId: new FormControl('')
   })
   loader = false
 
@@ -26,6 +27,15 @@ export class LoginFormComponent implements OnInit {
   }
 
   login() {
+    this.loginForm.get('restaurantId')?.setValue(this._botMeClientService.getCookie().restaurantId)
+
+    if(!this.loginForm.get('restaurantId')?.value){
+      this._toastService.setToast({
+        description: 'Restaurant Id is required!',
+        type: 'danger'
+      })
+      return;
+    }
 
     if (!this.loginForm.get('clientID')?.value || !this.loginForm.get('clientSecret')?.value) {
       this._toastService.setToast({
@@ -36,10 +46,10 @@ export class LoginFormComponent implements OnInit {
     }
 
     this.loader = true
-    this._botMeClientService.reSetCookie()
     this._botMeClientService.loginBotMeClientApi(JSON.parse(JSON.stringify(this.loginForm.value))).subscribe(
       (res: any) => {
         if (res.status === 'success') {
+          this._botMeClientService.reSetCookie()
           this._toastService.setToast({
             description: 'Successfully Login.',
             type: 'success'

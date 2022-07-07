@@ -45,8 +45,8 @@ async function getClientDetail(req, res) {
 async function addClient(req, res) {
     let response = new Response()
 
-    console.log("query==>",req.query)
-    console.log("body==>",req.body)
+    console.log("query==>", req.query)
+    console.log("body==>", req.body)
 
     if (req.body.clientType !== 'customer' && !req.body.clientDeviceId) {
         response.message = "clientDeviceId is required."
@@ -80,7 +80,7 @@ async function addClient(req, res) {
     // let clientSecret = hash.update(req.body.clientSecret).digest('hex');
 
     try {
-        if (req.query.admin){
+        if (req.query.admin) {
             console.log("created from admin bot crud")
             let client = {
                 clientDeviceId: req.body.clientDeviceId,
@@ -105,7 +105,7 @@ async function addClient(req, res) {
             }
 
             let newClient = await clientService.addClient(client)
-            
+
             if (newClient) {
                 response.payload = newClient
                 response.message = "Your account has been created successfully!"
@@ -150,10 +150,10 @@ async function addClient(req, res) {
             const redirect_url = `https://stg.gofindmenu.com/${client.restaurantId}/home?verification_token=${client.verification_token}&clientID=${client.clientID}`
 
             const sendEmail = await emailHelper.sendEmail(
-            'w11cafe113245@gmail.com',
-            client.clientEmail,
-            'Verify your email address!',
-            `
+                'w11cafe113245@gmail.com',
+                client.clientEmail,
+                'Verify your email address!',
+                `
             <!Doctype Html>  
             <Html>     
             <Head>     
@@ -211,7 +211,7 @@ async function addClient(req, res) {
 </body>
        
             `
-        )
+            )
 
             console.log('Email Sent =>', sendEmail)
 
@@ -242,17 +242,17 @@ async function addClient(req, res) {
 async function authorizeClient(req, res) {
     let response = new Response()
 
-    if (!req.body.clientID || !req.body.clientSecret) {
-        response.message = 'clientID, clientDeviceId and clientSecret is required';
+    if (!req.body.clientID || !req.body.clientSecret || !req.body.restaurantId) {
+        response.message = 'clientID, clientDeviceId and clientSecret, restaurantId is required';
         response.status = "danger"
         return res.send(response);
     }
 
-    let client = await clientService.getClientDetail(req.body.clientID, req.body.clientSecret)
+    let client = await clientService.getClientDetail(req.body.clientID, req.body.clientSecret, req.body.restaurantId)
 
     client = JSON.parse(JSON.stringify(client))
 
-    if(client && client.clientType !== req.body.clientType){
+    if (client && client.clientType !== req.body.clientType) {
         response.message = "clientID or clientSecret is incorrect or client is not active"
         response.status = "danger"
         return res.send(response)
