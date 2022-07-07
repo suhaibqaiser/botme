@@ -173,6 +173,8 @@ export class UserDetailComponent implements OnInit {
       accept: () => {
         this.userService.addUser(this.user)
           .subscribe(result => {
+            console.log(result);
+            
             if (result.status === 'success') {
               this.user = result.payload
               this.userId = result.payload.userId
@@ -182,6 +184,8 @@ export class UserDetailComponent implements OnInit {
               this.messageService.add({ severity: 'info', summary: 'Update Success', detail: 'User added!' })
               this.formMode = 'update'
             } else {
+              console.log(result);
+              
               this.messageService.add({ severity: 'error', summary: 'Add Failed', detail: `Reason: ${result.payload}` })
             }
             this.disableEdit()

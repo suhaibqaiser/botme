@@ -73,14 +73,14 @@ async function addUser(req, res) {
     if (!req.body.user) {
         response.payload = "User object is required"
         response.status = "error"
-        return res.status(400).send(response)
+        return res.json(response)
     }
 
     let check = await userService.checkIfUserExists(req.body.user.userName)
     if (check){
         response.payload = "user already exists with this user name"
         response.status = "error"
-        return res.status(400).send(response)
+        return res.json(response)
     } 
 
     let user = req.body.user
