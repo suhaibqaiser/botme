@@ -35,7 +35,9 @@ export class UserDetailComponent implements OnInit {
     userActive: new FormControl(true),
     userComment: new FormControl(''),
     restaurantId: new FormControl('', [Validators.required, Validators.maxLength(120)]),
-    userRole: new FormControl('')
+    userRole: new FormControl(''),
+    notificationType: new FormControl(''),
+    notificationState: new FormControl(true)
   });
 
   userId = '';
@@ -51,7 +53,9 @@ export class UserDetailComponent implements OnInit {
     userActive: true,
     userComment: '',
     restaurantId: '',
-    userRole: ''
+    userRole: '',
+    notificationType: '', 
+    notificationState: true
   }
   restaurantList = new Array
 
@@ -161,6 +165,7 @@ export class UserDetailComponent implements OnInit {
 
     this.user = this.userForm.getRawValue()
     this.user.userSecret = Md5.hashStr(this.user.userSecret);
+    this.user.notificationType = 'Order'
     this.confirmationService.confirm({
       message: 'Do you want to add this record?',
       header: 'Update Confirmation',

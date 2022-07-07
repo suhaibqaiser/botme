@@ -1,6 +1,8 @@
 // import { OrderNotification } from "../modules/notification/order-notification/controller"
 // import { GetAllSubscription } from "../modules/notification/order-notification/service"
 
+import { queryOrder } from "../modules/food/order/service"
+
 
 
 // export async function sendingPlaceOrderNotification(customerName:any,orderLabel:any,restaurantId:any,total:any) {
@@ -21,3 +23,50 @@
 //         console.log("error in sending notification")
 //     }
 // }
+
+export async function computeOrderSummaryNotification(restaurantId:any) {
+    let filter = {orderTimestamp: {},restaurantId:""}
+    let summary = {orderCancel: 0, orderdelivered: 0, orderInProgress: 0, totalEarning: 0 }
+
+
+    //getting orders by date
+    let date = new Date()
+    let newDate = new Date(date.toISOString().split('T')[0])
+    let fromDate = new Date(newDate)
+    let toDate = new Date(newDate)
+    toDate.setDate(date.getDate() + 1)
+
+    let orderTimestamp = {$gte: fromDate,$lt: toDate}
+
+    filter.orderTimestamp = orderTimestamp
+    filter.restaurantId = restaurantId
+
+    let result = await queryOrder(filter)
+
+    if (result.length != 0){
+        for (let order of result){
+            if(order.orderStatus == "notified"){
+                summary.orderInProgress = summary.orderCancel + 1
+            } else if (order.orderStatus == "delivered") {
+                summary.orderdelivered = summary.orderdelivered + 1
+            } else if (order.orderStatus == "cancel") {
+                summary.orderCancel = summary.orderCancel + 1
+            }
+        }
+        let total = await computeTotalEarning(result)
+        summary.totalEarning = total 
+        return summary
+    } else {
+        return summary
+    }    
+}
+export async function computeTotalEarning(orders:any) {
+    let total = 0 
+    for (let order of orders){
+        if (order.orderStatus == "notified" || order.orderStatus == "delivered"){
+            total = total + order.orderTotal
+        }
+    }
+    return total
+   
+}

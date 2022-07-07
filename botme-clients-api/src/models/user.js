@@ -15,6 +15,8 @@ const UserSchema = new Schema(
                 userComment: { type: String },
                 restaurantId: { type: String },
                 userRole: {type: String},
+                notificationType: {type: String},
+                notificationState: {type: Boolean},
         }
 );
 
