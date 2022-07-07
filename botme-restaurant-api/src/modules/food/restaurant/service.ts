@@ -16,6 +16,10 @@ export async function getRestaurantById(restaurantLabel: string) {
 export async function getActiveRestaurants() {
     return Restaurant.find({restaurantActive: true}, {_id: 0, __v: 0});
 }
+export function checkIfResaturantExists(restaurantName:any){
+    return Restaurant.exists({restaurantName: restaurantName})
+}
+
 
 export function addRestaurant(restaurant: any) {
     return Restaurant.create(restaurant);

@@ -182,11 +182,7 @@ export class UserDetailComponent implements OnInit {
               this.messageService.add({ severity: 'info', summary: 'Update Success', detail: 'User added!' })
               this.formMode = 'update'
             } else {
-              this.messageService.add({
-                severity: 'error',
-                summary: 'Add Failed',
-                detail: `Reason: ${result.payload}`
-              })
+              this.messageService.add({ severity: 'error', summary: 'Add Failed', detail: `Reason: ${result.payload}` })
             }
             this.disableEdit()
           })

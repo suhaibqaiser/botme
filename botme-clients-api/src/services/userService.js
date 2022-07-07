@@ -15,6 +15,9 @@ async function getUsers() {
 async function getUsersByRestaurantId(restaurantId) {
     return User.find({ restaurantId: restaurantId }, { _id: 0, __v: 0 });
 }
+async function checkIfUserExists(userName){
+    return User.exists({userName: userName})
+}
 
 async function addUser(user) {
     return User.create(user);
@@ -32,4 +35,4 @@ async function deleteUser(userId) {
     return User.findOneAndDelete({userId: userId})
 }
 
-module.exports = ({ getUserByUsername, getUsers, getUsersByRestaurantId, updateUser, addUser, getUserByUserId, getUsersByEmail, deleteUser })
+module.exports = ({ getUserByUsername, getUsers, getUsersByRestaurantId, updateUser, addUser, getUserByUserId, getUsersByEmail, deleteUser, checkIfUserExists })

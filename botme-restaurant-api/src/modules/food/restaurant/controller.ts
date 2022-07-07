@@ -7,7 +7,7 @@ import {
     updateRestaurant,
     getRestaurantById,
     deleteRestaurants,
-    getMaxLabelValue, getRestaurantId
+    getMaxLabelValue, getRestaurantId, checkIfResaturantExists
 } from "./service"
 import {restResponse} from "../../../utils/response"
 import {randomUUID} from "crypto";
@@ -96,6 +96,15 @@ export async function getActivedRestaurants() {
 
 export async function addRestaurants(restaurant: any) {
     let response = new restResponse()
+
+    let check = await checkIfResaturantExists(restaurant.restaurantName)
+
+    if (check){
+        response.payload = "a restaurant with the same name already exists"
+        response.status = "error"
+        return response
+    }
+
 
     let val = await getMaxLabelValue()
     restaurant.restaurantLabel = val ? (val.restaurantLabel + 1) : 1

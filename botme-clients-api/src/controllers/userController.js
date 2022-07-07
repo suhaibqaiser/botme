@@ -76,6 +76,13 @@ async function addUser(req, res) {
         return res.status(400).send(response)
     }
 
+    let check = await userService.checkIfUserExists(req.body.user.userName)
+    if (check){
+        response.payload = "user already exists with this user name"
+        response.status = "error"
+        return res.status(400).send(response)
+    } 
+
     let user = req.body.user
     user.userId = uuidv4()
     user.userCreated = new Date()
