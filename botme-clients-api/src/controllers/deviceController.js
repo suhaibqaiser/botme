@@ -58,12 +58,19 @@ async function addDevice(req, res) {
     return res.status(400).send(response);
   }
 
-  if (await deviceService.checkDeviceExists(req.body.deviceLabel,req.body.restaurantId)) {
-    response.payload = {
-      message: 'Device already exists'
-    };
-    return res.status(400).send(response);
-  }
+  let check = await deviceService.checkDeviceExists(req.body.deviceLabel,req.body.restaurantId)
+  if (check){
+      response.payload = "device already exists with this label"
+      response.status = "error"
+      return res.status(400).send(response);
+  } 
+
+  // if (await deviceService.checkDeviceExists(req.body.deviceLabel,req.body.restaurantId)) {
+  //   response.payload = {
+  //     message: 'Device already exists'
+  //   };
+  //   return res.json(response)
+  // }
 
 //   if(!['robot','web'].includes(req.body.deviceType.toLowerCase())){
 //     response.payload = 'Invalid device type. Please enter the correct one.'
