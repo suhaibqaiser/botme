@@ -4,7 +4,7 @@ import { NgClass } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import {environment} from 'src/environments/environment';
-
+import { NotificationService } from 'src/app/modules/admin/service/notification.service';
 
 @Component({
   selector: 'app-wrapper',
@@ -17,18 +17,28 @@ export class WrapperComponent implements OnInit {
 
   register:any
   notificationType:any 
+  notificationState: any
 
-  constructor(public headerService: HeaderService,private authservice:AuthenticationService) {
+  constructor(public headerService: HeaderService,private authservice:AuthenticationService, private ns:NotificationService) {
   }
 
   apiBaseUrl = environment.apiRestaurantUrl;
 
   ngOnInit(): void {
-    localStorage.setItem("dropDownValue", "Order")
-    localStorage.setItem("inputSwitch", "true")
-
     this.notificationType = localStorage.getItem("dropDownValue")
-    this.allowNotification()
+    this.notificationState = JSON.parse(localStorage.getItem("inputSwitch") || '{}')
+    console.log(this.notificationType)
+    console.log(this.notificationState)
+
+    if (this.notificationState == true){
+      console.log("notificationState true")
+      this.allowNotification()
+    }
+    if (this.notificationState == false){
+      console.log("notificationState false")
+      this.unregWorker()
+    }
+    this.ns.SetSummaryTime().subscribe()
   }
   setNotificationType(type:any){
     this.notificationType = type

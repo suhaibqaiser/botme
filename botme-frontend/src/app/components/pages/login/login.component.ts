@@ -59,6 +59,10 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('userFullName', response.userFullName)
           localStorage.setItem('restaurantId', response.restaurantId)
           localStorage.setItem('userRole',response.userRole)
+          localStorage.setItem("userId",response.userId)
+          localStorage.setItem('dropDownValue',response.notificationType)
+          localStorage.setItem('inputSwitch',response.notificationState)
+
           this.router.navigate(["/home"])
 
         }

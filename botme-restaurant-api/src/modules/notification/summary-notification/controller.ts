@@ -1,3 +1,4 @@
+import { computeOrderSummaryNotification } from "../../../utils/helpers";
 import { deleteSubscription, GetAllSubscription } from "../order-notification/service";
 
 // const express = require('express'); 
@@ -10,14 +11,19 @@ const privateKey = 'PhOBfVwSvRnXMzqSyuL4FZtUWTS3p8sMwH0GehRScTw';
 export async function SummaryNotification(restuarantId:any) {
     webPush.setVapidDetails('mailto:botme@123.com', publicKey,privateKey);
 
+
+    let orderSummary = await computeOrderSummaryNotification(restuarantId)
+    console.log("orderSummary==>",orderSummary)
+    console.log("summary notification")
+
     let subscription = await GetAllSubscription(restuarantId)
+    
         for (let val of subscription){
             if (val.notificationType == "Summary"){
-                console.log(val)
                 const subscription = val.subscription;
                 const payload = JSON.stringify({
-                    title: 'Order Summary',
-                    body: "here is summary notification"
+                    title: 'ORDER SUMMARY',
+                    body: '\nOrderInProgress: '+orderSummary.orderInProgress+'\nOrderDelivered: '+orderSummary.orderdelivered+'\nOrderCanceled: '+orderSummary.orderCancel+'\nTotalEarning: '+orderSummary.totalEarning
                 });
                 webPush.sendNotification(subscription,payload).catch((err:any) => {
                     console.error(err)
@@ -26,7 +32,6 @@ export async function SummaryNotification(restuarantId:any) {
                         console.log("expired subscription deleted successfully")
                     }
                     });
-                setTimeout(() => {SummaryNotification(restuarantId)}, 20000);
             }
             
         }

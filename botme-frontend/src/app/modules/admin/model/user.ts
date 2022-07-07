@@ -10,5 +10,7 @@ export interface User {
     userActive: boolean,
     userComment: string,
     restaurantId: string,
-    userRole: string
+    userRole: string,
+    notificationType: string
+    notificationState: boolean
 }
