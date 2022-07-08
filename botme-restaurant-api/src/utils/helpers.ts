@@ -28,6 +28,7 @@ export async function computeOrderSummaryNotification(restaurantId:any) {
     let filter = {orderTimestamp: {},restaurantId:""}
     let summary = {orderCancel: 0, orderdelivered: 0, orderInProgress: 0, totalEarning: 0 }
 
+    console.log("restaurantId==>",restaurantId)
 
     //getting orders by date
     let date = new Date()
@@ -38,10 +39,15 @@ export async function computeOrderSummaryNotification(restaurantId:any) {
 
     let orderTimestamp = {$gte: fromDate,$lt: toDate}
 
+    console.log("orderTimeStamp==>",orderTimestamp)
+
     filter.orderTimestamp = orderTimestamp
     filter.restaurantId = restaurantId
 
+    console.log("filter==>",filter)
+
     let result = await queryOrder(filter)
+    console.log("result==>",result.length)
 
     if (result.length != 0){
         for (let order of result){

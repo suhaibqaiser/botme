@@ -301,6 +301,7 @@ async function authorizeClient(req, res) {
 async function updateClient(req, res) {
     let response = new Response()
 
+    console.log("update client==>",req.body)
 
     if (!req.body.clientID) {
         response.payload = {message: 'clientID is required'};
