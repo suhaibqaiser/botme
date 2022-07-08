@@ -90,7 +90,6 @@ export class CartService {
   }
 
   removeFromCart(product: any) {
-
     if (product.cartId && product.cartId.length) {
       this.cartLoader = true
       this._menuService.deleteCartById(product.cartId).subscribe((res: any) => {
@@ -100,11 +99,10 @@ export class CartService {
         })
         if (res.status === 'success') {
           this.cartLoader = false
-          this._clientService.setCookie('orderStatus', res.payload.order.orderStatus)
           let cartListIndex = this.cartProduct.findIndex((item: any) => item._id === this.singleCustomProductObj._id)
           this.cartProduct.splice(cartListIndex, 1)
 
-          if (this._helperService.getCurrentRouteName() !== '/cart') {
+          if (this._helperService.getCurrentRouteName().split('/')[2] !== 'cart') {
             document.getElementById("ctaId-show-cart")?.click()
           }
         }
@@ -174,7 +172,7 @@ export class CartService {
       console.log('yo')
       this.cartLoader = true
       const orderObj = this.orderObjGenerator(singleCustomProductObj)
-      if (this._helperService.getCurrentRouteName() !== '/cart') {
+      if (this._helperService.getCurrentRouteName().split('/')[2] !== 'cart') {
         document.getElementById("ctaId-show-cart")?.click()
         document.getElementsByClassName('cart-modal-wrapper')[0].setAttribute('style', 'display:block')
       }
@@ -185,7 +183,6 @@ export class CartService {
         })
         this.cartLoader = false
         if (res.status === 'success') {
-          this._clientService.setCookie('orderStatus', res.payload.order.orderStatus)
           this.cartLoader = false
           let cart = JSON.parse(JSON.stringify(this.singleCustomProductObj))
 
@@ -214,7 +211,7 @@ export class CartService {
         const orderObj = this.orderObjGenerator(singleCustomProductObj)
         updatedList.order = orderObj.order
         updatedList.cart.push(orderObj.cart)
-        if (this._helperService.getCurrentRouteName() !== '/cart') {
+        if (this._helperService.getCurrentRouteName().split('/')[2] !== 'cart') {
           document.getElementById("ctaId-show-cart")?.click()
         }
         this._menuService.addToCartApi(updatedList).subscribe((res: any) => {
