@@ -81,7 +81,7 @@ export class CartService {
 
     if (callType === 'edit_local_list') {
       let cart = JSON.parse(JSON.stringify(this.singleCustomProductObj))
-      let cartListIndex = this.cartProduct.findIndex((item: any) => item.productId === cart.productId)
+      let cartListIndex = this.cartProduct.findIndex((item: any) => item.productId == cart.productId)
       this.cartProduct.splice(cartListIndex, 1, cart)
       localStorage.setItem('orderList', JSON.stringify(this.cartProduct))
       document.getElementById("ctaId-show-cart")?.click()
@@ -98,10 +98,17 @@ export class CartService {
           type: res.status
         })
         if (res.status === 'success') {
+          this.cartProduct = []
+          this._menuService.findOrderByOrderLabel(this._clientService.getCookie().orderLabel).subscribe((res: any) => {
+            const cartList = res.payload.cart
+            if (cartList && cartList.length) {
+              cartList.forEach((cartItem: any) => {
+                const product = this.products.find((item: any) => item.productId === cartItem.productId)
+                this.cartProduct.push(JSON.parse(JSON.stringify(this._helperService.setSingleCustomizeProduct(product, cartItem))))
+              })
+            }
+          })
           this.cartLoader = false
-          let cartListIndex = this.cartProduct.findIndex((item: any) => item._id === this.singleCustomProductObj._id)
-          this.cartProduct.splice(cartListIndex, 1)
-
           if (this._helperService.getCurrentRouteName().split('/')[2] !== 'cart') {
             document.getElementById("ctaId-show-cart")?.click()
           }
@@ -110,7 +117,7 @@ export class CartService {
       return
     }
 
-    let cartListIndex = this.cartProduct.findIndex((item: any) => item.productId === product.productId)
+    let cartListIndex = this.cartProduct.findIndex((item: any) => item.productId == product.productId)
     this.cartProduct.splice(cartListIndex, 1)
     localStorage.setItem('orderList', JSON.stringify(this.cartProduct))
 
@@ -169,7 +176,6 @@ export class CartService {
 
 
     if (callType === 'edit_db') {
-      console.log('yo')
       this.cartLoader = true
       const orderObj = this.orderObjGenerator(singleCustomProductObj)
       if (this._helperService.getCurrentRouteName().split('/')[2] !== 'cart') {
@@ -181,13 +187,18 @@ export class CartService {
           description: res.message,
           type: res.status
         })
-        this.cartLoader = false
         if (res.status === 'success') {
+          this.cartProduct = []
+          this._menuService.findOrderByOrderLabel(this._clientService.getCookie().orderLabel).subscribe((res: any) => {
+            const cartList = res.payload.cart
+            if (cartList && cartList.length) {
+              cartList.forEach((cartItem: any) => {
+                const product = this.products.find((item: any) => item.productId === cartItem.productId)
+                this.cartProduct.push(JSON.parse(JSON.stringify(this._helperService.setSingleCustomizeProduct(product, cartItem))))
+              })
+            }
+          })
           this.cartLoader = false
-          let cart = JSON.parse(JSON.stringify(this.singleCustomProductObj))
-
-          let cartListIndex = this.cartProduct.findIndex((item: any) => item._id === cart._id)
-          this.cartProduct.splice(cartListIndex, 1, cart)
         }
       })
       return;
