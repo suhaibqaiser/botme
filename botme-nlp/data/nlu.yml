@@ -842,6 +842,14 @@ nlu:
       - add product to the [cart](list)
       - i want to add item to [cart](list)
       - we want to add product to the [cart](list)
+      - update [cart](list) item
+      - update [card](list) item
+      - update [car](list) item
+      - update [cart item](list)
+      - i want to update my [cart](list)
+      - i want to update my [card](list)
+      - i want to update my [car](list)
+      - i want to update [cart item](list)
     
   - synonym: cart
     examples: |
@@ -898,7 +906,18 @@ nlu:
       - please [check out](checkout) my order
       - can you please [check out](checkout) my order
       - i want to do [check out](checkout)
+      - [get out](checkout)
+      - i want to [get out](checkout)
+      - please [get out](checkout)
+      - we want to [get out](checkout)
+      - please [get out](checkout) my order
+      - can you please [get out](checkout) my order
+      - i want to do [get out](checkout)
 
+  - synonym: check out
+    examples: |
+      - get out
+        
   - intent: place_order_page
     examples: |
       - take me to [menu](pagesix) page

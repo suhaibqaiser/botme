@@ -118,6 +118,7 @@ export class ClientSingleComponent implements OnInit {
         this.resturantId = localStorage.getItem('restaurantId') ? localStorage.getItem('restaurantId') : ''
         this.clientForm.patchValue({
           formclientid: this.client.clientID,
+          formclientType: this.client.clientType,
           formclientdeviceid: this.client?.clientDeviceId,
           formclientcomment: this.client?.clientComment,
           formclientsecret: this.client?.clientSecret,
@@ -144,13 +145,13 @@ export class ClientSingleComponent implements OnInit {
 
     console.log("update bot")
 
-    this.clientService.updateClient(client)
+    this.clientService.updateClient(this.client)
       .subscribe(result => {
         this.client = result.payload
         this.messageService.add({
           severity: result.status === 'success' ? 'info' : 'error',
           summary: result.status === 'success' ? 'Success' : 'Error',
-          detail: `Reason: ${result.statusMessage}`
+          detail: `Reason: ${result.message}`
         })
       });
   }
