@@ -52,7 +52,7 @@ export async function computeOrderSummaryNotification(restaurantId:any) {
     if (result.length != 0){
         for (let order of result){
             if(order.orderStatus == "notified"){
-                summary.orderInProgress = summary.orderCancel + 1
+                summary.orderInProgress = summary.orderInProgress + 1
             } else if (order.orderStatus == "delivered") {
                 summary.orderdelivered = summary.orderdelivered + 1
             } else if (order.orderStatus == "cancel") {
