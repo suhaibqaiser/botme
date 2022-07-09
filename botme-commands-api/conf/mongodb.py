@@ -15,6 +15,17 @@ def getDbCta(intent,entity,pageId,sectionId):
                     return None
                 else:
                     return x
+
+        elif intent == "Order_meal" or intent == "add_product_to_cart" or intent == "remove_item" or intent == "reduce_product_quantity" or intent == "product-detail":
+            my_query = {"intentName":intent,"context.pageId":pageId,"context.sectionId":sectionId}
+            mycta = mycollection.find(my_query)
+            for x in mycta:
+                print(x)
+                if (len(x) == 0):
+                    return None
+                else:
+                    return x
+                    
         elif (intent == "Home_page" or intent == "reservation_page" or intent == "contactus_page" or intent == "see_cart"):
             value = entity.title()
             my_query = {"intentName":intent,"context.entities.entityName":value}
