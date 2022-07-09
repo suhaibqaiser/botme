@@ -322,10 +322,6 @@ async function updateClient(req, res) {
         restaurantId: req.body.restaurantId,
         clientEmail: req.body.clientEmail,
         clientSecretHint: req.body.clientSecretHint,
-        clientEmailVerified: req.body.clientEmailVerified,
-        clientState: req.body.clientState,
-        clientDescription: req.body.clientDescription,
-        verification_token: req.body.verification_token,
         clientType: req.body.clientType
     }
 
