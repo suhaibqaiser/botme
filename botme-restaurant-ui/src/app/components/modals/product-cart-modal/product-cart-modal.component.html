@@ -16,7 +16,7 @@
       </div>
       </div>
       <div *ngIf="!cartService.cartLoader">
-        <div id="{{product.productId + product.productName}}" class="cart-modal-product"
+        <div id="{{product.productId}}" class="cart-modal-product"
              *ngFor="let product of cartService.cartProduct">
           <div class="cart-modal-thumb">
             <a href="/product-detail/?productId={{product.productId}}">
