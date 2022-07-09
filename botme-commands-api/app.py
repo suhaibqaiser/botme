@@ -85,8 +85,8 @@ def send_Response():
                       intent['name'], db, form, call)
     if(intent['name'] == "nlu_fallback"):
         response = utility.nluFallBack()
-        wrongCommand = insertingWrongResponseInDb(
-            converstion['conversationId'], converstion['conversationLogId'],context['clientId'],context['sessionId'],response, text)
+        # wrongCommand = insertingWrongResponseInDb(
+            # converstion['conversationId'], converstion['conversationLogId'],context['clientId'],context['sessionId'],response, text)
         return jsonify(response)
     else:
         response = getResponseUsingContext(intent['name'], rasa_data['entities'], text,
@@ -95,7 +95,7 @@ def send_Response():
             return jsonify(response)
         else:
             response = utility.nluFallBack()
-            wrongCommand = insertingWrongResponseInDb(converstion['conversationId'], converstion['conversationLogId'],context['clientId'],context['sessionId'],response, text)
+            # wrongCommand = insertingWrongResponseInDb(converstion['conversationId'], converstion['conversationLogId'],context['clientId'],context['sessionId'],response, text)
             return jsonify(response)
 
 
