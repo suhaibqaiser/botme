@@ -58,7 +58,7 @@ class Product():
             call = None
             utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
             Response = utility.nluFallBack()
-            wrongCommand = insertingWrongResponseInDb(self.converstion['conversationId'],self.converstion['conversationLogId'],self.context['clientId'],self.context['sessionId'],Response,self.text)
+            # wrongCommand = insertingWrongResponseInDb(self.converstion['conversationId'],self.converstion['conversationLogId'],self.context['clientId'],self.context['sessionId'],Response,self.text)
             return Response
         else:
             db = getDbCta(self.intent,self.value,self.pageId,self.sectionId)
@@ -95,6 +95,7 @@ class Product():
             data = getProductUsingProductName(self.value,self.context['restaurantId'])
             print("1 ==>",data)
             payload = data['payload']
+            print(parentProductId)
             parentdata = getProductUsingProductId(parentProductId,self.context['restaurantId'])
             parentPayload = parentdata['payload']
             print("3 ==>",parentPayload)
@@ -121,7 +122,7 @@ class Product():
             self.form = None
             utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
             Response = utility.nluFallBack()
-            wrongCommand = insertingWrongResponseInDb(self.converstion['conversationId'],self.converstion['conversationLogId'],self.context['clientId'],self.context['sessionId'],Response,self.text)
+            # wrongCommand = insertingWrongResponseInDb(self.converstion['conversationId'],self.converstion['conversationLogId'],self.converstion['clientId'],self.converstion['sessionId'],Response,self.text)
             return Response
 
 
@@ -152,7 +153,7 @@ class Product():
                         return False
 
             elif sectionId == "sectionId-toppings":
-                if intent == "Order_meal" or intent == "reduce_product_quantity":
+                if intent == "Order_meal" or intent == "reduce_product_quantity" or intent == "add_product_to_cart":
                     if iD in x['productToppings']:
                         return True
                     else:
