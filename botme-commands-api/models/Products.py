@@ -49,7 +49,7 @@ class Product():
             self.form = None
             utility = Utility(self.pageId,self.sectionId,self.value,self.text,self.intent,self.db,self.form,call)
             Response = utility.nluFallBack()
-            wrongCommand = insertingWrongResponseInDb(self.converstion['conversationId'],self.converstion['conversationLogId'],self.context['clientId'],self.context['sessionId'],Response,self.text)
+            # wrongCommand = insertingWrongResponseInDb(self.converstion['conversationId'],self.converstion['conversationLogId'],self.context['clientId'],self.context['sessionId'],Response,self.text)
             return Response
 
 
