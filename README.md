@@ -1,4 +1,12 @@
 # botme
+# Team
+
+Project Director: Suhaib Qaiser (suhaib@matacs.com)
+Technical Lead: Aman Subhan
+Project Manager: Sadaf Khan
+Senior Developer: Mohsin Khan
+Developer: Taha Hassan
+Developer: Zohain Hassan
 
 ## URls for various deployments
 
